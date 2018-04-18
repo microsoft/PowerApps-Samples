@@ -125,9 +125,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\App.config">
-      <Link>App.config</Link>
-    </None>
+    <None Include="App.config" />
+    <None Include="ChangeTrackingSample_1_0_0_0_managed.zip" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
