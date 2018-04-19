@@ -125,7 +125,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="..\..\..\..\..\..\GitHub\PowerApps-Samples\common-data-service\C#\App.config">
+      <Link>App.config</Link>
+    </None>
     <None Include="ChangeTrackingSample_1_0_0_0_managed.zip" />
     <None Include="packages.config" />
   </ItemGroup>
