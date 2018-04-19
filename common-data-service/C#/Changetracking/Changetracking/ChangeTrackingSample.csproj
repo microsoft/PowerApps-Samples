@@ -120,7 +120,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SampleMethod.cs" />
+    <Compile Include="MyOrganizationSdkTypes.cs" />
+    <Compile Include="SampleMethods.cs" />
     <Compile Include="SampleProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
