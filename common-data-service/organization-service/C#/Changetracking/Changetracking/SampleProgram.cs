@@ -1,13 +1,7 @@
 ﻿using System;
 using System.ServiceModel;
-using System.ServiceModel.Description;
-using System.Diagnostics;
-using System.Xml.Linq;
-using System.Linq.Expressions;
 using System.Linq;
-using System.IO;
 using System.Collections.Generic;
-using System.Xml;
 using System.Threading;
 using System.Configuration;
 
@@ -16,16 +10,11 @@ using System.Configuration;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Client;
 using Microsoft.Xrm.Sdk.Query;
-using Microsoft.Xrm.Sdk.Discovery;
 using Microsoft.Xrm.Sdk.Messages;
-using Microsoft.Xrm.Sdk.Metadata;
-using Microsoft.Xrm.Sdk.Metadata.Query;
 
 // This namespace is found in Microsoft.Crm.Sdk.Proxy.dll assembly
 // found in the SDK\bin folder.
-using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Tooling.Connector;
-using System.Net;
 
 namespace PowerApps.Samples
 {
@@ -184,7 +173,7 @@ namespace PowerApps.Samples
                     app.Run(csc, true);
 
             }
-            catch (FaultException<Microsoft.Xrm.Sdk.OrganizationServiceFault> ex)
+            catch (FaultException<OrganizationServiceFault> ex)
             {
                 Console.WriteLine("The application terminated with an error.");
                 Console.WriteLine("Timestamp: {0}", ex.Detail.Timestamp);
@@ -194,7 +183,7 @@ namespace PowerApps.Samples
                 Console.WriteLine("Inner Fault: {0}",
                     null == ex.Detail.InnerFault ? "No Inner Fault" : "Has Inner Fault");
             }
-            catch (System.TimeoutException ex)
+            catch (TimeoutException ex)
             {
                 Console.WriteLine("The application terminated with an error.");
                 Console.WriteLine("Message: {0}", ex.Message);
@@ -202,7 +191,7 @@ namespace PowerApps.Samples
                 Console.WriteLine("Inner Fault: {0}",
                     null == ex.InnerException.Message ? "No Inner Fault" : ex.InnerException.Message);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("The application terminated with an error.");
                 Console.WriteLine(ex.Message);
@@ -212,8 +201,8 @@ namespace PowerApps.Samples
                 {
                     Console.WriteLine(ex.InnerException.Message);
 
-                    FaultException<Microsoft.Xrm.Sdk.OrganizationServiceFault> fe = ex.InnerException
-                        as FaultException<Microsoft.Xrm.Sdk.OrganizationServiceFault>;
+                    FaultException<OrganizationServiceFault> fe = ex.InnerException
+                        as FaultException<OrganizationServiceFault>;
                     if (fe != null)
                     {
                         Console.WriteLine("Timestamp: {0}", fe.Detail.Timestamp);
