@@ -10,8 +10,21 @@ namespace PowerApps.Samples
     {
         static void Main(string[] args)
         {
+            string connectionString = string.Empty;
+            //Verify common-data-service/App.config contains a valid connection string named 'Connect'
+            try
+            {
+                connectionString = ConfigurationManager.ConnectionStrings["Connect"].ConnectionString;
+            }
+            catch (NullReferenceException)
+            {
+                Console.WriteLine("You must set connection data in common-data-service/App.config before running this sample.");                
+            }
+            
+
             try {
-                using (CrmServiceClient csc = new CrmServiceClient(ConfigurationManager.ConnectionStrings["Connect"].ConnectionString)) {
+                using (CrmServiceClient csc = new CrmServiceClient(connectionString))
+                {
                     if (csc.IsReady)
                     {
                         IOrganizationService service = csc.OrganizationServiceProxy;
@@ -32,15 +45,17 @@ namespace PowerApps.Samples
                         //////////////////////////////////////////////
                         Console.WriteLine("The sample completed successfully");
                     }
-                    else {
+                    else
+                    {
                         if (csc.LastCrmError.Equals("Unable to Login to Dynamics CRM"))
                         {
                             Console.WriteLine("Check the connection string values in common-data-service/App.config.");
-                            throw new Exception(csc.LastCrmError);                            
+                            throw new Exception(csc.LastCrmError);
                         }
-                        else {
+                        else
+                        {
                             throw csc.LastCrmException;
-                        }                        
+                        }
                     }
                 }
             }
