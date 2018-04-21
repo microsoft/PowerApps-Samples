@@ -24,7 +24,7 @@ namespace PowerApps.Samples
 
         private static OrganizationServiceProxy _service;
         private const String customBooksEntityName = "sample_book";
-        System.String ManagedSolutionLocation = @".\\Solution\ChangeTrackingSample_1_0_0_0_managed.zip";
+        System.String ManagedSolutionLocation = @"ChangeTrackingSample_1_0_0_0_managed.zip";
 
         public void Run(IOrganizationService service, bool promptForDelete)
         {
