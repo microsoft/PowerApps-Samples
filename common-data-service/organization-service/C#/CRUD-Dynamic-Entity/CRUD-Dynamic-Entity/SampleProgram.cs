@@ -11,22 +11,38 @@ namespace PowerApps.Samples
         static void Main(string[] args)
         {
             try {
-                CrmServiceClient csc = new CrmServiceClient(ConfigurationManager.ConnectionStrings["Connect"].ConnectionString);
-                IOrganizationService service = csc.OrganizationServiceProxy;
+                using (CrmServiceClient csc = new CrmServiceClient(ConfigurationManager.ConnectionStrings["Connect"].ConnectionString)) {
+                    if (csc.IsReady)
+                    {
+                        IOrganizationService service = csc.OrganizationServiceProxy;
 
-                //Add code here
-                //////////////////////////////////////////////
-                Entity account = new Entity("account");
-                account["name"] = "Test Account";
+                        //Add code here
+                        //////////////////////////////////////////////
+                        Entity account = new Entity("account");
+                        account["name"] = "Test Account";
 
-                //User service methods directly:
-                // Guid accountid = service.Create(account);
+                        //User service methods directly:
+                        // Guid accountid = service.Create(account);
 
-                //Use method defined in SampleMethods.cs
-                Guid accountid = CreateEntity(service, account);
+                        //Use method defined in SampleMethods.cs
+                        Guid accountid = CreateEntity(service, account);
 
-                //////////////////////////////////////////////
 
+
+                        //////////////////////////////////////////////
+                        Console.WriteLine("The sample completed successfully");
+                    }
+                    else {
+                        if (csc.LastCrmError.Equals("Unable to Login to Dynamics CRM"))
+                        {
+                            Console.WriteLine("Check the connection string values in common-data-service/App.config.");
+                            throw new Exception(csc.LastCrmError);                            
+                        }
+                        else {
+                            throw csc.LastCrmException;
+                        }                        
+                    }
+                }
             }
             catch (FaultException<OrganizationServiceFault> ex)
             {
@@ -74,7 +90,7 @@ namespace PowerApps.Samples
 
             finally
             {
-
+                
                 Console.WriteLine("Press <Enter> to exit.");
                 Console.ReadLine();
             }
