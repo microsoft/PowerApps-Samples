@@ -1,177 +1,80 @@
-﻿using System;
-using System.ServiceModel;
-using System.Linq;
-using System.Collections.Generic;
-using System.Threading;
-using System.Configuration;
-
-// These namespaces are found in the Microsoft.Xrm.Sdk.dll assembly
-// found in the SDK\bin folder.
-using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Client;
-using Microsoft.Xrm.Sdk.Query;
-using Microsoft.Xrm.Sdk.Messages;
-
-// This namespace is found in Microsoft.Crm.Sdk.Proxy.dll assembly
-// found in the SDK\bin folder.
+﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Tooling.Connector;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.ServiceModel;
+using System.Threading;
 
 namespace PowerApps.Samples
 {
-
-    partial class SampleProgram
+    public partial class SampleProgram
     {
-
-        private static OrganizationServiceProxy _service;
-        private const String customBooksEntityName = "sample_book";
-        System.String ManagedSolutionLocation = @"ChangeTrackingSample_1_0_0_0_managed.zip";
-
-        public void Run(IOrganizationService service, bool promptForDelete)
+        static void Main(string[] args)
         {
+           
             try
             {
-
-
-                // Check CRM version
-                if (CheckCRMVersion(service))
+                //You must specify connection information in common-data-service/App.config to run this sample.
+                using (CrmServiceClient csc = new CrmServiceClient(GetConnectionStringFromAppConfig("Connect")))
                 {
-                    // Import the ChangeTrackingSample solution if it is not already installed.
-                    ImportChangeTrackingSolution(service);
-
-                    // Wait for entity and key index to be active.
-                    WaitForEntityAndKeysToBeActive(service, customBooksEntityName.ToLower());
-
-                    // Create 10 demo records.
-                    CreateRequiredRecords(service);
-
-                    //<snippetChangeTrackingSample1>
-                    string token;
-
-                    // Initialize page number.
-                    int pageNumber = 1;
-                    List<Entity> initialrecords = new List<Entity>();
-
-                    // Retrieve records by using Change Tracking feature.
-                    RetrieveEntityChangesRequest request = new RetrieveEntityChangesRequest();
-
-                    request.EntityName = customBooksEntityName.ToLower();
-                    request.Columns = new ColumnSet("sample_bookcode", "sample_name", "sample_author");
-                    request.PageInfo = new PagingInfo() { Count = 5000, PageNumber = 1, ReturnTotalRecordCount = false };
-
-
-                    // Initial Synchronization. Retrieves all records as well as token value.
-                    Console.WriteLine("Initial synchronization....retrieving all records.");
-                    while (true)
+                    if (csc.IsReady)
                     {
-                        RetrieveEntityChangesResponse response = (RetrieveEntityChangesResponse)service.Execute(request);
+                        IOrganizationService service = csc.OrganizationServiceProxy;
 
-                        initialrecords.AddRange(response.EntityChanges.Changes.Select(x => (x as NewOrUpdatedItem).NewOrUpdatedEntity).ToArray());
-                        initialrecords.ForEach(x => Console.WriteLine("initial record id:{0}", x.Id));
-                        if (!response.EntityChanges.MoreRecords)
+                        //Add code here
+                        //////////////////////////////////////////////
+
+                        // Check that the current version is greater than the minimum version
+                        if (SampleHelpers.CheckVersion(service, new Version("7.1.0.0")))
                         {
-                            // Store token for later query
-                            token = response.EntityChanges.DataToken;
-                            break;
+                            //Import the ChangeTrackingSample solution
+                            if (SampleHelpers.ImportSolution(service, "ChangeTrackingSample", "ChangeTrackingSample_1_0_0_0_managed.zip"))
+                            {
+                                Console.WriteLine("Waiting for the alternate key index to be created.......");
+                                Thread.Sleep(50000);
+                            }
 
+                            if (WaitForEntityAndKeysToBeActive(service, "sample_book"))
+                            {
+                                // Create 10 sample book records.
+                                CreateBookRecordsForSample(service);
+
+                                //Continue from here...
+
+                            }
+                            else {
+                                Console.WriteLine("There is a problem creating the index for the book code alternate key for the sample_book entity.");
+                                Console.WriteLine("The sample cannot continue. Please try again.");
+                                //Delete the ChangeTrackingSample solution
+                                SampleHelpers.DeleteSolution(service, "ChangeTrackingSample");
+                                return;
+
+                            }
+
+
+                            //Delete the ChangeTrackingSample solution
+                            SampleHelpers.DeleteSolution(service, "ChangeTrackingSample");
                         }
-                        // Increment the page number to retrieve the next page.
-                        request.PageInfo.PageNumber++;
-                        // Set the paging cookie to the paging cookie returned from current results.
-                        request.PageInfo.PagingCookie = response.EntityChanges.PagingCookie;
-                    }
-                    //</snippetChangeTrackingSample1>
 
-                    // Display the initial records.
-                    // Do you like to view the records in browser? Add code.
-                    if (PromptForView())
+
+                        //////////////////////////////////////////////
+                        Console.WriteLine("The sample completed successfully");
+                        return;
+                    }
+                    else
                     {
-                        ViewEntityListInBrowser();
+                        if (csc.LastCrmError.Equals("Unable to Login to Dynamics CRM"))
+                        {
+                            Console.WriteLine("Check the connection string values in common-data-service/App.config.");
+                            throw new Exception(csc.LastCrmError);
+                        }
+                        else
+                        {
+                            throw csc.LastCrmException;
+                        }
                     }
-
-                    // Delay 10 seconds, then create/update/delete records
-                    Console.WriteLine("waiting 10 seconds until next operation..");
-                    Thread.Sleep(10000);
-
-
-                    // Add another 10 records, 1 update, and 1 delete.
-                    UpdateRecords(service);
-
-                    // Second Synchronization. Basically do the same.
-                    // Reset paging
-                    pageNumber = 1;
-                    request.PageInfo.PageNumber = pageNumber;
-                    request.PageInfo.PagingCookie = null;
-                    // Assign token
-                    request.DataVersion = token;
-
-                    // Instantiate cache.
-                    List<Entity> updatedRecords = new List<Entity>();
-                    List<EntityReference> deletedRecords = new List<EntityReference>();
-
-                    while (true)
-                    {
-
-                        RetrieveEntityChangesResponse results = (RetrieveEntityChangesResponse)service.Execute(request);
-
-                        updatedRecords.AddRange(results.EntityChanges.Changes.Where(x => x.Type == ChangeType.NewOrUpdated).Select(x => (x as NewOrUpdatedItem).NewOrUpdatedEntity).ToArray());
-                        deletedRecords.AddRange(results.EntityChanges.Changes.Where(x => x.Type == ChangeType.RemoveOrDeleted).Select(x => (x as RemovedOrDeletedItem).RemovedItem).ToArray());
-
-
-                        if (!results.EntityChanges.MoreRecords)
-                            break;
-
-                        // Increment the page number to retrieve the next page.
-                        request.PageInfo.PageNumber++;
-                        // Set the paging cookie to the paging cookie returned from current results.
-                        request.PageInfo.PagingCookie = results.EntityChanges.PagingCookie;
-                    }
-
-                    // Do synchronizig work here.
-                    Console.WriteLine("Retrieving changes since the last sync....");
-                    updatedRecords.ForEach(x => Console.WriteLine("new or updated record id:{0}!", x.Id));
-                    deletedRecords.ForEach(x => Console.WriteLine("record id:{0} deleted!", x.Id));
-
-                    // Prompt to view the records in the browser.
-                    if (PromptForView())
-                    {
-                        Console.WriteLine("Retrieving the changes for the sample_book entity.....");
-                        ViewEntityListInBrowser();
-                    }
-
-                    // Prompts to delete the ChangeTrackingSample managed solution.
-                    DeleteChangeTrackingSampleSolution(service, promptForDelete);
                 }
-            }
-            // Catch any service fault exceptions that Microsoft Dynamics CRM throws.
-            catch (FaultException<Microsoft.Xrm.Sdk.OrganizationServiceFault>)
-            {
-                // You can handle an exception here or pass it back to the calling method.
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks whether the ChangeTrackingSample solution is already installed.
-        /// If it is not, the ChangeTrackingSample_1_0_0_0_managed.zip file is imported to install
-        /// this solution.
-        /// </summary>
-       
-
-        static public void Main(string[] args)
-        {
-            try
-            {
-                // Obtain the target organization's Web address and client logon 
-                // credentials from the user.
-                CrmServiceClient csc = new CrmServiceClient(ConfigurationManager.ConnectionStrings["Connect"].ConnectionString);
-                IOrganizationService service = csc.OrganizationServiceProxy;
-                //_service = new OrganizationServiceProxy(ConfigurationManager.ConnectionStrings["Connect"].ConnectionString);
-               // _serviceProxy = new OrganizationServiceProxy(serverConfig.OrganizationUri, serverConfig.HomeRealmUri, serverConfig.Credentials, serverConfig.DeviceCredentials);
-                _service = csc.OrganizationServiceProxy;
-
-                    SampleProgram app = new SampleProgram();
-                    app.Run(csc, true);
-
             }
             catch (FaultException<OrganizationServiceFault> ex)
             {
@@ -214,6 +117,8 @@ namespace PowerApps.Samples
                     }
                 }
             }
+            // Additional exceptions to catch: SecurityTokenValidationException, ExpiredSecurityTokenException,
+            // SecurityAccessDeniedException, MessageSecurityException, and SecurityNegotiationException.
 
             finally
             {
@@ -222,6 +127,23 @@ namespace PowerApps.Samples
                 Console.ReadLine();
             }
 
-        } //#endregion Main
-    } //Samleprogram
-} //namespace
+        }
+        /// <summary>
+        /// Gets a named connection string from App.config
+        /// </summary>
+        /// <param name="name">The name of the connection string to return</param>
+        /// <returns>The named connection string</returns>
+        static string GetConnectionStringFromAppConfig(string name) {
+            //Verify common-data-service/App.config contains a valid connection string with the name.
+            try
+            {
+                return ConfigurationManager.ConnectionStrings[name].ConnectionString;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("You must set connection data in common-data-service/App.config before running this sample.");
+                return string.Empty;
+            }
+        }
+    }
+}

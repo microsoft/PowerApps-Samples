@@ -111,6 +111,9 @@
     <Compile Include="..\..\MyOrganizationSdkTypes.cs">
       <Link>MyOrganizationSdkTypes.cs</Link>
     </Compile>
+    <Compile Include="..\..\SampleHelpers.cs">
+      <Link>SampleHelpers.cs</Link>
+    </Compile>
     <Compile Include="SampleMethods.cs" />
     <Compile Include="SampleProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
