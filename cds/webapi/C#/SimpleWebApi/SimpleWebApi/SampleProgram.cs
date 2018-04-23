@@ -14,7 +14,7 @@ namespace PowerApps.Samples
             string redirectUrl = "http://localhost/SdkSample";
             try
             {
-                //Get configuration data from ../../../../cds/App.config
+                //Get configuration data from ..\..\..\..\App.config
                 string connectionString = ConfigurationManager.ConnectionStrings["Connect"].ConnectionString;
 
                 //Required for all:
