@@ -224,7 +224,7 @@ namespace PowerApps.Samples
             }
             catch (Exception)
             {
-                Console.WriteLine("You must set connection data in common-data-service/App.config before running this sample.");
+                Console.WriteLine("You must set connection data in cds/App.config before running this sample.");
                 return string.Empty;
             }
         }
