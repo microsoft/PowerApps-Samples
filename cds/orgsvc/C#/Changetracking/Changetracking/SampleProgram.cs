@@ -18,7 +18,7 @@ namespace PowerApps.Samples
 
             try
             {
-                //You must specify connection information in common-data-service/App.config to run this sample.
+                //You must specify connection information in cds/App.config to run this sample.
                 using (CrmServiceClient csc = new CrmServiceClient(GetConnectionStringFromAppConfig("Connect")))
                 {
                     if (csc.IsReady)
@@ -148,7 +148,7 @@ namespace PowerApps.Samples
                         const string UNABLE_TO_LOGIN_ERROR = "Unable to Login to Dynamics CRM";
                         if (csc.LastCrmError.Equals(UNABLE_TO_LOGIN_ERROR))
                         {
-                            Console.WriteLine("Check the connection string values in common-data-service/App.config.");
+                            Console.WriteLine("Check the connection string values in cds/App.config.");
                             throw new Exception(csc.LastCrmError);
                         }
                         else
@@ -217,7 +217,7 @@ namespace PowerApps.Samples
         /// <returns>The named connection string</returns>
         static string GetConnectionStringFromAppConfig(string name)
         {
-            //Verify common-data-service/App.config contains a valid connection string with the name.
+            //Verify cds/App.config contains a valid connection string with the name.
             try
             {
                 return ConfigurationManager.ConnectionStrings[name].ConnectionString;
