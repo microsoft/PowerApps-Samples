@@ -27,7 +27,6 @@ namespace PowerApps.Samples
 
                         #region Sample Code
                         //////////////////////////////////////////////
-
                         #region Set up
                         // Check that the current version is greater than the minimum version
                         if (!SampleHelpers.CheckVersion(service, new Version("7.1.0.0")))
@@ -132,15 +131,16 @@ namespace PowerApps.Samples
                         //Delete the ChangeTrackingSample solution
                         SampleHelpers.DeleteSolution(service, "ChangeTrackingSample");
                         #endregion Tear down
-
-                        #endregion Sample Code
                         //////////////////////////////////////////////
+                        #endregion Sample Code
+
                         Console.WriteLine("The sample completed successfully");
                         return;
                     }
                     else
                     {
-                        if (csc.LastCrmError.Equals("Unable to Login."))
+                        const string UNABLE_TO_LOGIN_ERROR = "Unable to Login to Dynamics CRM";
+                        if (csc.LastCrmError.Equals(UNABLE_TO_LOGIN_ERROR))
                         {
                             Console.WriteLine("Check the connection string values in common-data-service/App.config.");
                             throw new Exception(csc.LastCrmError);
