@@ -14,7 +14,7 @@ namespace PowerApps.Samples
         /// </summary>
         /// <param name="service">The service to use to check the version. </param>
         /// <param name="minVersion">The minimum version.</param>
-        /// <returns></returns>
+        /// <returns>true when the version is higher than the minimum verions, otherwise false.</returns>
         public static bool CheckVersion(IOrganizationService service, Version minVersion)
         {
 
@@ -37,14 +37,12 @@ namespace PowerApps.Samples
         /// <summary>
         /// Imports a solution if it is not already installed.
         /// </summary>
-        /// <param name="service">The service to use to check the version. </param>
+        /// <param name="service">The service to use to import the solution. </param>
         /// <param name="uniqueName">The unique name of the solution to install.</param>
         /// <param name="pathToFile">The path to the solution file.</param>
         /// <returns>true if the solution was installed, otherwise false.</returns>
         public static bool ImportSolution(IOrganizationService service, string uniqueName, string pathToFile)
         {
-
-            Console.WriteLine("Checking whether the {0} solution is already installed.", uniqueName);
 
             QueryByAttribute queryCheckForSampleSolution = new QueryByAttribute();
             queryCheckForSampleSolution.AddAttributeValue("uniquename", uniqueName);
@@ -73,7 +71,7 @@ namespace PowerApps.Samples
             }
         }
         /// <summary>
-        /// Deletes a solution
+        /// Prompts user to delete solution. Deletes solution if they choose.
         /// </summary>
         /// <param name="service">The service to use to delete the solution. </param>
         /// <param name="uniqueName">The unique name of the solution to delete.</param>
