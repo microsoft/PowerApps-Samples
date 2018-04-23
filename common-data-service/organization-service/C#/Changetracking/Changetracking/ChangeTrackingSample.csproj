@@ -47,9 +47,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AntiXSSLibrary, Version=4.2.0.0, Culture=neutral, PublicKeyToken=d127efab8a9c114f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CrmSdk.Extensions.7.1.0.1\lib\net45\AntiXSSLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Crm.Sdk.Proxy, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.0.7\lib\net452\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
     </Reference>
@@ -110,6 +107,9 @@
   <ItemGroup>
     <Compile Include="..\..\MyOrganizationSdkTypes.cs">
       <Link>MyOrganizationSdkTypes.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SampleHelpers.cs">
+      <Link>SampleHelpers.cs</Link>
     </Compile>
     <Compile Include="SampleMethods.cs" />
     <Compile Include="SampleProgram.cs" />

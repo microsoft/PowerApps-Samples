@@ -9,8 +9,6 @@
 *.userosscache
 *.sln.docstates
 
-# User-specific sample connection data
-common-data-service/App.config
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

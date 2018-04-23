@@ -1,201 +1,123 @@
-﻿using Microsoft.Crm.Sdk.Messages;
-using Microsoft.Xrm.Sdk;
+﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Metadata;
 using Microsoft.Xrm.Sdk.Metadata.Query;
 using Microsoft.Xrm.Sdk.Query;
 using System;
-using System.Diagnostics;
-using System.IO;
+using System.Collections.Generic;
+using System.Linq;
 using System.ServiceModel;
 using System.Threading;
 
 namespace PowerApps.Samples
 {
-    partial class SampleProgram
+    public partial class SampleProgram
     {
 
         /// <summary>
-        /// Checks whether the ChangeTrackingSample solution is already installed.
-        /// If it is not, the ChangeTrackingSample_1_0_0_0_managed.zip file is imported to install
-        /// this solution.
+        /// Alternate keys may not be active immediately after a solution defining them is installed.
+        /// This method polls the metadata for a specific entity
+        /// to delay execution of the rest of the sample until the alternate keys are ready.
         /// </summary>
-        public void ImportChangeTrackingSolution(IOrganizationService service)
+        /// <param name="service">Specifies the service to connect to.</param>
+        /// <param name="asyncJob">The system job that creates the index to support the alternate key</param>
+        /// <param name="iteration">The number of times this method has been called.</param>
+        /// 
+        private static bool VerifyBookCodeKeyIsActive(IOrganizationService service, EntityReference asyncJob = null, int iteration = 0)
         {
-            try
+            if (iteration > 5)
             {
+                //Give up
+                return false;
+            }
+           
 
-                Console.WriteLine("Checking whether the ChangeTrackingSample solution already exists.....");
-
-                QueryByAttribute queryCheckForSampleSolution = new QueryByAttribute();
-                queryCheckForSampleSolution.AddAttributeValue("uniquename", "ChangeTrackingSample");
-                queryCheckForSampleSolution.EntityName = Solution.EntityLogicalName;
-
-                EntityCollection querySampleSolutionResults = service.RetrieveMultiple(queryCheckForSampleSolution);
-                Solution SampleSolutionResults = null;
-                if (querySampleSolutionResults.Entities.Count > 0)
+            if (iteration == 0) //only the first time
+            {
+                //Get whether the Entity Key index is active from the metadata
+                EntityQueryExpression entityQuery = new EntityQueryExpression();
+                entityQuery.Criteria = new MetadataFilterExpression(LogicalOperator.And)
                 {
-                    Console.WriteLine("The {0} solution already exists....", "ChangeTrackingSample");
-                    SampleSolutionResults = (Solution)querySampleSolutionResults.Entities[0];
+                    Conditions = { { new MetadataConditionExpression("LogicalName", MetadataConditionOperator.Equals, "sample_book") } }
+                };
 
+                entityQuery.Properties = new MetadataPropertiesExpression("Keys");
+
+                RetrieveMetadataChangesRequest metadataRequest = new RetrieveMetadataChangesRequest() { Query = entityQuery };
+                RetrieveMetadataChangesResponse metadataResponse = (RetrieveMetadataChangesResponse)service.Execute(metadataRequest);
+                EntityKeyMetadata bookcodekey = metadataResponse.EntityMetadata.FirstOrDefault().Keys.FirstOrDefault();
+
+                if (bookcodekey.EntityKeyIndexStatus == EntityKeyIndexStatus.Active)
+                {
+                    return true;
                 }
                 else
                 {
-                    Console.WriteLine("The ChangeTrackingSample solution does not exist. Importing the solution....");
-                    byte[] fileBytes = File.ReadAllBytes(ManagedSolutionLocation);
-                    ImportSolutionRequest impSolReq = new ImportSolutionRequest()
-                    {
-                        CustomizationFile = fileBytes
-                    };
-
-                    service.Execute(impSolReq);
-
-                    Console.WriteLine("Imported Solution from {0}", ManagedSolutionLocation);
-                    Console.WriteLine("Waiting for the alternate key index to be created.......");
-                    Thread.Sleep(50000);
-
+                    
+                    iteration++;
+                    return VerifyBookCodeKeyIsActive(service, bookcodekey.AsyncJob, iteration);
                 }
-            }
-
-            // Catch any service fault exceptions that Microsoft Dynamics CRM throws.
-            catch (FaultException<Microsoft.Xrm.Sdk.OrganizationServiceFault>)
-            {
-                // You can handle an exception here or pass it back to the calling method.
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks the current CRM version.
-        /// If it is anything lower than 7.1.0.0, prompt to upgrade.
-        /// </summary>
-        private bool CheckCRMVersion(IOrganizationService service)
-        {
-
-            RetrieveVersionRequest crmVersionReq = new RetrieveVersionRequest();
-
-            RetrieveVersionResponse crmVersionResp = (RetrieveVersionResponse)service.Execute(crmVersionReq);
-
-            string version = crmVersionResp.Version;
-
-            if (String.CompareOrdinal("7.1.0.0", crmVersionResp.Version) < 0)
-            {
-                return true;
             }
             else
             {
-                Console.WriteLine("This sample cannot be run against the current version of CRM.");
-                Console.WriteLine("Upgrade your CRM instance to the latest version to run this sample.");
-                return false;
-            }
-        }
+                //Check the status of the system job that is should indicate that the alternate key index is active.
+                AsyncOperation systemJob = (AsyncOperation)service.Retrieve(asyncJob.LogicalName, asyncJob.Id, new ColumnSet("statecode", "statuscode"));
 
-        /// <summary>
-        /// Alternate keys may not be active immediately after the ChangeTrackingSample 
-        /// solution is installed.This method polls the metadata for the sample_book
-        /// entity to delay execution of the rest of the sample until the alternate keys are ready.
-        /// </summary>
-        /// <param name="service">Specifies the service to connect to.</param>
-        /// <param name="entityLogicalName">The entity logical name, i.e. sample_product.</param>
-        /// 
-        private static void WaitForEntityAndKeysToBeActive(IOrganizationService service, string entityLogicalName)
-        {
-            EntityQueryExpression entityQuery = new EntityQueryExpression();
-            entityQuery.Criteria = new MetadataFilterExpression(LogicalOperator.And)
-            {
-                Conditions = { { new MetadataConditionExpression("LogicalName", MetadataConditionOperator.Equals, entityLogicalName) } }
-            };
-
-            entityQuery.Properties = new MetadataPropertiesExpression("Keys");
-
-            RetrieveMetadataChangesRequest metadataRequest = new RetrieveMetadataChangesRequest() { Query = entityQuery };
-
-            bool allKeysReady = false;
-            do
-            {
-                System.Threading.Thread.Sleep(5000);
-
-                Console.WriteLine("Check for Entity...");
-                RetrieveMetadataChangesResponse metadataResponse = (RetrieveMetadataChangesResponse)service.Execute(metadataRequest);
-
-                if (metadataResponse.EntityMetadata.Count > 0)
+                if (systemJob.StateCode == AsyncOperationState.Completed) //Completed
                 {
-                    EntityKeyMetadata[] keys = metadataResponse.EntityMetadata[0].Keys;
-
-                    allKeysReady = true;
-                    if (keys.Length == 0)
+                    
+                    if (!systemJob.StatusCode.Value.Equals(30)) //Not Succeeded
                     {
-                        Console.WriteLine("No Keys Found!!!");
-                        allKeysReady = false;
+                        
+                        //Delete the system job and try to reactivate
+                        service.Delete(asyncJob.LogicalName, asyncJob.Id);
+
+                        ReactivateEntityKeyRequest reactivateRequest = new ReactivateEntityKeyRequest()
+                        {
+                            EntityLogicalName = "sample_book",
+                            EntityKeyLogicalName = "sample_bookcode"
+                        };
+                        ReactivateEntityKeyResponse reactivateResponse = (ReactivateEntityKeyResponse)service.Execute(reactivateRequest);
+                       
+                        //Get the system job created by the reactivate request
+                        QueryByAttribute systemJobQuery = new QueryByAttribute("asyncoperation");
+                        systemJobQuery.AddAttributeValue("primaryentitytype", "sample_book");
+                        systemJobQuery.AddOrder("createdon", OrderType.Descending);
+                        systemJobQuery.TopCount = 1;
+                        systemJobQuery.ColumnSet = new ColumnSet("asyncoperationid", "name");
+
+                        EntityCollection systemJobs =  service.RetrieveMultiple(systemJobQuery);
+                        asyncJob = systemJobs.Entities.FirstOrDefault().ToEntityReference();
+
+                        iteration++;
+                        return VerifyBookCodeKeyIsActive(service, asyncJob, iteration);
                     }
                     else
                     {
-                        foreach (var key in keys)
-                        {
-                            Console.WriteLine("  Key {0} status {1}", key.SchemaName, key.EntityKeyIndexStatus);
-                            allKeysReady = allKeysReady && (key.EntityKeyIndexStatus == EntityKeyIndexStatus.Active);
-                        }
+                        //It succeeded
+                        return true;
                     }
-
                 }
-            } while (!allKeysReady);
-
-            Console.WriteLine("Waiting 30 seconds for metadata caches to all synchronize...");
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(30));
-        }
-
-        // Prompt to view the entity.
-        private static bool PromptForView()
-        {
-            Console.WriteLine("\nDo you want to view the sample product entity records? (y/n)");
-            String answer = Console.ReadLine();
-            if (answer.StartsWith("y") || answer.StartsWith("Y"))
-            { return true; }
-            else
-            { return false; }
-        }
-
-        //Displays the sample product entity records in the browser.
-        public void ViewEntityListInBrowser()
-        {
-
-            try
-            {
-                //Get the view ID
-                QueryByAttribute query = new QueryByAttribute("savedquery");
-                query.AddAttributeValue("returnedtypecode", "sample_book");
-                query.AddAttributeValue("name", "Active Sample Books");
-                query.ColumnSet = new ColumnSet("savedqueryid", "name");
-                query.AddOrder("name", OrderType.Ascending);
-                RetrieveMultipleRequest req = new RetrieveMultipleRequest() { Query = query };
-                RetrieveMultipleResponse resp = (RetrieveMultipleResponse)_service.Execute(req);
-
-                SavedQuery activeSampleBooksView = (SavedQuery)resp.EntityCollection[0];
-
-                String webServiceURL = _service.ServiceConfiguration.CurrentServiceEndpoint.Address.Uri.AbsoluteUri;
-                String entityInDefaultSolutionUrl = webServiceURL.Replace("XRMServices/2011/Organization.svc",
-                 String.Format("main.aspx?etn={0}&pagetype=entitylist&viewid=%7b{1}%7d&viewtype=1039", "sample_book", activeSampleBooksView.SavedQueryId));
-
-                // View in IE
-                ProcessStartInfo browserProcess = new ProcessStartInfo("iexplore.exe");
-                browserProcess.Arguments = entityInDefaultSolutionUrl;
-                Process.Start(browserProcess);
+                else
+                {
+                    //Give it more time to complete
+                    Thread.Sleep(TimeSpan.FromSeconds(30));
+                    iteration++;
+                    return VerifyBookCodeKeyIsActive(service, asyncJob, iteration);
+                }
 
             }
-            catch (SystemException)
-            {
-                Console.WriteLine("\nThere was a problem opening Internet Explorer.");
-            }
-
 
         }
 
-        Guid bookIdtoDelete;
         /// <summary>
-        /// Creates any entity records that this sample requires.
+        /// Creates the inital set of book records in the sample
         /// </summary>
-        public void CreateRequiredRecords(IOrganizationService service)
+        /// <param name="service">Specifies the service to connect to.</param>
+        public static void CreateInitialBookRecordsForSample(IOrganizationService service)
         {
+            int recordsCreated = 0;
+
             Console.WriteLine("Creating required records......");
             // Create 10 book records for demo.
             for (int i = 0; i < 10; i++)
@@ -205,76 +127,81 @@ namespace PowerApps.Samples
                 book["sample_bookcode"] = "BookCode" + i.ToString();
                 book["sample_author"] = "Author" + i.ToString();
 
-                bookIdtoDelete = service.Create(book);
+                try
+                {
+                    service.Create(book);
+                    recordsCreated++;
+                }
+                catch (FaultException<OrganizationServiceFault> ex)
+                {
+                    //Record with sample_bookcode alternate key value already exists.
+                    //So it is fine that we don't re-create it.
+                    if (!(ex.Detail.ErrorCode == -2147088238))
+                    {
+                        throw;
+                    }
+                }
             }
-            Console.WriteLine("10 records created...");
+            Console.WriteLine("{0} records created...", recordsCreated);
+
         }
         /// <summary>
-        /// Update and delete records that this sample requires.
+        /// Updates the set of records used in the sample
         /// </summary>
-        public void UpdateRecords(IOrganizationService service)
+        /// <param name="service">Specifies the service to connect to.</param>
+        public static void UpdateBookRecordsForSample(IOrganizationService service)
         {
-            Console.WriteLine("Adding ten more records....");
-            // Create another 10 Account records for demo.
+            int recordsCreated = 0;
+
+            Console.WriteLine("Adding 10 more records");
+            // Create 10 book records for demo.
             for (int i = 10; i < 20; i++)
             {
                 Entity book = new Entity("sample_book");
                 book["sample_name"] = "Demo Book " + i.ToString();
                 book["sample_bookcode"] = "BookCode" + i.ToString();
                 book["sample_author"] = "Author" + i.ToString();
-                service.Create(book);
+
+                try
+                {
+                    service.Create(book);
+                    recordsCreated++;
+                }
+                catch (FaultException<OrganizationServiceFault> ex)
+                {
+                    //Record with sample_bookcode alternate key value already exists.
+                    //So it is fine that we don't re-create it.
+                    if (!(ex.Detail.ErrorCode == -2147088238))
+                    {
+                        throw;
+                    }
+                }
             }
+            Console.WriteLine("{0} records created...", recordsCreated);
 
             // Update a record.
-            Console.WriteLine("Updating an existing record");
-            Entity updatebook = new Entity(customBooksEntityName.ToLower(), "sample_bookcode", "BookCode0");
-            updatebook["sample_name"] = "Demo Book 0 updated";
+            Console.WriteLine("Updating one of the initial records.");
+            //Use the alternate key to reference the entity;
+            Entity demoBookZero = new Entity("sample_book", "sample_bookcode", "BookCode0");
+            demoBookZero["sample_name"] = string.Format("Demo Book 0 updated {0}",DateTime.Now.ToShortTimeString());
 
-            service.Update(updatebook);
+            service.Update(demoBookZero);
 
-            // Delete a record.
-            Console.WriteLine("Deleting the {0} record....", bookIdtoDelete);
-            service.Delete(customBooksEntityName.ToLower(), bookIdtoDelete);
-        }
-        /// <summary>
-        /// Deletes the managed solution that was created for this sample.
-        /// <param name="prompt"> Indicates whether to prompt the user to delete 
-        /// the solution created in this sample.</param>
-        /// If you choose "y", the managed solution will be deleted including the 
-        /// sample_book entity and all the data in the entity. 
-        /// If you choose "n", you must delete the solution manually to return 
-        /// your organization to the original state.
-        /// </summary>
-        public void DeleteChangeTrackingSampleSolution(IOrganizationService service, bool prompt)
-        {
-            bool deleteSolution = true;
-            if (prompt)
+            //Delete a record
+            Console.WriteLine("Deleting one of the initial records.");
+
+            //Use a KeyAttributeCollection to set the alternate key for the record.
+            KeyAttributeCollection demoBookOneKeys = new KeyAttributeCollection();
+            demoBookOneKeys.Add(new KeyValuePair<string, object>("sample_bookcode", "BookCode1"));
+
+            EntityReference bookOne = new EntityReference()
             {
-                Console.WriteLine("\nDo you want to delete the ChangeTackingSample solution? (y/n)");
-                String answer = Console.ReadLine();
-
-                deleteSolution = (answer.StartsWith("y") || answer.StartsWith("Y"));
-            }
-            if (deleteSolution)
-            {
-                Console.WriteLine("Deleting the {0} solution....", "ChangeTrackingSample");
-                QueryExpression queryImportedSolution = new QueryExpression
-                {
-                    EntityName = Solution.EntityLogicalName,
-                    ColumnSet = new ColumnSet(new string[] { "solutionid", "friendlyname" }),
-                    Criteria = new FilterExpression()
-                };
-                queryImportedSolution.Criteria.AddCondition("uniquename", ConditionOperator.Equal, "ChangeTrackingSample");
-                
-
-                Solution ImportedSolution = (Solution)service.RetrieveMultiple(queryImportedSolution).Entities[0];
-
-                service.Delete(Solution.EntityLogicalName, (Guid)ImportedSolution.SolutionId);
-
-                Console.WriteLine("Deleted the {0} solution.", ImportedSolution.FriendlyName);
-            }
+                LogicalName = "sample_book",
+                KeyAttributes = demoBookOneKeys
+            };
+            DeleteRequest deleteReq = new DeleteRequest() { Target = bookOne };
+            service.Execute(deleteReq);
         }
-
 
     }
 
