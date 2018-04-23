@@ -46,7 +46,7 @@ namespace PowerApps.Samples
                         {
                             Console.WriteLine("There is a problem creating the index for the book code alternate key for the sample_book entity.");
                             Console.WriteLine("The sample cannot continue. Please try again.");
-                            
+
                             //Delete the ChangeTrackingSample solution
                             SampleHelpers.DeleteSolution(service, "ChangeTrackingSample");
                             return;
@@ -59,7 +59,7 @@ namespace PowerApps.Samples
 
                         //To cache the RetrieveEntityChangesResponse.EntityChanges.DataToken value
                         string dataVersionToken;
-                        
+
                         //To cache information about the inital set of book records created.
                         List<Entity> initialRecords = new List<Entity>();
 
@@ -80,7 +80,7 @@ namespace PowerApps.Samples
                         //Cache the initial records for comparison.
                         initialRecords.AddRange(initialResponse.EntityChanges.Changes.Select(x => (x as NewOrUpdatedItem).NewOrUpdatedEntity).ToArray());
 
-                        // Store token for later query
+                        // Store token for second query
                         dataVersionToken = initialResponse.EntityChanges.DataToken;
 
                         Console.WriteLine("Waiting 10 seconds until next operation..");
@@ -95,7 +95,8 @@ namespace PowerApps.Samples
 
                         //Retrieve Changes since the initial records were created
                         //The request is identical except it now has the DataVersion value set to the DataToken of the previous request.
-                        RetrieveEntityChangesRequest secondRequest = new RetrieveEntityChangesRequest() {
+                        RetrieveEntityChangesRequest secondRequest = new RetrieveEntityChangesRequest()
+                        {
                             EntityName = "sample_book",
                             Columns = new ColumnSet("sample_bookcode", "sample_name", "sample_author"),
                             PageInfo = new PagingInfo()
@@ -103,8 +104,10 @@ namespace PowerApps.Samples
                             DataVersion = dataVersionToken
                         };
 
+                        //Get the results from the second request
                         RetrieveEntityChangesResponse results = (RetrieveEntityChangesResponse)service.Execute(secondRequest);
 
+                        //Separate the results by type: NewOrUpdated or RemoveOrDeleted
                         updatedRecords.AddRange(results.EntityChanges.Changes
                             .Where(x => x.Type == ChangeType.NewOrUpdated)
                             .Select(x => (x as NewOrUpdatedItem).NewOrUpdatedEntity).ToArray());
@@ -113,24 +116,27 @@ namespace PowerApps.Samples
                             .Where(x => x.Type == ChangeType.RemoveOrDeleted)
                             .Select(x => (x as RemovedOrDeletedItem).RemovedItem).ToArray());
 
+                        //Test results
+                        Console.WriteLine("\nList of updated records:");
+                        updatedRecords.ForEach(e =>
+                        {
+                            Console.WriteLine(" name: {0}", e["sample_name"]);
+                        }
+                        );
 
-                        Console.WriteLine("Test results");
-                        /*
-                        TODO:
-                        Demonstrate that the 11 items in updated records represent the changes applied since the initial record creation
-                         10 new records plus 1 updated record.
-
-                        The 1 deleted item is no longer in the system.
-                        */
-
-                        
-
+                        Console.WriteLine("\nList of deleted record entity references:");
+                        deletedRecords.ForEach(e =>
+                        {                            
+                            Console.WriteLine(" LogicalName: {0} Id:{1}", e.LogicalName, e.Id);
+                        }
+                        );
+                        Console.WriteLine("\n");
 
                         #endregion Demonstrate
-                        #region Tear down
+                        #region Clean up
                         //Delete the ChangeTrackingSample solution
                         SampleHelpers.DeleteSolution(service, "ChangeTrackingSample");
-                        #endregion Tear down
+                        #endregion Clean up
                         //////////////////////////////////////////////
                         #endregion Sample Code
 

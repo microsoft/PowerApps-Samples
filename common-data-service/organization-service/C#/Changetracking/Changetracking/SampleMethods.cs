@@ -180,8 +180,8 @@ namespace PowerApps.Samples
             Console.WriteLine("{0} records created...", recordsCreated);
 
             // Update a record.
-            Console.WriteLine("Updating an existing record");
-            //Use the alternate key to define the entity;
+            Console.WriteLine("Updating one of the initial records.");
+            //Use the alternate key to reference the entity;
             Entity demoBookZero = new Entity("sample_book", "sample_bookcode", "BookCode0");
             demoBookZero["sample_name"] = string.Format("Demo Book 0 updated {0}",DateTime.Now.ToShortTimeString());
 
