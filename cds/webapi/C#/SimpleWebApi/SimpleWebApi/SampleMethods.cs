@@ -10,7 +10,7 @@ namespace PowerApps.Samples
 {
     public partial class SampleProgram
     {
-        static string getParameterValueFromConnectionString(string connectionString, string parameter)
+        static string GetParameterValueFromConnectionString(string connectionString, string parameter)
         {
             try
             {
@@ -23,9 +23,13 @@ namespace PowerApps.Samples
 
         }
 
-        static HttpClient getHttpClient(string url, string username, string domain, string password, string clientId, string redirectUrl, string authType)
+        static HttpClient GetHttpClient(string connectionString, string clientId, string redirectUrl)
         {
-
+            string url = GetParameterValueFromConnectionString(connectionString, "Url");
+            string username = GetParameterValueFromConnectionString(connectionString, "Username");
+            string domain = GetParameterValueFromConnectionString(connectionString, "Domain");
+            string password = GetParameterValueFromConnectionString(connectionString, "Password");
+            string authType = GetParameterValueFromConnectionString(connectionString, "authtype");
             try
             {
                 HttpMessageHandler messageHandler;

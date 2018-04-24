@@ -14,19 +14,10 @@ namespace PowerApps.Samples
             string redirectUrl = "http://localhost/SdkSample";
             try
             {
-                //Get configuration data from ..\..\..\..\App.config
-                string connectionString = ConfigurationManager.ConnectionStrings["Connect"].ConnectionString;
+                //Get configuration data from App.config
+                string connectionString = ConfigurationManager.ConnectionStrings["Connect"].ConnectionString;              
 
-                //Required for all:
-                string url = getParameterValueFromConnectionString(connectionString, "Url");
-                string authType = getParameterValueFromConnectionString(connectionString, "authtype");
-
-                //Required only for on-premises Active Directory authentication
-                string username = getParameterValueFromConnectionString(connectionString, "Username");
-                string password = getParameterValueFromConnectionString(connectionString, "Password");
-                string domain = getParameterValueFromConnectionString(connectionString, "Domain");               
-
-                using (HttpClient client = getHttpClient(url, username, domain, password, clientId, redirectUrl, authType)) {
+                using (HttpClient client = GetHttpClient(connectionString, clientId, redirectUrl)) {
 
                     //Send the WhoAmI request to the Web API using a GET request. 
                     var response = client.GetAsync("api/data/v9.0/WhoAmI",
