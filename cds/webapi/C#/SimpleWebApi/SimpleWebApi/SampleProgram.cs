@@ -9,18 +9,20 @@ namespace PowerApps.Samples
     {
         static void Main(string[] args)
         {
-            //These sample application registration values are available for all online instances.
-            string clientId = "e5cf0024-a66a-4f16-85ce-99ba97a24bb2";
-            string redirectUrl = "http://localhost/SdkSample";
+
             try
             {
-                //Get configuration data from App.config
+                //Get configuration data from App.config connectionStrings
                 string connectionString = ConfigurationManager.ConnectionStrings["Connect"].ConnectionString;              
 
-                using (HttpClient client = GetHttpClient(connectionString, clientId, redirectUrl)) {
+                using (HttpClient client = SampleHelpers.GetHttpClient(
+                    connectionString, 
+                    SampleHelpers.clientId, 
+                    SampleHelpers.redirectUrl, 
+                    "v9.0")) {
 
-                    //Send the WhoAmI request to the Web API using a GET request. 
-                    var response = client.GetAsync("api/data/v9.0/WhoAmI",
+                    ////Send the WhoAmI request to the Web API using a GET request. 
+                    HttpResponseMessage response = client.GetAsync("WhoAmI",
                             HttpCompletionOption.ResponseHeadersRead).Result;
                     if (response.IsSuccessStatusCode)
                     {
@@ -34,11 +36,15 @@ namespace PowerApps.Samples
                         Console.WriteLine("The request failed with a status of '{0}'",
                                response.ReasonPhrase);
                     }
+
+                    //WhoAmIResponse response = WhoAmI(client);
+                    //Console.WriteLine("Your system user ID is: {0}", response.UserId);
+
                 }
             }
             catch (Exception ex)
             {
-                DisplayException(ex);
+                SampleHelpers.DisplayException(ex);
                 throw;
             }
             finally {
