@@ -42,8 +42,8 @@ namespace PowerApps.Samples
                 {
                     case "Office365":
                     case "IFD":
-                        //TODO: use username and password so that ADAL pop-up not required
-                        messageHandler = new OAuthMessageHandler(url, clientId, redirectUrl,
+
+                        messageHandler = new OAuthMessageHandler(url, clientId, redirectUrl, username, password,
                                  new HttpClientHandler());
                         break;
                     case "AD":
@@ -92,7 +92,7 @@ namespace PowerApps.Samples
     {
         private AuthenticationHeaderValue authHeader;
 
-        public OAuthMessageHandler(string serviceUrl, string clientId, string redirectUrl,
+        public OAuthMessageHandler(string serviceUrl, string clientId, string redirectUrl, string username, string password,
                 HttpMessageHandler innerHandler)
             : base(innerHandler)
         {
@@ -101,7 +101,20 @@ namespace PowerApps.Samples
                     new Uri(serviceUrl + "/api/data/")).Result;
             AuthenticationContext authContext = new AuthenticationContext(ap.Authority, false);
             //Note that an Azure AD access token has finite lifetime, default expiration is 60 minutes.
-            AuthenticationResult authResult = authContext.AcquireToken(serviceUrl, clientId, new Uri(redirectUrl), PromptBehavior.Always);
+            AuthenticationResult authResult;
+            if (username != string.Empty && password != string.Empty)
+            {
+
+                UserCredential cred = new UserCredential(username, password);
+                authResult = authContext.AcquireToken(serviceUrl, clientId, cred);
+            }
+            else
+            {
+                authResult = authContext.AcquireToken(serviceUrl, clientId, new Uri(redirectUrl), PromptBehavior.Auto);
+            }
+
+
+
             authHeader = new AuthenticationHeaderValue("Bearer", authResult.AccessToken);
         }
 
