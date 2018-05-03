@@ -113,5 +113,54 @@ namespace PowerApps.Samples
             }
             return false;
         }
+        /// <summary>
+        /// A function to manage exceptions thrown by console application samples
+        /// </summary>
+        /// <param name="ex">The exception thrown</param>
+        public static void HandleException(Exception ex) {
+            Console.WriteLine("The application terminated with an error.");
+
+            switch (ex) {
+
+                case FaultException<OrganizationServiceFault> fe:
+
+                    Console.WriteLine("Timestamp: {0}", fe.Detail.Timestamp);
+                    Console.WriteLine("Code: {0}", fe.Detail.ErrorCode);
+                    Console.WriteLine("Message: {0}", fe.Detail.Message);
+                    Console.WriteLine("Plugin Trace: {0}", fe.Detail.TraceText);
+                    Console.WriteLine("Inner Fault: {0}",
+                        null == fe.Detail.InnerFault ? "No Inner Fault" : "Has Inner Fault");
+                    break;
+                case TimeoutException te:
+                    
+                    Console.WriteLine("Message: {0}", te.Message);
+                    Console.WriteLine("Stack Trace: {0}", te.StackTrace);
+                    Console.WriteLine("Inner Fault: {0}",
+                        null == te.InnerException.Message ? "No Inner Fault" : te.InnerException.Message);
+                    break;
+                // Additional exceptions to catch: SecurityTokenValidationException, ExpiredSecurityTokenException,
+                // SecurityAccessDeniedException, MessageSecurityException, and SecurityNegotiationException.
+                default:
+
+                    // Display the details of the inner exception.
+                    if (ex.InnerException != null)
+                    {
+                        Console.WriteLine(ex.InnerException.Message);
+
+                        FaultException<OrganizationServiceFault> fe = ex.InnerException
+                            as FaultException<OrganizationServiceFault>;
+                        if (fe != null)
+                        {
+                            Console.WriteLine("Timestamp: {0}", fe.Detail.Timestamp);
+                            Console.WriteLine("Code: {0}", fe.Detail.ErrorCode);
+                            Console.WriteLine("Message: {0}", fe.Detail.Message);
+                            Console.WriteLine("Plugin Trace: {0}", fe.Detail.TraceText);
+                            Console.WriteLine("Inner Fault: {0}",
+                                null == fe.Detail.InnerFault ? "No Inner Fault" : "Has Inner Fault");
+                        }
+                    }
+                    break;
+            }
+        }
     }
 }
