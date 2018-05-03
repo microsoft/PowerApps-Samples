@@ -1,26 +1,22 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
+using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Tooling.Connector;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.ServiceModel;
-using System.Threading;
-using Microsoft.Xrm.Sdk.Query;
 using System.Linq;
+using System.Threading;
 
 namespace PowerApps.Samples
 {
     public partial class SampleProgram
     {
         static void Main(string[] args)
-        {
-            
+        {            
             try
-            {
-                
+            {                
                 //You must specify connection information in cds/App.config to run this sample.
-                using (CrmServiceClient csc = new CrmServiceClient(GetConnectionStringFromAppConfig("Connect")))
+                using (CrmServiceClient csc = new CrmServiceClient(SampleHelpers.GetConnectionStringFromAppConfig("Connect")))
                 {
                     if (csc.IsReady)
                     {
@@ -29,34 +25,17 @@ namespace PowerApps.Samples
                         #region Sample Code
                         //////////////////////////////////////////////
                         #region Set up
-                        // Check that the current version is greater than the minimum version
-                        if (!SampleHelpers.CheckVersion(service, new Version("7.1.0.0")))
-                        {
-                            //The environment version is lower than version 7.1.0.0
-                            return;
-                        }
-                        //Import the ChangeTrackingSample solution
-                        if (SampleHelpers.ImportSolution(service, "ChangeTrackingSample", "ChangeTrackingSample_1_0_0_0_managed.zip"))
-                        {
-                            //Wait a minute if the solution is being imported. This will give time for the new metadata to be cached.
-                            Thread.Sleep(TimeSpan.FromSeconds(60));
-                        }
-
-                        //Verify that the alternate key indexes are ready
-                        if (!VerifyBookCodeKeyIsActive(service))
-                        {
-                            Console.WriteLine("There is a problem creating the index for the book code alternate key for the sample_book entity.");
-                            Console.WriteLine("The sample cannot continue. Please try again.");
-
-                            //Delete the ChangeTrackingSample solution
-                            SampleHelpers.DeleteSolution(service, "ChangeTrackingSample");
-                            return;
-                        }
-
-                        // Create 10 sample book records.
-                        CreateInitialBookRecordsForSample(service);
+                        SetUpSample(service);
                         #endregion Set up
                         #region Demonstrate
+
+                        /*
+                            The Sample setup will import a ChangeTracking solution that contains 
+                            a sample_book entity that has an alternate key named sample_bookcode.
+
+                            10 initial sample_book entity records are created so that changes to those
+                            entities can be tracked.
+                        */
 
                         //To cache the RetrieveEntityChangesResponse.EntityChanges.DataToken value
                         string dataVersionToken;
@@ -122,6 +101,21 @@ namespace PowerApps.Samples
                         updatedRecords.ForEach(e =>
                         {
                             Console.WriteLine(" name: {0}", e["sample_name"]);
+
+                            /*
+                             Expected:
+                               name: Demo Book 10
+                               name: Demo Book 11
+                               name: Demo Book 12
+                               name: Demo Book 13
+                               name: Demo Book 14
+                               name: Demo Book 15
+                               name: Demo Book 16
+                               name: Demo Book 17
+                               name: Demo Book 18
+                               name: Demo Book 19
+                               name: Demo Book 0 updated < Time record was updated >
+                            */
                         }
                         );
 
@@ -129,14 +123,20 @@ namespace PowerApps.Samples
                         deletedRecords.ForEach(e =>
                         {
                             Console.WriteLine(" LogicalName: {0} Id:{1}", e.LogicalName, e.Id);
+
+                            /*
+                             Expected:
+                               LogicalName: sample_book Id:< GUID of record that was deleted >
+                            */
+
                         }
                         );
                         Console.WriteLine("\n");
 
                         #endregion Demonstrate
                         #region Clean up
-                        //Delete the ChangeTrackingSample solution
-                        SampleHelpers.DeleteSolution(service, "ChangeTrackingSample");
+                        // Provides option to delete the ChangeTracking solution
+                        CleanUpSample(service);
                         #endregion Clean up
                         //////////////////////////////////////////////
                         #endregion Sample Code
@@ -165,29 +165,11 @@ namespace PowerApps.Samples
                 
             finally
             {
-
                 Console.WriteLine("Press <Enter> to exit.");
                 Console.ReadLine();
             }
 
         }
-        /// <summary>
-        /// Gets a named connection string from App.config
-        /// </summary>
-        /// <param name="name">The name of the connection string to return</param>
-        /// <returns>The named connection string</returns>
-        static string GetConnectionStringFromAppConfig(string name)
-        {
-            //Verify cds/App.config contains a valid connection string with the name.
-            try
-            {
-                return ConfigurationManager.ConnectionStrings[name].ConnectionString;
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("You must set connection data in cds/App.config before running this sample.");
-                return string.Empty;
-            }
-        }
+
     }
 }

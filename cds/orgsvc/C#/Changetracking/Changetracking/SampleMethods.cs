@@ -13,6 +13,39 @@ namespace PowerApps.Samples
 {
     public partial class SampleProgram
     {
+        /// <summary>
+        /// Function to set up the sample.
+        /// </summary>
+        /// <param name="service">Specifies the service to connect to.</param>
+        private static void SetUpSample(IOrganizationService service) {
+            // Check that the current version is greater than the minimum version
+            if (!SampleHelpers.CheckVersion(service, new Version("7.1.0.0")))
+            {
+                //The environment version is lower than version 7.1.0.0
+                return;
+            }
+            //Import the ChangeTrackingSample solution
+            if (SampleHelpers.ImportSolution(service, "ChangeTrackingSample", "ChangeTrackingSample_1_0_0_0_managed.zip"))
+            {
+                //Wait a minute if the solution is being imported. This will give time for the new metadata to be cached.
+                Thread.Sleep(TimeSpan.FromSeconds(60));
+            }
+
+            //Verify that the alternate key indexes are ready
+            if (!VerifyBookCodeKeyIsActive(service))
+            {
+                Console.WriteLine("There is a problem creating the index for the book code alternate key for the sample_book entity.");
+                Console.WriteLine("The sample cannot continue. Please try again.");
+
+                //Delete the ChangeTrackingSample solution
+                SampleHelpers.DeleteSolution(service, "ChangeTrackingSample");
+                return;
+            }
+
+            // Create 10 sample book records.
+            CreateInitialBookRecordsForSample(service);
+        }
+
 
         /// <summary>
         /// Alternate keys may not be active immediately after a solution defining them is installed.
@@ -114,7 +147,7 @@ namespace PowerApps.Samples
         /// Creates the inital set of book records in the sample
         /// </summary>
         /// <param name="service">Specifies the service to connect to.</param>
-        public static void CreateInitialBookRecordsForSample(IOrganizationService service)
+        private static void CreateInitialBookRecordsForSample(IOrganizationService service)
         {
             int recordsCreated = 0;
 
@@ -149,7 +182,7 @@ namespace PowerApps.Samples
         /// Updates the set of records used in the sample
         /// </summary>
         /// <param name="service">Specifies the service to connect to.</param>
-        public static void UpdateBookRecordsForSample(IOrganizationService service)
+        private static void UpdateBookRecordsForSample(IOrganizationService service)
         {
             int recordsCreated = 0;
 
@@ -201,6 +234,11 @@ namespace PowerApps.Samples
             };
             DeleteRequest deleteReq = new DeleteRequest() { Target = bookOne };
             service.Execute(deleteReq);
+        }
+
+        private static void CleanUpSample(IOrganizationService service) {
+            //Delete the ChangeTrackingSample solution
+            SampleHelpers.DeleteSolution(service, "ChangeTrackingSample");
         }
 
     }

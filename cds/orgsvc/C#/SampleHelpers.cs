@@ -2,6 +2,7 @@
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using System;
+using System.Configuration;
 using System.IO;
 using System.ServiceModel;
 
@@ -160,6 +161,25 @@ namespace PowerApps.Samples
                         }
                     }
                     break;
+            }
+        }
+
+        /// <summary>
+        /// Gets a named connection string from App.config
+        /// </summary>
+        /// <param name="name">The name of the connection string to return</param>
+        /// <returns>The named connection string</returns>
+        public static string GetConnectionStringFromAppConfig(string name)
+        {
+            //Verify cds/App.config contains a valid connection string with the name.
+            try
+            {
+                return ConfigurationManager.ConnectionStrings[name].ConnectionString;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("You must set connection data in cds/App.config before running this sample.");
+                return string.Empty;
             }
         }
     }

@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Tooling.Connector;
 using System;
-using System.Configuration;
-using System.ServiceModel;
 using Microsoft.Xrm.Sdk.Query;
 
 namespace PowerApps.Samples
@@ -15,7 +13,7 @@ namespace PowerApps.Samples
             try
             {
                 //You must specify connection information in cds/App.config to run this sample.
-                using (CrmServiceClient csc = new CrmServiceClient(GetConnectionStringFromAppConfig("Connect")))
+                using (CrmServiceClient csc = new CrmServiceClient(SampleHelpers.GetConnectionStringFromAppConfig("Connect")))
                 {
                     if (csc.IsReady)
                     {
@@ -121,23 +119,6 @@ namespace PowerApps.Samples
             }
 
         }
-        /// <summary>
-        /// Gets a named connection string from App.config
-        /// </summary>
-        /// <param name="name">The name of the connection string to return</param>
-        /// <returns>The named connection string</returns>
-        static string GetConnectionStringFromAppConfig(string name)
-        {
-            //Verify cds/App.config contains a valid connection string with the name.
-            try
-            {
-                return ConfigurationManager.ConnectionStrings[name].ConnectionString;
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("You must set connection data in cds/App.config before running this sample.");
-                return string.Empty;
-            }
-        }
+      
     }
 }
