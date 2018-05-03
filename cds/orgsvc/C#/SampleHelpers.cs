@@ -46,7 +46,7 @@ namespace PowerApps.Samples
 
             QueryByAttribute queryCheckForSampleSolution = new QueryByAttribute();
             queryCheckForSampleSolution.AddAttributeValue("uniquename", uniqueName);
-            queryCheckForSampleSolution.EntityName = Solution.EntityLogicalName;
+            queryCheckForSampleSolution.EntityName = "solution";
 
             EntityCollection querySampleSolutionResults = service.RetrieveMultiple(queryCheckForSampleSolution);
 
@@ -90,20 +90,20 @@ namespace PowerApps.Samples
                 Console.WriteLine("Deleting the {0} solution....", uniqueName);
                 QueryExpression solutionQuery = new QueryExpression
                 {
-                    EntityName = Solution.EntityLogicalName,
+                    EntityName = "solution",
                     ColumnSet = new ColumnSet(new string[] { "solutionid", "friendlyname" }),
                     Criteria = new FilterExpression()
                 };
                 solutionQuery.Criteria.AddCondition("uniquename", ConditionOperator.Equal, uniqueName);
 
 
-                Solution solution = (Solution)service.RetrieveMultiple(solutionQuery).Entities[0];
+                Entity solution = (Entity)service.RetrieveMultiple(solutionQuery).Entities[0];
 
                 if (solution != null)
                 {
-                    service.Delete(Solution.EntityLogicalName, (Guid)solution.SolutionId);
+                    service.Delete("solution", (Guid)solution["solutionid"]);
 
-                    Console.WriteLine("Deleted the {0} solution.", solution.FriendlyName);
+                    Console.WriteLine("Deleted the {0} solution.", solution["friendlyname"]);
                     return true;
                 }
                 else

@@ -82,6 +82,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\SampleHelpers.cs">
+      <Link>SampleHelpers.cs</Link>
+    </Compile>
     <Compile Include="SampleProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
