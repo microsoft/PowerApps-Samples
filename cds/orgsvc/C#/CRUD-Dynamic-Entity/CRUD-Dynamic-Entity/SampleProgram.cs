@@ -2,23 +2,37 @@
 using Microsoft.Xrm.Tooling.Connector;
 using System;
 using Microsoft.Xrm.Sdk.Query;
+using PowerApps.Samples.LoginUX;
 
 namespace PowerApps.Samples
 {
     public class SampleProgram
     {
+        [STAThread] // Added to support UX
         static void Main(string[] args)
         {
-
+            CrmServiceClient service = null;
             try
             {
                 //You must specify connection information in cds/App.config to run this sample.
-                using (CrmServiceClient csc = new CrmServiceClient(SampleHelpers.GetConnectionStringFromAppConfig("Connect")))
+                if (string.IsNullOrEmpty(SampleHelpers.GetConnectionStringFromAppConfig("Connect")))
                 {
-                    if (csc.IsReady)
-                    {
-                        IOrganizationService service = csc.OrganizationServiceProxy;
+                    // Failed to find a connection string... Pop Dialog. 
+                    ExampleLoginForm loginFrm = new ExampleLoginForm();
+                    loginFrm.ConnectionToCrmCompleted += LoginFrm_ConnectionToCrmCompleted;
+                    loginFrm.ShowDialog();
 
+                    if (loginFrm.CrmConnectionMgr != null && loginFrm.CrmConnectionMgr.CrmSvc != null && loginFrm.CrmConnectionMgr.CrmSvc.IsReady)
+                        service = loginFrm.CrmConnectionMgr.CrmSvc;
+                }
+                else
+                    service = new CrmServiceClient(SampleHelpers.GetConnectionStringFromAppConfig("Connect")); 
+
+                if ( service != null )
+                {
+                    // Service implements IOrganizationService object 
+                    if (service.IsReady)
+                    {
                         #region Sample Code
                         //////////////////////////////////////////////
                         #region Demonstrate
@@ -92,14 +106,14 @@ namespace PowerApps.Samples
                     else
                     {
                         const string UNABLE_TO_LOGIN_ERROR = "Unable to Login to Dynamics CRM";
-                        if (csc.LastCrmError.Equals(UNABLE_TO_LOGIN_ERROR))
+                        if (service.LastCrmError.Equals(UNABLE_TO_LOGIN_ERROR))
                         {
                             Console.WriteLine("Check the connection string values in cds/App.config.");
-                            throw new Exception(csc.LastCrmError);
+                            throw new Exception(service.LastCrmError);
                         }
                         else
                         {
-                            throw csc.LastCrmException;
+                            throw service.LastCrmException;
                         }
                     }
                 }
@@ -113,12 +127,26 @@ namespace PowerApps.Samples
 
             finally
             {
+                if (service != null)
+                    service.Dispose(); 
 
                 Console.WriteLine("Press <Enter> to exit.");
                 Console.ReadLine();
             }
 
         }
-      
+
+        /// <summary>
+        /// Handel closing the dialog when completed. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void LoginFrm_ConnectionToCrmCompleted(object sender, EventArgs e)
+        {
+            if (sender is ExampleLoginForm)
+            {
+                ((ExampleLoginForm)sender).Close();
+            }
+        }
     }
 }

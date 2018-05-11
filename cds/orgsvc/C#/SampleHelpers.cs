@@ -1,6 +1,7 @@
 ﻿using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
+using Microsoft.Xrm.Tooling.Connector;
 using System;
 using System.Configuration;
 using System.IO;
@@ -16,14 +17,13 @@ namespace PowerApps.Samples
         /// <param name="service">The service to use to check the version. </param>
         /// <param name="minVersion">The minimum version.</param>
         /// <returns>true when the version is higher than the minimum verions, otherwise false.</returns>
-        public static bool CheckVersion(IOrganizationService service, Version minVersion)
+        public static bool CheckVersion(CrmServiceClient service, Version minVersion)
         {
+            //RetrieveVersionResponse crmVersionResp = (RetrieveVersionResponse)service.Execute(new RetrieveVersionRequest());
 
-            RetrieveVersionResponse crmVersionResp = (RetrieveVersionResponse)service.Execute(new RetrieveVersionRequest());
+            //Version currentVersion = new Version(crmVersionResp.Version);
 
-            Version currentVersion = new Version(crmVersionResp.Version);
-
-            if (currentVersion.CompareTo(minVersion) >= 0)
+            if (service.ConnectedOrgVersion.CompareTo(minVersion) >= 0)
             {
                 return true;
             }
@@ -42,7 +42,7 @@ namespace PowerApps.Samples
         /// <param name="uniqueName">The unique name of the solution to install.</param>
         /// <param name="pathToFile">The path to the solution file.</param>
         /// <returns>true if the solution was installed, otherwise false.</returns>
-        public static bool ImportSolution(IOrganizationService service, string uniqueName, string pathToFile)
+        public static bool ImportSolution(CrmServiceClient service, string uniqueName, string pathToFile)
         {
 
             QueryByAttribute queryCheckForSampleSolution = new QueryByAttribute();
@@ -60,13 +60,16 @@ namespace PowerApps.Samples
             else
             {
                 Console.WriteLine("The {0} solution is not installed. Importing the solution....", uniqueName);
-                byte[] fileBytes = File.ReadAllBytes(pathToFile);
-                ImportSolutionRequest impSolReq = new ImportSolutionRequest()
-                {
-                    CustomizationFile = fileBytes, 
-                };
+                Guid ImportId = Guid.Empty;
+                service.ImportSolutionToCrm(pathToFile, out ImportId); 
+                
+                //byte[] fileBytes = File.ReadAllBytes(pathToFile);
+                //ImportSolutionRequest impSolReq = new ImportSolutionRequest()
+                //{
+                //    CustomizationFile = fileBytes, 
+                //};
 
-                service.Execute(impSolReq);
+                //service.Execute(impSolReq);
 
                 return true;
             }
@@ -77,7 +80,7 @@ namespace PowerApps.Samples
         /// <param name="service">The service to use to delete the solution. </param>
         /// <param name="uniqueName">The unique name of the solution to delete.</param>
         /// <returns>true when the solution was deleted, otherwise false.</returns>
-        public static bool DeleteSolution(IOrganizationService service, string uniqueName)
+        public static bool DeleteSolution(CrmServiceClient service, string uniqueName)
         {
             bool deleteSolution = true;
 
@@ -178,7 +181,7 @@ namespace PowerApps.Samples
             }
             catch (Exception)
             {
-                Console.WriteLine("You must set connection data in cds/App.config before running this sample.");
+                Console.WriteLine("You must set connection data in cds/App.config before running this sample. - Switching to Interactive Mode");
                 return string.Empty;
             }
         }
