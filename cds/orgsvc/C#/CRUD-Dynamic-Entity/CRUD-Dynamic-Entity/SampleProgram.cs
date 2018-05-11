@@ -19,14 +19,20 @@ namespace PowerApps.Samples
                 {
                     // Failed to find a connection string... Pop Dialog. 
                     ExampleLoginForm loginFrm = new ExampleLoginForm();
+                    // Login process is Async,  thus we need to detect when login is completed and close the form. 
                     loginFrm.ConnectionToCrmCompleted += LoginFrm_ConnectionToCrmCompleted;
+                    // Show the dialog here. 
                     loginFrm.ShowDialog();
 
+                    // if the login process completed, assign the connected service to the CRMServiceClient var 
                     if (loginFrm.CrmConnectionMgr != null && loginFrm.CrmConnectionMgr.CrmSvc != null && loginFrm.CrmConnectionMgr.CrmSvc.IsReady)
                         service = loginFrm.CrmConnectionMgr.CrmSvc;
                 }
                 else
-                    service = new CrmServiceClient(SampleHelpers.GetConnectionStringFromAppConfig("Connect")); 
+                {
+                    // Try to create via connection string. 
+                    service = new CrmServiceClient(SampleHelpers.GetConnectionStringFromAppConfig("Connect"));
+                }
 
                 if ( service != null )
                 {
