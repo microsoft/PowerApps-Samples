@@ -113,8 +113,6 @@ namespace PowerApps.Samples
                 authResult = authContext.AcquireToken(serviceUrl, clientId, new Uri(redirectUrl), PromptBehavior.Auto);
             }
 
-
-
             authHeader = new AuthenticationHeaderValue("Bearer", authResult.AccessToken);
         }
 
