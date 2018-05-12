@@ -1,8 +1,7 @@
 ﻿using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Tooling.Connector;
 using System;
-using Microsoft.Xrm.Sdk.Query;
-using PowerApps.Samples.LoginUX;
 
 namespace PowerApps.Samples
 {
@@ -14,35 +13,17 @@ namespace PowerApps.Samples
             CrmServiceClient service = null;
             try
             {
-                //You must specify connection information in cds/App.config to run this sample.
-                if (string.IsNullOrEmpty(SampleHelpers.GetConnectionStringFromAppConfig("Connect")))
-                {
-                    // Failed to find a connection string... Pop Dialog. 
-                    ExampleLoginForm loginFrm = new ExampleLoginForm();
-                    // Login process is Async,  thus we need to detect when login is completed and close the form. 
-                    loginFrm.ConnectionToCrmCompleted += LoginFrm_ConnectionToCrmCompleted;
-                    // Show the dialog here. 
-                    loginFrm.ShowDialog();
-
-                    // if the login process completed, assign the connected service to the CRMServiceClient var 
-                    if (loginFrm.CrmConnectionMgr != null && loginFrm.CrmConnectionMgr.CrmSvc != null && loginFrm.CrmConnectionMgr.CrmSvc.IsReady)
-                        service = loginFrm.CrmConnectionMgr.CrmSvc;
-                }
-                else
-                {
-                    // Try to create via connection string. 
-                    service = new CrmServiceClient(SampleHelpers.GetConnectionStringFromAppConfig("Connect"));
-                }
+                service = SampleHelpers.Connect("Connect");
 
                 if ( service != null )
                 {
-                    // Service implements IOrganizationService object 
+                    // Service implements IOrganizationService interface 
                     if (service.IsReady)
                     {
                         #region Sample Code
                         //////////////////////////////////////////////
                         #region Demonstrate
-                        
+
                         // Instantiate an account object.
 
                         Entity newAccount = new Entity("account");
@@ -78,7 +59,7 @@ namespace PowerApps.Samples
                         */
 
                         Entity accountToUpdate = new Entity("account");
-                        accountToUpdate["accountid"] = accountid;
+                        accountToUpdate["accountid"] = newAccount.Id;
 
                         // Update the address 1 postal code attribute.
                         accountToUpdate["address1_postalcode"] = "98052";
@@ -142,17 +123,5 @@ namespace PowerApps.Samples
 
         }
 
-        /// <summary>
-        /// Handel closing the dialog when completed. 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private static void LoginFrm_ConnectionToCrmCompleted(object sender, EventArgs e)
-        {
-            if (sender is ExampleLoginForm)
-            {
-                ((ExampleLoginForm)sender).Close();
-            }
-        }
     }
 }
