@@ -1,28 +1,29 @@
 ﻿using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Tooling.Connector;
 using System;
-using Microsoft.Xrm.Sdk.Query;
 
 namespace PowerApps.Samples
 {
     public class SampleProgram
     {
+        [STAThread] // Added to support UX
         static void Main(string[] args)
         {
-
+            CrmServiceClient service = null;
             try
             {
-                //You must specify connection information in cds/App.config to run this sample.
-                using (CrmServiceClient csc = new CrmServiceClient(SampleHelpers.GetConnectionStringFromAppConfig("Connect")))
-                {
-                    if (csc.IsReady)
-                    {
-                        IOrganizationService service = csc.OrganizationServiceProxy;
+                service = SampleHelpers.Connect("Connect");
 
+                if ( service != null )
+                {
+                    // Service implements IOrganizationService interface 
+                    if (service.IsReady)
+                    {
                         #region Sample Code
                         //////////////////////////////////////////////
                         #region Demonstrate
-                        
+
                         // Instantiate an account object.
 
                         Entity newAccount = new Entity("account");
@@ -58,7 +59,7 @@ namespace PowerApps.Samples
                         */
 
                         Entity accountToUpdate = new Entity("account");
-                        accountToUpdate["accountid"] = accountid;
+                        accountToUpdate["accountid"] = newAccount.Id;
 
                         // Update the address 1 postal code attribute.
                         accountToUpdate["address1_postalcode"] = "98052";
@@ -92,14 +93,14 @@ namespace PowerApps.Samples
                     else
                     {
                         const string UNABLE_TO_LOGIN_ERROR = "Unable to Login to Dynamics CRM";
-                        if (csc.LastCrmError.Equals(UNABLE_TO_LOGIN_ERROR))
+                        if (service.LastCrmError.Equals(UNABLE_TO_LOGIN_ERROR))
                         {
                             Console.WriteLine("Check the connection string values in cds/App.config.");
-                            throw new Exception(csc.LastCrmError);
+                            throw new Exception(service.LastCrmError);
                         }
                         else
                         {
-                            throw csc.LastCrmException;
+                            throw service.LastCrmException;
                         }
                     }
                 }
@@ -113,12 +114,14 @@ namespace PowerApps.Samples
 
             finally
             {
+                if (service != null)
+                    service.Dispose(); 
 
                 Console.WriteLine("Press <Enter> to exit.");
                 Console.ReadLine();
             }
 
         }
-      
+
     }
 }
