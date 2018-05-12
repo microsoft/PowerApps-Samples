@@ -3,6 +3,7 @@ using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Metadata;
 using Microsoft.Xrm.Sdk.Metadata.Query;
 using Microsoft.Xrm.Sdk.Query;
+using Microsoft.Xrm.Tooling.Connector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,8 @@ namespace PowerApps.Samples
         /// Function to set up the sample.
         /// </summary>
         /// <param name="service">Specifies the service to connect to.</param>
-        private static void SetUpSample(IOrganizationService service) {
+        private static void SetUpSample(CrmServiceClient service)
+        {
             // Check that the current version is greater than the minimum version
             if (!SampleHelpers.CheckVersion(service, new Version("7.1.0.0")))
             {
@@ -63,7 +65,7 @@ namespace PowerApps.Samples
                 //Give up
                 return false;
             }
-           
+
 
             if (iteration == 0) //only the first time
             {
@@ -86,7 +88,7 @@ namespace PowerApps.Samples
                 }
                 else
                 {
-                    
+
                     iteration++;
                     return VerifyBookCodeKeyIsActive(service, bookcodekey.AsyncJob, iteration);
                 }
@@ -98,10 +100,10 @@ namespace PowerApps.Samples
 
                 if (systemJob.StateCode == AsyncOperationState.Completed) //Completed
                 {
-                    
+
                     if (!systemJob.StatusCode.Value.Equals(30)) //Not Succeeded
                     {
-                        
+
                         //Delete the system job and try to reactivate
                         service.Delete(asyncJob.LogicalName, asyncJob.Id);
 
@@ -111,7 +113,7 @@ namespace PowerApps.Samples
                             EntityKeyLogicalName = "sample_bookcode"
                         };
                         ReactivateEntityKeyResponse reactivateResponse = (ReactivateEntityKeyResponse)service.Execute(reactivateRequest);
-                       
+
                         //Get the system job created by the reactivate request
                         QueryByAttribute systemJobQuery = new QueryByAttribute("asyncoperation");
                         systemJobQuery.AddAttributeValue("primaryentitytype", "sample_book");
@@ -119,7 +121,7 @@ namespace PowerApps.Samples
                         systemJobQuery.TopCount = 1;
                         systemJobQuery.ColumnSet = new ColumnSet("asyncoperationid", "name");
 
-                        EntityCollection systemJobs =  service.RetrieveMultiple(systemJobQuery);
+                        EntityCollection systemJobs = service.RetrieveMultiple(systemJobQuery);
                         asyncJob = systemJobs.Entities.FirstOrDefault().ToEntityReference();
 
                         iteration++;
@@ -216,7 +218,7 @@ namespace PowerApps.Samples
             Console.WriteLine("Updating one of the initial records.");
             //Use the alternate key to reference the entity;
             Entity demoBookZero = new Entity("sample_book", "sample_bookcode", "BookCode0");
-            demoBookZero["sample_name"] = string.Format("Demo Book 0 updated {0}",DateTime.Now.ToShortTimeString());
+            demoBookZero["sample_name"] = string.Format("Demo Book 0 updated {0}", DateTime.Now.ToShortTimeString());
 
             service.Update(demoBookZero);
 
@@ -236,7 +238,8 @@ namespace PowerApps.Samples
             service.Execute(deleteReq);
         }
 
-        private static void CleanUpSample(IOrganizationService service) {
+        private static void CleanUpSample(CrmServiceClient service)
+        {
             //Delete the ChangeTrackingSample solution
             SampleHelpers.DeleteSolution(service, "ChangeTrackingSample");
         }
