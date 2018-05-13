@@ -1,25 +1,19 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Configuration;
 using System.Net.Http;
 
 namespace PowerApps.Samples
 {
     public partial class SampleProgram
     {
+        [STAThread] // Added to support UX
         static void Main(string[] args)
         {
 
             try
             {
-                //Get configuration data from App.config connectionStrings
-                string connectionString = ConfigurationManager.ConnectionStrings["Connect"].ConnectionString;              
 
-                using (HttpClient client = SampleHelpers.GetHttpClient(
-                    connectionString, 
-                    SampleHelpers.clientId, 
-                    SampleHelpers.redirectUrl, 
-                    "v9.0")) {
+                using (HttpClient client = SampleHelpers.Connect("Connect", "v9.0")) {
 
                     ////Send the WhoAmI request to the Web API using a GET request. 
                     HttpResponseMessage response = client.GetAsync("WhoAmI",
@@ -37,10 +31,8 @@ namespace PowerApps.Samples
                                response.ReasonPhrase);
                     }
 
-                    //WhoAmIResponse response = WhoAmI(client);
-                    //Console.WriteLine("Your system user ID is: {0}", response.UserId);
-
                 }
+
             }
             catch (Exception ex)
             {
