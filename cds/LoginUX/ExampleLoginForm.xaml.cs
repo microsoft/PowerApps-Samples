@@ -80,10 +80,10 @@ namespace PowerApps.Samples.LoginUX
             // set this option to true. 
             mgr.UseUserLocalDirectoryForConfigStore = true;
 
-            // Client ID to use for oAuth.  ID: e5cf0024-a66a-4f16-85ce-99ba97a24bb2 is a sample ID that should be replaced by a ID created for your use. 
-            mgr.ClientId = "e5cf0024-a66a-4f16-85ce-99ba97a24bb2";
+            // Client ID to use for oAuth.  ID: 51f81489-12ee-4a9e-aaae-a2591f45987d is a sample ID that should be replaced by a ID created for your use. 
+            mgr.ClientId = "51f81489-12ee-4a9e-aaae-a2591f45987d";
             // Redirect URI required for oAuth.
-            mgr.RedirectUri = new Uri("http://localhost/SdkSample");
+            mgr.RedirectUri = new Uri("app://58145B91-0C36-4500-8554-080854F2AC97");
 
             // if you are using an unmanaged client,  you need to provide the name of an exe to use to create app config key's for. 
             //mgr.HostApplicatioNameOveride = "MyExecName.exe";

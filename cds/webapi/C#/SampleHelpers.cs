@@ -11,8 +11,8 @@ namespace PowerApps.Samples
     public class SampleHelpers
     {
         //These sample application registration values are available for all online instances.
-        public static string clientId = "e5cf0024-a66a-4f16-85ce-99ba97a24bb2";
-        public static string redirectUrl = "http://localhost/SdkSample";
+        public static string clientId = "51f81489-12ee-4a9e-aaae-a2591f45987d";
+        public static string redirectUrl = "app://58145B91-0C36-4500-8554-080854F2AC97";
 
         static string GetParameterValueFromConnectionString(string connectionString, string parameter)
         {
