@@ -1,18 +1,14 @@
-﻿using System;
+﻿using Microsoft.Xrm.Tooling.Connector;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Messages;
-using Microsoft.Xrm.Tooling.Connector;
-using Microsoft.Xrm.Sdk.Query;
 
 namespace PowerApps.Samples
 {
-    public partial class SampleProgram
+   public partial class SampleProgram
     {
-       
         [STAThread] // Added to support UX
         static void Main(string[] args)
         {
@@ -23,32 +19,19 @@ namespace PowerApps.Samples
                 if (service.IsReady)
                 {
                     #region Sample Code
-                    //////////////////////////////////////////////
+                    ///////////////////////////////////////
                     #region Set up
                     SetUpSample(service);
                     #endregion Set up
-                    
-                    // Retrieve the fax.
-                    Fax retrievedFax = (Fax)service.Retrieve(Fax.EntityLogicalName, _faxId, new ColumnSet(true));
 
-                    // Create a task.
-                    Task task = new Task()
-                    {
-                        Subject = "Follow Up: " + retrievedFax.Subject,
-                        ScheduledEnd = retrievedFax.CreatedOn.Value.AddDays(7),
-                    };
-                    _taskId = service.Create(task);
+                    #region Demonstrate
 
-                    // Verify that the task has been created                    
-                    if (_taskId != Guid.Empty)
-                    {
-                        Console.WriteLine("Created a task for the fax: '{0}'.", task.Subject);
-                    }
-
-
-                    DeleteRequiredRecords(service, prompt);
+                    #region Clean up
+                    CleanUpSample(service);
+                    #endregion Clean up
                 }
                 #endregion Demonstrate
+                #endregion Sample Code
                 else
                 {
                     const string UNABLE_TO_LOGIN_ERROR = "Unable to Login to Dynamics CRM";
@@ -63,7 +46,6 @@ namespace PowerApps.Samples
                     }
                 }
             }
-
             catch (Exception ex)
             {
                 SampleHelpers.HandleException(ex);
@@ -79,6 +61,5 @@ namespace PowerApps.Samples
             }
 
         }
-    }
-
+            }
 }

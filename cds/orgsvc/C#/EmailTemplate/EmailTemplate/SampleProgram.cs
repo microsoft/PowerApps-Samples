@@ -1,54 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Messages;
+﻿using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Tooling.Connector;
-using Microsoft.Xrm.Sdk.Query;
+using System;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace PowerApps.Samples
 {
     public partial class SampleProgram
     {
-       
+
+        // Define the IDs needed for this sample.        
+        private static Guid _accountId;
+        private static Guid _templateId;
+        private static bool prompt = true;
+
         [STAThread] // Added to support UX
+
         static void Main(string[] args)
         {
             CrmServiceClient service = null;
             try
             {
+
                 service = SampleHelpers.Connect("Connect");
                 if (service.IsReady)
                 {
                     #region Sample Code
-                    //////////////////////////////////////////////
+                    ////////////////////////////////////////
                     #region Set up
                     SetUpSample(service);
                     #endregion Set up
+
                     
-                    // Retrieve the fax.
-                    Fax retrievedFax = (Fax)service.Retrieve(Fax.EntityLogicalName, _faxId, new ColumnSet(true));
-
-                    // Create a task.
-                    Task task = new Task()
+                    // Use the InstantiateTemplate message to create an e-mail message using a template.
+                    InstantiateTemplateRequest instTemplateReq = new InstantiateTemplateRequest
                     {
-                        Subject = "Follow Up: " + retrievedFax.Subject,
-                        ScheduledEnd = retrievedFax.CreatedOn.Value.AddDays(7),
+                        TemplateId = _templateId,
+                        ObjectId = _accountId,
+                        ObjectType = Account.EntityLogicalName
                     };
-                    _taskId = service.Create(task);
+                    InstantiateTemplateResponse instTemplateResp = (InstantiateTemplateResponse)service.Execute(instTemplateReq);
 
-                    // Verify that the task has been created                    
-                    if (_taskId != Guid.Empty)
+                    // Serialize the email message to XML, and save to a file.
+                    XmlSerializer serializer = new XmlSerializer(typeof(InstantiateTemplateResponse));
+                    string filename = "email-message.xml";
+                    using (StreamWriter writer = new StreamWriter(filename))
                     {
-                        Console.WriteLine("Created a task for the fax: '{0}'.", task.Subject);
+                        serializer.Serialize(writer, instTemplateResp);
                     }
+                    Console.WriteLine("Created e-mail using the template.");
 
 
-                    DeleteRequiredRecords(service, prompt);
+                    #region Clean Up
+                    CleanUpSample(service);
+                    #endregion Clean Up
                 }
+
                 #endregion Demonstrate
+
                 else
                 {
                     const string UNABLE_TO_LOGIN_ERROR = "Unable to Login to Dynamics CRM";
@@ -63,7 +72,6 @@ namespace PowerApps.Samples
                     }
                 }
             }
-
             catch (Exception ex)
             {
                 SampleHelpers.HandleException(ex);
@@ -77,8 +85,6 @@ namespace PowerApps.Samples
                 Console.WriteLine("Press <Enter> to exit.");
                 Console.ReadLine();
             }
-
         }
     }
-
 }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Crm.Sdk.Messages;
-using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Tooling.Connector;
 using System;
 using System.Collections.Generic;
@@ -9,11 +8,13 @@ using System.Threading.Tasks;
 
 namespace PowerApps.Samples
 {
-    public partial class SampleProgram
+   public partial class SampleProgram
     {
-        private static Guid _faxId;
-        private static Guid _taskId;
+        // Define the IDs needed for this sample.
+        private static Guid _emailId;
+        private static Guid _contactId;
         private static Guid _userId;
+        private static Guid _templateId;
         private static bool prompt = true;
         /// <summary>
         /// Function to set up the sample.
@@ -29,32 +30,35 @@ namespace PowerApps.Samples
                 return;
             }
 
-           CreateRequiredRecords(service);
+            CreateRequiredRecords(service);
+        }
+        private static void CleanUpSample(CrmServiceClient service)
+        {
+            DeleteRequiredRecords(service, prompt);
         }
 
+        /// <summary>
+        /// This method creates any entity records that this sample requires.        
+        /// </summary>
         public static void CreateRequiredRecords(CrmServiceClient service)
         {
-            // Get the current user.
-            WhoAmIRequest userRequest = new WhoAmIRequest();
-            WhoAmIResponse userResponse = (WhoAmIResponse)service.Execute(userRequest);
-            _userId = userResponse.UserId;
-
-            // Create the activity party for sending and receiving the fax.
-            ActivityParty party = new ActivityParty
+            // Create a contact to send an email to (To: field)
+            Contact emailContact = new Contact
             {
-                PartyId = new EntityReference(SystemUser.EntityLogicalName, _userId)
+                FirstName = "David",
+                LastName = "Pelton",
+                EMailAddress1 = "david@contoso.com",
+                DoNotEMail = false
             };
+            _contactId = service.Create(emailContact);
+            Console.WriteLine("Created a sample contact.");
 
-            // Create the fax object.
-            Fax fax = new Fax
-            {
-                Subject = "Sample Fax",
-                From = new ActivityParty[] { party },
-                To = new ActivityParty[] { party }
-            };
-            _faxId = service.Create(fax);
-            Console.WriteLine("Created a fax: '{0}'.", fax.Subject);
+            // Get a system user to send the email (From: field)
+            WhoAmIRequest systemUserRequest = new WhoAmIRequest();
+            WhoAmIResponse systemUserResponse = (WhoAmIResponse)service.Execute(systemUserRequest);
+            _userId = systemUserResponse.UserId;
         }
+
 
         /// <summary>
         /// Deletes the custom entity record that was created for this sample.
@@ -75,9 +79,8 @@ namespace PowerApps.Samples
 
             if (deleteRecords)
             {
-
-                service.Delete(Fax.EntityLogicalName, _faxId);
-                service.Delete(Task.EntityLogicalName, _taskId);
+                service.Delete(Email.EntityLogicalName, _emailId);
+                service.Delete(Contact.EntityLogicalName, _contactId); ;
 
                 Console.WriteLine("Entity records have been deleted.");
             }

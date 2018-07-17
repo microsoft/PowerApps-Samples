@@ -1,18 +1,16 @@
-﻿using System;
+﻿using Microsoft.Crm.Sdk.Messages;
+using Microsoft.Xrm.Sdk.Query;
+using Microsoft.Xrm.Tooling.Connector;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Messages;
-using Microsoft.Xrm.Tooling.Connector;
-using Microsoft.Xrm.Sdk.Query;
 
 namespace PowerApps.Samples
 {
-    public partial class SampleProgram
+   public partial class SampleProgram
     {
-       
         [STAThread] // Added to support UX
         static void Main(string[] args)
         {
@@ -27,28 +25,42 @@ namespace PowerApps.Samples
                     #region Set up
                     SetUpSample(service);
                     #endregion Set up
-                    
-                    // Retrieve the fax.
-                    Fax retrievedFax = (Fax)service.Retrieve(Fax.EntityLogicalName, _faxId, new ColumnSet(true));
+                    #region Demonstrate
 
-                    // Create a task.
-                    Task task = new Task()
+                    // Retrieve the current user information.
+                    WhoAmIRequest whoAmIRequest = new WhoAmIRequest();
+                    WhoAmIResponse whoAmIResponse = (WhoAmIResponse)service.Execute(
+                        whoAmIRequest);
+
+                    ColumnSet columnSet = new ColumnSet("fullname");
+                    SystemUser currentUser = (SystemUser)service.Retrieve(
+                        SystemUser.EntityLogicalName,
+                        whoAmIResponse.UserId, columnSet);
+                    String currentUserName = currentUser.FullName;
+                    _userId = currentUser.Id;
+
+                    // Create an instance of an existing queueitem in order to specify 
+                    // the user that will be working on it using PickFromQueueRequest.
+
+                    PickFromQueueRequest pickFromQueueRequest = new PickFromQueueRequest
                     {
-                        Subject = "Follow Up: " + retrievedFax.Subject,
-                        ScheduledEnd = retrievedFax.CreatedOn.Value.AddDays(7),
+                        QueueItemId = _queueItemId,
+                        WorkerId = _userId
                     };
-                    _taskId = service.Create(task);
 
-                    // Verify that the task has been created                    
-                    if (_taskId != Guid.Empty)
-                    {
-                        Console.WriteLine("Created a task for the fax: '{0}'.", task.Subject);
-                    }
+                    service.Execute(pickFromQueueRequest);
 
+                    Console.WriteLine("The letter queue item is queued for new owner {0}.",
+                        currentUserName);
 
-                    DeleteRequiredRecords(service, prompt);
+                    
+                    #region Clean up
+                    CleanUpSample(service);
+                    #endregion Clean up
+
                 }
                 #endregion Demonstrate
+                #endregion Sample Code
                 else
                 {
                     const string UNABLE_TO_LOGIN_ERROR = "Unable to Login to Dynamics CRM";
@@ -63,7 +75,6 @@ namespace PowerApps.Samples
                     }
                 }
             }
-
             catch (Exception ex)
             {
                 SampleHelpers.HandleException(ex);
@@ -78,7 +89,7 @@ namespace PowerApps.Samples
                 Console.ReadLine();
             }
 
-        }
-    }
 
+        }
+            }
 }

@@ -173,6 +173,7 @@ namespace PowerApps.Samples
 
         public static CrmServiceClient Connect(string name) {
             CrmServiceClient service = null;
+            
             //You can specify connection information in cds/App.config to run this sample without the login dialog
             if (string.IsNullOrEmpty(GetConnectionStringFromAppConfig("Connect")))
             {

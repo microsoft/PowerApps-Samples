@@ -1,6 +1,4 @@
-﻿using Microsoft.Crm.Sdk.Messages;
-using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Tooling.Connector;
+﻿using Microsoft.Xrm.Tooling.Connector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +7,9 @@ using System.Threading.Tasks;
 
 namespace PowerApps.Samples
 {
-    public partial class SampleProgram
+  public partial  class SampleProgram
     {
-        private static Guid _faxId;
-        private static Guid _taskId;
-        private static Guid _userId;
-        private static bool prompt = true;
+
         /// <summary>
         /// Function to set up the sample.
         /// </summary>
@@ -29,31 +24,7 @@ namespace PowerApps.Samples
                 return;
             }
 
-           CreateRequiredRecords(service);
-        }
-
-        public static void CreateRequiredRecords(CrmServiceClient service)
-        {
-            // Get the current user.
-            WhoAmIRequest userRequest = new WhoAmIRequest();
-            WhoAmIResponse userResponse = (WhoAmIResponse)service.Execute(userRequest);
-            _userId = userResponse.UserId;
-
-            // Create the activity party for sending and receiving the fax.
-            ActivityParty party = new ActivityParty
-            {
-                PartyId = new EntityReference(SystemUser.EntityLogicalName, _userId)
-            };
-
-            // Create the fax object.
-            Fax fax = new Fax
-            {
-                Subject = "Sample Fax",
-                From = new ActivityParty[] { party },
-                To = new ActivityParty[] { party }
-            };
-            _faxId = service.Create(fax);
-            Console.WriteLine("Created a fax: '{0}'.", fax.Subject);
+            
         }
 
         /// <summary>
@@ -75,9 +46,11 @@ namespace PowerApps.Samples
 
             if (deleteRecords)
             {
+                /// Delete the sent emails 
+                service.Delete(Email.EntityLogicalName, _emailId);
 
-                service.Delete(Fax.EntityLogicalName, _faxId);
-                service.Delete(Task.EntityLogicalName, _taskId);
+                // Delete the contacts created for emails
+                service.Delete(Contact.EntityLogicalName, _contactId);
 
                 Console.WriteLine("Entity records have been deleted.");
             }
