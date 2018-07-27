@@ -1,18 +1,16 @@
-﻿using System;
+﻿using Microsoft.Crm.Sdk.Messages;
+using Microsoft.Xrm.Sdk.Query;
+using Microsoft.Xrm.Tooling.Connector;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Messages;
-using Microsoft.Xrm.Tooling.Connector;
-using Microsoft.Xrm.Sdk.Query;
 
 namespace PowerApps.Samples
 {
     public partial class SampleProgram
     {
-       
         [STAThread] // Added to support UX
         static void Main(string[] args)
         {
@@ -27,31 +25,36 @@ namespace PowerApps.Samples
                     #region Set up
                     SetUpSample(service);
                     #endregion Set up
-                    #region Demonstrate
 
-                    // Retrieve the fax.
-                    Fax retrievedFax = (Fax)service.Retrieve(Fax.EntityLogicalName, _faxId, new ColumnSet(true));
+                    // Retrieve a recurring appointment series
+                    RecurringAppointmentMaster retrievedRecurringAppointmentSeries = (RecurringAppointmentMaster)service.Retrieve(RecurringAppointmentMaster.EntityLogicalName, _recurringAppointmentMasterId, new ColumnSet(true));
 
-                    // Create a task.
-                    Task task = new Task()
+                    // Use the DeleteOpenInstances message to end the series to the
+                    // last occurring past instance date w.r.t. the series end date
+                    // (i.e., 20 days from today). Effectively, that means that the 
+                    // series will end after the third instance (day 14) as this
+                    // instance is the last occuring past instance w.r.t the specified 
+                    // series end date (20 days from today).
+                    // Also specify that the state of past instances (w.r.t. the series 
+                    // end date) be set to 'completed'.
+                    DeleteOpenInstancesRequest endAppointmentSeries = new DeleteOpenInstancesRequest
                     {
-                        Subject = "Follow Up: " + retrievedFax.Subject,
-                        ScheduledEnd = retrievedFax.CreatedOn.Value.AddDays(7),
+                        Target = retrievedRecurringAppointmentSeries,
+                        SeriesEndDate = DateTime.Today.AddDays(20),
+                        StateOfPastInstances = (int)AppointmentState.Completed
                     };
-                    _taskId = service.Create(task);
+                    service.Execute(endAppointmentSeries);
 
-                    // Verify that the task has been created                    
-                    if (_taskId != Guid.Empty)
-                    {
-                        Console.WriteLine("Created a task for the fax: '{0}'.", task.Subject);
-                    }
+                    Console.WriteLine("The recurring appointment series has been ended after the third occurrence.");
 
 
                     #region Clean up
                     CleanUpSample(service);
                     #endregion Clean up
+
                 }
                 #endregion Demonstrate
+
                 else
                 {
                     const string UNABLE_TO_LOGIN_ERROR = "Unable to Login to Dynamics CRM";
@@ -66,7 +69,7 @@ namespace PowerApps.Samples
                     }
                 }
             }
-            #endregion Sample Code
+
             catch (Exception ex)
             {
                 SampleHelpers.HandleException(ex);
@@ -80,8 +83,6 @@ namespace PowerApps.Samples
                 Console.WriteLine("Press <Enter> to exit.");
                 Console.ReadLine();
             }
-
         }
     }
-
 }

@@ -1,6 +1,4 @@
-﻿using Microsoft.Crm.Sdk.Messages;
-using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Tooling.Connector;
+﻿using Microsoft.Xrm.Tooling.Connector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace PowerApps.Samples
 {
-    public partial class SampleProgram
+   public partial class SampleProgram
     {
-        private static Guid _faxId;
-        private static Guid _taskId;
-        private static Guid _userId;
+        // Define the IDs as well as strings needed for this sample.
+        public static Guid _appointmentId;
+        public static Guid __recurringAppointmentMasterId;
+
         private static bool prompt = true;
         /// <summary>
         /// Function to set up the sample.
@@ -29,41 +28,38 @@ namespace PowerApps.Samples
                 return;
             }
 
-           CreateRequiredRecords(service);
+            CreateRequiredRecords(service);
         }
 
         private static void CleanUpSample(CrmServiceClient service)
         {
             DeleteRequiredRecords(service, prompt);
         }
+        /// <summary>
+        /// This method creates any entity records that this sample requires.
+        /// Create a new recurring appointment.
+        /// </summary>
         public static void CreateRequiredRecords(CrmServiceClient service)
         {
-            // Get the current user.
-            WhoAmIRequest userRequest = new WhoAmIRequest();
-            WhoAmIResponse userResponse = (WhoAmIResponse)service.Execute(userRequest);
-            _userId = userResponse.UserId;
-
-            // Create the activity party for sending and receiving the fax.
-            ActivityParty party = new ActivityParty
+            // Create an appointment
+            Appointment newAppointment = new Appointment
             {
-                PartyId = new EntityReference(SystemUser.EntityLogicalName, _userId)
+                Subject = "Sample Appointment",
+                Location = "Office",
+                ScheduledStart = DateTime.Now.AddHours(1),
+                ScheduledEnd = DateTime.Now.AddHours(2),
             };
 
-            // Create the fax object.
-            Fax fax = new Fax
-            {
-                Subject = "Sample Fax",
-                From = new ActivityParty[] { party },
-                To = new ActivityParty[] { party }
-            };
-            _faxId = service.Create(fax);
-            Console.WriteLine("Created a fax: '{0}'.", fax.Subject);
+            _appointmentId = service.Create(newAppointment);
+            Console.WriteLine("Created {0}", newAppointment.Subject);
+
+            return;
         }
 
         /// <summary>
-        /// Deletes the custom entity record that was created for this sample.
-        /// <param name="prompt">Indicates whether to prompt the user 
-        /// to delete the entity created in this sample.</param>
+        /// Deletes any entity records that were created for this sample.
+        /// <param name="prompt">Indicates whether to prompt the user to delete 
+        /// the records created in this sample.</param>
         /// </summary>
         public static void DeleteRequiredRecords(CrmServiceClient service, bool prompt)
         {
@@ -71,7 +67,7 @@ namespace PowerApps.Samples
 
             if (prompt)
             {
-                Console.WriteLine("\nDo you want these entity records deleted? (y/n)");
+                Console.WriteLine("\nDo you want these entity records to be deleted? (y/n)");
                 String answer = Console.ReadLine();
 
                 deleteRecords = (answer.StartsWith("y") || answer.StartsWith("Y"));
@@ -79,12 +75,12 @@ namespace PowerApps.Samples
 
             if (deleteRecords)
             {
-
-                service.Delete(Fax.EntityLogicalName, _faxId);
-                service.Delete(Task.EntityLogicalName, _taskId);
+                service.Delete(RecurringAppointmentMaster.EntityLogicalName,
+                    __recurringAppointmentMasterId);
 
                 Console.WriteLine("Entity records have been deleted.");
             }
         }
+
     }
 }

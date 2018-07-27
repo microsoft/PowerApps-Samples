@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2043
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryHoursMultipleUsers", "QueryHoursMultipleUsers\QueryHoursMultipleUsers.csproj", "{6E75674E-ADBC-475C-AF3D-2FB08CA7B8A8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6E75674E-ADBC-475C-AF3D-2FB08CA7B8A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E75674E-ADBC-475C-AF3D-2FB08CA7B8A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E75674E-ADBC-475C-AF3D-2FB08CA7B8A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E75674E-ADBC-475C-AF3D-2FB08CA7B8A8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1C5181EE-E474-4850-A30D-EF59A2150915}
+	EndGlobalSection
+EndGlobal

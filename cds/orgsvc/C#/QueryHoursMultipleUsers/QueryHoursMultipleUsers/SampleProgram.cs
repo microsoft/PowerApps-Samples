@@ -1,18 +1,15 @@
-﻿using System;
+﻿using Microsoft.Crm.Sdk.Messages;
+using Microsoft.Xrm.Tooling.Connector;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Messages;
-using Microsoft.Xrm.Tooling.Connector;
-using Microsoft.Xrm.Sdk.Query;
 
 namespace PowerApps.Samples
 {
-    public partial class SampleProgram
+   public partial class SampleProgram
     {
-       
         [STAThread] // Added to support UX
         static void Main(string[] args)
         {
@@ -27,29 +24,24 @@ namespace PowerApps.Samples
                     #region Set up
                     SetUpSample(service);
                     #endregion Set up
-                    #region Demonstrate
 
-                    // Retrieve the fax.
-                    Fax retrievedFax = (Fax)service.Retrieve(Fax.EntityLogicalName, _faxId, new ColumnSet(true));
+                    // Retrieve the working hours of the current and the other user.   
+                    
+                    QueryMultipleSchedulesRequest scheduleRequest = new QueryMultipleSchedulesRequest();
+                    scheduleRequest.ResourceIds = new Guid[2];
+                    scheduleRequest.ResourceIds[0] = _currentUserId;
+                    scheduleRequest.ResourceIds[1] = _otherUserId;
+                    scheduleRequest.Start = DateTime.Now;
+                    scheduleRequest.End = DateTime.Today.AddDays(7);
+                    scheduleRequest.TimeCodes = new TimeCode[] { TimeCode.Available };
 
-                    // Create a task.
-                    Task task = new Task()
+                    QueryMultipleSchedulesResponse scheduleResponse = (QueryMultipleSchedulesResponse)service.Execute(scheduleRequest);
+
+                    // Verify if some data is returned for the availability of the users
+                    if (scheduleResponse.TimeInfos.Length > 0)
                     {
-                        Subject = "Follow Up: " + retrievedFax.Subject,
-                        ScheduledEnd = retrievedFax.CreatedOn.Value.AddDays(7),
-                    };
-                    _taskId = service.Create(task);
-
-                    // Verify that the task has been created                    
-                    if (_taskId != Guid.Empty)
-                    {
-                        Console.WriteLine("Created a task for the fax: '{0}'.", task.Subject);
+                        Console.WriteLine("Successfully queried the working hours of multiple users.");
                     }
-
-
-                    #region Clean up
-                    CleanUpSample(service);
-                    #endregion Clean up
                 }
                 #endregion Demonstrate
                 else
@@ -66,7 +58,7 @@ namespace PowerApps.Samples
                     }
                 }
             }
-            #endregion Sample Code
+
             catch (Exception ex)
             {
                 SampleHelpers.HandleException(ex);
@@ -80,8 +72,6 @@ namespace PowerApps.Samples
                 Console.WriteLine("Press <Enter> to exit.");
                 Console.ReadLine();
             }
-
         }
-    }
-
+            }
 }

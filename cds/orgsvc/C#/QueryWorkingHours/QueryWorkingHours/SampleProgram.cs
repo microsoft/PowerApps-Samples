@@ -1,18 +1,15 @@
-﻿using System;
+﻿using Microsoft.Crm.Sdk.Messages;
+using Microsoft.Xrm.Tooling.Connector;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Messages;
-using Microsoft.Xrm.Tooling.Connector;
-using Microsoft.Xrm.Sdk.Query;
 
 namespace PowerApps.Samples
 {
-    public partial class SampleProgram
+   public partial class SampleProgram
     {
-       
         [STAThread] // Added to support UX
         static void Main(string[] args)
         {
@@ -27,31 +24,27 @@ namespace PowerApps.Samples
                     #region Set up
                     SetUpSample(service);
                     #endregion Set up
-                    #region Demonstrate
 
-                    // Retrieve the fax.
-                    Fax retrievedFax = (Fax)service.Retrieve(Fax.EntityLogicalName, _faxId, new ColumnSet(true));
+                    // Get the current user's information.
+                    WhoAmIRequest userRequest = new WhoAmIRequest();
+                    WhoAmIResponse userResponse = (WhoAmIResponse)service.Execute(userRequest);
 
-                    // Create a task.
-                    Task task = new Task()
+                    // Retrieve the working hours of the current user.                                              
+                    QueryScheduleRequest scheduleRequest = new QueryScheduleRequest
                     {
-                        Subject = "Follow Up: " + retrievedFax.Subject,
-                        ScheduledEnd = retrievedFax.CreatedOn.Value.AddDays(7),
+                        ResourceId = userResponse.UserId,
+                        Start = DateTime.Now,
+                        End = DateTime.Today.AddDays(7),
+                        TimeCodes = new TimeCode[] { TimeCode.Available }
                     };
-                    _taskId = service.Create(task);
+                    QueryScheduleResponse scheduleResponse = (QueryScheduleResponse)service.Execute(scheduleRequest);
 
-                    // Verify that the task has been created                    
-                    if (_taskId != Guid.Empty)
+                    // Verify if some data is returned for the availability of the current user
+                    if (scheduleResponse.TimeInfos.Length > 0)
                     {
-                        Console.WriteLine("Created a task for the fax: '{0}'.", task.Subject);
+                        Console.WriteLine("Successfully queried the working hours of the current user.");
                     }
-
-
-                    #region Clean up
-                    CleanUpSample(service);
-                    #endregion Clean up
                 }
-                #endregion Demonstrate
                 else
                 {
                     const string UNABLE_TO_LOGIN_ERROR = "Unable to Login to Dynamics CRM";
@@ -66,7 +59,9 @@ namespace PowerApps.Samples
                     }
                 }
             }
-            #endregion Sample Code
+            #endregion Demonstrate
+      
+
             catch (Exception ex)
             {
                 SampleHelpers.HandleException(ex);
@@ -82,6 +77,5 @@ namespace PowerApps.Samples
             }
 
         }
-    }
-
+            }
 }
