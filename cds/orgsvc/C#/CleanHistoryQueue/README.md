@@ -1,28 +1,8 @@
----
-title: "Sample: Clean up history for a queue (early bound) | MicrosoftDocs"
-decription: "The sample code demonstrates how to clean up the history for the queue using RemoveFromQueueRequest with inactive items."
-ms.custom: ""
-ms.date: 07/24/2018
-ms.reviewer: ""
-ms.service: "crm-online"
-ms.suite: ""
-ms.tgt_pltfrm: ""
-ms.topic: "samples"
-applies_to: 
-  - "Dynamics 365 (online)"
-helpviewer_keywords: 
-  - "cleaning up history in queues (early bound), sample"
-  - "sample for deleting inactive items from queues (early bound)"
-  - "sample for cleaning up history in queues (early bound)"
-  - "deleting inactive items from queues (early bound), sample"
-ms.assetid: 369a2d36-9eb0-433c-81c1-14856b4d2e45
-author: "NavaKiran"
-ms.author: "nabuthuk"
----
+
 
 # Clean up history for a queue (early bound)
 
- This sample shows how to clean up the history for the queue by using <xref:Microsoft.Crm.Sdk.Messages.RemoveFromQueueRequest> with inactive items. It finds completed phone calls in the queue and removes the associated queue items.
+ This sample shows how to clean up the history for the queue by using [RemoveFromQueueRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.crm.sdk.messages.removefromqueuerequest?view=dynamics-general-ce-9) with inactive items. It finds completed phone calls in the queue and removes the associated queue items.
 
 ## How to run this sample
 
@@ -43,7 +23,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 
 ### Demonstrate
-1. Retrieves the queueitem with inactive phone calls from a queue using the `RemoveFromQueueRequest` message.
+1. Retrieves the queueitem with inactive phone calls from a queue using the [RemoveFromQueueRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.crm.sdk.messages.removefromqueuerequest?view=dynamics-general-ce-9) message.
 
 
 ### Clean up
