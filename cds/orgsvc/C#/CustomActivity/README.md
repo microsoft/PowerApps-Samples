@@ -1,22 +1,7 @@
----
-title: "Create a custom activity | MicrosoftDocs"
-description: "The following code example demonstrates how to create a custom activity using the CreateEntityRequest and CreateAttributeRequest messages"
-ms.custom: ""
-ms.date: 07/24/2018
-ms.reviewer: ""
-ms.service: "crm-online"
-ms.suite: ""
-ms.tgt_pltfrm: ""
-ms.topic: "samples"
-applies_to: 
-  - "Dynamics 365 (online)"
-ms.assetid: eec904da-5af8-43f4-b8f7-32642d8e4916
-author: "NavaKiran"
-ms.author: "nabuthuk"
----
+
 # Create a custom activity
 
-The following code example demonstrates how to create a custom activity using the <xref:Microsoft.Xrm.Sdk.Messages.CreateEntityRequest> and <xref:Microsoft.Xrm.Sdk.Messages.CreateAttributeRequest> messages.  
+The following code example demonstrates how to create a custom activity using [CreateEntityRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.messages.createentityrequest?view=dynamics-general-ce-9) and [CreateAttributeRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.messages.createattributerequest?view=dynamics-general-ce-9).  
 
 ## How to run this sample
 
