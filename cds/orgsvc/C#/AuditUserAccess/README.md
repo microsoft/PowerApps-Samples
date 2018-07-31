@@ -1,20 +1,4 @@
----
-title: " AuditUser Access | MicrosoftDocs"
-description: "Sample doc which expalins different methods used in this sample."
-ms.custom:
-  - dyn365-developer
-  - dyn365-marketing
-ms.date: 07/18/2018
-ms.service: dynamics-365-marketing
-ms.technology: 
-  - "marketing"
-ms.topic: "get-started-article"
-applies_to: 
-  - "Dynamics 365 (online)"
-ms.assetid: 49613bcb-ec6e-4f7d-8123-4a805a046b64
-author: NavaKiran 
-ms.author: nabuthuk
----
+
 # Audit User Access
 
 This sample code shows how to audit user access. 
