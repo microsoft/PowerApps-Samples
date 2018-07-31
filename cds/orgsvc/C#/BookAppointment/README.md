@@ -1,20 +1,4 @@
----
-title: " Book an Appointment | MicrosoftDocs"
-description: "Provides inforamtion on how to book an appointmnet using SDK."
-ms.custom:
-  - dyn365-developer
-  - dyn365-marketing
-ms.date: 07/18/2018
-ms.service: dynamics-365-marketing
-ms.technology: 
-  - "marketing"
-ms.topic: "get-started-article"
-applies_to: 
-  - "Dynamics 365 (online)"
-ms.assetid: d52e2750-7752-431b-8246-016669b5a34d
-author: NavaKiran 
-ms.author: nabuthuk
----
+
 
 # Book an Appointment
 
