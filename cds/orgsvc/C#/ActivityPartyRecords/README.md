@@ -1,20 +1,4 @@
----
-title: "Work with Activity Party Records MicrosoftDocs"
-description: "Sample code doc which expalins different methods used in this sample."
-ms.custom:
-  - dyn365-developer
-  - dyn365-marketing
-ms.date: 07/18/2018
-ms.service: dynamics-365-marketing
-ms.technology: 
-  - "marketing"
-ms.topic: "get-started-article"
-applies_to: 
-  - "Dynamics 365 (online)"
-ms.assetid: 73ede6c7-1972-4506-917c-4f147ecea033
-author: NavaKiran 
-ms.author: nabuthuk
----
+
 # Work with activity party records
 
 This sample code shows how to work with activity party records. 
