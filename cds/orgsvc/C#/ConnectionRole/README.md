@@ -1,21 +1,4 @@
----
-title: "Create a connection role (early bound) | MicrosoftDocs"
-description: "The sample code demonstrates how to create a connection role that are used for accouunts and contacts."
-ms.custom: ""
-ms.date: 07/24/2018
-ms.reviewer: ""
-ms.service: "crm-online"
-ms.suite: ""
-ms.tgt_pltfrm: ""
-ms.topic: "samples"
-applies_to: 
-  - "Dynamics 365 (online)"
-helpviewer_keywords: 
-  - "sample for creating connection roles, accounts and contacts"
-  - "creating connection roles, sample"
-ms.assetid: 1083ab7b-d4a2-4fed-95a5-2d247179129b
-author: "JimDaly"
-ms.author: "jdaly"
+
 ---
 # Create a connection role (early bound)
 
