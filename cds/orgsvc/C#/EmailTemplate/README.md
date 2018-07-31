@@ -1,22 +1,7 @@
----
-title: "Create an email using a template | MicrosoftDocs"
-description: "This sample shows how to instantiate an email record by using the InstantiateTemplateRequest message"
-ms.custom: ""
-ms.date: 07/24/2018
-ms.reviewer: ""
-ms.service: "crm-online"
-ms.suite: ""
-ms.tgt_pltfrm: ""
-ms.topic: "samples"
-applies_to: 
-  - "Dynamics 365 (online)"
-ms.assetid: 262151de-01be-4c90-992b-9e0084938c90
-author: "NavaKiran"
-ms.author: "nabuthuk"
----
+
 # Create an email using a template
 
-This sample shows how to instantiate an email record by using the <xref:Microsoft.Crm.Sdk.Messages.InstantiateTemplateRequest> message.  
+This sample shows how to instantiate an email record by using [InstantiateTemplateRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.crm.sdk.messages.instantiatetemplaterequest?view=dynamics-general-ce-9) message.  
 
 ## How to run this sample
 
