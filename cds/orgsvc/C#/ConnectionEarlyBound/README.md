@@ -1,24 +1,6 @@
----
-title: "Create a connection (early bound) | MicrosoftDocs"
-description: "The sample demonstrates how to create a connection between an account and a contact that have matching connection roles."
-ms.custom: ""
-ms.date: 07/24/2018
-ms.reviewer: ""
-ms.service: "crm-online"
-ms.suite: ""
-ms.tgt_pltfrm: ""
-ms.topic: "samples"
-applies_to: 
-  - "Dynamics 365 (online)"
-helpviewer_keywords: 
-  - "sample for creating connections, between accounts and contacts that have matching connection roles"
-  - "creating connections between accounts and contacts that have matching connection roles, sample"
-ms.assetid: 436ff750-a556-4070-bdb1-4ad8397afc69
-author: "NavaKiran"
-ms.author: "nabuthuk"
----
+
 #  Create a connection (early bound)
-This sample shows how to create a connection between an account and a contact that have matching connection roles.  
+This sample shows how to create a connection between an account and a contact entity that have matching connection roles.  
   
 # How to run this sample
 
