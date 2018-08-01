@@ -12,6 +12,8 @@ See [How to run samples](../../../How-to-run-samples.md) for information about h
 
 This sample shows how to create a connection role that can be used for accounts and contacts.
 
+## How this sample works
+
 In order to simulate the scenario described in [What this sample does](#what-this-sample-does), the sample will do the following:
 
 ### Setup
