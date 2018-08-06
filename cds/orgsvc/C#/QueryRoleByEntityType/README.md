@@ -1,8 +1,6 @@
+# Query connection role by entity type code (early bound)
 
----
-# Create a connection role (early bound)
-
-This sample shows how to create a connection role that can be used for accounts and contacts.
+This sample shows how to use a query to find a connection role for an account entity by specifying an entity type code.
 
 ## How to run this sample
 
@@ -10,7 +8,7 @@ See [How to run samples](../../../How-to-run-samples.md) for information about h
 
 ## What this sample does
 
-This sample shows how to create a connection role that can be used for accounts and contacts.
+This sample shows how to use a query to find a connection role for an account entity by specifying an entity type code.
 
 ## How this sample works
 
@@ -22,8 +20,9 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Demonstrate
 1. Defines some anonymous types to define the range of possible conection property values.
-2. Creates a connection role for account and contact entity.
-3. Creates a connection role object type code record for account and contact entity. 
+2. The `ConnectionRole` creates a connection role.
+3. The `QueryExpression` queries all the connection roles.
+3. The `ConnectionRoleObjectTypeCode` creates a connection role object type code record for account entity. 
 
 ### Clean up
 

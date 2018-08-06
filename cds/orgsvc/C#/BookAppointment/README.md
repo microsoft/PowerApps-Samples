@@ -1,24 +1,8 @@
----
-title: " Book an Appointment | MicrosoftDocs"
-description: "Provides inforamtion on how to book an appointmnet using SDK."
-ms.custom:
-  - dyn365-developer
-  - dyn365-marketing
-ms.date: 07/18/2018
-ms.service: dynamics-365-marketing
-ms.technology: 
-  - "marketing"
-ms.topic: "get-started-article"
-applies_to: 
-  - "Dynamics 365 (online)"
-ms.assetid: d52e2750-7752-431b-8246-016669b5a34d
-author: NavaKiran 
-ms.author: nabuthuk
----
+
 
 # Book an Appointment
 
-This sample shows how to book or schedule an appointment by using the <xref:Microsoft.Crm.Sdk.Messages.BookRequest> message.
+This sample shows how to book or schedule an appointment by using the [BookRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.crm.sdk.messages.bookrequest?view=dynamics-general-ce-9) message.
 
 ## How to run this sample
 
@@ -40,7 +24,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Demonstrate
 
-1. Creates the appointment instance using the BookRequest message and verifies that the appointment has been scheduled or not. 
+1. Creates the appointment instance using the [BookRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.crm.sdk.messages.bookrequest?view=dynamics-general-ce-9) message and verifies that the appointment has been scheduled or not. 
 
 ### Clean up
 
