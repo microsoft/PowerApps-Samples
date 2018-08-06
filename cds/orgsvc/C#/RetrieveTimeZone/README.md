@@ -1,4 +1,4 @@
-Retrieve time zone information
+# Retrieve time zone information
 
 This sample shows how to retrieve time zone information.
 
