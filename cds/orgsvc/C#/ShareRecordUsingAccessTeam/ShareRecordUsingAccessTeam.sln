@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2043
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareRecordUsingAccessTeam", "ShareRecordUsingAccessTeam\ShareRecordUsingAccessTeam.csproj", "{394A8B3F-7B9C-4EA1-B173-889A5D488DCC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{394A8B3F-7B9C-4EA1-B173-889A5D488DCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{394A8B3F-7B9C-4EA1-B173-889A5D488DCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{394A8B3F-7B9C-4EA1-B173-889A5D488DCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{394A8B3F-7B9C-4EA1-B173-889A5D488DCC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9A0791D7-C28C-4F99-A9A7-39709434190D}
+	EndGlobalSection
+EndGlobal

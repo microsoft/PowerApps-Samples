@@ -13,7 +13,7 @@ namespace PowerApps.Samples
    public partial class SampleProgram
     {
         private static List<Guid> _contactsIds = new List<Guid>();
-        private const int ARBITRARY_MAX_POLLING_TIME = 120;
+        private const int ARBITRARY_MAX_POLLING_TIME = 60;
         private static bool prompt = true;
 
         [STAThread] // Added to support UX
@@ -59,8 +59,8 @@ namespace PowerApps.Samples
                         // Set the Sender.
                         Sender = new EntityReference(SystemUser.EntityLogicalName, emailSenderResponse.UserId),
                         // Set the RegardingId - this field is required.
-                        RegardingId = Guid.Empty,
-                        RegardingType = SystemUser.EntityLogicalName,
+                        //RegardingId = Guid.Empty,
+                        //RegardingType = SystemUser.EntityLogicalName,
 
                         // Use a built-in Microsoft Dynamics CRM email template.
                         // NOTE: The email template's "template type" must match the type of 
@@ -88,13 +88,15 @@ namespace PowerApps.Samples
                     QueryByAttribute bulkQuery = new QueryByAttribute()
                     {
                         EntityName = AsyncOperation.EntityLogicalName,
-                        ColumnSet = new ColumnSet(new string[] { "requestid", "statecode" }),
+                        ColumnSet = new ColumnSet(new string[] { "requestid"}),
                         Attributes = { "requestid" },
                         Values = { trackingId }
                     };
 
+                    
                     // Retrieve the bulk email async operation.
                     EntityCollection aResponse = service.RetrieveMultiple(bulkQuery);
+                    
 
                     Console.WriteLine("  Retrieved Bulk Email Async Operation.");
 
