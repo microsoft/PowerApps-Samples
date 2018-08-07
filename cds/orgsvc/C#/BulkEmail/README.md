@@ -1,19 +1,4 @@
----
-title: " Send bulk email and monitor results | MicrosoftDocs"
-description: "This sample shows how to send bulk email using the SendBulkMailRequest and monitor the results by retrieving records from the AsyncOperation entity"
-ms.custom: ""
-ms.date: 07/24/2017
-ms.reviewer: ""
-ms.service: "crm-online"
-ms.suite: ""
-ms.tgt_pltfrm: ""
-ms.topic: "samples"
-applies_to: 
-  - "Dynamics 365 (online)"
-ms.assetid: 480d8c10-8abd-4b2a-bb13-12ce578a2cae
-author: "NavaKiran"
-ms.author: "nabuthuk"
----
+
 # Sample: Send bulk email and monitor results
 
 This sample shows how to send bulk email using the <xref:Microsoft.Crm.Sdk.Messages.SendBulkMailRequest> and monitor the results by retrieving records from the `AsyncOperation` entity. 
