@@ -4,12 +4,12 @@ This sample shows how to convert a Faxt to Task.
 
 ## How to run this sample
 
-See [How to run this sample](../../How-to-run-samples.md) for information about hoe to run this sample.
+See [How to run this sample](../../How-to-run-samples.md) for information about how to run this sample.
 
 What this sample does
 
 The `CreateRequiredRecords` creates the data required for the sample. The `retrievedFax` retrieves the fax. 
-The `DeleteRequiredRecords` gives a option to delete all the data that sample has created.
+The `DeleteRequiredRecords` gives an option to delete all the data that sample has created.
 
 ## How this sample works
 
