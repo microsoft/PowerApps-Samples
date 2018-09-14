@@ -11,7 +11,7 @@ This sample requires additional users that are not present in your system. Creat
 
 ## How to run this sample
 
-See [How to run samples](../../../How-to-run-samples.md) for information about how to run this sample.
+[!include[cc-how-to-run-samples](../../includes/cc-how-to-run-samples.md)]
 
 ## What this sample does
 
@@ -23,13 +23,14 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Setup
 
-1. Checks the version of the org.
-2. Retrieves the current user's information and also the user that you have created manually in **Office 365**.
+1. Checks for the current version of the org.
+2. Retrieves the current user's information and also the user, that you have created manually in **Office 365**.
 
 
 ### Demonstrate
 
-1. The `QueryMultipleScheduleRequest` message retrieves the working hours ofthe current user and the user that you have created manually.
+1. The `QueryMultipleScheduleRequest` message retrieves the working hours of the current user and the user that you have created manually.
+
 ### Clean up
 
 1. Display an option to delete the records created in [Setup](#setup).
