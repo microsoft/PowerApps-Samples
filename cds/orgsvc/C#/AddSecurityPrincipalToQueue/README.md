@@ -21,7 +21,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 3. The `QueryExpression` retrieves the default business unit for the creation of the team and role.
 4. Creates a new example team and role required for the sample.
 5. Retrieves the `prvReadQueue` and `prvAppendToQueue` privileges.
-6. The `AddPriviligeRoleRequest` method adds the `prvReadQueue` abd `prvAppendToQueue` privileges to the example role.
+6. The `AddPrivilegeRoleRequest` method adds the `prvReadQueue` abd `prvAppendToQueue` privileges to the example role.
 
 ### Demonstrate
 
