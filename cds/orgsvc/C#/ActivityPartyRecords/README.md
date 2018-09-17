@@ -21,7 +21,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Demonstrate
 
-1. Retrieves the contact records that are created in the Setup(#Setup). 
+1. Retrieves the contact records that are created in the [Setup](#Setup). 
 2. Creates the activity party records for each contact.
 3. Also creates Letter activity and set **From** and **To** fields to the respective Activity Party entities.
 
