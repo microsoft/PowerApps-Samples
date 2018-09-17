@@ -1,3 +1,4 @@
+# Query connections by a record
 This sample shows how to query connections for a particular record. It creates connections between a contact and two accounts, and then searches for the contact’s connections.
 
 ## How to run this sample
