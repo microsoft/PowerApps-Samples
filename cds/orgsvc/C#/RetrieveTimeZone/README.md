@@ -21,10 +21,10 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Demonstrate
 
 1. The `RetrieveCurrentUSerSettings` method retrieves the current users timezone code and locale id.
-2. The `RetrieveAllTimeZonesForLocale` method uses the current locale id and retrieves all the timezones.
-3. The `GetTimeZoneCodeByLocaleAndName` method retireves the tiezone by name and locale id.
+2. The `RetrieveAllTimeZonesForLocale` method uses the current locale id and retrieves all the time zones.
+3. The `GetTimeZoneCodeByLocaleAndName` method retrieves the timezone by name and locale id.
 4. The `RetrieveTimeZoneById` method retrieves the timezone by id.
-5. The RetrieveTimeZonesLessThan50`` method retrieves time zones less than 50.
+5. The `RetrieveTimeZonesLessThan50` method retrieves time zones less than 50.
 6. The `RetrieveLocalTimeFromUTCTime` method retrieves the local time from UTC time.
 7. The `RetrieveUTCTimeFromLocalTime` method retrieves the UTC time from the locale time.
 

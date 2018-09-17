@@ -16,9 +16,8 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Setup
 
-1. Checks for the current version of the org. 
-2. The `TransactionCurrency` method creates a new currenncy for the sample.
-
+1. Checks for the current version of the org.
+2. The `TransactionCurrency` method creates a new currency for the sample.
 
 ### Demonstrate
 

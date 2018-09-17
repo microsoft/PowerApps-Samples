@@ -1,10 +1,10 @@
 # Enable field security for an entity
-This sample shows how to enable field security for an entity.
 
+This sample shows how to enable field security for an entity.
 
 This sample requires additional users that are not in your system. Create the required users manually in **Office 365** in order to run the sample without any errors. For this sample create a user profile **as is** shown below. 
 
-**First Name**: Samantha<br/>
+**First Name**: Samantha <br/>
 **Last Name**: Smith<br/>
 **Security Role**: Marketing Manager<br/>
 **UserName**: ssmith@yourorg.onmicrosoft.com<br/>
@@ -20,15 +20,14 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Setup
 
 1. Get the user that you have created manually in **Office 365**.
-2. Retrieve the security role needed to assign to the user. 
+2. Retrieve the security role needed to assign to the user.
 3. Retrieve the default business unit needed to create the team.
-4. Instantiate a team entity record and set its property values. 
-
+4. Instantiate a team entity record and set its property values.
 
 ### Demonstrate
 
-1. Creates firld security profile and create the request object and set the monikers with the teamprofiles_assocation relationship.
-2. Creates custom activity entity and attributes using the `CreateEntityRequest` and `CreateAttributeRequest` mesaage.
+1. Creates field security profile and create the request object and set the monikers with the teamprofiles_assocation relationship.
+2. Creates custom activity entity and attributes using the `CreateEntityRequest` and `CreateAttributeRequest` message.
 3. Create the field permission for the identity attribute.
 
 ### Clean up

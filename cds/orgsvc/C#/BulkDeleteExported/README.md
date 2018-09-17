@@ -1,4 +1,5 @@
 # Bulk delete exported records
+
 This sample shows how to perform a bulk deletion of records that were previously exported from Dynamics 365 by using the **Export to Excel** option
 
 ## How to run this sample
@@ -16,15 +17,16 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Setup
 
 1. Checks for the current version of the org.
-2.Query for a system user to send an email after bulk delete request operation completes.
+2. Query for a system user to send an email after bulk delete request operation completes.
 3. The `BulkDeleteRequest` creates the bulk delete process and set the request properties.
 4. The `CheckSuccess` method queries for the `BulkDeleteOperation` until it has been completed or until the designated time runs out. It then checks to see if the operation is complete.
+
 ### Demonstrate
 
 1. The `PerformBulkDeleteBackup` method performs the main ulk delete operation on inactive opportunities and activities to remove them from the system.
 
 ### Clean up
 
-1. Display an option to delete the sample data that is creatd in [Setup](#setup).
+1. Display an option to delete the sample data that is created in [Setup](#setup).
 
     The deletion is optional in case you want to examine the entities and data created by the sample. You can manually delete the records to achieve the same result.

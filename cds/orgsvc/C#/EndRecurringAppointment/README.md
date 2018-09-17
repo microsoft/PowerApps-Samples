@@ -1,4 +1,5 @@
 # End a recurring appointment series
+
 The following sample shows how to end a recurring appointment series by using the [DeleteOpenInstancesRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.crm.sdk.messages.deleteopeninstancesrequest?view=dynamics-general-ce-9) message.
 
 ## How to run this sample
@@ -17,11 +18,11 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 1. Checks for the current version of the org.
 2. Defines the anonymous types that define possible recurrence pattern values, possible values for days, and recurrence rule pattern end type values.
-3. Creates a new recurring apointment that is required for the sample.
+3. Creates a new recurring appointment that is required for the sample.
 
 ### Demonstrate
 
-1. The `RecurringAppointmentMaster` message retrieves a recurring appoinhtment series that is created in the [Setup](#setup).
+1. The `RecurringAppointmentMaster` message retrieves a recurring appointment series that is created in the [Setup](#setup).
 2. The `DeleteOpenInstanceRequest` message ends the recurring appointment series to the last occurring past instance date w.r.t. the series end date.
 
 ### Clean up

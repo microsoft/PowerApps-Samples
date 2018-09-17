@@ -15,14 +15,15 @@ This sample shows how to use a query to find a connection role for an account en
 In order to simulate the scenario described in [What this sample does](#what-this-sample-does), the sample will do the following:
 
 ### Setup
+
 1. Checks the version of the org.
 
-
 ### Demonstrate
-1. Defines some anonymous types to define the range of possible conection property values.
+
+1. Defines some anonymous types to define the range of possible connection property values.
 2. The `ConnectionRole` creates a connection role.
 3. The `QueryExpression` queries all the connection roles.
-3. The `ConnectionRoleObjectTypeCode` creates a connection role object type code record for account entity. 
+4. The `ConnectionRoleObjectTypeCode` creates a connection role object type code record for account entity.
 
 ### Clean up
 

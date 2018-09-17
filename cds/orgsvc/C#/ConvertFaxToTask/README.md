@@ -1,6 +1,6 @@
 # Convert Fax to Task
 
-This sample shows how to convert a Faxt to Task. 
+This sample shows how to convert a **Fax** to **Task**.
 
 ## How to run this sample
 
@@ -19,12 +19,12 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 1. Creates required data that this sample requires.
 
-
 ### Demonstrate
-1. Retreives the fax id's that are created in [Setup](#setup).
-2. Creates a task and verifies that the task has been created. 
+
+1. Retrieves the fax id's that are created in [Setup](#setup).
+2. Creates a task and verifies that the task has been created.
 
 ### Clean up
 
 1. Displays an option to delete all the data created in the sample.
-2. The deletion is optional in case you want to exxamine the data created by the sanple. You can manually delete the data to acheive same results.
+2. The deletion is optional in case you want to examine the data created by the sample. You can manually delete the data to achieve same results.

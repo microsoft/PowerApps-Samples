@@ -1,4 +1,5 @@
 # Create a reciprocal connection role (early bound)
+
 This sample shows how to create the reciprocal connection roles. It creates a connection role for an account and a connection role for a contact, and then makes them reciprocal by associating them with each other.
 
 ## How to run this sample
@@ -15,7 +16,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Setup
 
-1. Checks for the currrent version of the org.
+1. Checks for the current version of the org.
 2. The `ConnectionRole` message creates connection roles required for the sample.
 3. The `ConnectionRoleObjectTypeCode` message creates the connection role object type code record for account.
 4. The `AssociateRequest` message associates the connection roles with each other.

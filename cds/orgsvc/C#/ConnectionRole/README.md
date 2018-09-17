@@ -1,5 +1,3 @@
-
----
 # Create a connection role (early bound)
 
 This sample shows how to create a connection role that can be used for accounts and contacts.
@@ -17,13 +15,14 @@ This sample shows how to create a connection role that can be used for accounts 
 In order to simulate the scenario described in [What this sample does](#what-this-sample-does), the sample will do the following:
 
 ### Setup
-1. Checks the version of the org.
 
+1. Checks for the current version of the org.
 
 ### Demonstrate
-1. Defines some anonymous types to define the range of possible conection property values.
+
+1. Defines some anonymous types to define the range of possible connection property values.
 2. Creates a connection role for account and contact entity.
-3. Creates a connection role object type code record for account and contact entity. 
+3. Creates a connection role object type code record for account and contact entity.
 
 ### Clean up
 

@@ -38,7 +38,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 2. The `RollupFields` creates a Rollup field which targets completed (received) phone calls.
 3. The `GoalRollupQuery` creates the goal rollup queries, locating the incoming and outgoing closed phone calls. 
 4. Creates a goal to track the open incoming phone calls.
-5. The `RecalculateRequest` calculates the rollup for goals. 
+5. The `RecalculateRequest` calculates the rollup for goals.
 6. Overrides the actual and in-progress values of the goal.
 7. Set `goal.IsOverridden =true` prevents the rollup values to be overwritten during the next recalculate operation.
 

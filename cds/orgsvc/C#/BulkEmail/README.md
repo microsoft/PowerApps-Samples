@@ -1,7 +1,7 @@
 
 # Sample: Send bulk email and monitor results
 
-This sample shows how to send bulk email using the <xref:Microsoft.Crm.Sdk.Messages.SendBulkMailRequest> and monitor the results by retrieving records from the `AsyncOperation` entity. 
+This sample shows how to send bulk email using the <xref:Microsoft.Crm.Sdk.Messages.SendBulkMailRequest> and monitor the results by retrieving records from the `AsyncOperation` entity.
 
 ## How to run this sample
 
@@ -9,7 +9,7 @@ See [How to run samples](../../../How-to-run-samples.md) for information about h
 
 ## What this sample does
 
-The `SendBulkMailRequest` message is intended to be used in a scenario to send bulk emails. 
+The `SendBulkMailRequest` message is intended to be used in a scenario to send bulk emails.
 
 ## How this sample works
 
@@ -21,11 +21,11 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Demonstrate
 
-1. Get's the system user to use as the sender. 
+1. Gets the system user to use as the sender.
 2. Set tacking id for the bulk email request.
-3. Creates aquery expression for the bulk opertaion to retrieve the contacts in the email list.
+3. Creates a query expression for the bulk operation to retrieve the contacts in the email list.
 4. Set the regarding id and execute the bulk email request.
-5. Retrieve the bulk email async opertaion and monitor it via polling.
+5. Retrieve the bulk email async operation and monitor it via polling.
 
 ### Clean up
 

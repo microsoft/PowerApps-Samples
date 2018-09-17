@@ -11,16 +11,18 @@ See [How to run samples](../../../How-to-run-samples.md) for information about h
 The `InstallSampleDataRequest` message is intended to be used in a scenario where it contains data that is needed to install the sample data.
 
 ## How this sample works
+
 In order to simulate the scenario described in [What this sample does](#what-this-sample-does), the sample will do the following:
 
 ### Setup
-1. Checks the version of the org.
 
+1. Checks for the current version of the org.
 
 ### Demonstrate
-1. Prompts users to install or remove sample data. 
+
+1. Prompts users to install or remove sample data.
 2. If the user opts to install sample data, the `InstallSampleDataRequest` message installs the sample data.
-3. If the user opts to unistall the sample data, the `UninstallSampleDataRequest` message removes the sample data.
+3. If the user opts to uninstall the sample data, the `UninstallSampleDataRequest` message removes the sample data.
 
 ### Clean up
 

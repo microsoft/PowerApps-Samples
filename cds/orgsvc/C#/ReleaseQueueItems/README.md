@@ -1,4 +1,5 @@
 # Release a queue item to the queue (early bound)
+
 This sample shows how to use [ReleaseToQueueRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.crm.sdk.messages.releasetoqueuerequest?view=dynamics-general-ce-9) to dissociate a user from a queue item that he or she worked on and release a queue item back to the queue.
 
 ## How to run this sample
@@ -19,6 +20,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 2. The `Queue` message creates a new queue and store its returned GUIDs in a variable.
 3. The `QueueItem` message creates a new instance of a queueitem and initialize its properties.
 4. The `WhoAMIRequest` retrieves the current user's information.
+
 ### Demonstrate
 
 1. The `ReleaseToQueueRequest` message removes worker from queue item to release queued object from worker's queue.

@@ -1,5 +1,3 @@
-
-
 # Book an Appointment
 
 This sample shows how to book or schedule an appointment by using the [BookRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.crm.sdk.messages.bookrequest?view=dynamics-general-ce-9) message.
@@ -12,19 +10,17 @@ See [How to run samples](../../../How-to-run-samples.md) for information about h
 
 The `BookRequest` message is intended to be used in a scenario to book or schedule an appointment.
 
-
 ## How this sample works
 
 In order to simulate the scenario described in [What this sample does](#what-this-sample-does), the sample will do the following:
 
 ### Setup
 
-1. Get's the current user inforamtion and creates the ActivityParty instance.
-
+1. Gets the current user information and creates the ActivityParty instance.
 
 ### Demonstrate
 
-1. Creates the appointment instance using the [BookRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.crm.sdk.messages.bookrequest?view=dynamics-general-ce-9) message and verifies that the appointment has been scheduled or not. 
+1. Creates the appointment instance using the [BookRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.crm.sdk.messages.bookrequest?view=dynamics-general-ce-9) message and verifies that the appointment has been scheduled or not.
 
 ### Clean up
 

@@ -1,4 +1,5 @@
 # Send an email using a template
+
 This sample shows how to send an email message by using a template using the [SendEmailFromTemplateRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.crm.sdk.messages.sendemailfromtemplaterequest?view=dynamics-general-ce-9) message.
 
 ## How to run this sample
@@ -24,7 +25,6 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 2. Creates an email message.
 3. The `QueryExpression` queries to get one of the email template of type `Contact`.
 4. The `SendEmailFromTemplateRequest` sends an email message by using a template.
-
 
 ### Clean up
 

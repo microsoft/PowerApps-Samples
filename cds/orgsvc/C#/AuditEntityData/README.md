@@ -1,4 +1,5 @@
 # Audit entity data changes
+
  This sample shows how to enable and disable auditing on an entity and its attributes, retrieve the data change history of the audited entity, and delete the audit records.
 
 ## How to run this sample
@@ -18,9 +19,10 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 1. Checks for the current version of the org.
 2. Creates an sample account entity.
+
 ### Demonstrate
 
-1. Get's the organization's ID from the system user record.
+1. Gets the organization's ID from the system user record.
 2. Enabling auditing on organization and also on the sample account entity.
 3. The `RetrieveRecordChangeHistoryRequest` retrieves the audit history for the account entity and displays the result.
 

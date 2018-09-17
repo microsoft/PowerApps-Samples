@@ -2,7 +2,7 @@
 
 This sample shows how to roll up goal data for a custom period against the target revenue.
 
-This sample requires additional three users that are not in your system. Create the three required users **as is** shown below manually in **Office 365**. 
+This sample requires additional three users that are not in your system. Create the three required users **as is** shown below manually in **Office 365**.
 
 **First Name**: Nancy<br/>
 **Last Name**: Anderson<br/>
@@ -35,11 +35,11 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 1. Checks for the version of the org.
 2. Retrieves the sales manager and 2 sales representatives created manually in **Office 365**.
-3. Creates a sample unit group and retrieve the default unit id. 
-4. Creates few products and new disocunt list.
+3. Creates a sample unit group and retrieve the default unit id.
+4. Creates few products and new discount list.
 5. The `PriceLevel` creates the price list.
 6. The `ProductPriceLevel` creates a price list item for the first product and apply volume discount.
-7. Creates account record for the opportunity's potential customerid.
+7. Creates account record for the opportunity's potential customer id.
 8. Creates a new opportunity with user specified estimated revenue.
 9. Creates a catalog products and override the list price.
 10. Creates a new write-in opportunity product with a manual discount applied.
@@ -48,9 +48,9 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 1. Creates Metric, and setting the Amount Data type to `Money`.
 2. Creates a Rollup fields which targets the estimated values and actual values.
-3. The `GoalRollupQuery` creates the goal rollup queries, locating the opportunities in the sales representative's area. 
+3. The `GoalRollupQuery` creates the goal rollup queries, locating the opportunities in the sales representative's area.
 4. Creates three goals, one parent goal and two child goals.
-5. The `RecalculateRequest` calculates the rollup for goals. 
+5. The `RecalculateRequest` calculates the rollup for goals.
 
 ### Clean up
 

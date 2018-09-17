@@ -1,4 +1,5 @@
 # Retrieve field sharing records
+
 This sample shows how to retrieve the `PrincipalObjectAttributeAccess` (field sharing) records for an entity.
 
 ## How to run this sample
@@ -20,10 +21,10 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Demonstrate
 
-1. The `WhoAMIrequest` retrieves the current user's information.
-2. The `RetrieveUserPriviligesRequest` message checks if the current user has prvReadPOAA.
-4. The `PrincipalObjectAttributeAccess` creates POAA entity for the custom fields created in the Setup(#setup).
-5. Using the `QueryExpression` retrieve user shared attribute permissons.
+1. The `WhoAMIRequest` retrieves the current user's information.
+2. The `RetrieveUserPrivilegesRequest` message checks if the current user has `prvReadPOAA`.
+3. The `PrincipalObjectAttributeAccess` creates `POAA`entity for the custom fields created in the Setup(#setup).
+4. Using the `QueryExpression` retrieve user shared attribute permissions.
 
 ### Clean up
 

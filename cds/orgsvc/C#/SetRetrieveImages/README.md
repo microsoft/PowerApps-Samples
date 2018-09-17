@@ -1,4 +1,5 @@
 # Set and retrieve entity images
+
 This sample shows how to set and retrieve data for entity images.
 
 ## How to run this sample
@@ -14,12 +15,12 @@ This sample shows how to create a connection role that can be used for accounts 
 In order to simulate the scenario described in [What this sample does](#what-this-sample-does), the sample will do the following:
 
 ### Setup
-1. Checks the current version of the org.
 
+1. Checks the current version of the org.
 
 ### Demonstrate
 
-1. Uses the CreateImageAttributeDemoEntity method to create a custom entity with the schema name `sample_ImageAttributeDemo` and a primary attribute with the schema name `sample_Name`. 
+1. Uses the CreateImageAttributeDemoEntity method to create a custom entity with the schema name `sample_ImageAttributeDemo` and a primary attribute with the schema name `sample_Name`.
 2. Create an image attribute with the schema name `EntityImage`. All image attributes use this name.
 
 3. Retrieve and update the main form for the `sample_ImageAttributeDemo` entity to set the `showImage` attribute to true so that the image is displayed in the form.

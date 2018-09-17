@@ -1,6 +1,7 @@
 # Work with solutions
 
 This sample shows how to how to perform the following actions with solutions:
+
 - Create a publisher.
 - Retrieve the default publisher.
 - Create a solution.
@@ -15,7 +16,6 @@ This sample shows how to how to perform the following actions with solutions:
 
 See [How to run samples](../../../How-to-run-samples.md) for information about how to run this sample.
 
-
 ## What this sample does
 
 This sample shows how to work with solutions. This sample covers how to create a publisher, create a solution, export and import solution and also how to delete the solution.
@@ -27,19 +27,18 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Setup
 
 1. Checks for the current version of the org.
-1. The `Publisher` mnethod defines a new publisher. 
+1. The `Publisher` method defines a new publisher. 
 1. The `Solution` method creates a new solution.
 1. The `OptionSetMetadata` method adds a solution component.
 1. The `ExportSolutionRequest` method exports the created solution in the [Setup](#setup).
 1. The `DeleteSolutionRequest` method deletes the solution and the components.
 
-
 ### Demonstrate
+
 1. The `querySDKSamplePublisher` method checks whether the publisher is already in the system.
 1. The `querySampleSolutionResults` method checks whether the solution is already in the system.
-1. The `ExportSolutionRequest` method exports the solution. 
+1. The `ExportSolutionRequest` method exports the solution.
 1. The `ImportSolutionRequest` method imports the solution.
-
 
 ### Clean up
 

@@ -1,4 +1,5 @@
 # Share a record using an access team
+
 This sample shows how to allow access to a record using an access team. All members of the team receive the same access to the record as is granted to the team.
 
 This sample requires additional users that are not in your system. Create the required users manually in **Office 365** in order to run the sample without any errors. For this sample create a user profile **as is** shown below.
@@ -19,7 +20,7 @@ See [How to run samples](../../../How-to-run-samples.md) for information about h
 
 ## What this sample does
 
-The `AddMembersTeamRequest`, `GrantAccessRequest`, `RemoveMembersTeamRequest` messages are intended to be used in a scenario where it contains data that is needed to Add, Grant and Remove Memebers.
+The `AddMembersTeamRequest`, `GrantAccessRequest`, `RemoveMembersTeamRequest` messages are intended to be used in a scenario where it contains data that is needed to Add, Grant and Remove Members.
 
 ## How this sample works
 
@@ -27,14 +28,14 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Setup
 
-1. Checks for the current version ofthe org.
+1. Checks for the current version of the org.
 2. Creates a test account record for the sample.
 
 ### Demonstrate
 
 1. Retrieves the sales people that are created manually in **Office 365** that will be added to the team.
 1. The `WhoAMIRequest` gets the ID's of the current user and business unit.
-1. Cretes a sample access team. The `AddMembersTeamRequest`adds two sales people to the access team.
+1. Creates a sample access team. The `AddMembersTeamRequest`adds two sales people to the access team.
 1. The `GrantAccessRequest` grant the team read/write access to the account created in the Setup(#setup).
 1. The `RetrieveAndDisplayEntityAccess` retrieves and displays entity access information.
 1. The `RetrieveAndDisplayPrincipalAccess` retrieves and displays principal access information.

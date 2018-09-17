@@ -1,4 +1,3 @@
-
 # Create an email using a template
 
 This sample shows how to instantiate an email record by using [InstantiateTemplateRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.crm.sdk.messages.instantiatetemplaterequest?view=dynamics-general-ce-9) message.  
@@ -17,7 +16,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Setup
 
-1. Creates an account record. 
+1. Creates an account record.
 2. Defines the body and subject of the email template in **XML** format.
 3. Creates an email template.
 
@@ -25,7 +24,6 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 1. The `InstantiateTemplateRequest` message is used to create an email message using a template. 
 2. Serialize the email message to **XML** and save to a file.
-
 
 ### Clean up
 

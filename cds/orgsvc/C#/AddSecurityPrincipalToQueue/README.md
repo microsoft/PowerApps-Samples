@@ -17,15 +17,16 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Setup
 
 1. Checks for the current version of the org.
-2. The `Queue` method creates a queue instance and set its property values. The returned GUIDs are stored in a variable.
-3. The `QueryExpression` rettrieves the defaulr business unit for the creation of the team and role.
+2. The `Queue` method creates a queue instance and set its property values. The returned Guids are stored in a variable.
+3. The `QueryExpression` retrieves the default business unit for the creation of the team and role.
 4. Creates a new example team and role required for the sample.
-5. Retreives the `prvReadQueue` and `prvAppendToQueue` priviliges.
-6. The `AddPriviligeRoleRequest` method adds the `prvReadQueue` abd `prvAppendToQueue` priviliges to the example role.
+5. Retrieves the `prvReadQueue` and `prvAppendToQueue` privileges.
+6. The `AddPriviligeRoleRequest` method adds the `prvReadQueue` abd `prvAppendToQueue` privileges to the example role.
 
 ### Demonstrate
 
 1. The `AddPrincipalToQueueRequest` method adds the team to the queue.
+
 ### Clean up
 
 1. Display an option to delete the sample data in [Setup](#setup).

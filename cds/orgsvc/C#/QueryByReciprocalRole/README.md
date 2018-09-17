@@ -13,17 +13,16 @@ This sample shows how to create matching roles and then find a matching role for
 In order to simulate the scenario described in [What this sample does](#what-this-sample-does), the sample will do the following:
 
 ### Setup
-1. Checks the version of the org.
-2. Defines some anonymous types to define the range of possible conection property values.
+
+1. Checks for the current version of the org.
+2. Defines some anonymous types to define the range of possible connection property values.
 3. The `ConnectionRole`creates the primary connection role instance.
 4. The `ConnectionRoleObjectTypeCode` creates a connection role object type code record for account and contact entity.
 5. The `AssociateRequest` associates the connection roles.
 
-
-
 ### Demonstrate
-1. The `QueryExpression` retrieves all connection roles that have this role listed as reciprocal role.
 
+1. The `QueryExpression` retrieves all connection roles that have this role listed as reciprocal role.
 
 ### Clean up
 

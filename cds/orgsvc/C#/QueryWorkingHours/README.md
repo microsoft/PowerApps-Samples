@@ -2,7 +2,6 @@
 
 This sample shows how to retrieve the working hours of a user by using the [QueryScheduleRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.crm.sdk.messages.queryschedulerequest?view=dynamics-general-ce-9) message.
 
-
 ## How to run this sample
 
 See [How to run samples](../../../How-to-run-samples.md) for information about how to run this sample.
@@ -18,10 +17,12 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Setup
 
 1. Checks for the current version of the org.
+
 ### Demonstrate
 
 1. The `WhoAMIRequest` message gets the current user's information.
 2. The `QueryScheduleRequest` message retrieves the working hours of the current user.
+
 ### Clean up
 
 1. Display an option to delete the sample data created in [Setup](#setup).

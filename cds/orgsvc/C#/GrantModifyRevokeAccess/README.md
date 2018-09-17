@@ -1,4 +1,4 @@
-# Share records using GrantAccess, ModifyAccess and RevokeAccess mesages
+# Share records using GrantAccess, ModifyAccess and RevokeAccess messages
 
 This sample shows how to share a record using the following messages:
 
@@ -48,11 +48,10 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 2. Retrieves and displays the access that the first user has to the created account. 
 3. The `GrantAccessRequest` method grants the first user `read` access to the created account.
 4. The `ModifyAccessRequest` method grants the first user `delete` access to the created account.
-4. The `RevokeAccessRequest` method grants the first user `revoke` access to the created account.
-
+5. The `RevokeAccessRequest` method grants the first user `revoke` access to the created account.
 
 ### Clean up
 
-1. Display an option to delete the sample data that is creatd in [Setup](#setup).
+1. Display an option to delete the sample data that is created in [Setup](#setup).
 
     The deletion is optional in case you want to examine the entities and data created by the sample. You can manually delete the records to achieve the same result.

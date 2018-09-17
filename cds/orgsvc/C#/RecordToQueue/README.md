@@ -1,7 +1,8 @@
 # Add a record to a queue (early bound)
+
 This sample shows how to add a record to a queue. It creates source and destination queues. It adds a letter activity to the source queue and then moves it to the destination queue.
 
-This sample requires additional users that are not in your system. Create the users manually in **Office 365** in order to run the sample without any errors. For this sample create a user profile **as is** shown below. 
+This sample requires additional users that are not in your system. Create the users manually in **Office 365** in order to run the sample without any errors. For this sample create a user profile **as is** shown below.
 
 **First Name**: Kevin<br/>
 **Last Name**: Cook<br/>
@@ -23,15 +24,16 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Setup
 
 1. Checks for the current version of the org.
-2. The `Queue` message creates source and destination queues and store their returned GUIDs in vatiable.
+2. The `Queue` message creates source and destination queues and store their returned GUIDs in variable.
 3. Creates a Letter entity.
-4. The `AddToQueueRequest` message adds an entiy record into a queue, in this sample it associates the letter with first queue.
+4. The `AddToQueueRequest` message adds an entity record into a queue, in this sample it associates the letter with first queue.
 5. Retrievers the user created manually in **Office 365** for assigning the queue items to the user's queue.
 
 ### Demonstrate
 
 1. The `RetrieveUserQueueRequest` message retrieves the known private queues for the user.
 2. The `AddToQueueRequest` message adds the record from a source queue to destination queue.
+
 ### Clean up
 
 1. Display an option to delete the sample data that is created in [Setup](#setup).

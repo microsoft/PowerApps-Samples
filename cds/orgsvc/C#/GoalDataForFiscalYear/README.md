@@ -1,4 +1,4 @@
-# Rollup goal data for a fiscal period agianst the strech target count
+# Rollup goal data for a fiscal period against the strech target count
 
 This sample shows how to roll up goal data for a fiscal period against stretch target count representing a number of completed phone calls.
 
@@ -44,8 +44,8 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Demonstrate
 
 1. Creates Metric, and setting the Metric type to "count" and enabling strech tracking.
-2. Creates a Rollup foeld which targets completed (received) phone calls.
-3. The `GoalRollupQuery` creates the goal rollup queries, locating the incoming and outgoing closed phone calls. 
+2. Creates a Rollup field which targets completed (received) phone calls.
+3. The `GoalRollupQuery` creates the goal rollup queries, locating the incoming and outgoing closed phone calls.
 4. Creates three goals, one parent goal and two child goals.
 5. The `RecalculateRequest` calculates the rollup for goals. 
 

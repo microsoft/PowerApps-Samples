@@ -1,4 +1,4 @@
-# Promote an email mesage
+# Promote an email message
 
 This sample shows how to create an email activity instance from the specified email message in Dynamics 365 by using the [DeliverPromoteEmailRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.crm.sdk.messages.deliverpromoteemailrequest?view=dynamics-general-ce-9) message.
 
@@ -8,7 +8,7 @@ See [How to run samples](../../../How-to-run-samples.md) for information about h
 
 ## What this sample does
 
-The `DeliverPRomoteEmailRequest` message is intended to be used in a scenario where it contains data that is needed to create an email activity record from the specified email message.
+The `DeliverPromoteEmailRequest` message is intended to be used in a scenario where it contains data that is needed to create an email activity record from the specified email message.
 
 ## How this sample works
 
@@ -21,9 +21,9 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Demonstrate
 
 1. Creates a contact to send an email to (To: field).
-2. The `WhoAmIRequest` retreives the system user to send the eamil (From: field).
+2. The `WhoAmIRequest` retrieves the system user to send the email (From: field).
 3. The `DeliverPromoteEmailRequest` message creates the request and also executes it.
-4. Verify the success by defining anonymous types that define possible values for email status. 
+4. Verify the success by defining anonymous types that define possible values for email status.
 5. Queries the delivered email, and verify the status code is `sent`.
 
 ### Clean up

@@ -1,4 +1,5 @@
 # Rollup records related to a specific record
+
 This sample shows how to roll up opportunities by the parent account.
 
 ## How to run this sample
@@ -7,20 +8,22 @@ See [How to run samples](../../../How-to-run-samples.md) for information about h
 
 ## What this sample does
 
-The `RollupRequest` message is intended to be used in a scenario where it contains data that is needed to create a roll up request. 
+The `RollupRequest` message is intended to be used in a scenario where it contains data that is needed to create a roll up request.
 
 ## How this sample works
 
 In order to simulate the scenario described in [What this sample does](#what-this-sample-does), the sample will do the following:
 
 ### Setup
-1. Checks the version of the org.
+
+1. Checks for the current version of the org.
 2. Creates sample account and opportunity records.
 
-
 ### Demonstrate
-1. The `QueryExpression` queries the opportunites by parent account.
+
+1. The `QueryExpression` queries the opportunities by parent account.
 2. The `RollupRequest` creates the roll up request.
+
 ### Clean up
 
 1. Display an option to delete the records in [Setup](#setup).
