@@ -30,7 +30,7 @@ namespace PowerApps.Samples
 
                     ColumnSet columnSet = new ColumnSet("name");
                     Entity team = service.Retrieve(Team.EntityLogicalName, _teamId, columnSet);
-                    AddPrincipalToQueueRequest addPrincipalToQueueRequest = new AddPrincipalToQueueRequest
+                    var addPrincipalToQueueRequest = new AddPrincipalToQueueRequest
                     {
                         Principal = team,
                         QueueId = _queueId

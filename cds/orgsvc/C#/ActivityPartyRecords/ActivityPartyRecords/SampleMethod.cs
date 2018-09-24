@@ -9,6 +9,9 @@ namespace PowerApps.Samples
 {
    public partial class SampleProgram
     {
+        private static Guid[] _contactIds = new Guid[3];
+        private Dictionary<Guid, String> _recordIds = new Dictionary<Guid, String>();
+        private static bool prompt = true;
         /// <summary>
         /// Function to set up the sample.
         /// </summary>
@@ -26,13 +29,18 @@ namespace PowerApps.Samples
             CreateRequiredRecords(service);
         }
 
+        private static void CleanUpSample(CrmServiceClient service)
+        {
+            DeleteRequiredRecords(service, prompt);
+        }
+
         /// <summary>
         /// Creates any entity records that this sample requires.
         /// </summary>
         public static void CreateRequiredRecords(CrmServiceClient service)
         {
             // Create 3 Contact records to use in the Run() method.
-            Contact contact1 = new Contact()
+            var contact1 = new Contact()
             {
                 FirstName = "Mary Kay",
                 LastName = "Andersen",
@@ -45,7 +53,7 @@ namespace PowerApps.Samples
             };
             _contactIds[0] = service.Create(contact1);
 
-            Contact contact2 = new Contact()
+            var contact2 = new Contact()
             {
                 FirstName = "Joe",
                 LastName = "Andreshak",
@@ -58,7 +66,7 @@ namespace PowerApps.Samples
             };
             _contactIds[1] = service.Create(contact2);
 
-            Contact contact3 = new Contact()
+            var contact3 = new Contact()
             {
                 FirstName = "Denise",
                 LastName = "Smith",

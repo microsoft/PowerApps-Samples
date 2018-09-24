@@ -58,7 +58,7 @@ namespace PowerApps.Samples
                 QueryExpression opportunitiesQuery = BuildOpportunityQuery();
 
                 // Create the bulk delete request.
-                BulkDeleteRequest bulkDeleteRequest = new BulkDeleteRequest();
+                var bulkDeleteRequest = new BulkDeleteRequest();
 
                 // Set the request properties.
                 bulkDeleteRequest.JobName = "Backup Bulk Delete";
@@ -116,7 +116,7 @@ namespace PowerApps.Samples
         private static void CheckSuccess(CrmServiceClient service)
         {
             // Query for bulk delete operation and check for status.
-            QueryByAttribute bulkQuery = new QueryByAttribute(
+            var bulkQuery = new QueryByAttribute(
                 BulkDeleteOperation.EntityLogicalName);
             bulkQuery.ColumnSet = new ColumnSet(true);
 

@@ -42,32 +42,33 @@ namespace PowerApps.Samples
         public static void CreateRequiredRecords(CrmServiceClient service)
         {
             // Create a new account entity. 
-            Account newAccount = new Account { Name = "Example Account" };
+            var newAccount = new Account { Name = "Example Account" };
             _newAccountId = service.Create(newAccount);
         }
 
         private static bool EnableEntityAuditing(CrmServiceClient service, String entityLogicalName, bool flag)
         {
             // Retrieve the entity metadata.
-            RetrieveEntityRequest entityRequest = new RetrieveEntityRequest
+            var entityRequest = new RetrieveEntityRequest
             {
                 LogicalName = entityLogicalName,
                 EntityFilters = EntityFilters.Attributes
             };
 
-            RetrieveEntityResponse entityResponse =
+            var entityResponse =
                 (RetrieveEntityResponse)service.Execute(entityRequest);
 
             // Enable auditing on the entity. By default, this also enables auditing
             // on all the entity's attributes.
+
             EntityMetadata entityMetadata = entityResponse.EntityMetadata;
 
             bool oldValue = entityMetadata.IsAuditEnabled.Value;
             entityMetadata.IsAuditEnabled = new BooleanManagedProperty(flag);
 
-            UpdateEntityRequest updateEntityRequest = new UpdateEntityRequest { Entity = entityMetadata };
+            var updateEntityRequest = new UpdateEntityRequest { Entity = entityMetadata };
 
-            UpdateEntityResponse updateEntityResponse =
+            var updateEntityResponse =
                 (UpdateEntityResponse)service.Execute(updateEntityRequest);
 
             return oldValue;
@@ -107,12 +108,12 @@ namespace PowerApps.Samples
             if (deleteRecords)
             {
                 // Get the list of audit partitions.
-                RetrieveAuditPartitionListResponse partitionRequest =
+                var partitionRequest =
                     (RetrieveAuditPartitionListResponse)service.Execute(new RetrieveAuditPartitionListRequest());
                 AuditPartitionDetailCollection partitions = partitionRequest.AuditPartitionDetailCollection;
 
                 // Create a delete request with an end date earlier than possible.
-                DeleteAuditDataRequest deleteRequest = new DeleteAuditDataRequest();
+                var deleteRequest = new DeleteAuditDataRequest();
                 deleteRequest.EndDate = new DateTime(2000, 1, 1);
 
                 // Check if partitions are not supported as is the case with SQL Server Standard edition.

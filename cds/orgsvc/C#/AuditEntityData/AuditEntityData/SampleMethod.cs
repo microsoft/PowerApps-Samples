@@ -49,7 +49,7 @@ namespace PowerApps.Samples
         private static void DisplayAuditDetails(CrmServiceClient service, AuditDetail detail)
         {
             // Write out some of the change history information in the audit record. 
-            Audit record = (Audit)detail.AuditRecord;
+            var record = (Audit)detail.AuditRecord;
 
             Console.WriteLine("\nAudit record created on: {0}", record.CreatedOn.Value.ToLocalTime());
             Console.WriteLine("Entity: {0}, Action: {1}, Operation: {2}",
@@ -103,13 +103,13 @@ namespace PowerApps.Samples
         private static bool EnableEntityAuditing(CrmServiceClient service, string entityLogicalName, bool flag)
         {
             // Retrieve the entity metadata.
-            RetrieveEntityRequest entityRequest = new RetrieveEntityRequest
+            var entityRequest = new RetrieveEntityRequest
             {
                 LogicalName = entityLogicalName,
                 EntityFilters = EntityFilters.Attributes
             };
 
-            RetrieveEntityResponse entityResponse =
+            var entityResponse =
                 (RetrieveEntityResponse)service.Execute(entityRequest);
 
             // Enable auditing on the entity. By default, this also enables auditing
@@ -119,9 +119,9 @@ namespace PowerApps.Samples
             bool oldValue = entityMetadata.IsAuditEnabled.Value;
             entityMetadata.IsAuditEnabled = new BooleanManagedProperty(flag);
 
-            UpdateEntityRequest updateEntityRequest = new UpdateEntityRequest { Entity = entityMetadata };
+            var updateEntityRequest = new UpdateEntityRequest { Entity = entityMetadata };
 
-            UpdateEntityResponse updateEntityResponse =
+            var updateEntityResponse =
                 (UpdateEntityResponse)service.Execute(updateEntityRequest);
 
             return oldValue;
@@ -138,7 +138,7 @@ namespace PowerApps.Samples
             var Categories = new { PreferredCustomer = 1, Standard = 2 };
 
             // Create a new account entity. 
-            Account newAccount = new Account {Name = "Example Account" };
+            var newAccount = new Account {Name = "Example Account" };
             _newAccountId = service.Create(newAccount);
 
             Console.WriteLine("then updating the account.");
@@ -185,12 +185,12 @@ namespace PowerApps.Samples
             if (deleteRecords)
             {
                 // Get the list of audit partitions.
-                RetrieveAuditPartitionListResponse partitionRequest =
+                var partitionRequest =
                     (RetrieveAuditPartitionListResponse)service.Execute(new RetrieveAuditPartitionListRequest());
                 AuditPartitionDetailCollection partitions = partitionRequest.AuditPartitionDetailCollection;
 
                 // Create a delete request with an end date earlier than possible.
-                DeleteAuditDataRequest deleteRequest = new DeleteAuditDataRequest();
+                var deleteRequest = new DeleteAuditDataRequest();
                 deleteRequest.EndDate = new DateTime(2000, 1, 1);
 
                 // Check if partitions are not supported as is the case with SQL Server Standard edition.

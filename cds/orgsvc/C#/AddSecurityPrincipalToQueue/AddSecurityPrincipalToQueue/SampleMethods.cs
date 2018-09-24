@@ -55,7 +55,7 @@ namespace PowerApps.Samples
                 Private = 1
             };
             // Create a queue instance and set its property values.
-            Queue newQueue = new Queue
+            var newQueue = new Queue
             {
                 Name = "Example Queue",
                 Description = "This is an example queue.",
@@ -67,7 +67,7 @@ namespace PowerApps.Samples
             Console.WriteLine("Created {0}", newQueue.Name);
 
             // Retrieve the default business unit for the creation of the team and role.
-            QueryExpression queryDefaultBusinessUnit = new QueryExpression
+            var queryDefaultBusinessUnit = new QueryExpression
             {
                 EntityName = BusinessUnit.EntityLogicalName,
                 ColumnSet = new ColumnSet("businessunitid"),
@@ -84,12 +84,12 @@ namespace PowerApps.Samples
                 }
             };
 
-            BusinessUnit defaultBusinessUnit =
+            var defaultBusinessUnit =
                 (BusinessUnit)service.RetrieveMultiple(
                 queryDefaultBusinessUnit).Entities[0];
 
             // Create a new example team.
-            Team setupTeam = new Team
+            var setupTeam = new Team
             {
                 Name = "Example Team",
                 BusinessUnitId = new EntityReference(BusinessUnit.EntityLogicalName,
@@ -100,7 +100,7 @@ namespace PowerApps.Samples
             Console.WriteLine("Created {0}", setupTeam.Name);
 
             // Create a new example role.
-            Role setupRole = new Role
+            var setupRole = new Role
             {
                 Name = "Example Role",
                 BusinessUnitId = new EntityReference(BusinessUnit.EntityLogicalName,
@@ -111,7 +111,7 @@ namespace PowerApps.Samples
             Console.WriteLine("Created {0}", setupRole.Name);
 
             // Retrieve the prvReadQueue and prvAppendToQueue privileges.
-            QueryExpression queryQueuePrivileges = new QueryExpression
+            var queryQueuePrivileges = new QueryExpression
             {
                 EntityName = Privilege.EntityLogicalName,
                 ColumnSet = new ColumnSet("privilegeid", "name"),
@@ -145,7 +145,7 @@ namespace PowerApps.Samples
             }
 
             // Add the prvReadQueue and prvAppendToQueue privileges to the example role.
-            AddPrivilegesRoleRequest addPrivilegesRequest = new AddPrivilegesRoleRequest
+            var addPrivilegesRequest = new AddPrivilegesRoleRequest
             {
                 RoleId = _roleId,
                 Privileges = rolePrivileges.ToArray()
@@ -167,13 +167,13 @@ namespace PowerApps.Samples
             bool teamLacksPrivilege = true;
             while (teamLacksPrivilege)
             {
-                RetrieveTeamPrivilegesRequest retrieveTeamPrivilegesRequest =
+                var retrieveTeamPrivilegesRequest =
                     new RetrieveTeamPrivilegesRequest
                     {
                         TeamId = _teamId
                     };
 
-                RetrieveTeamPrivilegesResponse retrieveTeamPrivilegesResponse =
+                var retrieveTeamPrivilegesResponse =
                     (RetrieveTeamPrivilegesResponse)service.Execute(
                     retrieveTeamPrivilegesRequest);
 
