@@ -33,14 +33,14 @@ namespace PowerApps.Samples
                     #region Demonstrate
 
                     // Get a system user to use as the sender.
-                    WhoAmIRequest emailSenderRequest = new WhoAmIRequest();
-                    WhoAmIResponse emailSenderResponse =
+                    var emailSenderRequest = new WhoAmIRequest();
+                    var emailSenderResponse =
                         service.Execute(emailSenderRequest) as WhoAmIResponse;
 
                     // Set trackingId for bulk mail request.
                     Guid trackingId = Guid.NewGuid();
 
-                    SendBulkMailRequest bulkMailRequest = new SendBulkMailRequest()
+                    var bulkMailRequest = new SendBulkMailRequest()
                     {
                         // Create a query expression for the bulk operation to use to retrieve 
                         // the contacts in the email list.
@@ -71,7 +71,7 @@ namespace PowerApps.Samples
                     };
 
                     // Execute the async bulk email request
-                    SendBulkMailResponse resp = (SendBulkMailResponse)
+                    var resp = (SendBulkMailResponse)
                         service.Execute(bulkMailRequest);
 
                     Console.WriteLine("  Sent Bulk Email.");
@@ -85,7 +85,7 @@ namespace PowerApps.Samples
                     // Now that we've executed the bulk operation, we need to retrieve it 
                     // using our tracking Id.
 
-                    QueryByAttribute bulkQuery = new QueryByAttribute()
+                    var bulkQuery = new QueryByAttribute()
                     {
                         EntityName = AsyncOperation.EntityLogicalName,
                         ColumnSet = new ColumnSet(new string[] { "requestid"}),

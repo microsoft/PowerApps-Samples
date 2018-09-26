@@ -10,8 +10,7 @@ namespace PowerApps.Samples
 {
     public partial class SampleProgram
     {
-        public static Guid _connectionRoleId;
-        private static bool prompt = true;
+        
 
         [STAThread] // Added to support UX
         static void Main(string[] args)
@@ -41,7 +40,7 @@ namespace PowerApps.Samples
                     };
 
                     // Create a Connection Role for account and contact
-                    ConnectionRole newConnectionRole = new ConnectionRole
+                    var newConnectionRole = new ConnectionRole
                     {
                         Name = "Example Connection Role",
                         Category = new OptionSetValue(Categories.Business)
@@ -51,7 +50,7 @@ namespace PowerApps.Samples
                     Console.WriteLine("Created {0}.", newConnectionRole.Name);
 
                     // Create a related Connection Role Object Type Code record for Account
-                    ConnectionRoleObjectTypeCode newAccountConnectionRoleTypeCode
+                    var newAccountConnectionRoleTypeCode
                         = new ConnectionRoleObjectTypeCode
                         {
                             ConnectionRoleId = new EntityReference(
@@ -64,7 +63,7 @@ namespace PowerApps.Samples
                         "Created a related Connection Role Object Type Code record for Account.");
 
                     // Create a related Connection Role Object Type Code record for Contact
-                    ConnectionRoleObjectTypeCode newContactConnectionRoleTypeCode
+                    var newContactConnectionRoleTypeCode
                         = new ConnectionRoleObjectTypeCode
                         {
                             ConnectionRoleId = new EntityReference(

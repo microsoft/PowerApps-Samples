@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4A68AF02-0C71-4FA4-B005-78023FE75DA4}</ProjectGuid>
+    <ProjectGuid>{C650F770-934E-45D5-84D4-1922A02742F1}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ConnectionRole</RootNamespace>
-    <AssemblyName>ConnectionRole</AssemblyName>
+    <RootNamespace>RetrieveFieldPermission</RootNamespace>
+    <AssemblyName>RetrieveFieldPermission</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -107,15 +107,12 @@
     <Compile Include="..\..\SampleHelpers.cs">
       <Link>SampleHelpers.cs</Link>
     </Compile>
-    <Compile Include="SampleMethods.cs" />
+    <Compile Include="..\..\SystemUserProvider.cs">
+      <Link>SystemUserProvider.cs</Link>
+    </Compile>
+    <Compile Include="SampleMethod.cs" />
     <Compile Include="SampleProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\..\App.config">
-      <Link>App.config</Link>
-    </None>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="..\..\..\..\LoginUX\ExampleLoginForm.xaml">
@@ -123,6 +120,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\App.config">
+      <Link>App.config</Link>
+    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

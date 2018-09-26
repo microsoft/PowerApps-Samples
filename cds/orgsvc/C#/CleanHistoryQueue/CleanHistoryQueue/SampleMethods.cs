@@ -47,7 +47,7 @@ namespace PowerApps.Samples
         public static void CreateRequiredRecords(CrmServiceClient service)
         {
             // Create a queue instance and set its property values.
-            Queue newQueue = new Queue()
+            var newQueue = new Queue()
             {
                 Name = "Example Queue",
                 Description = "This is an example queue.",
@@ -58,7 +58,7 @@ namespace PowerApps.Samples
             Console.WriteLine("Created {0}.", newQueue.Name);
 
             // Create a phone call activity instance.
-            PhoneCall newPhoneCall = new PhoneCall
+            var newPhoneCall = new PhoneCall
             {
                 Description = "Example Phone Call"
             };
@@ -68,7 +68,7 @@ namespace PowerApps.Samples
 
             // Create a new instance of a queueitem and initialize its 
             // properties.
-            QueueItem item = new QueueItem
+            var item = new QueueItem
             {
                 QueueId = new EntityReference(Queue.EntityLogicalName, _queueId),
                 ObjectId = new EntityReference(PhoneCall.EntityLogicalName, _phoneCallId)
@@ -81,7 +81,7 @@ namespace PowerApps.Samples
             Console.WriteLine("Added phone call entity instance to {0}", newQueue.Name);
 
             // Mark the phone call as completed.
-            SetStateRequest setStatePhoneCall = new SetStateRequest
+            var setStatePhoneCall = new SetStateRequest
             {
                 EntityMoniker = new EntityReference(PhoneCall.EntityLogicalName,
                     _phoneCallId),

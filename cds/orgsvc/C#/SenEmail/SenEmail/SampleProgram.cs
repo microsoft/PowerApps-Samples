@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 
 namespace PowerApps.Samples
 {
-    
-    public partial class SampleProgram
+  public partial  class SampleProgram
     {
         [STAThread] // Added to support UX
         static void Main(string[] args)
@@ -27,22 +26,22 @@ namespace PowerApps.Samples
                     #endregion Set up
                     #region Demonstrate
 
-                    // Retrieve the queueitem with inactive phone calls from a queue            
-                    var removeFromQueueRequest = new RemoveFromQueueRequest
+                    // Use the SendEmail message to send an e-mail message.
+                    var sendEmailreq = new SendEmailRequest
                     {
-                        QueueItemId = _queueItemId
+                        EmailId = emailId,
+                        TrackingToken = "",
+                        IssueSend = true
                     };
-                    service.Execute(removeFromQueueRequest);
 
-
-                    Console.WriteLine("Inactive phonecalls have been deleted from the queue.");
+                    var sendEmailresp = (SendEmailResponse)service.Execute(sendEmailreq);
+                    Console.WriteLine("Sent the e-mail message.");
 
                     #region Clean up
                     CleanUpSample(service);
                     #endregion Clean up
                 }
                 #endregion Demonstrate
-                #endregion Sample Code
                 else
                 {
                     const string UNABLE_TO_LOGIN_ERROR = "Unable to Login to Dynamics CRM";
@@ -57,6 +56,7 @@ namespace PowerApps.Samples
                     }
                 }
             }
+            #endregion Sample Code
             catch (Exception ex)
             {
                 SampleHelpers.HandleException(ex);

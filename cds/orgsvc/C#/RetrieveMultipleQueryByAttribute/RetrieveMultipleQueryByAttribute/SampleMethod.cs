@@ -9,6 +9,8 @@ namespace PowerApps.Samples
 {
    public partial class SampleProgram
     {
+        private static List<Guid> _accountIds = new List<Guid>();
+        private static bool prompt = true;
         /// <summary>
         /// Function to set up the sample.
         /// </summary>
@@ -22,10 +24,8 @@ namespace PowerApps.Samples
                 //The environment version is lower than version 7.1.0.0
                 return;
             }
-            CreateRequiredRecords(service);
-            Console.WriteLine();
-            Console.WriteLine("Creating and sending SendBulkEmail.");
 
+            CreateRequiredRecords(service);
         }
 
         private static void CleanUpSample(CrmServiceClient service)
@@ -38,30 +38,25 @@ namespace PowerApps.Samples
         /// </summary>
         public static void CreateRequiredRecords(CrmServiceClient service)
         {
-            Console.WriteLine("Creating contacts records...");
-
-            var emailContact1 = new Contact()
+            // Create two accounts.
+            var account = new Account
             {
-                FirstName = "Adam",
-                LastName = "Carter",
-                EMailAddress1 = "someone@example.com"
+                Name = "A. Datum Corporation",
+                Address1_StateOrProvince = "Colorado",
+                Address1_Telephone1 = "(206)555-5555",
+                EMailAddress1 = "info@datum.com"
             };
+            _accountIds.Add(service.Create(account));
 
-            // Create the contact1.
-            _contactsIds.Add(service.Create(emailContact1));
-            Console.WriteLine("Contact1 created.");
-
-            var emailContact2 = new Contact()
+            account = new Account
             {
-                FirstName = "Adina",
-                LastName = "Hagege",
-                EMailAddress1 = "someone@example.com"
+                Name = "Adventure Works Cycle",
+                Address1_StateOrProvince = "Washington",
+                Address1_City = "Redmond",
+                Address1_Telephone1 = "(206)555-5555",
+                EMailAddress1 = "contactus@adventureworkscycle.com"
             };
-
-            // Create the contact2.
-            _contactsIds.Add(service.Create(emailContact2));
-            Console.WriteLine("Contact2 created.");
-
+            _accountIds.Add(service.Create(account));
         }
 
         /// <summary>
@@ -78,8 +73,7 @@ namespace PowerApps.Samples
                 // Ask the user if the created entities should be deleted.
                 Console.Write("\nDo you want these entity records deleted? (y/n) [y]: ");
                 String answer = Console.ReadLine();
-                if (answer.StartsWith("y") ||
-                    answer.StartsWith("Y") ||
+                if (answer.StartsWith("y") || answer.StartsWith("Y") ||
                     answer == String.Empty)
                 {
                     toBeDeleted = true;
@@ -92,13 +86,14 @@ namespace PowerApps.Samples
 
             if (toBeDeleted)
             {
-                // Delete the contacts.
-                foreach (var contactId in _contactsIds)
+                // Delete all records created in this sample.
+                foreach (Guid accountId in _accountIds)
                 {
-                    service.Delete(Contact.EntityLogicalName, contactId);
+                    service.Delete(Account.EntityLogicalName, accountId);
                 }
-                Console.WriteLine("Contacts have been deleted.");
+                Console.WriteLine("Entity record(s) have been deleted.");
             }
         }
+
     }
 }

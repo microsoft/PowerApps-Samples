@@ -10,12 +10,7 @@ namespace PowerApps.Samples
 {
    public partial class SampleProgram
     {
-        // Define the IDs needed for this sample.
-        public static Guid _connectionRoleId;
-        public static Guid _connectionId;
-        public static Guid _accountId;
-        public static Guid _contactId;
-        private static bool prompt = true;
+        
         [STAThread] // Added to support UX
         static void Main(string[] args)
         {
@@ -33,7 +28,7 @@ namespace PowerApps.Samples
 
                     // Create a connection between the account and the contact.
                     // Assign a connection role to a record.
-                    Connection newConnection = new Connection
+                    var newConnection = new Connection
                     {
                         Record1Id = new EntityReference(Account.EntityLogicalName,
                             _accountId),

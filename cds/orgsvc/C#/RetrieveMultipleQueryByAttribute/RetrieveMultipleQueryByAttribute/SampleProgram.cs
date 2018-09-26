@@ -1,4 +1,5 @@
-﻿using Microsoft.Crm.Sdk.Messages;
+﻿using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Tooling.Connector;
 using System;
 using System.Collections.Generic;
@@ -8,8 +9,7 @@ using System.Threading.Tasks;
 
 namespace PowerApps.Samples
 {
-    
-    public partial class SampleProgram
+   public partial class SampleProgram
     {
         [STAThread] // Added to support UX
         static void Main(string[] args)
@@ -21,28 +21,46 @@ namespace PowerApps.Samples
                 if (service.IsReady)
                 {
                     #region Sample Code
-                    //////////////////////////////////////////////
+                    /////////////////////////////////////////////
                     #region Set up
                     SetUpSample(service);
                     #endregion Set up
                     #region Demonstrate
 
-                    // Retrieve the queueitem with inactive phone calls from a queue            
-                    var removeFromQueueRequest = new RemoveFromQueueRequest
+                    //  Create query using QueryByAttribute.
+                    var querybyattribute = new QueryByAttribute("account");
+                    querybyattribute.ColumnSet = new ColumnSet("name", "address1_city", "emailaddress1");
+
+                    //  Attribute to query.
+                    querybyattribute.Attributes.AddRange("address1_city");
+
+                    //  Value of queried attribute to return.
+                    querybyattribute.Values.AddRange("Redmond");
+
+                    //  Query passed to service proxy.
+                    EntityCollection retrieved = service.RetrieveMultiple(querybyattribute);
+
+                    System.Console.WriteLine("Query Using QueryByAttribute");
+                    System.Console.WriteLine("===============================");
+
+                    //  Iterate through returned collection.
+                    foreach (var c in retrieved.Entities)
                     {
-                        QueueItemId = _queueItemId
-                    };
-                    service.Execute(removeFromQueueRequest);
+                        System.Console.WriteLine("Name: " + c.Attributes["name"]);
 
+                        if (c.Attributes.Contains("address1_city"))
+                            System.Console.WriteLine("Address: " + c.Attributes["address1_city"]);
 
-                    Console.WriteLine("Inactive phonecalls have been deleted from the queue.");
+                        if (c.Attributes.Contains("emailaddress1"))
+                            System.Console.WriteLine("E-mail: " + c.Attributes["emailaddress1"]);
+                    }
+                    System.Console.WriteLine("===============================");
 
                     #region Clean up
                     CleanUpSample(service);
                     #endregion Clean up
                 }
                 #endregion Demonstrate
-                #endregion Sample Code
                 else
                 {
                     const string UNABLE_TO_LOGIN_ERROR = "Unable to Login to Dynamics CRM";
@@ -57,6 +75,7 @@ namespace PowerApps.Samples
                     }
                 }
             }
+            #endregion Sample Code
             catch (Exception ex)
             {
                 SampleHelpers.HandleException(ex);

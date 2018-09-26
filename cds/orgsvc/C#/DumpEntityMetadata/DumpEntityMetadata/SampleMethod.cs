@@ -1,4 +1,5 @@
-﻿using Microsoft.Xrm.Tooling.Connector;
+﻿using Microsoft.Xrm.Sdk.Metadata;
+using Microsoft.Xrm.Tooling.Connector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,19 @@ using System.Threading.Tasks;
 
 namespace PowerApps.Samples
 {
-    public partial class SampleProgram
+   public partial class SampleProgram
     {
-        public static Guid _connectionRoleId;
+        // Create storage for new attributes being created
+        public static List<AttributeMetadata> addedAttributes;
+
+        // Specify which language code to use in the sample. If you are using a language
+        // other than US English, you will need to modify this value accordingly.
+        // See http://msdn.microsoft.com/en-us/library/0h88fahh.aspx
+        public const int languageCode = 1033;
+
+        // Define the IDs/variables needed for this sample.
+        public int insertedStatusValue;
+
         private static bool prompt = true;
         /// <summary>
         /// Function to set up the sample.
@@ -24,6 +35,7 @@ namespace PowerApps.Samples
                 //The environment version is lower than version 7.1.0.0
                 return;
             }
+
             
         }
 
@@ -31,20 +43,19 @@ namespace PowerApps.Samples
         {
             DeleteRequiredRecords(service, prompt);
         }
-
         /// <summary>
-        /// Deletes any entity records that were created for this sample.
-        /// <param name="prompt">Indicates whether to prompt the user 
-        /// to delete the records created in this sample.</param>
+        /// Deletes/Reverts the record that was created/changed for this sample.
+        /// <param name="prompt">Indicates whether to prompt the user to delete 
+        /// the records created in this sample.</param>
         /// </summary>
-        public static void DeleteRequiredRecords(CrmServiceClient service, bool prompt)
+        public static void DeleteRequiredRecords(CrmServiceClient service ,bool prompt)
         {
             bool deleteRecords = true;
-            
 
             if (prompt)
             {
-                Console.WriteLine("\nDo you want these entity records deleted? (y/n)");
+                Console.WriteLine(
+                    "\nDo you want these entity records to be deleted? (y/n)");
                 String answer = Console.ReadLine();
 
                 deleteRecords = (answer.StartsWith("y") || answer.StartsWith("Y"));
@@ -52,10 +63,9 @@ namespace PowerApps.Samples
 
             if (deleteRecords)
             {
-                service.Delete(ConnectionRole.EntityLogicalName, _connectionRoleId);
 
-                Console.WriteLine("Entity records have been deleted.");
             }
         }
+
     }
 }

@@ -1,5 +1,4 @@
-﻿using Microsoft.Crm.Sdk.Messages;
-using Microsoft.Xrm.Tooling.Connector;
+﻿using Microsoft.Xrm.Tooling.Connector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace PowerApps.Samples
 {
-    
-    public partial class SampleProgram
+   public partial class SampleProgram
     {
         [STAThread] // Added to support UX
         static void Main(string[] args)
@@ -21,28 +19,17 @@ namespace PowerApps.Samples
                 if (service.IsReady)
                 {
                     #region Sample Code
-                    //////////////////////////////////////////////
+                    /////////////////////////////////////////////
                     #region Set up
                     SetUpSample(service);
                     #endregion Set up
                     #region Demonstrate
-
-                    // Retrieve the queueitem with inactive phone calls from a queue            
-                    var removeFromQueueRequest = new RemoveFromQueueRequest
-                    {
-                        QueueItemId = _queueItemId
-                    };
-                    service.Execute(removeFromQueueRequest);
-
-
-                    Console.WriteLine("Inactive phonecalls have been deleted from the queue.");
 
                     #region Clean up
                     CleanUpSample(service);
                     #endregion Clean up
                 }
                 #endregion Demonstrate
-                #endregion Sample Code
                 else
                 {
                     const string UNABLE_TO_LOGIN_ERROR = "Unable to Login to Dynamics CRM";
@@ -57,6 +44,7 @@ namespace PowerApps.Samples
                     }
                 }
             }
+            #endregion Sample Code
             catch (Exception ex)
             {
                 SampleHelpers.HandleException(ex);
@@ -70,6 +58,7 @@ namespace PowerApps.Samples
                 Console.WriteLine("Press <Enter> to exit.");
                 Console.ReadLine();
             }
+
         }
             }
 }
