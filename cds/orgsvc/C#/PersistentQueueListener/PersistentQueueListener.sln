@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2043
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersistentQueueListener", "PersistentQueueListener\PersistentQueueListener.csproj", "{02C4ED19-42A8-4374-A1B3-32B72618E634}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{02C4ED19-42A8-4374-A1B3-32B72618E634}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02C4ED19-42A8-4374-A1B3-32B72618E634}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02C4ED19-42A8-4374-A1B3-32B72618E634}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02C4ED19-42A8-4374-A1B3-32B72618E634}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {356FDBF2-6821-43C6-9D60-A2D8D16A9744}
+	EndGlobalSection
+EndGlobal
