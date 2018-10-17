@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0D548F31-AE16-44AE-9273-76B1CE61766E}</ProjectGuid>
+    <ProjectGuid>{30B25C3B-021A-4E85-A665-63E85657A0E8}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>PowerApps.Samples</RootNamespace>
-    <AssemblyName>SimpleWebApi</AssemblyName>
+    <RootNamespace>FunctionAndActions</RootNamespace>
+    <AssemblyName>FunctionAndActions</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -40,7 +39,7 @@
       <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.29.0\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -56,7 +55,7 @@
     <Compile Include="..\..\SampleHelpers.cs">
       <Link>SampleHelpers.cs</Link>
     </Compile>
-    <Compile Include="SampleMethods.cs" />
+    <Compile Include="SampleMethod.cs" />
     <Compile Include="SampleProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -65,6 +64,7 @@
       <Link>App.config</Link>
     </None>
     <None Include="packages.config" />
+    <None Include="WebAPIFunctionsandActions_1_0_0_0_managed.zip" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
