@@ -23,7 +23,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Demonstrate
 
-1. The `RetrieveAllEntitesRequest` method retrieves the metadata. 
+1. The `RetrieveAllEntitiesRequest` method retrieves the metadata. 
 1. The `StreamWriter` creates an instance of StreamWriter to write text to a file.
 
 ### Clean up
