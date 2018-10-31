@@ -19,9 +19,9 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 1. Checks for the current version of the org.
 1. The `Account` method creates some account records to retrieve duplicates.
 1. The `RetrieveDuplicateRequest` method retrieves the duplicate records. 
-1. The `EnableDupkicateDetectionForOrg` class enables duplicate detection for an organization. 
+1. The `EnableDuplicateDetectionForOrg` class enables duplicate detection for an organization. 
 1. To enable duplicate detection set `IsDuplicateDetectionEnabled = true`.
-1. The `RetrieveEntityRequest` method retrieves the netity metadata. 
+1. The `RetrieveEntityRequest` method retrieves the entity metadata. 
 1. Set `IsDuplicateDetectionEnabled = true` to update the duplicate detection flag.
 1. The `UpdateEntityRequest` updates the entity with duplicate detection set to `true`.
 
