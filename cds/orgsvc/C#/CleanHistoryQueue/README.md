@@ -17,7 +17,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Setup
 
 1. Creates a queue instance and set its property values.
-2. Creates a phone call activity instance and also queueitems instance and intializes its properties.
+2. Creates a phone call activity instance and also queueitems instance and initializes its properties.
 3. Marks the phone call as completed.
 
 ### Demonstrate
