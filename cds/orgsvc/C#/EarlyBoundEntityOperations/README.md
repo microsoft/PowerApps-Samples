@@ -27,7 +27,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 1. Instantiate an account object.
 1. Retrieves the account containing its attributes .
-1. Rettrieves the version number of the account.
+1. Retrieves the version number of the account.
 1. Updates the account with postal1 code attribute. 
 
 
