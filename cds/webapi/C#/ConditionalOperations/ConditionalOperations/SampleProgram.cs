@@ -39,7 +39,7 @@ namespace PowerApps.Samples
                     request.Content = new StringContent(account.ToString(), Encoding.UTF8, "application/json");
 
 
-                    HttpResponseMessage response = client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).Result;
+                    HttpResponseMessage response = client.SendAsync(request, HttpCompletionOption.ResponseContentRead).Result;
 
                     if (response.IsSuccessStatusCode)
                     {
