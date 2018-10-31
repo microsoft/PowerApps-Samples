@@ -9,7 +9,7 @@ See [How to run samples](../../../How-to-run-samples.md) for information about h
 
 ## What this sample does
 
-This sample first enables user access auditing with the logged on user's organization. Next, it creates and modifies an account entity so that audit records are genertated.
+This sample first enables user access auditing with the logged on user's organization. Next, it creates and modifies an account entity so that audit records are generated.
 
 ## How this sample works
 
@@ -17,6 +17,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Setup
 
+1. Checks for the current version of the org.
 1. Creates a new account entity and enables auditing on the new account entity.
 
 ### Demonstrate
