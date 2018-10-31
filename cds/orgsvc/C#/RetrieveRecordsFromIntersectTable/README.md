@@ -18,7 +18,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 1. Checks for the current version of the org. 
 1. The `CreateRequireRecords` method creates entity records that are used by the sample.
-1. The `QueryExpression` message is used to retrieve the deault business unit needed to create the team.
+1. The `QueryExpression` message is used to retrieve the default business unit needed to create the team.
 1. The `WhoAmIRequest` gets the GUID of the current user.
 1. The `Role` message instantiate a role entity record and set its property values.
 1. The `AssociateRequest` assigns the user to the Managers role. 
@@ -27,6 +27,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 1. The `QueryExpression` retrieves the records from an intersect table.
 1. The `RetrieveMultipleRequest` builds the fetch request and obtains the results.
+
 ### Clean up
 
 1. Display an option to delete the records created in the [Setup](#setup).
