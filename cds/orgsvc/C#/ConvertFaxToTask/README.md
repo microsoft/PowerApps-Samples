@@ -1,6 +1,6 @@
 # Convert Fax to Task
 
-This sample shows how to convert a **Fax** to **Task**.
+This sample shows how to convert a **Fax** to a **Task**.
 
 ## How to run this sample
 
@@ -17,6 +17,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Setup
 
+1. Checks for the current  version of the org. 
 1. Creates required data that this sample requires.
 
 ### Demonstrate
@@ -27,4 +28,5 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Clean up
 
 1. Displays an option to delete all the data created in the sample.
-2. The deletion is optional in case you want to examine the data created by the sample. You can manually delete the data to achieve same results.
+
+The deletion is optional in case you want to examine the data created by the sample. You can manually delete the data to achieve same results.
