@@ -18,7 +18,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 1. Checks for the current version of the org.
 2. The `Queue` method creates a private queue instance and set its property values.
-3. The `QueueItem` method creates a new instance of queueitem and intialize its properties.
+3. The `QueueItem` method creates a new instance of queueitem and initialize its properties.
 
 ### Demonstrate
 
