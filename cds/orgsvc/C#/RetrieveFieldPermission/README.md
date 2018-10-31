@@ -25,7 +25,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 1. Checks for the current version of the org.
 1. Gets the user information that you have created manually in **Office 365**.
-1. The `QueryExpresion` method retrieves the security role needed to assign to the user.
+1. The `QueryExpression` method retrieves the security role needed to assign to the user.
 1. The `Team` method instantiate a team entity record and set its property values.
 
 ### Demonstrate
