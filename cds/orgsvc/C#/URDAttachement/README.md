@@ -8,7 +8,7 @@ See [How to run samples](../../../How-to-run-samples.md) for information about h
 
 ## What this sample does
 
-The `IOrganizationService` methods is intended to be used in a scenario where it provides progrommatic access to the metadata and data for an organization.
+The `IOrganizationService` methods is intended to be used in a scenario where it provides programmatic access to the metadata and data for an organization.
 
 ## How this sample works
 
