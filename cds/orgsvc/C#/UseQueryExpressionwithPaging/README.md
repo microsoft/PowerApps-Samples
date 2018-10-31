@@ -21,7 +21,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Demonstrate
 
 1. The `ConditionExpress` defines the condition expression for retrieving records.
-1. The `OrderExpresion` method defines the order expresion to retrieve the records.
+1. The `OrderExpression` method defines the order expression to retrieve the records.
 
 ### Clean up
 
