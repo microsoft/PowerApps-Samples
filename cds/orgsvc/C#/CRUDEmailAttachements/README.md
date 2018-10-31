@@ -27,8 +27,8 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Demonstrate
 
 1. The `ActivityMimeAttachment` method creates three email attachments. 
-1. The `Retrieve` method retrieves an atachment including its id, subject, filename and body.
-1. The `Update` method updates the filename of the existing attachemnt.
+1. The `Retrieve` method retrieves an attachment including its id, subject, filename and body.
+1. The `Update` method updates the filename of the existing attachment.
 
 
 ### Clean up
