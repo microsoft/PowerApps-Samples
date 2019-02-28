@@ -64,9 +64,7 @@ namespace Microsoft.Dynamics365.CustomerEngagement.Samples
         public static async Task<HttpResponseMessage> SendMessage(WebApiConfiguration webConfig,
             HttpMethod httpMethod, string messageUri, string body = null)
         {
-            // Get the access token that is required for authentication. Note that this sample does
-            // not refresh the token. However, in real code you should check the token for expiration
-            // and refresh when needed.
+            // Get the access token that is required for authentication.
             var accessToken = await GetAccessToken(webConfig);
 
             // Create an HTTP message with the required WebAPI headers populated.
