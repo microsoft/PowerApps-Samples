@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Configuration;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
-
 
 namespace Microsoft.Dynamics365.CustomerEngagement.Samples
 {
@@ -48,9 +49,19 @@ namespace Microsoft.Dynamics365.CustomerEngagement.Samples
 
             // Send a WebAPI message request for the top 3 account names.
             var response = SendMessage(webConfig, HttpMethod.Get,
-                webConfig.serviceRoot + "accounts?$select=name&$top=3").Result.Content.ReadAsStringAsync();
+                webConfig.serviceRoot + "accounts?$select=name&$top=3").Result;
 
-            Console.WriteLine(response.Result);
+            // Format and display the JSON response.
+            if (response.IsSuccessStatusCode)
+            {  
+                JObject body = JObject.Parse(response.Content.ReadAsStringAsync().Result);
+                Console.WriteLine(body.ToString());
+            }
+            else
+            {
+                Console.WriteLine("The request failed with a status of '{0}'",
+                       response.ReasonPhrase);
+            }
         }
 
         /// <summary>
@@ -74,11 +85,11 @@ namespace Microsoft.Dynamics365.CustomerEngagement.Samples
             message.Headers.Add("OData-MaxVersion", "4.0");
             message.Headers.Add("OData-Version", "4.0");
             message.Headers.Add("Prefer", "odata.include-annotations=\"*\"");
-            message.Headers.Add("Authorization", $"Bearer {accessToken}");
+            message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             // Add any body content specified in the passed parameter.   
             if (body != null)
-                message.Content = new StringContent(body, UnicodeEncoding.UTF8, "application/json; odata.metadata=minimal");
+                message.Content = new StringContent(body, UnicodeEncoding.UTF8, "application/json");
 
             // Send the message to the WebAPI. 
             return await client.SendAsync(message);
