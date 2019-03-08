@@ -10,48 +10,48 @@ using System.Threading.Tasks;
 namespace Microsoft.Dynamics365.CustomerEngagement.Samples
 {
     /// <summary>
-    /// Contains the D365 web service and Azure app registration information read
-    /// from the app.config file in this project.
+    /// Provides the D365 web service and Azure app registration information read
+    /// from the App.config file in this project.
     /// </summary>
-    /// <remarks>You must provide your own values for the app settings in the app.config
+    /// <remarks>You must provide your own values for the app settings in the App.config
     /// file before running this sample.</remarks>
     class WebApiConfiguration
     {
-        public string clientId;
-        public string secret;
-        public string tenantId;
-        public string resourceUri;
-        public string serviceRoot;
+        public string ClientId { get; set; }
+        public string Secret { get; set; }
+        public string TenantId { get; set; }
+        public string ResourceUri { get; set; }
+        public string ServiceRoot { get; set; }
 
         public WebApiConfiguration()
         {
             var appSettings = ConfigurationManager.AppSettings;
 
-            clientId    = appSettings["Client-ID"];
-            secret      = appSettings["Client-Secret"];
-            tenantId    = appSettings["Tenant-ID"];
-            resourceUri = appSettings["Resource-URL"];
-            serviceRoot = appSettings["Service-Root"];
+            ClientId    = appSettings["Client-ID"];
+            Secret      = appSettings["Client-Secret"];
+            TenantId    = appSettings["Tenant-ID"];
+            ResourceUri = appSettings["Resource-URL"];
+            ServiceRoot = appSettings["Service-Root"];
         }
     }
 
     /// <summary>
     /// Single tenant service-to-service (S2S) sample. This sample makes use of an
     /// app registration in Azure to access a D365 server using WebAPI calls without 
-    /// requiring the user's logon credentials.
+    /// requiring a user's logon credentials.
     /// </summary>
     class SingleTenantS2S
     {
         static void Main(string[] args)
         {
-            // Obtain the app registration and service configuration values from the app.config file.
+            // Obtain the app registration and service configuration values from the App.config file.
             var webConfig = new WebApiConfiguration();
 
             // Send a WebAPI message request for the top 3 account names.
-            var response = SendMessage(webConfig, HttpMethod.Get,
-                webConfig.serviceRoot + "accounts?$select=name&$top=3").Result;
+            var response = SendMessageAsync(webConfig, HttpMethod.Get,
+                webConfig.ServiceRoot + "accounts?$select=name&$top=3").Result;
 
-            // Format and display the JSON response.
+            // Format and then output the JSON response to the console.
             if (response.IsSuccessStatusCode)
             {  
                 JObject body = JObject.Parse(response.Content.ReadAsStringAsync().Result);
@@ -72,7 +72,7 @@ namespace Microsoft.Dynamics365.CustomerEngagement.Samples
         /// <param name="messageUri">The URI of the WebAPI endpoint plus ODATA parameters.</param>
         /// <param name="body">The message body; otherwise, null.</param>
         /// <returns></returns>
-        public static async Task<HttpResponseMessage> SendMessage(WebApiConfiguration webConfig,
+        public static async Task<HttpResponseMessage> SendMessageAsync(WebApiConfiguration webConfig,
             HttpMethod httpMethod, string messageUri, string body = null)
         {
             // Get the access token that is required for authentication.
@@ -84,7 +84,7 @@ namespace Microsoft.Dynamics365.CustomerEngagement.Samples
 
             message.Headers.Add("OData-MaxVersion", "4.0");
             message.Headers.Add("OData-Version", "4.0");
-            message.Headers.Add("Prefer", "odata.include-annotations=\"*\"");
+            message.Headers.Add("Prefer", "odata.include-annotations=*");
             message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             // Add any body content specified in the passed parameter.   
@@ -102,10 +102,10 @@ namespace Microsoft.Dynamics365.CustomerEngagement.Samples
         /// <returns></returns>
         public static async Task<string> GetAccessToken(WebApiConfiguration webConfig)
         {
-            var credentials = new ClientCredential(webConfig.clientId, webConfig.secret);
+            var credentials = new ClientCredential(webConfig.ClientId, webConfig.Secret);
             var authContext = new AuthenticationContext(
-                "https://login.microsoftonline.com/" + webConfig.tenantId);
-            var result = await authContext.AcquireTokenAsync(webConfig.resourceUri, credentials);
+                "https://login.microsoftonline.com/" + webConfig.TenantId);
+            var result = await authContext.AcquireTokenAsync(webConfig.ResourceUri, credentials);
 
             return result.AccessToken;
         }
