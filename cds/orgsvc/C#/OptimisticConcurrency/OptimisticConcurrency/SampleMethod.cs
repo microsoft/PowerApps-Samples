@@ -58,6 +58,7 @@ namespace PowerApps.Samples
         {
             bool deleteRecords = true;
 
+           
             if (prompt)
             {
                 Console.WriteLine("\nDo you want these entity records deleted? (y/n) [y]: ");

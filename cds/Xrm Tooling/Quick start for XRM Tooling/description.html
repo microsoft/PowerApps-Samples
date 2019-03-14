@@ -1,0 +1,253 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head><link rel="stylesheet" type="text/css" href="https://uhf.microsoft.com/mscc/statics/mscc-0.3.7.min.css" xmlns="http://www.w3.org/1999/xhtml" />
+<link rel="stylesheet" type="text/css" href="https://i-msdn.sec.s-msft.com/Combined.css?resources=0:Header,0:HeaderFooterSprite,0:Header.NonMtps;/Areas/Centers/Themes/StandardDevCenter/Content:0&amp;amp;v=CB96F7CEDBAE47A56E9691FA2880BB6B" xmlns="http://www.w3.org/1999/xhtml" />
+<link type="text/css" rel="stylesheet" xmlns="http://www.w3.org/1999/xhtml" />
+<link rel="stylesheet" type="text/css" href="https://i-msdn.sec.s-msft.com/Combined.css?resources=0:Footer,0:HeaderFooterSprite,0:Footer.NonMtps,1:NewFooterSock,1:LinkList;/Areas/Centers/Themes/StandardDevCenter/Content:0,/Areas/Epx/Themes/Base/Content:1&amp;amp;v=796167C22D661E9581B896B28BA7A0E8" xmlns="http://www.w3.org/1999/xhtml" />
+<link type="text/css" rel="stylesheet" xmlns="http://www.w3.org/1999/xhtml" />
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Quick start for XRM Tooling</title>
+        <link href="description/Galleries.css" type="text/css" rel="Stylesheet" /><link href="description/Layout.css" type="text/css" rel="Stylesheet" /><link href="description/Brand.css" type="text/css" rel="Stylesheet" />
+        <link href="https://i1.code.msdn.s-msft.com/content/common/iframedescription.css" rel="Stylesheet" type="text/css" />
+        <script src="https://i1.code.msdn.s-msft.com/content/common/offline.js" type="text/javascript"></script>
+        <style type="text/css">
+            #projectInfo {
+                overflow: auto;
+            }
+            #longDesc {
+                clear:both;
+                margin: 25px 0 10px 0;
+            }
+
+            #SampleIndexList{
+                margin-left: 15px;
+            }
+        </style>
+    </head>
+<body>
+    <div id="offlineDescription">
+        <h1>Quick start for XRM Tooling</h1>
+        <br/>
+        <div id="projectInfo">
+            <div class="section">
+                    <div class="itemBarLong tagsContainer">
+                        <label for="Technologies">Technologies</label>
+                        <div id="Technologies">
+                            Microsoft Dynamics CRM, Dynamics 365 Customer Engagement
+                        </div>
+                    </div>
+                    <div class="itemBarLong tagsContainer">
+                        <label for="Topics">Topics</label>
+                        <div id="Topics">
+                            library assembly, Microsoft Dynamics CRM SDK
+                        </div>
+                    </div>
+                <div class="itemBarLong">
+                    <label for="Platforms">Platforms</label>
+                    <div id="Platforms">
+                        Cloud, Data
+                    </div>
+                </div>
+                <div class="itemBarLong">
+                    <label for="Requirements">Requirements</label>
+                    <div id="Requirements">
+                        
+                    </div>
+                </div>
+                <div class="itemBar">
+                    <label for="LastUpdated">Primary language</label>
+                    <div id="LastUpdated">en-US</div>
+                </div>
+                <div class="itemBar">
+                    <label for="LastUpdated">Updated</label>
+                    <div id="LastUpdated">12/12/2017</div>
+                </div>
+                <div class="itemBarLong">
+                    <label for="License">License</label>
+                    <div id="License">
+                        <a href="license.rtf">MS-LPL</a></div>
+                </div>
+                <div class="itemBar">
+                    <div class="viewonlinecont">
+                        <a data-link="online" href="https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c">View this sample online</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+                   
+<script type="text/javascript">
+    function initializePage() {
+        var otherTabClass = 'otherTab';
+        var hiddenPreClass = 'hidden';
+
+        var htmlDecode = function(encodedData) {
+            var decodedData = "";
+            if (encodedData) {
+                var div = document.createElement('div');
+                div.innerHTML = encodedData;
+                decodedData = div.firstChild.nodeValue.replace( /\\r\\n/ig , '\r\n');
+            }
+            return decodedData;
+        };
+                
+        Galleries.iterateElem(Galleries.findElem(null, 'div', 'scriptcode'), function (index, scriptBlock) {
+            var titleElem = Galleries.findElem(scriptBlock, 'div', 'title')[0];
+            var labelElems = Galleries.findElem(titleElem, 'span');
+            if (labelElems.length == 0) {
+                labelElems = titleElem;
+            }
+            var languageSpans = Galleries.findElem(scriptBlock, 'span', 'hidden');
+            var pres = Galleries.findElem(scriptBlock, 'pre');
+            if (languageSpans.length > 0 && pres.length > 1) {
+                Galleries.iterateElem(labelElems, function(index, elem) {
+                    var codePre = pres[index];
+                    var labelSpan = elem;
+                    var languageSpan = languageSpans[index];
+                            
+                    elem.code = codePre.innerHTML.replace( /(\r(\n)?)|((\r)?\n)/ig , '\\r\\n');
+                            
+                    codePre.className = codePre.className.replace(hiddenPreClass, '');
+                            
+                    languageSpan.parentNode.removeChild(languageSpan);
+                });
+
+                pres = Galleries.findElem(scriptBlock, 'pre');
+                Galleries.iterateElem(labelElems, function(index, elem) {
+                    var codePre = pres[index];
+                    var labelSpan = elem;
+                    if (index == 0) {
+                        scriptBlock.activeTab = 0;
+                    }
+                    else {
+                        labelSpan.className += otherTabClass;
+                        codePre.className += hiddenPreClass;
+                    }
+                    Galleries.attachEventHandler(labelSpan, 'click', function(e) {
+                        var activeTab = scriptBlock.activeTab;
+                        labelElems[activeTab].className += otherTabClass;
+                        pres[activeTab].className += hiddenPreClass;
+
+                        codePre.className = codePre.className.replace(hiddenPreClass, '');
+                        labelSpan.className = labelSpan.className.replace(otherTabClass, '');
+                        scriptBlock.activeTab = index;
+                    });
+                });
+
+                var preview = Galleries.findElem(scriptBlock, 'div', 'preview');
+                if (preview.length == 0) {
+                    preview.push(pres[pres.length - 1]);
+                }
+                Galleries.iterateElem(preview, function(index, elem) {
+                    elem.parentNode.removeChild(elem);
+                });
+
+                if (window.clipboardData && clipboardData.setData) {
+                    var copyLink = document.createElement('a');
+                    copyLink.href = 'javascript:void(0);';
+                    copyLink.className = 'copyCode';
+                    copyLink.innerHTML = 'Copy code';
+                    Galleries.attachEventHandler(copyLink, 'click', function (e) {
+                        clipboardData.setData("Text", htmlDecode(labelElems[scriptBlock.activeTab].code));
+                        return false;
+                    });
+                    scriptBlock.insertBefore(copyLink, scriptBlock.childNodes[0]);
+                }
+            }
+        });
+    }
+
+    Galleries.onWindowLoad(function(){
+        initializePage();
+    });
+
+</script>
+<div id="longDesc">
+    
+<div class="content">
+<div>
+<div class="topic">
+<h1 class="title">Quick start for XRM Tooling</h1>
+<div id="mainSection">
+<div id="mainBody">
+<p>Applies To: Dynamics 365 (online), Dynamics 365 (on-premises), Dynamics CRM 2016, Dynamics CRM Online</p>
+<div class="introduction">
+<p>The QuickStart sample is a Microsoft .NET Framework managed code sample that shows how to connect to a Microsoft Dynamics 365 instance by using the XRM Tooling APIs, and perform basic create, update, retrieve, and delete operations on an entity. For more
+ information about XRM Tooling, see <a href="https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/https://docs.microsoft.com/en-us/dynamics365/customer-engagement/developer/build-windows-client-applications-xrm-tools">
+Build Windows client applications using the XRM tools</a>.</p>
+<p>Click to see the following files:</p>
+<ul>
+<li><a href="https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/sourcecode?fileId=183598&amp;pathId=621084766">CrmLogin.xaml.cs</a>
+</li><li><a href="https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/sourcecode?fileId=183598&amp;pathId=788624547">AssemblyInfo.cs</a><strong>&nbsp;</strong><em>&nbsp;</em>
+</li><li><a href="https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/sourcecode?fileId=183598&amp;pathId=1434552886">Resources.Designer.cs</a><strong>&nbsp;</strong><em>&nbsp;</em>
+</li><li><a href="https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/sourcecode?fileId=183598&amp;pathId=1523264864">Settings.Designer.cs</a>
+</li><li><a href="https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/sourcecode?fileId=183598&amp;pathId=1001513950">App.xaml.cs</a><strong></strong><em></em>
+</li><li><a href="https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/sourcecode?fileId=183598&amp;pathId=1270463228">MainWindow.xaml.cs</a><strong></strong><em></em>
+</li></ul>
+<p>More information: <a class="selected" href="https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/https://docs.microsoft.com/en-us/dynamics365/customer-engagement/developer/xrm-tooling/sample-quick-start-xrm-tooling-api" tabindex="0">
+Sample: Quick start for XRM Tooling API</a> and <a href="https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/https://docs.microsoft.com/en-us/dynamics365/customer-engagement/developer/xrm-tooling/use-xrm-tooling-classes-generated-code-generation-tool" tabindex="0">
+Use XRM tooling with classes generated using the code-generation tool</a> <strong>
+&nbsp;</strong><em>&nbsp;</em></p>
+</div>
+<div class="section">
+<div class="section"></div>
+</div>
+<div class="section">
+<h2 class="heading">Demonstrates</h2>
+<div class="section">
+<ul class="unordered">
+<li>
+<p>The sample code is built using the <strong>WPF Application for Dynamics 365</strong> SDK template that provides a common login control with built-in support for authentication and credential caching and reuse. For more information about the common login
+ control and how to use the SDK template in Microsoft Visual Studio, see <a href="https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/https://docs.microsoft.com/en-us/dynamics365/customer-engagement/developer/xrm-tooling/use-xrm-tooling-common-login-control-client-applications">
+Use the XRM tooling common login control in your client applications</a>.</p>
+</li><li>
+<p>No helper code is used to establish a connection to Dynamics 365.</p>
+</li><li>
+<p>After connecting to Dynamics 365, the sample performs basic create, update, retrieve, and delete operations on an account entity.</p>
+</li><li>
+<p>Stores user credentials in a configuration file (Default_QuickStartXRMToolingWPFClient.exe.config) in the c:\Users\<em>&lt;username&gt;</em>\AppData\Roaming\Microsoft\QuickStartXRMToolingWPFClient folder when the sample is run for the first time, and thereafter
+ prompts the user to either use the stored or specify new credentials at runtime to sign in to Dynamics 365.</p>
+</li><li>
+<p>Generates the following log files, if any issue occurs, to aid troubleshooting:</p>
+<ul class="unordered">
+<li>
+<p>Login_ErrorLog.log: To report sign-in errors. This file is available at C:\Users\<em>&lt;username&gt;</em>\AppData\Roaming\Microsoft\QuickStartXRMToolingWPFClient.</p>
+</li><li>
+<p>QuickStartXRMToolingWPFClient.log: To report operational errors. This file is available at the same location as the executable, that is in the debug folder of your Microsoft Visual Studio project.</p>
+</li></ul>
+</li></ul>
+</div>
+<div class="LW_CollapsibleArea_Container">
+<div class="LW_CollapsibleArea_TitleDiv"><span class="LW_CollapsibleArea_Title">To run the sample</span></div>
+<div class="section">
+<ol class="ordered">
+<li>
+<p>Open the QuickStartXRMToolingWPFClient.sln file in Visual Studio.</p>
+</li><li>
+<p>Press <strong>F5</strong> to compile and run the program.</p>
+</li></ol>
+</div>
+</div>
+</div>
+<div class="section">
+<div class="codeSnippetContainer" id="code-snippet-1">
+<div class="code">
+<div class="endscriptcode"></div>
+<div class="endscriptcode">More information:&nbsp;<a href="https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/https://docs.microsoft.com/en-us/dynamics365/customer-engagement/developer/tutorials-resources-sdk">Tutorials and resources for learning about development for Microsoft Dynamics 365</a>.</div>
+</div>
+</div>
+</div>
+<p>&nbsp;</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+
+    </div>
+</body>
+</html>

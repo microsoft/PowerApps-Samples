@@ -2,6 +2,7 @@
 using System;
 using System.Configuration;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -526,6 +527,50 @@ namespace PowerApps.Samples
                             disassocResponse1.ReasonPhrase);
                         throw new Exception(string.Format("Failed to disassociate entities for reason: {0}.", disassocResponse1.Content));
                     }
+
+                    #region Section 5: Delete sample entities  
+                    Console.WriteLine("\n--Section 5 started--");
+                    //Delete all the created sample entities.  Note that explicit deletion is not required  
+                    // for contact tasks because these are automatically cascade-deleted with owner.  
+                    Console.Write("\nDo you want these entity records deleted? (y/n) [y]: ");
+                    String answer = Console.ReadLine();
+                    answer = answer.Trim();
+                    if (!(answer.StartsWith("y") || answer.StartsWith("Y") || answer == String.Empty))
+                    { entityUris.Clear(); }
+
+                    HttpResponseMessage deleteResponse1;
+                    int successCnt = 0, notFoundCnt = 0, failCnt = 0;
+                    HttpContent lastBadResponseContent = null;
+                    foreach (string ent in entityUris)
+                    {
+                        deleteResponse1 = client.DeleteAsync(ent).Result;
+                        if (deleteResponse1.IsSuccessStatusCode) //200-299 
+                        {
+                            Console.WriteLine("Entity deleted: \n{0}.", ent);
+                            successCnt++;
+                        }
+                        else if (deleteResponse1.StatusCode == HttpStatusCode.NotFound) //404 
+                        {
+                            //May have been deleted by another user or via cascade operation 
+                            Console.WriteLine("Entity not found: {0}.", ent);
+                            notFoundCnt++;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Failed to delete: {0}.", ent);
+                            failCnt++;
+                            lastBadResponseContent = deleteResponse1.Content;
+                        }
+                    }
+                    Console.WriteLine("Entities deleted: {0}, not found: {1}, delete " +
+                        "failures: {2}. \n", successCnt, notFoundCnt, failCnt);
+                    entityUris.Clear();
+                    if (failCnt > 0)
+                    {
+                        //Throw last failure 
+                        throw new Exception(string.Format("Failed to delete entities for reason: {0}.", disassocResponse1.Content));
+                    }
+                    #endregion Section 5: Delete sample entities
                 }
             }
             catch (Exception ex)
