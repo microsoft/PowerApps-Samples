@@ -98,16 +98,16 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\..\LoginUX\ExampleLoginForm.xaml.cs">
+    <Compile Include="..\..\..\LoginUX\ExampleLoginForm.xaml.cs">
       <Link>LoginUX\ExampleLoginForm.xaml.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\orgsvc\C#\MyOrganizationSdkTypes.cs">
+    <Compile Include="..\..\..\orgsvc\C#\MyOrganizationSdkTypes.cs">
       <Link>MyOrganizationSdkTypes.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\orgsvc\C#\OptionSets.cs">
+    <Compile Include="..\..\..\orgsvc\C#\OptionSets.cs">
       <Link>OptionSets.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\orgsvc\C#\SampleHelpers.cs">
+    <Compile Include="..\..\..\orgsvc\C#\SampleHelpers.cs">
       <Link>SampleHelpers.cs</Link>
     </Compile>
     <Compile Include="SampleMethods.cs" />
@@ -115,13 +115,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\App.config">
+    <None Include="..\..\..\App.config">
       <Link>App.config</Link>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="..\..\..\..\LoginUX\ExampleLoginForm.xaml">
+    <Page Include="..\..\..\LoginUX\ExampleLoginForm.xaml">
       <Link>LoginUX\ExampleLoginForm.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
