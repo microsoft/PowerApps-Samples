@@ -2,10 +2,11 @@
 
 ## What is it?
 This sample demonstrates how to interact with the *PowerApps checker* 
-services. This service is used by the *Solution checker* feature in the 
-*PowerApps Maker Portal*. The included PowerShell module, 
-*PowerApps.Checker*, is a sample script module and it contains what is 
-needed to utilize. It includes a psm1 file that has the script logic.
+service. This service is used by the *Solution checker* feature in the 
+*PowerApps Maker Portal* along with the tooling for ISV and Dynamics 365 package
+certifications. This sample PowerShell module, *PowerApps.Checker*, is a script 
+module that provides an example of interacting with this service. The logic is 
+contained in the psm1 file making it readily available for viewing.
 
 ## How to install
 1. Download or clone the repo so that you have a local copy
