@@ -13,6 +13,7 @@ namespace PowerApps.Samples
         //These sample application registration values are available for all online instances.
         public static string clientId = "51f81489-12ee-4a9e-aaae-a2591f45987d";
         public static string redirectUrl = "app://58145B91-0C36-4500-8554-080854F2AC97";
+       
 
         public static string GetParameterValueFromConnectionString(string connectionString, string parameter)
         {
