@@ -7,7 +7,7 @@ See [How to run samples](../../../How-to-run-samples.md) for information about h
 
 ## What this sample does
 
-The `AddRecurrenceRequest` message is intended to be used in a scenario where it contins the data tthat is needed to add recurrence information to an existing appointment.
+The `AddRecurrenceRequest` message is intended to be used in a scenario where it contains the data that is needed to add recurrence information to an existing appointment.
 
 ## How this sample works
 

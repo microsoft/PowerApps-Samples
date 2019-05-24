@@ -28,7 +28,7 @@ namespace PowerApps.Samples
                     #region Demonstrate
 
                     // Retrieve the queueitem with inactive phone calls from a queue            
-                    RemoveFromQueueRequest removeFromQueueRequest = new RemoveFromQueueRequest
+                    var removeFromQueueRequest = new RemoveFromQueueRequest
                     {
                         QueueItemId = _queueItemId
                     };

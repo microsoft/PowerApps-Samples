@@ -30,17 +30,17 @@ namespace PowerApps.Samples
                     #region Demonstrate
 
                     // Get the current user information
-                    WhoAmIRequest userRequest = new WhoAmIRequest();
-                    WhoAmIResponse userResponse = (WhoAmIResponse)service.Execute(userRequest);
+                    var userRequest = new WhoAmIRequest();
+                    var userResponse = (WhoAmIResponse)service.Execute(userRequest);
 
                     // Create the ActivityParty instance.
-                    ActivityParty party = new ActivityParty
+                    var party = new ActivityParty
                     {
                         PartyId = new EntityReference(SystemUser.EntityLogicalName, userResponse.UserId)
                     };
 
                     // Create the appointment instance.
-                    Appointment appointment = new Appointment
+                    var appointment = new Appointment
                     {
                         Subject = "Test Appointment",
                         Description = "Test Appointment created using the BookRequest Message.",
@@ -52,11 +52,11 @@ namespace PowerApps.Samples
                     };
 
                     // Use the Book request message.
-                    BookRequest book = new BookRequest
+                    var book = new BookRequest
                     {
                         Target = appointment
                     };
-                    BookResponse booked = (BookResponse)service.Execute(book);
+                    var booked = (BookResponse)service.Execute(book);
                     _appointmentId = booked.ValidationResult.ActivityId;
 
                     // Verify that the appointment has been scheduled.

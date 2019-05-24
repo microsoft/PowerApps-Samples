@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2043
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetrieveValidStatusTransitions", "RetrieveValidTransitions\RetrieveValidStatusTransitions.csproj", "{7738A56D-24DF-45FA-84F4-F97FE4C5D86E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7738A56D-24DF-45FA-84F4-F97FE4C5D86E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7738A56D-24DF-45FA-84F4-F97FE4C5D86E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7738A56D-24DF-45FA-84F4-F97FE4C5D86E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7738A56D-24DF-45FA-84F4-F97FE4C5D86E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DBF0FA13-B1B1-4116-896F-85DC4D085CC2}
+	EndGlobalSection
+EndGlobal

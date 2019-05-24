@@ -10,7 +10,6 @@ See [How to run samples](../../../How-to-run-samples.md) for information about h
 
 The `IOrganizationService.RetrieveMultiple` method is intended to be used in a scenario where it retrieves a collection of records.
 
-
 ## How this sample works
 
 In order to simulate the scenario described in [What this sample does](#what-this-sample-does), the sample will do the following:

@@ -60,7 +60,7 @@ namespace PowerApps.Samples
                         Cc = String.Empty,
                         Importance = "high",
                         Body = "This message will create an email activity.",
-                        MessageId = Guid.NewGuid().ToString(),
+                        //MessageId = Guid.NewGuid().ToString(),
                         SubmittedBy = "",
                         ReceivedOn = DateTime.Now
                     };

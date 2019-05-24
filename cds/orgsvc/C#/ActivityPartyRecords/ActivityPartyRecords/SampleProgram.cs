@@ -11,9 +11,7 @@ namespace PowerApps.Samples
 {
    public partial class SampleProgram
     {
-        private static Guid[] _contactIds = new Guid[3];
-        private Dictionary<Guid, String> _recordIds = new Dictionary<Guid, String>();
-        private static bool prompt = true;
+       
         [STAThread] // Added to support UX
         static void Main(string[] args)
         {
@@ -31,7 +29,7 @@ namespace PowerApps.Samples
                     #endregion Set up
                     #region Demonstrate
 
-                    OrganizationServiceContext orgContext = new OrganizationServiceContext(service);
+                    var orgContext = new OrganizationServiceContext(service);
                     // Retrieve the Contact records that we created previously.
                     List<Contact> contacts = (from c in orgContext.CreateQuery<Contact>()
                                               where c.Address1_City == "Sammamish"
@@ -74,7 +72,7 @@ namespace PowerApps.Samples
                         ScheduledEnd = DateTime.Now + TimeSpan.FromDays(5),
                         Description = @"Greetings, Mr. Andreshak,
 
-This is a sample letter activity as part of the Microsoft Dynamics CRM SDK.
+This is a sample letter activity as part of the SDK Samples.
 
 Sincerely,
 Mary Kay Andersen
@@ -88,7 +86,9 @@ cc: Denise Smith",
 
                     Console.WriteLine("and Letter Activity created.");
 
-                    DeleteRequiredRecords(service, prompt);
+                    #region Clean up
+                    CleanUpSample(service);
+                    #endregion Clean up
 
                 }
                 #endregion Demonstrate

@@ -1,6 +1,6 @@
 # Detect solution dependencies
 
-This sample shows how to how to detect dependencies before you delete a solution component.
+This sample shows how to detect dependencies before you delete a solution component.
 
 ## How to run this sample
 

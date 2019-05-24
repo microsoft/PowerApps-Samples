@@ -40,7 +40,7 @@ namespace PowerApps.Samples
         {
             Console.WriteLine("Creating contacts records...");
 
-            Contact emailContact1 = new Contact()
+            var emailContact1 = new Contact()
             {
                 FirstName = "Adam",
                 LastName = "Carter",
@@ -51,7 +51,7 @@ namespace PowerApps.Samples
             _contactsIds.Add(service.Create(emailContact1));
             Console.WriteLine("Contact1 created.");
 
-            Contact emailContact2 = new Contact()
+            var emailContact2 = new Contact()
             {
                 FirstName = "Adina",
                 LastName = "Hagege",

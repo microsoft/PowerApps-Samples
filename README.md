@@ -1,5 +1,10 @@
+# PowerApps Samples
 
-# Contributing
+Welcome to the samples repo for PowerApps.
+
+For PowerApps developer documentation, see [PowerApps for developers](https://docs.microsoft.com/powerapps/#pivot=home&panel=developer).
+
+## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us

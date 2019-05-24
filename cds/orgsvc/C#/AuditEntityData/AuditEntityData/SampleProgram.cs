@@ -36,7 +36,7 @@ namespace PowerApps.Samples
                     Guid orgId = ((WhoAmIResponse)service.Execute(new WhoAmIRequest())).OrganizationId;
 
                     // Next, retrieve the organization's record.
-                    Organization org = service.Retrieve(Organization.EntityLogicalName, orgId,
+                    var org = service.Retrieve(Organization.EntityLogicalName, orgId,
                         new ColumnSet(new string[] { "organizationid", "isauditenabled" })) as Organization;
 
                     // Finally, enable auditing on the organization.
@@ -49,11 +49,12 @@ namespace PowerApps.Samples
                     #endregion Enable Auditing for an Account
                     #region Retrieve the Record Change History
                     Console.WriteLine("Retrieving the account change history.\n");
+                    
                     // Retrieve the audit history for the account and display it.
-                    RetrieveRecordChangeHistoryRequest changeRequest = new RetrieveRecordChangeHistoryRequest();
+                    var changeRequest = new RetrieveRecordChangeHistoryRequest();
                     changeRequest.Target = new EntityReference(Account.EntityLogicalName, _newAccountId);
 
-                    RetrieveRecordChangeHistoryResponse changeResponse =
+                    var changeResponse =
                         (RetrieveRecordChangeHistoryResponse)service.Execute(changeRequest);
 
                     AuditDetailCollection details = changeResponse.AuditDetailCollection;
@@ -68,7 +69,7 @@ namespace PowerApps.Samples
                     #region Retrieve the Attribute Change History
 
                     // Update the Telephone1 attribute in the Account entity record.
-                    Account accountToUpdate = new Account();
+                    var accountToUpdate = new Account();
                     accountToUpdate.AccountId = _newAccountId;
                     accountToUpdate.Telephone1 = "123-555-5555";
                     service.Update(accountToUpdate);

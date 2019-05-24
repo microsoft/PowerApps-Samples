@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<products>
+  <product>
+    <Code>Cam01</Code>
+    <Name>Nam01Updated</Name>
+    <Category>Cat01</Category>
+    <Make>Widget1</Make>
+  </product>
+  <product>
+    <Code>Ody01</Code>
+    <Name>Nam02Updated</Name>
+    <Category>Cat02</Category>
+    <Make>Widget2</Make>
+  </product>
+  <product>
+    <Code>Civ01</Code>
+    <Name>Nam03Updated</Name>
+    <Category>Cat03</Category>
+    <Make>Widget2</Make>
+  </product>
+  <product>
+    <Code>Rav01</Code>
+    <Name>Nam04Updated</Name>
+    <Category>Cat04</Category>
+    <Make>Widget1</Make>
+  </product>
+  <product>
+    <Code>Maz01</Code>
+    <Name>Nam05Updated</Name>
+    <Category>Cat05</Category>
+    <Make>Widget3</Make>
+  </product>
+  <product>
+    <Code>Leaf06</Code>
+    <Name>Nam06</Name>
+    <Category>Cat06</Category>
+    <Make>Widget4</Make>
+  </product>
+</products>
+

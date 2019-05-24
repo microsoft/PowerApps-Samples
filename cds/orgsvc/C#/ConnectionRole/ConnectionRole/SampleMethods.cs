@@ -9,6 +9,8 @@ namespace PowerApps.Samples
 {
     public partial class SampleProgram
     {
+        public static Guid _connectionRoleId;
+        private static bool prompt = true;
         /// <summary>
         /// Function to set up the sample.
         /// </summary>

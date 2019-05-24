@@ -12,6 +12,12 @@ namespace PowerApps.Samples
     
    public partial class SampleProgram
     {
+        // Define the IDs needed for this sample.
+        public static Guid _connectionRoleId;
+        public static Guid _connectionId;
+        public static Guid _accountId;
+        public static Guid _contactId;
+        private static bool prompt = true;
         /// <summary>
         /// Function to set up the sample.
         /// </summary>
@@ -44,7 +50,7 @@ namespace PowerApps.Samples
         public static void CreateRequiredRecords(CrmServiceClient service)
         {
             // Create a Connection Role for account and contact
-            ConnectionRole newConnectionRole = new ConnectionRole
+            var newConnectionRole = new ConnectionRole
             {
                 Name = "Example Connection Role",
                 Category = new OptionSetValue((int)connectionrole_category.Business)
@@ -54,7 +60,7 @@ namespace PowerApps.Samples
             Console.WriteLine("Created {0}.", newConnectionRole.Name);
 
             // Create a related Connection Role Object Type Code record for Account
-            ConnectionRoleObjectTypeCode newAccountConnectionRoleTypeCode
+            var newAccountConnectionRoleTypeCode
                 = new ConnectionRoleObjectTypeCode
                 {
                     ConnectionRoleId = new EntityReference(
@@ -68,7 +74,7 @@ namespace PowerApps.Samples
                 );
 
             // Create a related Connection Role Object Type Code record for Contact
-            ConnectionRoleObjectTypeCode newContactConnectionRoleTypeCode
+            var newContactConnectionRoleTypeCode
                 = new ConnectionRoleObjectTypeCode
                 {
                     ConnectionRoleId = new EntityReference(
@@ -82,7 +88,7 @@ namespace PowerApps.Samples
                 );
 
             // Associate the connection role with itself.
-            AssociateRequest associateConnectionRoles = new AssociateRequest
+            var associateConnectionRoles = new AssociateRequest
             {
                 Target = new EntityReference(ConnectionRole.EntityLogicalName,
                     _connectionRoleId),
@@ -104,12 +110,12 @@ namespace PowerApps.Samples
             Console.WriteLine("Associated the connection role with itself.");
 
             // Create an Account
-            Account setupAccount = new Account { Name = "Example Account" };
+            var setupAccount = new Account { Name = "Example Account" };
             _accountId = service.Create(setupAccount);
             Console.WriteLine("Created {0}.", setupAccount.Name);
 
             // Create a Contact
-            Contact setupContact = new Contact { LastName = "Example Contact" };
+            var setupContact = new Contact { LastName = "Example Contact" };
             _contactId = service.Create(setupContact);
             Console.WriteLine("Created {0}.", setupContact.LastName);
 

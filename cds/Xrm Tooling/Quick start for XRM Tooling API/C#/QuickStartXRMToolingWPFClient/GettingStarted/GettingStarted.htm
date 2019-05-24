@@ -1,0 +1,302 @@
+﻿<!DOCTYPE HTML>
+<!-- saved from url=(0054)https://msdn.microsoft.com/en-us/library/dn689071.aspx -->
+<!DOCTYPE html PUBLIC "" ""><HTML lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml"><HEAD><META 
+content="IE=11.0000" http-equiv="X-UA-Compatible">
+<LINK href="https://msdn.microsoft.com/en-us/library/dn689071.aspx" rel="canonical"> 
+        
+<META http-equiv="Content-Type" content="text/html; charset=utf-8"><TITLE>Use 
+the XRM tooling common login control in your client applications</TITLE> 
+<META name="DCS.dcsuri" content="/en-us/library/dn689071(d=default,l=en-us,v=crm.7).aspx"> 
+<META name="NormalizedUrl" content="https://msdn.microsoft.com/en-us/library/dn689071(d=default,l=en-us,v=crm.7).aspx"> 
+<META name="ms.normalizedurl" content="https://msdn.microsoft.com/en-us/library/dn689071(d=default,l=en-us,v=crm.7).aspx"> 
+<META name="VotingContextUrl" content="https://msdn.microsoft.com/en-us/library/dn689071(d=default,l=en-us,v=crm.7).aspx"> 
+<META name="MN" content="61C41DCF-11:41:18 AM"> 
+<META name="Search.ShortId" content="dn689071"> 
+<META name="ms.shortidmsdn" content="dn689071"> 
+<META name="Ms.Locale" content="en-us"> 
+<META name="ms.prodver" content="CRM.7"> 
+<META name="ms.contentlang" content="EN"> 
+<META name="ms.lang" content="EN"> 
+<META name="ms.loc" content="US"> 
+<META name="ms.sitever" content="2015.02.26.3"> 
+<META name="ms.assetid" content="f77b2a20-0a30-4211-a1d9-74923d3eeae1"> 
+<META name="ms.auth" content="0">             <LINK href="support/Combined.css" 
+rel="stylesheet" type="text/css">
+<META name="GENERATOR" content="MSHTML 11.00.9600.17631"></HEAD>     
+<BODY class="library IE IE11">
+<DIV id="page"><LINK rel="stylesheet" type="text/css">         <INPUT id="isHeaderBleeding" type="hidden" value="true"> 
+    
+<DIV class="ltr msdn" id="ux-header" dir="ltr"><HEADER><SPAN 
+id="moveDrawer"></SPAN>             <SPAN id="singleCol"></SPAN>             
+<SPAN id="doubleCol"></SPAN>             
+<DIV class="row">
+<DIV class="top">
+<DIV class="left"><A class="msdnLogoImg" 
+href="https://msdn.microsoft.com/en-us"><IMG src="support/microsoftLogoForHeader.png"> 
+                            </A></DIV>
+<DIV class="right">
+
+<DIV class="auxNav">
+
+
+<DIV id="Fragment_SocialLinks" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="SocialLinks">
+</DIV></DIV></DIV></DIV>
+<DIV class="bottom">
+<DIV class="left">
+<DIV id="Fragment_SiteLogo" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="SiteLogo">
+<DIV class="LinkWithImage topImage"><A id="SiteLogo_2152_1" href="https://msdn.microsoft.com/"><IMG 
+id="msdnLogo-black" src="support/dn610975.msdnLogo-black.jpg" 
+xmlns="">       <SPAN></SPAN>     </A>   </DIV></DIV>
+</DIV>
+    </DIV></DIV></HEADER>   
+  </DIV>
+<DIV id="body">
+<DIV class="content" id="content">
+<DIV xmlns="http://www.w3.org/1999/xhtml">
+<DIV class="topic" xmlns="http://www.w3.org/1999/xhtml" xmlns:cs="http://msdn.microsoft.com/en-us/" 
+xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mtps="http://msdn2.microsoft.com/mtps">
+<H1 class="title">Use the XRM tooling common login control in your client 
+applications</H1>
+    <A href="http://go.microsoft.com/fwlink/p/?LinkID=400508">Online Version</A>
+<DIV id="mainSection">
+<DIV id="mainBody">
+<P></P>
+<P>The Microsoft Dynamics&nbsp;CRM&nbsp;SDK provides you with a template for 
+Microsoft Visual Studio that enables you to use the common login control in your 
+client applications. The code for CRM authentication, credential storage and 
+retrieval, and diagnostic logging is built into the template so that you can 
+quickly leverage these capabilities in your Windows client applications for CRM. 
+The common login control is an implementation of the <A href="https://msdn.microsoft.com/en-us/library/microsoft.xrm.tooling.crmconnectcontrol.aspx">Microsoft.Xrm.Tooling.CrmConnectControl</A>, 
+and the control resembles the following image.</P><IMG title="XRM Tooling common login control" 
+id="880a7974-1c2f-4606-8248-ef754a9a2c08" alt="XRM Tooling common login control" 
+src="support/IC726475.png" xmlns="">       
+<P></P>
+<DIV>
+<H2 class="LW_CollapsibleArea_TitleDiv">
+<DIV><A title="Collapse" class="LW_CollapsibleArea_TitleAhref" role="button" 
+href="javascript:void(0)"><SPAN class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></SPAN><SPAN 
+class="LW_CollapsibleArea_Title">In This Topic</SPAN></A>
+<DIV class="LW_CollapsibleArea_HrDiv">
+<HR class="LW_CollapsibleArea_Hr">
+</DIV></DIV></H2>
+<DIV class="sectionblock">
+<P><A 
+href="https://msdn.microsoft.com/en-us/library/dn689071.aspx#Prereq">Prerequisites</A> 
+        </P>
+<P><A href="https://msdn.microsoft.com/en-us/library/dn689071.aspx#NewProjectUsingTemplate">Create 
+a WPF application using the common login control template</A>         </P>
+<P><A href="https://msdn.microsoft.com/en-us/library/dn689071.aspx#Add">Add the 
+common login control template to your existing WPF application</A>         
+</P></DIV></DIV><A id="Prereq"></A>       
+<H2 class="heading">Prerequisites</H2>
+<DIV class="section" id="sectionSection1">
+<UL>
+  <LI class="unordered">															.NET Framework 4.5.2							 <BR><BR></LI>
+  <LI class="unordered">															Microsoft Visual Studio 2012, Visual 
+  Studio 2013, or Visual Studio 2015<BR><BR></LI>
+  <LI class="unordered">							Nuget Package Manager for <A href="http://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c">Visual 
+  Studio 2012</A>, <A href="http://visualstudiogallery.msdn.microsoft.com/4ec1526c-4a8c-4a84-b702-b21a8f5293ca">Visual 
+  Studio 2013</A>, or <A href="http://visualstudiogallery.msdn.microsoft.com/4ec1526c-4a8c-4a84-b702-b21a8f5293ca">Visual 
+  Studio 2015</A><BR><BR></LI>
+  <LI class="unordered">															Microsoft Dynamics&nbsp;CRM&nbsp;SDK 
+  templates for Visual Studio that contains the common login control template. 
+  You can get it in one of the following ways: <BR><BR>
+  <UL>
+    <LI class="unordered"><A href="http://go.microsoft.com/fwlink/p/?LinkId=400925">Download</A> 
+    the CRM SDK template from Visual Studio gallery, and double-click the 
+    <CODE>CRMSDKTemplates.vsix</CODE> file to install the template in Visual 
+    Studio.<BR><BR></LI>
+    <LI class="unordered"><A href="http://go.microsoft.com/fwlink/p/?LinkId=512122">Download</A> 
+    and extract the CRM SDK package. The templates file, CRMSDKTemplates.vsix, 
+    is located in the SDK\Templates folder. Double-click the 
+    <CODE>CRMSDKTemplates.vsix</CODE> file to install the template in Visual 
+    Studio.<BR><BR></LI></UL></LI></UL></DIV><A id="NewProjectUsingTemplate"></A>    
+   
+<H2 class="heading">Create a WPF application using the common login control 
+template</H2>
+<DIV class="section" id="sectionSection2">
+<P>Here is a quick way to create a Windows Presentation Foundation (WPF) 
+application that leverages the common login control and the underlying code for 
+authentication, credential storage and reuse, and default tracing or 
+logging.</P>
+<DIV class="subSection">
+<OL class="ordered">
+  <LI>
+  <P>Start Microsoft Visual Studio, and create a new project.</P></LI>
+  <LI>
+  <P>In the <STRONG>New Project</STRONG> dialog box:</P>
+  <OL class="ordered">
+    <LI>											From the list of installed templates, expand <STRONG>Visual 
+    C#</STRONG>, and select <STRONG>CRM SDK Templates</STRONG>.<BR><BR></LI>
+    <LI>											Ensure that <STRONG>.NET Framework 4.5.2</STRONG> is 
+    selected.<BR><BR></LI>
+    <LI>											Select <STRONG>WPF Application for CRM</STRONG>.<BR><BR></LI>
+    <LI>											Specify the name and location of the project, and click 
+    <STRONG>OK</STRONG>.<BR><BR></LI></OL><IMG title="WPF Application for CRM template" 
+  id="d6d0b49c-c112-46b7-ad70-ec1bb0a7015d" alt="WPF Application for CRM template" 
+  src="support/IC755649.png" xmlns="">             </LI>
+  <LI>
+  <P>To test the project:</P>
+  <OL class="ordered">
+    <LI>											Save the project and press F5 or click <STRONG>Debug</STRONG> 
+    &gt; <STRONG>Start Debugging</STRONG> to verify if the project compiles 
+    successfully. On successful compilation, you’ll see a MainWindow with 
+    <STRONG>Login to CRM</STRONG> button. Click the button to display the common 
+    login control.<BR><BR></LI>
+    <LI>											Test the authentication by providing your credentials to 
+    connect to CRM, and then click <STRONG>Login</STRONG>. A message displays 
+    your CRM connection status.<BR><BR></LI></OL></LI></OL></DIV>
+<P>For a sample that uses the common login control template to connect to CRM 
+and perform various operations, see <A href="https://msdn.microsoft.com/en-us/library/dn689019.aspx">Sample: 
+Quick start for XRM Tooling API</A>.</P>
+</DIV><A id="Add"></A>       
+<H2 class="heading">Add the common login control template to your existing WPF 
+application</H2>
+<DIV class="section" id="sectionSection3">
+<P>If you already have a WPF client application, you can easily add the common 
+login control template to it to leverage the uniform sign-in experience and the 
+underlying code for CRM authentication, credential storage and reuse, and 
+default tracing or logging. In this case, you must create a control in the user 
+interface of your existing client application to call the common login control, 
+instantiate an instance of the CRM connection object, and then use the 
+connection object to perform various operations in CRM.</P>
+<DIV class="subSection">
+<OL class="ordered">
+  <LI>
+  <P>Open an existing WPF application project in Visual Studio. For this 
+  example, let’s assume that the name of your WPF application project is 
+  SampleWPFApp.</P></LI>
+  <LI>
+  <P>Add the common login control template to your project.</P>
+  <OL class="ordered">
+    <LI>											In the <STRONG>Solution Explorer</STRONG> pane, right-click 
+    the project name, and click <STRONG>Add</STRONG> &gt; <STRONG>New 
+    Item</STRONG>.<BR><BR></LI>
+    <LI>											In the <STRONG>Add New Item</STRONG> dialog box, from the 
+    list of installed templates, expand <STRONG>Visual C#</STRONG>, and select 
+    <STRONG>CRM SDK Templates</STRONG>. Click <STRONG>CRM Login Form for WPF 
+    Applications</STRONG>, and click <STRONG>OK</STRONG>.<BR><BR><IMG title="Add the common login control template" 
+    id="9609f8ea-75a6-49ff-80bf-e6e935b5cbc5" alt="Add the common login control template" 
+    src="support/IC755650.png" xmlns=""></LI></OL></LI>
+  <LI>
+  <P>The newly added <STRONG>CrmLoginForm1.xaml</STRONG> login control is 
+  displayed in the XAML designer area. If it doesn’t, double-click the 
+  <STRONG>CrmLoginForm1.xaml</STRONG> file in the <STRONG>Solution 
+  Explorer</STRONG> pane.</P><IMG title="Verify that the login control renders properly" 
+  id="1373b9c3-6d41-402e-98f6-7c18e75977ce" alt="Verify that the login control renders properly" 
+  src="support/IC726478.png" xmlns="">             </LI>
+  <LI>
+  <P>You must now call the newly added login control from your application. To 
+  do this, add a <STRONG>Button</STRONG> control on your MainWindow.xaml file, 
+  and set the name and content to <STRONG>btnSignIn</STRONG> and <STRONG>Sign in 
+  to CRM</STRONG> respectively.</P><IMG title="Add a control to call the login form" 
+  id="3ca899d2-a1be-4b6c-8f4d-2b7d134b5c91" alt="Add a control to call the login form" 
+  src="support/IC726479.png" xmlns="">             </LI>
+  <LI>
+  <P>Double-click the button to add code for the click event of the 
+  <STRONG>btnSignIn</STRONG> button in the MainWindow.xaml.cs file.</P></LI>
+  <LI>
+  <P>Add the following sample code in the click event of the 
+  <STRONG>btnSignIn</STRONG> button to call the CrmLoginForm1 control, and 
+  create an instance of the CRM connection object.</P>
+  <DIV class="codeSnippetContainer" id="code-snippet-1" xmlns="">
+  <DIV class="codeSnippetContainerTabs"></DIV>
+  <DIV class="codeSnippetContainerCodeContainer">
+  <DIV class="codeSnippetToolBar">
+  <DIV class="codeSnippetToolBarText"><A name="CodeSnippetCopyLink" title="Copy to clipboard." 
+  style="display: none;" href="javascript:if (window.epx.codeSnippet)window.epx.codeSnippet.copyCode('CodeSnippetContainerCode_8a424441-84ba-4477-a296-0382614b8b33');">Copy</A> 
+              </DIV></DIV>
+  <DIV class="codeSnippetContainerCode" id="CodeSnippetContainerCode_8a424441-84ba-4477-a296-0382614b8b33" 
+  dir="ltr">
+  <DIV style="color: black;">
+<PRE>// Establish the Login control.
+CRMLoginForm1 ctrl = new CRMLoginForm1();
+
+// Wire event to login response. 
+ctrl.ConnectionToCrmCompleted += ctrl_ConnectionToCrmCompleted;
+
+// Show the login control. 
+ctrl.ShowDialog();
+
+// Handle the returned CRM connection object.
+// On successful connection, display the CRM version and connected org name 
+if (ctrl.CrmConnectionMgr != null &amp;&amp; ctrl.CrmConnectionMgr.CrmSvc != null &amp;&amp; ctrl.CrmConnectionMgr.CrmSvc.IsReady)
+{
+    MessageBox.Show("Connected to CRM! Version: " + ctrl.CrmConnectionMgr.CrmSvc.ConnectedOrgVersion.ToString() + 
+    " Org: " + ctrl.CrmConnectionMgr.CrmSvc.ConnectedOrgUniqueName, "Connection Status");
+
+    // Perform your actions here
+}
+else
+{
+    MessageBox.Show("Cannot connect; try again!", "Connection Status");
+}
+</PRE></DIV></DIV></DIV></DIV></LI>
+  <LI>
+  <P>Add the definition of the <CODE>ctrl_ConnectionToCrmCompleted</CODE> event 
+  below the click event of the button:</P>
+  <DIV class="codeSnippetContainer" id="code-snippet-2" xmlns="">
+  <DIV class="codeSnippetContainerTabs"></DIV>
+  <DIV class="codeSnippetContainerCodeContainer">
+  <DIV class="codeSnippetToolBar">
+  <DIV class="codeSnippetToolBarText"><A name="CodeSnippetCopyLink" title="Copy to clipboard." 
+  style="display: none;" href="javascript:if (window.epx.codeSnippet)window.epx.codeSnippet.copyCode('CodeSnippetContainerCode_74ad173e-0dac-4007-acb1-a76107c9c4cc');">Copy</A> 
+              </DIV></DIV>
+  <DIV class="codeSnippetContainerCode" id="CodeSnippetContainerCode_74ad173e-0dac-4007-acb1-a76107c9c4cc" 
+  dir="ltr">
+  <DIV style="color: black;">
+<PRE>private void ctrl_ConnectionToCrmCompleted(object sender, EventArgs e)
+{
+    if (sender is CRMLoginForm1)
+    {
+        this.Dispatcher.Invoke(() =&gt;
+        {
+            ((CRMLoginForm1)sender).Close();
+        });
+    }
+}
+</PRE></DIV></DIV></DIV></DIV></LI>
+  <LI>
+  <P>This is how your MainWindow.xaml.cs file appears after adding code from the 
+  previous two steps:</P><IMG title="Sample code" id="331d9136-943d-416b-8436-fb57e29f9c9c" 
+  alt="Sample code" src="support/IC726480.png" xmlns="">            
+   </LI>
+  <LI>
+  <P>To test the project:</P>
+  <OL class="ordered">
+    <LI>											Save the project and press F5 or click <STRONG>Debug</STRONG> 
+    &gt; <STRONG>Start Debugging</STRONG> to verify if the project compiles 
+    successfully. On successful compilation, you will see a MainWindow with the 
+    new <STRONG>Sign In to CRM</STRONG> button. Click it to display the common 
+    login control.<BR><BR></LI>
+    <LI>											Test the authentication by providing your credentials to 
+    connect to CRM, and then click <STRONG>Login</STRONG>. If successful, a 
+    message appears stating the version and the organization name that you are 
+    connected to. Click <STRONG>OK</STRONG> to close the message.<BR><BR><IMG 
+    title="Project test results" id="a1c762c3-cddc-4ae1-9f79-c94da603193f" alt="Project test results" 
+    src="support/IC755651.png" xmlns=""></LI>
+    <LI>											If you click <STRONG>Sign In to CRM</STRONG> again, the 
+    application prompts you to either choose the saved credentials from the last 
+    sign-in activity, or to re-enter the new credentials.<BR><BR><IMG title="Stored credentials" 
+    id="a378b181-f744-4b44-80b8-937b147d6417" alt="Stored credentials" src="support/IC726482.png" 
+    xmlns=""></LI></OL></LI></OL></DIV></DIV>
+<H2 class="heading"><SPAN id="seeAlsoNoToggle">See Also</SPAN>       </H2>
+<DIV class="section" id="seeAlsoSection">
+<H4 class="subHeading">Tasks</H4><A href="https://msdn.microsoft.com/en-us/library/dn689019.aspx">Sample: 
+Quick start for XRM Tooling API</A>         <BR>
+<H4 class="subHeading">Concepts</H4><A href="https://msdn.microsoft.com/en-us/library/dn689057.aspx">Build 
+Windows client applications using the XRM tools</A>         <BR><BR></DIV></DIV>
+<P></P>	Microsoft Dynamics CRM 2015 and Microsoft Dynamics CRM Online	 <BR><A 
+href="mailto:mscrmdf@microsoft.com?subject=Use the XRM tooling common login control in your client applications (/1:SDK Content/2:V7.0/3:V7.0.0/4:f77b2a20-0a30-4211-a1d9-74923d3eeae1/5:none/6:en-us/7:Both/8:CRM)">
+				Send comments about this topic to Microsoft.	 </A><BR><A href="https://msdn.microsoft.com/en-us/library/gg490658.aspx">© 
+2014 Microsoft Corporation. All rights reserved.   </A></DIV></DIV></DIV>
+<DIV class="libraryMemberFilter">
+<DIV class="filterContainer"><SPAN>Show:</SPAN>         <LABEL><INPUT class="libraryFilterInherited" 
+type="checkbox" checked="checked" value="Inherit">Inherited         </LABEL>     
+    <LABEL><INPUT class="libraryFilterProtected" type="checkbox" checked="checked" 
+value="Protected">Protected         </LABEL>     </DIV></DIV><INPUT id="libraryMemberFilterEmptyWarning" type="hidden" value="There are no members available with your current filter settings."> 
+ </DIV></DIV>
+
+ </BODY></HTML>

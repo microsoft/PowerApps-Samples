@@ -30,6 +30,7 @@ namespace PowerApps.Samples
                     // Enable auditing on the organization and for user access by editing the
                     // organization's settings.
                     // First, get the organization's ID from the system user record.
+
                     var whoAmIReq = new WhoAmIRequest();
                     var whoAmIRes = (WhoAmIResponse)service.Execute(whoAmIReq);
                     Guid orgId = whoAmIRes.OrganizationId;

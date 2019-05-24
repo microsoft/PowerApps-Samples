@@ -24,14 +24,22 @@ namespace PowerApps.Samples
                 if (service.IsReady)
                 {
                     #region Sample Code
+<<<<<<< HEAD
                     //////////////////////////////////////////////
+=======
+                    /////////////////////////////////////////////
+>>>>>>> e17f0bedd03f33aec18be3f488aee58b5c2fbc6a
                     #region Set up
                     SetUpSample(service);
                     #endregion Set up
                     #region Demonstrate
 
                     // Create Field Security Profile.
+<<<<<<< HEAD
                     FieldSecurityProfile managersProfile = new FieldSecurityProfile();
+=======
+                    var managersProfile = new FieldSecurityProfile();
+>>>>>>> e17f0bedd03f33aec18be3f488aee58b5c2fbc6a
                     managersProfile.Name = "Managers";
                     profileId = service.Create(managersProfile);
                     Console.Write("Created Profile, ");
@@ -42,9 +50,15 @@ namespace PowerApps.Samples
                         Target = new EntityReference(FieldSecurityProfile.EntityLogicalName,
                             profileId),
                         RelatedEntities = new EntityReferenceCollection()
+<<<<<<< HEAD
                         {
                             new EntityReference(Team.EntityLogicalName, teamId)
                         },
+=======
+        {
+            new EntityReference(Team.EntityLogicalName, teamId)
+        },
+>>>>>>> e17f0bedd03f33aec18be3f488aee58b5c2fbc6a
                         Relationship = new Relationship("teamprofiles_association")
                     };
                     service.Execute(teamToProfile);
@@ -55,9 +69,15 @@ namespace PowerApps.Samples
                         Target = new EntityReference(FieldSecurityProfile.EntityLogicalName,
                             profileId),
                         RelatedEntities = new EntityReferenceCollection()
+<<<<<<< HEAD
                         {
                             new EntityReference(SystemUser.EntityLogicalName, userId)
                         },
+=======
+        {
+            new EntityReference(SystemUser.EntityLogicalName, userId)
+        },
+>>>>>>> e17f0bedd03f33aec18be3f488aee58b5c2fbc6a
                         Relationship = new Relationship("systemuserprofiles_association")
                     };
                     service.Execute(userToProfile);
@@ -93,7 +113,11 @@ namespace PowerApps.Samples
                     Console.Write("Entity Created, ");
 
                     // Add privileges for the Tweet entity to the Marketing Role.
+<<<<<<< HEAD
                     RolePrivilege[] privileges = new RolePrivilege[3];
+=======
+                    var privileges = new RolePrivilege[3];
+>>>>>>> e17f0bedd03f33aec18be3f488aee58b5c2fbc6a
 
                     // SDK: prvCreateActivity
                     privileges[0] = new RolePrivilege();
@@ -116,7 +140,11 @@ namespace PowerApps.Samples
                         RoleId = roleId,
                         Privileges = privileges
                     };
+<<<<<<< HEAD
                     AddPrivilegesRoleResponse response =
+=======
+                    var response =
+>>>>>>> e17f0bedd03f33aec18be3f488aee58b5c2fbc6a
                         (AddPrivilegesRoleResponse)service.Execute(request);
 
                     // Create custom identity attribute.
@@ -134,7 +162,11 @@ namespace PowerApps.Samples
                         },
                         EntityName = "new_tweet"
                     };
+<<<<<<< HEAD
                     CreateAttributeResponse identityAttributeResponse =
+=======
+                    var identityAttributeResponse =
+>>>>>>> e17f0bedd03f33aec18be3f488aee58b5c2fbc6a
                         (CreateAttributeResponse)service.Execute(attrReq);
                     identityId = identityAttributeResponse.AttributeId;
                     Console.Write("Identity Created, ");
@@ -178,6 +210,7 @@ namespace PowerApps.Samples
                         EntityName = FieldSecurityProfile.EntityLogicalName,
                         ColumnSet = new ColumnSet("fieldsecurityprofileid"),
                         LinkEntities =
+<<<<<<< HEAD
                         {
                             new LinkEntity
                             {
@@ -192,6 +225,22 @@ namespace PowerApps.Samples
                                 }
                             }
                         }
+=======
+        {
+            new LinkEntity
+            {
+                LinkFromEntityName = FieldSecurityProfile.EntityLogicalName,
+                LinkToEntityName = SystemUser.EntityLogicalName,
+                LinkCriteria =
+                {
+                    Conditions =
+                    {
+                        new ConditionExpression("systemuserid", ConditionOperator.Equal, userId)
+                    }
+                }
+            }
+        }
+>>>>>>> e17f0bedd03f33aec18be3f488aee58b5c2fbc6a
                     };
 
                     // Execute the query and obtain the results.
@@ -214,15 +263,27 @@ namespace PowerApps.Samples
                     DataCollection<Entity> dc;
 
                     // Retrieve the attributes.
+<<<<<<< HEAD
                     QueryByAttribute qba = new QueryByAttribute(FieldPermission.EntityLogicalName);
+=======
+                    var qba = new QueryByAttribute(FieldPermission.EntityLogicalName);
+>>>>>>> e17f0bedd03f33aec18be3f488aee58b5c2fbc6a
                     qba.AddAttributeValue("fieldsecurityprofileid", profileId);
                     qba.ColumnSet = new ColumnSet("attributelogicalname");
 
                     dc = service.RetrieveMultiple(qba).Entities;
                     Console.Write("Attributes Retrieved. ");
+<<<<<<< HEAD
                     #region Clean up
                     CleanUpSample(service);
                     #endregion Clean up
+=======
+
+                    #region Clean up
+                    CleanUpSample(service);
+                    #endregion Clean up
+
+>>>>>>> e17f0bedd03f33aec18be3f488aee58b5c2fbc6a
                 }
                 #endregion Demonstrate
                 else

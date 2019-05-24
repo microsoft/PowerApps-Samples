@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2043
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetrieveMultipleQueryByAttribute", "RetrieveMultipleQueryByAttribute\RetrieveMultipleQueryByAttribute.csproj", "{1B87EAAF-613D-47A0-BE33-29E0471F27AD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1B87EAAF-613D-47A0-BE33-29E0471F27AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B87EAAF-613D-47A0-BE33-29E0471F27AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B87EAAF-613D-47A0-BE33-29E0471F27AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B87EAAF-613D-47A0-BE33-29E0471F27AD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F2377918-FF74-49BE-B7BE-5B37FF24BACD}
+	EndGlobalSection
+EndGlobal
