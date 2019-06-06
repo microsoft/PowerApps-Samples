@@ -8,14 +8,14 @@ This sample is an ASP.NET based project and is used to validate the ID token iss
 ```
 <add key="Microsoft.Dynamics.AllowedPortal" value="portalUrl"/>
 ```
-2. If the token was fetched from Portal using a ClientId, replace the value of ValidAudience in Startup.cs (L. 103) with the valid clientId registered on Dynamics 365.
+2. If the token was fetched from Portal using a ClientId, replace the value of ValidAudience in Startup.cs (L. 103) with a valid ClientId that is registered with Dynamics 365.
 3. If the token was not fetched using a ClientId, set the value of ValidateAudience in Startup.cs to `false` . (L. 102)
 4. Build the project to fetch all packages from Nuget Store.
 
 ## Token Validation
 
-1. Make a GET request to ServerURL (e.g: `http://localhost:60717/api/external/WhoAmI`) with Authorization Header having the value "Bearer TokenFetchedFromPortal"
- eg: Key: Authorization Value: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJ
+1. Make a `GET` request to ServerURL (e.g: `http://localhost:60717/api/external/WhoAmI`) with Authorization Header having the value "Bearer TokenFetchedFromPortal".
+For example: `Key: Authorization Value: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJ`.
 2. You can use a request composer tool like Postman to test this.
 3. To decode the ID token, you can visit https://jwt.io.
 
