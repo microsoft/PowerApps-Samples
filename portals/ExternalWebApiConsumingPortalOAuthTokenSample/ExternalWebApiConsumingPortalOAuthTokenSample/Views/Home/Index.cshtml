@@ -1,0 +1,19 @@
+﻿@using System.Configuration
+@{
+    ViewBag.Title = "External WebApi For Dynamics Portals Sample";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Allowed Portal Urls</h2>
+        <p>
+            The following Portal Urls are allowed to access this API:
+        </p>
+        <p>
+            Valid Issuer: @ViewBag.AllowedPortals
+        </p>
+        <p>
+            Portal Signing Key: @ViewBag.AllowedPortalsSigningKeyPlainText
+        </p>
+    </div>
+</div>
