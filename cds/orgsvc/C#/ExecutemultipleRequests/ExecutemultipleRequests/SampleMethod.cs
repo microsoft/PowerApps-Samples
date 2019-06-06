@@ -11,7 +11,7 @@ namespace PowerApps.Samples
 {
    public partial class SampleProgram
     {
-        private static readonly List<Guid> newAccountIds = new List<Guid>();
+        private static readonly List<Guid> _newAccountIds = new List<Guid>();
         private static bool prompt = true;
         /// <summary>
         /// Function to set up the sample.
@@ -40,7 +40,7 @@ namespace PowerApps.Samples
         /// <param name="prompt">Indicates whether to prompt the user 
         /// to delete the records created in this sample.</param>
         /// </summary>
-        public static void DeleteRequiredRecords(CrmServiceClient service ,bool prompt)
+        public static void DeleteRequiredRecords(CrmServiceClient service, bool prompt)
         {
             bool deleteRecords = true;
 
@@ -68,11 +68,11 @@ namespace PowerApps.Samples
             };
 
             // Update the entities that were previously created.
-            EntityCollection delete = GetCollectionOfEntitiesToDelete(service);
+            EntityCollection delete = GetCollectionOfEntitiesToDelete();
 
             foreach (var entity in delete.Entities)
             {
-                var deleteRequest = new DeleteRequest { Target = entity.ToEntityReference() };
+                DeleteRequest deleteRequest = new DeleteRequest { Target = entity.ToEntityReference() };
                 requestWithNoResults.Requests.Add(deleteRequest);
             }
 
@@ -86,7 +86,7 @@ namespace PowerApps.Samples
                 foreach (var responseItem in responseWithNoResults.Responses)
                 {
                     if (responseItem.Fault != null)
-                        DisplayFault(service, requestWithNoResults.Requests[responseItem.RequestIndex],
+                        DisplayFault(requestWithNoResults.Requests[responseItem.RequestIndex],
                             responseItem.RequestIndex, responseItem.Fault);
                 }
             }
@@ -95,22 +95,20 @@ namespace PowerApps.Samples
                 Console.WriteLine("All account records have been deleted successfully.");
             }
         }
-
-
         /// <summary>
         /// Create a collection of entity objects for updating. Give these entities a new
         /// name for the update. However, use a bad (empty) GUID in some entities to demonstrate
         /// returning errors in ExecuteMultipleResponse.
         /// </summary>
         /// <returns>An entity collection.</returns>
-        private static EntityCollection GetCollectionOfEntitiesToUpdateWithErrors(CrmServiceClient service)
+        private static EntityCollection GetCollectionOfEntitiesToUpdateWithErrors()
         {
-            var collection = new EntityCollection()
+            EntityCollection collection = new EntityCollection()
             {
                 EntityName = Account.EntityLogicalName
             };
 
-            for (int i = 1; i <= newAccountIds.Count; i++)
+            for (int i = 1; i <= _newAccountIds.Count; i++)
             {
                 if (i % 2 > 0)
                 {
@@ -128,7 +126,7 @@ namespace PowerApps.Samples
                         new Account
                         {
                             Name = "Again Updated Example Account " + i.ToString(),
-                            Id = newAccountIds[i - 1]
+                            Id = _newAccountIds[i - 1]
                         });
                 }
             }
@@ -141,20 +139,20 @@ namespace PowerApps.Samples
         /// name for the update.
         /// </summary>
         /// <returns>An entity collection.</returns>
-        private static EntityCollection GetCollectionOfEntitiesToUpdate(CrmServiceClient service)
+        private static EntityCollection GetCollectionOfEntitiesToUpdate()
         {
-            var collection = new EntityCollection()
+            EntityCollection collection = new EntityCollection()
             {
                 EntityName = Account.EntityLogicalName
             };
 
-            for (int i = 1; i <= newAccountIds.Count; i++)
+            for (int i = 1; i <= _newAccountIds.Count; i++)
             {
                 collection.Entities.Add(
                     new Account
                     {
                         Name = "Updated Example Account " + i.ToString(),
-                        Id = newAccountIds[i - 1]
+                        Id = _newAccountIds[i - 1]
                     });
             }
 
@@ -165,7 +163,7 @@ namespace PowerApps.Samples
         /// Create a collection of new entity objects.
         /// </summary>
         /// <returns>A collection of entity objects.</returns>
-        private static EntityCollection GetCollectionOfEntitiesToCreate(CrmServiceClient service)
+        private static EntityCollection GetCollectionOfEntitiesToCreate()
         {
             return new EntityCollection()
             {
@@ -184,19 +182,19 @@ namespace PowerApps.Samples
         /// Delete a collection of entity objects.
         /// </summary>
         /// <returns>A collection of entity objects</returns>
-        private static EntityCollection GetCollectionOfEntitiesToDelete(CrmServiceClient service)
+        private static EntityCollection GetCollectionOfEntitiesToDelete()
         {
-            var collection = new EntityCollection()
+            EntityCollection collection = new EntityCollection()
             {
                 EntityName = Account.EntityLogicalName
             };
 
-            for (int i = 1; i <= newAccountIds.Count; i++)
+            for (int i = 1; i <= _newAccountIds.Count; i++)
             {
                 collection.Entities.Add(
                     new Account
                     {
-                        Id = newAccountIds[i - 1]
+                        Id = _newAccountIds[i - 1]
                     });
             }
 
@@ -208,11 +206,11 @@ namespace PowerApps.Samples
         /// </summary>
         /// <param name="organizationRequest">The organization message request.</param>
         /// <param name="organizationResponse">The organization message response.</param>
-        private static void DisplayResponse(CrmServiceClient service, OrganizationRequest organizationRequest, OrganizationResponse organizationResponse)
+        private static void DisplayResponse(OrganizationRequest organizationRequest, OrganizationResponse organizationResponse)
         {
             Console.WriteLine("Created " + ((Account)organizationRequest.Parameters["Target"]).Name
                 + " with account id as " + organizationResponse.Results["id"].ToString());
-            newAccountIds.Add(new Guid(organizationResponse.Results["id"].ToString()));
+            _newAccountIds.Add(new Guid(organizationResponse.Results["id"].ToString()));
         }
 
         /// <summary>
@@ -221,13 +219,14 @@ namespace PowerApps.Samples
         /// <param name="organizationRequest">The organization message request.</param>
         /// <param name="count">nth request number from ExecuteMultiple request</param>
         /// <param name="organizationServiceFault">A WCF fault.</param>
-        private static void DisplayFault(CrmServiceClient service, OrganizationRequest organizationRequest, int count,
+        private static void DisplayFault(OrganizationRequest organizationRequest, int count,
             OrganizationServiceFault organizationServiceFault)
         {
             Console.WriteLine("A fault occurred when processing {1} request, at index {0} in the request collection with a fault message: {2}", count + 1,
                 organizationRequest.RequestName,
                 organizationServiceFault.Message);
         }
+
 
     }
 }

@@ -21,7 +21,7 @@ namespace PowerApps.Samples
                 if (service.IsReady)
                 {
                     #region Sample Code
-                    ////////////////////////////////////////////
+                    //////////////////////////////////////////////
                     #region Set up
                     SetUpSample(service);
                     #endregion Set up
@@ -41,7 +41,7 @@ namespace PowerApps.Samples
                     };
 
                     // Create several (local, in memory) entities in a collection. 
-                    EntityCollection input = GetCollectionOfEntitiesToCreate(service);
+                    EntityCollection input = GetCollectionOfEntitiesToCreate();
 
                     // Add a CreateRequest for each entity to the request collection.
                     foreach (var entity in input.Entities)
@@ -59,11 +59,11 @@ namespace PowerApps.Samples
                     {
                         // A valid response.
                         if (responseItem.Response != null)
-                            DisplayResponse(service, requestWithResults.Requests[responseItem.RequestIndex], responseItem.Response);
+                            DisplayResponse(requestWithResults.Requests[responseItem.RequestIndex], responseItem.Response);
 
                         // An error has occurred.
                         else if (responseItem.Fault != null)
-                            DisplayFault(service, requestWithResults.Requests[responseItem.RequestIndex],
+                            DisplayFault(requestWithResults.Requests[responseItem.RequestIndex],
                                 responseItem.RequestIndex, responseItem.Fault);
                     }
                     #endregion Execute Multiple with Results
@@ -84,7 +84,7 @@ namespace PowerApps.Samples
                     };
 
                     // Update the entities that were previously created.
-                    EntityCollection update = GetCollectionOfEntitiesToUpdate(service);
+                    EntityCollection update = GetCollectionOfEntitiesToUpdate();
 
                     foreach (var entity in update.Entities)
                     {
@@ -92,7 +92,7 @@ namespace PowerApps.Samples
                         requestWithNoResults.Requests.Add(updateRequest);
                     }
 
-                    var responseWithNoResults =
+                    ExecuteMultipleResponse responseWithNoResults =
                         (ExecuteMultipleResponse)service.Execute(requestWithNoResults);
 
                     // There should be no responses unless there was an error. Only the first error 
@@ -102,7 +102,7 @@ namespace PowerApps.Samples
                         foreach (var responseItem in responseWithNoResults.Responses)
                         {
                             if (responseItem.Fault != null)
-                                DisplayFault(service, requestWithNoResults.Requests[responseItem.RequestIndex],
+                                DisplayFault(requestWithNoResults.Requests[responseItem.RequestIndex],
                                     responseItem.RequestIndex, responseItem.Fault);
                         }
                     }
@@ -128,11 +128,11 @@ namespace PowerApps.Samples
                     };
 
                     // Update the entities but introduce some bad attribute values so we get errors.
-                    EntityCollection updateWithErrors = GetCollectionOfEntitiesToUpdateWithErrors(service);
+                    EntityCollection updateWithErrors = GetCollectionOfEntitiesToUpdateWithErrors();
 
                     foreach (var entity in updateWithErrors.Entities)
                     {
-                        var updateRequest = new UpdateRequest { Target = entity };
+                        UpdateRequest updateRequest = new UpdateRequest { Target = entity };
                         requestWithContinueOnError.Requests.Add(updateRequest);
                     }
 
@@ -149,7 +149,7 @@ namespace PowerApps.Samples
                         foreach (var responseItem in responseWithContinueOnError.Responses)
                         {
                             if (responseItem.Fault != null)
-                                DisplayFault(service,requestWithContinueOnError.Requests[responseItem.RequestIndex],
+                                DisplayFault(requestWithContinueOnError.Requests[responseItem.RequestIndex],
                                     responseItem.RequestIndex, responseItem.Fault);
                         }
                     }
@@ -159,12 +159,14 @@ namespace PowerApps.Samples
                         Console.WriteLine("All account records have been updated successfully.");
                     }
 
+                    #endregion Execute Multiple with Continue On Error
 
                     #region Clean up
                     CleanUpSample(service);
                     #endregion Clean up
                 }
                 #endregion Demonstrate
+
                 else
                 {
                     const string UNABLE_TO_LOGIN_ERROR = "Unable to Login to Dynamics CRM";
@@ -179,7 +181,7 @@ namespace PowerApps.Samples
                     }
                 }
             }
-            #endregion Sample Code
+            
             catch (Exception ex)
             {
                 SampleHelpers.HandleException(ex);
@@ -193,6 +195,7 @@ namespace PowerApps.Samples
                 Console.WriteLine("Press <Enter> to exit.");
                 Console.ReadLine();
             }
+
         }
             }
 }
