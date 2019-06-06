@@ -21,9 +21,9 @@ This sample is an ASP.NET based project and is used to validate the ID token iss
 
 ## Working
 
-* This Project uses a custom BearerAuthenticationProvider - DynamicsPortalBearerAuthenticationProvider.
-* This provider is registered in StartUp.cs with route "/api/external".
-* All actions for the routes starting with "api/external" are defined in ExternalWebApiController. (RoutePrefix used)
+* This Project uses a custom BearerAuthenticationProvider called **DynamicsPortalBearerAuthenticationProvider**.
+* This provider is registered in StartUp.cs with route `/api/external`.
+* All actions for the routes starting with `api/external` are defined in **Controllers/ExternalWebApiController.cs** file. (RoutePrefix used)
 * All ID tokens are digitally signed by Portal using its private key.
-* DynamicsPortalBearerAuthenticationProvider uses the Portal's public key endpoint (/_services/auth/publickey) to validate the token.
-* DynamicsPortalBearerAuthenticationProvider also validates the audience and issuer of the ID token.
+* **DynamicsPortalBearerAuthenticationProvider** uses the Portal's public key endpoint (/_services/auth/publickey) to validate the token.
+* **DynamicsPortalBearerAuthenticationProvider** also validates the audience and issuer of the ID token.
