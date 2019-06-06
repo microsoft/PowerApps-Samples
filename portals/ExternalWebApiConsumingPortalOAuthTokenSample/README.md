@@ -16,7 +16,7 @@ This sample is an ASP.NET based project and is used to validate the ID token iss
 
 1. Make a GET request to ServerURL (e.g: `http://localhost:60717/api/external/WhoAmI`) with Authorization Header having the value "Bearer TokenFetchedFromPortal"
  eg: Key: Authorization Value: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJ
-2. You can use a requst composer tool like Postman to test this.
+2. You can use a request composer tool like Postman to test this.
 3. To decode the ID token, you can visit https://jwt.io.
 
 ## Working
