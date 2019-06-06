@@ -4,9 +4,9 @@ This sample is an ASP.NET based project and is used to validate the ID token iss
 
 ## Setup
 
-1. Replace the value of `YourPortalURL` with your Portal URL in the appSetting `Microsoft.Dynamics.AllowedPortal`.
+1. Replace the value of `portalUrl` with your Portal URL in the application setting `Microsoft.Dynamics.AllowedPortal`.
 ```
-<add key="Microsoft.Dynamics.AllowedPortal" value="YourPortalURL"/>
+<add key="Microsoft.Dynamics.AllowedPortal" value="portalUrl"/>
 ```
 2. If the token was fetched from Portal using a ClientId, replace the value of ValidAudience in Startup.cs (L. 103) with the valid clientId registered on Dynamics 365.
 3. If the token was not fetched using a ClientId, set the value of ValidateAudience in Startup.cs to `false` . (L. 102)
