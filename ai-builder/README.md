@@ -2,7 +2,7 @@
 
 This topic provides information about the sample data files available in the **ai-builder** folder.
 
-AI builder documentation is available here: <https://docs.microsoft.com/ai-builder>
+AI Builder documentation is available here: <https://docs.microsoft.com/ai-builder>
 
 ## Sample data for binary classification
 
