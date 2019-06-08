@@ -6,7 +6,7 @@ AI Builder documentation is available here: <https://docs.microsoft.com/ai-build
 
 ## Sample data for binary classification
 
-To help you get started quickly with binary classification, use these three sample datasets. For information on how to import the sample data and use it in a binary classification model, see [Data Preparation]https://docs.microsoft.com/ai-builder/binary-classification-data-prep in AI Builder docs.
+To help you get started quickly with binary classification, use these three sample datasets. For information on how to import the sample data and use it in a binary classification model, see [Data Preparation](https://docs.microsoft.com/ai-builder/binary-classification-data-prep) in AI Builder docs.
 
 ### Online Shopper Intention
 
