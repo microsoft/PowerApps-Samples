@@ -16,7 +16,7 @@ With the recent changes to .NET Framework, an exception is thrown when a sample 
     
     ![](media/http-activation.png "Enable HTTP Activation")
     
-This issue will be resolved in a future update when we distribute the update assemblies through our [NuGet package](https://www.nuget.org/packages/Microsoft.CrmSdk.XrmTooling.WpfControls/). 
+This issue will be resolved in a future update when we distribute the updated assemblies through our [NuGet package](https://www.nuget.org/packages/Microsoft.CrmSdk.XrmTooling.WpfControls/). 
 
 
 
