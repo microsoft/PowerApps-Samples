@@ -4,7 +4,7 @@
 1. (Optional) Edit the cds/App.config file to define a connection string specifying the Common Data service instance you want to connect to.
 2. Open the sample solution in Visual Studio and press F5 to run the sample.
     - If you have specified a connection string in cds/App.config, any sample you run will use that connection information.
-    - If you haven't specified a connection string in cds/App.config file, a dialog ([XRM tooling common login control](https://docs.microsoft.com/powerapps/developer/common-data-service/xrm-tooling/use-xrm-tooling-common-login-control-client-applications)) will open each time you run the sample and you will need to enter information about which Common Data Service instance you want to connect to and which credentials you want to use. This dialog will cache previous connections so that you can choose a previously used connection. See tke **Known issue** later for this scenario.
+    - If you haven't specified a connection string in cds/App.config file, a dialog ([XRM tooling common login control](https://docs.microsoft.com/powerapps/developer/common-data-service/xrm-tooling/use-xrm-tooling-common-login-control-client-applications)) will open each time you run the sample and you will need to enter information about which Common Data Service instance you want to connect to and which credentials you want to use. This dialog will cache previous connections so that you can choose a previously used connection. See the **Known issue** and its workaround later for this scenario.
 
 The samples in this repo that require a connection to a Common Data Service instance to run will include a linked reference to the cds/App.config file.
     
