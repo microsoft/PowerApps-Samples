@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ExecuteMultipleRequests")]
+[assembly: AssemblyTitle("ExecutemultipleRequests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ExecuteMultipleRequests")]
+[assembly: AssemblyProduct("ExecutemultipleRequests")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("50a5c42b-3459-482d-8656-e2174364515c")]
+[assembly: Guid("a23dd5db-adee-4f11-857a-65152d97f57e")]
 
 // Version information for an assembly consists of the following four values:
 //
