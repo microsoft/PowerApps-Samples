@@ -133,6 +133,8 @@ export class PowerAppsDetails extends Component {
     // Step 1: Helper method that constructs the URL to the PowerApp, also adds an extra query parameter to force the iframe to refresh
     getEmbeddedUrl() {        
         let rand = Math.floor((Math.random() * 1000) + 1);
+
+        // Set the Bing API here
         let bingAPIKey = "";
         return "https://web.powerapps.com/webplayer/iframeapp?source=builddemo&appId=" + this.state.appId + "&Address=" + encodeURI(this.props.item.address) + "&BingAPIKey=" + bingAPIKey + "&extra=" + rand;
     }
