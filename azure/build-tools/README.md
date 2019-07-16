@@ -14,7 +14,7 @@ This compressed archive contains the files described below.
 
 ### PowerPlatform_DevOps_Module0.pdf
 
-Module 0: Pre-lab setup – create environments
+Module 0: Pre-lab setup to create environments
 
 ### PowerPlatform_DevOps_Module1.pdf
 
