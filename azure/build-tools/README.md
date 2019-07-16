@@ -22,7 +22,7 @@ Module 1: Create a model-driven Common Data Service app
 
 ### PowerPlatform_DevOps_Module2.pdf
 
-Module 2: Azure DevOps
+Module 2: Automating solution deployment using Azure DevOps
 
 ## PowerApps build tools lab instructions
 
