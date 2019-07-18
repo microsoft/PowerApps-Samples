@@ -4,7 +4,7 @@ This topic provides information about the sample data files available in the **a
 
 AI Builder documentation is available [here](https://docs.microsoft.com/ai-builder).
 
-## AIBuilder_Labs.zip
+## AIBuilder_Lab.zip
 
 This file contains all the folders and files for the hands-on-labs that walk through object detection, binary classification, text classification, form processing & business card reader scenarios in AI Builder. It contains the following folders and zip files:
 
