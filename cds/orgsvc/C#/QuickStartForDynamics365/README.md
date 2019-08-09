@@ -4,7 +4,7 @@ This sample shows you how to compile and run a program that creates an account r
 
 ## How to run this sample
 
-See [How to run samples](../../../How-to-run-samples.md) for information about how to run this sample.
+See [How to run samples](../../../README.md) for information about how to run this sample.
 
 ## What this sample does
 

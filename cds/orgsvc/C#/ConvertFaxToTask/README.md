@@ -4,7 +4,7 @@ This sample shows how to convert a **Fax** to a **Task**.
 
 ## How to run this sample
 
-See [How to run this sample](../../How-to-run-samples.md) for information about how to run this sample.
+See [How to run this sample](../../../README.md) for information about how to run this sample.
 
 What this sample does
 

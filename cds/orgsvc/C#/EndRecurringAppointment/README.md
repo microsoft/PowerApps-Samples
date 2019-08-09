@@ -4,7 +4,7 @@ The following sample shows how to end a recurring appointment series by using th
 
 ## How to run this sample
 
-See [How to run samples](../../../How-to-run-samples.md) for information about how to run this sample.
+See [How to run samples](../../../README.md) for information about how to run this sample.
 
 ## What this sample does
 

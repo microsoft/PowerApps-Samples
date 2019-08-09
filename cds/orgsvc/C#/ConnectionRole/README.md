@@ -4,7 +4,7 @@ This sample shows how to create a connection role that can be used for accounts 
 
 ## How to run this sample
 
-See [How to run samples](../../../How-to-run-samples.md) for information about how to run this sample.
+See [How to run samples](../../../README.md) for information about how to run this sample.
 
 ## What this sample does
 
