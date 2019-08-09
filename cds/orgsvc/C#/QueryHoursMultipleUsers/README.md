@@ -11,7 +11,7 @@ This sample requires additional users that are not present in your system. Creat
 
 ## How to run this sample
 
-[!include[cc-how-to-run-samples](../../includes/cc-how-to-run-samples.md)]
+See [How to run samples](../../../README.md) for information about how to run this sample.
 
 ## What this sample does
 

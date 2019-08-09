@@ -9,7 +9,10 @@ Visual representation of metadata can be very useful, especially when you are tr
 
 ## How to run this sample
 
-See [How to run samples](../../../How-to-run-samples.md) for information about how to run this sample.
+See [How to run samples](../README.md) for information about how to run this sample.
+
+> [!NOTE]
+> The generated entity diagrams can be found at `bin/Debug` folder.
 
 ## What this sample does
 

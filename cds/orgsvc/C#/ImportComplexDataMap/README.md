@@ -7,7 +7,7 @@ This sample shows how to create new records by using data import. The sample use
 
 ## How to run this sample
 
-See [How to run samples](../../../How-to-run-samples.md) for information about how to run this sample.
+See [How to run samples](../../../README.md) for information about how to run this sample.
 
 ## How this sample works
 

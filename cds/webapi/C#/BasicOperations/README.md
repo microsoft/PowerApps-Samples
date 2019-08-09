@@ -4,7 +4,7 @@ Thise Sample demonstrates how to perform basic CRUD (Create, Retrieve, Update, a
 
 ## How to run the sample
 
-see [How to run samples](../../../How-to-run-samples.md) for information about how to run this sample.
+see [How to run samples](../../../README.md) for information about how to run this sample.
 
 ## Demonstrate
 

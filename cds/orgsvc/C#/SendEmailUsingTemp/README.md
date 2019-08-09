@@ -4,7 +4,7 @@ This sample shows how to send an email message by using a template using the [Se
 
 ## How to run this sample
 
-See [How to run samples](../../../How-to-run-samples.md) for information about how to run this sample.
+See [How to run samples](../../../README.md) for information about how to run this sample.
 
 ## What this sample does
 

@@ -4,7 +4,7 @@ This sample code shows how to insert or update records by using the [UpsertReque
 
 ## How to run this sample
 
-See [How to run samples](../../../How-to-run-samples.md) for information about how to run this sample.
+See [How to run samples](../../../README.md) for information about how to run this sample.
 ## What this sample does
 
 The `UpsertRequest` message is intended to be used in a scenario where it contains data that is needed to update or insert a record.
