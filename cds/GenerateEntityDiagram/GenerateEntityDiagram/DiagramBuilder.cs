@@ -23,7 +23,7 @@ namespace PowerApps.Samples
             String filename = String.Empty;
             VisioApi.Application application;
             VisioApi.Document document;
-            DiagramBuilder builder = new DiagramBuilder();
+            DiagramBuilder builder = new DiagramBuilder(service);
 
             try
             {
@@ -74,12 +74,12 @@ namespace PowerApps.Samples
                             }
                         }
 
-                        builder.BuildDiagram((string[])entities.ToArray(typeof(string)), "All Entities");
+                        builder.BuildDiagram(service, (string[])entities.ToArray(typeof(string)), "All Entities");
                         filename = "AllEntities.vsd";
                     }
                     else
                     {
-                        builder.BuildDiagram(args, String.Join(", ", args));
+                        builder.BuildDiagram(service, args, String.Join(", ", args));
                         filename = String.Concat(args[0], ".vsd");
                     }
 
@@ -103,7 +103,7 @@ namespace PowerApps.Samples
                     }
                 }
             }
-            catch (Exception ex)
+             catch (Exception ex) 
             {
                 SampleHelpers.HandleException(ex);
             }
