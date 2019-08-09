@@ -1,7 +1,7 @@
 
 # Use metadata to generate entity diagrams
 
-Visual representation of metadata can be very useful, especially when you are trying to describe the relationship between entities in the system. You can use the Metadata Diagram sample code provided to generate the entity relationship diagrams. You can create a simple diagram that shows a relationship for just one entity, or a complex diagram that includes dozens of related entities, including custom and system entities.
+Visual representation of metadata can be very useful, especially when you are trying to describe the relationship between entities in the system. You can use the Metadata Diagram program to generate entity relationship diagrams. You can create a simple diagram that shows a relationship for just one entity, or a complex diagram that includes dozens of related entities, including custom and system entities.
 
 ## Prerequisites
 
@@ -10,6 +10,9 @@ Visual representation of metadata can be very useful, especially when you are tr
 ## How to run this sample
 
 See [How to run samples](../README.md) for information about how to run this sample.
+
+You can specify a list of entity names on the command line when executing the program to generate a diagram containing those entities. For example:
+  % MetadataDiagram.exe account contact
 
 > [!NOTE]
 > The generated entity diagrams can be found at `bin/Debug` folder.
