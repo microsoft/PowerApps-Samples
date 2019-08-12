@@ -14,8 +14,7 @@ See [How to run samples](../README.md) for information about how to run this sam
 You can specify a list of entity names on the command line when executing the program to generate a diagram containing those entities. For example:
   % MetadataDiagram.exe account contact
 
-> [!NOTE]
-> The generated entity diagrams can be found at `bin/Debug` folder.
+> **NOTE:** The generated entity diagrams can be found at `bin/Debug` folder.
 
 ## What this sample does
 
