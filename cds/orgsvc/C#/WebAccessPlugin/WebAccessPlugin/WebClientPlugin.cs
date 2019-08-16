@@ -108,10 +108,12 @@ namespace PowerApps.Samples
   {
     protected override WebRequest GetWebRequest(Uri address)
     {
-      var request = base.GetWebRequest(address);
+      HttpWebRequest request = (HttpWebRequest)base.GetWebRequest(address);
       if (request != null)
       {
         request.Timeout = 15000; //15 Seconds
+        request.KeepAlive = false;
+        
       }
       return request;
     }

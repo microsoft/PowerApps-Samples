@@ -50,6 +50,7 @@ namespace PowerApps.Samples
           using (HttpClient client = new HttpClient())
           {
             client.Timeout = TimeSpan.FromMilliseconds(15000); //15 seconds
+            client.DefaultRequestHeaders.ConnectionClose = true;
             
 
             HttpResponseMessage response =  client.GetAsync(webAddress).Result;
