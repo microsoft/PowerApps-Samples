@@ -28,7 +28,7 @@ namespace PowerApps.Samples
     }
 
     /// <summary>
-    /// Main execute method that is required by the IPlugin interface. Uses the WebClient 
+    /// Main execute method that is required by the IPlugin interface. Uses the HttpClient 
     /// .NET class to access the target Web address.
     /// </summary>
     /// <param name="serviceProvider">The service provider from which you can obtain the
@@ -50,13 +50,13 @@ namespace PowerApps.Samples
           using (HttpClient client = new HttpClient())
           {
             client.Timeout = TimeSpan.FromMilliseconds(15000); //15 seconds
-            client.DefaultRequestHeaders.ConnectionClose = true;
+            client.DefaultRequestHeaders.ConnectionClose = true; //Set KeepAlive to false
             
 
-            HttpResponseMessage response =  client.GetAsync(webAddress).Result;
+            HttpResponseMessage response =  client.GetAsync(webAddress).Result; //Make sure it is synchonrous
             response.EnsureSuccessStatusCode();
 
-            string responseText = response.Content.ReadAsStringAsync().Result;
+            string responseText = response.Content.ReadAsStringAsync().Result; //Make sure it is synchonrous
             tracingService.Trace(responseText);
             //Log success in the Plugin Trace Log:
             tracingService.Trace("HttpClientPlugin completed successfully.");
@@ -85,7 +85,7 @@ namespace PowerApps.Samples
            at PowerApps.Samples.HttpClientPlugin.Execute(IServiceProvider serviceProvider)
 
 
-        For a better experience detecting TimeOut errors, see
+        For a better experience detecting TimeOut errors explicitly, see
         https://thomaslevesque.com/2018/02/25/better-timeout-handling-with-httpclient/
           */
         }

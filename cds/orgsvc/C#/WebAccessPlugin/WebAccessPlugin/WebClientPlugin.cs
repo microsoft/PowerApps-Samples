@@ -49,7 +49,7 @@ namespace PowerApps.Samples
         {
           // Download the target URI using a ShortWebClient derived WebClient with shorter timeout 
           // Any .NET class that uses the HTTP or HTTPS protocols and a DNS lookup should work.
-          using (ShortWebClient client = new ShortWebClient())
+          using (CustomWebClient client = new CustomWebClient())
           {
 
             byte[] responseBytes = client.DownloadData(webAddress);
@@ -102,9 +102,9 @@ namespace PowerApps.Samples
     }
   }
   /// <summary>
-  /// A class derived from WebClient with 15 second timeout
+  /// A class derived from WebClient with 15 second timeout and KeepAlive disabled
   /// </summary>
-  public class ShortWebClient : WebClient
+  public class CustomWebClient : WebClient
   {
     protected override WebRequest GetWebRequest(Uri address)
     {
