@@ -22,17 +22,6 @@ When executed, the plug-in downloads web page data from the specified web servic
 If the request exceeds the 15 second limit it will throw an [InvalidPluginExecutionException](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.invalidpluginexecutionexception) 
 and write details to the Plugin Trace Log.
 
-- If the `HttpClientPlugin` plugin fails, it will write something like the following to the Plugin Trace log:
-    ```
-    Downloading the target URI: http://www.bing.com
-    Inner Exceptions:
-      Exception: System.Threading.Tasks.TaskCanceledException: A task was canceled.
-    Exception: Microsoft.Xrm.Sdk.InvalidPluginExecutionException: An exception occurred while attempting to issue the request.
-       at PowerApps.Samples.HttpClientPlugin.Execute(IServiceProvider serviceProvider)
-    ```
-    The [TaskCanceledException](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.taskcanceledexception) is somewhat ambigous about the cause of the task being cancelled. For a more complete solution showing how to explicitly detect errors due to time outs, see this blog post: [Better timeout handling with HttpClient](https://thomaslevesque.com/2018/02/25/better-timeout-handling-with-httpclient/).
-
-
 - If the `WebClientPlugin` plugin fails, it will write something like the following to the Plugin Trace log:
     ```
     Downloading the target URI: http://www.bing.com
@@ -43,6 +32,16 @@ and write details to the Plugin Trace Log.
       --- End of inner exception stack trace ---
       at PowerApps.Samples.WebClientPlugin.Execute(IServiceProvider serviceProvider)
     ```
+
+- If the `HttpClientPlugin` plugin fails, it will write something like the following to the Plugin Trace log:
+    ```
+    Downloading the target URI: http://www.bing.com
+    Inner Exceptions:
+      Exception: System.Threading.Tasks.TaskCanceledException: A task was canceled.
+    Exception: Microsoft.Xrm.Sdk.InvalidPluginExecutionException: An exception occurred while attempting to issue the request.
+       at PowerApps.Samples.HttpClientPlugin.Execute(IServiceProvider serviceProvider)
+    ```
+    The [TaskCanceledException](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.taskcanceledexception) is somewhat ambigous about the cause of the task being cancelled. For a more complete solution showing how to explicitly detect errors due to time outs, see this blog post: [Better timeout handling with HttpClient](https://thomaslevesque.com/2018/02/25/better-timeout-handling-with-httpclient/).
 
 ## How this sample works
 
@@ -58,24 +57,26 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 #### WebClientPlugin plugin
 
-1. Uses a derived `ShortWebClient` class to set the [WebRequest.Timeout Property](https://docs.microsoft.com/en-us/dotnet/api/system.net.webrequest.timeout) that is not available in the `WebClient` class.
+1. Uses a derived `CustomWebClient` class to set the [WebRequest.Timeout Property](https://docs.microsoft.com/en-us/dotnet/api/system.net.webrequest.timeout) that is not available in the `WebClient` class.
 
    ````
-     /// <summary>
-     /// A class derived from WebClient with 15 second timeout
-     /// </summary>
-     public class ShortWebClient : WebClient
-     {
-       protected override WebRequest GetWebRequest(Uri address)
-       {
-         var request = base.GetWebRequest(address);
-         if (request != null)
-         {
-           request.Timeout = 15000; //15 Seconds
-         }
-         return request;
-       }
-     }
+    /// <summary>
+    /// A class derived from WebClient with 15 second timeout and KeepAlive disabled
+    /// </summary>
+    public class CustomWebClient : WebClient
+    {
+      protected override WebRequest GetWebRequest(Uri address)
+      {
+        HttpWebRequest request = (HttpWebRequest)base.GetWebRequest(address);
+        if (request != null)
+        {
+          request.Timeout = 15000; //15 Seconds
+          request.KeepAlive = false;
+          
+        }
+        return request;
+      }
+    }
     ````
 
 1. Uses the [WebClient.DownloadData Method](https://docs.microsoft.com/en-us/dotnet/api/system.net.webclient.downloaddata) to download the data from the resource.
