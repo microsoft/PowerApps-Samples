@@ -1,6 +1,5 @@
-# PowerApps Embedding SDK 
 
-This topic introduces the capabilities of the PowerApps embedding SDKs and shows you how PowerApps can help your customers extend your applications with experiences ranging from creating simple custom forms to adding a feature-rich screens.
+This topic introduces the capabilities of the PowerApps embedding SDKs and shows you how PowerApps can help customers extend your applications with experiences ranging from creating simple custom forms to adding a feature-rich screens.
 
 ## What this sample does
 
@@ -20,19 +19,18 @@ The Player SDK enables developers to:
 
 1. Download or clone the repository so that you have a local copy.
 2. To Play a PowerApp by AppId
-	Replace <appid> in PlayerSDK.ts file 
-	How to get AppId
-	If you are using @microsoft/powerappsauthoringsdk, app Id is returned in appSaved and appPublished event.
-	Else in powerapps.com, on the Apps tab, click or tap the ellipsis(…), then Details- copy the App ID (GUID). 
+- Replace <appid> in PlayerSDK.ts file
+#### How to get AppId
+- If you are using @microsoft/powerappsauthoringsdk, app Id is returned in appSaved and appPublished event.
+- Else in powerapps.com, on the Apps tab, click or tap the ellipsis(…), then Details- copy the App ID (GUID). 
 3. To Play a PowerApp by LogicalName
-	Replace <logicalname>', '<environmentid>', '<tenantid> in PlayerSDK.ts file
-	- If using the @microsoft/powerappsauthoringsdk, these values will be returned in appSaved and appPublished events (only when the application is created within a solution).
-
+- Replace <logicalname>', '<environmentid>', '<tenantid> in PlayerSDK.ts file
+- If using the @microsoft/powerappsauthoringsdk, these values will be returned in appSaved and appPublished events (only when the application is created within a solution).
+#### How to get LogicalName, EnvironmentId, TenantId 
 LogicalName 
    1. Go to powerapps.com.
    2. Click on the Solutions link in the left-hand side navigation 
    3. Open the solution in which the App was added or created. Copy the “Name”.
-
 
 Environment Id 
    1. Go to powerapps.com.
@@ -47,10 +45,10 @@ Tenant Id
 3. There is a sample App(Player SDK sample) in the repository that can be imported in your environment to quickly get started.
 
 ## How to run this sample
-
-1. Navigate to the folder where the sample code is cloned
-2. Run npm install
-3. Run npm run build
-4. Run npm start
+ 
+1. Open Command Prompt and navigate to the folder where the sample code is cloned.
+2. Run `npm install`
+3. Run `npm run build`
+4. Run `npm start`
 5. Navigate to [http://localhost:9000/](https://localhost:9000)
   
