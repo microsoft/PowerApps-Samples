@@ -7,12 +7,12 @@ This sample introduces the capabilities of the PowerApps embedding SDKs and show
 This sample uses the PowerApps embedding authoring SDK to create or edit a new canvas app from the host.
 
 The PowerApps Authoring SDK enables developers to:
-	1. Launch PowerApps Studio to allow the user to create or open canvas apps in the specified environment.
-	2. Specify the form-factor (tablet or mobile) for a new application along with predefined templates.
-	   Subscribe to events from the Studio or Maker (like Studio Launched, App Saved, App Published) that describe the user’s interaction with the app and provides information (i.e., the application id) about the created app.
-	3. Set schema for the data which can be passed to the application during authoring/runtime.
-	4. Set data on the application during authoring time, this data shows up during authoring time but is not saved with application.
-	5. Set host method definition which allows the application to callback into the host.
+- Launch PowerApps Studio to allow the user to create or edit canvas apps.
+- Specify the form-factor (tablet or mobile) for a new application along with predefined templates.
+- Subscribe to events from the Studio or Maker (like Studio Launched, App Saved, App Published) that describe the user’s interaction with the app and provides information (i.e., the application id) about the created app.
+- Set schema for the data which can be passed to the application during authoring/runtime.
+- Set data on the application during authoring time, this data shows up during authoring time but is not saved with application.
+- Set host method definition which allows the application to callback into the host.
 
 ## How this sample works
 
