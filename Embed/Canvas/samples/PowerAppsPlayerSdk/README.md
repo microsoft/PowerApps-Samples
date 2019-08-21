@@ -24,7 +24,7 @@ The Player SDK enables developers to:
 - If you are using @microsoft/powerappsauthoringsdk, app Id is returned in appSaved and appPublished event.
 - Else in powerapps.com, on the Apps tab, click or tap the ellipsis(…), then Details- copy the App ID (GUID). 
 3. To Play a PowerApp by LogicalName
-- Replace <logicalname>', '<environmentid>', '<tenantid> in PlayerSDK.ts file
+- Replace `logicalname`, `environmentid`, `tenantid` in PlayerSDK.ts file
 - If using the @microsoft/powerappsauthoringsdk, these values will be returned in appSaved and appPublished events (only when the application is created within a solution).
 #### How to get LogicalName, EnvironmentId, TenantId 
 LogicalName 

@@ -25,9 +25,9 @@ To simulate creating or editing a canvas app from the host via the sample, you n
 ## How to run this sample
 
 1. Navigate to the folder where the sample code is cloned
-2. Run npm install
-3. Run npm run build
-4. Run npm start
+2. Run `npm install`
+3. Run `npm run build`
+4. Run `npm start`
 5. Navigate to [http://localhost:9000/](https://localhost:9000)
   
   
