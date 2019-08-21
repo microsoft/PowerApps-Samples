@@ -19,7 +19,7 @@ The Player SDK enables developers to:
 
 1. Download or clone the repository so that you have a local copy.
 2. To Play a PowerApp by AppId
-- Replace <appid> in PlayerSDK.ts file
+- Replace `appid` in `PlayerSDK.ts` file
 #### How to get AppId
 - If you are using @microsoft/powerappsauthoringsdk, app Id is returned in appSaved and appPublished event.
 - Else in powerapps.com, on the Apps tab, click or tap the ellipsis(…), then Details- copy the App ID (GUID). 
@@ -42,7 +42,7 @@ Tenant Id
    2. Click on the Apps tab, click or tap the ellipses(...), then Details.
    3. In the Web Link section, copy the GUID after 'tenantid='.
    
-3. There is a sample App(Player SDK sample) in the repository that can be imported in your environment to quickly get started.
+3. There is a sample App (Player SDK sample) in the repository that can be imported into your environment to get started quickly.
 
 ## How to run this sample
  
