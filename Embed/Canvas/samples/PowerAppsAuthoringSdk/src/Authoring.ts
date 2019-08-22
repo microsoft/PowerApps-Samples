@@ -1,7 +1,7 @@
 import * as PowerAppsAuthoringSdk from "@microsoft/powerappsauthoringsdk";
 
 let makerSession: PowerAppsAuthoringSdk.MakerSession = {} as PowerAppsAuthoringSdk.MakerSession;
-let appId: string = "dcb43ab9-dee3-4326-a854-950485073cb3";
+let appId: string = "";
 
 export function initSdkAndCreateApp() {
     // Check if SDK is initialized then play the App else initialize the SDK and play App
@@ -51,10 +51,10 @@ function createApp(): void {
     PowerAppsAuthoringSdk.MakerSession.createAppAsync(options).then(function (session) {
         makerSession = session;
         // Set schema on the App
-        setSchema();
+        setSchemaAsync();
 
         // Set data on the App being edited
-        setData();
+        setDataAsync();
 
         // Set host definition on the App being edited
         setHostMethods();
@@ -94,7 +94,7 @@ function editApp(): void {
     });
 }
 
-function setSchema() {
+function setSchemaAsync() {
     // Initializing schema
     const defaultSchema: PowerAppsAuthoringSdk.PowerAppsSchema = {
         Name: PowerAppsAuthoringSdk.DataType.String,
@@ -110,7 +110,7 @@ function setSchema() {
     });
 }
 
-function setData() {
+function setDataAsync() {
     // This allows setting the data on the App that is being edited
     // This should be called after set schema and should conform to the schema which was set
     // This will override the data that was set previously provided

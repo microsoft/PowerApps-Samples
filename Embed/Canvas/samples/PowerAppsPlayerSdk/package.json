@@ -11,9 +11,7 @@
   "author": "Microsoft",
   "license": "",
   "dependencies": {
-    "@microsoft/powerappsplayersdk": "0.0.9",
-    "path": "^0.12.7",
-    "ts-loader": "^6.0.4"
+    "@microsoft/powerappsplayersdk": "0.0.3"    
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
@@ -21,6 +19,8 @@
     "typescript": "^3.5.3",
     "webpack": "^4.39.2",
     "webpack-cli": "^3.3.6",
-    "webpack-dev-server": "^3.8.0"
+    "webpack-dev-server": "^3.8.0",
+    "path": "^0.12.7",
+    "ts-loader": "^6.0.4"
   }
 }
