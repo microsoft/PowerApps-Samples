@@ -18,26 +18,23 @@ To simulate creating or editing a canvas app from the host via the sample, you n
 ### Setup
 
 1. Download or clone the repository so that you have a local copy.
+
 2. To Play a PowerApp by AppId
    - Replace `appid` in `PlayerSDK.ts` file
    - To get appid value, log into [PowerApps](https://powerapps.com), click on **Apps** tab from the left navigation bar and click or tap the ellipsis(…) and then select **Details**. In the page,copy the App ID value. 
 
 3. To Play a PowerApp by LogicalName
    - Replace `logicalname`, `environmentid`, `tenantid` in PlayerSDK.ts file
-   - To get the `logicalName`, go to [PowerApps](https://powerapps.com), click on the **Solutions** in the left navigation bar
-   - Open the solution in which the app is added or created. Copy the **Name**.
-
-4. To get the environmentid, go to o to [PowerApps](https://powerapps.com)
-
-   - From top-right corner select the environment in which you application exists.
-   - Copy the id (GUID) after environments portion in URL.
-
-5. To get the tenantid, go to [PowerApps](https://powerapps.com)
+    - To get the `logicalName`, go to [PowerApps](https://powerapps.com), click on the **Solutions** in the left navigation bar
+    - Open the solution in which the app is added or created. Copy the **Name**.
+    - To get the environmentid, go to [PowerApps](https://powerapps.com)
+    - From top-right corner select the environment in which you application exists.
+    - Copy the id (GUID) after environments portion in URL.
+    - To get the tenantid, go to [PowerApps](https://powerapps.com)   
+    - Click on the **Apps tab**, click or tap the ellipses(...) and then **Details**.
+    - In the **Web Link** section, copy the GUID after `tenantid=`.
    
-   - Click on the **Apps tab**, click or tap the ellipses(...) and then **Details**.
-   - In the **Web Link** section, copy the GUID after `tenantid=`.
-   
-6. There is a sample Aapp (Player SDK sample) in the repository that can be imported into your environment to get started quickly.
+4. There is a sample App (Player SDK sample) in the repository that can be imported into your environment to get started quickly.
 
 ## How to run this sample
  
