@@ -51,10 +51,10 @@ function createApp(): void {
     PowerAppsAuthoringSdk.MakerSession.createAppAsync(options).then(function (session) {
         makerSession = session;
         // Set schema on the App
-        setSchemaAsync();
+        setSchema();
 
         // Set data on the App being edited
-        setDataAsync();
+        setData();
 
         // Set host definition on the App being edited
         setHostMethods();
@@ -94,7 +94,7 @@ function editApp(): void {
     });
 }
 
-function setSchemaAsync() {
+function setSchema() {
     // Initializing schema
     const defaultSchema: PowerAppsAuthoringSdk.PowerAppsSchema = {
         Name: PowerAppsAuthoringSdk.DataType.String,
@@ -110,7 +110,7 @@ function setSchemaAsync() {
     });
 }
 
-function setDataAsync() {
+function setData() {
     // This allows setting the data on the App that is being edited
     // This should be called after set schema and should conform to the schema which was set
     // This will override the data that was set previously provided
@@ -139,7 +139,7 @@ function setHostMethods() {
     // Refer to the link - https://www.w3.org/Submission/wadl/ to understand more about WADL
     const callback = "<application xmlns:xml=\"http://www.w3.org/XML/1998/namespace\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:service=\"https://example.com/apim\" xmlns:siena=\"http://schemas.microsoft.com/MicrosoftProjectSiena/WADL/2014/11\" siena:serviceId=\"Authoring SDK sample\" xmlns=\"http://wadl.dev.java.net/2009/02\">\r\n    <doc title=\"Authoring SDK Sample Button\" /> \r\n    <resources base=\"https://example.com/apim\"> \r\n        <resource path=\"/ChangeHostBackground/{hexColor}\"> \r\n            <param style=\"template\" name=\"hexColor\" type=\"xs:string\" required=\"true\" /> \r\n            <method siena:requiresAuthentication=\"false\" name=\"POST\" id=\"ChangeHostBackground\" siena:isHostFunction=\"true\"> \r\n                <doc title=\"Updates background color of Authoring SDK sample.\" /> \r\n                <request> \r\n                    <representation mediaType=\"application/json\" /> \r\n                </request> \r\n            </method> \r\n        </resource> \r\n    </resources> \r\n</application>";
 
-    makerSession.setHostMethodDefinition(callback).then(function () {
+    makerSession.setHostMethodDefinitionAsync(callback).then(function () {
         console.log("Host definition is set on the App")
     });;
 }
