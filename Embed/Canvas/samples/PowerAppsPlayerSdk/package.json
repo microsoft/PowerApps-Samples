@@ -1,0 +1,26 @@
+{
+  "name": "powerappplayersdksample",
+  "version": "1.0.0",
+  "description": "Sample to show the usage of PowerApps Player SDK. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.config.js",
+    "start": "webpack-dev-server"
+  },
+  "author": "Microsoft",
+  "license": "",
+  "dependencies": {
+    "@microsoft/powerappsplayersdk": "0.3.0"    
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "babel-loader": "^8.0.6",
+    "typescript": "^3.5.3",
+    "webpack": "^4.39.2",
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.8.0",
+    "path": "^0.12.7",
+    "ts-loader": "^6.0.4"
+  }
+}
