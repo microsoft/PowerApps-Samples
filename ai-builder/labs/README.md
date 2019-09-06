@@ -18,13 +18,13 @@ Click **AIBuilder_Lab.zip** in the file list at the top of this page, and then c
 
 Please follow the steps below to set up the environment for use with AIBuilder Labs. 
 
-For binary classification, text classification, and object detection scenarios you will need some sample data in CDS.
+For binary classification, text classification, and object detection scenarios you will need some sample data in Common Data Service.
 
 ### Manual data set up
 
 #### Part 1 : Import AIBuilderLabSolution_1_0_0_0 solution to the CDS environment
 
-This creates 3 CDS entities - Object Detection Product , Health Feedback, and Online Shopping Intent.
+This creates 3 Common Data Service entities - Object Detection Product, Health Feedback, and Online Shopping Intent.
 
 #### Part 2 : Upload data to the entities created in Part 1
 
@@ -35,7 +35,7 @@ This creates 3 CDS entities - Object Detection Product , Health Feedback, and On
 
 ### Automated lab environment & data set up
 
-Follow the instructions in the **Automated Lab Environment** folder to build and run the tool which will create a trial CDS organization with the data already uploaded.
+Follow the instructions in the **Automated Lab Environment** folder to build and run the tool which will create a trial Common Data Service organization with the data already uploaded.
 
 For form processing, business card reader, and object detection labs you will need images or pdfs which are available in the **Lab Images** folder.
 
