@@ -18,12 +18,6 @@ This dataset is from the UCI Machine Learning Repository. The prediction scenari
 
 *Citation*: Sakar, C.O., Polat, S.O., Katircioglu, M. et al. Neural Comput & Applic (2018). <https://doi.org/10.1007/s00521-018-3523-0> 
 
-### Personal Bank Loan
-
-This is a synthetic dataset. The prediction scenario is whether a customer of a bank will be approved a loan based on the profile information of the customer.
--	**Solution**: AIBuilderPersonalBankLoan_1_0_0_0.zip
--	**Data**: aib_personalbankloan.csv
-
 ### Steel Plates Fault
 
 This dataset is from the UCI Machine Learning Repository. The prediction scenario is whether a stainless steel plate has a surface defect using indicators that approximate shape and reflective properties of the steel plate.
