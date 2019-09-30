@@ -1,4 +1,5 @@
-﻿using Microsoft.Xrm.Sdk.Query;
+﻿using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Tooling.Connector;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace PowerApps.Samples
 {
    public partial class SampleProgram
     {
-        [STAThread] // Added to support UX
+        [STAThread]// Added to support UX
         static void Main(string[] args)
         {
             CrmServiceClient service = null;
@@ -20,54 +21,54 @@ namespace PowerApps.Samples
                 if (service.IsReady)
                 {
                     #region Sample Code
-                    ///////////////////////////////////////
                     #region Set up
                     SetUpSample(service);
                     #endregion Set up
 
                     #region Demonstrate
-                    //Create a query to retrieve attachments.
+
+                    // Retrieve a role from CRM.
                     var query = new QueryExpression
                     {
-                        EntityName = ActivityMimeAttachment.EntityLogicalName,
-                        ColumnSet = new ColumnSet("filename"),
-
-                        //Define the conditions for each attachment.
-                        Criteria =
+                        EntityName = Role.EntityLogicalName,
+                        ColumnSet = new ColumnSet("roleid"),
+                        Criteria = new FilterExpression
                         {
-                            FilterOperator = LogicalOperator.And,
                             Conditions =
                         {
-                            //The ObjectTypeCode must be specified, or else the query
-                            //defaults to "email" instead of "template".
+                            // You would replace the condition below with an actual role
+                            // name, or skip this query if you had a role id.
                             new ConditionExpression
                             {
-                                AttributeName = "objecttypecode",
+                                AttributeName = "name",
                                 Operator = ConditionOperator.Equal,
-                                Values = {Template.EntityTypeCode}
-                            },
-                            //Specify which template we need.
-                            new ConditionExpression
-                            {
-                                AttributeName = "objectid",
-                                Operator = ConditionOperator.Equal,
-                                Values = {_emailTemplateId}
+                                Values = {_roleName}
                             }
                         }
                         }
                     };
 
-                    //Write out the filename of each attachment retrieved.
-                    foreach (ActivityMimeAttachment attachment in service.RetrieveMultiple(query).Entities)
-                    {
-                        Console.WriteLine("Retrieved attachment {0}", attachment.FileName);
-                    }
+                    var role = service.RetrieveMultiple(query).Entities.
+                        Cast<Role>().First();
+
+
+                    // Add the role to the team.
+                    service.Associate(
+                           Team.EntityLogicalName,
+                           _teamId,
+                           new Relationship("teamroles_association"),
+                           new EntityReferenceCollection() { new EntityReference(Role.EntityLogicalName, _roleId) });
+
+                    Console.WriteLine("Assigned role to team");
+                    //</snippetAssignSecurityRoleToTeam1>
+
                     #region Clean up
                     CleanUpSample(service);
                     #endregion Clean up
+
                 }
                 #endregion Demonstrate
-                #endregion Sample Code
+                #endregion Sample code
                 else
                 {
                     const string UNABLE_TO_LOGIN_ERROR = "Unable to Login to Dynamics CRM";
@@ -86,16 +87,6 @@ namespace PowerApps.Samples
             {
                 SampleHelpers.HandleException(ex);
             }
-
-            finally
-            {
-                if (service != null)
-                    service.Dispose();
-
-                Console.WriteLine("Press <Enter> to exit.");
-                Console.ReadLine();
-            }
-
         }
-            }
+    }
 }
