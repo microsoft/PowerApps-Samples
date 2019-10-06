@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{97591C99-D88A-45C4-9EFA-258DB1D37898}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>OneWayListeners</RootNamespace>
     <AssemblyName>OneWayListeners</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
