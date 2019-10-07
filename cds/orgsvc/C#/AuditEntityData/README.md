@@ -1,3 +1,12 @@
+---
+languages:
+- csharp
+products:
+- powerapps
+- common-data-service
+page_type: sample
+description: "Sample that shows how to enable and disable auditing on an entity and its attributes."
+---
 # Audit entity data changes
 
  This sample shows how to enable and disable auditing on an entity and its attributes, retrieve the data change history of the audited entity, and delete the audit records.
