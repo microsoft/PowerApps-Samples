@@ -8,7 +8,7 @@ See [How to run samples](../../../README.md) for information about how to run th
 
 ## What this sample does
 
-The `AddPrincipalToQueueRequest` message is intended to be used in a scenario where it contains data that is needed to add the specified principal to the list of queue members. If the principal is a team, add each team member to the queue.
+The [AddPrincipalToQueueRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.crm.sdk.messages.addprincipaltoqueuerequest?view=dynamics-general-ce-9) message is intended to be used in a scenario where it contains data that is needed to add the specified principal to the list of queue members. If the principal is a team, add each team member to the queue.
 
 ## How this sample works
 
