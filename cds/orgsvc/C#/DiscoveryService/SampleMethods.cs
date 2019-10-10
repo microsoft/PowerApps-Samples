@@ -254,6 +254,8 @@ namespace PowerApps.Samples
         [Description("https://disco.crm9.dynamics.com/XRMServices/2011/Discovery.svc/web")]
         NorthAmerica2,
         [Description("https://disco.crm11.dynamics.com/XRMServices/2011/Discovery.svc/web")]
-        UK
+        UK,
+        [Description("https://disco.crm12.dynamics.com/XRMServices/2011/Discovery.svc/web")]
+        France
     }
 }
