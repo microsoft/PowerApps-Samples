@@ -11,7 +11,6 @@ namespace PowerApps.Samples
     {
         static void Main(string[] args)
         {
-            //You could comment out everything in the getAppConfigData region and set these values here:
             string username = "yourUserName@yourOrgName.onmicrosoft.com";
             string password = "yourPassword";
 
@@ -63,8 +62,8 @@ namespace PowerApps.Samples
 
                     string conn = $@"AuthType=Office365;
                          Url={serviceUrl};
-                         UserName={settings["Username"]};
-                         Password={settings["Password"]};
+                         UserName={username};
+                         Password={password};
                          RequireNewInstance=True";
 
                     using (CrmServiceClient svc = new CrmServiceClient(conn))
