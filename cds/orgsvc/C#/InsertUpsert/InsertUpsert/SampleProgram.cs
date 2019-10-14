@@ -54,7 +54,7 @@ namespace PowerApps.Samples
 
                 {
 
-                    const string UNABLE_TO_LOGIN_ERROR = "Unable to Login to Dynamics CRM";
+                    const string UNABLE_TO_LOGIN_ERROR = "Unable to Login to Common Data Service";
 
                     if (service.LastCrmError.Equals(UNABLE_TO_LOGIN_ERROR))
 
