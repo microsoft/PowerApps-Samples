@@ -1,13 +1,13 @@
----
+<!---
 languages:
 - csharp
 products:
 - power-platform
 page_type: sample
 description: "Sample to audit user access."
----
+--->
 
-# Audit User Access
+# Audit User Access with PowerApps
 
 This sample code shows how to audit user access. 
 
