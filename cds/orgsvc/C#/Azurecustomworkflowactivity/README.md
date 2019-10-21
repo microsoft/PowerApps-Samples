@@ -4,7 +4,7 @@ This sample obtains the data context from the current operation and posts it to 
 
 ## How to run samples
 
-See [How to run samples](../../../README.md) for information about how to run this sample.
+See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/master/cds/README.md) for information about how to run this sample.
 
 ## What this sample does
 
