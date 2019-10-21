@@ -4,7 +4,7 @@ Thise Sample demonstrates how to perform basic CRUD (Create, Retrieve, Update, a
 
 ## How to run the sample
 
-see [How to run samples](../../../README.md) for information about how to run this sample.
+see [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/master/cds/README.md) for information about how to run this sample.
 
 ## Demonstrate
 
