@@ -2,6 +2,7 @@
 languages:
 - csharp
 products:
+- dotnet
 - powerapps
 page_type: sample
 description: "Sample that shows how to enable and disable auditing on an entity and its attributes."
