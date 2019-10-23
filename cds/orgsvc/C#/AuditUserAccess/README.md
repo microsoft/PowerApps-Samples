@@ -3,7 +3,6 @@ languages:
 - csharp
 products:
 - power-platform
-page_type: sample
 description: "Sample to audit user access."
 --->
 
