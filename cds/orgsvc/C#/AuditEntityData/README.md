@@ -20,7 +20,6 @@ See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/mas
 
 The `RetrieveRecordChangeHistoryRequest` message is intended to be used in a scenario where it contains data that is needed to retrieve the audit history for an entity.
 
-
 ## How this sample works
 
 In order to simulate the scenario described in [What this sample does](#what-this-sample-does), the sample will do the following:
