@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PowerApps.Samples
 {
-   public partial class SampleProgram
+    public partial class SampleProgram
     {
         [STAThread]// Added to support UX
         static void Main(string[] args)

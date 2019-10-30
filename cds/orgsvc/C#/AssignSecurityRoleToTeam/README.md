@@ -1,3 +1,15 @@
+---
+languages:
+- csharp
+products:
+- dotnet
+- powerapps
+page_type: sample
+description: "This sample shows how to assign a security role to a team by using the AssignRequest message in 
+Common Data Service. [SOAP]"
+---
+
+
 # Assign a security role to a team
 
 This sample shows how to assign a security role to a team by using the [AssignRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.crm.sdk.messages.assignrequest?view=dynamics-general-ce-9) message.

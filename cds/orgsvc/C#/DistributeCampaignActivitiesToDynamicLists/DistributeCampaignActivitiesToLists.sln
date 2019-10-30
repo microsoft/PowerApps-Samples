@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.902
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistributeCampaignActivitiesToLists", "DistributeCampaignActivitiesToDynamicLists\DistributeCampaignActivitiesToLists.csproj", "{028F212F-4C78-4EF0-91D1-A92377EBA856}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{028F212F-4C78-4EF0-91D1-A92377EBA856}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{028F212F-4C78-4EF0-91D1-A92377EBA856}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{028F212F-4C78-4EF0-91D1-A92377EBA856}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{028F212F-4C78-4EF0-91D1-A92377EBA856}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0196B7C6-E92D-4A93-8126-A41D4B6B664F}
+	EndGlobalSection
+EndGlobal

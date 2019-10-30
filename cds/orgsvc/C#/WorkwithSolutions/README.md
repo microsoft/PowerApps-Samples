@@ -1,6 +1,16 @@
+---
+languages:
+- csharp
+products:
+- dotnet
+- powerapps
+page_type: sample
+description: "This sample shows how to work with solutions in Common Data Service. [SOAP]"
+---
+
 # Work with solutions
 
-This sample shows how to how to perform the following actions with solutions:
+This sample shows how to perform the following actions with solutions:
 
 - Create a publisher.
 - Retrieve the default publisher.

@@ -1,6 +1,16 @@
+---
+languages:
+- csharp
+products:
+- dotnet
+- powerapps
+page_type: sample
+description: "This sample shows how to perform a bulk deletion of records that were previously exported from Common Data Service by using the Export to Excel option. [SOAP]"
+---
+
 # Bulk delete exported records
 
-This sample shows how to perform a bulk deletion of records that were previously exported from Dynamics 365 by using the **Export to Excel** option
+This sample shows how to perform a bulk deletion of records that were previously exported from Dynamics 365 by using the **Export to Excel** option.
 
 ## How to run this sample
 
