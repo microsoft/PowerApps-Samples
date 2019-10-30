@@ -5,7 +5,7 @@ products:
 - dotnet
 - powerapps
 page_type: sample
-description: "This sample shows how to perform a bulk deletion of records that were previously exported from Common Data Service by using the **Export to Excel** option. [SOAP]"
+description: "This sample shows how to perform a bulk deletion of records that were previously exported from Common Data Service by using the Export to Excel option. [SOAP]"
 ---
 
 # Bulk delete exported records
