@@ -52,7 +52,7 @@ namespace PowerApps.Samples
                     #region check success
 
                     Console.WriteLine("  Waiting for job to complete...");
-                    WaitForAsyncJobToFinish(service,response.JobId, 120);
+                    WaitForAsyncJobToFinish(service,response.JobId, 240);
 
                     var query = new QueryByAttribute()
                     {

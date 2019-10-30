@@ -1,4 +1,14 @@
-# Sample: Create, retrieve, update, and delete an email attachment
+---
+languages:
+- csharp
+products:
+- dotnet
+- powerapps
+page_type: sample
+description: "This sample shows how to create, retrieve, update, and delete email attachments in Common Data Service. [SOAP]"
+---
+
+# Create, retrieve, update, and delete an email attachment
 
 This sample shows how to create, retrieve, update, and delete email attachments using the following methods:
 

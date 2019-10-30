@@ -1,4 +1,15 @@
-# Sample: Early-bound entity operations
+---
+languages:
+- csharp
+products:
+- dotnet
+- powerapps
+page_type: sample
+description: "This sample shows how to create, retrieve, update, and delete operations on an account using the early bound class in Common Data Service. [SOAP]"
+---
+
+# Early-bound entity operations
+
 This sample shows how to create, retrieve, update, and delete operations on an account using the early bound class. This sample uses the following common methods:
 
 - [IOrganizationService.Create](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.iorganizationservice.create?view=dynamics-general-ce-9)

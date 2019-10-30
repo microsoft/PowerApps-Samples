@@ -1,3 +1,13 @@
+---
+languages:
+- csharp
+products:
+- dotnet
+- powerapps
+page_type: sample
+description: "This sample shows how to install or uninstall the sample data for an organization by using the InstallSampleDataRequest message in Common Data Service. [SOAP]"
+---
+
 # Install or remove sample data
 
 This sample shows how to install or uninstall the sample data for an organization by using the [InstallSampleDataRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.crm.sdk.messages.installsampledatarequest?view=dynamics-general-ce-9) message.

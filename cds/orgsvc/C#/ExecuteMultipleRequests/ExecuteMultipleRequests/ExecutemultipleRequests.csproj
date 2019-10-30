@@ -98,31 +98,25 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\..\LoginUX\ExampleLoginForm.xaml.cs">
-      <Link>LoginUX\ExampleLoginForm.xaml.cs</Link>
-    </Compile>
-    <Compile Include="..\..\MyOrganizationSdkTypes.cs">
-      <Link>MyOrganizationSdkTypes.cs</Link>
-    </Compile>
-    <Compile Include="..\..\SampleHelpers.cs">
-      <Link>SampleHelpers.cs</Link>
-    </Compile>
+    <Compile Include="HelperCode\MyOrganizationSdkTypes.cs" />
+    <Compile Include="HelperCode\OptionSets.cs" />
+    <Compile Include="HelperCode\SampleHelpers.cs" />
+    <Compile Include="HelperCode\SystemUserProvider.cs" />
+    <Compile Include="LoginUX\ExampleLoginForm.xaml.cs" />
     <Compile Include="SampleMethod.cs" />
     <Compile Include="SampleProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="..\..\..\..\LoginUX\ExampleLoginForm.xaml">
-      <Link>LoginUX\ExampleLoginForm.xaml</Link>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Page Include="LoginUX\ExampleLoginForm.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\..\App.config">
-      <Link>App.config</Link>
-    </None>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
