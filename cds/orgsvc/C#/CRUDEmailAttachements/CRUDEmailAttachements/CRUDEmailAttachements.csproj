@@ -102,11 +102,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HelperCode\MyOrganizationSdkTypes.cs" />
-    <Compile Include="HelperCode\OptionSets.cs" />
-    <Compile Include="HelperCode\SampleHelpers.cs" />
-    <Compile Include="HelperCode\SystemUserProvider.cs" />
-    <Compile Include="LoginUX\ExampleLoginForm.xaml.cs" />
+    <Compile Include="Helper-Code\MyOrganizationSdkTypes.cs" />
+    <Compile Include="Helper-Code\OptionSets.cs" />
+    <Compile Include="Helper-Code\SampleHelpers.cs" />
+    <Compile Include="Helper-Code\SystemUserProvider.cs" />
+    <Compile Include="Login-UX\ExampleLoginForm.xaml.cs" />
     <Compile Include="SampleMethod.cs" />
     <Compile Include="SampleProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -116,7 +116,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="LoginUX\ExampleLoginForm.xaml">
+    <Page Include="Login-UX\ExampleLoginForm.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
