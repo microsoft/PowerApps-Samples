@@ -6,7 +6,7 @@ This sample shows how to use the Web API Global discovery Service
 
 To run the sample:
 1. Download or clone the sample so that you have a local copy.
-2. Open the ptoject solution file in Visual Studio 2017 and restore the Nuget packages.
+2. Open the project solution file in Visual Studio 2017 and restore the Nuget packages.
 3. Press F5 to run the sample.
 4. The samples prompts a login window where you need to specify the Commnon Data Service user credentials. 
 
