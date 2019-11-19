@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Configuration;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -267,6 +266,7 @@ namespace PowerApps.Samples
     /// <summary>
     /// Object returned by the discovery service
     /// </summary>
+
     class Instance
     {
         public string Id { get; set; }
