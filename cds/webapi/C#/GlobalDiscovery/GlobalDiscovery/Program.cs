@@ -9,6 +9,7 @@ using System.Text;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Configuration;
 
 namespace PowerApps.Samples
 {
@@ -253,7 +254,9 @@ namespace PowerApps.Samples
             }
             else
             {
-                PlatformParameters platformParameters = new PlatformParameters(PromptBehavior.Auto);
+                // Note that PromptBehavior.Always is why the UserID is aways prompted when this path is executed
+                // Lookup PromptBehavior's to understand what other options exist. 
+                PlatformParameters platformParameters = new PlatformParameters(PromptBehavior.Always);
                 authResult = authContext.AcquireTokenAsync(ap.Resource, clientId, new Uri(redirectUrl), platformParameters).Result;
             }
 
