@@ -1,4 +1,4 @@
-# Sample: Create, retrieve, update, and delete a recurring appointment
+# Create, retrieve, update, and delete a recurring appointment
 
 This sample shows how to create, retrieve, update, and delete a recurring appointment series. This sample uses the following common methods:
 
@@ -10,7 +10,6 @@ This sample shows how to create, retrieve, update, and delete a recurring appoin
 ## How to run this sample
 
 See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/master/cds/README.md) for information about how to run this sample.
-
 
 ## What this sample does
 
