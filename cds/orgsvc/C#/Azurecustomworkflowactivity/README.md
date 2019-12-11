@@ -40,5 +40,5 @@ A message containing the context of the current CDS operation will be available 
 
 ### See Also
 
-[Configure Azure integration with Common Data Service](https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/configure-azure-integration)
+[Configure Azure integration with Common Data Service](https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/configure-azure-integration)  
 [Workflow extensions](https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/workflow/workflow-extensions)
