@@ -4,9 +4,24 @@ This sample obtains the data context from the current Common Data Service (CDS) 
 
 ## How to run this sample
 
-1. Follow the [Setup](#Setup) instructions below.
-2. Execute the workflow.
-3. Using the Azure portal web interface, examine the Azure message queue for the posted CDS message.
+### Setup
+
+1. Download or clone the [Samples](https://github.com/Microsoft/PowerApps-Samples) repo so that you have a local copy of the sample.
+2. Open the sample solution in Visual Studio and build the sample.
+3. Register the compiled custom activity assembly in partial trust using the **Plug-in Registration** tool.
+4. Using the Azure web portal, create an Azure Service Bus queue to receive the custom activity context from CDS.
+5. Register an Azure service endpoint, specifying the queue from step #4, using the **Plug-in Registration** tool.
+6. Create a workflow and add a step using the AzureAwareWorkflowActivity action. When adding the step, make sure to specify the GUID of the registered service endpoint as the Input Id parameter value.
+
+### Demonstrate
+
+1. Execute the workflow.
+2. Using the Azure portal web interface, examine the Azure message queue for the posted CDS message.
+
+### Clean up
+
+1. Un-register the activity assembly, and then the service bus endpoint, using the **Plug-in Registration** tool.
+2. Delete the Azure Service Bus queue.
 
 ## What this sample does
 
@@ -20,25 +35,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 2. Obtains a reference to the service endpoint notification service.
 3. Posts the context to the Service Bus using the notification service.
 
-### Setup
-
-1. Download or clone the [Samples](https://github.com/Microsoft/PowerApps-Samples) repo so that you have a local copy of the sample.
-2. Open the sample solution in Visual Studio and build the sample.
-3. Register the compiled custom activity assembly in partial trust using the **Plug-in Registration** tool.
-4. Using the Azure web portal, create an Azure Service Bus queue to receive the custom activity context from CDS.
-5. Register an Azure service endpoint, specifying the queue from step #4, using the **Plug-in Registration** tool.
-6. Create a workflow and add a step using the AzureAwareWorkflowActivity action. When adding the step, make sure to specify the GUID of the registered service endpoint as the Input Id parameter value.
-
-### Demonstrate
-
-A message containing the context of the current CDS operation will be available in the Azure message queue. 
-
-### Clean up
-
-1. Un-register the activity assembly, and then the service bus endpoint, using the **Plug-in Registration** tool.
-2. Delete the Azure service bus queue.
-
-### See Also
+## See Also
 
 [Configure Azure integration with Common Data Service](https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/configure-azure-integration)  
 [Workflow extensions](https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/workflow/workflow-extensions)
