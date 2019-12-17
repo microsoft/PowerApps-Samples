@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DetermineWhetherUserHasRole", "DetermineWhetherUserHasRole\DetermineWhetherUserHasRole.csproj", "{BCE38852-FF8B-4953-9109-6CAC58879B4F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BCE38852-FF8B-4953-9109-6CAC58879B4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCE38852-FF8B-4953-9109-6CAC58879B4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCE38852-FF8B-4953-9109-6CAC58879B4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCE38852-FF8B-4953-9109-6CAC58879B4F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {57A39531-7846-4A18-B195-53C0A4B5BFDB}
+	EndGlobalSection
+EndGlobal
