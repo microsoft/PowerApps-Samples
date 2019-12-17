@@ -94,7 +94,7 @@ namespace PowerApps.Samples
             client.Timeout = new TimeSpan(0, 2, 0);
             client.BaseAddress = new Uri(GlobalDiscoUrl);
 
-            HttpResponseMessage response = client.GetAsync("api/discovery/v1.0/Instances", HttpCompletionOption.ResponseHeadersRead).Result;
+            HttpResponseMessage response = client.GetAsync("api/discovery/v2.0/Instances", HttpCompletionOption.ResponseHeadersRead).Result;
 
 
             if (response.IsSuccessStatusCode)
