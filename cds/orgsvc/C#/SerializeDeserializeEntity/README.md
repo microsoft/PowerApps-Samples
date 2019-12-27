@@ -8,7 +8,7 @@ See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/mas
 
 ## What this sample does
 
-The `IOrganizationService` message is intended to be used in a scenario where it contains data that provides programmatic access to the metadata and data for an organization.
+The `DataContractSerializer` message is intended to be used in a scenario where it Serializes and deserializes an instance of a type into an XML stream or document using a supplied data contract. This class cannot be inherited.
 
 ## How this sample works
 
