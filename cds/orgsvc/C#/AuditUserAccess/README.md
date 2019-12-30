@@ -1,11 +1,3 @@
-<!---
-languages:
-- csharp
-products:
-- power-platform
-description: "Sample to audit user access."
---->
-
 # Audit User Access with PowerApps
 
 This sample code shows how to audit user access. 
@@ -36,6 +28,4 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Clean up
 
-1. Display an option to delete the records created during [Setup](#setup). 
-
-    The deletion is optional in case you want to examine the entities and data created by the sample. You can manually delete the records to achieve the same result.
+Display an option to delete the records created during [Setup](#setup). The deletion is optional in case you want to examine the entities and data created by the sample. You can manually delete the records to achieve the same result.

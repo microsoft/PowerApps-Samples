@@ -1,6 +1,6 @@
 # Validate an appointment
 
-This sample shows how to validate an appointment using the [ValidateRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.crm.sdk.messages.validaterequest?view=dynamics-general-ce-9) message.
+This sample shows how to validate an appointment using the [ValidateRequest](https://docs.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.validaterequest?view=dynamics-general-ce-9) message.
 
 ## How to run this sample
 
@@ -27,5 +27,4 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Clean up
 
-1. Display an option to delete the records in [Setup](#setup).
-    The deletion is optional in case you want to examine the entities and data created by the sample. You can manually delete the records to achieve the same result.
+Display an option to delete the records in [Setup](#setup). The deletion is optional in case you want to examine the entities and data created by the sample. You can manually delete the records to achieve the same result.

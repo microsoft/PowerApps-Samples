@@ -27,4 +27,4 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Clean up
 
-1. This sample creates no records. No clean up is required.
+This sample creates no records. No clean up is required.

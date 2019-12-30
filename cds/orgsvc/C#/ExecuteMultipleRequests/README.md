@@ -10,7 +10,7 @@ description: "This sample shows how to execute multiple organization message req
 
 # Execute multiple requests
 
-This sample shows how to execute multiple organization message requests by using a single web service method call, passing [ExecuteMultipleRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.messages.executemultiplerequest?view=dynamics-general-ce-9) as a parameter. Reducing the number of message requests that must be transmitted over the network results in increased message processing performance.
+This sample shows how to execute multiple organization message requests by using a single web service method call, passing [ExecuteMultipleRequest](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.executemultiplerequest?view=dynamics-general-ce-9) as a parameter. Reducing the number of message requests that must be transmitted over the network results in increased message processing performance.
 
 ## How to run this sample
 
@@ -40,6 +40,4 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Clean up
 
-1. Display an option to delete the records created in the [Setup](#setup).
-
-   The deletion is optional in case you want to examine the entities and data created by the sample. You can manually delete the records to achieve the same result.
+Display an option to delete the records created in the [Setup](#setup). The deletion is optional in case you want to examine the entities and data created by the sample. You can manually delete the records to achieve the same result.
