@@ -8,7 +8,7 @@ See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/mas
 
 ## What this sample does
 
-This sample shows how to perform CRUD operation on an entyty.
+This sample shows how to perform CRUD operation on an entity.
 
 ## How this sample works
 
@@ -16,13 +16,13 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Setup
 
-1. Checks for the current version of the org.
+Checks for the current version of the org.
 
 ### Demonstrate
 
 1. The `WhoAMIRequest` method gets the current user's information.
-2. The `Account` method creates a smple account record.
+2. The `Account` method creates a sample account record.
 
 ### Clean up
 
-1. Display an option to delete the sample data created. The deletion is optional in case you want to examine the entities and data created by the sample. You can manually delete the records to achieve the same resuult.
+Display an option to delete the sample data created. The deletion is optional in case you want to examine the entities and data created by the sample. You can manually delete the records to achieve the same result.

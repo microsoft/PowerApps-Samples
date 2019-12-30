@@ -1,6 +1,6 @@
 # Dump entity relationships information to a file
 
-This sample shows how to write out all the attribute metadata to an `XML` file. It uses the [RetrieveAllEntitiesRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.messages.retrieveallentitiesrequest?view=dynamics-general-ce-9) message.
+This sample shows how to write out all the attribute metadata to an `XML` file. It uses the [RetrieveAllEntitiesRequest](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.retrieveallentitiesrequest?view=dynamics-general-ce-9) message.
 
 The following sample creates a new file at `\DumpEntityRelationShips\bin\Debug\RelationshipInfo.xml`. You can open this file in **Office Excel** to see a tabular report. 
 
@@ -18,7 +18,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Setup
 
-1. Checks for the current version of the org.
+Checks for the current version of the org.
 
 ### Demonstrate
 

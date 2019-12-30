@@ -12,10 +12,10 @@ description: "This sample shows how to create, retrieve, update, and delete emai
 
 This sample shows how to create, retrieve, update, and delete email attachments using the following methods:
 
-- [IOrganizationService.Create](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.iorganizationservice.create?view=dynamics-general-ce-9)
-- [IOrganizationService.Retrieve](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.iorganizationservice.retrieve?view=dynamics-general-ce-9)
-- [IOrganizationService.Update](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.iorganizationservice.update?view=dynamics-general-ce-9)
-- [IOrganizationService.Delete](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.iorganizationservice.delete?view=dynamics-general-ce-9)
+- [IOrganizationService.Create](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.create?view=dynamics-general-ce-9)
+- [IOrganizationService.Retrieve](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.retrieve?view=dynamics-general-ce-9)
+- [IOrganizationService.Update](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.update?view=dynamics-general-ce-9)
+- [IOrganizationService.Delete](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.delete?view=dynamics-general-ce-9)
 
 ## How to run this sample
 
@@ -40,11 +40,8 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 1. The `Retrieve` method retrieves an attachment including its id, subject, filename and body.
 1. The `Update` method updates the filename of the existing attachment.
 
-
 ### Clean up
 
-1. Display an option to delete the records created in the [Setup](#setup).
-
-    The deletion is optional in case you want to examine the entities and data created by the sample. You can manually delete the records to achieve the same result.
+Display an option to delete the records created in the [Setup](#setup). The deletion is optional in case you want to examine the entities and data created by the sample. You can manually delete the records to achieve the same result.
 
 

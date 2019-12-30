@@ -1,6 +1,6 @@
 # Retrieve the roles for an organization
 
-This sample shows how to retrieve the roles for an organization by using the [IOrganizationService.RetrieveMultiple](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.iorganizationservice.retrievemultiple?view=dynamics-general-ce-9) method.
+This sample shows how to retrieve the roles for an organization by using the [IOrganizationService.RetrieveMultiple](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.retrievemultiple?view=dynamics-general-ce-9) method.
 
 ## How to run this sample
 
@@ -16,11 +16,11 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Setup
 
-1. Checks for the current version of the org.
+Checks for the current version of the org.
 
 ### Demonstrate
 
-1. The `query` method retrieves all the roles that are present in an organization.
+The `query` method retrieves all the roles that are present in an organization.
 
 ### Clean up
 

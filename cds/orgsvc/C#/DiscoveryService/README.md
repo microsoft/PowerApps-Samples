@@ -27,7 +27,6 @@ If you know the regional data center that your environments are in, the sample w
 
 In SampleMethods.cs there is a `DataCenter` enumeration for each of the known data centers. Each enumeration member is decorated with a `Description` notation. All of these members except `Unknown` have the URL for the regional discovery service set as the description. 
 
-
 ### Demonstrate
 
 1. Using the user credentials and the `dataCenter` value, the program uses the `GetAllOrganizations` static method to retrieve all known environments for the user.

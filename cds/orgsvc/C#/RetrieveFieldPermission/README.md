@@ -1,6 +1,6 @@
 # Sample: Retrieve field permissions
 
-This sample shows how to retrieve secured fields for a user according to the steps outlined in [Field security entities](https://docs.microsoft.com/en-us/dynamics365/customer-engagement/developer/field-security-entities).
+This sample shows how to retrieve secured fields for a user according to the steps outlined in [Field security entities](https://docs.microsoft.com/dynamics365/customer-engagement/developer/field-security-entities).
 
 This sample requires additional users that are not in your system. Create the required users manually in **Office 365** in order to run the sample without any errors. For this sample create a user profile **as is** shown below. 
 
@@ -39,6 +39,4 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Clean up
 
-1. Display an option to delete the records created in the [Setup](#setup).
-
-    The deletion is optional in case you want to examine the entities and data created by the sample. You can manually delete the records to achieve the same result.
+Display an option to delete the records created in the [Setup](#setup). The deletion is optional in case you want to examine the entities and data created by the sample. You can manually delete the records to achieve the same result.

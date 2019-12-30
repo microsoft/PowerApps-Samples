@@ -15,7 +15,7 @@ See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/mas
 
 ## What this sample does
 
-The [IOrganizationService.Disassociate](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.iorganizationservice.disassociate?view=dynamics-general-ce-9) message is intended to be used in a scenario where it deletes a link between records.
+The [IOrganizationService.Disassociate](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.disassociate?view=dynamics-general-ce-9) message is intended to be used in a scenario where it deletes a link between records.
 
 ## How this sample works
 
