@@ -26,7 +26,7 @@ namespace PowerApps.Samples
                     // Create any entity records that the demonstration code requires
                     SetUpSample(service);
                     #region Demonstrate
-                    bool eligibleCreateOneToManyRelationship = EligibleCreateOneToManyRelationship(service, "account", "campaign");
+                    bool eligibleCreateOneToManyRelationship = EligibleCreateOneToManyRelationship(service, "account", "contact");
 
                     if (eligibleCreateOneToManyRelationship)
                     {
@@ -37,8 +37,8 @@ namespace PowerApps.Samples
                             new OneToManyRelationshipMetadata
                             {
                                 ReferencedEntity = "account",
-                                ReferencingEntity = "campaign",
-                                SchemaName = "new_account_campaign",
+                                ReferencingEntity = "contact",
+                                SchemaName = "new_account_contact",
                                 AssociatedMenuConfiguration = new AssociatedMenuConfiguration
                                 {
                                     Behavior = AssociatedMenuBehavior.UseLabel,
@@ -76,7 +76,7 @@ namespace PowerApps.Samples
 
                         Console.WriteLine(
                             "The one-to-many relationship has been created between {0} and {1}.",
-                            "account", "campaign");
+                            "account", "contact");
                     }
 
                     
@@ -84,7 +84,7 @@ namespace PowerApps.Samples
                     bool accountEligibleParticipate =
                         EligibleCreateManyToManyRelationship(service, "account");
                     bool campaignEligibleParticipate =
-                        EligibleCreateManyToManyRelationship(service, "campaign");
+                        EligibleCreateManyToManyRelationship(service, "contact");
 
                     if (accountEligibleParticipate && campaignEligibleParticipate)
                     {
@@ -92,10 +92,10 @@ namespace PowerApps.Samples
                         var createManyToManyRelationshipRequest =
                             new CreateManyToManyRequest
                             {
-                                IntersectEntitySchemaName = "new_accounts_campaigns",
+                                IntersectEntitySchemaName = "new_accounts_contacts",
                                 ManyToManyRelationship = new ManyToManyRelationshipMetadata
                                 {
-                                    SchemaName = "new_accounts_campaigns",
+                                    SchemaName = "new_accounts_contacts",
                                     Entity1LogicalName = "account",
                                     Entity1AssociatedMenuConfiguration =
                                 new AssociatedMenuConfiguration
@@ -105,13 +105,13 @@ namespace PowerApps.Samples
                                     Label = new Label("Account", 1033),
                                     Order = 10000
                                 },
-                                    Entity2LogicalName = "campaign",
+                                    Entity2LogicalName = "contact",
                                     Entity2AssociatedMenuConfiguration =
                                 new AssociatedMenuConfiguration
                                 {
                                     Behavior = AssociatedMenuBehavior.UseLabel,
                                     Group = AssociatedMenuGroup.Details,
-                                    Label = new Label("Campaign", 1033),
+                                    Label = new Label("Contact", 1033),
                                     Order = 10000
                                 }
                                 }
@@ -129,7 +129,7 @@ namespace PowerApps.Samples
 
                         Console.WriteLine(
                             "The many-to-many relationship has been created between {0} and {1}.",
-                            "account", "campaign");
+                            "account", "contact");
                     }
 
                     

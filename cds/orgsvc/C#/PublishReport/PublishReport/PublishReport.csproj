@@ -110,6 +110,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="SampleReport.rdl" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Login-UX\ExampleLoginForm.xaml">

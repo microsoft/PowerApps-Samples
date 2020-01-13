@@ -41,7 +41,6 @@ namespace PowerApps.Samples
 
         /// <summary>
         /// This method creates any entity records that this sample requires.
-        /// Creates the email activity.
         /// </summary>
         public static void CreateRequiredRecords(CrmServiceClient service)
         {
@@ -73,7 +72,7 @@ namespace PowerApps.Samples
                 var deleteOneToManyRelationshipRequest =
                     new DeleteRelationshipRequest
                     {
-                        Name = "new_account_campaign"
+                        Name = "new_account_contact"
                     };
 
                 service.Execute(deleteOneToManyRelationshipRequest);
@@ -81,7 +80,7 @@ namespace PowerApps.Samples
                 var deleteManyToManyRelationshipRequest =
                     new DeleteRelationshipRequest
                     {
-                        Name = "new_accounts_campaigns"
+                        Name = "new_accounts_contacts"
                     };
 
                 service.Execute(deleteManyToManyRelationshipRequest);

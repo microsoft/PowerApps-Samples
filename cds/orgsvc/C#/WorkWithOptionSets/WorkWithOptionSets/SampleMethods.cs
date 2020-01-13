@@ -38,7 +38,7 @@ namespace PowerApps.Samples
                 return;
             }
 
-            CreateRequiredRecords(service);
+            //CreateRequiredRecords(service);
         }
 
         private static void CleanUpSample(CrmServiceClient service)

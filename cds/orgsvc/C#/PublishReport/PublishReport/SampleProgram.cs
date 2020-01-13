@@ -107,7 +107,7 @@ namespace PowerApps.Samples
                     };
                     _reportVisibilityId3 = service.Create(rv);
 
-                    Console.WriteLine("{0} published in Microsoft Dynamics CRM.", sampleReport.Name);
+                    Console.WriteLine("{0} published in Common Data Service.", sampleReport.Name);
                     #endregion Demonstrate
 
                     #region Clean up
