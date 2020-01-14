@@ -102,16 +102,16 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="D:\PowerApps-Samples\cds\LoginUX\ExampleLoginForm.xaml.cs">
+    <Compile Include="..\..\LoginUX\ExampleLoginForm.xaml.cs">
       <Link>LoginUX\ExampleLoginForm.xaml.cs</Link>
     </Compile>
-    <Compile Include="D:\PowerApps-Samples\cds\orgsvc\C#\MyOrganizationSdkTypes.cs">
+    <Compile Include="..\..\orgsvc\C#\MyOrganizationSdkTypes.cs">
       <Link>MyOrganizationSdkTypes.cs</Link>
     </Compile>
-    <Compile Include="D:\PowerApps-Samples\cds\orgsvc\C#\SampleHelpers.cs">
+    <Compile Include="..\..\orgsvc\C#\SampleHelpers.cs">
       <Link>SampleHelpers.cs</Link>
     </Compile>
-    <Compile Include="D:\PowerApps-Samples\cds\orgsvc\C#\SystemUserProvider.cs">
+    <Compile Include="..\..\orgsvc\C#\SystemUserProvider.cs">
       <Link>SystemUserProvider.cs</Link>
     </Compile>
     <Compile Include="SampleMethod.cs" />
@@ -119,13 +119,13 @@
     <Compile Include="DiagramBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="D:\PowerApps-Samples\cds\App.config">
+    <None Include="..\..\App.config">
       <Link>App.config</Link>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="D:\PowerApps-Samples\cds\LoginUX\ExampleLoginForm.xaml">
+    <Page Include="..\..\LoginUX\ExampleLoginForm.xaml">
       <Link>LoginUX\ExampleLoginForm.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
