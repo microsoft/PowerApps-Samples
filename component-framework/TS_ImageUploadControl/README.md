@@ -1,15 +1,6 @@
----
-languages:
-- typescript
-products:
-- powerapps
-page_type: sample
-description: "Sample that shows how to create an increment component using Power Apps component framework."
----
+# Power Apps component framework: Image upload component
 
-# Power Apps component framework: Implementing increment component
-
-This sample component shows how to bind data with Power Apps component framework and error handling.
+This sample component renders as an `Upload` button to upload the image and a default image when the component loads for the first time. When you click on the `Upload`, a file explorer pops up to pick an image. The selected image renders within the component. Meanwhile, the `Remove button` is shown if we need to reset. When you click on the `Remove` button, the default image is displayed. 
 
 ## Before you can try the sample components
 
@@ -28,11 +19,9 @@ To try the sample components, you must first:
 
 ## What this sample does
 
-The increment component renders as a textbox with an `Increment` button in the runtime. The text box shows the current value and the `Increment` button is clickable. Whenever you click on the button, the value within the textbox is increased by 1. You can change the increment value when you are configuring the component to the field on the form.
+The `successCallback` method will be triggered and the resource content injects in the `successCallback`. Then you use the image element 'src' points to the content and the default image loads.
 
-The increment value can be changed to any number you wish. The updated value flows to the framework through the *notifyOutputChanged* method.
-
-If the value in the text box is a valid integer, then it updates the value to the component framework. You can continuously click the `Increment` button and update it. If it’s an invalid integer, an error message pops out.
+The `device.pickFile` method opens a dialog box to select files from your computer (web client) or mobile device (mobile clients). For desktop, it opens the file explorer, for the mobile client, it opens the library of the photo. When you click on the `Upload` button, the device API `pickFile` triggers and the user picks up the file. Once the file is successfully picked, the file's filename, file content will be injected in the `successCallback`.
 
 ## How to run the sample
 

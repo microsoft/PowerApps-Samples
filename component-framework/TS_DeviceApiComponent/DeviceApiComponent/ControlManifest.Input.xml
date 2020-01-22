@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="SampleNamespace" constructor="DeviceApiComponent" version="0.1.11" display-name-key="TS_DeviceApiComponent_Display_Key" description-key="TS_DeviceApiComponent_Desc_Key" control-type="standard">
+    <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
+    <property name="Location" display-name-key="Location_Display_Key" description-key="Location_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
+    <resources>
+      <code path="index.ts" order="1"/>
+      <css path="css/TS_DeviceApiComponent.css" order="2" />
+      <resx version="1.0.0" path="strings/TS_DeviceApiComponent.1033.resx"/>
+    </resources>
+    <feature-usage>
+      <uses-feature name="Device.getCurrentPosition" required="false" />
+      <uses-feature name="Device.captureImage" required="false" />
+      <uses-feature name="Device.pickFile" required="true" />
+      <!-- 
+      <uses-feature name="Device.captureAudio" required="true" />
+      <uses-feature name="Device.captureVideo" required="true" />
+      <uses-feature name="Device.getBarcodeValue" required="true" />
+      <uses-feature name="Utility" required="true" />
+      <uses-feature name="WebAPI" required="true" />
+      -->
+    </feature-usage>
+  </control>
+</manifest>

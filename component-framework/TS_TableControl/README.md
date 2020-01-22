@@ -1,15 +1,6 @@
----
-languages:
-- typescript
-products:
-- powerapps
-page_type: sample
-description: "Sample that shows how to create an increment component using Power Apps component framework."
----
+# Power Apps component framework: Table component
 
-# Power Apps component framework: Implementing increment component
-
-This sample component shows how to bind data with Power Apps component framework and error handling.
+This sample component renders a table with two columns. The left column shows the name of the API method or property, and the right column shows the value returned by the API. You can open this component on the different type of devices or modify your language or user settings to see the values adjust correctly in the table.
 
 ## Before you can try the sample components
 
@@ -28,11 +19,13 @@ To try the sample components, you must first:
 
 ## What this sample does
 
-The increment component renders as a textbox with an `Increment` button in the runtime. The text box shows the current value and the `Increment` button is clickable. Whenever you click on the button, the value within the textbox is increased by 1. You can change the increment value when you are configuring the component to the field on the form.
+This sample provides examples on how to use methods from the `Client`, `UserSettings`, `Utility`, and `Formatting` interfaces. This component also showcases two utility functions, `setFullScreen` and `lookupObjects`. These functions are invoked by clicking the button rendered as part of the code component. The `setFullScreen` button toggles the component in and out of full screen mode. The `lookupObjects` button opens a lookup dialog, and then inject the selected record as text into div.
 
-The increment value can be changed to any number you wish. The updated value flows to the framework through the *notifyOutputChanged* method.
+In this sample, we render an HTML button and attach an onClick event handler `onLookupObjectsButtonClick` to the button. On click of this button, we invoke `context.utils.lookupObjects()` method and pass as a parameter an array of entity names.
 
-If the value in the text box is a valid integer, then it updates the value to the component framework. You can continuously click the `Increment` button and update it. If it’s an invalid integer, an error message pops out.
+This method returns a Promise object, representing the completion or failure of the call to the lookup dialog. If the promise is resolved successfully, the lookup object which the user selected is passed as a parameter into the callback method and can be referenced as `data.id`, `data.name`, `data.entityType`.
+
+The callback method injects this information as HTML into a div rendered on the code component to showcase the selected results to the user. If the promise is rejected, the error callback method is invoked where your component can handle the error scenario accordingly.
 
 ## How to run the sample
 

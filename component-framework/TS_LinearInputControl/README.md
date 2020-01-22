@@ -1,15 +1,6 @@
----
-languages:
-- typescript
-products:
-- powerapps
-page_type: sample
-description: "Sample that shows how to create an increment component using Power Apps component framework."
----
+# Power Apps component framework: Linear input component
 
-# Power Apps component framework: Implementing increment component
-
-This sample component shows how to bind data with Power Apps component framework and error handling.
+This sample component changes the user experience of interacting with numeric types on the form. Instead of typing in the numbers, the linear input component provides a linear slider using which the value of the attribute can be set on the form.
 
 ## Before you can try the sample components
 
@@ -28,11 +19,15 @@ To try the sample components, you must first:
 
 ## What this sample does
 
-The increment component renders as a textbox with an `Increment` button in the runtime. The text box shows the current value and the `Increment` button is clickable. Whenever you click on the button, the value within the textbox is increased by 1. You can change the increment value when you are configuring the component to the field on the form.
+In this sample, a `type-group` is defined and named it as `numbers` which includes decimal, whole, floating and currency value types into that group in the manifest. This group is used to bind the component property.
 
-The increment value can be changed to any number you wish. The updated value flows to the framework through the *notifyOutputChanged* method.
+An input element of type range with min and max value set to 1 and 1000, respectively is created. A label element is created which shows the value that is relative to the position of the slider. Attach a function `refreshData` to the `eventlistener` on the input of the component.
 
-If the value in the text box is a valid integer, then it updates the value to the component framework. You can continuously click the `Increment` button and update it. If it’s an invalid integer, an error message pops out.
+Create a local variable for saving the `context` and `notifyOutputChanged`. Assign the `context` and `notifyOutputChanged` from the parameters that are passed as part of the `init` function.
+
+Implement the logic for the `refreshData` function. As you can see in the sample, we take the value from the inputElement and set the value of the component, `innerHTML` property of the `labelElement` and then call the `notifyOutputChanged` so that the changes are cascaded up above the framework layer.
+
+In the `updateView` method, we get the value of the attribute from the `context.parameters` and then set it to the value variable which stores the component value and also the input elements in the component.
 
 ## How to run the sample
 

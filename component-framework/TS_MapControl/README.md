@@ -1,15 +1,6 @@
----
-languages:
-- typescript
-products:
-- powerapps
-page_type: sample
-description: "Sample that shows how to create an increment component using Power Apps component framework."
----
+# Power Apps component framework: Map component
 
-# Power Apps component framework: Implementing increment component
-
-This sample component shows how to bind data with Power Apps component framework and error handling.
+This sample component changes the user experience of interacting with address fields on the form. Along with the text values of the address, this component provides the ability to visually identify a particular address on a map without navigating to another tab or screen. 
 
 ## Before you can try the sample components
 
@@ -28,11 +19,9 @@ To try the sample components, you must first:
 
 ## What this sample does
 
-The increment component renders as a textbox with an `Increment` button in the runtime. The text box shows the current value and the `Increment` button is clickable. Whenever you click on the button, the value within the textbox is increased by 1. You can change the increment value when you are configuring the component to the field on the form.
+In the manifest file, we defined property of type Single line of Text. We use this to bind it to the address field on the form. Create a variable name `MAPS_API_KEY` that can be accessed in the context of the component. Google Map API allows you only to render the maps inside an `IFRAME`. So, you need to create an IFRAME element that is going to render the map using the URL we generate. By default, we are setting the map to be hidden and display it only when the address value exists on the form.
 
-The increment value can be changed to any number you wish. The updated value flows to the framework through the *notifyOutputChanged* method.
-
-If the value in the text box is a valid integer, then it updates the value to the component framework. You can continuously click the `Increment` button and update it. If it’s an invalid integer, an error message pops out.
+`buildMapUrl` and `renderMap` (you can even merge them into one) takes the address string and embeds it onto the map URL by encoding the address string and then sets the IFRAME element’s src element to the URL respectively. Also, call the `notifyOutputChanged` method to ensure we notify the component that the rendering has changed.
 
 ## How to run the sample
 

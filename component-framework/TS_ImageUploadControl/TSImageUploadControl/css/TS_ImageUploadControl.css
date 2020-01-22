@@ -1,0 +1,46 @@
+/*
+	This file is part of the Microsoft PowerApps code samples. 
+	Copyright (C) Microsoft Corporation.  All rights reserved. 
+	This source code is intended only as a supplement to Microsoft Development Tools and/or  
+	on-line documentation.  See these other materials for detailed information regarding  
+	Microsoft code samples. 
+
+	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER  
+	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF  
+	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. 
+ */
+ 
+.SampleNamespace\.TSImageUploadControl button{
+	text-decoration: none;
+    display: block;
+    font-size: 14px;
+    margin: 4px 6px;
+    cursor: pointer;
+	color: white;
+    border-radius: 0px;
+	background-color: rgb(59, 121, 183);
+    border: none;
+    padding: 5px;
+    text-align: center;
+}
+
+.SampleNamespace\.TSImageUploadControl img{
+    display: block;
+    box-shadow: 0 5px 10px 0 rgba(30, 30, 30, 0.3);
+    width: 100px;
+    height: 100px;
+}
+
+.SampleNamespace\.TSImageUploadControl .NoImage>.RemoveButton {
+    display: none;
+}
+
+
+.SampleNamespace\.TSImageUploadControl label{
+    display: none;
+}
+
+.SampleNamespace\.TSImageUploadControl .ShowError>label{
+    display: block;
+    color: red;
+}

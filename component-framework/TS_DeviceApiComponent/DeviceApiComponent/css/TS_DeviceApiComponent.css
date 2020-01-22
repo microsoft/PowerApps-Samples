@@ -1,0 +1,11 @@
+.success {
+  color: #17b417;
+}
+
+.warning {
+  color: #cc6d00;
+}
+
+.error {
+  color: #ff0000;
+}
