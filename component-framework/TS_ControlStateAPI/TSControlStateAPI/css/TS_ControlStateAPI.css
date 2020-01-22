@@ -1,0 +1,59 @@
+/*
+	This file is part of the Microsoft PowerApps code samples. 
+	Copyright (C) Microsoft Corporation.  All rights reserved. 
+	This source code is intended only as a supplement to Microsoft Development Tools and/or  
+	on-line documentation.  See these other materials for detailed information regarding  
+	Microsoft code samples. 
+
+	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER  
+	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF  
+	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. 
+ */
+ 
+.SampleNamespace\.TSControlStateAPI 
+{
+	font-family: "SegoeUI-Semibold", "Segoe UI Semibold", "Segoe UI Regular", "Segoe UI";
+}
+
+.SampleNamespace\.TSControlStateAPI .ControlState_Container
+{
+	overflow-x: auto;
+}
+
+.SampleNamespace\.TSControlStateAPI  .ControlState_ButtonClass
+{
+	text-decoration: none;
+	display: inline-block;
+	font-size: 14px;
+	cursor: pointer;
+	color: #1160B7;
+	background-color: #FFFFFF;
+	border: 1px solid black;
+	padding: 5px;
+	text-align: center;
+	min-width: 200px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	display: block;
+}
+
+.SampleNamespace\.TSControlStateAPI .ControlState_SelectedColorElement
+{
+	width: 200px;
+	height: 40px;
+	margin-bottom: 25px;
+	text-align: center;
+	padding: auto;
+	font-size: 24px;
+	color: rgb(51, 51, 51);
+}
+
+.SampleNamespace\.TSControlStateAPI .ControlState_DivLabelClass
+{
+	width: 200px;
+	height: 40px;
+	text-align: center;
+	padding: auto;
+	font-size: 24px;
+	color: rgb(51, 51, 51);
+}
