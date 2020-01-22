@@ -1,15 +1,6 @@
----
-languages:
-- typescript
-products:
-- powerapps
-page_type: sample
-description: "Sample that shows how to create an increment component using Power Apps component framework."
----
+# Power Apps component framework: Formatting API component
 
-# Power Apps component framework: Implementing increment component
-
-This sample component shows how to bind data with Power Apps component framework and error handling.
+This sample component explores the various methods available as part of the Power Apps component framework formatting API. In this sample, you create a series of input elements which calls into the respective methods of the formatting API that matches with the value displayed.
 
 ## Before you can try the sample components
 
@@ -25,14 +16,6 @@ To try the sample components, you must first:
 
 1. Install [Microsoft Power Apps CLI](https://aka.ms/PowerAppsCLI).
 1. [Download](https://github.com/microsoft/PowerApps-Samples/tree/master/component-framework) the sample components so that you have a local copy.
-
-## What this sample does
-
-The increment component renders as a textbox with an `Increment` button in the runtime. The text box shows the current value and the `Increment` button is clickable. Whenever you click on the button, the value within the textbox is increased by 1. You can change the increment value when you are configuring the component to the field on the form.
-
-The increment value can be changed to any number you wish. The updated value flows to the framework through the *notifyOutputChanged* method.
-
-If the value in the text box is a valid integer, then it updates the value to the component framework. You can continuously click the `Increment` button and update it. If it’s an invalid integer, an error message pops out.
 
 ## How to run the sample
 

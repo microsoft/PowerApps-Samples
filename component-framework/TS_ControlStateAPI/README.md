@@ -1,15 +1,6 @@
----
-languages:
-- typescript
-products:
-- powerapps
-page_type: sample
-description: "Sample that shows how to create an increment component using Power Apps component framework."
----
+# Power Apps component framework: Control state API component
 
-# Power Apps component framework: Implementing increment component
-
-This sample component shows how to bind data with Power Apps component framework and error handling.
+This sample component shows how the ability to build components that can maintain user state throughout the user's session as the user navigates to and from the component.
 
 ## Before you can try the sample components
 
@@ -28,11 +19,9 @@ To try the sample components, you must first:
 
 ## What this sample does
 
-The increment component renders as a textbox with an `Increment` button in the runtime. The text box shows the current value and the `Increment` button is clickable. Whenever you click on the button, the value within the textbox is increased by 1. You can change the increment value when you are configuring the component to the field on the form.
+The Power Apps component framework allows you to persist state of component across multiple renderings of the component within the same session. It provides you with the ability to build components that can maintain user state throughout the user's session as the user navigates to and from the component.
 
-The increment value can be changed to any number you wish. The updated value flows to the framework through the *notifyOutputChanged* method.
-
-If the value in the text box is a valid integer, then it updates the value to the component framework. You can continuously click the `Increment` button and update it. If it’s an invalid integer, an error message pops out.
+For example, if your code component is a long list that the user can scroll through, you could leverage the `SetControlState` functionality to remember the point in the list the user is looking at when they navigated away from the form. You could then add logic on component initialization to check the stored state and render the component's list at the point where the user was previously reading.
 
 ## How to run the sample
 
