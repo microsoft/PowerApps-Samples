@@ -1,5 +1,5 @@
 
-# Sample: %title%
+# Sample: Disable a user
 
 This sample shows how to disable and enable a system user account in an online or on-premise/IFD environment.
 
