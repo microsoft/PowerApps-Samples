@@ -31,7 +31,7 @@ A custom field named *Contact*.new_nextbirthday must exist for this custom workf
 **RetrieveCreditScore**  
 The following customizations must exist for this custom workflow activity to work:
 
-Custom entity schema name: new_loanapplication  
+Custom entity schema name: *new_loanapplication*  
 Attribute: new_loanapplicationid as the primary key  
 Attribute: new_creditscore of type int with min of 0 and max of 1000 (if it is to be updated)  
 Attribute: new_loanamount of type money with default min/max  
