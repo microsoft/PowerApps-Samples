@@ -72,7 +72,7 @@ namespace PowerApps.Samples
                     foreach (Contact contact in contacts)
                     {
                         Console.WriteLine("Contact ID: {0}", contact.Id);
-                        Console.WriteLine("Contact Name: {0}", contact.FullName);
+                        Console.WriteLine("Contact Name: {0} {1}", contact.FirstName, contact.LastName );
                         Console.WriteLine("Contact Phone: {0}", contact.Address1_Telephone1);
                     }
                     Console.WriteLine("<End of Listing>");
@@ -83,10 +83,10 @@ namespace PowerApps.Samples
                     //List all contacts matching specified parameters
                     //===============================================
                     //Contact ID: a263e139-63a3-e011-aea3-00155dba3818
-                    //Contact Name:
+                    //Contact Name: Ben Andrews
                     //Contact Phone: (206)555-5555
                     //Contact ID: a463e139-63a3-e011-aea3-00155dba3818
-                    //Contact Name:
+                    //Contact Name: Colin Wilcox
                     //Contact Phone: (425)555-5555
                     //<End of Listing>
 

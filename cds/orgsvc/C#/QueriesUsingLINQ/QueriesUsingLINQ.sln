@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Query using late binding", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Retrieve multiple using conditions", "RetrieveMultipleUsingConditions\Retrieve multiple using conditions.csproj", "{369CD18B-CE78-4382-A242-A31727745844}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComplexQueries", "ComplexQueries\ComplexQueries.csproj", "{8C25A47A-5FB6-4541-BC1A-B4CD245A659B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,10 @@ Global
 		{369CD18B-CE78-4382-A242-A31727745844}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{369CD18B-CE78-4382-A242-A31727745844}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{369CD18B-CE78-4382-A242-A31727745844}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C25A47A-5FB6-4541-BC1A-B4CD245A659B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C25A47A-5FB6-4541-BC1A-B4CD245A659B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C25A47A-5FB6-4541-BC1A-B4CD245A659B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C25A47A-5FB6-4541-BC1A-B4CD245A659B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
