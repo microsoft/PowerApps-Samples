@@ -1,15 +1,19 @@
 
-# Sample: %title%
+# Sample: Query data using LINQ
 
-This sample shows how to %brief-description%.
+These samples show how to query business data using [Language-Integrated Query (LINQ)](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/introduction-to-linq-queries).
 
 ## How to run this sample
 
-See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/master/cds/README.md) for information about how to run this sample.
+See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/master/cds/README.md) for information about how to run this sample. There are multiple projects in the solution. Each project demonstrates some aspect of LINQ queries.
 
 ## What this sample does
 
-%full-description%
+Read each sample's comments to find out what each sample does. There are samples that:
+* Create a simple LINQ query
+* Create a LINQ query using entity late binding
+* Retrieve multiple records using condition operators
+* Complex queries - a wide assortment of LINQ examples
 
 ## How this sample works
 
@@ -17,14 +21,14 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Setup
 
-%setup%
+Creates any entity instances required by the `Demonstrate` region of each `Main`() method.
 
 ### Demonstrate
 
-%demonstrates%
+Code in the `Demonstrate` region of the `Main`() method performs one or more LINQ queries.
 
 ### Clean up
 
-1. Display an option to delete the records created in [Setup](#setup).
+Displays an option to delete the records created in [Setup](#setup).
 
-    The deletion is optional in case you want to examine the entities and data created by the sample. You can manually delete the records to achieve the same result.
+The deletion is optional in case you want to examine the entities and data created by the sample. You can manually delete the records to achieve the same result.
