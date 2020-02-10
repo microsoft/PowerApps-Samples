@@ -10,7 +10,7 @@ description: "This sample shows how to create, retrieve, update, delete and asso
 
 # Web API Basic Operations Sample
 
-This Sample demonstrates how to perform basic CRUD (Create, Retrieve, Update, and Delete) and associative operations using the Common Data Service for Apps Web API.
+This Sample demonstrates how to perform basic CRUD (Create, Retrieve, Update, and Delete) and associative operations using the Common Data Service Web API.
 
 ## How to run the sample
 
