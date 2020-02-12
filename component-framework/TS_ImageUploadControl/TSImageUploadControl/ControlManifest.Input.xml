@@ -8,5 +8,8 @@
       <img path="img/default.png" />
       <resx path="strings/TS_ImageUploadControl.1033" version="1.0.0" />
     </resources>
+    <feature-usage>
+			<uses-feature name="Device.pickFile" required="true" />
+		</feature-usage>
   </control>
 </manifest>
