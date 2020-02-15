@@ -241,6 +241,9 @@ type DataSet = ComponentFramework.PropertyTypes.DataSet;
 					let innerDiv = document.createElement("div");
 					innerDiv.classList.add("SimpleTable_TableCellInnerDiv_Style");
 					innerDiv.style.maxWidth = widthDistribution[index];
+					// Currently there is a bug in canvas preventing retrieving value using alias for property set columns.
+					// In this sample, we use the column's actual attribute name to retrieve the formatted value to work around the issue
+					// columnItem.alias should be used after bug is addressed
 					innerDiv.innerText = gridParam.records[currentRecordId].getFormattedValue(columnItem.name);
 					tableRecordCell.appendChild(innerDiv);
 					tableRecordRow.appendChild(tableRecordCell);
