@@ -221,38 +221,6 @@ type DataSet = ComponentFramework.PropertyTypes.DataSet;
 		return tableHeader;
 	}
 
-	private createSearchBar(context: ComponentFramework.Context<IInputs>) {
-		let container = document.createElement("div");
-		let input = document.createElement("input");
-		input.id = "searchBar";
-		let button = document.createElement("button");
-		button.innerHTML = "Search"
-		button.addEventListener("click", (() => {
-			let conditionsArray: DataSetInterfaces.ConditionExpression[] = [];
-			let searchString = input.value;
-			for (let i = 0; i < this.columns.length; i++) {
-				const column = this.columns[i];
-				if (!column.isHidden && column.dataType === "SingleLine.Text") {
-					const condition: DataSetInterfaces.ConditionExpression = {
-						attributeName: column.alias,
-						conditionOperator: 6,
-						value: searchString,
-					};
-					conditionsArray.push(condition);
-				}
-			}
-			this.contextObj.parameters.sampleDataSet.filtering.setFilter({
-				conditions: conditionsArray,
-				filterOperator: 1,
-			});
-			this.contextObj.parameters.sampleDataSet.refresh();
-		}).bind(this));
-		container.appendChild(input);
-		container.appendChild(button);
-
-		return container;
-	}
-
 	private createTableBody(columnsOnView: DataSetInterfaces.Column[], widthDistribution: string[], gridParam: DataSet): HTMLTableSectionElement {
 
 		let tableBody: HTMLTableSectionElement = document.createElement("tbody");
