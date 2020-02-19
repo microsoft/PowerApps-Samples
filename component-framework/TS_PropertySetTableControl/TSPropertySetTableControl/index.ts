@@ -58,7 +58,9 @@ type DataSet = ComponentFramework.PropertyTypes.DataSet;
 		 */
 		public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container:HTMLDivElement)
 		{
-			// Need to track container resize so that control could get the available width. The available height won't be provided even this is true
+			// Need to track container resize so that control could get the available width.
+			// In Model-driven app, the available height won't be provided even this is true
+			// In Canvas-app, the available height will be provided in context.mode.allocatedHeight
 			context.mode.trackContainerResize(true);
 
 			// Create main table container div.
@@ -113,6 +115,7 @@ type DataSet = ComponentFramework.PropertyTypes.DataSet;
 				return;
 			}
 
+			//calculate the width for each column
 			let columnWidthDistribution = this.getColumnWidthDistribution(context, columnsOnView);
 
 			while (this.dataTable.firstChild) {
@@ -142,7 +145,10 @@ type DataSet = ComponentFramework.PropertyTypes.DataSet;
 	}
 
 	/**
-	 * Get sorted columns on view
+	 * Get sorted columns on view, columns are sorted by DataSetInterfaces.Column.order
+	 * Property-set columns will always have order = 0.
+	 * In Model-driven app, the columns are ordered in the same way as columns defined in views.
+	 * In Canvas-app, the columns are ordered by the sequence fields added to control
 	 * @param context
 	 * @return sorted columns object on View
 	 */
@@ -157,7 +163,10 @@ type DataSet = ComponentFramework.PropertyTypes.DataSet;
 	}
 
 	/**
-	 * Get column width distribution
+	 * Get column width distribution using visualSizeFactor. 
+	 * In model-driven app, visualSizeFactor can be configured from view's settiong.
+	 * In Canvas app, currently there is no way to configure this value. In all data sources, all columns will have the same visualSizeFactor value.
+	 * 
 	 * @param context context object of this cycle
 	 * @param columnsOnView columns array on the configured view
 	 * @returns column width distribution
@@ -231,9 +240,6 @@ type DataSet = ComponentFramework.PropertyTypes.DataSet;
 				let tableRecordRow: HTMLTableRowElement = document.createElement("tr");
 				tableRecordRow.classList.add("SimpleTable_TableRow_Style");
 				tableRecordRow.addEventListener("click", this.onRowClick.bind(this));
-
-				// Set the recordId on the row dom
-				tableRecordRow.setAttribute(RowRecordId, gridParam.records[currentRecordId].getRecordId());
 
 				columnsOnView.forEach(function (columnItem, index) {
 					let tableRecordCell = document.createElement("td");
