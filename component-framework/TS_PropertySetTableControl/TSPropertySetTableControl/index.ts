@@ -146,7 +146,7 @@ type DataSet = ComponentFramework.PropertyTypes.DataSet;
 
 	/**
 	 * Get sorted columns on view, columns are sorted by DataSetInterfaces.Column.order
-	 * Property-set columns will always have order = 0.
+	 * Property-set columns will always have order = -1.
 	 * In Model-driven app, the columns are ordered in the same way as columns defined in views.
 	 * In Canvas-app, the columns are ordered by the sequence fields added to control
 	 * @param context
@@ -246,7 +246,7 @@ type DataSet = ComponentFramework.PropertyTypes.DataSet;
 					tableRecordCell.classList.add("SimpleTable_TableCell_Style");
 					let innerDiv = document.createElement("div");
 					innerDiv.classList.add("SimpleTable_TableCellInnerDiv_Style");
-					innerDiv.style.maxWidth = widthDistribution[index];
+					innerDiv.style.width = widthDistribution[index];
 					// Currently there is a bug in canvas preventing retrieving value using alias for property set columns.
 					// In this sample, we use the column's actual attribute name to retrieve the formatted value to work around the issue
 					// columnItem.alias should be used after bug is addressed
