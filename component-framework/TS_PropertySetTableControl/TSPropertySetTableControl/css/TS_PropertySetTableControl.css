@@ -28,6 +28,20 @@
     max-height:1.5rem;
 }
 
+.SampleNamespace\.TSPropertySetTableControl th.SimpleTable_TableHeader_PropertySet_Style{
+    background-color: #0099ff;
+    color: #000;
+    height:3rem;
+    font-family:"Segoe UI Regular","Segoe UI", Arial, Sans-Serif;
+    font-size:1rem;
+    line-height:1.384;
+    text-align:left;
+    padding:0.5rem;
+    border-left:.1rem solid rgba(255,255,255,.1);
+    vertical-align: middle;
+    width: 100vw;
+}
+
 .SampleNamespace\.TSPropertySetTableControl th.SimpleTable_TableHeader_Style{
     height:3rem;
     font-family:"Segoe UI Regular","Segoe UI", Arial, Sans-Serif;
@@ -88,4 +102,14 @@
 
 .SampleNamespace\.TSPropertySetTableControl button.LoadPageButton_Disabled_Style{
     background-color:#999999;
+}
+
+.SampleNamespace\.TSPropertySetTableControl input.GetValueInput_Style {
+    width: 300px;
+    margin: 5px;
+}
+
+.SampleNamespace\.TSPropertySetTableControl label.GetValueResult_Style {
+    width: 200px;
+    margin: 5px;
 }

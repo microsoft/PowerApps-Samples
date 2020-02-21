@@ -39,7 +39,9 @@ type DataSet = ComponentFramework.PropertyTypes.DataSet;
 		// Button element created as part of this control
 		private loadPrevPageButton: HTMLButtonElement;
 
-		private columns: DataSetInterfaces.Column[];
+		private getValueResultLabel: HTMLLabelElement;
+
+		private selectedRecord: DataSetInterfaces.EntityRecord;
 
 		/**
 		 * Empty constructor.
@@ -90,6 +92,7 @@ type DataSet = ComponentFramework.PropertyTypes.DataSet;
 			this.mainContainer = document.createElement("div");
 
 			// Adding the main table and loadNextPage button created to the container DIV.
+			this.mainContainer.appendChild(this.createGetValueDiv());
 			this.mainContainer.appendChild(this.loadPrevPageButton);
 			this.mainContainer.appendChild(this.loadNextPageButton);
 			this.mainContainer.appendChild(this.dataTable);
@@ -110,7 +113,6 @@ type DataSet = ComponentFramework.PropertyTypes.DataSet;
 
 			// Get sorted columns on View
 			let columnsOnView = this.getSortedColumnsOnView(context);
-			this.columns = columnsOnView;
 			if (!columnsOnView || columnsOnView.length === 0) {
 				return;
 			}
@@ -144,11 +146,39 @@ type DataSet = ComponentFramework.PropertyTypes.DataSet;
 	public destroy(): void {
 	}
 
+	private createGetValueDiv(): HTMLDivElement {
+		const getValueDiv = document.createElement("div");
+		const inputBox = document.createElement("input");
+		const getValueButton = document.createElement("button");
+		const resultText = document.createElement("label");
+
+		const _this = this; 
+
+		inputBox.id = "getValueInputBox";
+		inputBox.placeholder = "select a row and enter the alias name";
+		inputBox.classList.add("GetValueInput_Style");
+
+		getValueButton.innerText = "GetValue";		
+		getValueButton.onclick = () => {
+			if (_this.selectedRecord) {
+				resultText.innerText = _this.selectedRecord.getFormattedValue(inputBox.value);
+			}
+		}
+		resultText.innerText = "Select a row first";
+		resultText.classList.add("GetValueResult_Style");
+		this.getValueResultLabel = resultText;
+		getValueDiv.appendChild(inputBox);
+		getValueDiv.appendChild(getValueButton);
+		getValueDiv.appendChild(resultText);
+		return getValueDiv;
+	}
+
 	/**
 	 * Get sorted columns on view, columns are sorted by DataSetInterfaces.Column.order
 	 * Property-set columns will always have order = -1.
 	 * In Model-driven app, the columns are ordered in the same way as columns defined in views.
 	 * In Canvas-app, the columns are ordered by the sequence fields added to control
+	 * Note that property set columns will have order = 0 in test harness, this is a bug.
 	 * @param context
 	 * @return sorted columns object on View
 	 */
@@ -166,7 +196,8 @@ type DataSet = ComponentFramework.PropertyTypes.DataSet;
 	 * Get column width distribution using visualSizeFactor. 
 	 * In model-driven app, visualSizeFactor can be configured from view's settiong.
 	 * In Canvas app, currently there is no way to configure this value. In all data sources, all columns will have the same visualSizeFactor value.
-	 * 
+	 * Control does not have to render the control using these values, controls are free to display any columns with any width, or making column width adjustable.
+	 * However, these kind of configurations will be lost when leaving the page
 	 * @param context context object of this cycle
 	 * @param columnsOnView columns array on the configured view
 	 * @returns column width distribution
@@ -207,17 +238,17 @@ type DataSet = ComponentFramework.PropertyTypes.DataSet;
 		let tableHeader: HTMLTableSectionElement = document.createElement("thead");
 		let tableHeaderRow: HTMLTableRowElement = document.createElement("tr");
 		tableHeaderRow.classList.add("SimpleTable_TableRow_Style");
-		const _this = this;
 		columnsOnView.forEach(function (columnItem, index) {
 			let tableHeaderCell = document.createElement("th");
-			tableHeaderCell.classList.add("SimpleTable_TableHeader_Style");
 			let innerDiv = document.createElement("div");
 			innerDiv.classList.add("SimpleTable_TableCellInnerDiv_Style");
 			innerDiv.style.maxWidth = widthDistribution[index];
 			let columnDisplayName: string;
 			if (columnItem.order < 0) {
+				tableHeaderCell.classList.add("SimpleTable_TableHeader_PropertySet_Style");
 				columnDisplayName = columnItem.displayName + "(propertySet)";
 			} else {
+				tableHeaderCell.classList.add("SimpleTable_TableHeader_Style");
 				columnDisplayName = columnItem.displayName;
 			}
 			innerDiv.innerText = columnDisplayName;
@@ -240,6 +271,9 @@ type DataSet = ComponentFramework.PropertyTypes.DataSet;
 				let tableRecordRow: HTMLTableRowElement = document.createElement("tr");
 				tableRecordRow.classList.add("SimpleTable_TableRow_Style");
 				tableRecordRow.addEventListener("click", this.onRowClick.bind(this));
+
+				// Set the recordId on the row dom, this is the simplest way to help us track which record has been clicked.
+				tableRecordRow.setAttribute(RowRecordId, gridParam.records[currentRecordId].getRecordId());
 
 				columnsOnView.forEach(function (columnItem, index) {
 					let tableRecordCell = document.createElement("td");
@@ -280,6 +314,8 @@ type DataSet = ComponentFramework.PropertyTypes.DataSet;
 		let rowRecordId = (event.currentTarget as HTMLTableRowElement).getAttribute(RowRecordId);
 		if (rowRecordId) {
 			const record = this.contextObj.parameters.sampleDataSet.records[rowRecordId];
+			this.selectedRecord = record;
+			this.getValueResultLabel.innerText = "";
 			this.contextObj.parameters.sampleDataSet.openDatasetItem(record.getNamedReference());
 		}
 	}
