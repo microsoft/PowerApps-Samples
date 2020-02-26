@@ -43,6 +43,8 @@ type DataSet = ComponentFramework.PropertyTypes.DataSet;
 
 		private selectedRecord: DataSetInterfaces.EntityRecord;
 
+		private selectedRecords: {[id: string]: boolean} = {};
+
 		/**
 		 * Empty constructor.
 		 */
@@ -120,6 +122,8 @@ type DataSet = ComponentFramework.PropertyTypes.DataSet;
 			//calculate the width for each column
 			let columnWidthDistribution = this.getColumnWidthDistribution(context, columnsOnView);
 
+			//When new data is received, it needs to first remove the table element, allowing it to properly render a table with updated data
+			//This only needs to be done on elements having child elements which is tied to data received from canvas/model ..
 			while (this.dataTable.firstChild) {
 				this.dataTable.removeChild(this.dataTable.firstChild);
 			}
@@ -311,11 +315,20 @@ type DataSet = ComponentFramework.PropertyTypes.DataSet;
 	 * @param event
 	 */
 	private onRowClick(event: Event): void {
-		let rowRecordId = (event.currentTarget as HTMLTableRowElement).getAttribute(RowRecordId);
+		let rowElement = (event.currentTarget as HTMLTableRowElement);
+		let rowRecordId = rowElement.getAttribute(RowRecordId);
 		if (rowRecordId) {
 			const record = this.contextObj.parameters.sampleDataSet.records[rowRecordId];
 			this.selectedRecord = record;
 			this.getValueResultLabel.innerText = "";
+			this.selectedRecords[rowRecordId] = !this.selectedRecords[rowRecordId];
+			const selectedRecordsArray = [];
+			for (const recordId in this.selectedRecords) {
+				if (this.selectedRecords[recordId]) {
+					selectedRecordsArray.push(recordId);
+				}
+			}
+			this.contextObj.parameters.sampleDataSet.setSelectedRecordIds(selectedRecordsArray);
 			this.contextObj.parameters.sampleDataSet.openDatasetItem(record.getNamedReference());
 		}
 	}
