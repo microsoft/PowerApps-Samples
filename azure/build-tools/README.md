@@ -31,3 +31,9 @@ Module 2: Automating solution deployment using Azure DevOps
 3.	Build the ‘Build Pipeline’ (Generate Build Artifact)
 4.	Build the ‘Release Pipeline’ (Deploy to Production)
 
+## Support
+
+If you need assistance with the hands-on labs, create a new issue in this repo indicating the specific lab module.
+
+If you need assistance with the Power Apps build tools, post a message to the [Power Apps component framework, ALM & Pro Dev](https://powerusers.microsoft.com/t5/Power-Apps-Component-Framework/bd-p/pa_component_framework) forum.
+
