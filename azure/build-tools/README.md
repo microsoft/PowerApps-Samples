@@ -33,7 +33,5 @@ Module 2: Automating solution deployment using Azure DevOps
 
 ## Support
 
-If you need assistance with the hands-on labs, create a new issue in this repo indicating the specific lab module.
-
-If you need assistance with the Power Apps build tools, post a message to the [Power Apps component framework, ALM & Pro Dev](https://powerusers.microsoft.com/t5/Power-Apps-Component-Framework/bd-p/pa_component_framework) forum.
+If you need assistance with the hands-on labs and Power Apps build tools, post a message to the [Power Apps component framework, ALM & Pro Dev](https://powerusers.microsoft.com/t5/Power-Apps-Component-Framework/bd-p/pa_component_framework) forum.
 
