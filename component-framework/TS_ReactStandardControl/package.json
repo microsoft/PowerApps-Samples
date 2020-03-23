@@ -18,7 +18,7 @@
   "devDependencies": {
     "@types/react": "^16.8",
     "@types/react-dom": "^16.8",
-    "pcf-scripts": "^0",
-    "pcf-start": "^0"
+    "pcf-scripts": "^1",
+    "pcf-start": "^1"
   }
 }

@@ -6,11 +6,11 @@ This sample component shows how to use third-party libraries to create component
 
 To try the sample components, you must first:
 
-1. Install [Npm](https://www.npmjs.com/get-npm) (comes with Node.js) or [Node.js](https://nodejs.org/en/) (comes with npm). We recommend LTS (Long Term Support) version 10.15.3 LTS because it seems to be the most stable.
+1. Install [Npm](https://www.npmjs.com/get-npm) (comes with Node.js) or [Node.js](https://nodejs.org/en/) (comes with npm). We recommend LTS (Long Term Support) version 12.16.1 LTS because it seems to be the most stable.
 
 1. Install [.NET Framework 4.6.2 Developer Pack](https://dotnet.microsoft.com/download/dotnet-framework/net462). 
 
-1. If you don’t already have Visual Studio 2017 or later, follow one of these options:
+1. If you don't already have Visual Studio 2017 or later, follow one of these options:
    - Option 1: Install [Visual Studio 2017](https://docs.microsoft.com/visualstudio/install/install-visual-studio?view=vs-2017) or later.
    - Option 2: Install [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) and then install [Visual Studio Code](https://code.visualstudio.com/Download).
 
@@ -26,7 +26,7 @@ The flip component sample consists of a label and a button. When you click on th
 - When the component is loaded, the label shows the text based on the bind attribute value. The `context.parameters.[property_name].attributes` contains the associated metadata.
 For TwoOptions fields, `context.parameters.[property_name].Options` will include both true and false value option.
 - Clicking on the Flip button, the label will update value using `notifyOutputEvents` method, getOutputs method will be called asynchronously and will flow to Power Apps component framework.
-- ClientAPI updates the bind attribute value, and the updated value flows to the component label. You can also use `ClientAPI` to update an attribute value to trigger control’s updateView method. The component then updates the third-party model and the label gets updated.
+- ClientAPI updates the bind attribute value, and the updated value flows to the component label. You can also use `ClientAPI` to update an attribute value to trigger control's updateView method. The component then updates the third-party model and the label gets updated.
 
 ## How to run the sample
 
