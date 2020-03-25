@@ -1,6 +1,6 @@
 # Metadata Visualizer
 
-![Entity diagram example](./images/intro-graphic.png)
+![Entity diagram example](images/intro-graphic.png)
 
 Metadata Visualizer (MetaViz) downloads the metadata of your Dynamics 365 Customer Engagement or Common Data Service organization to visually display the entities, entity relationships, and registered plug-in information.
 
@@ -47,7 +47,7 @@ You can select specific entities and check their relationships in a visual diagr
 3. Select **Diagram** > **Draw Selected Entities** to view those entities and their relationships.
 4. Next, select **Diagram** > **Draw Related Entities** to view all other entities that have a relationship with the entities specified in step #2.
 
-![Entity Relationship (ER) Viewer](./images/er-viewer.png)
+![Entity Relationship (ER) Viewer](images/er-viewer.png)
 
 ### Viewing entity metadata
 
@@ -58,7 +58,7 @@ You can select specific entities and check their relationships in a visual diagr
 5. In the ER Viewer window, select an entity and choose **Selected Entity** > **Copy URL**.
 6. Paste the URL into your browser to see the list of records for that entity. Note that you may need to choose a different view in the browser page other than the default view to see the records for that entity.
 
-![Schema Viewer](./images/schema-viewer.png)
+![Schema Viewer](images/schema-viewer.png)
 
 ### Viewing plug-in and custom activity registrations
 
@@ -67,7 +67,7 @@ You can select specific entities and check their relationships in a visual diagr
 3. Select an entity link (blue underlined text) to jump to the plug-in/custom activity information for that entity.
 4. Select other links to see what kind of information is available from that browser page.
 
-![Trigger information page](./images/trigger-view.png)
+![Trigger information page](images/trigger-view.png)
 
 ## FAQs
 
