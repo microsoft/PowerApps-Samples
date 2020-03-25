@@ -28,46 +28,66 @@ You can select specific entities and check their relationships in a visual diagr
 
 ## How to use the application
 
-### Download Metadata from the Online organization
+### Building and running the application
 
-Type your **organization URL** (e.g. https://contoso.crm.dynamics.com) in URL field then click **Download Metadata** button.
+1. Load the solution into Visual Studio, build, and then run the program.
+2. After the download dialog is displayed, enter your target organization URL in the provided field of the dialog.
+3. When prompted, specify a folder where the organization's metadata is to be stored.
+4. When prompted, provide your organization logon information.
+5. The organization metadata download will start, and this may take several minutes.
+6. The entity relationship (ER Viewer) window opens and displays an initial (default) diagram of the pre-selected entities.
+7. Resize the window as appropriate.
+8. Select the zoom (+) icon in the toolbar to enlarge the diagram and the pan (hand) icon to pan around the view.
+9. Hover the cursor over the other icons in the toolbar to see what other functionality is available.
 
-### ALl entities checkbox
+### Changing the entity diagram
 
-Tick this checkbox if Entity definitions and ER diagram reports are required. This option needs to download all entities metadata therefore execution will take longer.
+1. In the ER Viewer, select **Entities** > **Clear**.
+2. In the left panel select any entities that you want to be rendered in the diagram (i.e., account, contact, activityparty).
+3. Select **Diagram** > **Draw Selected Entities** to view those entities and their relationships.
+4. Next, select **Diagram** > **Draw Related Entities** to view all other entities that have a relationship with the entities specified in step #2.
 
-### ER (Entity Relationship) viewer
+![Entity Relationship (ER) Viewer](./images/er-viewer.png)
 
-You can browse the downloaded Entity Relationship Json file using the ER viewer. 
+### Viewing entity metadata
 
-1. Click **ER Viewer** button. From **Diagram - Open ER Json file** menu the json file downloaded.
-2. After entities are loaded choose **Diagram - Draw Selected Entities** menu to render the diagram.
-3. **Click the entity name** to display the scheme information and its trigger registrations.
-4. **Hover the mouse pointers on relations** to see the relation information.
+1. In the ER Viewer, hover the cursor over an entity in the entity diagram to view a summary description.
+2. Select the entity in the diagram to display the Schema Viewer showing the entity's metadata (attributes and relationships).
+3. Select another entity in the diagram to now view its metadata in the Schema Viewer window.
+4. Logon to your organization using your default internet browser.
+5. In the ER Viewer window, select an entity and choose **Selected Entity** > **Copy URL**.
+6. Paste the URL into your browser to see the list of records for that entity. Note that you may need to choose a different view in the browser page other than the default view to see the records for that entity.
 
-Please check FAQ sections for further information how ER viewer works.
+![Schema Viewer](./images/schema-viewer.png)
+
+### Viewing plug-in and custom activity registrations
+
+1. Logon to an organization in your default internet browser.
+2. In the ER Viewer, select **Diagram** > **Trigger information**. A browser window or tab will open displaying entity information and registered plug-in/custom workflow activity information.
+3. Select an entity link (blue underlined text) to jump to the plug-in/custom activity information for that entity.
+4. Select other links to see what kind of information is available from that browser page.
+
+![Trigger information page](./images/trigger-view.png)
 
 ## FAQs
 
-**Q. How can I limit the entities rendered in the ER diagram?**
+Please check this FAQ section for further information on how this application works.
+
+**Q. How can I specify the entities rendered in the ER Viewer diagram?**
 
 You need to select a list of entities you want to use.
 
-1. Choose **Entities - Clear** to untick all entities.
-2. Tick the entities you are interested.
-3. Use either **Diagram - Draw Selected Entities** or **Draw Related Entities** menu. 
+1. Choose **Entities > Clear** to de-select all entities.
+2. Select (check) the entities you are interested in viewing.
+3. Use either **Diagram > Draw Selected Entities** or the **Draw Related Entities** menu items.
 
-**Draw Selected Entities** menu automatically expands the selection to the related entities to the ones currently selected.
-You can copy and paste the list of entities selected by **Entities - Copy** and **Entities - Paste** menu.
+The **Draw Selected Entities** menu automatically expands the selection to the related entities to the ones currently selected.
+You can copy and paste the list of entities selected by choosing **Entities > Copy** and **Entities > Paste** menu items.
 
 **Q. How to add related entities to/remove the entity from the diagram?**
 
-Click the Entity in the diagram. Then choose **Selected Entity - Remove** menu. Same way you can perform different operations such as **Select Related Entities** on the selected entity as well.
+Click the entity in the diagram and then choose the **Selected Entity > Remove** menu item. In the same way you can perform different operations such as **Select Related Entities** on the selected entity.
 
-**Q. What library is used to render the ER diagram?**
+**Q. What library is used to render the ER Viewer diagram?**
 
-[Microsoft Automatic Graph Layout](https://www.microsoft.com/en-us/research/project/microsoft-automatic-graph-layout/) (MSAGL). *MSAGL is a .NET tool for graph layout and viewing. It was developed in Microsoft by Lev Nachmanson, Sergey Pupyrev, Tim Dwyer and Ted Hart.*
-
-**Q. What are the mysterious 3 alphabet letters dumped in the scheme text file?**
-
-They are the first 3 letters of the entity name hashcode. These letters can help text comparison tools to find matching rows correctly.
+[Microsoft Automatic Graph Layout](https://www.microsoft.com/research/project/microsoft-automatic-graph-layout/) (MSAGL). *MSAGL is a .NET tool for graph layout and viewing. It was developed in Microsoft by Lev Nachmanson, Sergey Pupyrev, Tim Dwyer and Ted Hart.*
