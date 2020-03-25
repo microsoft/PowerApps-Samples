@@ -1,40 +1,42 @@
-# Metadata Visualizer (MetaViz)
+# Metadata Visualizer
 
-MetaViz downloads the metadata of your Dynamics 365 CE organization to render the entity, trigger and entity relation information.
+![Entity diagram example](./images/intro-graphic.png)
+
+Metadata Visualizer (MetaViz) downloads the metadata of your Dynamics 365 Customer Engagement or Common Data Service organization to visually display the entities, entity relationships, and registered plug-in information.
 
 ## What can you do with MetaViz?
 
-You can download various Metadata information from Dynamics 365 CE organization and browse them offline.
-Since information can be downloaded into the static files you can keep them in the repo, compare different environment, track changes, let somebody check the information without giving an access to the organization, etc. easily and quickly.
+The application can download entity, plug-in, and custom workflow activity metadata information from your organization into a text file and you can browse that data offline.
+Since this metadata information is downloaded into readable files you can: keep it in a repo, compare metadata of different environments, track changes to metadata, let somebody check the information without giving them access to the organization, and more.
 
-- Trigger definitions (html file)
+Below is a description of the files that are generated when you download an organization's metadata.
 
-Registered sync and async plug-ins and workflows and their filtering attributes, etc. are all dumped into html file.
-You can find what workflow/plugin are registered on the entity to trace what code will be triggered when CRUD operation occurrs.
+- Trigger definitions (HTML file)
 
-Following reports will be available if **All entities** option is selected.
+Registered synchronous and asynchronous plug-ins and custom workflow activities (and their filtering attributes) are dumped into the html file.
+You can find what activity or plug-in is registered on an entity to trace what code will be triggered when a core system operation (create, update, delete, etc.) occurs.
 
-- Entity definitions (txt file)
+- Entity definitions (text file)
 
-Localized/customized display names for all attributes, description and datatype across all entities are dumped into the text format.
-You can compare the scheme across environments and/or releases easily by your preferred text comparison tools.
+Localized/customized display names for all attributes, descriptions, and data-types across all entities are dumped into a text file.
+You can compare the scheme across environments and/or releases easily by using your preferred text comparison (differences) tools.
 
-- ER diagram (json file)
+- Entity relationship diagram (JSON file)
 
-ER (Entity relationship) viewer allows you to browse the relationship across your selected entities.
-You can select some entities and check their relationship in the visualization.
+The ER Viewer allows you to visually browse the relationships across your chosen entities.
+You can select specific entities and check their relationships in a visual diagram.
 
-## How to download Metadata using MetaViz
+## How to use the application
 
-#### Download Metadata from the Online organization
+### Download Metadata from the Online organization
 
 Type your **organization URL** (e.g. https://contoso.crm.dynamics.com) in URL field then click **Download Metadata** button.
 
-#### ALl entities checkbox
+### ALl entities checkbox
 
 Tick this checkbox if Entity definitions and ER diagram reports are required. This option needs to download all entities metadata therefore execution will take longer.
 
-## ER (Entity Relationship) viewer
+### ER (Entity Relationship) viewer
 
 You can browse the downloaded Entity Relationship Json file using the ER viewer. 
 
