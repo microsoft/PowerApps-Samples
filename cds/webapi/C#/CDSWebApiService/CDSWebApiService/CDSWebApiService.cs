@@ -43,6 +43,12 @@ namespace PowerApps.Samples
             }
         }
 
+        /// <summary>
+        /// Creates an entity and returns the URI
+        /// </summary>
+        /// <param name="entitySetName">The entity set name of the entity to create.</param>
+        /// <param name="body">The JObject containing the data of the entity to create.</param>
+        /// <returns></returns>
         public Uri PostCreate(string entitySetName, JObject body)
         {
             return PostCreateAsync(entitySetName, body).Result;
