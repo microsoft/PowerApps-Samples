@@ -148,10 +148,8 @@
     <None Include="..\..\App.config">
       <Link>App.config</Link>
     </None>
-    <None Include="..\..\README.md">
-      <Link>README.md</Link>
-    </None>
     <None Include="packages.config" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
