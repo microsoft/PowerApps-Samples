@@ -41,7 +41,7 @@ namespace PowerApps.Samples
                     instances = GetInstances(string.Empty, string.Empty);
 
 
-                if (instances.Count > 1)
+                if (instances.Count >= 1)
                 {
                     Console.WriteLine("Available Instances:");
                     instances.ForEach(x =>
