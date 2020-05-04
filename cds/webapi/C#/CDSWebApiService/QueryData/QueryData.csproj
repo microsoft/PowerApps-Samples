@@ -55,6 +55,7 @@
       <Link>App.config</Link>
     </None>
     <None Include="packages.config" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CDSWebApiService\CDSWebApiService.csproj">
