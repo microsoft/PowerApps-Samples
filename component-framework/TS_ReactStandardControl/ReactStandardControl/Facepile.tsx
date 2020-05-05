@@ -54,8 +54,6 @@ export class FacepileBasicExample extends React.Component<IFacepileBasicExampleP
 
 		return (
 			<div className={"msFacepileExample"}>
-				<h3>React version in control: {React.version}</h3>
-				<h3>React version in host window: {(window as any).React.version}</h3>
 				<Facepile {...facepileProps} />
 				<div className={"control"}>
 					<Slider
