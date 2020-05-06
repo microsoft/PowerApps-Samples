@@ -26,3 +26,10 @@ This dataset is from the UCI Machine Learning Repository. The prediction scenari
 
 *Citation*: Dataset provided by Semeion, Research Center of Sciences of Communication, Via Sersale 117, 00128, Rome, Italy. <http://www.semeion.it/>
 
+### Brazilian E-Commerce Public Dataset 
+
+This is a Brazilian ecommerce public dataset of orders made at Olist Store <https://www.olist.com>. The dataset has information of 100k orders from 2016 to 2018 made at multiple marketplaces in Brazil.
+-	**Solution**: BrazilianCommerce_1_0_0_4_managed.zip
+-	**Data**: order.csv, customer,csv, product.csv
+
+*Citation*: Dataset provided by Olist Store, <https://www.olist.com>
