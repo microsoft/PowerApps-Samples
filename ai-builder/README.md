@@ -28,7 +28,7 @@ This dataset is from the UCI Machine Learning Repository. The prediction scenari
 
 ### Brazilian E-Commerce Public Dataset 
 
-This is a Brazilian ecommerce public dataset of orders made at Olist Store <https://www.olist.com>. The dataset has information of 100k orders from 2016 to 2018 made at multiple marketplaces in Brazil.
+This is a Brazilian ecommerce public dataset of orders made at Olist Store <https://www.olist.com>. The dataset has information of 100k orders from 2016 to 2018 made at multiple marketplaces in Brazil. We did some modifications on the dataset by re-sampling and selected a more homogeneous subset to avoid overfitting issue.
 -	**Solution**: BrazilianCommerce_1_0_0_4_managed.zip
 -	**Data**: order.csv, customer,csv, product.csv
 
