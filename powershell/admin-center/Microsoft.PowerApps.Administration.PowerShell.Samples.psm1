@@ -42,7 +42,7 @@ function AllEnvironmentsPolicyTests
                 }
 
             $response = New-DlpPolicy -NewPolicy $newPolicy
-            StringsAreEqual -Expect "BadRequest" -Actual $response.StatusCode
+            StringsAreEqual -Expect "Bad Request" -Actual $response.StatusDescription
 
             Write-Host "`r`nAllEnvironmentsPolicyTests completed"
         } catch {
