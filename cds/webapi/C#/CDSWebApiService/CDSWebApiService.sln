@@ -18,6 +18,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryData", "QueryData\QueryData.csproj", "{D5C4C65C-1F02-4C06-BCB0-7C514018EE2A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConditionalOperations", "ConditionalOperations\ConditionalOperations.csproj", "{40D728D9-3698-45CB-A02E-6F8FBAA65826}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E8C225D3-F15A-417C-AA4A-9114C0F2BDF4} = {E8C225D3-F15A-417C-AA4A-9114C0F2BDF4}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +49,10 @@ Global
 		{D5C4C65C-1F02-4C06-BCB0-7C514018EE2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5C4C65C-1F02-4C06-BCB0-7C514018EE2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5C4C65C-1F02-4C06-BCB0-7C514018EE2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40D728D9-3698-45CB-A02E-6F8FBAA65826}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40D728D9-3698-45CB-A02E-6F8FBAA65826}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40D728D9-3698-45CB-A02E-6F8FBAA65826}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40D728D9-3698-45CB-A02E-6F8FBAA65826}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

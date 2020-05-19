@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.Remoting.Messaging;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,10 +15,16 @@ namespace PowerApps.Samples
     {
         private readonly HttpClient httpClient;
         private readonly ServiceConfig config;
+        private HttpStatusCode statuscode;
         /// <summary>
         /// The BaseAddresss property of the HttpClient.
         /// </summary>
         public Uri BaseAddress { get { return httpClient.BaseAddress; } }
+
+        /// <summary>
+        /// The HTTP status code returned from the last SendAsync call.
+        /// </summary>
+        public HttpStatusCode LastStatusCode { get { return statuscode; } private set { statuscode = value; } }
 
         public CDSWebApiService(ServiceConfig config)
         {
@@ -243,42 +250,35 @@ namespace PowerApps.Samples
             {
                 //The request is cloned so it can be sent again.
                 response = await httpClient.SendAsync(request.Clone(), httpCompletionOption);
+                statuscode = response.StatusCode;
             }
             catch (Exception)
             {
                 throw;
             }
 
-            if (!response.IsSuccessStatusCode)
+            if ((int)response.StatusCode == 429)
             {
-                if ((int)response.StatusCode != 429)
+                // Give up re-trying if exceeding the maxRetries
+                if (++retryCount >= config.MaxRetries)
                 {
-                    //Not a service protection limit error
                     throw ParseError(response);
+                }
+
+                int seconds;
+                //Try to use the Retry-After header value if it is returned.
+                if (response.Headers.Contains("Retry-After"))
+                {
+                    seconds = int.Parse(response.Headers.GetValues("Retry-After").FirstOrDefault());
                 }
                 else
                 {
-                    // Give up re-trying if exceeding the maxRetries
-                    if (++retryCount >= config.MaxRetries)
-                    {
-                        throw ParseError(response);
-                    }
-
-                    int seconds;
-                    //Try to use the Retry-After header value if it is returned.
-                    if (response.Headers.Contains("Retry-After"))
-                    {
-                        seconds = int.Parse(response.Headers.GetValues("Retry-After").FirstOrDefault());
-                    }
-                    else
-                    {
-                        //Otherwise, use an exponential backoff strategy
-                        seconds = (int)Math.Pow(2, retryCount);
-                    }
-                    Thread.Sleep(TimeSpan.FromSeconds(seconds));
-
-                    return await SendAsync(request, httpCompletionOption, retryCount);
+                    //Otherwise, use an exponential backoff strategy
+                    seconds = (int)Math.Pow(2, retryCount);
                 }
+                Thread.Sleep(TimeSpan.FromSeconds(seconds));
+
+                return await SendAsync(request, httpCompletionOption, retryCount);
             }
             else
             {
