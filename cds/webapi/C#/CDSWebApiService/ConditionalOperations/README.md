@@ -22,7 +22,7 @@ This sample doesn't require any special setup other than what is described above
 
 ### Demonstrate
 
-This sample uses a conditional (If-Match, If-Non-Match) message header along with the ETag value of an account record when retrieving, updating, or deleting an account.
+This sample uses a conditional (If-Match, If-None-Match) message header along with the ETag value of an account record when retrieving, updating, or deleting an account.
 
 This sample also makes use of the CDSWebApiService wrapper class for HTTP message operations and error handling.
 
