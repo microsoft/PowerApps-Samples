@@ -21,7 +21,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.PowerApps.MSBuild.Pcf" Version="0.*"/>
+    <PackageReference Include="Microsoft.PowerApps.MSBuild.Pcf" Version="1.*"/>
   </ItemGroup>
 
   <ItemGroup>
