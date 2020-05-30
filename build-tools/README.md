@@ -1,4 +1,4 @@
-# Power Platform Build Tools for Azure DevOps
+# Microsoft Power Platform Build Tools for Azure DevOps
 
 This topic provides information about the files available in the **build-tools** folder.
 
@@ -24,7 +24,7 @@ Module 1: Create a model-driven Common Data Service app
 
 Module 2: Automating solution deployment using Azure DevOps
 
-## PowerApps build tools lab instructions
+## Build tools lab instructions
 
 1.	Configure Azure DevOps
 2.	Build the ‘Capture Pipeline’ (Export solution)
