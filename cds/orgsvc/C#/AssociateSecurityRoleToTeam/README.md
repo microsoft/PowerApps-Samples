@@ -1,6 +1,6 @@
 # Associate security role to a team 
 
-This sample shows how to assign a security role to a team by using the [AssignRequest](https://docs.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.assignrequest?view=dynamics-general-ce-9) message. Note that this example does not take into consideration that a team or user can only be assigned a role from its business unit. The role to be assigned is the first from the collection that is returned by the RetrieveMultiple method. If that record is from a business unit that is different from the requesting team, the assignment fails.
+This sample shows how to associate a security role to a team by using the [AssociateRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.messages.associaterequest?view=dynamics-general-ce-9) message. Note that this example does not take into consideration that a team or user can only be associated to a role from its business unit. The role to be associated is the first from the collection that is returned by the `RetrieveMultiple` method. If that record is from a business unit that is different from the requesting team, the association fails.
 
 ## How to run this sample
 
@@ -8,7 +8,7 @@ See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/mas
 
 ## What this sample does
 
-The [AssignRequest](https://docs.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.assignrequest?view=dynamics-general-ce-9) message is intended to be used in a scenario where it contains data that is needed to assign the specified record to a new owner (user or team) by changing the OwnerId attribute of the record.
+The [AssociateRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.messages.associaterequest?view=dynamics-general-ce-9) message is intended to be used in a scenario where it contains data that is needed to create a link between records.
 
 ## How this sample works
 
