@@ -1,6 +1,6 @@
 # Associate security role to a team 
 
-This sample shows how to assign a security role to a team by using the [AssociateRequest]https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.messages.associaterequest?view=dynamics-general-ce-9) message. Note that this example does not take into consideration that a team or user can only be assigned a role from its business unit. The role to be assigned is the first from the collection that is returned by the RetrieveMultiple method. If that record is from a business unit that is different from the requesting team, the assignment fails.
+This sample shows how to assign a security role to a team by using the [AssociateRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.messages.associaterequest?view=dynamics-general-ce-9) message. Note that this example does not take into consideration that a team or user can only be assigned a role from its business unit. The role to be assigned is the first from the collection that is returned by the RetrieveMultiple method. If that record is from a business unit that is different from the requesting team, the assignment fails.
 
 ## How to run this sample
 
