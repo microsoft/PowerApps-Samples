@@ -23,6 +23,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConditionalOperations", "Co
 		{E8C225D3-F15A-417C-AA4A-9114C0F2BDF4} = {E8C225D3-F15A-417C-AA4A-9114C0F2BDF4}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionAndActions", "FunctionAndActions\FunctionAndActions.csproj", "{F6C3A4AF-6596-467C-B440-DC0214ADD228}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E8C225D3-F15A-417C-AA4A-9114C0F2BDF4} = {E8C225D3-F15A-417C-AA4A-9114C0F2BDF4}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +58,10 @@ Global
 		{40D728D9-3698-45CB-A02E-6F8FBAA65826}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40D728D9-3698-45CB-A02E-6F8FBAA65826}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40D728D9-3698-45CB-A02E-6F8FBAA65826}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6C3A4AF-6596-467C-B440-DC0214ADD228}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6C3A4AF-6596-467C-B440-DC0214ADD228}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6C3A4AF-6596-467C-B440-DC0214ADD228}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6C3A4AF-6596-467C-B440-DC0214ADD228}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
