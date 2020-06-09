@@ -23,8 +23,9 @@ namespace PowerApps.Samples
             ConfigurationManager.ConnectionStrings["Connect"].ConnectionString;
         static readonly ServiceConfig config = new ServiceConfig(connectionString);
 
-        // Store entity record URIs so they can be deleted prior to exit.
-        static Dictionary<string, Uri> entityUris = new Dictionary<string, Uri>();
+        // Save the URIs for entity records created in this sample. so they
+        // can be deleted later.
+        static List<Uri> entityUris = new List<Uri>();
 
         static void Main()
         {
