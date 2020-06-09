@@ -23,8 +23,7 @@ namespace PowerApps.Samples
             ConfigurationManager.ConnectionStrings["Connect"].ConnectionString;
         static readonly ServiceConfig config = new ServiceConfig(connectionString);
 
-        // Save the URIs for entity records created in this sample. so they
-        // can be deleted later.
+        // Store entity record URIs so they can be deleted prior to exit.
         static Dictionary<string, Uri> entityUris = new Dictionary<string, Uri>();
 
         static void Main()
@@ -37,6 +36,37 @@ namespace PowerApps.Samples
                     Console.WriteLine("-- Starting function and actions demonstration --\n");
 
                     CreateRequiredRecords(svc);
+
+                    #region Call an unbound function with no parameters.
+                    //Retrieve the current user's full name from the WhoAmI function:
+                    JToken currentUser;
+
+                    try
+                    {
+                        Console.Write("Getting information on the current user..");
+                        currentUser = svc.Get("WhoAmI");
+
+                        //Obtain the user's ID, and then the full name
+                        Guid myUserId = (Guid)currentUser["UserId"];
+                        JToken lookup = svc.Get("systemusers(" + myUserId + ")?$select=fullname");
+                        currentUser = lookup["fullname"].ToString();
+
+                        Console.WriteLine("completed.");
+                        Console.WriteLine("Current user's full name is '{0}'.", currentUser);
+                    }
+                    catch (ServiceException e)
+                    {
+                        if (e.StatusCode == (int)HttpStatusCode.NotFound)
+                        {
+                            Console.WriteLine("Current user does not have a full name.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("failed.");
+                            throw e;
+                        }
+                    }
+                    #endregion Call an unbound function with no parameters.
 
                     #region Delete created records
 
