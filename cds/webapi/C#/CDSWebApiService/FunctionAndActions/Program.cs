@@ -77,7 +77,7 @@ namespace PowerApps.Samples
                     if (!(answer.StartsWith("y") || answer.StartsWith("Y") || answer == string.Empty))
                         entityUris.Clear();
 
-                    foreach (Uri entityUrl in entityUris.Values) svc.Delete(entityUrl);
+                    foreach (Uri entityUrl in entityUris) svc.Delete(entityUrl);
 
                     #endregion Delete created records 
                 }
@@ -105,7 +105,7 @@ namespace PowerApps.Samples
                 account1Uri = svc.PostCreate("accounts", account1);
 
                 Console.WriteLine("completed.");
-                entityUris.Add("Fourth Coffee", account1Uri); // Track any created records
+                entityUris.Add(account1Uri); // Track any created records
             }
             catch (ServiceException e)
             {
@@ -136,7 +136,7 @@ namespace PowerApps.Samples
                 incident1Uri = svc.PostCreate("incidents", incident1);
 
                 Console.WriteLine("completed.");
-                entityUris.Add("Sample Case", incident1Uri);
+                entityUris.Add(incident1Uri);
             }
             catch (ServiceException e)
             {
@@ -155,8 +155,8 @@ namespace PowerApps.Samples
 
                 foreach (var taskref in incidentTaskRefs)
                 {
-                    Uri taskUri = new Uri(taskref["value"][0]["@odata.id"].ToString());
-                    svc.Patch(taskUri, completeCode);
+                    // TODO Set the completion code for each task
+                    //svc.Patch(taskref., completeCode);
                 }
                 Console.WriteLine("done.");
             }
@@ -166,63 +166,55 @@ namespace PowerApps.Samples
                 throw e;
             }
 
+            /**
             //Create another account and associated opportunity (required for CloseOpportunityAsWon).
-            JObject account2 = new JObject()
+            JObject account2 = new JObject();
+            string account2Uri;
+            account2["name"] = "Coho Winery";
+            account2["opportunity_customer_accounts"] = JArray.Parse(@"[{ name: 'Opportunity to win' }]");
+            request = new HttpRequestMessage(HttpMethod.Post, "accounts");
+            request.Content = new StringContent(account2.ToString(), Encoding.UTF8, "application/json");
+            response = httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead).Result;
+            if (response.StatusCode == HttpStatusCode.NoContent)
             {
-                {"name", "Coho Winery" },
-                {"opportunity_customer_accounts", JArray.Parse(@"[{ name: 'Opportunity to win' }]") }
-            };
-
-            Uri account2Uri;
-            try
-            {
-                Console.Write("Creating another account with an opportunity..");
-                account2Uri = svc.PostCreate("accounts", account2);
-
-                Console.WriteLine("completed.");
-                entityUris.Add("Coho Winery", account2Uri);
+                Console.WriteLine("Another Account is created and associated Opportunity");
+                account2Uri = response.Headers.GetValues("OData-EntityId").FirstOrDefault();
+                entityUris.Add(account2Uri);
             }
-            catch (ServiceException e)
+            else
+            { throw new Exception(string.Format("Failed to create another account and associated opportunity", response.Content)); }
+            
+
+
+            //Retrieve the URI to the opportunity.
+            JObject custOpporRefs;
+            response = httpClient.GetAsync(account2Uri + "/opportunity_customer_accounts/$ref",
+                HttpCompletionOption.ResponseContentRead).Result;
+            if (response.IsSuccessStatusCode)
             {
-                Console.WriteLine("failed.");
-                throw e;
+                Console.WriteLine("Retrieving the URI to the Opportunity");
+                custOpporRefs = JObject.Parse(response.Content.ReadAsStringAsync().Result);
+                opportunity1Uri = custOpporRefs["value"][0]["@odata.id"].ToString();
             }
+            else
+            { throw new Exception(string.Format("Failed to retrieve the URI to the opportunity", response.Content)); }
 
-            //Retrieve the URI of the opportunity.
-            Uri opportunity1Uri;
 
-            try
+
+            //Create a contact to use with custom action sample_AddNoteToContact 
+            contact1 = JObject.Parse(@"{firstname: 'Jon', lastname: 'Fogg'}");
+            request = new HttpRequestMessage(HttpMethod.Post, "contacts");
+            request.Content = new StringContent(contact1.ToString(), Encoding.UTF8, "application/json");
+            response = httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead).Result;
+            if (response.StatusCode == HttpStatusCode.NoContent)
             {
-                Console.Write("Retrieving the URI of the opportunity..");
-                JToken custOpporRefs = svc.Get(account2Uri + "/opportunity_customer_accounts/$ref");
-
-                opportunity1Uri = new Uri(custOpporRefs["value"][0]["@odata.id"].ToString());
-                Console.WriteLine("completed.");
+                Console.WriteLine("Contact record is created");
+                contact1Uri = response.Headers.GetValues("OData-EntityId").FirstOrDefault();
+                entityUris.Add(contact1Uri);
             }
-            catch (ServiceException e)
-            {
-                Console.WriteLine("failed.");
-                throw e;
-            }
-
-            //Create a contact to use with custom action sample_AddNoteToContact
-            Uri contact1Uri;
-
-            try
-            {
-                JObject contact1 = JObject.Parse(@"{firstname: 'Jon', lastname: 'Fogg'}");
-
-                Console.Write("Creating a contact..");
-                contact1Uri = svc.PostCreate("contacts", contact1);
-
-                Console.WriteLine("completed.");
-                entityUris.Add("Jon Fogg", contact1Uri);
-            }
-            catch (ServiceException e)
-            {
-                Console.WriteLine("failed.");
-                throw e;
-            }
+            else
+            { throw new Exception(string.Format("Failed to create a contact to use with custom action", response.Content)); }
+            **/
         }
     }
 }
