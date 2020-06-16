@@ -6,4 +6,8 @@ This is an installation package including two Power Automate flows orchestrating
 
 We have also included a connector to invoices received by email, but you can enhance it with any connectors supported by Power Automate.
 
-The starter kit is also available on Microsoft AppSource: <https://appsource.microsoft.com/en-us/product/dynamics-365/mscrm.aibuilder_invoiceprocessing_starterkit>
+The starter kit is also available on Microsoft AppSource: <https://appsource.microsoft.com/product/dynamics-365/mscrm.aibuilder_invoiceprocessing_starterkit>
+
+##Learn more:##
+
+[Invoice processing automation starter kit user guide](https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4vlqW)
