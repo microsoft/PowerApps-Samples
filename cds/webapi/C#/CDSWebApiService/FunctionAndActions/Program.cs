@@ -82,11 +82,23 @@ namespace PowerApps.Samples
                     #endregion Delete created records 
                 }
             }
-            catch (ServiceException e)
+            catch (Exception e)
             {
-                Console.WriteLine("Message send response: status code {0}, {1}",
-                    e.StatusCode, e.ReasonPhrase);
+                if( e is AggregateException )
+                {
+                    foreach (Exception inner in (e as AggregateException).InnerExceptions)
+                    {
+                        Console.WriteLine(inner.Message);
+                    }
+                }
+                else if ( e is ServiceException)
+                {
+                    var ex = e as ServiceException;
+                    Console.WriteLine("Message send response: status code {0}, {1}",
+                        ex.StatusCode, ex.ReasonPhrase);
+                }
             }
+
         }
 
         /// <summary> 
