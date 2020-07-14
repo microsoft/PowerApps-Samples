@@ -19,7 +19,7 @@ namespace PowerApps.Samples
         {
             try
             {
-                return connectionString.Split(';').Where(s => s.Trim().StartsWith(parameter)).FirstOrDefault().Split('=')[1];
+                 return connectionString.Split(';').Where(s => s.Trim().StartsWith(parameter)).FirstOrDefault().Split('=')[1];
             }
             catch (Exception)
             {
