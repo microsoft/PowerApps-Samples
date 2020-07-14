@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>AssignChartToAnotherUser</RootNamespace>
     <AssemblyName>AssignChartToAnotherUser</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
