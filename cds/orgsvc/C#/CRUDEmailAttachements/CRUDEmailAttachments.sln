@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2043
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUDEmailAttachements", "CRUDEmailAttachements\CRUDEmailAttachements.csproj", "{366925B6-A9B5-4349-89FF-E1F5E6F1A1D6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUDEmailAttachments", "CRUDEmailAttachements\CRUDEmailAttachments.csproj", "{366925B6-A9B5-4349-89FF-E1F5E6F1A1D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
