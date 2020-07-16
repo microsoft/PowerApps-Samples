@@ -1,32 +1,20 @@
-﻿# Use of conditional Web API message operations
+﻿# Conditional message operations using the Web API
 
-This sample shows how to perform conditional message operations when accessing records of the Common Data Service. 
+This sample shows how to perform conditional message operations when retrieving, updating, and deleting an account of the Common Data Service. The sample solution includes a shared project named CDSWebApiService that provides helper methods for message sending and receiving, performance enhancements, and error processing.
+
+More information: [CDSWebApiService class](https://docs.microsoft.com/powerapps/developer/common-data-service/webapi/samples/cdswebapiservice), [Web API Conditional Operations Sample](https://docs.microsoft.com/powerapps/developer/common-data-service/webapi/web-api-conditional-operations-sample)
 
 ## How to run this sample
 
-To run the sample:
 1. Download or clone the sample so that you have a local copy.
-2. Open the  solution file (CDSWebApiService.sln) in Visual Studio and restore the NuGet packages.
-3. In **Solution Explorer**, edit the App.config file located under the **Solution items** node. Set the Url, UserPrincipalName, and Password values for your environment
-4. In **Solution Explorer**, right-click the **ConditionalOperations** node and select **Set as Startup Project**. 
-5. Press F5 to run the sample.
-
-## What this sample does
-
-This sample uses a conditional message header when retrieving, updating, and deleting an account. Descriptive output is sent to the console. 
-
-### Setup
-
-This sample doesn't require any special setup other than what is described above.
-
+1. In the sample's folder, locate the solution file and load it into Visual Studio 2017 or later.
+1. In **Solution Explorer** locate and edit the project's App.config file and set appropriate values for the Common Data Service environment you intend to use: connectionString `Url`, `UserPrincipalName`, and `Password`. You only need to perform this step once for all samples that share this file.
+1. Press F5 to build and run the program in debug mode
 
 ### Demonstrate
 
 This sample uses a conditional (If-Match, If-None-Match) message header along with the ETag value of an account record when retrieving, updating, or deleting an account.
 
-This sample also makes use of the CDSWebApiService wrapper class for HTTP message operations and error handling.
-
 ### Clean up
 
-Prior to program exit, this sample displays an option to delete any created records. The deletion is optional in case you want to examine the entities and data created by the sample.
-You can manually delete the records to achieve the same result.
+Prior to termination, the program will display a console prompt asking if you want any created entity records deleted. If you want to view created records after the sample terminates, answer 'n' or 'no' and press \[Enter\].

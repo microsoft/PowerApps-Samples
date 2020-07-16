@@ -1,30 +1,32 @@
-﻿# Web API CDSWebApiService Query Data Sample
+﻿# Query entity data using the Web API
 
-This Sample demonstrates how to define an perform queries using the CDSWebApiService class with the Common Data Service Web API.
+This sample demonstrates how to define and perform data queries on Common Data Service entity instances using the Web API. The sample solution includes a shared project named CDSWebApiService that provides helper methods for message sending and receiving, performance enhancements, and error processing.
 
-The CDSWebApiService class provides helper methods that are aligned to the Http methods used, with some variations for different use cases.
-
-The CDSWebApiService class also demonstrates best practices for managing an HttpClient and properly handling Service Protection Limit 429 errors that client applications should expect.
+More information: [CDSWebApiService class](https://docs.microsoft.com/powerapps/developer/common-data-service/webapi/samples/cdswebapiservice), [Web API Query Data Sample](https://docs.microsoft.com/powerapps/developer/common-data-service/webapi/web-api-query-data-sample)
 
 ## How to run the sample
 
-Wee [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/master/cds/README.md) for information about how to run this sample.
+1. Download or clone the sample so that you have a local copy.
+
+1. In the sample's folder, locate the solution file and load it into Visual Studio 2017 or later.
+
+1. In **Solution Explorer** locate and edit the project's App.config file and set appropriate values for the Common Data Service environment you intend to use: connectionString `Url`, `UserPrincipalName`, and `Password`. You only need to perform this step once for all samples that share this file.
+
+1. Press F5 to build and run the program in debug mode.
 
 ## Demonstrates
 
-This class demonstrates how to use the CDSWebApiService class methods to perform Queries:
+This sample demonstrates how to perform the following queries on entity instance data:
 
-Selecting specific properties
-Using Query Functions
-Ordering and alias
-Limit results
-Expanding results
-Aggregate results
-FetchXml queries
-Using predefined queries
+- Selecting specific properties
+- Using Query Functions
+- Ordering and alias
+- Limit results
+- Expanding results
+- Aggregate results
+- FetchXml queries
+- Using predefined queries
 
 ## Clean up
 
-By default this sample will delete all the records created in it.
-
-If you want to view created records after the sample is completed, change the `deleteCreatedRecords` variable to `false`.
+Prior to termination, the program will display a console prompt asking if you want any created entity records deleted. If you want to view created records after the sample terminates, answer 'n' or 'no' and press \[Enter\].
