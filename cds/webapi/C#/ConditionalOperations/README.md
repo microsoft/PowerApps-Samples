@@ -11,10 +11,10 @@ More information: [CDSWebApiService class](https://docs.microsoft.com/powerapps/
 1. In **Solution Explorer** locate and edit the project's App.config file and set appropriate values for the Common Data Service environment you intend to use: connectionString `Url`, `UserPrincipalName`, and `Password`. You only need to perform this step once for all samples that share this file.
 1. Press F5 to build and run the program in debug mode
 
-### Demonstrate
+## Demonstrates
 
 This sample uses a conditional (If-Match, If-None-Match) message header along with the ETag value of an account record when retrieving, updating, or deleting an account.
 
-### Clean up
+## Clean up
 
 Prior to termination, the program will display a console prompt asking if you want any created entity records deleted. If you want to view created records after the sample terminates, answer 'n' or 'no' and press \[Enter\].
