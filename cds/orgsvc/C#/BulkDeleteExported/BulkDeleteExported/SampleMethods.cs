@@ -30,7 +30,7 @@ namespace PowerApps.Samples
                 return;
             }
 
-            PerformBulkDeleteBackup(service);
+            //PerformBulkDeleteBackup(service);
         }
 
         private static void CleanUpSample(CrmServiceClient service)

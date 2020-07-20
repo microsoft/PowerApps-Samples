@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUDEmailAttachments", "CRUDEmailAttachements\CRUDEmailAttachments.csproj", "{366925B6-A9B5-4349-89FF-E1F5E6F1A1D6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{366925B6-A9B5-4349-89FF-E1F5E6F1A1D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{366925B6-A9B5-4349-89FF-E1F5E6F1A1D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{366925B6-A9B5-4349-89FF-E1F5E6F1A1D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{366925B6-A9B5-4349-89FF-E1F5E6F1A1D6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B34172B3-AC9C-4C21-98BE-07C2910C59AC}
+	EndGlobalSection
+EndGlobal

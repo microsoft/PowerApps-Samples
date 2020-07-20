@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="SampleNamespace" constructor="TSImageUploadControl" version="1.1.0" display-name-key="TS_ImageUploadControl_Display_Key" description-key="TSImageUploadControl_Desc_Key" control-type="standard">
+    <property name="value" display-name-key="value_Display_Key" description-key="value_Desc_Key" of-type="Multiple" usage="bound" required="true" />
+    <resources>
+      <code path="index.ts" order="1" />
+      <css path="css/TS_ImageUploadControl.css" order="2" />
+      <img path="img/default.png" />
+      <resx path="strings/TS_ImageUploadControl.1033" version="1.0.0" />
+    </resources>
+    <feature-usage>
+			<uses-feature name="Device.pickFile" required="true" />
+		</feature-usage>
+  </control>
+</manifest>

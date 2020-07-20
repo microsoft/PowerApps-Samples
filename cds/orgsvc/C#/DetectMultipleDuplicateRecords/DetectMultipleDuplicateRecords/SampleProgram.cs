@@ -52,7 +52,7 @@ namespace PowerApps.Samples
                     #region check success
 
                     Console.WriteLine("  Waiting for job to complete...");
-                    WaitForAsyncJobToFinish(service,response.JobId, 120);
+                    WaitForAsyncJobToFinish(service,response.JobId, 240);
 
                     var query = new QueryByAttribute()
                     {
@@ -88,7 +88,7 @@ namespace PowerApps.Samples
                 #endregion Sample Code
                 else
                 {
-                    const string UNABLE_TO_LOGIN_ERROR = "Unable to Login to Dynamics CRM";
+                    const string UNABLE_TO_LOGIN_ERROR = "Unable to Login to Common Data Service";
                     if (service.LastCrmError.Equals(UNABLE_TO_LOGIN_ERROR))
                     {
                         Console.WriteLine("Check the connection string values in cds/App.config.");

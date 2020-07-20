@@ -1,8 +1,8 @@
-# PowerApps Samples
+# Power Apps Samples
 
-Welcome to the samples repo for PowerApps.
+Welcome to the samples repo for Power Apps.
 
-For PowerApps developer documentation, see [PowerApps for developers](https://docs.microsoft.com/powerapps/#pivot=home&panel=developer).
+For Power Apps developer documentation, see [Power Apps for developers](https://docs.microsoft.com/powerapps/#pivot=home&panel=developer).
 
 ## Contributing
 

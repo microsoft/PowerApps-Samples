@@ -7,7 +7,7 @@ This sample code shows how to use the discovery service with SDK assemblies.
 
 This sample will not open dialog to prompt you for connection information.
 
-If you have set `Username` and `Password` values in the App.config connection strings it will use them. Otherwise, set the `username` and `password` variables in the `SampleProgram.Main` method.
+You must first set the `username` and `password` variables in the `SampleProgram.Main` method before building this sample.
 
 ## What this sample does
 
@@ -26,7 +26,6 @@ This sample requires no special setup except that there are valid user credentia
 If you know the regional data center that your environments are in, the sample will run faster if you set this value at line 40 of the SampleProgram.cs file.
 
 In SampleMethods.cs there is a `DataCenter` enumeration for each of the known data centers. Each enumeration member is decorated with a `Description` notation. All of these members except `Unknown` have the URL for the regional discovery service set as the description. 
-
 
 ### Demonstrate
 

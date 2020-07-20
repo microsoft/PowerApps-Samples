@@ -2,11 +2,11 @@
 
 This sample shows how to share a record using the following messages:
 
-[GrantAccessRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.crm.sdk.messages.grantaccessrequest?view=dynamics-general-ce-9)
+[GrantAccessRequest](https://docs.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.grantaccessrequest?view=dynamics-general-ce-9)
 
-[ModifyAccessRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.crm.sdk.messages.modifyaccessrequest?view=dynamics-general-ce-9)
+[ModifyAccessRequest](https://docs.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.modifyaccessrequest?view=dynamics-general-ce-9)
 
-[RevokeAccessRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.crm.sdk.messages.revokeaccessrequest?view=dynamics-general-ce-9)
+[RevokeAccessRequest](https://docs.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.revokeaccessrequest?view=dynamics-general-ce-9)
 
 This sample requires additional users that are not in your system. Create the required users manually in **Office 365** in order to run the sample without any errors. For this sample create 2 user profiles **as is** shown below. 
 
@@ -22,7 +22,7 @@ This sample requires additional users that are not in your system. Create the re
 
 ## How to run this sample
 
-See [How to run samples](../../../README.md) for information about how to run this sample.
+See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/master/cds/README.md) for information about how to run this sample.
 
 ## What this sample does
 
@@ -52,6 +52,4 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Clean up
 
-1. Display an option to delete the sample data that is created in [Setup](#setup).
-
-    The deletion is optional in case you want to examine the entities and data created by the sample. You can manually delete the records to achieve the same result.
+Display an option to delete the sample data that is created in [Setup](#setup). The deletion is optional in case you want to examine the entities and data created by the sample. You can manually delete the records to achieve the same result.

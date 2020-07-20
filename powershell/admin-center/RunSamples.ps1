@@ -1,0 +1,102 @@
+Import-Module (Join-Path (Split-Path $script:MyInvocation.MyCommand.Path) "Microsoft.PowerApps.Administration.PowerShell.Samples.psm1") -Force
+
+#
+# Scenario tests
+#
+
+function RunTests
+{
+    param
+    (
+        [Parameter(Mandatory = $false)]
+        [string]$EnvironmentDisplayName = "Test Environment",
+
+        [Parameter(Mandatory = $false)]
+        [string]$EndPoint = "prod",
+
+        [Parameter(Mandatory = $false)]
+        [string]$TenantAdminName = "tenant admin account",
+
+        [Parameter(Mandatory = $false)]
+        [string]$TenantAdminPassword = "tenant admin password",
+
+        [Parameter(Mandatory = $false)]
+        [string]$EnvironmentAdminName = "environment admin account",
+
+        [Parameter(Mandatory = $false)]
+        [string]$EnvironmentAdminPassword = "environment admin password"
+    )
+
+    <# login with user name and password #>
+    $Password = ConvertTo-SecureString $TenantAdminPassword -AsPlainText -Force
+    Add-PowerAppsAccount -Endpoint $EndPoint -Username $TenantAdminName -Password $Password
+
+    $StartTime = Get-Date
+    Write-Host "`r`n`r`nTests started at $StartTime.`r`nThe tests will run about 5 minutes.`r`n"
+
+    # 1. Clean test policies
+    # 2. Create an empty test policy for ALLEnvironments with policy dispay name dng environment type
+    # 3. Add test connectors.
+    # 4. Add the same connector to all groups test.
+    # 5. Get all policies
+    # 6. Update test policy for ALLEnvironments
+    # 7. Remove policy AllEnvironments
+    AllEnvironmentsPolicyTests -EnvironmentDisplayName $EnvironmentDisplayName
+
+    # 1. Clean test policies
+    # 2. Create test policy for OnlyEnvironments
+    # 3. Change EnvironmentType from OnlyEnvironments to ExceptEnvironments
+    # 4. Remove the test policy
+    ChangeOnlyToExceptEnvironmentsPolicyTests -EnvironmentDisplayName $EnvironmentDisplayName
+
+    # 1. Clean test policies
+    # 2. Change to a user who is not GlobalAdmin
+    # 3. Create test policy for SingleEnvironment
+    # 4. Get all policies
+    # 5. Update test policy for SingleEnvironment
+    # 6. Remove policy for SingleEnvironment
+    # 7. Change user back to GlobalAdmin
+    SingleEnvironmentPolicyTests  `
+        -EnvironmentDisplayName $EnvironmentDisplayName `
+        -EndPoint $EndPoint `
+        -TenantAdminName $TenantAdminName `
+        -TenantAdminPassword $TenantAdminPassword `
+        -EnvironmentAdminName $EnvironmentAdminName `
+        -EnvironmentAdminPassword $EnvironmentAdminPassword
+
+    # 1. Clean test policies
+    # 2. Create a test policy for AllEnvironments
+    # 3. Create a test policy for OnlyEnvironments
+    # 4. Create a test policy for ExeptEnvironments
+    # 5. Get all policies
+    # 6. Check each policy and remove the policy if matched
+    CreateListMultiplePoliciesTests -EnvironmentDisplayName $EnvironmentDisplayName
+    
+    # 1. Clean test policies
+    # 2. Create a new test policy for AllEnvironments
+    # 3. Remove a connector from Confidential group
+    # 4. Add the connector to Blocked group
+    # 5. Update policy
+    MoveConnectorCrossGroupsTests
+        
+    # 1. Clean test policies
+    # 2. Create a new test policy for AllEnvironments
+    # 3. Create an old test tenant policy
+    # 5. Get all policies with new API
+    # 6. Check each policy and remove the policy with new API if matched
+    OldAPIToNewAPICompatibilityTests -EnvironmentDisplayName $EnvironmentDisplayName
+        
+    # 1. Clean test policies
+    # 2. Create a new AllEnvironments test policy
+    # 3. Create an new OnlyEnvironments test tenant policy
+    # 4. Create an new ExceptEnvironments test tenant policy
+    # 5. Get all policies with old API
+    # 6. Check each policy and remove the policy with old API if matched
+    NewAPIToOldAPICompatibilityTests -EnvironmentDisplayName $EnvironmentDisplayName
+
+    $EndTime = Get-Date
+    $TimeSpan = New-TimeSpan -Start $StartTime -End $EndTime
+    Write-Host "`r`n`r`nAll tests completed at $EndTime.`r`nTotal running time: $TimeSpan`r`n"
+}
+
+RunTests

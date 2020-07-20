@@ -4,7 +4,7 @@ This sample demonstrates the create, retrieve, update, and delete operations on 
 
 ## How to run this sample
 
-See [How to run samples](../../../README.md) for information about how to run this sample.
+See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/master/cds/README.md) for information about how to run this sample.
 
 ## How this sample works
 
@@ -12,7 +12,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Setup
 
-1. Checks for the current version of the org.
+Checks for the current version of the org.
 
 ### Demonstrate
 
@@ -23,7 +23,6 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 1. Update the account. 
 1. Prompts to delete the account records created.
 
-
 ### Clean up
 
-1. There is no clean up required, since all the sample records that are created are deleted in the demonstrate section.
+There is no clean up required, since all the sample records that are created are deleted in the demonstrate section.

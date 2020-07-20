@@ -119,7 +119,7 @@ namespace PowerApps.Samples
             // The PublishDuplicateRule request returns before the publish is completed,
             // so we keep retrieving the async job state until it is "Completed"
             Console.WriteLine("  Checking to see if duplicate detection rule has finished publishing");
-            WaitForAsyncJobToFinish(service, publishResponse.JobId, 60);
+            WaitForAsyncJobToFinish(service, publishResponse.JobId, 120);
 
            
         }

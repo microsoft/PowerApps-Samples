@@ -1,6 +1,16 @@
+---
+languages:
+- csharp
+products:
+- dotnet
+- powerapps
+page_type: sample
+description: "This sample shows how to work with solutions in Common Data Service. [SOAP]"
+---
+
 # Work with solutions
 
-This sample shows how to how to perform the following actions with solutions:
+This sample shows how to perform the following actions with solutions:
 
 - Create a publisher.
 - Retrieve the default publisher.
@@ -14,7 +24,7 @@ This sample shows how to how to perform the following actions with solutions:
 
 ## How to run this sample
 
-See [How to run samples](../../../README.md) for information about how to run this sample.
+See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/master/cds/README.md) for information about how to run this sample.
 
 ## What this sample does
 
@@ -42,6 +52,4 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Clean up
 
-1. Displays an option to delete all the data created in the sample.
-
-The deletion is optional in case you want to examine the data created by the sample. You can manually delete the data to achieve same results.
+Displays an option to delete all the data created in the sample. The deletion is optional in case you want to examine the data created by the sample. You can manually delete the data to achieve same results.

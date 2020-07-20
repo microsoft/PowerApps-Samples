@@ -4,7 +4,7 @@ This sample shows how to use optimistic concurrency for update and delete operat
 
 ## How to run this sample
 
-See [How to run samples](../../../README.md) for information about how to run this sample.
+See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/master/cds/README.md) for information about how to run this sample.
 
 ## What this sample does
 
@@ -23,10 +23,8 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 1. Retrieves the account record that is created in the [Setup](#setup).
 1. Updates the account record by increasing the `creditlimit` attribute.
-1. The `UpdateRequest` method sets the request's concurrency behaviour to check for a row version match.
+1. The `UpdateRequest` method sets the request's concurrency behavior to check for a row version match.
 
 ### Clean up
 
-1. Displays an option to delete all the data created in the sample.
-
-The deletion is optional in case you want to examine the data created by the sample. You can manually delete the data to achieve same results.
+Displays an option to delete all the data created in the sample. The deletion is optional in case you want to examine the data created by the sample. You can manually delete the data to achieve same results.

@@ -95,7 +95,7 @@ cc: Denise Smith",
                 #endregion Sample Code
                 else
                 {
-                    const string UNABLE_TO_LOGIN_ERROR = "Unable to Login to Dynamics CRM";
+                    const string UNABLE_TO_LOGIN_ERROR = "Unable to Login to Common Data Service";
                     if (service.LastCrmError.Equals(UNABLE_TO_LOGIN_ERROR))
                     {
                         Console.WriteLine("Check the connection string values in cds/App.config.");

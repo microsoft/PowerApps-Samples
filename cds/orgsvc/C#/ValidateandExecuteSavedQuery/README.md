@@ -1,10 +1,10 @@
 # Sample: Validate and execute a saved query
 
-This sample shows how to use the [IOrganizationService.ValidateSavedQueryRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.crm.sdk.messages.validatesavedqueryrequest?view=dynamics-general-ce-9) message to validate a FetchXML query, and then use the [IOrganizationService.ExecuteByIdSavedQueryRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.crm.sdk.messages.executebyidsavedqueryrequest?view=dynamics-general-ce-9) message to execute the query.
+This sample shows how to use the [IOrganizationService.ValidateSavedQueryRequest](https://docs.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.validatesavedqueryrequest?view=dynamics-general-ce-9) message to validate a FetchXML query, and then use the [IOrganizationService.ExecuteByIdSavedQueryRequest](https://docs.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.executebyidsavedqueryrequest?view=dynamics-general-ce-9) message to execute the query.
 
 ## How to run this sample
 
-See [How to run samples](../../../README.md) for information about how to run this sample.
+See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/master/cds/README.md) for information about how to run this sample.
 
 ## What this sample does
 
@@ -23,13 +23,11 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 1. The `SavedQuery` method creates a Saved query.
 1. The `UserQuery` method creates a User query.
 
-
 ### Demonstrate
+
 1. The `ValidateSavedQueryRequest` method creates the validate request.
 1. The `ExecuteByIdSavedQueryRequest` method executes the saved query.
 
 ### Clean up
 
-1. Displays an option to delete all the data created in the sample.
-
-The deletion is optional in case you want to examine the data created by the sample. You can manually delete the data to achieve same results.
+Displays an option to delete all the data created in the sample. The deletion is optional in case you want to examine the data created by the sample. You can manually delete the data to achieve same results.

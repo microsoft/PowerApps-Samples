@@ -1,9 +1,10 @@
 # Convert an appointment to a recurring appointment
-This sample shows how to convert an appointment to an recurring appointment series using the [AddRecurrenceRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.crm.sdk.messages.addrecurrencerequest?view=dynamics-general-ce-9) message.
+
+This sample shows how to convert an appointment to an recurring appointment series using the [AddRecurrenceRequest](https://docs.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.addrecurrencerequest?view=dynamics-general-ce-9) message.
 
 ## How to run this sample
 
-See [How to run samples](../../../README.md) for information about how to run this sample.
+See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/master/cds/README.md) for information about how to run this sample.
 
 ## What this sample does
 
@@ -15,7 +16,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Setup
 
-1. Creates an sample appointment that is later converted into an recurring appointment.
+Creates an sample appointment that is later converted into an recurring appointment.
 
 ### Demonstrate
 
@@ -27,6 +28,4 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Clean up
 
-1. Display an option to delete the sample data created in [Setup](#setup). If you opt **Y** , it deletes all the records created.
-
-    The deletion is optional in case you want to examine the entities and data created by the sample. You can manually delete the sample data to achieve the same result.
+Display an option to delete the sample data created in [Setup](#setup). If you opt **Y**, it deletes all the records created. The deletion is optional in case you want to examine the entities and data created by the sample. You can manually delete the sample data to achieve the same result.

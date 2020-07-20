@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DumpEntityRelationShips", "DumpEntityRelationShips\DumpEntityRelationShips.csproj", "{12FD45D0-7E29-44E9-B566-49BDA0E791A4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{12FD45D0-7E29-44E9-B566-49BDA0E791A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12FD45D0-7E29-44E9-B566-49BDA0E791A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12FD45D0-7E29-44E9-B566-49BDA0E791A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12FD45D0-7E29-44E9-B566-49BDA0E791A4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {65EAA89D-9DC1-41A1-830C-E80E6FE2E63A}
+	EndGlobalSection
+EndGlobal

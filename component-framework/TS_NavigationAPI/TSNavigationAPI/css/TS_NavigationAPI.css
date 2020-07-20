@@ -1,0 +1,28 @@
+/*
+	This file is part of the Microsoft PowerApps code samples. 
+	Copyright (C) Microsoft Corporation.  All rights reserved. 
+	This source code is intended only as a supplement to Microsoft Development Tools and/or  
+	on-line documentation.  See these other materials for detailed information regarding  
+	Microsoft code samples. 
+
+	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER  
+	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF  
+	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. 
+ */
+.SampleNamespace\.TSNavigationAPI button{
+	background-color: rgb(59, 121, 183);
+	border: 1px solid black;
+	color: white;
+	padding: 10px 24px;
+	cursor: pointer;
+	width: 100%;
+	display: block;
+}
+
+.SampleNamespace\.TSNavigationAPI button:not(:last-child) {
+	border-bottom: none;
+}
+
+.SampleNamespace\.TSNavigationAPI button:hover {
+	background-color: #c2c2c2;
+}

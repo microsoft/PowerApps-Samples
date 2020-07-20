@@ -32,12 +32,12 @@ namespace PowerApps.Samples
                     
                     // Obtain information about the logged on user from the web service.
                     Guid userid = ((WhoAmIResponse)service.Execute(new WhoAmIRequest())).UserId;
-                    SystemUser systemUser = (SystemUser)service.Retrieve("systemuser", userid,
+                    var systemUser = (SystemUser)service.Retrieve("systemuser", userid,
                         new ColumnSet(new string[] { "firstname", "lastname" }));
                     Console.WriteLine("Logged on user is {0} {1}.", systemUser.FirstName, systemUser.LastName);
 
                     // Retrieve the version of Microsoft Dynamics CRM.
-                    RetrieveVersionRequest versionRequest = new RetrieveVersionRequest();
+                    var versionRequest = new RetrieveVersionRequest();
                     RetrieveVersionResponse versionResponse =
                         (RetrieveVersionResponse)service.Execute(versionRequest);
                     Console.WriteLine("Microsoft Dynamics CRM version {0}.", versionResponse.Version);
@@ -45,7 +45,7 @@ namespace PowerApps.Samples
                     // Instantiate an account object. Note the use of option set enumerations defined in OptionSets.cs.
                     // Refer to the Entity Metadata topic in the SDK documentation to determine which attributes must
                     // be set for each entity.
-                    Account account = new Account { Name = "Fourth Coffee" };
+                    var account = new Account { Name = "Fourth Coffee" };
                     account.AccountCategoryCode = new OptionSetValue((int)AccountAccountCategoryCode.PreferredCustomer);
                     account.CustomerTypeCode = new OptionSetValue((int)AccountCustomerTypeCode.Investor);
 
@@ -55,10 +55,10 @@ namespace PowerApps.Samples
                     Console.Write("{0} {1} created, ", account.LogicalName, account.Name);
 
                     // Retrieve the several attributes from the new account.
-                    ColumnSet cols = new ColumnSet(
+                    var cols = new ColumnSet(
                         new String[] { "name", "address1_postalcode", "lastusedincampaign" });
 
-                    Account retrievedAccount = (Account)service.Retrieve("account", _accountId, cols);
+                    var retrievedAccount = (Account)service.Retrieve("account", _accountId, cols);
                     Console.Write("retrieved, ");
 
                     // Update the postal code attribute.
@@ -86,7 +86,7 @@ namespace PowerApps.Samples
 
                 else
                 {
-                    const string UNABLE_TO_LOGIN_ERROR = "Unable to Login to Dynamics CRM";
+                    const string UNABLE_TO_LOGIN_ERROR = "Unable to Login to Common Data Service";
                     if (service.LastCrmError.Equals(UNABLE_TO_LOGIN_ERROR))
                     {
                         Console.WriteLine("Check the connection string values in cds/App.config.");

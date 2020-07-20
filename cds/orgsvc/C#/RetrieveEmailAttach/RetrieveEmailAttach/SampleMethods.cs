@@ -13,7 +13,6 @@ namespace PowerApps.Samples
         // Define the IDs needed for this sample.
         public static Guid _emailTemplateId;
         public static List<Guid> _templateAttachmentIds = new List<Guid>();
-
         private static bool prompt = true;
         /// <summary>
         /// Function to set up the sample.

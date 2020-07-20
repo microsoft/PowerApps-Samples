@@ -1,15 +1,13 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Workflow;
-using System;
 using System.Activities;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace  PowerApps.Samples
+namespace PowerApps.Samples
 {
-    public class AzureWorkFlowActivity: CodeActivity
+    /// <summary>
+    /// This class posts the CDS execution context to the Azure Service Bus.
+    /// </summary>
+    public class AzureAwareWorkflowActivity : CodeActivity
     {
         /// <summary>
         /// This method is called when the workflow executes.
@@ -26,13 +24,12 @@ namespace  PowerApps.Samples
         }
 
         /// <summary>
-        /// Enables the service endpoint to be provided when this activity is added as a 
+        /// Enables the service endpoint GUID to be provided when this activity is added as a 
         /// step in a workflow.
         /// </summary>
         [RequiredArgument]
         [ReferenceTarget("serviceendpoint")]
         [Input("Input id")]
         public InArgument<EntityReference> ServiceEndpoint { get; set; }
-
     }
 }

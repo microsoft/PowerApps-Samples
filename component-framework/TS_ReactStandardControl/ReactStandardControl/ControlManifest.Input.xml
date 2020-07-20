@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="SampleControls" constructor="ReactStandardControl" version="0.1.1" display-name-key="TS_ReactStandardControl_Display_Key" description-key="TS_ReactStandardControl_Desc_Key" control-type="standard">
+    <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
+    <property name="numberOfFaces" display-name-key="numberOfFaces_Display_Key" description-key="numberOfFaces_Desc_Key" of-type="Whole.None" usage="bound" required="false" />
+    <resources>
+      <code path="index.ts" order="1"/>
+      <css path="css/ReactStandardControl.css" order="2" />
+      <resx path="strings/TS_ReactStandardControl.1033.resx" version="1.0.0" />
+    </resources>
+  </control>
+</manifest>

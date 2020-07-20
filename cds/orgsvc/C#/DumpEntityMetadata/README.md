@@ -1,16 +1,16 @@
-# Sample: Dump entity metadata to a file
+# Dump entity metadata to a file
 
-This sample shows how to write out all the entity metadata to an `XML` file. It uses the [RetrieveAllEntitiesRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.messages.retrieveallentitiesrequest?view=dynamics-general-ce-9) message.
+This sample shows how to write out all the entity metadata to an `XML` file. It uses the [RetrieveAllEntitiesRequest](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.retrieveallentitiesrequest?view=dynamics-general-ce-9) message.
 
-The following sample creates a new file at `\Entities\bin\Debug\EntityInfo.xml`. You can open this file in **Office Excel** to see a tabular report. You may need this information to discover the entity type code for a custom entity for use in reports.
+The following sample creates a new file at `\DumpEntityMetadata\bin\Debug\EntityInfo.xml`. You can open this file in **Office Excel** to see a tabular report. You may need this information to discover the entity type code for a custom entity for use in reports.
 
 ## How to run this sample
 
-See [How to run samples](../../../README.md) for information about how to run this sample.
+See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/master/cds/README.md) for information about how to run this sample.
 
 ## What this sample does
 
-The `RetrieveAllEntitiesRequest` message is intended to be used in a scenario that contains data that is needed to retrieve metadata information about all the entites.
+The `RetrieveAllEntitiesRequest` message is intended to be used in a scenario that contains data that is needed to retrieve metadata information about all the entities.
 
 ## How this sample works
 
@@ -18,8 +18,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Setup
 
-1. Checks for the current version of the org.
-
+Checks for the current version of the org.
 
 ### Demonstrate
 
@@ -28,6 +27,6 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Clean up
 
-1. This sample creates no records. No cleanup is required.
+This sample creates no records. No cleanup is required.
 
 

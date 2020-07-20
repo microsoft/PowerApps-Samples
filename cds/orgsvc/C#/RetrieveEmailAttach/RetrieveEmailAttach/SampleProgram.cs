@@ -1,4 +1,5 @@
-﻿using Microsoft.Xrm.Tooling.Connector;
+﻿using Microsoft.Xrm.Sdk.Query;
+using Microsoft.Xrm.Tooling.Connector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,42 @@ namespace PowerApps.Samples
                     #endregion Set up
 
                     #region Demonstrate
+                    //Create a query to retrieve attachments.
+                    var query = new QueryExpression
+                    {
+                        EntityName = ActivityMimeAttachment.EntityLogicalName,
+                        ColumnSet = new ColumnSet("filename"),
 
+                        //Define the conditions for each attachment.
+                        Criteria =
+                        {
+                            FilterOperator = LogicalOperator.And,
+                            Conditions =
+                        {
+                            //The ObjectTypeCode must be specified, or else the query
+                            //defaults to "email" instead of "template".
+                            new ConditionExpression
+                            {
+                                AttributeName = "objecttypecode",
+                                Operator = ConditionOperator.Equal,
+                                Values = {Template.EntityTypeCode}
+                            },
+                            //Specify which template we need.
+                            new ConditionExpression
+                            {
+                                AttributeName = "objectid",
+                                Operator = ConditionOperator.Equal,
+                                Values = {_emailTemplateId}
+                            }
+                        }
+                        }
+                    };
+
+                    //Write out the filename of each attachment retrieved.
+                    foreach (ActivityMimeAttachment attachment in service.RetrieveMultiple(query).Entities)
+                    {
+                        Console.WriteLine("Retrieved attachment {0}", attachment.FileName);
+                    }
                     #region Clean up
                     CleanUpSample(service);
                     #endregion Clean up
@@ -34,7 +70,7 @@ namespace PowerApps.Samples
                 #endregion Sample Code
                 else
                 {
-                    const string UNABLE_TO_LOGIN_ERROR = "Unable to Login to Dynamics CRM";
+                    const string UNABLE_TO_LOGIN_ERROR = "Unable to Login to Common Data Service";
                     if (service.LastCrmError.Equals(UNABLE_TO_LOGIN_ERROR))
                     {
                         Console.WriteLine("Check the connection string values in cds/App.config.");

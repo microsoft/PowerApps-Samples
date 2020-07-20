@@ -1,0 +1,8 @@
+{
+    "extends": "./node_modules/pcf-scripts/tsconfig_base.json",
+    "compilerOptions": {
+        "jsx": "react",
+        "jsxFactory": "React.createElement",
+        "typeRoots": ["node_modules/@types"],
+    }
+}
