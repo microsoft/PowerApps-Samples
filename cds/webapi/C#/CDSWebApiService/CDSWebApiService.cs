@@ -14,6 +14,7 @@ namespace PowerApps.Samples
     {
         private readonly HttpClient httpClient;
         private readonly ServiceConfig config;
+
         /// <summary>
         /// The BaseAddresss property of the HttpClient.
         /// </summary>
@@ -295,9 +296,16 @@ namespace PowerApps.Samples
         {
             try
             {
-                var errorObject = JObject.Parse(response.Content.ReadAsStringAsync().Result);
-                string message = errorObject["error"]["message"].Value<string>();
-                int code = Convert.ToInt32(errorObject["error"]["code"].Value<string>(), 16);
+                int code = 0;
+                string message = "no content returned",
+                       content = response.Content.ReadAsStringAsync().Result;
+                
+                if (content.Length > 0)
+                {
+                    var errorObject = JObject.Parse(content);
+                    message = errorObject["error"]["message"].Value<string>();
+                    code = Convert.ToInt32(errorObject["error"]["code"].Value<string>(), 16);
+                }
                 int statusCode = (int)response.StatusCode;
                 string reasonPhrase = response.ReasonPhrase;
 

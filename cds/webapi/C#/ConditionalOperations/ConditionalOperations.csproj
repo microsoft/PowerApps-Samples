@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D5C4C65C-1F02-4C06-BCB0-7C514018EE2A}</ProjectGuid>
+    <ProjectGuid>{40D728D9-3698-45CB-A02E-6F8FBAA65826}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>PowerApps.Samples</RootNamespace>
-    <AssemblyName>QueryData</AssemblyName>
+    <AssemblyName>condop</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -53,6 +53,7 @@
   <ItemGroup>
     <None Include="..\App.config">
       <Link>App.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
     <None Include="README.md" />
