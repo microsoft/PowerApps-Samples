@@ -12,6 +12,13 @@ using System.Threading.Tasks;
 namespace PowerApps.Samples
 
 {
+    // TODO The reader must load the provided sample solution into the target testing environment
+    // Otherwise, the custom action code in this program will not work.
+
+    /// <summary>
+    /// Demonstrates Web API functions and actions.
+    /// </summary>
+    /// <seealso cref="https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/webapi/samples/functions-actions-csharp"/>
     public partial class SampleProgram
     {
         static void Main(string[] args)
@@ -28,9 +35,10 @@ namespace PowerApps.Samples
                     "v9.0"))
                 {
                     CreateRequiredRecords(client);
-                    //DeleteRequiredRecords(client, prompt);
+
                     HttpRequestMessage request;
                     HttpResponseMessage response;
+
                     #region Call an unbound function with no parameters.
                     //Retrieve the current user's full name from the WhoAmI function:
                     // https://msdn.microsoft.com/library/mt607925.aspx, which returns a WhoAmIResponse 
@@ -148,6 +156,7 @@ namespace PowerApps.Samples
                         Console.WriteLine("Error calling WinOpportunity!");
                         throw new Exception(string.Format("Failed to close an opportunity as won", response.Content));
                     }
+                    response.Dispose();
                     Console.WriteLine("\tOpportunity won.");
                     #endregion Call an unbound action that requires parameters.
 
@@ -160,7 +169,8 @@ namespace PowerApps.Samples
                     //Create a letter tracking instance.
                     string letterUri;
                     JObject letter = new JObject();
-                    letter["description"] = "Example letter";
+                    letter["subject"] = "Example letter";
+                    letter["description"] = "Body of the letter";
                     Console.WriteLine("Bound action: AddToQueue");
                     request = new HttpRequestMessage(HttpMethod.Post, client.BaseAddress + "letters");
                     request.Content = new StringContent(letter.ToString(), Encoding.UTF8, "application/json");
@@ -176,10 +186,11 @@ namespace PowerApps.Samples
                         Console.WriteLine("Error creating tracking letter!");
                         throw new Exception(string.Format("Failed to create a Letter", response.Content));
                     }
+                    response.Dispose();
 
                     //Retrieve the ID associated with this new letter tracking activity.
                     string letterActivityId;
-                    response = client.GetAsync(letterUri + "?$select=activityid",
+                    response = client.GetAsync(letterUri + "?$select=activityid,subject",
                         HttpCompletionOption.ResponseHeadersRead).Result;
                     if (response.IsSuccessStatusCode)
                     {
@@ -206,13 +217,14 @@ namespace PowerApps.Samples
                         Console.WriteLine("Error retrieving current user queue URL!");
                         throw new Exception(string.Format("Failed to retrieve URL to current user's queue", response.Content));
                     }
+                    response.Dispose();
 
                     //Add letter activity to current user's queue, then return its queue ID.
                     JObject addToQueueParams = new JObject();
                     addToQueueParams["Target"] = JObject.Parse(
                       @"{activityid: '" + letterActivityId + @"', '@odata.type': 'Microsoft.Dynamics.CRM.letter' }");
                     request = new HttpRequestMessage(HttpMethod.Post, myQueueUri + "/Microsoft.Dynamics.CRM.AddToQueue");
-                    request.Content = new StringContent(addToQueueParams.ToString());
+                    request.Content = new StringContent(addToQueueParams.ToString(), Encoding.UTF8, "application/json");
                     response = client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).Result;
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
@@ -224,75 +236,9 @@ namespace PowerApps.Samples
                         Console.WriteLine("Error adding letter activity to queue!");
                         throw new Exception(string.Format("Failed to Add letter activity to current user's queue", response.Content));
                     }
+                    response.Dispose();
                     Console.WriteLine("\tQueueItemId returned from AddToQueue action: {0}", queueItemId);
                     #endregion Call a bound action that requires parameters.
-
-                    //Attempt to load the associated managed solution so that we can call its custom actions. 
-                    //Check first if the solution is already installed by retrieving its ID.
-                    customSolutionID = customSolutionName;
-                    bool install = true;
-                    //Request to install and solution is not already present
-                    if (install == true && customSolutionID == null)
-                    {
-                        //Locate the custom solution zip file, which should have been copied over to the build 
-                        //output directory.
-                        string solutionPath = Directory.GetCurrentDirectory() + "\\" + customSolutionFilename;
-                        if (!File.Exists(solutionPath))
-                        { return; }
-                        //Read the solution package into memory
-                        byte[] packageBytes = File.ReadAllBytes(solutionPath);
-                        //Import the solution package.
-                        JObject importParams = new JObject();
-                        importParams["CustomizationFile"] = packageBytes;
-                        importParams["OverwriteUnmanagedCustomizations"] = false;
-                        importParams["PublishWorkflows"] = false;
-                        importParams["ImportJobId"] = Guid.NewGuid();
-
-                        request = new HttpRequestMessage(HttpMethod.Post, "ImportSolution");
-                        request.Content = new StringContent(importParams.ToString(), Encoding.UTF8, "application/json");
-                        response = client.SendAsync(request, HttpCompletionOption.ResponseContentRead).Result;
-                        if (response.IsSuccessStatusCode)
-                        {
-                            customSolutionID = customSolutionName;
-                            string solutionUri = client.BaseAddress.ToString() + "solutions(" + customSolutionID + ")";
-                            entityUris.Add(solutionUri);  //Add to lifetime-managed records.
-                            return;
-                        }
-                        else
-                        { throw new Exception(string.Format("Failed to import solution package", response.Content)); }
-                    }
-                    //Request to uninstall and solution is present. 
-                    else if (install == false && customSolutionID != null)
-                    {
-                        string solutionUri = client.BaseAddress.ToString() + "solutions(" + customSolutionID + ")";
-                        response = client.DeleteAsync(solutionUri).Result;
-                        customSolutionID = null;
-                    }
-                    if (customSolutionID == null)
-                    {
-                        Console.WriteLine("Failed to install custom solution, so custom operations cannot be called.");
-                        return;
-                    }
-
-                    string solutionID = null;
-
-                    if (String.IsNullOrEmpty(solutionName))
-                    { //return null;
-                    }
-                    string queryOptions = "solutions?$select=solutionid&$filter=uniquename eq '" + solutionName + "'";
-                    response = client.GetAsync(queryOptions, HttpCompletionOption.ResponseHeadersRead).Result;
-                    if (response.StatusCode == HttpStatusCode.OK)
-                    {
-                        JObject solutionArray = JObject.Parse(response.Content.ReadAsStringAsync().Result);
-                        //There can only be zero or one returned record when filtering on a unique property.
-                        if (!solutionArray["value"].Any())
-                        { solutionID = null; }
-                        else
-                        { solutionID = solutionArray["value"].First()["solutionid"].ToString(); }
-                    }
-                    else
-                    { throw new Exception(string.Format("Failed to get  solutionID", response.Content)); }
-                    ///return solutionID;
 
                     #region Call a bound custom action that requires parameters.
                     //Add a note to a specified contact. Uses the custom action sample_AddNoteToContact, which
@@ -313,9 +259,11 @@ namespace PowerApps.Samples
                     }
                     else
                     {
-                        Console.WriteLine("Error calling custom action sample_AddNoteToContact!");
+                        Console.WriteLine("Error calling custom action AddNoteToContact!");
                         throw new Exception(string.Format("Failed calling custom action sample_AddNoteToContact", response.Content));
                     }
+                    response.Dispose();
+
                     Console.WriteLine("\tA note with the title '{0}' was created and " +
                         "associated with the contact {2}.",
                         note1["NoteTitle"], note1["NoteText"],
@@ -339,6 +287,7 @@ namespace PowerApps.Samples
                         throw new Exception(string.Format("Failed calling custom action sample_CreateCustomer", response.Content));
                     }
                     Console.WriteLine("\tThe account '" + customerName1 + "' was created.");
+                    response.Dispose();
 
                     //Try to call the same custom action with invalid parameters, here the same name is
                     //not valid for a contact. (ContactFirstname and ContactLastName parameters are  
@@ -354,6 +303,7 @@ namespace PowerApps.Samples
                         Exception ex = new Exception(string.Format("Failed calling custom action", response.Content));
                         Console.WriteLine("\tExpected Error: " + ex.Message);
                     }
+                    response.Dispose();
                     #endregion Call an unbound custom action that requires parameters.
 
                     DeleteRequiredRecords(client, prompt);
