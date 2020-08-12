@@ -20,9 +20,9 @@ namespace BlazorCDS
 
             builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-            //Get configuration data about the Global Discovery API set in wwwroot/appsettings.json
+            // Get configuration data about the Global Discovery API set in wwwroot/appsettings.json
             var GDSWebApiConfig = builder.Configuration.GetSection("GDSWebAPI");
-            var gdsResourceUrl = GDSWebApiConfig.GetSection("ResourceUrl").Value;
+            var gdsResourceUrl = "https://globaldisco.crm.dynamics.com";
 
             // Get configuration data about the Web API set in wwwroot/appsettings.json
             var CDSWebApiConfig = builder.Configuration.GetSection("CDSWebAPI");

@@ -34,16 +34,23 @@
                     }
                 </select>
             </div>
+        }        
+        else if (failedToLoadEnv)
+        {
+            <label>Failed to load environments</label>
         }
         else
         {
             <label>Loading Environments...</label>
         }
+
     </Authorized>
 </AuthorizeView>
 
 
 @code {
+    private bool failedToLoadEnv;
+
     private string selectedEnvUrl { get; set; }
 
     [Parameter]
@@ -77,7 +84,7 @@
     {
         try
         {
-
+            failedToLoadEnv = false;
             var tokenResult = await TokenProvider.RequestAccessToken();
 
             logger.LogInformation($"AccessTokenResult.Status: {tokenResult.Status}"); //RequiresRedirect
@@ -99,7 +106,7 @@
             var request = new HttpRequestMessage()
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"{client.BaseAddress}api/discovery/v2.0/Instances")
+                RequestUri = new Uri($"/api/discovery/v2.0/Instances")
             };
 
             //Add the access token
@@ -119,17 +126,6 @@
                 JObject body = JObject.Parse(result);
                 JArray values = (JArray)body.GetValue("value");
 
-                if (!values.HasValues)
-                {
-                    var mockInstances = new Instance[] {
-                        new Instance() { FriendlyName = "Environment A", ApiUrl = "A" },
-                        new Instance() { FriendlyName = "Environment B", ApiUrl = "B" },
-                        new Instance() { FriendlyName = "Environment C", ApiUrl = "C" },
-                        };
-
-                    instances = new InstanceCollection() { value = mockInstances };
-                }
-
                 instances = new InstanceCollection() { value = JsonConvert.DeserializeObject<List<Instance>>(values.ToString()).ToArray() };
 
                 if (instances.value.Length > 0)
@@ -140,10 +136,13 @@
             else
             {
                 //Something went wrong.
+                failedToLoadEnv = true;
             }
         }
         catch (Exception ex)
         {
+            failedToLoadEnv = true;
+            logger.LogError(ex.Message);
         }
     }
 

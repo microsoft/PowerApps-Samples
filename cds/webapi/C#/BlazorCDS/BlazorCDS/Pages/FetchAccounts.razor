@@ -14,7 +14,7 @@
     @*Only show the list if the user is signed in and authorized*@
     <Authorized>
         <h3>Fetch Accounts</h3>
-        <br /><label>SelectedEnvUrl: @AppState.SelectedEnvUrl</label>
+        <br /><label>Selected Environment Url:  </label><a href="@AppState.SelectedEnvUrl.Replace(".api","")" target="_blank">@AppState.SelectedEnvUrl</a>
 
         @if (!string.IsNullOrEmpty(AppState.SelectedEnvUrl))
         {
