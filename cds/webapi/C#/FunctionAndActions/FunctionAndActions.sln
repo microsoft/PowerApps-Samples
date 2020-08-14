@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30330.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionAndActions", "FunctionAndActions.csproj", "{F6C3A4AF-6596-467C-B440-DC0214ADD228}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CDSWebApiService", "..\..\..\..\..\GitHub\PowerApps-Samples\cds\webapi\C#\CDSWebApiService\CDSWebApiService.csproj", "{E8C225D3-F15A-417C-AA4A-9114C0F2BDF4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CDSWebApiService", "..\CDSWebApiService\CDSWebApiService.csproj", "{E8C225D3-F15A-417C-AA4A-9114C0F2BDF4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
