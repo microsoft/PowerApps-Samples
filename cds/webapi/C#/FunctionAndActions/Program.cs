@@ -11,7 +11,7 @@ namespace PowerApps.Samples
     /// Power Platform data service Web API.
     /// </summary>
     /// <remarks>Be sure to fill out App.config with your test environment information
-    /// and load the provided managed solution into your test environment using the web app
+    /// and import the provided managed solution into your test environment using the web app
     /// before running this program.</remarks>
     /// <see cref="Https://docs.microsoft.com/powerapps/developer/common-data-service/webapi/samples/functions-actions-csharp"/>
     public class Program
