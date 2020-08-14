@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -59,7 +59,7 @@
     <None Include="WebAPIFunctionsandActions_1_0_0_0_managed.zip" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\GitHub\PowerApps-Samples\cds\webapi\C#\CDSWebApiService\CDSWebApiService.csproj">
+    <ProjectReference Include="..\CDSWebApiService\CDSWebApiService.csproj">
       <Project>{e8c225d3-f15a-417c-aa4a-9114c0f2bdf4}</Project>
       <Name>CDSWebApiService</Name>
     </ProjectReference>
