@@ -192,8 +192,9 @@ namespace PowerApps.Samples
 
                     //Next retrieve same contact and its assigned tasks.
                     //Don't have a saved URI for contact 'Susie Curtis', so create one 
-                    // from base address and entity ID.
+                    // from base address and entity ID (and add it to collection for cleanup).
                     Uri contact2Uri = new Uri($"{svc.BaseAddress}contacts({retrievedAccount2["primarycontactid"]["contactid"]})");
+                    entityUris.Add(contact2Uri); //To delete later                    
                     //Retrieve the contact
                     var retrievedcontact2 = svc.Get($"{contact2Uri}?$select=fullname," +
                         $"&$expand=Contact_Tasks($select=subject,description,scheduledstart,scheduledend)");
