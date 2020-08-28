@@ -49,7 +49,7 @@ steps:
   inputs:
     authenticationType: 'PowerPlatformSPN'
     PowerPlatformSPN: 'like10-dev'
-    
+
 - task: PowerPlatformExportSolution@0
   inputs:
     authenticationType: 'PowerPlatformSPN'
@@ -72,11 +72,11 @@ steps:
    write-host "commit all changes"
    git config user.email "hosted.agent@dev.azure.com"
    git config user.name "Azure Pipeline"
-   git checkout main
+   git checkout $env:Build_SourceBranchName
    git add --all
    git commit -m "solution source updated by $env:BUILD_BUILDNUMBER [skip ci]"
    write-host "push code to repo"
-   git push origin main
+   git push origin $env:Build_SourceBranchName
   displayName: "Commit changes to Git repo"
   
 
