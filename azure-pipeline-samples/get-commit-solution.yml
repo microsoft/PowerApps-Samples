@@ -28,11 +28,11 @@ steps:
   clean: true
   persistCredentials: true
 
- - pwsh: |
+- pwsh: |
     $VersionRegex = "\d+\.\d+\.\d+\.\d+"
     $VersionData = [regex]::matches($Env:BUILD_BUILDNUMBER,$VersionRegex)
     Write-Host "##vso[task.setvariable variable=Solution.Version;]$VersionData"
-   displayName: 'Get Version String'
+  displayName: 'Get Version String'
 
 - task: PowerPlatformToolInstaller@0
   inputs:
