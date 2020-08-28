@@ -1,0 +1,80 @@
+# Get solution from Power Apps or Dynamics and 
+# Commit it to the same Git repository we're in
+# 
+# Using the following variables to build a version string: Version.Major, Version.Minor, Version.Patch
+# PowerPlatformSPN values are Service connections which are defined in 
+# Service Connections under Project Settings using the Power Platform connection type and a Service Principal
+# https://docs.microsoft.com/en-us/power-platform/alm/devops-build-tools#configure-service-connections-using-a-service-principal
+
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  GIT_REDIRECT_STDERR: 2>&1
+  Version.Revision: $[counter(format('{0:yyyyMMdd}', pipeline.startTime), 0)]
+  Solution.Name: 'SampleApp'
+  Solution.Version: '0.0.0.0'
+  Version.Major: 1
+  Version.Minor: 0
+  Version.Patch: 0
+
+name: '$(Build.DefinitionName) $(Version.Major).$(Version.Minor).$(Version.Patch).$(Date:yy)$(DayOfYear)$(Version.Revision)'
+
+steps:
+- checkout: self
+  clean: true
+  persistCredentials: true
+
+ - pwsh: |
+    $VersionRegex = "\d+\.\d+\.\d+\.\d+"
+    $VersionData = [regex]::matches($Env:BUILD_BUILDNUMBER,$VersionRegex)
+    Write-Host "##vso[task.setvariable variable=Solution.Version;]$VersionData"
+   displayName: 'Get Version String'
+
+- task: PowerPlatformToolInstaller@0
+  inputs:
+    DefaultVersion: true
+- task: PowerPlatformSetSolutionVersion@0
+        inputs:
+          authenticationType: 'PowerPlatformSPN'
+          PowerPlatformSPN: 'like10-dev'
+          SolutionName: '$(Solution.Name)'
+          SolutionVersionNumber: '$(Solution.Version)'    
+
+- task: PowerPlatformPublishCustomizations@0
+  inputs:
+    authenticationType: 'PowerPlatformSPN'
+    PowerPlatformSPN: 'like10-dev'
+- task: PowerPlatformExportSolution@0
+  inputs:
+    authenticationType: 'PowerPlatformSPN'
+    PowerPlatformSPN: 'like10-dev'
+    SolutionName: '$(Solution.Name)'
+    SolutionOutputFile: '$(Build.ArtifactStagingDirectory)\$(Solution.Name).zip'
+
+- task: PowerPlatformChecker@0
+  inputs:
+    PowerPlatformSPN: 'like10-dev'
+    FilesToAnalyze: '$(Build.ArtifactStagingDirectory)\*.zip'
+    RuleSet: '0ad12346-e108-40b8-a956-9a8f95ea18c9'
+
+- task: PowerPlatformUnpackSolution@0
+  inputs:
+    SolutionInputFile: '$(Build.ArtifactStagingDirectory)\$(Solution.Name).zip'
+    SolutionTargetFolder: '$(Pipeline.Workspace)/Solution'
+
+- pwsh: |
+   write-host "commit all changes"
+   git config user.email "hosted.agent@dev.azure.com"
+   git config user.name "Azure Pipeline"
+   git checkout main
+   git add --all
+   git commit -m "solution source updated by $env:BUILD_BUILDNUMBER [skip ci]"
+   write-host "push code to repo"
+   git push origin main
+  displayName: "Commit changes to Git repo"
+  
+
