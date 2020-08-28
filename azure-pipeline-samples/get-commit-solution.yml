@@ -72,7 +72,7 @@ steps:
    write-host "commit all changes"
    git config user.email "hosted.agent@dev.azure.com"
    git config user.name "Azure Pipeline"
-   git checkout $env:Build_SourceBranchName
+   git checkout $env:Build_SourceBranchName --
    git add --all
    git commit -m "solution source updated by $env:BUILD_BUILDNUMBER [skip ci]"
    write-host "push code to repo"
