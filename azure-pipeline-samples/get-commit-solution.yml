@@ -37,17 +37,19 @@ steps:
 - task: PowerPlatformToolInstaller@0
   inputs:
     DefaultVersion: true
+
 - task: PowerPlatformSetSolutionVersion@0
-        inputs:
-          authenticationType: 'PowerPlatformSPN'
-          PowerPlatformSPN: 'like10-dev'
-          SolutionName: '$(Solution.Name)'
-          SolutionVersionNumber: '$(Solution.Version)'    
+  inputs:
+    authenticationType: 'PowerPlatformSPN'
+    PowerPlatformSPN: 'like10-dev'
+    SolutionName: '$(Solution.Name)'
+    SolutionVersionNumber: '$(Solution.Version)'    
 
 - task: PowerPlatformPublishCustomizations@0
   inputs:
     authenticationType: 'PowerPlatformSPN'
     PowerPlatformSPN: 'like10-dev'
+    
 - task: PowerPlatformExportSolution@0
   inputs:
     authenticationType: 'PowerPlatformSPN'
