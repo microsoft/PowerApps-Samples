@@ -79,7 +79,7 @@ steps:
     SolutionTargetFolder: '$(Pipeline.Workspace)/s/Solution'
 
 - pwsh: |
-   write-host "commit all changes"
+   write-host "commit all changes to $env:Build_SourceBranchName"
    git config user.email "hosted.agent@dev.azure.com"
    git config user.name "Azure Pipeline"
    git checkout $env:Build_SourceBranchName --
