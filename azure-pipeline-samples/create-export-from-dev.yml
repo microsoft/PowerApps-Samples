@@ -17,6 +17,7 @@ variables:
   GIT_REDIRECT_STDERR: 2>&1
   # Solution Details
   Solution.Name: 'SampleApp'
+  Solution.Path: '$(Pipeline.Workspace)/s/Solution'
 
 
 steps:
@@ -42,7 +43,7 @@ steps:
   displayName: 'Unpack solution'
   inputs:
     SolutionInputFile: '$(Build.ArtifactStagingDirectory)\$(Solution.Name).zip'
-    SolutionTargetFolder: '$(Pipeline.Workspace)/s/Solution'
+    SolutionTargetFolder: '$(Solution.Path)'
 
 - pwsh: |
    write-host "commit all changes to $env:Build_SourceBranchName"
@@ -55,4 +56,3 @@ steps:
    git push origin $env:Build_SourceBranchName
   displayName: "Commit changes to Git repo/branch"
   
-
