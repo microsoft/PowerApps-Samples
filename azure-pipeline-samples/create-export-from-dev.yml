@@ -1,0 +1,58 @@
+# Get solution and commit 
+# to the same Git repository and branch used when pipeline
+# is triggered
+# 
+# PowerPlatformSPN values are Service connections which are defined in 
+# Service Connections under Project Settings using the Power Platform connection type and a Service Principal
+# https://docs.microsoft.com/en-us/power-platform/alm/devops-build-tools#configure-service-connections-using-a-service-principal
+
+trigger:
+  - main
+  - develop
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  # Git command output is done on stderr, not stdout
+  GIT_REDIRECT_STDERR: 2>&1
+  # Solution Details
+  Solution.Name: 'SampleApp'
+
+
+steps:
+- checkout: self
+  clean: true
+  persistCredentials: true
+
+- task: PowerPlatformToolInstaller@0
+  displayName: 'Power Platform Tool Installer'
+  inputs:
+    DefaultVersion: true
+
+- task: PowerPlatformExportSolution@0
+  displayName: 'Export Solution (unmanaged)'
+  inputs:
+    authenticationType: 'PowerPlatformSPN'
+    PowerPlatformSPN: 'like10-dev'
+    SolutionName: '$(Solution.Name)'
+    SolutionOutputFile: '$(Build.ArtifactStagingDirectory)\$(Solution.Name).zip'
+    Managed: false
+
+- task: PowerPlatformUnpackSolution@0
+  displayName: 'Unpack solution'
+  inputs:
+    SolutionInputFile: '$(Build.ArtifactStagingDirectory)\$(Solution.Name).zip'
+    SolutionTargetFolder: '$(Pipeline.Workspace)/s/Solution'
+
+- pwsh: |
+   write-host "commit all changes to $env:Build_SourceBranchName"
+   git config user.email "hosted.agent@dev.azure.com"
+   git config user.name "Azure Pipeline"
+   git checkout $env:Build_SourceBranchName --
+   git add --all
+   git commit -m "solution source updated by $env:BUILD_BUILDNUMBER [skip ci]"
+   write-host "push code to repo"
+   git push origin $env:Build_SourceBranchName
+  displayName: "Commit changes to Git repo/branch"
+  
+
