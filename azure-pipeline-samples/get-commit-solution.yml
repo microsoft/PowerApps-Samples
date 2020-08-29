@@ -1,5 +1,5 @@
-# Get solution from Power Apps or Dynamics and 
-# Commit it to the same Git repository we're in
+# Get solution from Power Apps and 
+# Commit it to the same Git repository and branch in the pipeline
 # 
 # Using the following variables to build a version string: Version.Major, Version.Minor, Version.Patch
 # PowerPlatformSPN values are Service connections which are defined in 
