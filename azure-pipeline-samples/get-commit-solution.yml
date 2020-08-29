@@ -7,7 +7,13 @@
 # https://docs.microsoft.com/en-us/power-platform/alm/devops-build-tools#configure-service-connections-using-a-service-principal
 
 trigger:
-- main
+  branches:
+    include:
+    - main
+    - develop
+  paths:
+    include:
+    - azure-pipeline-samples/*
 
 pool:
   vmImage: 'windows-latest'
