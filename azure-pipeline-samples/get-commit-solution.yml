@@ -13,13 +13,16 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
+  # Git command output is done on stderr, not stdout
   GIT_REDIRECT_STDERR: 2>&1
+  # Solution Version Variables
   Version.Revision: $[counter(format('{0:yyyyMMdd}', pipeline.startTime), 0)]
-  Solution.Name: 'SampleApp'
-  Solution.Version: '0.0.0.0'
   Version.Major: 1
   Version.Minor: 0
   Version.Patch: 0
+  # Solution Details
+  Solution.Name: 'SampleApp'
+  Solution.Version: '0.0.0.0'
 
 name: '$(Build.DefinitionName) $(Version.Major).$(Version.Minor).$(Version.Patch).$(Date:yy)$(DayOfYear)$(Version.Revision)'
 
@@ -35,10 +38,12 @@ steps:
   displayName: 'Get Version String'
 
 - task: PowerPlatformToolInstaller@0
+  displayName: 'Power Platform Tool Installer'
   inputs:
     DefaultVersion: true
 
 - task: PowerPlatformSetSolutionVersion@0
+  displayName: 'Set Solution Version'
   inputs:
     authenticationType: 'PowerPlatformSPN'
     PowerPlatformSPN: 'like10-dev'
@@ -46,24 +51,29 @@ steps:
     SolutionVersionNumber: '$(Solution.Version)'    
 
 - task: PowerPlatformPublishCustomizations@0
+  displayName: 'Publish Customizations'
   inputs:
     authenticationType: 'PowerPlatformSPN'
     PowerPlatformSPN: 'like10-dev'
 
 - task: PowerPlatformExportSolution@0
+  displayName: 'Export Solution (unmanaged)'
   inputs:
     authenticationType: 'PowerPlatformSPN'
     PowerPlatformSPN: 'like10-dev'
     SolutionName: '$(Solution.Name)'
     SolutionOutputFile: '$(Build.ArtifactStagingDirectory)\$(Solution.Name).zip'
+    Managed: false
 
 - task: PowerPlatformChecker@0
+  displayName: 'Execute Power Platform Checker'
   inputs:
     PowerPlatformSPN: 'like10-dev'
     FilesToAnalyze: '$(Build.ArtifactStagingDirectory)\*.zip'
     RuleSet: '0ad12346-e108-40b8-a956-9a8f95ea18c9'
 
 - task: PowerPlatformUnpackSolution@0
+  displayName: 'Unpack solution'
   inputs:
     SolutionInputFile: '$(Build.ArtifactStagingDirectory)\$(Solution.Name).zip'
     SolutionTargetFolder: '$(Pipeline.Workspace)/s/Solution'
@@ -77,6 +87,6 @@ steps:
    git commit -m "solution source updated by $env:BUILD_BUILDNUMBER [skip ci]"
    write-host "push code to repo"
    git push origin $env:Build_SourceBranchName
-  displayName: "Commit changes to Git repo"
+  displayName: "Commit changes to Git repo/branch"
   
 
