@@ -79,7 +79,7 @@ namespace PowerApps.Samples
                     JToken containsSampleinFullNameCollection = svc.Get("contacts?" +
                         "$select=fullname,jobtitle,annualincome&" +
                         "$filter=contains(fullname,'(sample)') and " +
-                        $"_parentcustomerid_value eq {contosoId.ToString()}",
+                        $"_parentcustomerid_value eq {contosoId}",
                         formattedValueHeaders);
 
                     WriteContactResultsTable(
@@ -93,7 +93,7 @@ namespace PowerApps.Samples
                     JToken createdInLastHourCollection = svc.Get("contacts?" +
                     "$select=fullname,jobtitle,annualincome&" +
                     "$filter=Microsoft.Dynamics.CRM.LastXHours(PropertyName='createdon',PropertyValue='1') and " +
-                    $"_parentcustomerid_value eq {contosoId.ToString()}",
+                    $"_parentcustomerid_value eq {contosoId}",
                     formattedValueHeaders);
 
                     WriteContactResultsTable(
@@ -108,7 +108,7 @@ namespace PowerApps.Samples
                         "$select=fullname,jobtitle,annualincome&" +
                         "$filter=contains(fullname,'(sample)') and " +
                         "annualincome gt 55000  and " +
-                        $"_parentcustomerid_value eq {contosoId.ToString()}",
+                        $"_parentcustomerid_value eq {contosoId}",
                         formattedValueHeaders);
 
                     WriteContactResultsTable(
@@ -125,7 +125,7 @@ namespace PowerApps.Samples
                         "(contains(jobtitle, 'senior') or " +
                         "contains(jobtitle,'manager')) and " +
                         "annualincome gt 55000 and " +
-                        $"_parentcustomerid_value eq {contosoId.ToString()}",
+                        $"_parentcustomerid_value eq {contosoId}",
                         formattedValueHeaders);
 
                     WriteContactResultsTable(
@@ -142,7 +142,7 @@ namespace PowerApps.Samples
                     JToken orderedResults = svc.Get("contacts?" +
                         "$select=fullname,jobtitle,annualincome&" +
                         "$filter=contains(fullname,'(sample)')and " +
-                        $"_parentcustomerid_value eq {contosoId.ToString()}&" +
+                        $"_parentcustomerid_value eq {contosoId}&" +
                         "$orderby=jobtitle asc, annualincome desc",
                         formattedValueHeaders);
 
@@ -164,7 +164,7 @@ namespace PowerApps.Samples
                         "$orderby=@p4 asc, @p5 desc&" +
                         "@p1=fullname&" +
                         "@p2=_parentcustomerid_value&" +
-                        $"@p3={contosoId.ToString()}&" +
+                        $"@p3={contosoId}&" +
                         "@p4=jobtitle&" +
                         "@p5=annualincome",
                         formattedValueHeaders);
@@ -186,7 +186,7 @@ namespace PowerApps.Samples
                     JToken topFive = svc.Get("contacts?" +
                         "$select=fullname,jobtitle,annualincome&" +
                         "$filter=contains(fullname,'(sample)') and " +
-                        $"_parentcustomerid_value eq {contosoId.ToString()}&" +
+                        $"_parentcustomerid_value eq {contosoId}&" +
                         "$top=5",
                         formattedValueHeaders);
 
@@ -204,7 +204,7 @@ namespace PowerApps.Samples
                     JToken countWithData = svc.Get("contacts?" +
                         "$select=fullname,jobtitle,annualincome&" +
                         "$filter=(contains(jobtitle,'senior') or contains(jobtitle, 'manager')) and " +
-                        $"_parentcustomerid_value eq {contosoId.ToString()}" +
+                        $"_parentcustomerid_value eq {contosoId}" +
                         "&$count=true",
                         formattedValueHeaders);
 
@@ -342,7 +342,7 @@ namespace PowerApps.Samples
                             "<order descending ='true' attribute='fullname' />" +
                             "<filter type ='and'>" +
                               "<condition value ='%(sample)%' attribute='fullname' operator='like' />" +
-                              $"<condition value ='{contosoId.ToString()}' attribute='parentcustomerid' operator='eq' />" +
+                              $"<condition value ='{contosoId}' attribute='parentcustomerid' operator='eq' />" +
                             "</filter>" +
                           "</entity>" +
                         "</fetch>";
@@ -664,7 +664,7 @@ namespace PowerApps.Samples
             entityUris.ForEach(x =>
             {
                 Console.Write(".");
-                svc.Delete(x);
+                svc.Delete(x.ToString());
             });
 
             Console.WriteLine("\nData created for this sample deleted.");

@@ -83,7 +83,7 @@ namespace PowerApps.Samples
                     //Delete the accounts in parallel
                     Parallel.ForEach(accountsToDelete, parallelOptions, (uri) =>
                     {
-                        svc.Delete(uri);
+                        svc.Delete(uri.ToString());
                     });
 
                     //Calculate the duration to complete

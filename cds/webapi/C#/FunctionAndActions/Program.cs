@@ -203,11 +203,10 @@ namespace PowerApps.Samples
                         customerUri = svc.PostCreate("sample_CreateCustomer", customerAttributes);
                         Console.WriteLine("\tCall to the custom CreateCustomer action succeeded, which was not expected.");
                     }
-                    catch (AggregateException e)
+                    catch (ServiceException e)
                     {
                         Console.WriteLine("\tCall to the custom CreateCustomer action did not succeed (as was expected).");
-                        foreach (Exception inner in (e as AggregateException).InnerExceptions)
-                        { Console.WriteLine("\t  -" + inner.Message); }
+                        Console.WriteLine($"\t\tError: {e.Message}");
                     }
                     #endregion Call an unbound custom action that requires parameters
 
@@ -250,7 +249,7 @@ namespace PowerApps.Samples
                     try
                     {
                         Console.Write("Deleting '{0}'..", entityName);
-                        svc.Delete(entityUris[entityName]);
+                        svc.Delete(entityUris[entityName].ToString());
                         Console.WriteLine("done");
                     }
                     catch (ServiceException e)
