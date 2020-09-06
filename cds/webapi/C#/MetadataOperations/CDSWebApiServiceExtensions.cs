@@ -1101,7 +1101,7 @@ namespace PowerApps.Samples.Metadata
 
             try
             {
-                optionset = svc.RetrieveOptionSet(entityLogicalName, attributeLogicalName);
+                optionset = svc.RetrieveLocalOptionSet(entityLogicalName, attributeLogicalName);
             }
             catch (ServiceException se)
             {
@@ -1148,52 +1148,6 @@ namespace PowerApps.Samples.Metadata
                 throw new Exception($"Error inserting local option:{ex.Message}");
             }
             return NewOptionValue;
-        }
-
-        /// <summary>
-        /// Inserts a new option value for a global option set.
-        /// </summary>
-        /// <param name="svc">An instance of the CDSWebApiService to extend.</param>
-        /// <param name="optionSetName">The name of the global optionset to update</param>
-        /// <param name="value">The new value. A value will be generated if left null.</param>
-        /// <param name="label">The new label</param>
-        /// <param name="description">The new description.</param>
-        /// <param name="parentValues">	Reserved for future use.</param>
-        /// <param name="solutionUniqueName">Unique name of the solution.</param>
-        /// <returns>The optionset value.</returns>
-        public static int InsertOptionValue(this CDSWebApiService svc,
-            string optionSetName,
-            int? value = null,
-            Label label = null,
-            Label description = null,
-            int[] parentValues = null,
-            string solutionUniqueName = null)
-        {
-            return svc.InsertOptionValue(optionSetName, null, null, value, label, description, parentValues, solutionUniqueName);
-        }
-
-        /// <summary>
-        /// Inserts a new option value for a local option set.
-        /// </summary>
-        /// <param name="svc">An instance of the CDSWebApiService to extend.</param>
-        /// <param name="attributeLogicalName">The logical name of the attribute.</param>
-        /// <param name="entityLogicalName">Logical name of the entity.</param>
-        /// <param name="value">The new value. A value will be generated if left null.</param>
-        /// <param name="label">The new label</param>
-        /// <param name="description">The new description.</param>
-        /// <param name="parentValues">	Reserved for future use.</param>
-        /// <param name="solutionUniqueName">Unique name of the solution.</param>
-        /// <returns>The optionset value.</returns>
-        public static int InsertOptionValue(this CDSWebApiService svc,
-            string entityLogicalName,
-            string attributeLogicalName,
-            int? value = null,
-            Label label = null,
-            Label description = null,
-            int[] parentValues = null,
-            string solutionUniqueName = null)
-        {
-            return svc.InsertOptionValue(null, entityLogicalName, attributeLogicalName, value, label, description, parentValues, solutionUniqueName);
         }
 
         /// <summary>
@@ -1384,37 +1338,6 @@ namespace PowerApps.Samples.Metadata
             return RetrieveAttribute<T>(svc, entityLogicalName, null, logicalName, null, properties);
         }
 
-        /// <summary>
-        /// Retrieves the OptionSet of a boolean attribute.
-        /// </summary>
-        /// <param name="svc">An instance of the CDSWebApiService to extend.</param>
-        /// <param name="entityLogicalName">The logical name of the entity.</param>
-        /// <param name="attributeLogicalName">The logical name of the boolean attribute.</param>
-        /// <returns>The OptionSet of a boolean attribute.</returns>
-        public static BooleanOptionSetMetadata RetrieveBooleanOptionSet(this CDSWebApiService svc,
-                string entityLogicalName,
-                string attributeLogicalName)
-        {
-            {
-                JToken BooleanAttribute;
-
-                try
-                {
-                    BooleanAttribute = svc.Get($"EntityDefinitions(LogicalName='{entityLogicalName}')" +
-                                                $"/Attributes(LogicalName='{attributeLogicalName}')" +
-                                                $"/Microsoft.Dynamics.CRM.BooleanAttributeMetadata" +
-                                                $"?$select=MetadataId&$expand=OptionSet", STRONGCONSISTENCYHEADER);
-                }
-                catch (ServiceException se)
-                {
-                    throw new Exception($"Service Error retrieving Boolean attribute:{se.Message}", se);
-                }
-
-                var BooleanOptionSet = BooleanAttribute["OptionSet"].ToString();
-
-                return JsonConvert.DeserializeObject<BooleanOptionSetMetadata>(BooleanOptionSet);
-            }
-        }
 
         /// <summary>
         /// Retrieves data for a specific entity by Id
@@ -1488,7 +1411,7 @@ namespace PowerApps.Samples.Metadata
         /// <param name="entityLogicalName">The logical name of the entity.</param>
         /// <param name="attributeLogicalName">The logical name of the attribute.</param>
         /// <returns>The OptionSet of an attribute.</returns>
-        public static OptionSetMetadata RetrieveOptionSet(this CDSWebApiService svc,
+        public static OptionSetMetadata RetrieveLocalOptionSet(this CDSWebApiService svc,
             string entityLogicalName,
             string attributeLogicalName)
         {

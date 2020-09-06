@@ -408,7 +408,7 @@ namespace PowerApps.Samples
                         solutionUniqueName: solution.UniqueName);
 
                     //Retrieve the picklist Options:
-                    OptionSetMetadata options = svc.RetrieveOptionSet(
+                    OptionSetMetadata options = svc.RetrieveLocalOptionSet(
                         entityLogicalName: bankAccountEntityLogicalName,
                         attributeLogicalName: picklistAttributeMetadata.LogicalName);
                     
@@ -435,7 +435,7 @@ namespace PowerApps.Samples
                     Console.WriteLine("Options re-ordered.");
 
                     //Retrieve the re-ordered picklist Options:
-                    options = svc.RetrieveOptionSet(
+                    options = svc.RetrieveLocalOptionSet(
                         entityLogicalName: bankAccountEntityLogicalName,
                         attributeLogicalName: picklistAttributeMetadata.LogicalName);
                     
@@ -510,7 +510,7 @@ namespace PowerApps.Samples
                         $"{multiSelectPicklistAttributeMetadata.SchemaName}");
 
                     //Retrieve the picklist Options:
-                    var multiSelectOptions = svc.RetrieveOptionSet(
+                    var multiSelectOptions = svc.RetrieveLocalOptionSet(
                         entityLogicalName: bankAccountEntityLogicalName,
                         attributeLogicalName: multiSelectPicklistAttributeMetadata.LogicalName);
 
@@ -649,7 +649,7 @@ namespace PowerApps.Samples
                         solutionUniqueName: solution.UniqueName);
 
                     //Retrieve the picklist from the picklist using the global optionset:
-                    OptionSetMetadata colorsPicklistOptions = svc.RetrieveOptionSet(
+                    OptionSetMetadata colorsPicklistOptions = svc.RetrieveLocalOptionSet(
                         entityLogicalName: bankAccountEntityLogicalName,
                         attributeLogicalName: colorsPicklistLogicalName);
                     
