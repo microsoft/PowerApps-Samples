@@ -76,7 +76,7 @@ namespace PowerApps.Samples
 
                     // Change just one property 
                     string telephone1 = "555-0105";
-                    svc.Put(contact1Uri, "telephone1", telephone1);
+                    svc.Put(contact1Uri.ToString(), "telephone1", telephone1);
                     Console.WriteLine($"Contact '{retrievedcontact1["fullname"]}' " +
                         $"phone number updated.");
 
@@ -205,8 +205,8 @@ namespace PowerApps.Samples
                         Console.WriteLine(
                             $"Subject: {tk["subject"]}, \n" +
                             $"\tDescription: {tk["description"]}\n" +
-                            $"\tStart: {tk["scheduledstart"].Value<DateTime>().ToString("d")}\n" +
-                            $"\tEnd: {tk["scheduledend"].Value<DateTime>().ToString("d")}\n");
+                            $"\tStart: {tk["scheduledstart"].Value<DateTime>():d}\n" +
+                            $"\tEnd: {tk["scheduledend"].Value<DateTime>():d}\n");
                     }
                     #endregion Section 3: Create related entities
 
@@ -240,7 +240,7 @@ namespace PowerApps.Samples
 
                     //Dissociate the contact from the account.  For a collection-valued 
                     // navigation property, must append URI of referenced entity.
-                    Uri dis1Uri = new Uri($"{navUri1}?$id={contact1Uri}");
+                    var dis1Uri = $"{navUri1}?$id={contact1Uri}";
                     //Equivalently, could have dissociated from the other end of the 
                     // relationship, using the single-valued navigation ref, located in 
                     // the contact 'Peter Cambel'.  This dissociation URI has a simpler form:
@@ -293,7 +293,7 @@ namespace PowerApps.Samples
                     }
 
                     //Dissociate opportunity from competitor.  
-                    svc.Delete(new Uri($"{navUri2}?$id={comp1Uri}"));
+                    svc.Delete($"{navUri2}?$id={comp1Uri}");
                     // 'River rafting adventure' opportunity disassociated with 'Adventure Works' competitor
 
                     #endregion Section 4: Associate and Disassociate entities
@@ -322,7 +322,7 @@ namespace PowerApps.Samples
 
                     foreach (Uri entityUrl in entityUris)
                     {
-                        svc.Delete(entityUrl);
+                        svc.Delete(entityUrl.ToString());
                     }
                     #endregion Section 5: Delete sample entities
 

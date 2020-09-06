@@ -71,26 +71,18 @@ namespace PowerApps.Samples
                         Console.WriteLine("Instance retrieved using ETag: {0}", initialAcctETagVal);
                         Console.WriteLine(retrievedaccount1.ToString(Formatting.Indented));
                     }
-                    catch (AggregateException ae) // Message was not successful
-                    {
-                        ae.Handle((x) =>
+                    catch (ServiceException e) {
+                        if (e.StatusCode == (int)HttpStatusCode.NotModified) // Expected result
                         {
-                            if (x is ServiceException) // This we know how to handle.
-                            {
-                                var e = x as ServiceException;
-                                if (e.StatusCode == (int)HttpStatusCode.NotModified) // Expected result
-                                {
-                                    Console.WriteLine("Account record retrieved using ETag: {0}", initialAcctETagVal);
-                                    Console.WriteLine("Expected outcome: Entity was not modified so nothing was returned.");
-                                    return true;
-                                }
-                            }
-                            return false; // Let anything else stop the application.
-                        });
+                            Console.WriteLine("Account record retrieved using ETag: {0}", initialAcctETagVal);
+                            Console.WriteLine("Expected outcome: Entity was not modified so nothing was returned.");
+                        }
+                        else { throw e; }
+
                     }
 
                     // Modify the account instance by updating the telephone1 attribute
-                    svc.Put(account1Uri, "telephone1", "555-0001");
+                    svc.Put(account1Uri.ToString(), "telephone1", "555-0001");
                     Console.WriteLine("\n\bAccount telephone number updated to '555-0001'.\n");
 
                     // Re-attempt to retrieve using conditional GET defined by a message header with
@@ -134,7 +126,7 @@ namespace PowerApps.Samples
                     try
                     {
                         svc.Delete(
-                            uri: account1Uri,
+                            path: account1Uri.ToString(),
                             headers: new Dictionary<string, List<string>> {
                                { "If-Match", new List<string> {initialAcctETagVal}}}
                         );
@@ -225,9 +217,13 @@ namespace PowerApps.Samples
                     if (!(answer.StartsWith("y") || answer.StartsWith("Y") || answer == string.Empty))
                         entityUris.Clear();
 
-                    foreach (Uri entityUrl in entityUris) svc.Delete(entityUrl);
+                    foreach (Uri entityUrl in entityUris) svc.Delete(entityUrl.ToString());
 
                     #endregion Delete created records 
+
+                    Console.WriteLine("--Conditional operations demonstration Completed--");
+                    Console.WriteLine("Press any key to close");
+                    Console.ReadLine();
                 }
             }
             catch (ServiceException e)

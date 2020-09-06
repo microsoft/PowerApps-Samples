@@ -51,7 +51,7 @@ namespace PowerApps.Samples
                     clone = new StringContent(sc.ReadAsStringAsync().Result);
                     break;
                 default:
-                    throw new Exception($"{content.GetType().ToString()} Content type not implemented for HttpContent.Clone extension method.");
+                    throw new Exception($"{content.GetType()} Content type not implemented for HttpContent.Clone extension method.");
             }
 
             clone.Headers.Clear();

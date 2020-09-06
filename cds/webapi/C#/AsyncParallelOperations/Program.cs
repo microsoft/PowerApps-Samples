@@ -86,7 +86,7 @@ namespace PowerApps.Samples
             var deleteAccounts = new ActionBlock<Uri>(
                 async u =>
                 {
-                    await svc.DeleteAsync(u);
+                    await svc.DeleteAsync(u.ToString());
                 },
                 executionDataflowBlockOptions
               );
