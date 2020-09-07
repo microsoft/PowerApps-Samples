@@ -1929,76 +1929,7 @@ namespace PowerApps.Samples.Metadata
             }
         }
 
-        /// <summary>
-        /// Inserts a new option value for a global or local option set.
-        /// </summary>
-        /// <param name="svc">An instance of the CDSWebApiService to extend.</param>
-        /// <param name="optionSetName">The name of the global optionset to update</param>
-        /// <param name="attributeLogicalName">The logical name of the attribute.</param>
-        /// <param name="entityLogicalName">Logical name of the entity.</param>
-        /// <param name="value">The new value.</param>
-        /// <param name="label">The new label</param>
-        /// <param name="description">The new description.</param>
-        /// <param name="parentValues">	Reserved for future use.</param>
-        /// <param name="solutionUniqueName">Unique name of the solution.</param>
-        /// <returns>The option value.</returns>
-        private static int InsertOptionValue(this CDSWebApiService svc,
-            string optionSetName = null,
-            string entityLogicalName = null,
-            string attributeLogicalName = null,
-            int? value = null,
-            Label label = null,
-            Label description = null,
-            int[] parentValues = null,
-            string solutionUniqueName = null)
-        {
-            JObject args = new JObject();
-            int newOptionValue;
-
-            if (optionSetName != null)
-            {
-                args["OptionSetName"] = optionSetName;
-            }
-            if (attributeLogicalName != null)
-            {
-                args["AttributeLogicalName"] = attributeLogicalName;
-            }
-            if (entityLogicalName != null)
-            {
-                args["EntityLogicalName"] = entityLogicalName;
-            }
-            if (value != null)
-            {
-                args["Value"] = value;
-            }
-            if (label != null)
-            {
-                args["Label"] = JObject.FromObject(label);
-            }
-            if (description != null)
-            {
-                args["Description"] = JObject.FromObject(description);
-            }
-            if (parentValues != null)
-            {
-                args["ParentValues"] = JObject.FromObject(parentValues);
-            }
-            if (solutionUniqueName != null)
-            {
-                args["SolutionUniqueName"] = solutionUniqueName;
-            }
-
-            try
-            {
-                var result = svc.Post("InsertOptionValue", args);
-                newOptionValue = (int)result["NewOptionValue"];
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            return newOptionValue;
-        }
+        
 
         /// <summary>
         /// Retrieves an attribute using either id or logical name values
