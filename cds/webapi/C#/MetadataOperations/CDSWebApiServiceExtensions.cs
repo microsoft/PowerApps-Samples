@@ -43,40 +43,39 @@ namespace PowerApps.Samples.Metadata
 
             if (!string.IsNullOrEmpty(solutionUniqueName))
             {
-                //Add the attribute as part of a solution
-                JObject addSolutionComponentParameters = new JObject
-                {
-                    ["ComponentId"] = componentId,
-                    ["ComponentType"] = (int)componentType,
-                    ["SolutionUniqueName"] = solutionUniqueName,
-                    ["AddRequiredComponents"] = addRequiredComponents
-                };
-                if (doNotIncludeSubComponents != null)
-                {
-                    addSolutionComponentParameters["DoNotIncludeSubcomponents"] = doNotIncludeSubComponents;
-                }
-                if (includedComponentsSettingsValues != null)
-                {
-                    addSolutionComponentParameters["IncludedComponentSettingsValues"] = includedComponentsSettingsValues;
-                }
-
-                try
-                {
-                    JObject addSolutionComponentResponse = new JObject();
-
-                    addSolutionComponentResponse = svc.Post("AddSolutionComponent", addSolutionComponentParameters, strongConsistencyHeader);
-
-                    solutionComponentId = new Guid(addSolutionComponentResponse.GetValue("id").ToString());
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception($"There was a problem adding the {componentType} as a component to the {solutionUniqueName} solution:{ex.Message}");
-                }
-            }
-            else
-            {
                 throw new Exception("AddSolutionComponent requires the solutionUniqueName parameter value.");
             }
+
+            //Add the attribute as part of a solution
+            JObject addSolutionComponentParameters = new JObject
+            {
+                ["ComponentId"] = componentId,
+                ["ComponentType"] = (int)componentType,
+                ["SolutionUniqueName"] = solutionUniqueName,
+                ["AddRequiredComponents"] = addRequiredComponents
+            };
+            if (doNotIncludeSubComponents != null)
+            {
+                addSolutionComponentParameters["DoNotIncludeSubcomponents"] = doNotIncludeSubComponents;
+            }
+            if (includedComponentsSettingsValues != null)
+            {
+                addSolutionComponentParameters["IncludedComponentSettingsValues"] = includedComponentsSettingsValues;
+            }
+
+            try
+            {
+                JObject addSolutionComponentResponse = new JObject();
+
+                addSolutionComponentResponse = svc.Post("AddSolutionComponent", addSolutionComponentParameters, strongConsistencyHeader);
+
+                solutionComponentId = new Guid(addSolutionComponentResponse.GetValue("id").ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"There was a problem adding the {componentType} as a component to the {solutionUniqueName} solution:{ex.Message}");
+            }
+
             return solutionComponentId;
         }
 
@@ -1929,7 +1928,7 @@ namespace PowerApps.Samples.Metadata
             }
         }
 
-        
+
 
         /// <summary>
         /// Retrieves an attribute using either id or logical name values
