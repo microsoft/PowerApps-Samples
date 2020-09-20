@@ -15,7 +15,7 @@ namespace PowerApps.Samples.Metadata
         /// Users are always guaranteed to read the latest committed write.
         /// Use of this header incurs a small overhead and is therefore not suited to high volume workloads.
         /// </summary>
-        private static readonly Dictionary<string, List<string>> STRONGCONSISTENCYHEADER = new Dictionary<string, List<string>>()
+        private static readonly Dictionary<string, List<string>> strongConsistencyHeader = new Dictionary<string, List<string>>()
         {
             {"Consistency", new List<string> { "Strong" } }
         };
@@ -64,7 +64,7 @@ namespace PowerApps.Samples.Metadata
                 {
                     JObject addSolutionComponentResponse = new JObject();
 
-                    addSolutionComponentResponse = svc.Post("AddSolutionComponent", addSolutionComponentParameters, STRONGCONSISTENCYHEADER);
+                    addSolutionComponentResponse = svc.Post("AddSolutionComponent", addSolutionComponentParameters, strongConsistencyHeader);
 
                     solutionComponentId = new Guid(addSolutionComponentResponse.GetValue("id").ToString());
                 }
@@ -604,7 +604,7 @@ namespace PowerApps.Samples.Metadata
             {
                 svc.Delete("EntityDefinitions" +
                     $"(LogicalName='{entityLogicalName}')/Attributes" +
-                    $"(LogicalName='{attributeLogicalName}')", STRONGCONSISTENCYHEADER);
+                    $"(LogicalName='{attributeLogicalName}')", strongConsistencyHeader);
             }
             catch (Exception)
             {
@@ -850,7 +850,7 @@ namespace PowerApps.Samples.Metadata
         {
             try
             {
-                var results = svc.Get($"GetValidManyToMany", STRONGCONSISTENCYHEADER)["EntityNames"].ToString();
+                var results = svc.Get($"GetValidManyToMany", strongConsistencyHeader)["EntityNames"].ToString();
                 var entityNames = JsonConvert.DeserializeObject<List<string>>(results);
                 return entityNames;
             }
@@ -871,7 +871,7 @@ namespace PowerApps.Samples.Metadata
             try
             {
                 var results = svc.Get($"GetValidReferencedEntities(ReferencingEntityName=@p1)" +
-                    $"?@p1='{referencingEntityName}'", STRONGCONSISTENCYHEADER)["EntityNames"].ToString();
+                    $"?@p1='{referencingEntityName}'", strongConsistencyHeader)["EntityNames"].ToString();
                 var entityNames = JsonConvert.DeserializeObject<List<string>>(results);
                 return entityNames;
             }
@@ -892,7 +892,7 @@ namespace PowerApps.Samples.Metadata
             try
             {
                 var results = svc.Get($"GetValidReferencingEntities(ReferencedEntityName=@p1)" +
-                    $"?@p1='{referencedEntityName}'", STRONGCONSISTENCYHEADER)["EntityNames"].ToString();
+                    $"?@p1='{referencedEntityName}'", strongConsistencyHeader)["EntityNames"].ToString();
                 var entityNames = JsonConvert.DeserializeObject<List<string>>(results);
                 return entityNames;
             }
@@ -1293,7 +1293,7 @@ namespace PowerApps.Samples.Metadata
         {
             try
             {
-                var results = svc.Get("GlobalOptionSetDefinitions", STRONGCONSISTENCYHEADER)["value"];
+                var results = svc.Get("GlobalOptionSetDefinitions", strongConsistencyHeader)["value"];
                 return JsonConvert.DeserializeObject<List<OptionSetMetadata>>(results.ToString());
             }
             catch (Exception ex)
@@ -1423,7 +1423,7 @@ namespace PowerApps.Samples.Metadata
             {
                 attribute = svc.Get($"EntityDefinitions(LogicalName='{entityLogicalName}')" +
                                             $"/Attributes(LogicalName='{attributeLogicalName}')" +
-                                            $"?$select=AttributeTypeName", STRONGCONSISTENCYHEADER);
+                                            $"?$select=AttributeTypeName", strongConsistencyHeader);
             }
             catch (ServiceException se)
             {
@@ -1463,7 +1463,7 @@ namespace PowerApps.Samples.Metadata
                 typedAttribute = svc.Get($"EntityDefinitions(LogicalName='{entityLogicalName}')" +
                                             $"/Attributes(LogicalName='{attributeLogicalName}')" +
                                             $"/Microsoft.Dynamics.CRM.{className}" +
-                                            $"?$select=MetadataId&$expand=OptionSet", STRONGCONSISTENCYHEADER);
+                                            $"?$select=MetadataId&$expand=OptionSet", strongConsistencyHeader);
             }
             catch (ServiceException se)
             {
@@ -1798,7 +1798,7 @@ namespace PowerApps.Samples.Metadata
             //Verify that solution exists and is unmanaged.
             try
             {
-                JObject solutionQueryResults = (JObject)svc.Get($"solutions?$select=solutionid,ismanaged&$filter=uniquename eq '{solutionUniqueName}'", STRONGCONSISTENCYHEADER);
+                JObject solutionQueryResults = (JObject)svc.Get($"solutions?$select=solutionid,ismanaged&$filter=uniquename eq '{solutionUniqueName}'", strongConsistencyHeader);
 
                 JObject solution = (JObject)solutionQueryResults["value"][0];
 
@@ -1847,7 +1847,7 @@ namespace PowerApps.Samples.Metadata
 
             try
             {
-                svc.Delete($"EntityDefinitions({entityKey})", STRONGCONSISTENCYHEADER);
+                svc.Delete($"EntityDefinitions({entityKey})", strongConsistencyHeader);
             }
             catch (ServiceException se)
             {
@@ -1883,7 +1883,7 @@ namespace PowerApps.Samples.Metadata
 
             try
             {
-                svc.Delete($"GlobalOptionSetDefinitions({key})", STRONGCONSISTENCYHEADER);
+                svc.Delete($"GlobalOptionSetDefinitions({key})", strongConsistencyHeader);
             }
             catch (ServiceException se)
             {
@@ -1921,7 +1921,7 @@ namespace PowerApps.Samples.Metadata
             }
             try
             {
-                svc.Delete($"RelationshipDefinitions({key})", STRONGCONSISTENCYHEADER);
+                svc.Delete($"RelationshipDefinitions({key})", strongConsistencyHeader);
             }
             catch (Exception)
             {
@@ -2019,7 +2019,7 @@ namespace PowerApps.Samples.Metadata
                 arguments = $"?{string.Join("&", parameters.ToArray())}";
             }
 
-            JToken json = svc.Get($"{path}{arguments}", STRONGCONSISTENCYHEADER);
+            JToken json = svc.Get($"{path}{arguments}", strongConsistencyHeader);
             return JsonConvert.DeserializeObject<T>(json.ToString());
         }
 
@@ -2133,7 +2133,7 @@ namespace PowerApps.Samples.Metadata
             JToken results;
             try
             {
-                results = svc.Get($"EntityDefinitions({key}){arguments}", STRONGCONSISTENCYHEADER);
+                results = svc.Get($"EntityDefinitions({key}){arguments}", strongConsistencyHeader);
             }
             catch (ServiceException se)
             {
@@ -2176,7 +2176,7 @@ namespace PowerApps.Samples.Metadata
             JToken results;
             try
             {
-                results = svc.Get($"GlobalOptionSetDefinitions({key})", STRONGCONSISTENCYHEADER);
+                results = svc.Get($"GlobalOptionSetDefinitions({key})", strongConsistencyHeader);
             }
             catch (ServiceException se)
             {
@@ -2210,7 +2210,7 @@ namespace PowerApps.Samples.Metadata
                 //Get the key to use
                 string key = (metadataId != null) ? metadataId.ToString() : $"SchemaName='{schemaName}'";
 
-                var results = svc.Get($"RelationshipDefinitions({key})", STRONGCONSISTENCYHEADER);
+                var results = svc.Get($"RelationshipDefinitions({key})", strongConsistencyHeader);
                 var type = (string)results["RelationshipType"];
 
                 switch (type)
