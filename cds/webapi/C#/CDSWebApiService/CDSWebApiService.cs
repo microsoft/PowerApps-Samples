@@ -50,7 +50,7 @@ namespace PowerApps.Samples
         /// <param name="entitySetName">The entity set name of the entity to create.</param>
         /// <param name="body">The JObject containing the data of the entity to create.</param>
         /// <returns>The Uri for the created entity record.</returns>
-        public Uri PostCreate(string entitySetName, JObject body)
+        public Uri PostCreate(string entitySetName, object body)
         {
             try
             {
@@ -69,13 +69,13 @@ namespace PowerApps.Samples
         /// <param name="entitySetName">The entity set name of the entity to create.</param>
         /// <param name="body">The JObject containing the data of the entity to create.</param>
         /// <returns>The Uri for the created entity record.</returns>
-        public async Task<Uri> PostCreateAsync(string entitySetName, JObject body)
+        public async Task<Uri> PostCreateAsync(string entitySetName, object body)
         {
             try
             {
                 using (var message = new HttpRequestMessage(HttpMethod.Post, entitySetName))
                 {
-                    message.Content = new StringContent(body.ToString());
+                    message.Content = new StringContent(JObject.FromObject(body).ToString());
                     message.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                     using (HttpResponseMessage response = await SendAsync(message))
                     {
@@ -117,6 +117,13 @@ namespace PowerApps.Samples
                 {
                     message.Content = new StringContent(JObject.FromObject(body).ToString());
                     message.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+                    if (headers != null)
+                    {
+                        foreach (KeyValuePair<string, List<string>> header in headers)
+                        {
+                            message.Headers.Add(header.Key, header.Value);
+                        }
+                    }
                     using (HttpResponseMessage response = await SendAsync(message))
                     {
                         string content = await response.Content.ReadAsStringAsync();
@@ -514,7 +521,7 @@ namespace PowerApps.Samples
             {
                 int code = 0;
                 string message = "no content returned",
-                       content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();;
+                       content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 
                 if (content.Length > 0)
                 {

@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C92762CA-DBB3-4D05-A8BC-0B2B8ED90110}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>PowerApps.Samples</RootNamespace>
+    <AssemblyName>MetadataOperations</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CDSWebApiServiceExtensions.cs" />
+    <Compile Include="LayerDesiredOrder.cs" />
+    <Compile Include="LayerDesiredOrderType.cs" />
+    <Compile Include="MetadataTypes\AssociatedMenuBehavior.cs" />
+    <Compile Include="MetadataTypes\AssociatedMenuConfiguration.cs" />
+    <Compile Include="MetadataTypes\AssociatedMenuGroup.cs" />
+    <Compile Include="MetadataTypes\AttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\AttributeRequiredLevel.cs" />
+    <Compile Include="MetadataTypes\AttributeRequiredLevelManagedProperty.cs" />
+    <Compile Include="MetadataTypes\AttributeTypeCode.cs" />
+    <Compile Include="MetadataTypes\AttributeTypeDisplayName.cs" />
+    <Compile Include="MetadataTypes\BigIntAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\BooleanAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\BooleanManagedProperty.cs" />
+    <Compile Include="MetadataTypes\BooleanOptionSetMetadata.cs" />
+    <Compile Include="MetadataTypes\CascadeConfiguration.cs" />
+    <Compile Include="MetadataTypes\CascadeType.cs" />
+    <Compile Include="MetadataTypes\ComplexAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\ComplexBigIntAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\ComplexBooleanAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\ComplexBooleanOptionSetMetadata.cs" />
+    <Compile Include="MetadataTypes\ComplexDateTimeAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\ComplexDecimalAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\ComplexDoubleAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\ComplexEntityKeyMetadata.cs" />
+    <Compile Include="MetadataTypes\ComplexEntityMetadata.cs" />
+    <Compile Include="MetadataTypes\ComplexEnumAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\ComplexFileAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\ComplexImageAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\ComplexIntegerAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\ComplexLookupAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\ComplexManagedPropertyAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\ComplexManyToManyRelationshipMetadata.cs" />
+    <Compile Include="MetadataTypes\ComplexMemoAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\ComplexMoneyAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\ComplexOneToManyRelationshipMetadata.cs" />
+    <Compile Include="MetadataTypes\ComplexOptionSetMetadata.cs" />
+    <Compile Include="MetadataTypes\ComplexStringAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\ComplexUniqueIdentifierAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\CreateAttributeResponse.cs" />
+    <Compile Include="MetadataTypes\CreateCustomerRelationshipsResponse.cs" />
+    <Compile Include="MetadataTypes\CreateEntityResponse.cs" />
+    <Compile Include="MetadataTypes\CreateOneToManyResponse.cs" />
+    <Compile Include="MetadataTypes\crmmodelbaseentity.cs" />
+    <Compile Include="MetadataTypes\DateTimeAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\DateTimeBehavior.cs" />
+    <Compile Include="MetadataTypes\DateTimeFormat.cs" />
+    <Compile Include="MetadataTypes\DecimalAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\DoubleAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\EntityFilters.cs" />
+    <Compile Include="MetadataTypes\EntityKeyIndexStatus.cs" />
+    <Compile Include="MetadataTypes\EntityKeyMetadata.cs" />
+    <Compile Include="MetadataTypes\EntityMetadata.cs" />
+    <Compile Include="MetadataTypes\EntityNameAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\EntitySetting.cs" />
+    <Compile Include="MetadataTypes\EnumAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\FileAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\ImageAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\ImeMode.cs" />
+    <Compile Include="MetadataTypes\IntegerAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\IntegerFormat.cs" />
+    <Compile Include="MetadataTypes\Label.cs" />
+    <Compile Include="MetadataTypes\LocalizedLabel.cs" />
+    <Compile Include="MetadataTypes\LookupAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\LookupFormat.cs" />
+    <Compile Include="MetadataTypes\ManagedPropertyAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\ManagedPropertyEvaluationPriority.cs" />
+    <Compile Include="MetadataTypes\ManagedPropertyMetadata.cs" />
+    <Compile Include="MetadataTypes\ManagedPropertyOperation.cs" />
+    <Compile Include="MetadataTypes\ManagedPropertyType.cs" />
+    <Compile Include="MetadataTypes\ManyToManyRelationshipMetadata.cs" />
+    <Compile Include="MetadataTypes\MemoAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\MetadataBase.cs" />
+    <Compile Include="MetadataTypes\MoneyAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\MultiSelectPicklistAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\OneToManyRelationshipMetadata.cs" />
+    <Compile Include="MetadataTypes\OptionMetadata.cs" />
+    <Compile Include="MetadataTypes\OptionSetMetadata.cs" />
+    <Compile Include="MetadataTypes\OptionSetMetadataBase.cs" />
+    <Compile Include="MetadataTypes\OptionSetType.cs" />
+    <Compile Include="MetadataTypes\OwnershipTypes.cs" />
+    <Compile Include="MetadataTypes\PicklistAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\PrivilegeType.cs" />
+    <Compile Include="MetadataTypes\Query\AttributeQueryExpression.cs" />
+    <Compile Include="MetadataTypes\Query\DeletedMetadataCollection.cs" />
+    <Compile Include="MetadataTypes\Query\DeletedMetadataFilters.cs" />
+    <Compile Include="MetadataTypes\Query\EntityKeyQueryExpression.cs" />
+    <Compile Include="MetadataTypes\Query\EntityQueryExpression.cs" />
+    <Compile Include="MetadataTypes\Query\LabelQueryExpression.cs" />
+    <Compile Include="MetadataTypes\Query\MetadataConditionExpression.cs" />
+    <Compile Include="MetadataTypes\Query\MetadataConditionOperator.cs" />
+    <Compile Include="MetadataTypes\Query\MetadataFilterExpression.cs" />
+    <Compile Include="MetadataTypes\Query\MetadataPropertiesExpression.cs" />
+    <Compile Include="MetadataTypes\Query\MetadataQueryBase.cs" />
+    <Compile Include="MetadataTypes\Query\MetadataQueryExpression.cs" />
+    <Compile Include="MetadataTypes\Query\Object.cs" />
+    <Compile Include="MetadataTypes\Query\RelationshipQueryExpression.cs" />
+    <Compile Include="MetadataTypes\RelationshipMetadataBase.cs" />
+    <Compile Include="MetadataTypes\RelationshipType.cs" />
+    <Compile Include="MetadataTypes\RetrieveMetadataChangesResponse.cs" />
+    <Compile Include="MetadataTypes\SecurityPrivilegeMetadata.cs" />
+    <Compile Include="MetadataTypes\SecurityTypes.cs" />
+    <Compile Include="MetadataTypes\SolutionComponentType.cs" />
+    <Compile Include="MetadataTypes\StateAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\StateOptionMetadata.cs" />
+    <Compile Include="MetadataTypes\StatusAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\StatusOptionMetadata.cs" />
+    <Compile Include="MetadataTypes\StringAttributeMetadata.cs" />
+    <Compile Include="MetadataTypes\StringFormat.cs" />
+    <Compile Include="MetadataTypes\StringFormatName.cs" />
+    <Compile Include="MetadataTypes\UniqueIdentifierAttributeMetadata.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Publisher.cs" />
+    <Compile Include="Solution.cs" />
+    <Compile Include="SolutionInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\App.config">
+      <Link>App.config</Link>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CDSWebApiService\CDSWebApiService.csproj">
+      <Project>{e8c225d3-f15a-417c-aa4a-9114c0f2bdf4}</Project>
+      <Name>CDSWebApiService</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
