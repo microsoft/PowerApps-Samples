@@ -682,7 +682,7 @@ function DLPPolicyConnectorActionControlCrud
         if ($msnWeatherConnectorActionConfigurations -eq $null)
         {
             $msnWeatherConnectorActionConfigurations = [pscustomobject]@{  
-                connectorId = "/providers/Microsoft.PowerApps/apis/shared_msnweather" 
+                connectorId = $connectorId
                 actionRules = @()
                 defaultConnectorActionRuleBehavior = $desiredDefaultBehavior
             }
