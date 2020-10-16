@@ -640,15 +640,9 @@ function DLPPolicyConnectorActionControlCrud
         if ($policyConnectorConfigurations -eq $null)
         {
             Write-Host "Create a new dlp policy connector configurations."
-            $endpointRule = [pscustomobject]@{
-                order = 1
-                behavior = "Deny"
-                endPoint = "http://*"
-            }
-
             $endpointRuleConfigurations = [pscustomobject]@{
-                connectorId = "/providers/Microsoft.PowerApps/apis/shared_webcontents"
-                endpointRules = @($endpointRule)
+                connectorId = $connectorId
+                endpointRules = @()
             }
 
             $newConnectorConfigurations = [pscustomobject]@{
