@@ -612,6 +612,105 @@ function NewAPIToOldAPICompatibilityTests
     }
 }
 
+function DLPPolicyConnectorActionControlCrud
+{
+    param
+    (
+        [Parameter(Mandatory = $false)]
+        [string]$TenantPolicyTestDisplayName = "TenantPolicyDemo"
+    )
+    process 
+    {
+        $connectorId = "/providers/Microsoft.PowerApps/apis/shared_msnweather"
+        $connectorName = "shared_msnweather"
+        $desiredActionBehavior = "Block"
+        $desiredDefaultBehavior = "Allow"
+
+        Write-Host "Get connector shared_msnweather actions"
+        $connectorActions = Get-AdminPowerAppConnectorAction -ConnectorName $connectorName
+        $connectorAction = $connectorActions[0]
+
+
+        Write-Host "Create test tenant policy."
+        $tenantPolicy = New-DlpPolicy -DisplayName $TenantPolicyTestDisplayName -EnvironmentType "AllEnvironments"
+        $tenantId = $global:currentSession.tenantId;
+ 
+        Write-Host "Get connector configuration."
+        $policyConnectorConfigurations = Get-PowerAppDlpPolicyConnectorConfigurations  -TenantId $tenantId -PolicyName $tenantPolicy.Name
+        if ($policyConnectorConfigurations -eq $null)
+        {
+            Write-Host "Create a new dlp policy connector configurations."
+            $endpointRuleConfigurations = [pscustomobject]@{
+                connectorId = $connectorId
+                endpointRules = @()
+            }
+
+            $newConnectorConfigurations = [pscustomobject]@{
+                endpointConfigurations = @($endpointRuleConfigurations)
+                connectorActionConfigurations = $null
+            }
+
+            $policyConnectorConfigurations = New-PowerAppDlpPolicyConnectorConfigurations -NewDlpPolicyConnectorConfigurations $newConnectorConfigurations -TenantId $tenantId -PolicyName $tenantPolicy.Name;
+        }
+
+        if ($policyConnectorConfigurations.connectorActionConfigurations -eq $null)
+        {
+            Write-Host "Create a connector actions configuration."
+            $policyConnectorConfigurations = [pscustomobject]@{
+                endpointConfigurations = $policyConnectorConfigurations.endpointConfigurations
+                connectorActionConfigurations = @()
+            }
+        }
+
+        Write-Host "Loop through policy connector action configurations and find the connector based on connector Id."
+        $msnWeatherConnectorActionConfigurations = $null
+        foreach ($connectorConfiguration in $policyConnectorConfigurations.connectorActionConfigurations)
+        {
+            if ($connectorConfiguration.connectorId -eq $connectorId)
+            {
+                $msnWeatherConnectorActionConfigurations = $connectorConfiguration
+            }
+        }
+
+        Write-Host "If the connector action configuration does not exist, add the connector action configuration."
+        if ($msnWeatherConnectorActionConfigurations -eq $null)
+        {
+            $msnWeatherConnectorActionConfigurations = [pscustomobject]@{  
+                connectorId = $connectorId
+                actionRules = @()
+                defaultConnectorActionRuleBehavior = $desiredDefaultBehavior
+            }
+
+            $policyConnectorConfigurations.connectorActionConfigurations += $msnWeatherConnectorActionConfigurations
+        }
+ 
+
+        Write-Host "Loop through policy connector action configurations action rules and find the action rule based on connector action."
+        $msnWeatherConnectorActionRule = $null
+        foreach ($actionRule in $msnWeatherConnectorActionConfigurations.actionRules)
+        {
+            if ($actionRule.ActionId -eq $connectorAction.Id)
+            {
+                $msnWeatherConnectorActionRule = $actionRule
+            }
+        }
+         
+        Write-Host "If the action rule does not exist, add the action rule."
+        if ($msnWeatherConnectorActionRule -eq $null)
+        {
+            $msnWeatherConnectorActionRule = [pscustomobject]@{  
+                ActionId = $connectorAction.Id
+                behavior = $desiredActionBehavior
+            }
+
+            $msnWeatherConnectorActionConfigurations.actionRules += $msnWeatherConnectorActionRule
+        }
+
+        Write-Host "Update the policy connector configuration."
+        Set-PowerAppDlpPolicyConnectorConfigurations -PolicyName $tenantPolicy.Name -UpdatedConnectorConfigurations $policyConnectorConfigurations -TenantId $tenantId | Out-Null
+    }
+}
+
 #internal, helper function
 function CheckHttpResponse
 {

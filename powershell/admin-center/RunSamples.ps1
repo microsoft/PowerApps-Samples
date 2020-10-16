@@ -94,6 +94,18 @@ function RunTests
     # 6. Check each policy and remove the policy with old API if matched
     NewAPIToOldAPICompatibilityTests -EnvironmentDisplayName $EnvironmentDisplayName
 
+    # 1. Get connector shared_msnweather actions.
+    # 2. Create test tenant policy.
+    # 3. Get connector configuration.
+    # 4. Create a new dlp policy connector configurations.
+    # 5. Create a connector actions configuration 
+    # 6. Loop through policy connector action configurations and find the connector based on connector Id.
+    # 7. If the connector action configuration does not exist, add the connector action configuration.
+    # 8. Loop through policy connector action configurations action rules and find the action rule based on connector action.
+    # 9. If the action rule does not exist, add the action rule.
+    #10. Update the policy connector configuration.
+    DLPPolicyConnectorActionControlCrud
+
     $EndTime = Get-Date
     $TimeSpan = New-TimeSpan -Start $StartTime -End $EndTime
     Write-Host "`r`n`r`nAll tests completed at $EndTime.`r`nTotal running time: $TimeSpan`r`n"
