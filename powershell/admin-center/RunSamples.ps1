@@ -33,7 +33,7 @@ function RunTests
 
     $StartTime = Get-Date
     Write-Host "`r`n`r`nTests started at $StartTime.`r`nThe tests will run about 5 minutes.`r`n"
-
+    
     # 1. Clean test policies
     # 2. Create an empty test policy for ALLEnvironments with policy dispay name dng environment type
     # 3. Add test connectors.
@@ -93,17 +93,18 @@ function RunTests
     # 5. Get all policies with old API
     # 6. Check each policy and remove the policy with old API if matched
     NewAPIToOldAPICompatibilityTests -EnvironmentDisplayName $EnvironmentDisplayName
-
+    
     # 1. Get connector shared_msnweather actions.
-    # 2. Create test tenant policy.
-    # 3. Get connector configuration.
-    # 4. Create a new dlp policy connector configurations.
-    # 5. Create a connector actions configuration 
-    # 6. Loop through policy connector action configurations and find the connector based on connector Id.
-    # 7. If the connector action configuration does not exist, add the connector action configuration.
-    # 8. Loop through policy connector action configurations action rules and find the action rule based on connector action.
-    # 9. If the action rule does not exist, add the action rule.
-    #10. Update the policy connector configuration.
+    # 2. Get dlp policies
+    # 3. Create tenant policy if not exist.
+    # 4. Get policy connector configuration.
+    # 5. Create a new policy connector configurations if not exist.
+    # 6. Create a connector actions configuration if not exist
+    # 7. Loop through policy connector action configurations and find the connector based on connector Id.
+    # 8. If the connector action configuration does not exist, add the connector action configuration.
+    # 9. Loop through policy connector action configurations action rules and find the action rule based on connector action.
+    #10. If the action rule does not exist, add the action rule.
+    #11. Create/Update the policy connector configuration.
     DLPPolicyConnectorActionControlCrud
 
     $EndTime = Get-Date
