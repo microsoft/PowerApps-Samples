@@ -625,41 +625,45 @@ function DLPPolicyConnectorActionControlCrud
         $connectorName = "shared_msnweather"
         $desiredActionBehavior = "Block"
         $desiredDefaultBehavior = "Allow"
+        $tenantId = $global:currentSession.tenantId;
 
         Write-Host "Get connector shared_msnweather actions"
         $connectorActions = Get-AdminPowerAppConnectorAction -ConnectorName $connectorName
         $connectorAction = $connectorActions[0]
 
-
-        Write-Host "Create test tenant policy."
-        $tenantPolicy = New-DlpPolicy -DisplayName $TenantPolicyTestDisplayName -EnvironmentType "AllEnvironments"
-        $tenantId = $global:currentSession.tenantId;
- 
-        Write-Host "Get connector configuration."
-        $policyConnectorConfigurations = Get-PowerAppDlpPolicyConnectorConfigurations  -TenantId $tenantId -PolicyName $tenantPolicy.Name
-        if ($policyConnectorConfigurations -eq $null)
+        Write-Host "Get all policies"
+        $policies = Get-DlpPolicy
+        if ($policies -ne $null -and $policies.value -ne $null)
         {
-            Write-Host "Create a new dlp policy connector configurations."
-            $endpointRuleConfigurations = [pscustomobject]@{
-                connectorId = $connectorId
-                endpointRules = @()
+            foreach ($policy in $policies.value)
+            {
+                if ($policy.displayName -eq $TenantPolicyTestDisplayName)
+                {
+                    $tenantPolicy = $policy
+                    break
+                }
             }
-
-            $newConnectorConfigurations = [pscustomobject]@{
-                endpointConfigurations = @($endpointRuleConfigurations)
-                connectorActionConfigurations = $null
-            }
-
-            $policyConnectorConfigurations = New-PowerAppDlpPolicyConnectorConfigurations -NewDlpPolicyConnectorConfigurations $newConnectorConfigurations -TenantId $tenantId -PolicyName $tenantPolicy.Name;
         }
 
-        if ($policyConnectorConfigurations.connectorActionConfigurations -eq $null)
+        if ($tenantPolicy -eq $null)
         {
-            Write-Host "Create a connector actions configuration."
+            Write-Host "Create test tenant policy."
+            $tenantPolicy = New-DlpPolicy -DisplayName $TenantPolicyTestDisplayName -EnvironmentType "AllEnvironments"
+        }
+
+        Write-Host "Get connector configuration."
+        $policyConnectorConfigurations = Get-PowerAppDlpPolicyConnectorConfigurations  -TenantId $tenantId -PolicyName $tenantPolicy.Name
+
+        $connectorConfigurationsAlreadyExists = $false
+        if ($policyConnectorConfigurations -eq $null)
+        {
             $policyConnectorConfigurations = [pscustomobject]@{
-                endpointConfigurations = $policyConnectorConfigurations.endpointConfigurations
                 connectorActionConfigurations = @()
             }
+        }
+        else
+        {
+             $connectorConfigurationsAlreadyExists = $true
         }
 
         Write-Host "Loop through policy connector action configurations and find the connector based on connector Id."
@@ -669,6 +673,7 @@ function DLPPolicyConnectorActionControlCrud
             if ($connectorConfiguration.connectorId -eq $connectorId)
             {
                 $msnWeatherConnectorActionConfigurations = $connectorConfiguration
+                break
             }
         }
 
@@ -692,6 +697,7 @@ function DLPPolicyConnectorActionControlCrud
             if ($actionRule.ActionId -eq $connectorAction.Id)
             {
                 $msnWeatherConnectorActionRule = $actionRule
+                break
             }
         }
          
@@ -706,8 +712,24 @@ function DLPPolicyConnectorActionControlCrud
             $msnWeatherConnectorActionConfigurations.actionRules += $msnWeatherConnectorActionRule
         }
 
-        Write-Host "Update the policy connector configuration."
-        Set-PowerAppDlpPolicyConnectorConfigurations -PolicyName $tenantPolicy.Name -UpdatedConnectorConfigurations $policyConnectorConfigurations -TenantId $tenantId | Out-Null
+        if ($connectorConfigurationsAlreadyExists)
+        {
+            Write-Host "Update the policy connector configurations."
+            Set-PowerAppDlpPolicyConnectorConfigurations -PolicyName $tenantPolicy.Name -UpdatedConnectorConfigurations $policyConnectorConfigurations -TenantId $tenantId | Out-Null
+            $removeConnectorConfigration = $true
+        }
+        else
+        {
+            Write-Host "Create a new dlp policy connector configurations."
+            New-PowerAppDlpPolicyConnectorConfigurations -NewDlpPolicyConnectorConfigurations $policyConnectorConfigurations -TenantId $tenantId -PolicyName $tenantPolicy.Name | Out-Null
+            $removeConnectorConfigration = $false
+        }
+
+        if ($removeConnectorConfigration)
+        {
+            Write-Host "Remove the policy connector configurations."
+            Remove-PowerAppDlpPolicyConnectorConfigurations -TenantId $tenantId -PolicyName $tenantPolicy.Name | Out-Null
+        }
     }
 }
 
