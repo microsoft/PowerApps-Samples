@@ -742,12 +742,12 @@ function DLPPolicyConnectorEndpointControlCrud
     )
     process 
     {
-        $connectorId = "/providers/Microsoft.PowerApps/apis/shared_msnweather"
-        $connectorName = "shared_msnweather"
+        $connectorId = "/providers/Microsoft.PowerApps/apis/shared_sql"
+        $connectorName = "shared_sql"
         $desiredEndpointRule = [pscustomobject]@{
             order = 1
             behavior = "Deny"
-            endPoint = "http://*"
+            endPoint = "*"
         }
 
         $tenantId = $global:currentSession.tenantId;
@@ -788,44 +788,55 @@ function DLPPolicyConnectorEndpointControlCrud
         }
 
         Write-Host "Loop through policy connector endpoint configurations and find the connector configuration based on connector Id."
-        $msnWeatherConnectorEndpointConfigurations = $null
+        $sqlConnectorEndpointConfigurations = $null
         foreach ($connectorConfiguration in $policyConnectorConfigurations.endpointConfigurations)
         {
             if ($connectorConfiguration.connectorId -eq $connectorId)
             {
-                $msnWeatherConnectorEndpointConfigurations = $connectorConfiguration
+                $sqlConnectorEndpointConfigurations = $connectorConfiguration
                 break
             }
         }
 
         Write-Host "If the connector endpoint configuration does not exist, add the connector endpoint configuration."
-        if ($msnWeatherConnectorEndpointConfigurations -eq $null)
+        if ($sqlConnectorEndpointConfigurations -eq $null)
         {
-            $msnWeatherConnectorEndpointConfigurations = [pscustomobject]@{  
+            $sqlConnectorEndpointConfigurations = [pscustomobject]@{  
                 connectorId = $connectorId
                 endpointRules = @()
             }
 
-            $policyConnectorConfigurations.endpointConfigurations += $msnWeatherConnectorEndpointConfigurations
+            $policyConnectorConfigurations.endpointConfigurations += $sqlConnectorEndpointConfigurations
         } 
 
         Write-Host "Loop through policy connector endpoint configurations endpoint rules and find the endpoint rule based on the endpoint."
-        $msnWeatherConnectorEndpointRule = $null
-        foreach ($endpointRule in $msnWeatherConnectorEndpointConfigurations.endpointRules)
+        $sqlConnectorEndpointRule = $null
+        foreach ($endpointRule in $sqlConnectorEndpointConfigurations.endpointRules)
         {
             if ($endpointRule.endPoint -eq $desiredEndpointRule.endPoint)
             {
-                $msnWeatherConnectorEndpointRule = $endpointRule
+                $sqlConnectorEndpointRule = $endpointRule
+
+                # Set existing rule (endpoint *) to the last rule
+                $sqlConnectorEndpointRule.order = 2
+
+                # Add a new endpoint rule
+                $newEndPointRule = [pscustomobject]@{
+                    order = 1
+                    behavior = "Allow"
+                    endPoint = "www.a.*.com"
+                }
+
                 break
             }
         }
          
         Write-Host "If the endpoint rule does not exist, add the endpoint rule."
-        if ($msnWeatherConnectorEndpointRule -eq $null)
+        if ($sqlConnectorEndpointRule -eq $null)
         {
-            $msnWeatherConnectorEndpointRule = $desiredEndpointRule
+            $sqlConnectorEndpointRule = $desiredEndpointRule
 
-            $msnWeatherConnectorEndpointConfigurations.endpointRules += $msnWeatherConnectorEndpointRule
+            $sqlConnectorEndpointConfigurations.endpointRules += $sqlConnectorEndpointRule
         }
 
         if ($connectorConfigurationsAlreadyExists)
