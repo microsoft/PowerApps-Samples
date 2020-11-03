@@ -623,6 +623,7 @@ function DLPPolicyConnectorActionControlCrud
     {
         $connectorId = "/providers/Microsoft.PowerApps/apis/shared_msnweather"
         $connectorName = "shared_msnweather"
+        $desiredActionBehavior = "Block"
         $desiredDefaultBehavior = "Allow"
         $tenantId = $global:currentSession.tenantId;
 
@@ -663,6 +664,52 @@ function DLPPolicyConnectorActionControlCrud
         else
         {
              $connectorConfigurationsAlreadyExists = $true
+        }
+
+        Write-Host "Loop through policy connector action configurations and find the connector based on connector Id."
+        $msnWeatherConnectorActionConfigurations = $null
+        foreach ($connectorConfiguration in $policyConnectorConfigurations.connectorActionConfigurations)
+        {
+            if ($connectorConfiguration.connectorId -eq $connectorId)
+            {
+                $msnWeatherConnectorActionConfigurations = $connectorConfiguration
+                break
+            }
+        }
+
+        Write-Host "If the connector action configuration does not exist, add the connector action configuration."
+        if ($msnWeatherConnectorActionConfigurations -eq $null)
+        {
+            $msnWeatherConnectorActionConfigurations = [pscustomobject]@{  
+                connectorId = $connectorId
+                actionRules = @()
+                defaultConnectorActionRuleBehavior = $desiredDefaultBehavior
+            }
+
+            $policyConnectorConfigurations.connectorActionConfigurations += $msnWeatherConnectorActionConfigurations
+        }
+ 
+
+        Write-Host "Loop through policy connector action configurations action rules and find the action rule based on connector action."
+        $msnWeatherConnectorActionRule = $null
+        foreach ($actionRule in $msnWeatherConnectorActionConfigurations.actionRules)
+        {
+            if ($actionRule.ActionId -eq $connectorAction.Id)
+            {
+                $msnWeatherConnectorActionRule = $actionRule
+                break
+            }
+        }
+         
+        Write-Host "If the action rule does not exist, add the action rule."
+        if ($msnWeatherConnectorActionRule -eq $null)
+        {
+            $msnWeatherConnectorActionRule = [pscustomobject]@{  
+                ActionId = $connectorAction.Id
+                behavior = $desiredActionBehavior
+            }
+
+            $msnWeatherConnectorActionConfigurations.actionRules += $msnWeatherConnectorActionRule
         }
 
         if ($connectorConfigurationsAlreadyExists)
