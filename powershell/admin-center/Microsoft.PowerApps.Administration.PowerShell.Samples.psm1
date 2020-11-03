@@ -612,7 +612,7 @@ function NewAPIToOldAPICompatibilityTests
     }
 }
 
-function DLPPolicyConnectorActionControlCrud
+function DLPPolicyConnectorControlCrud
 {
     param
     (
@@ -625,6 +625,12 @@ function DLPPolicyConnectorActionControlCrud
         $connectorName = "shared_msnweather"
         $desiredActionBehavior = "Block"
         $desiredDefaultBehavior = "Allow"
+        $desiredEndpointRule = [pscustomobject]@{
+            order = 1
+            behavior = "Deny"
+            endPoint = "http://*"
+        }
+
         $tenantId = $global:currentSession.tenantId;
 
         Write-Host "Get connector shared_msnweather actions"
@@ -659,6 +665,7 @@ function DLPPolicyConnectorActionControlCrud
         {
             $policyConnectorConfigurations = [pscustomobject]@{
                 connectorActionConfigurations = @()
+                endpointConfigurations = @()
             }
         }
         else
@@ -666,13 +673,24 @@ function DLPPolicyConnectorActionControlCrud
              $connectorConfigurationsAlreadyExists = $true
         }
 
-        Write-Host "Loop through policy connector action configurations and find the connector based on connector Id."
+        Write-Host "Loop through policy connector action configurations and find the connector configuration based on connector Id."
         $msnWeatherConnectorActionConfigurations = $null
         foreach ($connectorConfiguration in $policyConnectorConfigurations.connectorActionConfigurations)
         {
             if ($connectorConfiguration.connectorId -eq $connectorId)
             {
                 $msnWeatherConnectorActionConfigurations = $connectorConfiguration
+                break
+            }
+        }
+
+        Write-Host "Loop through policy connector endpoint configurations and find the connector configuration based on connector Id."
+        $msnWeatherConnectorEndpointConfigurations = $null
+        foreach ($connectorConfiguration in $policyConnectorConfigurations.endpointConfigurations)
+        {
+            if ($connectorConfiguration.connectorId -eq $connectorId)
+            {
+                $msnWeatherConnectorEndpointConfigurations = $connectorConfiguration
                 break
             }
         }
@@ -688,7 +706,17 @@ function DLPPolicyConnectorActionControlCrud
 
             $policyConnectorConfigurations.connectorActionConfigurations += $msnWeatherConnectorActionConfigurations
         }
- 
+
+        Write-Host "If the connector endpoint configuration does not exist, add the connector endpoint configuration."
+        if ($msnWeatherConnectorEndpointConfigurations -eq $null)
+        {
+            $msnWeatherConnectorEndpointConfigurations = [pscustomobject]@{  
+                connectorId = $connectorId
+                endpointRules = @()
+            }
+
+            $policyConnectorConfigurations.endpointConfigurations += $msnWeatherConnectorEndpointConfigurations
+        } 
 
         Write-Host "Loop through policy connector action configurations action rules and find the action rule based on connector action."
         $msnWeatherConnectorActionRule = $null
@@ -710,6 +738,25 @@ function DLPPolicyConnectorActionControlCrud
             }
 
             $msnWeatherConnectorActionConfigurations.actionRules += $msnWeatherConnectorActionRule
+        }
+
+        Write-Host "Loop through policy connector endpoint configurations endpoint rules and find the endpoint rule based on the endpoint."
+        $msnWeatherConnectorEndpointRule = $null
+        foreach ($endpointRule in $msnWeatherConnectorEndpointConfigurations.endpointRules)
+        {
+            if ($endpointRule.endPoint -eq $desiredEndpointRule.endPoint)
+            {
+                $msnWeatherConnectorEndpointRule = $endpointRule
+                break
+            }
+        }
+         
+        Write-Host "If the endpoint rule does not exist, add the endpoint rule."
+        if ($msnWeatherConnectorEndpointRule -eq $null)
+        {
+            $msnWeatherConnectorEndpointRule = $desiredEndpointRule
+
+            $msnWeatherConnectorEndpointConfigurations.endpointRules += $msnWeatherConnectorEndpointRule
         }
 
         if ($connectorConfigurationsAlreadyExists)

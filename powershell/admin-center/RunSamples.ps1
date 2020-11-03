@@ -100,12 +100,18 @@ function RunTests
     # 4. Get policy connector configuration.
     # 5. Create a new policy connector configurations if not exist.
     # 6. Create a connector actions configuration if not exist
-    # 7. Loop through policy connector action configurations and find the connector based on connector Id.
-    # 8. If the connector action configuration does not exist, add the connector action configuration.
-    # 9. Loop through policy connector action configurations action rules and find the action rule based on connector action.
-    #10. If the action rule does not exist, add the action rule.
-    #11. Create/Update the policy connector configuration.
-    DLPPolicyConnectorActionControlCrud
+    # 7. Create a connector endpoint configuration if not exist
+    # 8. Loop through policy connector action configurations and find the connector based on connector Id.
+    # 9. If the connector action configuration does not exist, add the connector action configuration.
+    #10. Loop through policy connector endpoint configurations and find the connector based on connector Id.
+    #11. If the connector endpoint configuration does not exist, add the connector endpoint configuration.
+    #12. Loop through policy connector action configurations action rules and find the action rule based on connector action.
+    #13. If the action rule does not exist, add the action rule.
+    #14. Loop through policy connector endpoint configurations endpoint rules and find the endpoint rule based on the endpoint.
+    #15. If the endpoint rule does not exist, add the endpoint rule.
+    #16. Create/Update the policy connector configuration.
+    #17. Remove the policy connector configuration if it already exist.
+    DLPPolicyConnectorControlCrud
 
     $EndTime = Get-Date
     $TimeSpan = New-TimeSpan -Start $StartTime -End $EndTime
