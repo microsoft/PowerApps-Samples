@@ -827,6 +827,7 @@ function DLPPolicyConnectorEndpointControlCrud
                     endPoint = "www.a.*.com"
                 }
 
+                $sqlConnectorEndpointConfigurations.endpointRules += $newEndPointRule
                 break
             }
         }
