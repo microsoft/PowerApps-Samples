@@ -744,11 +744,8 @@ function DLPPolicyConnectorEndpointControlCrud
     {
         $connectorId = "/providers/Microsoft.PowerApps/apis/shared_sql"
         $connectorName = "shared_sql"
-        $desiredEndpointRule = [pscustomobject]@{
-            order = 1
-            behavior = "Deny"
-            endPoint = "*"
-        }
+        $initialEndpoint = "www.a.*.com"
+        $updatedEndPoint = "www.b.*.com"
 
         $tenantId = $global:currentSession.tenantId;
 
@@ -776,15 +773,16 @@ function DLPPolicyConnectorEndpointControlCrud
         $policyConnectorConfigurations = Get-PowerAppDlpPolicyConnectorConfigurations  -TenantId $tenantId -PolicyName $tenantPolicy.Name
 
         $connectorConfigurationsAlreadyExists = $false
-        if ($policyConnectorConfigurations -eq $null)
+        if ($policyConnectorConfigurations -ne $null)
+        {
+             $connectorConfigurationsAlreadyExists = $true
+        }
+
+        if ($policyConnectorConfigurations.endpointConfigurations -eq $null)
         {
             $policyConnectorConfigurations = [pscustomobject]@{
                 endpointConfigurations = @()
             }
-        }
-        else
-        {
-             $connectorConfigurationsAlreadyExists = $true
         }
 
         Write-Host "Loop through policy connector endpoint configurations and find the connector configuration based on connector Id."
@@ -810,47 +808,73 @@ function DLPPolicyConnectorEndpointControlCrud
         } 
 
         Write-Host "Loop through policy connector endpoint configurations endpoint rules and find the endpoint rule based on the endpoint."
-        $sqlConnectorEndpointRule = $null
+        $endpointUpdated = $false
         foreach ($endpointRule in $sqlConnectorEndpointConfigurations.endpointRules)
         {
-            if ($endpointRule.endPoint -eq $desiredEndpointRule.endPoint)
+            if ($endpointRule.endPoint -eq $initialEndpoint)
             {
-                $sqlConnectorEndpointRule = $endpointRule
-
-                # Set existing rule (endpoint *) to the last rule
-                $sqlConnectorEndpointRule.order = 2
-
-                # Add a new endpoint rule
-                $newEndPointRule = [pscustomobject]@{
-                    order = 1
-                    behavior = "Allow"
-                    endPoint = "www.a.*.com"
-                }
-
-                $sqlConnectorEndpointConfigurations.endpointRules += $newEndPointRule
+                # Update the endpoint rule in the 3nd run.
+                $endpointRule.endPoint = $updatedEndPoint
+                $endpointUpdated = $true
                 break
             }
         }
          
         Write-Host "If the endpoint rule does not exist, add the endpoint rule."
-        if ($sqlConnectorEndpointRule -eq $null)
+        if ($sqlConnectorEndpointConfigurations.endpointRules.Count -eq 0)
         {
-            $sqlConnectorEndpointRule = $desiredEndpointRule
+            # Add the last endpoint rule in the first run.
+            $lastEndpointRule = [pscustomobject]@{
+                order = 1
+                behavior = "Deny"
+                endPoint = "*"
+            }
 
-            $sqlConnectorEndpointConfigurations.endpointRules += $sqlConnectorEndpointRule
+            $sqlConnectorEndpointConfigurations.endpointRules += $lastEndpointRule
+        }
+        else
+        {
+            # Increase the last endpoint rule order
+            $lastOrder = $sqlConnectorEndpointConfigurations.endpointRules[$sqlConnectorEndpointConfigurations.endpointRules.Count - 1].order
+            $sqlConnectorEndpointConfigurations.endpointRules[$sqlConnectorEndpointConfigurations.endpointRules.Count - 1].order = $lastOrder + 1
+
+            # Add a new endpoint rule
+            $newEndPointRule = [pscustomobject]@{
+                order = $lastOrder
+                behavior = "Allow"
+                endPoint = $initialEndpoint
+            }
+
+            $sqlConnectorEndpointConfigurations.endpointRules += $newEndPointRule
+            
+            # Sort endpoint rules by order in ascending
+            $sqlConnectorEndpointConfigurations.endpointRules = $sqlConnectorEndpointConfigurations.endpointRules | Sort-Object -Property order
+
+            # After the 3nd run, there are 3 endpoint rules.
+            #[DBG]: PS C:\>> $sqlConnectorEndpointConfigurations.endpointRules
+            #
+            #order behavior endPoint   
+            #----- -------- --------   
+            #    1 Allow    www.b.*.com
+            #    2 Allow    www.a.*.com
+            #    3 Deny     *        
         }
 
+        $removeConnectorConfigration = $false
         if ($connectorConfigurationsAlreadyExists)
         {
             Write-Host "Update the policy connector configurations."
             Set-PowerAppDlpPolicyConnectorConfigurations -PolicyName $tenantPolicy.Name -UpdatedConnectorConfigurations $policyConnectorConfigurations -TenantId $tenantId | Out-Null
-            $removeConnectorConfigration = $true
+
+            if ($endpointUpdated)
+            {
+                $removeConnectorConfigration = $true
+            }
         }
         else
         {
             Write-Host "Create a new dlp policy connector configurations."
             New-PowerAppDlpPolicyConnectorConfigurations -NewDlpPolicyConnectorConfigurations $policyConnectorConfigurations -TenantId $tenantId -PolicyName $tenantPolicy.Name | Out-Null
-            $removeConnectorConfigration = $false
         }
 
         if ($removeConnectorConfigration)
