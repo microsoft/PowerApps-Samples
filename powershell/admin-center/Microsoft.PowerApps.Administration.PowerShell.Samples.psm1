@@ -657,7 +657,7 @@ function DLPPolicyConnectorActionControlCrud
         $connectorConfigurationsAlreadyExists = $false
         if ($policyConnectorConfigurations -ne $null)
         {
-             $connectorConfigurationsAlreadyExists = $true
+            $connectorConfigurationsAlreadyExists = $true
         }
         else
         {
@@ -778,7 +778,7 @@ function DLPPolicyConnectorEndpointControlCrud
         $connectorConfigurationsAlreadyExists = $false
         if ($policyConnectorConfigurations -ne $null)
         {
-             $connectorConfigurationsAlreadyExists = $true
+            $connectorConfigurationsAlreadyExists = $true
         }
         else
         {
