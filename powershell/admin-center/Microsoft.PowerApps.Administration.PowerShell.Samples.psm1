@@ -655,15 +655,18 @@ function DLPPolicyConnectorActionControlCrud
         $policyConnectorConfigurations = Get-PowerAppDlpPolicyConnectorConfigurations  -TenantId $tenantId -PolicyName $tenantPolicy.Name
 
         $connectorConfigurationsAlreadyExists = $false
-        if ($policyConnectorConfigurations -eq $null)
+        if ($policyConnectorConfigurations -ne $null)
         {
-            $policyConnectorConfigurations = [pscustomobject]@{
-                connectorActionConfigurations = @()
-            }
+            $connectorConfigurationsAlreadyExists = $true
         }
         else
         {
-             $connectorConfigurationsAlreadyExists = $true
+            $policyConnectorConfigurations = New-Object -TypeName PSObject
+        }
+
+        if ($policyConnectorConfigurations.connectorActionConfigurations -eq $null)
+        {
+            $policyConnectorConfigurations | Add-Member -PassThru -MemberType NoteProperty -Name connectorActionConfigurations -Value @()
         }
 
         Write-Host "Loop through policy connector action configurations and find the connector based on connector Id."
@@ -723,6 +726,160 @@ function DLPPolicyConnectorActionControlCrud
             Write-Host "Create a new dlp policy connector configurations."
             New-PowerAppDlpPolicyConnectorConfigurations -NewDlpPolicyConnectorConfigurations $policyConnectorConfigurations -TenantId $tenantId -PolicyName $tenantPolicy.Name | Out-Null
             $removeConnectorConfigration = $false
+        }
+
+        if ($removeConnectorConfigration)
+        {
+            Write-Host "Remove the policy connector configurations."
+            Remove-PowerAppDlpPolicyConnectorConfigurations -TenantId $tenantId -PolicyName $tenantPolicy.Name | Out-Null
+        }
+    }
+}
+
+function DLPPolicyConnectorEndpointControlCrud
+{
+    param
+    (
+        [Parameter(Mandatory = $false)]
+        [string]$TenantPolicyTestDisplayName = "TenantPolicyDemo"
+    )
+    process 
+    {
+        $connectorId = "/providers/Microsoft.PowerApps/apis/shared_sql"
+        $connectorName = "shared_sql"
+        $initialEndpoint = "www.a.*.com"
+        $updatedEndPoint = "www.b.*.com"
+
+        $tenantId = $global:currentSession.tenantId;
+
+        Write-Host "Get all policies"
+        $policies = Get-DlpPolicy
+        if ($policies -ne $null -and $policies.value -ne $null)
+        {
+            foreach ($policy in $policies.value)
+            {
+                if ($policy.displayName -eq $TenantPolicyTestDisplayName)
+                {
+                    $tenantPolicy = $policy
+                    break
+                }
+            }
+        }
+
+        if ($tenantPolicy -eq $null)
+        {
+            Write-Host "Create test tenant policy."
+            $tenantPolicy = New-DlpPolicy -DisplayName $TenantPolicyTestDisplayName -EnvironmentType "AllEnvironments"
+        }
+
+        Write-Host "Get connector configuration."
+        $policyConnectorConfigurations = Get-PowerAppDlpPolicyConnectorConfigurations  -TenantId $tenantId -PolicyName $tenantPolicy.Name
+
+        $connectorConfigurationsAlreadyExists = $false
+        if ($policyConnectorConfigurations -ne $null)
+        {
+            $connectorConfigurationsAlreadyExists = $true
+        }
+        else
+        {
+            $policyConnectorConfigurations = New-Object -TypeName PSObject
+        }
+
+        if ($policyConnectorConfigurations.endpointConfigurations -eq $null)
+        {
+            $policyConnectorConfigurations | Add-Member -PassThru -MemberType NoteProperty -Name endpointConfigurations -Value @()
+        }
+
+        Write-Host "Loop through policy connector endpoint configurations and find the connector configuration based on connector Id."
+        $sqlConnectorEndpointConfigurations = $null
+        foreach ($connectorConfiguration in $policyConnectorConfigurations.endpointConfigurations)
+        {
+            if ($connectorConfiguration.connectorId -eq $connectorId)
+            {
+                $sqlConnectorEndpointConfigurations = $connectorConfiguration
+                break
+            }
+        }
+
+        Write-Host "If the connector endpoint configuration does not exist, add the connector endpoint configuration."
+        if ($sqlConnectorEndpointConfigurations -eq $null)
+        {
+            $sqlConnectorEndpointConfigurations = [pscustomobject]@{  
+                connectorId = $connectorId
+                endpointRules = @()
+            }
+
+            $policyConnectorConfigurations.endpointConfigurations += $sqlConnectorEndpointConfigurations
+        } 
+
+        Write-Host "Loop through policy connector endpoint configurations endpoint rules and find the endpoint rule based on the endpoint."
+        $endpointUpdated = $false
+        foreach ($endpointRule in $sqlConnectorEndpointConfigurations.endpointRules)
+        {
+            if ($endpointRule.endPoint -eq $initialEndpoint)
+            {
+                # Update the endpoint rule in the 3nd run.
+                $endpointRule.endPoint = $updatedEndPoint
+                $endpointUpdated = $true
+                break
+            }
+        }
+         
+        Write-Host "If the endpoint rule does not exist, add the endpoint rule."
+        if ($sqlConnectorEndpointConfigurations.endpointRules.Count -eq 0)
+        {
+            # Add the last endpoint rule in the first run.
+            $lastEndpointRule = [pscustomobject]@{
+                order = 1
+                behavior = "Deny"
+                endPoint = "*"
+            }
+
+            $sqlConnectorEndpointConfigurations.endpointRules += $lastEndpointRule
+        }
+        else
+        {
+            # Increase the last endpoint rule order
+            $lastOrder = $sqlConnectorEndpointConfigurations.endpointRules[$sqlConnectorEndpointConfigurations.endpointRules.Count - 1].order
+            $sqlConnectorEndpointConfigurations.endpointRules[$sqlConnectorEndpointConfigurations.endpointRules.Count - 1].order = $lastOrder + 1
+
+            # Add a new endpoint rule
+            $newEndPointRule = [pscustomobject]@{
+                order = $lastOrder
+                behavior = "Allow"
+                endPoint = $initialEndpoint
+            }
+
+            $sqlConnectorEndpointConfigurations.endpointRules += $newEndPointRule
+            
+            # Sort endpoint rules by order in ascending
+            $sqlConnectorEndpointConfigurations.endpointRules = $sqlConnectorEndpointConfigurations.endpointRules | Sort-Object -Property order
+
+            # After the 3nd run, there are 3 endpoint rules.
+            #[DBG]: PS C:\>> $sqlConnectorEndpointConfigurations.endpointRules
+            #
+            #order behavior endPoint   
+            #----- -------- --------   
+            #    1 Allow    www.b.*.com
+            #    2 Allow    www.a.*.com
+            #    3 Deny     *        
+        }
+
+        $removeConnectorConfigration = $false
+        if ($connectorConfigurationsAlreadyExists)
+        {
+            Write-Host "Update the policy connector configurations."
+            Set-PowerAppDlpPolicyConnectorConfigurations -PolicyName $tenantPolicy.Name -UpdatedConnectorConfigurations $policyConnectorConfigurations -TenantId $tenantId | Out-Null
+
+            if ($endpointUpdated)
+            {
+                $removeConnectorConfigration = $true
+            }
+        }
+        else
+        {
+            Write-Host "Create a new dlp policy connector configurations."
+            New-PowerAppDlpPolicyConnectorConfigurations -NewDlpPolicyConnectorConfigurations $policyConnectorConfigurations -TenantId $tenantId -PolicyName $tenantPolicy.Name | Out-Null
         }
 
         if ($removeConnectorConfigration)
