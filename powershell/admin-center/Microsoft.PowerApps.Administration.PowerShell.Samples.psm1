@@ -655,15 +655,18 @@ function DLPPolicyConnectorActionControlCrud
         $policyConnectorConfigurations = Get-PowerAppDlpPolicyConnectorConfigurations  -TenantId $tenantId -PolicyName $tenantPolicy.Name
 
         $connectorConfigurationsAlreadyExists = $false
-        if ($policyConnectorConfigurations -eq $null)
+        if ($policyConnectorConfigurations -ne $null)
         {
-            $policyConnectorConfigurations = [pscustomobject]@{
-                connectorActionConfigurations = @()
-            }
+             $connectorConfigurationsAlreadyExists = $true
         }
         else
         {
-             $connectorConfigurationsAlreadyExists = $true
+            $policyConnectorConfigurations = New-Object -TypeName PSObject
+        }
+
+        if ($policyConnectorConfigurations.connectorActionConfigurations -eq $null)
+        {
+            $policyConnectorConfigurations | Add-Member -PassThru -MemberType NoteProperty -Name connectorActionConfigurations -Value @()
         }
 
         Write-Host "Loop through policy connector action configurations and find the connector based on connector Id."
@@ -777,12 +780,14 @@ function DLPPolicyConnectorEndpointControlCrud
         {
              $connectorConfigurationsAlreadyExists = $true
         }
+        else
+        {
+            $policyConnectorConfigurations = New-Object -TypeName PSObject
+        }
 
         if ($policyConnectorConfigurations.endpointConfigurations -eq $null)
         {
-            $policyConnectorConfigurations = [pscustomobject]@{
-                endpointConfigurations = @()
-            }
+            $policyConnectorConfigurations | Add-Member -PassThru -MemberType NoteProperty -Name endpointConfigurations -Value @()
         }
 
         Write-Host "Loop through policy connector endpoint configurations and find the connector configuration based on connector Id."
