@@ -1,0 +1,177 @@
+﻿@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using System.Net.Http.Headers
+@using System.Net.Http.Json
+@using Microsoft.Extensions.Logging
+@using System.Text.Json.Serialization
+@using Newtonsoft.Json.Linq
+@using Newtonsoft.Json
+@inject IAccessTokenProvider TokenProvider
+@inject IHttpClientFactory ClientFactory
+@inject ILogger<EnvironmentChooser> logger
+@inject Models.AppState AppState
+
+<AuthorizeView>
+    @*Only show the list if the user is signed in and authorized*@
+    <Authorized>
+        @if (instances != null)
+        {
+            <div>
+                <label for="Environments">Choose an Environment:</label>
+                <select name="Environments" id="EnvironmentsSelector" @bind="@SelectedEnvUrl">
+                    @{ int i = 1;
+                        foreach (Instance env in instances.value)
+                        {
+                            if (i == 1)
+                            {
+                                <option selected="selected" value="@env.ApiUrl">@env.FriendlyName</option>
+                                i++;
+                            }
+                            else
+                            {
+                                <option value="@env.ApiUrl">@env.FriendlyName</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+        }        
+        else if (failedToLoadEnv)
+        {
+            <label>Failed to load environments</label>
+        }
+        else
+        {
+            <label>Loading Environments...</label>
+        }
+
+    </Authorized>
+</AuthorizeView>
+
+
+@code {
+    private bool failedToLoadEnv;
+
+    private string selectedEnvUrl { get; set; }
+
+    [Parameter]
+    public string SelectedEnvUrl
+    {
+        get
+        {
+            return selectedEnvUrl;
+        }
+        set
+        {
+            if (selectedEnvUrl != value)
+            {
+                selectedEnvUrl = value;
+                AppState.SetEnvUrl(value);
+
+                if (SelectedEnvUrlChanged.HasDelegate)
+                {
+                    SelectedEnvUrlChanged.InvokeAsync(value);
+                }
+            }
+        }
+    }
+
+    [Parameter]
+    public EventCallback<string> SelectedEnvUrlChanged { get; set; }
+
+    private InstanceCollection instances;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            failedToLoadEnv = false;
+            var tokenResult = await TokenProvider.RequestAccessToken();
+
+            logger.LogInformation($"AccessTokenResult.Status: {tokenResult.Status}"); //RequiresRedirect
+            logger.LogInformation($"AccessTokenResult.RedirectUrl: {tokenResult.RedirectUrl}");
+
+            if (tokenResult.TryGetToken(out var token))
+            {
+                logger.LogInformation(token.ToString());
+            }
+            else
+            {
+                logger.LogInformation("No accesstoken");
+            }
+
+            //Creates an HttpClient based on the named definition found in Program.Main
+            var client = ClientFactory.CreateClient("GDSClient");
+
+            //Prepare the request to get the data
+            var request = new HttpRequestMessage()
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"/api/discovery/v2.0/Instances")
+            };
+
+            //Add the access token
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token.Value);
+            //Specify a JSON result is expected
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            //Send the request
+            var response = await client.SendAsync(request);
+
+            instances = new InstanceCollection();
+
+            if (response.IsSuccessStatusCode)
+            {
+                //Get the response content and parse it.
+                string result = response.Content.ReadAsStringAsync().Result;
+                JObject body = JObject.Parse(result);
+                JArray values = (JArray)body.GetValue("value");
+
+                instances = new InstanceCollection() { value = JsonConvert.DeserializeObject<List<Instance>>(values.ToString()).ToArray() };
+
+                if (instances.value.Length > 0)
+                {
+                    AppState.SetEnvUrl(instances.value.First().ApiUrl);
+                }
+            }
+            else
+            {
+                //Something went wrong.
+                failedToLoadEnv = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            failedToLoadEnv = true;
+            logger.LogError(ex.Message);
+        }
+    }
+
+    class InstanceCollection
+    {
+        public Instance[] value { get; set; }
+    }
+
+    /// <summary>
+    /// Object returned from the Discovery Service.
+    /// </summary>
+    class Instance
+    {
+        public bool IsUserSysAdmin { get; set; }
+        public string Region { get; set; }
+        public string Purpose { get; set; }
+        public int StatusMessage { get; set; }
+        public DateTime TrialExpirationDate { get; set; }
+        public int OrganizationType { get; set; }
+        public Guid TenantId { get; set; }
+        public string EnvironmentId { get; set; }
+        public string Id { get; set; }
+        public string UniqueName { get; set; }
+        public string UrlName { get; set; }
+        public string FriendlyName { get; set; }
+        public int State { get; set; }
+        public Version Version { get; set; }
+        public string Url { get; set; }
+        public string ApiUrl { get; set; }
+        public DateTime LastUpdated { get; set; }
+    }
+}

@@ -34,7 +34,7 @@ namespace PowerApps.Samples
             string username = GetParameterValueFromConnectionString(connectionString, "Username");
             string domain = GetParameterValueFromConnectionString(connectionString, "Domain");
             string password = GetParameterValueFromConnectionString(connectionString, "Password");
-            string authType = GetParameterValueFromConnectionString(connectionString, "authtype");
+            string authType = GetParameterValueFromConnectionString(connectionString, "AuthType");
             try
             {
                 HttpMessageHandler messageHandler;
@@ -43,6 +43,7 @@ namespace PowerApps.Samples
                 {
                     case "Office365":
                     case "IFD":
+                    case "OAuth":
 
                         messageHandler = new OAuthMessageHandler(url, clientId, redirectUrl, username, password,
                                  new HttpClientHandler());

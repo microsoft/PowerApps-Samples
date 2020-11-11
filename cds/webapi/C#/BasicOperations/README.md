@@ -1,41 +1,30 @@
----
-languages:
-- csharp
-products:
-- dotnet
-- powerapps
-page_type: sample
-description: "This sample shows how to create, retrieve, update, delete and associative operations using the Web API in Common Data Service. [REST]"
----
+# Web API CDSWebApiService Basic Operations Sample
 
-# Web API Basic Operations Sample
+This Sample demonstrates how to perform basic CRUD (Create, Retrieve, Update, and Delete) and associative operations using the CDSWebApiService class with the Common Data Service Web API.
 
-This Sample demonstrates how to perform basic CRUD (Create, Retrieve, Update, and Delete) and associative operations using the Common Data Service Web API.
+The CDSWebApiService class provides helper methods that are aligned to the  Http methods used, with some variations for different use cases. It helps to reduce duplication of code found in the other BasicOperations sample.
+
+The CDSWebApiService class also demonstrates best practices for managing an HttpClient and properly handling Service Protection Limit 429 errors that client applications should expect.
 
 ## How to run the sample
 
-see [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/master/cds/README.md) for information about how to run this sample.
+Wee [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/master/cds/README.md) for information about how to run this sample.
 
-## Demonstrate
+## Demonstrates
 
-1. The `createrequest1` creates a contact record with the `firstname` and `lastname`. 
-2. The `createResponse1` gets the response and diaplays the result. 
-3. The `updaterequest1` updates the existing contact record that is created with new values. 
-4. The `queryOption` filters the contact record by fullname, annulaincome, jobtitle, description.
-5. The `retrieveresponse1` gets the response and displays the result.
-6. The `updateRequest2` updates the specific properties of the contact record. 
-7. The `createRequest2` creates a new account and associate with existing contact in one operation.
-8. The `queryOption1` queries the account name and primary contact info. 
-9. The `createRequest3` creates an account, its primary contact info and open tasks for that contatct. 
-10. The `queryOption2` retrieves account, primary contact info, and assigned tasks for contact. 
-11. The `assRequest1` demonstrates the association of existing entity instances.
-12. The `queryOption4` retrieves and output all the contacts for account `Fourth Coffee`.
-13. The `createRequest4` associates an opportunity to a competitor.
-14. The `assocRequest2` associates opportunity to competitor via opportunitycompetitors_association.
-15. The `queryOption5` retrieves all opportunities for competitor `Adventure Works`.
+This class demonstrates how to use the CDSWebApiService class methods to perform basic operations:
+
+- Create entities using the PostCreate method
+- Update entities using the Patch method
+- Retrieve entities using the Get method
+- Set the value of a specific property using the Put method
+- Associating entities on create using the PostCreate method
+- Creating multiple related entities with the PostCreate method
+- Associating and disassociating entities with the Post and Delete method
+- Deleting records using the Delete method
 
 ## Clean up
 
-1. Displays an option to delete the records.
+By default this sample will delete all the records created in it.
 
-    The deletion is optional in case you want to examine the entities and data created by the sample. You can manually delete the records to achieve the same result.
+If you want to view created records after the sample is completed, change the `deleteCreatedRecords` variable to `false`.
