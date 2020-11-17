@@ -21,6 +21,8 @@ Follow the steps below to import and try the sample components in your model-dri
 
     ```
     msbuild /t:restore
+    Generate release
+    msbuild /t:rebuild /restore /p:Configuration=Release
     ```
 1. Again, run the command `msbuild`.
 1. The generated solution zip file will be available at `Solution\bin\debug` folder. Manually [import the solution](/powerapps/maker/common-data-service/import-update-export-solutions) into your Common Data Service environment using the web portal once the zip file is ready. Alternatively, to import the solution using Power Apps CLI commands, see the [Connecting to your environment](https://docs.microsoft.com/powerapps/developer/component-framework/import-custom-controls#connecting-to-your-environment) and [Deployment](https://docs.microsoft.com/powerapps/developer/component-framework/import-custom-controls#deploying-code-components) sections.
