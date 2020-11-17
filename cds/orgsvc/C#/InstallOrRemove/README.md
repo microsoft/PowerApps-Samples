@@ -5,7 +5,7 @@ products:
 - dotnet
 - powerapps
 page_type: sample
-description: "This sample shows how to install or uninstall the sample data for an organization by using the InstallSampleDataRequest message in Common Data Service. [SOAP]"
+description: "This sample shows how to install or uninstall the sample data for an organization by using the InstallSampleDataRequest message in Microsoft Dataverse. [SOAP]"
 ---
 
 # Install or remove sample data

@@ -8,9 +8,9 @@ See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/mas
 
 ## What this sample does
 
-The [IDeploymentService.RetrieveDeploymentLicenseTypeRequest](https://docs.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.retrievedeploymentlicensetyperequest?view=dynamics-general-ce-9) message is intended to be used in a scenario where it contains data  that is needed to retrieve the type of license for a deployment of Common Data Service.
+The [IDeploymentService.RetrieveDeploymentLicenseTypeRequest](https://docs.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.retrievedeploymentlicensetyperequest?view=dynamics-general-ce-9) message is intended to be used in a scenario where it contains data  that is needed to retrieve the type of license for a deployment of Microsoft Dataverse.
 
-The [IOrganizationService.RetrieveLicenseInfoRequest](https://docs.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.retrievelicenseinforequest?view=dynamics-general-ce-9) message is intended to be used in a scenario where it contains data that is needed to retrieve the number of used and available licenses for a deployment of Common Data Service.
+The [IOrganizationService.RetrieveLicenseInfoRequest](https://docs.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.retrievelicenseinforequest?view=dynamics-general-ce-9) message is intended to be used in a scenario where it contains data that is needed to retrieve the number of used and available licenses for a deployment of Dataverse.
 
 ## How this sample works
 

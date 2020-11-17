@@ -5,7 +5,7 @@ products:
 - dotnet
 - powerapps
 page_type: sample
-description: "Sample that shows how to enable and disable auditing on an entity and its attributes in Common Data Service. [SOAP]"
+description: "Sample that shows how to enable and disable auditing on an entity and its attributes in Microsoft Dataverse. [SOAP]"
 ---
 
 # Audit entity data changes
