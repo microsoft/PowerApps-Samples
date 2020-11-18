@@ -5,11 +5,11 @@ products:
 - dotnet, blazor web assembly
 - common data service
 page_type: sample
-description: "This sample shows how to retrieve Common Data Service environment instances using the Global Discovery Service, and then retrieves business account information using the Web API in Common Data Service."
+description: "This sample shows how to retrieve Microsoft Dataverse environment instances using the Global Discovery Service, and then retrieves business account information using the Web API in Dataverse."
 ---
 # Blazor web assembly sample
 
-This sample application is based on the code and information provided in [Tutorial: Create an ASP.NET Core Blazor WebAssembly App using Common Data Service](https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/walkthrough-blazor-webassembly-single-tenant).
+This sample application is based on the code and information provided in [Tutorial: Create an ASP.NET Core Blazor WebAssembly App using Dataverse](https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/walkthrough-blazor-webassembly-single-tenant).
 
 ## Demonstrate
 

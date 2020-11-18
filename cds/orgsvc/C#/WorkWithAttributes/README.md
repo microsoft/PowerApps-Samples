@@ -8,7 +8,7 @@ See [How to run this sample](https://github.com/microsoft/PowerApps-Samples/blob
 
 ## What this sample does
 
-This sample shows how to create different types of attributes in Common Data Service.
+This sample shows how to create different types of attributes in Microsoft Dataverse.
 
 ## How this sample works
 
