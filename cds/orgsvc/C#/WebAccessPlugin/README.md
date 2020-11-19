@@ -9,7 +9,7 @@ This sample shows how to write a plug-in that can access web (network) resources
     - WebClientPlugin uses [WebClient Class](https://docs.microsoft.com/en-us/dotnet/api/system.net.webclient)
     - HttpClientPlugin uses [HttpClient Class](https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclient)
 1. Open the sample solution in Visual Studio, navigate to the project's properties, and verify the assembly will be signed during the build. Press F6 to build the sample's assembly (WebAccessPlugin.dll).
-1. Run the Plug-in Registration tool and register the assembly in the Common Data Service server's sandbox and database. 
+1. Run the Plug-in Registration tool and register the assembly in Microsoft Dataverse server's sandbox and database. 
 1. For either plug-in type, when registering a step, specify a web URI string (i.e., http://www.microsoft.com) in the unsecure configuration field.
     - The default value `http://www.bing.com` will be used if none is provided.
 1. Using an app or write code to perform the appropriate operation to invoke the message and entity request that you registered the plug-in on.

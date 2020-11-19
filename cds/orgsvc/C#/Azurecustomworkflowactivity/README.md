@@ -1,6 +1,6 @@
 # Sample: Azure aware custom workflow activity
 
-This sample obtains the data context from the current Common Data Service (CDS) operation and posts it to the Azure Service Bus.
+This sample obtains the data context from the current Microsoft Dataverse operation and posts it to the Azure Service Bus.
 
 ## How to run this sample
 
@@ -37,5 +37,5 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ## See Also
 
-[Configure Azure integration with Common Data Service](https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/configure-azure-integration)  
+[Configure Azure integration with Dataverse](https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/configure-azure-integration)  
 [Workflow extensions](https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/workflow/workflow-extensions)

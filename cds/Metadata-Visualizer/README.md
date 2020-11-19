@@ -2,7 +2,7 @@
 
 ![Entity diagram example](images/intro-graphic.PNG)
 
-Metadata Visualizer (MetaViz) downloads the metadata of your Dynamics 365 Customer Engagement or Common Data Service organization to visually display the entities, entity relationships, and registered plug-in information.
+Metadata Visualizer (MetaViz) downloads the metadata of your Dynamics 365 Customer Engagement or Microsoft Dataverse organization to visually display the entities, entity relationships, and registered plug-in information.
 
 ## What can you do with MetaViz?
 

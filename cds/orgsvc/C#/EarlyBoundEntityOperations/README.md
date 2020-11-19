@@ -5,7 +5,7 @@ products:
 - dotnet
 - powerapps
 page_type: sample
-description: "This sample shows how to create, retrieve, update, and delete operations on an account using the early bound class in Common Data Service. [SOAP]"
+description: "This sample shows how to create, retrieve, update, and delete operations on an account using the early bound class in Microsoft Dataverse. [SOAP]"
 ---
 
 # Early-bound entity operations
