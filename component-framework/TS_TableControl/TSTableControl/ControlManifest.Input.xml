@@ -7,5 +7,8 @@
 			<css path="css/TS_TableControl.css" order="2" />
 			<resx path="strings/TS_TableControl.1033.resx" version="1.0.0" />
 		</resources>
+		<feature-usage> 
+	           <uses-feature name="Utility" required="true" />  
+		</feature-usage>
 	</control>
 </manifest>
