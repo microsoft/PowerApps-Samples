@@ -154,19 +154,12 @@ namespace PowerApps.Samples
 
         private static void SetState(CrmServiceClient service, EntityReference caseReference)
         {
-            // Create the Request Object
-            var state = new SetStateRequest();
-
-            // Set the Request Object's Properties
-            state.State = new OptionSetValue((int)IncidentState.Active);
-            state.Status =
-                new OptionSetValue((int)incident_statuscode.WaitingforDetails);
-
-            // Point the Request to the case whose state is being changed
-            state.EntityMoniker = caseReference;
-
-            // Execute the Request
-            var stateSet = (SetStateResponse)service.Execute(state);
+            // Updating the incident state
+            var state = new Entity("incident");
+            state["incidentid"] = _caseIncidentId;
+            state["statecode"] = new OptionSetValue((int)IncidentState.Active);
+            state["statuscode"] = new OptionSetValue((int)incident_statuscode.WaitingforDetails);
+            service.Update(state);
 
             // Check if the state was successfully set
             Incident incident = service.Retrieve(Incident.EntityLogicalName,
