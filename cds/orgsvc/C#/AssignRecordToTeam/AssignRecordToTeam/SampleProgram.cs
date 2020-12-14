@@ -29,19 +29,9 @@ namespace PowerApps.Samples
                     #region Demonstrate
 
                     // Assign the account to a team.                
-                    var assignRequest = new AssignRequest()
-                    {
-                        Assignee = new EntityReference
-                        {
-                            LogicalName = Team.EntityLogicalName,
-                            Id = _teamId
-                        },
-
-                        Target = new EntityReference(Account.EntityLogicalName, _accountId)
-                    };
-
-                    service.Execute(assignRequest);
-
+                    var accountRecord = service.Retrieve("account", _accountId, new Microsoft.Xrm.Sdk.Query.ColumnSet(true));
+                    accountRecord["ownerid"] = new EntityReference(Team.EntityLogicalName, _teamId);
+                    service.Update(accountRecord); 
                     Console.WriteLine("The account is owned by the team.");
                     #region Clean up
                     CleanUpSample(service);
