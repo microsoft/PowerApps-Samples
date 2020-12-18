@@ -2,8 +2,8 @@
 languages:
 - csharp
 products:
-- dotnet
-- powerapps
+- power-platform
+- power-apps
 page_type: sample
 description: "This sample shows how to perform a bulk deletion of records that were previously exported from Microsoft Dataverse by using the Export to Excel option. [SOAP]"
 ---

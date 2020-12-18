@@ -2,8 +2,8 @@
 languages:
 - csharp
 products:
-- dotnet
-- powerapps
+- power-platform
+- power-apps
 page_type: sample
 description: "This sample shows how to install or uninstall the sample data for an organization by using the InstallSampleDataRequest message in Microsoft Dataverse. [SOAP]"
 ---

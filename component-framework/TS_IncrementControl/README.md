@@ -2,7 +2,8 @@
 languages:
 - typescript
 products:
-- powerapps
+- power-platform
+- power-apps
 page_type: sample
 description: "Sample that shows how to create an increment component using Power Apps component framework."
 ---

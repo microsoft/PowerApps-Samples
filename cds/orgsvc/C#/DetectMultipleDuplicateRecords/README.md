@@ -2,8 +2,8 @@
 languages:
 - csharp
 products:
-- dotnet
-- powerapps
+- power-platform
+- power-apps
 page_type: sample
 description: "This sample shows how to detect and log multiple duplicate records for a specified entity type in Microsoft Dataverse. [SOAP]"
 ---
