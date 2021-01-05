@@ -2,10 +2,10 @@
 languages:
 - csharp
 products:
-- dotnet
-- powerapps
+- power-platform
+- power-apps
 page_type: sample
-description: "This sample shows how to execute multiple organization message requests by using a single web service method call, passing ExecuteMultipleRequest as a parameter in Common Data Service. [SOAP]"
+description: "This sample shows how to execute multiple organization message requests by using a single web service method call, passing ExecuteMultipleRequest as a parameter in Microsoft Dataverse. [SOAP]"
 ---
 
 # Execute multiple requests

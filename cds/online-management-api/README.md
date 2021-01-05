@@ -1,6 +1,6 @@
-# Quick Start Sample: Retrieve Common Data Service environements using Online Management API 
+# Quick Start Sample: Retrieve Microsoft Dataverse environments using Online Management API 
 
-The C# sample demonstrates how to authenticate to the Online Management API and then retrieve all Common Data Service environements from your Office 365 tenant.
+The C# sample demonstrates how to authenticate to the Online Management API and then retrieve all Dataverse environments from your Office 365 tenant.
 
 The sample uses the authentication [helper code](sample-authentication-helper.md) to easily authenticate to Online Management API using the OAuth 2.0 protocol and pass in the access token in header of your request.
 

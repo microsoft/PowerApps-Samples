@@ -25,7 +25,7 @@ The `device.pickFile` method opens a dialog box to select files from your comput
 
 ## How to run the sample
 
-See [How to run the sample components](https://github.com/microsoft/PowerApps-Samples/blob/master/component-framework/README.md) for more information about how to build and import components into Common Data Service.
+See [How to run the sample components](https://github.com/microsoft/PowerApps-Samples/blob/master/component-framework/README.md) for more information about how to build and import components into Microsoft Dataverse.
 
 ## See also
 
