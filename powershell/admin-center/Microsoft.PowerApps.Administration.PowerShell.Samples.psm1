@@ -996,15 +996,15 @@ function Remove-ConnectorFromBusinessDataGroupSample
         }
 
         #Add the connector to the General group of the policy
-        $connectorInGeneral += $connector
+        $generalGroup.connectors += $connector
 
         #remove the connector from Confidential group of the policy
         $confidentialGroup = $policy.connectorGroups | Where-Object { $_.classification -eq 'Confidential' }
         $confidentialConnectorsWithoutProvidedConnector = $confidentialGroup.connectors | where { $_.id -ne $connector.id }
 
-        if($connectorInConfidential -eq $null)
+        if($confidentialConnectorsWithoutProvidedConnector -eq $null)
         {
-            $generalConnectorsWithoutProvidedConnector =  @()
+            $confidentialConnectorsWithoutProvidedConnector =  @()
         }
         
         $confidentialGroup.connectors = [Array]$confidentialConnectorsWithoutProvidedConnector
