@@ -123,6 +123,20 @@ function RunTests
     #13. Create/Update the policy connector configuration.
     #14. Remove the policy connector configuration if it already exist.
     DLPPolicyConnectorEndpointControlCrud
+    
+    # 1. Change to EnvironmentAdmin
+    # 2. Create an environment if not exist
+    # 3. Call Add-CustomConnectorToPolicySample
+    # 4. Call Remove-CustomConnectorToPolicySample
+    # 5. Call Add-ConnectorToBusinessDataGroupSample
+    # 6. Call Remove-ConnectorToBusinessDataGroupSample
+    CustomerConnectorUpdateTests  `
+        -EnvironmentDisplayName $EnvironmentDisplayName `
+        -EndPoint $EndPoint `
+        -TenantAdminName $TenantAdminName `
+        -TenantAdminPassword $TenantAdminPassword `
+        -EnvironmentAdminName $EnvironmentAdminName `
+        -EnvironmentAdminPassword $EnvironmentAdminPassword
 
     $EndTime = Get-Date
     $TimeSpan = New-TimeSpan -Start $StartTime -End $EndTime
