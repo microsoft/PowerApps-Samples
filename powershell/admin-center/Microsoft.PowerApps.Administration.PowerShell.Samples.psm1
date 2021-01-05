@@ -924,7 +924,7 @@ function Add-ConnectorToBusinessDataGroupSample
         }
 
         $connector = Get-PowerAppConnector -EnvironmentName $policy.environments[0].name -ConnectorName $ConnectorName `
-            | %{ New-Object -TypeName PSObject -Property @{ id = $_.connectorId; name = $_.internal.properties.displayName; type = $_.internal.type } }
+            | %{ New-Object -TypeName PSObject -Property @{ id = $_.connectorId; name = ($_.connectorId -split "/apis/")[1]; type = $_.internal.type } }
 
         if($connector -eq $null)
         {
@@ -987,7 +987,7 @@ function Remove-ConnectorFromBusinessDataGroupSample
         }
 
         $connector = Get-PowerAppConnector -EnvironmentName $policy.environments[0].name -ConnectorName $ConnectorName `
-            | %{ New-Object -TypeName PSObject -Property @{ id = $_.connectorId; name = $_.internal.properties.displayName; type = $_.internal.type } }
+            | %{ New-Object -TypeName PSObject -Property @{ id = $_.connectorId; name = ($_.connectorId -split "/apis/")[1]; type = $_.internal.type } }
 
         if($connector -eq $null)
         {
@@ -1086,7 +1086,7 @@ function Add-CustomConnectorToPolicySample
         }
         else
         {
-            if($connectorJsonLbi -eq $null)
+            if($connectorInConfidential -ne $null)
             {
                 Write-Error "The given connector is already present in the hbi group."
             }
@@ -1143,7 +1143,7 @@ function Remove-CustomConnectorFromPolicySample
             {
                 #remove the connector from confidential group of policy
                 $confidentialConnectorsWithoutProvidedConnector = $confidentialGroup.connectors | where { $_.name -ne $ConnectorName }
-                $confidentialGroup.connectors = $confidentialConnectorsWithoutProvidedConnector
+                $confidentialGroup.connectors = [Array]$confidentialConnectorsWithoutProvidedConnector
 
                 #Update policy
                 Set-DlpPolicy -PolicyName $policy.name -UpdatedPolicy $policy
@@ -1152,7 +1152,7 @@ function Remove-CustomConnectorFromPolicySample
             {
                 #remove the connector from general group of policy
                 $generalConnectorsWithoutProvidedConnector = $generalGroup.connectors | Where-Object { $_.name -ne $ConnectorName }
-                $generalGroup.connectors = $generalConnectorsWithoutProvidedConnector
+                $generalGroup.connectors = [Array]$generalConnectorsWithoutProvidedConnector
 
                 #Update policy
                 Set-DlpPolicy -PolicyName $policy.name -UpdatedPolicy $policy
@@ -1216,8 +1216,8 @@ function CustomerConnectorUpdateTests
                 $newPolicy.environments += $environment
         
                 Write-Host "Create a new policy for SingleEnvironment"
-                $response = New-DlpPolicy -NewPolicy $newPolicy
-                StringsAreEqual -Expect $PolicyDisplayName -Actual $response.displayName
+                $policy = New-DlpPolicy -NewPolicy $newPolicy
+                StringsAreEqual -Expect $PolicyDisplayName -Actual $policy.displayName
             }
 
             # define connector test data
@@ -1225,31 +1225,36 @@ function CustomerConnectorUpdateTests
             $BusinessConnectorName = "shared_msnweather"
             $BusinessConnectorType = "Microsoft.PowerApps/apis"
 
-            $confidentialGroup = $policy.connectorGroups | Where-Object { $_.classification -eq 'Confidential' }
-            $connectorInConfidential = $confidentialGroup.connectors | where { $_.name -eq $BusinessConnectorName }
-
-            if ($connectorInConfidential -ne $null)
+            if ((CheckConnectorExist -Policy $policy -Classification "Confidential" -ConnectorName $BusinessConnectorName) -or
+                (CheckConnectorExist -Policy $policy -Classification "General" -ConnectorName $BusinessConnectorName))
             {
                 # remove the connector from the policy
                 $response = Remove-CustomConnectorFromPolicySample -PolicyName $policy.Name -ConnectorName $BusinessConnectorName
-                StringsAreEqual -Expect $PolicyDisplayName -Actual $response.Internal.displayName            
+                $result = CheckConnectorExist -Policy $response.Internal -Classification "Confidential" -ConnectorName $BusinessConnectorName
+                IsFalse -Result $result -Message "The connector is not removed."
+                $result = CheckConnectorExist -Policy $response.Internal -Classification "General" -ConnectorName $BusinessConnectorName
+                IsFalse -Result $result -Message "The connector is not removed."
             }
 
             # add a connector to the policy
             $response = Add-CustomConnectorToPolicySample -PolicyName $policy.Name -ConnectorName $BusinessConnectorName -ConnectorId $BusinessConnectorId -ConnectorType $BusinessConnectorType -GroupName hbi
-            StringsAreEqual -Expect $PolicyDisplayName -Actual $response.Internal.displayName
+            $result = CheckConnectorExist -Policy $response.Internal -Classification "Confidential" -ConnectorName $BusinessConnectorName
+            IsTrue -Result $result -Message "The connector is not in confidential group."
 
             # remove the connector from the policy
             $response = Remove-CustomConnectorFromPolicySample -PolicyName $policy.Name -ConnectorName $BusinessConnectorName
-            StringsAreEqual -Expect $PolicyDisplayName -Actual $response.Internal.displayName
+            $result = CheckConnectorExist -Policy $response.Internal -Classification "Confidential" -ConnectorName $BusinessConnectorName
+            IsFalse -Result $result -Message "The connector is not removed."
 
             # add the connector to confidential group
             $response = Add-ConnectorToBusinessDataGroupSample -PolicyName $policy.Name -ConnectorName $BusinessConnectorName
-            StringsAreEqual -Expect $PolicyDisplayName -Actual $response.Internal.displayName
+            $result = CheckConnectorExist -Policy $response.Internal -Classification "Confidential" -ConnectorName $BusinessConnectorName
+            IsTrue -Result $result -Message "The connector is not in confidential group."
 
             # remove the connector from confidential group
             $response = Remove-ConnectorFromBusinessDataGroupSample -PolicyName $policy.Name -ConnectorName $BusinessConnectorName
-            StringsAreEqual -Expect $PolicyDisplayName -Actual $response.Internal.displayName
+            $result = CheckConnectorExist -Policy $response.Internal -Classification "Confidential" -ConnectorName $BusinessConnectorName
+            IsFalse -Result $result -Message "The connector is not removed."
 
             Write-Host "Change user back to GlobalAdmin"
             $Password = ConvertTo-SecureString $TenantAdminPassword -AsPlainText -Force
@@ -1700,6 +1705,66 @@ function IsNotNull
     {
         throw $"Input objectis null."
     }
+}
+
+function IsFalse
+{
+    param
+    (
+        [Parameter(Mandatory = $true)]
+        [bool]$Result,
+
+        [Parameter(Mandatory = $true)]
+        [string]$Message
+    )
+
+    if ($Result)
+    {
+        throw $Message
+    }
+}
+
+function IsTrue
+{
+    param
+    (
+        [Parameter(Mandatory = $true)]
+        [bool]$Result,
+
+        [Parameter(Mandatory = $true)]
+        [string]$Message
+    )
+
+    if (-Not $Result)
+    {
+        throw $Message
+    }
+}
+
+function CheckConnectorExist
+{
+    param
+    (
+        [Parameter(Mandatory = $true)]
+        [object]$Policy,
+
+        [Parameter(Mandatory = $true)]
+        [string]$Classification,
+
+        [Parameter(Mandatory = $true)]
+        [string]$ConnectorName
+    )
+
+    $group = $Policy.connectorGroups | Where-Object { $_.classification -eq $Classification }
+    $connector = $group.connectors | where { $_.name -eq $ConnectorName }
+
+    if ($connector -eq $null)
+    {
+        # the connector is not in the connector group
+        return $false
+    }
+
+    return $true
 }
 
 function WriteStack
