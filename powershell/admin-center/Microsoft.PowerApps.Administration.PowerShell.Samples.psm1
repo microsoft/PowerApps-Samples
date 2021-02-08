@@ -1267,6 +1267,46 @@ function CustomerConnectorUpdateTests
     }
 }
 
+function ReplacePolicyEnvironmentsForOnlyEnvironmentType
+{
+    param
+    (
+        [Parameter(Mandatory = $true)]
+        [string]$PolicyName,
+
+        [Parameter(Mandatory = $true)]
+        [string]$PolicyDisplayName
+    )
+
+    Write-Host "ReplacePolicyEnvironments start."
+    $environments = Get-AdminPowerAppEnvironment -ApiVersion "2020-06-01"
+
+    $teamEnvironments = @()
+    foreach ($env in $environments)
+    {
+        if ($env.Internal.properties.environmentsku -eq "Teams")
+        {
+            $item = [pscustomobject]@{
+                id = $env.Internal.id
+                name = $env.Internal.name
+                type = $env.Internal.type
+            }
+            $teamEnvironments += $item
+        }
+    }
+
+    $policy = Get-DlpPolicy -PolicyName $PolicyName
+    
+    if ($policy.environmentType -eq "OnlyEnvironments" -and $policy.displayName -eq $PolicyDisplayName)
+    {
+        $policy.environments = $teamEnvironments
+        $response = Set-DlpPolicy -PolicyName $policy.name -UpdatedPolicy $policy
+
+        StringsAreEqual -Expect $PolicyName -Actual $response.Internal.name
+        Write-Host "Policy is updated."
+    }
+}
+
 #internal, helper function
 function CheckHttpResponse
 {
