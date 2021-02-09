@@ -1278,7 +1278,7 @@ function ReplacePolicyEnvironmentsForOnlyEnvironmentType
         [string]$PolicyDisplayName
     )
 
-    Write-Host "ReplacePolicyEnvironments start."
+    Write-Host "ReplacePolicyEnvironmentsForOnlyEnvironmentType start."
     $environments = Get-AdminPowerAppEnvironment -ApiVersion "2020-06-01"
 
     $teamEnvironments = @()
