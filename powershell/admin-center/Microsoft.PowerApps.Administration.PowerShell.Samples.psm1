@@ -1297,7 +1297,9 @@ function ReplacePolicyEnvironmentsForOnlyEnvironmentType
 
     $policy = Get-DlpPolicy -PolicyName $PolicyName
     
-    if ($policy.environmentType -eq "OnlyEnvironments" -and $policy.displayName -eq $PolicyDisplayName)
+    if ($policy.environmentType -eq "OnlyEnvironments" -and
+        $policy.displayName -eq $PolicyDisplayName -and
+        $teamEnvironments.Count -gt 0)
     {
         $policy.environments = $teamEnvironments
         $response = Set-DlpPolicy -PolicyName $policy.name -UpdatedPolicy $policy
