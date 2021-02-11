@@ -48,7 +48,7 @@ function RunTests
     # 3. Change EnvironmentType from OnlyEnvironments to ExceptEnvironments
     # 4. Remove the test policy
     ChangeOnlyToExceptEnvironmentsPolicyTests -EnvironmentDisplayName $EnvironmentDisplayName
-
+    
     # 1. Clean test policies
     # 2. Change to a user who is not GlobalAdmin
     # 3. Create test policy for SingleEnvironment
@@ -63,7 +63,7 @@ function RunTests
         -TenantAdminPassword $TenantAdminPassword `
         -EnvironmentAdminName $EnvironmentAdminName `
         -EnvironmentAdminPassword $EnvironmentAdminPassword
-
+    
     # 1. Clean test policies
     # 2. Create a test policy for AllEnvironments
     # 3. Create a test policy for OnlyEnvironments
@@ -137,6 +137,13 @@ function RunTests
         -TenantAdminPassword $TenantAdminPassword `
         -EnvironmentAdminName $EnvironmentAdminName `
         -EnvironmentAdminPassword $EnvironmentAdminPassword
+
+    # 1. Get Teams environments
+    # 2. Get the specified policy
+    # 3. Relace environments for OnlyEnvironments type
+    ReplacePolicyEnvironmentsForOnlyEnvironmentType  `
+        -PolicyName "522c21f6-3eb0-4649-b430-0c44e1c57b62" `
+        -PolicyDisplayName "Policy test for Teams"
 
     $EndTime = Get-Date
     $TimeSpan = New-TimeSpan -Start $StartTime -End $EndTime
