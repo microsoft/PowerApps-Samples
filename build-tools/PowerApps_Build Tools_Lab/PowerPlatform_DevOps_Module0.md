@@ -1,6 +1,6 @@
 # Power Apps Lab
 ## Module 0: Pre-Lab Setup and Review using Azure DevOps
-Last updated: September 29, 2020
+Last updated: February 15, 2021
 Authors: Per Mikkelsen, Shan McArthur, Evan Chaki, Amin Espinoza
 
 ### Overview
@@ -79,4 +79,4 @@ During this lab you will use the account, login, and environments you created in
 
 8. Select **Solutions** in the navigation.
 
-9. Solutions are how customizers and developers author, package, and maintain units of software that extend Common Data Service. Customizers and developers distribute solutions so that organizations can use Common Data Service to install and uninstall the app(s) defined in the solution. In the next Module you will learn how to create a new solution.
+9. Solutions are how customizers and developers author, package, and maintain units of software that extend Dataverse. Customizers and developers distribute solutions so that organizations can use Dataverse to install and uninstall the app(s) defined in the solution. In the next Module you will learn how to create a new solution.
