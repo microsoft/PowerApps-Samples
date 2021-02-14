@@ -2,10 +2,10 @@
 languages:
 - csharp
 products:
-- dotnet
-- powerapps
+- power-platform
+- power-apps
 page_type: sample
-description: "This sample shows how to work with solutions in Common Data Service. [SOAP]"
+description: "This sample shows how to work with solutions in Microsoft Dataverse. [SOAP]"
 ---
 
 # Work with solutions

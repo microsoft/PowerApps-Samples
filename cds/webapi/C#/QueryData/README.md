@@ -1,6 +1,6 @@
 ﻿# Query entity data using the Web API
 
-This sample demonstrates how to define and perform data queries on Common Data Service entity instances using the Web API. The sample solution includes a shared project named CDSWebApiService that provides helper methods for message sending and receiving, performance enhancements, and error processing.
+This sample demonstrates how to define and perform data queries on Microsoft Dataverse entity instances using the Web API. The sample solution includes a shared project named CDSWebApiService that provides helper methods for message sending and receiving, performance enhancements, and error processing.
 
 More information: [CDSWebApiService class](https://docs.microsoft.com/powerapps/developer/common-data-service/webapi/samples/cdswebapiservice), [Web API Query Data Sample](https://docs.microsoft.com/powerapps/developer/common-data-service/webapi/web-api-query-data-sample)
 
@@ -10,7 +10,7 @@ More information: [CDSWebApiService class](https://docs.microsoft.com/powerapps/
 
 1. In the sample's folder, locate the solution file and load it into Visual Studio 2017 or later.
 
-1. In **Solution Explorer** locate and edit the project's App.config file and set appropriate values for the Common Data Service environment you intend to use: connectionString `Url`, `UserPrincipalName`, and `Password`. You only need to perform this step once for all samples that share this file.
+1. In **Solution Explorer** locate and edit the project's App.config file and set appropriate values for the Dataverse environment you intend to use: connectionString `Url`, `UserPrincipalName`, and `Password`. You only need to perform this step once for all samples that share this file.
 
 1. Press F5 to build and run the program in debug mode.
 

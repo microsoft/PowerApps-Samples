@@ -1,4 +1,4 @@
-# Quick start for Common Data Service (Organization Service)
+# Quick start for Microsoft Dataverse (Organization Service)
 
 This sample shows you how to compile and run a program that creates an account record, retrieves the record, updates the record, and then prompts to see if you would like the record deleted.
 

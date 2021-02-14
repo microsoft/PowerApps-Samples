@@ -33,7 +33,7 @@ On successful retrieve of the records, the code component has logic to count how
 
 ## How to run the sample
 
-See [How to run the sample components](https://github.com/microsoft/PowerApps-Samples/blob/master/component-framework/README.md) for more information about how to build and import components into Common Data Service.
+See [How to run the sample components](https://github.com/microsoft/PowerApps-Samples/blob/master/component-framework/README.md) for more information about how to build and import components into Microsoft Dataverse.
 
 ## See also
 

@@ -1,6 +1,6 @@
 # Web API CDSWebApiService Basic Operations Sample
 
-This Sample demonstrates how to perform basic CRUD (Create, Retrieve, Update, and Delete) and associative operations using the CDSWebApiService class with the Common Data Service Web API.
+This Sample demonstrates how to perform basic CRUD (Create, Retrieve, Update, and Delete) and associative operations using the CDSWebApiService class with the Microsoft Dataverse Web API.
 
 The CDSWebApiService class provides helper methods that are aligned to the  Http methods used, with some variations for different use cases. It helps to reduce duplication of code found in the other BasicOperations sample.
 

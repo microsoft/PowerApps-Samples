@@ -2,10 +2,10 @@
 languages:
 - csharp
 products:
-- dotnet
-- powerapps
+- power-platform
+- power-apps
 page_type: sample
-description: "This sample shows how to create, retrieve, update, and delete email attachments in Common Data Service. [SOAP]"
+description: "This sample shows how to create, retrieve, update, and delete email attachments in Microsoft Dataverse. [SOAP]"
 ---
 
 # Create, retrieve, update, and delete an email attachment

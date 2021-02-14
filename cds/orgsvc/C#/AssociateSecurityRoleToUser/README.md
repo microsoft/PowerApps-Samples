@@ -28,7 +28,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Demonstrate
 
-1. The `QueryExpression` method retrieves a role from Common Data Service.
+1. The `QueryExpression` method retrieves a role from Microsoft Dataverse.
 2. The `Associate` message assigns the role to a user.
 
 ### Clean up
