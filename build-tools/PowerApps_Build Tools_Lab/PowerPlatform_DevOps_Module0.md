@@ -19,7 +19,7 @@ instructions:
 
 2. Go to [https://admin.powerplatform.microsoft.com/](https://admin.powerplatform.microsoft.com/), this will take you to the *admin center*.
 
-3. Select environments in the navigation area.
+3. Select **environments** in the navigation area.
 
 ![Environments](./assets/module0/img0.jpg)
 
