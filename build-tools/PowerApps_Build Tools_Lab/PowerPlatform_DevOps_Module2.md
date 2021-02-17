@@ -207,7 +207,7 @@ Next, we are going to add some scripts as a next pipeline step to commit the sol
 echo commit all changes
 git config user.email "userXXX@wrkdevops.onmicrosoft.com"
 git config user.name "Automatic Build"
-git checkout master
+git checkout main
 git add --all
 git commit -m "solution init"
 echo push code to new repo
@@ -254,3 +254,93 @@ git -c http.extraheader="AUTHORIZATION: bearer $(System.AccessToken)" push origi
 
 50. Click **Save and queue** and observe the results. Fix any issues until you get a successful build.
 
+![Success](./assets/module2/img43.jpg)
+
+**Note** You can get more details about any issues found by setting the variable **debug** to **true**.
+
+![Success](./assets/module2/img44.jpg)
+
+51. Let's go look at what it added to your source control now. Click **Repos and Files** and notice that it added a new folder that contains your solution files.
+
+![Repos](./assets/module2/img45.jpg)
+
+## Pipeline 2: Build your Managed Solution
+
+Your unmanaged solution is checked into source control, but you need to have a managed solution to deploy to other environments such as test and production. To obtain your managed solution to deploy to other environments such as test and production. To obtain your managed solution, you should ue a **Just-In-Time**(JIT) build environment where you would import your unmanaged solution files then export them as managed. These managed solution files will not be checked into source control buy will be stored as a build artifact in your pipeline. This will make them available to be deployed in your release pipeline.
+
+52. Navigate to your pipelines and add a new build pipeline.
+
+![Repos](./assets/module2/img46.jpg)
+
+53. Click **Use the classic editor** link to build the pipeline without YAML. On the next screen use the defaults and click **Continue**. Finally, click on the **Empty job**link on the template selection page shown below.
+
+![Job](./assets/module2/img47.jpg)
+
+54. Name the pipeline **Build Managed Solution** and Save it. This will give you an empty pipeline.
+
+![Job](./assets/module2/img48.jpg)
+
+55. A small note on navigation. If you have problems seeing your newly created pipeline, you can see all the pipelines you have created in the **All** tab.
+
+![Pipelines](./assets/module2/img49.jpg)
+
+56. In your empty pipeline, add the Power Platform Tool Installer task.
+
+![Add](./assets/module2/img50.jpg)
+
+57. Add the Power Platform Pack Solution task.
+
+![Add](./assets/module2/img51.jpg)
+
+58. Configure the pack solution task with the following parameters:
+
+* **Source folder of Solution to Pack**: $(Build.SourcesDirectory)\$(SolutionName)
+* **Solution Output File**: $(Build.ArtifactStagingDirectory)\$(SolutionName).zip
+
+![Add](./assets/module2/img52.jpg)
+
+59. On the pipeline screen, switch to the variables tab in the pipeline and add the SolutionName variables with your unique solution name. This should be your solution name from Module 1. Click **Save** (through the **Save & Queue dropdown).
+
+![Save](./assets/module2/img53.jpg)
+
+60. The next task will be to import the solution into your build server, so we need to add a connection to that environment before we add and configure the task to do the import. Click the **Project settings** link in the lower left of the screen and navigate to **Service connections** then click **New service connection**.
+
+![Connection](./assets/module2/img54.jpg)
+
+61. Select **Generic** on the New Service connection page and click **Next**.
+
+![Connection](./assets/module2/img55.jpg)
+
+62. Fill out the required details:
+
+* **Server URL**: https://<environment-url>.crm.dynamics.com. This should be the URL to your build environment.
+* **Username**: Username of a user with administrator access to the environment.
+* **Password**: Associated password for the user
+* **Service connection name**: This name will be used to identify which environment to connect to in the Build tasks.
+* **Description**: Give the connection a description that helps you identify the environment the service connection connects to.
+
+The sample connection is shown below.
+
+![Generic](./assets/module2/img56.jpg)
+
+**Note**: If you forgot to record the server URL for your build environment, simple visit [https://admin.powerplatform.microsoft.com/](https://admin.powerplatform.microsoft.com/) click the environment. This will open another tab displaying the environment URL. Make sure it is your build environment.
+
+![Environments](./assets/module2/img57.jpg)
+
+![Environments](./assets/module2/img58.jpg)
+
+63. Click **Save** You will be in the pipeline service connections area in your project.
+
+64. Navigate back to your Build Management Solution pipeline (if you don't see the pipeline go to step 55 on how to view all the pipelines). Click **Edit**, and then add the **Power Platform Import Solution** task to take the solution file and import into your build environment.
+
+![Import](./assets/module2/img59.jpg)
+
+65. Select the connection you just added to your build server and provide the following for the solution input file: $(Build.ArtifactStagingDirectory)\$(SolutionName).zip.
+
+![Select](./assets/module2/img60.jpg)
+
+66. Add a task to export the solution file as a managed file.
+
+![Add](./assets/module2/img61.jpg)
+
+67. 
