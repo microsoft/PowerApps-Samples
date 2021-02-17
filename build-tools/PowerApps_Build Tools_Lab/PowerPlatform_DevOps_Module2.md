@@ -94,3 +94,163 @@ The first pipeline you wil create will export your solution from your developmen
 19. Select **Add** under the Power Platform Tool Installer task.
 
 ![Add](./assets/module2/img18.jpg)
+
+20. This will add the Tool Installer task to the Pipeline. No additional configuration is required for this task.
+
+![Task](./assets/module2/img19.jpg)
+
+### Export Solution as Unmanaged
+
+Your unmanaged solution is your source code for your configuration. You should export your solution as unmanaged to check it into source control. 
+
+21. The next task you will add is a task that exports the unmanaged solution from development environment. Search for **Power Platform Export Solution**.
+
+![Task](./assets/module2/img20.jpg)
+
+22. Select the task and click **Add**.
+
+![Export](./assets/module2/img21.jpg)
+
+23. After adding the Power Platform Export Solution task, you will notice that additional configuration is required. Click on the Power Platform Export Solution (in the pipeline view).
+
+![Export](./assets/module2/img22.jpg)
+
+24. This will open the task configuration page:
+
+* **Display name**: Is inherited from Build task itself.
+* **Application type**: Two types of authentications are available:
+    * **Username/password**: Simple to setup but does not support multi factor authentication (MFA). This is what we will use for this lab.
+    * **Service Principal/client secret**: Recommended and supports MFA. This is harder to setup as it requires creation of the Service principal and client secret in the Azure Portal as well as creation of the application user in the Power Platform environment. Not used in this lab but anyone familiar with setting this up can use this option instead throughout the rest of the lab.
+* **Service Connection**: This is the connection to the environment that you want to export the solution from. We will define this in the next step.
+* **Solution name**: This is the mane of the solution you want to export.
+* **Solution output file**: This specifies the path and filename of the generated solution zip.
+* **Export as Managed solution**: By default, solutions are exported as unmanaged (for development purposes). Setting this flag exports the solution as Managed (used fro deployment to any downstream environment such as Test, Pre-prod, and Production).
+
+25. Select **Username/password** under **Authentication type**. Click on **Manage** next to Service connection.
+
+![Export](./assets/module2/img23.jpg)
+
+26. This will bring up the connection configuration required to export the solution from the development environment (user-xx-dev). Click **Create service connection**.
+
+![Service](./assets/module2/img24.jpg)
+
+27. This will bring up the New Service connection screen. Select **Generic** from the list of connections and click **Next**.
+
+![Generic](./assets/module2/img25.jpg)
+
+28. Fill the required details:
+
+    * **Server URL**: https://<environment-url>.crm.dynamics.com. This should be the URL to your development environment.
+    * **Username**: Username of a user with admin access to the environment.
+    * **Password**: Associated password for the user.
+    * **Service Connection Name**: This name will be used to identify which environment to connect to the Build tasks.
+    * **Description**: Give the connection a description that helps you identify the environment the service connection connects to.
+
+A sample connection is shown below.
+
+![Service](./assets/module2/img26.jpg)
+
+29. Click **Save**. You will be in the pipeline service connection area in your project.
+30. Close the browser tab and go back to the previous tab where tou were building the pipeline. Select the Service Connection that created in the previous step.
+
+![Manage](./assets/module2/img27.jpg)
+
+31. Fill out the remaining details:
+    * Solution Name: **$(SolutionName)
+      **Note**: This will use the input parameter that you specify when running (queuing) the build pipeline.
+    * Solution Output File: **$(Build.ArtifactStagingDirectory)\$(SolutionName).zip**
+      **Note** This will add the file to your repo and retain the existing solution name.
+
+![Solution](./assets/module2/img28.jpg)
+
+32. Save the Build Pipeline by clicking **Save & Queue**, then save from the top command bar and clicking **Save** on the dialog.
+
+### Unpack Solution
+
+The solution file that is exported from the server is a zip file with consolidated configuration files. These initial files are not suitable for source code management as they are not structured to make it feasible for source code management systems to properly do differencing on the files and capture the changes you want to commit to source control. You need to **unpack** the solution files to make then suitable for source control storage and processing.
+
+33. Click **Ad a task**, then search for **Power Platform Unpack**.
+
+![Unpack](./assets/module2/img29.jpg)
+
+34. Add the Power Platform Unpack Solution task to the pipeline.
+
+![Add](./assets/module2/img30.jpg)
+
+35. Open the task to configure settings for the task with the following details:
+
+* **Solution Input File**: $(Build.ArtifactStagingDirectory)\$(SolutionName).zip
+* **Target folder to unpack solution**: $(Build.SourcesDirectory)\$(SolutionName)
+* **Type of sulution**: Unmanaged.
+
+![Unpack](./assets/module2/img31.jpg)
+
+36. Save the updated pipeline.
+
+![Save](./assets/module2/img32.jpg)
+
+37. You can leave the comment blank.
+
+![Comment](./assets/module2/img33.jpg)
+
+### Commit Solution Files to Source Control
+
+Next, we are going to add some scripts as a next pipeline step to commit the solution to the repo. The reason we allowed for scripts to access the OAuth token when we started building the pipeline was to allow for this next step.
+
+38. Add a Command Line task to your pipeline by clicking the **+** button, searching for **command**, and adding it.
+
+![Command](./assets/module2/img34.jpg)
+
+39. Select the task, give the task a display name and copy the following script into the script textbox:
+
+```bash
+echo commit all changes
+git config user.email "userXXX@wrkdevops.onmicrosoft.com"
+git config user.name "Automatic Build"
+git checkout master
+git add --all
+git commit -m "solution init"
+echo push code to new repo
+git -c http.extraheader="AUTHORIZATION: bearer $(System.AccessToken)" push origin main
+```
+
+40. Screenshot provided below:
+
+![Script](./assets/module2/img35.jpg)
+
+41. Save the task (Save & queue > Save).
+
+### Test your Pipeline
+
+42. Select **Queue** to execute your pipeline.
+
+![Queue](./assets/module2/img36.jpg)
+
+43. Leave the defaults and click **Run**.
+
+![Run](./assets/module2/img37.jpg)
+
+44. You can see your build has been queued. You can navigate to it directly in the notification on this screen or using the **Builds** area in the left navigation.
+
+![Task](./assets/module2/img38.jpg)
+
+45. The desired outcome would be a series of green checkboxes, but if you have some issues with your pipeline, you should see the errors in the log. You can click on those for more details if you like. In our case, we have not defined our solution name variable yet, so the export step will fail. This was done intentionally to show you what a failure looks like and how to look at the details.
+
+![Fail](./assets/module2/img39.jpg)
+
+46. Go back to your pipeline by selecting the arrow next to the pipeline name on the top of the screen.
+
+![Back](./assets/module2/img40.jpg)
+
+47. Select the three dots button and then **Edit pipeline**.
+
+![Edit](./assets/module2/img41.jpg)
+
+48. On the pipelines screen, switch to the Variables tab and click **Add** to add a new variable.
+
+49. Use **SolutionName** for the name of the variable and add your unique solution name as a value. It should be your solution's name form Module1 (point 3).
+
+![Edit](./assets/module2/img42.jpg)
+
+50. Click **Save and queue** and observe the results. Fix any issues until you get a successful build.
+
