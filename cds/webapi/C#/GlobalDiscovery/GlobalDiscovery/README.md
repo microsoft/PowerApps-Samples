@@ -1,18 +1,21 @@
-﻿# Use the Web API Global Discovery Service
+﻿# Demonstrates the Global Discovery Service
 
-This sample shows how to use the Web API Global discovery Service
+This sample shows how to access the Global Discovery Service using the Web API.
 
 ## How to run this sample
 
 To run the sample:
 1. Download or clone the sample so that you have a local copy.
-2. Open the project solution file in Visual Studio 2017 and restore the Nuget packages.
-3. Press F5 to run the sample.
-4. The samples prompts a login window where you need to specify the Microsoft Dataverse user credentials. 
+2. Open the project solution file in Visual Studio.
+3. Press F5 to build and run the sample.
 
 ## What this sample does
 
-This sample returns the available Dataverse instances for a given user credentials.
+When run, the sample opens a logon form where you must specify the Microsoft Dataverse credentials for an enabled user. The program then displays to the console window a list of Dataverse environment instances that the specified user is a member of.
+
+Other important aspects of this sample include:
+1. Handles breaking API changes in different versions of Azure Active Directory Authentication Library (ADAL)
+1. No dependency on helper code or a helper library since all required code, including authentication code, is provided.
 
 ### Setup
 
@@ -21,7 +24,7 @@ This sample doesn't require any setup.
 
 ### Demonstrate
 
-Uses a HttpClient to authenticate using ADAL and call the global discovery service to return information about available instances the user can connect to.
+Uses an HttpClient to authenticate using ADAL and then call the global Discovery Service to return information about available instances the user is a member of.
 
 ### Clean up
 
