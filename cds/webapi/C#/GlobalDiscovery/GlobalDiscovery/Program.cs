@@ -3,16 +3,20 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Diagnostics;
 using System.Threading.Tasks;
-using System.Linq;
-using System.Configuration;
 
 namespace PowerApps.Samples
 {
+    /// <summary>
+    /// This sample uses the global Discovery service to query all environments that the logged
+    /// on user is a member of.
+    /// </summary>
+    /// <remarks>This sample does not use the CDSWebApiService class library or any helper code.</remarks>
     class Program
     {
 
@@ -20,19 +24,28 @@ namespace PowerApps.Samples
         public static string clientId = "51f81489-12ee-4a9e-aaae-a2591f45987d";
         public static string redirectUrl = "app://58145B91-0C36-4500-8554-080854F2AC97";
 
-        // version of ADAL that is linked to deal with different version of ADAL. 
+        // This sample supports newer and older versions of Azure Active Directory Authentication
+        // Library (ADAL) using conditional code blocks to deal with breaking library API changes.
         private static Version _ADALAsmVersion;
 
         static void Main(string[] args)
         {
             try
             {
+                // A list of environment instances.
                 List<Instance> instances = null;
+
+                // The supplied App.config file for this sample no longer provides a "Connect" connection string
+                // containing a username and password. Therefore, the 'else' statement below will be executed and
+                // the user interactively prompted for a tenant logon.
+
+                // If you want to bypass the interactive logon and provide a connection string, see the sample
+                // App.config file at PowerApps-Samples/cds/webapi/C# for a sample "Connect" string.
+
                 var connecStringContainer = ConfigurationManager.ConnectionStrings["Connect"];
                 if (connecStringContainer != null)
                 {
                     string connectionString = ConfigurationManager.ConnectionStrings["Connect"].ConnectionString;
-                    //This sample does not use the Url set in the connection string, just the credentials.
                     string username = GetParameterValueFromConnectionString(connectionString, "Username");
                     string password = GetParameterValueFromConnectionString(connectionString, "Password");
                     instances = GetInstances(username, password);
@@ -79,11 +92,12 @@ namespace PowerApps.Samples
 
         }
         /// <summary>
-        /// Uses the global web api discovery service to return instances
+        /// Uses the global Discovery service Web API to return environment instances that the specified user
+        /// is a member of.
         /// </summary>
         /// <param name="clientId">The Azure AD client (app) registration</param>
-        /// <param name="username">The user name</param>
-        /// <param name="password">The password</param>
+        /// <param name="username">The user's logon username.</param>
+        /// <param name="password">The user's logon password.</param>
         /// <returns>A List of Instances</returns>
         static List<Instance> GetInstances(string username, string password)
         {
@@ -119,8 +133,10 @@ namespace PowerApps.Samples
 
         #region Utilities 
 
-        /// <summary> Displays exception information to the console. </summary>
-        /// <param name="ex">The exception to output</param>
+        /// <summary>
+        /// Displays exception information to the console.
+        /// </summary>
+        /// <param name="ex">The exception to output.</param>
         public static void DisplayException(Exception ex)
         {
             Console.WriteLine("The application terminated with an error.");
@@ -132,6 +148,12 @@ namespace PowerApps.Samples
             }
         }
 
+        /// <summary>
+        /// Obtains the target parameter value from the connection string.
+        /// </summary>
+        /// <param name="connectionString">The connection string.</param>
+        /// <param name="parameter">The target parameter.</param>
+        /// <returns></returns>
         public static string GetParameterValueFromConnectionString(string connectionString, string parameter)
         {
             try
@@ -147,10 +169,10 @@ namespace PowerApps.Samples
 
         #region AuthSupport
         /// <summary>
-        /// Forming version tagged UriBuilder
+        /// Appends '/web' to the service URI.
         /// </summary>
-        /// <param name="discoveryServiceUri"></param>
-        /// <returns></returns>
+        /// <param name="discoveryServiceUri">The Discovery web service URI.</param>
+        /// <returns>A properly formatted web service URI.</returns>
         private static UriBuilder GetUriBuilderWithVersion(Uri discoveryServiceUri)
         {
             UriBuilder webUrlBuilder = new UriBuilder(discoveryServiceUri);
@@ -169,11 +191,12 @@ namespace PowerApps.Samples
         }
 
         /// <summary>
-        /// Get the Authority and Support data from the requesting system using a sync call. 
+        /// Get the authentication Authority and support data from the requesting system. 
         /// </summary>
         /// <param name="targetServiceUrl">Resource URL</param>
         /// <param name="logSink">Log tracer</param>
         /// <returns>Populated AuthenticationParameters or null</returns>
+        /// <remarks>Handles breaking API changes in the various versions of ADAL.</remarks>
         private static AuthenticationParameters GetAuthorityFromTargetService(Uri targetServiceUrl)
         {
             try
@@ -224,7 +247,7 @@ namespace PowerApps.Samples
 
         /// <summary>
         /// Creates authentication parameters from the address of the resource.
-        /// Invoked for ADAL 5+ which changed the method used to retrieve authentication parameters.
+        /// Invoked for ADAL v5+ which changed the method used to retrieve authentication parameters.
         /// </summary>
         /// <param name="targetServiceUrl">Resource URL</param>
         /// <returns>AuthenticationParameters object containing authentication parameters</returns>
@@ -236,7 +259,15 @@ namespace PowerApps.Samples
             return result.Result;
         }
 
-
+        /// <summary>
+        /// Gets the authentication access token.
+        /// </summary>
+        /// <param name="userName">The user's username,</param>
+        /// <param name="password">The user's password.</param>
+        /// <param name="serviceRoot">The service root URI.</param>
+        /// <returns>The access token.</returns>
+        /// <remarks>The access token is only good for about one hour. In real world applications
+        /// you should refresh the access token periodically so it does not expire.</remarks>
         public static string GetAccessToken(string userName, string password, Uri serviceRoot)
         {
             var targetServiceUrl = GetUriBuilderWithVersion(serviceRoot);
@@ -254,8 +285,8 @@ namespace PowerApps.Samples
             }
             else
             {
-                // Note that PromptBehavior.Always is why the UserID is aways prompted when this path is executed
-                // Lookup PromptBehavior's to understand what other options exist. 
+                // Note that PromptBehavior.Always is why the user is aways prompted when this path is executed.
+                // Look up PromptBehavior to understand what other options exist. 
                 PlatformParameters platformParameters = new PlatformParameters(PromptBehavior.Always);
                 authResult = authContext.AcquireTokenAsync(ap.Resource, clientId, new Uri(redirectUrl), platformParameters).Result;
             }
@@ -267,9 +298,8 @@ namespace PowerApps.Samples
     }
 
     /// <summary>
-    /// Object returned by the discovery service
+    /// Environment instance returned from the Discovery service.
     /// </summary>
-
     class Instance
     {
         public string Id { get; set; }
