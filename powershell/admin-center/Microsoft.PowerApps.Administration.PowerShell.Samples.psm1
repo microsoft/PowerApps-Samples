@@ -173,9 +173,9 @@ function SingleEnvironmentPolicyTests
 
             $newPolicy = CreatePolicyObject -EnvironmentType "SingleEnvironment" -PolicyDisplayName $PolicyDisplayName
             $environment = [pscustomobject]@{
-                id = "/providers/admin/environment"
+                id = "/providers/Microsoft.BusinessAppPlatform/scopes/admin/environments/$($environment.EnvironmentName)"
                 name = $environment.EnvironmentName
-                type = "/providers/dummyEnvironments"
+                type = "Microsoft.BusinessAppPlatform/scopes/environments"
             }
 
             $newPolicy.environments += $environment
@@ -359,14 +359,14 @@ function OldAPIToNewAPICompatibilityTests
             $newCreatedPolicy = New-DlpPolicy -NewPolicy $newPolicy
             StringsAreEqual -Expect $AllEnvironmentsPolicyDisplayName -Actual $newCreatedPolicy.displayName
 
-            # define test data for old API
+            # define customer connector for old API
             $TenantPolicyTestDisplayName = "TenantPolicyDemo"
             $EnvironmentPolicyDisplayName = "EnvironmentPolicyDemo"
-            $NonBusinessConnectorName = "Amazon Redshift"
-            $NonBusinessConnectorId = "/providers/Microsoft.PowerApps/apis/shared_amazonredshift"
+            $NonBusinessConnectorName = "shared_graph-2dapi-2dtest-5f490bdb62ac165ca8-5fbf5c83266b2adfb5"
+            $NonBusinessConnectorId = "/providers/Microsoft.PowerApps/scopes/admin/environments/Default-bde1d79a-4825-4883-a114-b4a801feaf16/apis/shared_graph-2dapi-2dtest-5f490bdb62ac165ca8-5fbf5c83266b2adfb5"
             $NonBusinessConnectorType = "Microsoft.PowerApps/apis"
-            $BusinessConnectorName = "Dropbox"
-            $BusinessConnectorId = "/providers/Microsoft.PowerApps/apis/shared_dropbox"
+            $BusinessConnectorName = "shared_graph-2dapi-2dtest-5f490bdb62ac165ca8-5fbf5c83266b2adfb5"
+            $BusinessConnectorId = "/providers/Microsoft.PowerApps/scopes/admin/environments/Default-bde1d79a-4825-4883-a114-b4a801feaf16/apis/shared_graph-2dapi-2dtest-5f490bdb62ac165ca8-5fbf5c83266b2adfb5"
             $BusinessConnectorType = "Microsoft.PowerApps/apis"
 
             # create test tenant policy
@@ -1279,20 +1279,17 @@ function ReplacePolicyEnvironmentsForOnlyEnvironmentType
     )
 
     Write-Host "ReplacePolicyEnvironmentsForOnlyEnvironmentType start."
-    $environments = Get-AdminPowerAppEnvironment -ApiVersion "2020-06-01"
+    $environments = Get-AdminPowerAppEnvironment -EnvironmentSku "Teams" -ApiVersion "2020-06-01"
 
     $teamEnvironments = @()
     foreach ($env in $environments)
     {
-        if ($env.Internal.properties.environmentsku -eq "Teams")
-        {
-            $item = [pscustomobject]@{
-                id = $env.Internal.id
-                name = $env.Internal.name
-                type = $env.Internal.type
-            }
-            $teamEnvironments += $item
+        $item = [pscustomobject]@{
+            id = $env.Internal.id
+            name = $env.Internal.name
+            type = $env.Internal.type
         }
+        $teamEnvironments += $item
     }
 
     $policy = Get-DlpPolicy -PolicyName $PolicyName
@@ -1463,7 +1460,7 @@ function CreateEnvironmentWithoutCDSDatabase
         [string]$LocationName = "unitedstates",
 
         [Parameter(Mandatory = $false)]
-        [string]$EnvironmentSku = "Trial"
+        [string]$EnvironmentSku = "Production"
     )
 
     Write-Host "CreateEnvironmentWithoutCDSDatabase: $EnvironmentDisplayName"
