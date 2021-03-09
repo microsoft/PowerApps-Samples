@@ -142,7 +142,7 @@ function RunTests
     # 2. Get the specified policy
     # 3. Relace environments for OnlyEnvironments type
     ReplacePolicyEnvironmentsForOnlyEnvironmentType  `
-        -PolicyName "522c21f6-3eb0-4649-b430-0c44e1c57b62" `
+        -PolicyName "9d903089-f712-4877-8e99-f6c96bd615b7" `
         -PolicyDisplayName "Policy test for Teams"
 
     $EndTime = Get-Date
