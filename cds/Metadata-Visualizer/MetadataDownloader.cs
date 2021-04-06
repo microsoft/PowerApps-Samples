@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 
 namespace MetaViz
@@ -30,6 +31,7 @@ namespace MetaViz
             FetchEntities,
             FetchWorkflows,
             FetchPluginTypes,
+            FetchDependencyWorkflowToPlugin,
             FetchSdkSteps,
             FetchFullSpecReports,
             Completed
@@ -64,7 +66,8 @@ namespace MetaViz
         // https://docs.microsoft.com/en-us/dynamics365/customer-engagement/developer/entities/workflow
         // workflow type 1 Definition 2 Activation 3 Template
         // showing 1 Definition here, accuracy wise 2 Activation more makes sense (if we think workflow published different time 'different') but duplications make folks more confused
-        private const string URL_WORKFLOWS = "/workflows?$filter=type%20eq%201&$select=workflowid,name,uniquename,primaryentity,mode,triggeroncreate,triggerondelete,triggeronupdateattributelist,createstage,deletestage,updatestage,description,solutionid,ismanaged,asyncautodelete,statecode,statuscode,componentstate,subprocess";
+        private const string URL_WORKFLOWS_FIELDS = "workflowid,_activeworkflowid_value,_sdkmessageid_value,name,uniquename,primaryentity,mode,category,triggeroncreate,triggerondelete,triggeronupdateattributelist,ondemand,createstage,deletestage,updatestage,description,solutionid,ismanaged,asyncautodelete,statecode,statuscode,componentstate,subprocess,rendererobjecttypecode";
+        private const string URL_WORKFLOWS = "/workflows?$filter=type%20eq%201&$select=" + URL_WORKFLOWS_FIELDS;
 
         // https://docs.microsoft.com/en-us/dynamics365/customer-engagement/developer/entities/plugintype
         // Excludes InternalOperationPlugin -> "plugintypeid": "29efe3a5-047c-40a3-b89c-2787eff38eee", "typename": "Microsoft.Crm.Extensibility.InternalOperationPlugin", 
@@ -84,6 +87,9 @@ namespace MetaViz
 </fetch>";
 
         // https://docs.microsoft.com/en-us/dynamics365/customer-engagement/developer/entities/sdkmessageprocessingstep
+        // plugintypes(29efe3a5-047c-40a3-b89c-2787eff38eee) Microsoft.Crm.Extensibility.InternalOperationPlugin
+        // plugintypes(6237eef9-3a11-4c09-b197-96fd9cb134dd) Microsoft.Crm.ObjectModel.SyncWorkflowExecutionPlugin
+        // plugintypes(582f2a68-e023-4600-b8f1-e0bcb6c330c1) Microsoft.Crm.Workflow.WorkflowExpansionPlugin
         private const string URL_SDKSTEPS = "/sdkmessageprocessingsteps?fetchXml=";
         private const string URL_SDKSTEPS_FETCHXML = @"<fetch no-lock='true'>
 <entity name='sdkmessageprocessingstep'>
@@ -104,13 +110,35 @@ namespace MetaViz
 <attribute name='filteringattributes' />
 <attribute name='ishidden' />
 <link-entity name='sdkmessage' from='sdkmessageid' to='sdkmessageid' alias='messsage'>
+<attribute name='sdkmessageid' alias='MessageSdkMessageId' />
 <attribute name='name' alias='MessageName' />
+<attribute name='categoryname' alias='MessageCategoryName' />
 </link-entity>
-<link-entity name='sdkmessagefilter' from='sdkmessagefilterid' to='sdkmessagefilterid' alias='step'>
+<link-entity name='sdkmessagefilter' from='sdkmessagefilterid' to='sdkmessagefilterid' link-type='outer' alias='step'>
 <attribute name='primaryobjecttypecode' alias='primaryobjecttype'/>
 </link-entity>
-<filter>
-<condition attribute='plugintypeid' operator='ne' value='29efe3a5-047c-40a3-b89c-2787eff38eee' />
+<filter type='and'>
+<condition attribute='plugintypeid' operator='not-in'>
+<value>29efe3a5-047c-40a3-b89c-2787eff38eee</value><value>6237eef9-3a11-4c09-b197-96fd9cb134dd</value><value>582f2a68-e023-4600-b8f1-e0bcb6c330c1</value>
+</condition>
+</filter>
+</entity>
+</fetch>";
+
+        private const string URL_DEPDENDENCIES = "/dependencies?fetchXml=";
+        private const string URL_DEPDENDENCIES_FETCHXML = @"<fetch no-lock='true'>
+<entity name='dependency'>
+<attribute name='requiredcomponentobjectid' />
+<attribute name='dependentcomponentobjectid' />
+<link-entity name='plugintype' from='plugintypeid' to='requiredcomponentobjectid' link-type='outer' alias='plugin'>
+<attribute name='name' alias='pluginname' />
+</link-entity>
+<link-entity name='workflow' from='workflowid' to='dependentcomponentobjectid' link-type='outer' alias='workflow'>
+<attribute name='name' alias='workflowname' />
+</link-entity>
+<filter type='and'>
+<condition attribute = 'requiredcomponenttype' operator='eq' value='90' />
+<condition attribute = 'dependentcomponenttype' operator='eq' value='29' />
 </filter>
 </entity>
 </fetch>";
@@ -159,6 +187,7 @@ td.smallfontcell
         private Dictionary<string, List<string>> pluginTypeIdToEntityLogicalName = new Dictionary<string, List<string>>();  // plugin type id -> entities plugins are registered
         private JToken workflows = null;
         private JToken pluginTypes = null;
+        private JToken dependenciesWorkflowToPlugin = null;
         private JToken sdkSteps = null;
 
         private readonly bool fetchAllEntities = false;
@@ -226,6 +255,9 @@ td.smallfontcell
                     string criteria = @"<condition attribute = 'plugintypeid' operator='ne' value='29efe3a5-047c-40a3-b89c-2787eff38eee' />";
                     webApiUrlToExecute = WEBAPIURL + URL_PLUGINTYPES + System.Web.HttpUtility.UrlEncode(string.Format(URL_PLUGINTYPES_FETCHXML, criteria));
                     break;
+                case DumpStage.FetchDependencyWorkflowToPlugin:
+                    webApiUrlToExecute = WEBAPIURL + URL_DEPDENDENCIES + System.Web.HttpUtility.UrlEncode(URL_DEPDENDENCIES_FETCHXML);
+                    break;
                 case DumpStage.FetchSdkSteps:
                     webApiUrlToExecute = WEBAPIURL + URL_SDKSTEPS + System.Web.HttpUtility.UrlEncode(URL_SDKSTEPS_FETCHXML);
                     break;
@@ -284,11 +316,17 @@ td.smallfontcell
                     break;
                 case DumpStage.FetchPluginTypes:
                     pluginTypes = HandleResponseJson(response);
+                    nextStageToExecute = DumpStage.FetchDependencyWorkflowToPlugin;
+                    break;
+                case DumpStage.FetchDependencyWorkflowToPlugin:
+                    dependenciesWorkflowToPlugin = HandleResponseJson(response);
                     nextStageToExecute = DumpStage.FetchSdkSteps;
                     break;
                 case DumpStage.FetchSdkSteps:
                     sdkSteps = HandleResponseJson(response);
-                    DumpHtmlReport();   // all objects for html report are avaialble.
+                    // all objects for html report are avaialble. massage data a bit and dump report
+                    SetProcessTriggersCategoryAndDependencies();
+                    DumpHtmlReport();
                     // If fullspec report is requested we got work on execution of those, otherwise job is done
                     nextStageToExecute = (fetchAllEntities ? DumpStage.FetchFullSpecReports : DumpStage.Completed);
                     break;
@@ -328,6 +366,100 @@ td.smallfontcell
             return root["value"];
         }
 
+        private void SetProcessTriggersCategoryAndDependencies()
+        {
+            foreach (JToken row in workflows)
+            {
+                SetWorkflowToPluginDependencies(row);
+                row["category"] = CategoryText(row["category"].Value<string>(), out bool isCategoryAction);
+                if (isCategoryAction)
+                {
+                    SetTriggerFieldValueActionCategory(row);
+                }
+                else
+                {
+                    SetTriggerFieldValueNonActionCategory(row);
+                }
+            }
+        }
+
+        private const string MESSAGEWEBAPI = @"<fetch no-lock='true'>
+<entity name='sdkmessage'>
+<all-attributes />
+<link-entity name='sdkmessageprocessingstep' from='sdkmessageid' to='sdkmessageid' link-type='outer' alias='step' />
+<filter type='and'>
+<condition attribute = 'sdkmessageid' operator='eq' value='{0}' />
+</filter>
+</entity>
+</fetch>";
+
+        private void SetTriggerFieldValueActionCategory(JToken row)
+        {
+            string WEBAPIPATH = "/sdkmessages?fetchXml=";
+            string messageId = row["_sdkmessageid_value"].Value<string>();
+            StringBuilder sbTrigger = new StringBuilder();
+            foreach (JToken sdkMessage in sdkSteps.Where(obj => messageId.Equals(obj["MessageSdkMessageId"].Value<string>())))
+            {
+                sbTrigger.Append(sdkMessage["name"].Value<string>());
+            }
+            if (sbTrigger.Length == 0) sbTrigger.Append("(step not found)");
+            string fetchXmlEncoded = System.Web.HttpUtility.UrlEncode(string.Format(MESSAGEWEBAPI, messageId));
+            row["trigger"] = string.Format("<a href='{0}{1}{2}{3}' target='_blank'>{4}</a></td>", OrganizationUrl, WEBAPIURL, WEBAPIPATH, fetchXmlEncoded, sbTrigger.ToString());
+        }
+
+        private void SetTriggerFieldValueNonActionCategory(JToken row)
+        {
+            // renderor object type is useful to find the system built in workflow things (like automatic record creation for email entity)
+            string renderorOT = row["rendererobjecttypecode"].Value<string>();
+            if (!string.IsNullOrWhiteSpace(renderorOT)) renderorOT = $"[{renderorOT}]";
+
+            bool.TryParse(row["ondemand"].Value<string>(), out bool ondemand);
+            bool.TryParse(row["triggeroncreate"].Value<string>(), out bool triggeroncreate);
+            bool.TryParse(row["triggerondelete"].Value<string>(), out bool triggerondelete);
+            string triggeronupdateattributelist = row["triggeronupdateattributelist"].Value<string>();
+            bool triggeronupdate = !string.IsNullOrWhiteSpace(triggeronupdateattributelist);
+            if (triggeronupdate) triggeronupdateattributelist = triggeronupdateattributelist.Replace(",", ", ");
+            string createstage = StageNumberToStageText(row["createstage"].Value<string>());
+            string updatestage = StageNumberToStageText(row["updatestage"].Value<string>());
+            string deletestage = StageNumberToStageText(row["deletestage"].Value<string>());
+            string ondemandText = (ondemand ? " OnDemand" : "");
+            string oncreateText = (triggeroncreate ? $" On{createstage}Create" : "");
+            string onupdateText = (triggeronupdate ? $" On{updatestage}Update({triggeronupdateattributelist})" : "");
+            string ondeleteText = (triggerondelete ? $" On{deletestage}Delete" : "");
+            row["trigger"] = $"{renderorOT}{ondemandText}{oncreateText}{onupdateText}{ondeleteText}";
+        }
+
+        private void SetWorkflowToPluginDependencies(JToken row)
+        {
+            string workflowid = row["workflowid"].Value<string>();
+            StringBuilder sb = new StringBuilder();
+            foreach (JToken depWF2PT in dependenciesWorkflowToPlugin.Where(obj => workflowid.Equals(obj["dependentcomponentobjectid"].Value<string>())))
+            {
+                if (sb.Length > 0) sb.Append(", ");
+                sb.Append(depWF2PT["pluginname"].Value<string>());
+            }
+            row["plugindependency"] = sb.ToString();
+        }
+
+        private string CategoryText(string categoryNumberString, out bool isCategoryAction)
+        {
+            isCategoryAction = false;
+            if (string.IsNullOrWhiteSpace(categoryNumberString)) return "";
+            if (!int.TryParse(categoryNumberString, out int categoryNumber)) return categoryNumberString;
+            string categoryText = categoryNumberString;
+            switch (categoryNumber)
+            {
+                case 0: categoryText = "Workflow"; break;
+                case 1: categoryText = "Dialog"; break;
+                case 2: categoryText = "Business Rule"; break;
+                case 3: categoryText = "Action"; isCategoryAction = true; break;
+                case 4: categoryText = "Business Process Flow"; break;
+                case 5: categoryText = "Modern Flow"; break;
+                default: break;
+            }
+            return categoryText;
+        }
+
         private void StartReport()
         {
             reportStartDateTime = DateTime.UtcNow;
@@ -357,13 +489,16 @@ td.smallfontcell
             htmlWriter.WriteLine("<h2>Entities</h2>");
             DumpEntities();
 
-            htmlWriter.WriteLine("<h2>Entities and Plugins/Workflows</h2>");
+            htmlWriter.WriteLine("<a name='entity_none' /><h2>Global (Any Entity)</h2>");
+            DumpGlobalPluginAndProcesses();
+
+            htmlWriter.WriteLine("<h2>Entities and Plugins/Processes</h2>");
             foreach (JObject entity in entities.OrderBy(obj => (string)obj["LogicalName"]))
             {
                 DumpEntityAndChildren(entity);
             }
 
-            htmlWriter.WriteLine("<h2>Solutions and Plugins/Workflows</h2>");
+            htmlWriter.WriteLine("<h2>Solutions and Plugins/Processes</h2>");
             DumpSolutionAndChildren();
 
             htmlWriter.WriteLine("<hr /><p>MetaViz completed at UTC {1:yyyy-MM-dd HH:mm:ss}. This report generation took {0} seconds. Please send your feedback and ideas to hianzai@microsoft.com for this report.</p>", (DateTime.Now - reportStartDateTime).TotalSeconds, DateTime.Now);
@@ -372,12 +507,25 @@ td.smallfontcell
             htmlWriter.Flush();
         }
 
+        private void DumpGlobalPluginAndProcesses()
+        {
+            const string PrimaryObjectType = "none";
+
+            DumpSDKSteps(PrimaryObjectType, 0);
+            DumpSDKSteps(PrimaryObjectType, 1);
+
+            DumpWorkflows(PrimaryObjectType, 1);
+            DumpWorkflows(PrimaryObjectType, 0);
+        }
+
         private void DumpEntities()
         {
             htmlWriter.WriteLine("<table>");
 
             htmlWriter.WriteLine("<tr>");
-            htmlWriter.Write("<th>Logical(EntitySet)Name</th><th>Description</th><th>OTC</th><th>Primary</th><th>DisplayNames</th><th>Sync Plugin</th><th>Async Plugin</th><th>Realtime WF</th><th>Workflow</th>");
+            htmlWriter.Write("<th>Logical(EntitySet)Name</th><th>Description</th><th>OTC</th><th>Primary</th><th>DisplayNames</th><th>Sync Plugin</th><th>Async Plugin</th><th>Sync Process</th><th>Async Process</th>");
+            htmlWriter.WriteLine("</tr><tr>");
+            htmlWriter.Write("<td><a href='#entity_none'>Global</a></td><td>Plugin or Custom actions of any entity (entity 'none')</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>");
             htmlWriter.WriteLine("</tr>");
 
             foreach (JObject entity in entities.OrderBy(obj => (string)obj["LogicalName"]))
@@ -443,8 +591,8 @@ td.smallfontcell
 
             htmlWriter.WriteLine("<a name='entity_{1}' /><h3>{0} ({1})</h3>", entityLogicalName, entityLogicalName);
 
-            DumpSDKSteps(entityLogicalName, 1);
             DumpSDKSteps(entityLogicalName, 0);
+            DumpSDKSteps(entityLogicalName, 1);
 
             DumpWorkflows(entityLogicalName, 1);
             DumpWorkflows(entityLogicalName, 0);
@@ -462,7 +610,7 @@ td.smallfontcell
             htmlWriter.WriteLine("<table>");
 
             htmlWriter.WriteLine("<tr>");
-            htmlWriter.Write("<th>sdkmessageprocessingstepid</th><th>Message</th><th>Stage</th><th>Rank</th><th>Name</th><th>Hidden</th><th>State</th>");
+            htmlWriter.Write("<th>stepid</th><th>Message</th><th>Category</th><th>Stage</th><th>Rank</th><th>Name</th><th>Hidden</th><th>State</th>");
             htmlWriter.WriteLine("<th>Plugin</th><th>IsolationMode</th><th>Filtering Attributes</th><th>Solution</th>");
             htmlWriter.WriteLine("</tr>");
 
@@ -478,10 +626,12 @@ td.smallfontcell
         {
             htmlWriter.WriteLine("<tr>");
 
-            string sdkmessageprocessingstepid = DumpCellWebApiLink("sdkmessageprocessingstepid", "sdkmessageprocessingsteps", row);
+            DumpCellWebApiLink("sdkmessageprocessingstepid", "/sdkmessageprocessingsteps({0})", row);
 
-            DumpCell(row, "MessageName");
-            DumpCellStage(row);
+            string stage = row["stage"].Value<string>();
+            DumpSDKStepsRowMessageNameField(row);
+            DumpCell(row, "MessageCategoryName");
+            htmlWriter.WriteLine("<td>{0}-{1}</td>", stage, StageNumberToStageText(stage)); ;
             DumpCell(row, "rank");
             DumpCell(row, "name");
             DumpCell(row, "ishidden");
@@ -510,6 +660,15 @@ td.smallfontcell
             htmlWriter.WriteLine("</tr>");
         }
 
+        private void DumpSDKStepsRowMessageNameField(JToken row)
+        {
+            string WEBAPIPATH = "/sdkmessages({0})";
+            string messageName = row["MessageName"].Value<string>();
+            string messageId = row["MessageSdkMessageId"].Value<string>();
+            string webapiurl = string.Format(WEBAPIURL + WEBAPIPATH, messageId);
+            htmlWriter.WriteLine("<td><a href='{1}{2}' target='_blank'>{0}</a></td>", messageName, OrganizationUrl, webapiurl);
+        }
+
         private string FindSolutionIdFromSolutionComponent(JToken row, string objectId)
         {
             IEnumerable<JToken> component = solutionComponents.Where(obj => (string)obj["objectid"] == objectId);
@@ -530,28 +689,24 @@ td.smallfontcell
 
             if (targets.Count<JToken>() == 0) return;
 
-            string[] fields = new string[] { "name", "uniquename", "primaryentity", "description", "ondemand", "triggeroncreate", "triggerondelete", "triggeronupdateattributelist", "createstage", "deletestage", "updatestage" };
-            string[] captions = new string[] { "Name", "UniqueName", "primaryentity", "description", "ondemand", "triggeroncreate", "triggerondelete", "triggeronupdateattributelist", "createstage", "deletestage", "updatestage" };
-
             //0 Background
             //1 Real-time
-            htmlWriter.WriteLine("<p>{0} workflows</p>", (mode == 1 ? "Real-time" : "Background"));
+            htmlWriter.WriteLine("<p>{0}</p>", (mode == 1 ? "Real-time Processes" : "Background Processes and Actions"));
             htmlWriter.WriteLine("<table>");
 
             htmlWriter.WriteLine("<tr>");
-            htmlWriter.WriteLine("<th>WorkflowId</th>");
-            foreach (string caption in captions) htmlWriter.Write("<th>{0}</th>", caption);
-            htmlWriter.WriteLine("<th>Solution</th>");
+            htmlWriter.WriteLine("<th>WorkflowId</th><th>Name</th><th>Category</th><th>Trigger</th><th>Dependent Plug-in</th><th>Description</th><th>Solution</th>");
             htmlWriter.WriteLine("</tr>");
 
-            foreach (JToken row in targets)
+            foreach (JToken row in targets.OrderBy(obj => (string)obj["category"]).ThenBy(obj => (string)obj["rendererobjecttypecode"]).ThenBy(obj => (string)obj["name"]))
             {
                 htmlWriter.WriteLine("<tr>");
-                string workflowId = DumpCellWebApiLink("workflowid", "workflows", row);
-                foreach (string field in fields)
-                {
-                    DumpCell(row, field);
-                }
+                string workflowId = DumpCellWebApiLink("workflowid", "/workflows({0})?$select=" + URL_WORKFLOWS_FIELDS, row);
+                DumpProcessNameWithHyperlink(workflowId, row);
+                DumpCell(row, "category");
+                DumpCell(row, "trigger");
+                DumpCell(row, "plugindependency");
+                DumpCell(row, "description");
 
                 // Solution
                 string solutionId = FindSolutionIdFromSolutionComponent(row, workflowId);
@@ -563,17 +718,20 @@ td.smallfontcell
             htmlWriter.WriteLine("</table>");
         }
 
+        private void DumpProcessNameWithHyperlink(string workflowId, JToken row)
+        {
+            string name = row["name"].Value<string>();
+            string webapiurl = $"/sfa/workflow/edit.aspx?id={workflowId}";
+            string anchor = $"<a href='{OrganizationUrl}{webapiurl}' target='_blank'>{name}</a>";
+            string subprocess = ("true".Equals(row["subprocess"].Value<string>(), StringComparison.InvariantCultureIgnoreCase) ? " (subprocess)" : "");
+            htmlWriter.WriteLine($"<td>{anchor}{subprocess}</td>");
+        }
+
         private void DumpCell(JToken row, string field)
         {
             string fieldValue = null;
             switch (field)
             {
-                case "createstage":
-                case "deletestage":
-                case "updatestage":
-                    fieldValue = row[field].Value<string>();
-                    if ("20".Equals(fieldValue)) { fieldValue = "Pre"; } else if ("40".Equals(fieldValue)) { fieldValue = "Post"; };
-                    break;
                 case "ishidden":
                     fieldValue = row[field]["Value"].Value<string>();
                     break;
@@ -602,26 +760,27 @@ td.smallfontcell
             htmlWriter.WriteLine("<td>{0}</td>", stateText);
         }
 
-        private void DumpCellStage(JToken row)
+        private string StageNumberToStageText(string originalStageText)
         {
-            int stage = row["stage"].Value<int>();
+            if (string.IsNullOrWhiteSpace(originalStageText)) return string.Empty;
+            if (!int.TryParse(originalStageText, out int stageNum)) return originalStageText;
             string stageName = null;
-            switch (stage)
+            switch (stageNum)
             {
-                case 5: stageName = "Initial Pre-operation"; break;
-                case 10: stageName = "Pre-validation"; break;
-                case 15: stageName = "Internal Pre-operation Before External Plugins"; break;
-                case 20: stageName = "Pre-operation"; break;
-                case 25: stageName = "Internal Pre-operation After External Plugins"; break;
-                case 30: stageName = "Main Operation"; break;
-                case 35: stageName = "Internal Post-operation Before External Plugins"; break;
-                case 40: stageName = "Post-operation"; break;
-                case 45: stageName = "Internal Post-operation After External Plugins"; break;
-                case 50: stageName = "Post-operation (Deprecated)"; break;
-                case 55: stageName = "Final Post-operation"; break;
-                default: stageName = "Undefined-" + stage; break;
+                case 5: stageName = "Initial Pre"; break;
+                case 10: stageName = "Prevalidation"; break;
+                case 15: stageName = "Internal Pre Before External"; break;
+                case 20: stageName = "Pre"; break;
+                case 25: stageName = "Internal Pre After External"; break;
+                case 30: stageName = "Main"; break;
+                case 35: stageName = "Internal Post Before External"; break;
+                case 40: stageName = "Post"; break;
+                case 45: stageName = "Internal Post After External"; break;
+                case 50: stageName = "Post(Deprecated)"; break;
+                case 55: stageName = "Final Post"; break;
+                default: stageName = originalStageText; break;
             }
-            htmlWriter.WriteLine("<td>{0}-{1}</td>", stage, stageName);
+            return stageName;
         }
 
         private void DumpCellAssemblyIsolationMode(JToken row)
@@ -629,7 +788,7 @@ td.smallfontcell
             string isolationModeText = null;
             int isolationMode = row["assemblyisolationmode"].Value<int>();
             switch (isolationMode)
-            { 
+            {
                 case 1:
                     isolationModeText = "None";
                     break;
@@ -702,12 +861,12 @@ td.smallfontcell
                 }
 
                 IEnumerable<JToken> pluginsForSolution = pluginTypes.Where(obj => (string)obj["solutionid"] == solutionid).OrderBy(obj => (string)obj["assemblyname"] + (string)obj["typename"]);
-                string[] fields = new string[] { "assemblyname", "assemblyisolationmode", "typename", "friendlyname", "description", "modifiedon" };
+                string[] fields = new string[] { "assemblyname", "assemblyisolationmode", "typename", "isworkflowactivity", "friendlyname", "description", "modifiedon" };
                 DumpAsTableWithWebApiLink(pluginsForSolution, "Plugins", fields, fields, "plugintypeid", "plugintypes");
 
-                IEnumerable <JToken> workflowsForThisSolution = workflows.Where(obj => (string)obj["solutionid"] == solutionid).OrderBy(obj => (string)obj["name"]);
-                string[] wfFields = new string[] { "name", "uniquename", "primaryentity", "mode"};
-                DumpAsTableWithWebApiLink(workflowsForThisSolution, "Workflows", wfFields, wfFields, "workflowid", "workflows");
+                IEnumerable<JToken> processesForThisSolution = workflows.Where(obj => (string)obj["solutionid"] == solutionid).OrderBy(obj => (string)obj["name"]);
+                string[] wfFields = new string[] { "category", "name", "mode", "primaryentity", "trigger" };
+                DumpAsTableWithWebApiLink(processesForThisSolution, "Processes and Actions", wfFields, wfFields, "workflowid", "workflows");
             }
         }
 
@@ -727,7 +886,7 @@ td.smallfontcell
             foreach (JToken row in targets)
             {
                 htmlWriter.WriteLine("<tr>");
-                DumpCellWebApiLink(webApiLinkField, webapiName, row);
+                DumpCellWebApiLink(webApiLinkField, "/" + webapiName + "({0})", row);
                 foreach (string field in fields)
                 {
                     string fieldValue = (row[field] == null ? "&nbsp;" : row[field].Value<string>());
@@ -743,10 +902,10 @@ td.smallfontcell
             htmlWriter.WriteLine("</table>");
         }
 
-        private string DumpCellWebApiLink(string webApiLinkField, string webapiName, JToken row)
+        private string DumpCellWebApiLink(string webApiLinkField, string webapiPath, JToken row)
         {
             string linkValue = row[webApiLinkField].Value<string>();
-            string webapiurl = string.Format(WEBAPIURL + "/{0}({1})", webapiName, linkValue);
+            string webapiurl = string.Format(WEBAPIURL + webapiPath, linkValue);
             htmlWriter.WriteLine("<td class='smallfontcell'><a href='{1}{2}' target='_blank'>{0}</a></td>", linkValue, OrganizationUrl, webapiurl);
             return linkValue;
         }
@@ -766,7 +925,7 @@ td.smallfontcell
             htmlWriter.Write("</td>");
         }
     }
-   
+
     internal static class FindLabelsUtil
     {
         internal static string FindLabels(JToken entity, string fieldName)

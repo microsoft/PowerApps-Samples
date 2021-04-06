@@ -91,3 +91,12 @@ Click the entity in the diagram and then choose the **Selected Entity > Remove**
 **Q. What library is used to render the ER Viewer diagram?**
 
 [Microsoft Automatic Graph Layout](https://www.microsoft.com/research/project/microsoft-automatic-graph-layout/) (MSAGL). *MSAGL is a .NET tool for graph layout and viewing. It was developed in Microsoft by Lev Nachmanson, Sergey Pupyrev, Tim Dwyer and Ted Hart.*
+
+## Version history
+
+04-06-2021
+
+- Added the global plug-in in the report
+- Added the workflow activities registration status in the reports
+- Improved the registration status message
+- Added the categories for plug-in and workflows in the reports
