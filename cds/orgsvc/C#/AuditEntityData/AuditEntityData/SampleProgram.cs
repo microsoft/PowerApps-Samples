@@ -1,23 +1,20 @@
 ﻿using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Client;
 using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Tooling.Connector;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PowerApps.Samples
 {
-   public partial class SampleProgram
+    public partial class SampleProgram
     {
         [STAThread] // Added to support UX
         static void Main(string[] args)
         {
             CrmServiceClient service = null;
-       
+            bool organizationAuditingFlag;
+            bool accountAuditingFlag;
             try
             {
                 service = SampleHelpers.Connect("Connect");
@@ -36,23 +33,30 @@ namespace PowerApps.Samples
                     Guid orgId = ((WhoAmIResponse)service.Execute(new WhoAmIRequest())).OrganizationId;
 
                     // Next, retrieve the organization's record.
-                    var org = service.Retrieve(Organization.EntityLogicalName, orgId,
-                        new ColumnSet(new string[] { "organizationid", "isauditenabled" })) as Organization;
+                    var retrivedOrg = service.Retrieve(Organization.EntityLogicalName, orgId,
+                        new ColumnSet(new string[] {"isauditenabled" })) as Organization;
 
-                    // Finally, enable auditing on the organization.
-                    bool organizationAuditingFlag = org.IsAuditEnabled.Value;
-                    org.IsAuditEnabled = true;
-                    service.Update(org);
+                    // Cache the value to set it back later
+                    organizationAuditingFlag = retrivedOrg.IsAuditEnabled.Value;
+
+                    // Enable auditing on the organization.
+                    Organization orgToUpdate = new Organization {
+                        Id = orgId,
+                        IsAuditEnabled = true
+                    };
+                    service.Update(orgToUpdate);
 
                     // Enable auditing on account entities.
-                    bool accountAuditingFlag = EnableEntityAuditing(service, Account.EntityLogicalName, true);
+                    accountAuditingFlag = EnableEntityAuditing(service, Account.EntityLogicalName, true);
+
                     #endregion Enable Auditing for an Account
                     #region Retrieve the Record Change History
                     Console.WriteLine("Retrieving the account change history.\n");
-                    
+
                     // Retrieve the audit history for the account and display it.
-                    var changeRequest = new RetrieveRecordChangeHistoryRequest();
-                    changeRequest.Target = new EntityReference(Account.EntityLogicalName, _newAccountId);
+                    var changeRequest = new RetrieveRecordChangeHistoryRequest { 
+                        Target = new EntityReference(Account.EntityLogicalName, _newAccountId)
+                    };                    
 
                     var changeResponse =
                         (RetrieveRecordChangeHistoryResponse)service.Execute(changeRequest);
@@ -69,9 +73,11 @@ namespace PowerApps.Samples
                     #region Retrieve the Attribute Change History
 
                     // Update the Telephone1 attribute in the Account entity record.
-                    var accountToUpdate = new Account();
-                    accountToUpdate.AccountId = _newAccountId;
-                    accountToUpdate.Telephone1 = "123-555-5555";
+                    var accountToUpdate = new Account {
+                        AccountId = _newAccountId,
+                        Telephone1 = "123-555-5555"
+                    };
+
                     service.Update(accountToUpdate);
                     Console.WriteLine("Updated the Telephone1 field in the Account entity.");
 
@@ -110,14 +116,16 @@ namespace PowerApps.Samples
 
                     var auditDetailsResponse =
                         (RetrieveAuditDetailsResponse)service.Execute(auditDetailsRequest);
+
                     DisplayAuditDetails(service,auditDetailsResponse.AuditDetail);
 
                     #endregion Retrieve the Audit Details
 
                     #region Revert Auditing
                     // Set the organization and account auditing flags back to the old values
-                    org.IsAuditEnabled = organizationAuditingFlag;
-                    service.Update(org);
+
+                    orgToUpdate.IsAuditEnabled = organizationAuditingFlag;
+                    service.Update(orgToUpdate);
 
                     EnableEntityAuditing(service,Account.EntityLogicalName, accountAuditingFlag);
 
