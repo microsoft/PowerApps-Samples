@@ -1,20 +1,16 @@
 ﻿using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Client;
 using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Metadata;
 using Microsoft.Xrm.Tooling.Connector;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PowerApps.Samples
 {
-   public partial class SampleProgram
+    public partial class SampleProgram
     {
-        
+
         private static Guid _newAccountId;
         private static bool prompt = true;
 
@@ -32,7 +28,7 @@ namespace PowerApps.Samples
                 return;
             }
             CreateRequiredRecords(service);
-            
+
 
         }
 
@@ -51,43 +47,41 @@ namespace PowerApps.Samples
             // Write out some of the change history information in the audit record. 
             var record = (Audit)detail.AuditRecord;
 
-            Console.WriteLine("\nAudit record created on: {0}", record.CreatedOn.Value.ToLocalTime());
-            Console.WriteLine("Entity: {0}, Action: {1}, Operation: {2}",
-                record.ObjectId.LogicalName, record.FormattedValues["action"],
-                record.FormattedValues["operation"]);
+            Console.WriteLine($"\nAudit record created on: {record.CreatedOn.Value.ToLocalTime()}");
+            Console.WriteLine($"Entity: {record.ObjectId.LogicalName}, Action: {record.FormattedValues["action"]}, Operation: {record.FormattedValues["operation"]}");
+            Console.WriteLine($"Operation performed by {record.UserId.Name}");
 
             // Show additional details for certain AuditDetail sub-types.
             var detailType = detail.GetType();
             if (detailType == typeof(AttributeAuditDetail))
             {
                 var attributeDetail = (AttributeAuditDetail)detail;
+                string oldValue = "(no value)", newValue = "(no value)";
 
                 // Display the old and new attribute values.
-                foreach (KeyValuePair<String, object> attribute in attributeDetail.NewValue.Attributes)
+                foreach (KeyValuePair<string, object> attribute in attributeDetail.NewValue.Attributes)
                 {
-                    String oldValue = "(no value)", newValue = "(no value)";
 
-                    //TODO Display the lookup values of those attributes that do not contain strings.
                     if (attributeDetail.OldValue.Contains(attribute.Key))
-                        oldValue = attributeDetail.OldValue[attribute.Key].ToString();
+                    {
+                        oldValue = GetTypedValueAsString(attributeDetail.OldValue[attribute.Key]);
+                    }
 
-                    newValue = attributeDetail.NewValue[attribute.Key].ToString();
+                    newValue = GetTypedValueAsString(attributeDetail.NewValue[attribute.Key]);
 
-                    Console.WriteLine("Attribute: {0}, old value: {1}, new value: {2}",
-                        attribute.Key, oldValue, newValue);
+                    Console.WriteLine($"Attribute: {attribute.Key}, old value: {oldValue}, new value: {newValue}");
+
                 }
 
                 foreach (KeyValuePair<String, object> attribute in attributeDetail.OldValue.Attributes)
                 {
                     if (!attributeDetail.NewValue.Contains(attribute.Key))
                     {
-                        String newValue = "(no value)";
+                        newValue = "(no value)";
 
-                        //TODO Display the lookup values of those attributes that do not contain strings.
-                        String oldValue = attributeDetail.OldValue[attribute.Key].ToString();
+                        oldValue = GetTypedValueAsString(attributeDetail.OldValue[attribute.Key]);
 
-                        Console.WriteLine("Attribute: {0}, old value: {1}, new value: {2}",
-                            attribute.Key, oldValue, newValue);
+                        Console.WriteLine($"Attribute: {attribute.Key}, old value: {oldValue}, new value: {newValue}");
                     }
                 }
             }
@@ -106,7 +100,7 @@ namespace PowerApps.Samples
             var entityRequest = new RetrieveEntityRequest
             {
                 LogicalName = entityLogicalName,
-                EntityFilters = EntityFilters.Attributes
+                EntityFilters = EntityFilters.Entity
             };
 
             var entityResponse =
@@ -138,18 +132,20 @@ namespace PowerApps.Samples
             var Categories = new { PreferredCustomer = 1, Standard = 2 };
 
             // Create a new account entity. 
-            var newAccount = new Account {Name = "Example Account" };
+            var newAccount = new Account { Name = "Example Account" };
             _newAccountId = service.Create(newAccount);
 
             Console.WriteLine("then updating the account.");
 
-            // Set the values of some other attributes.
-            newAccount.AccountId = _newAccountId;
-            newAccount.AccountNumber = "1-A";
-            newAccount.AccountCategoryCode = new OptionSetValue(Categories.PreferredCustomer);
-            newAccount.Telephone1 = "555-555-5555";
+            var accountToUpdate = new Account
+            {
+                AccountId = _newAccountId,
+                AccountNumber = "1-A",
+                AccountCategoryCode = new OptionSetValue(Categories.PreferredCustomer),
+                Telephone1 = "555-555-5555"
+            };
 
-            service.Update(newAccount);
+            service.Update(accountToUpdate);
         }
         /// <summary>
         /// Deletes any entity records that were created for this sample.
@@ -163,9 +159,9 @@ namespace PowerApps.Samples
             if (prompt)
             {
                 Console.WriteLine("\nDo you want to delete the account record? (y/n) [y]: ");
-                String answer = Console.ReadLine();
+                string answer = Console.ReadLine();
 
-                deleteRecords = (answer.StartsWith("y") || answer.StartsWith("Y") || answer == String.Empty);
+                deleteRecords = (answer.StartsWith("y") || answer.StartsWith("Y") || answer == string.Empty);
             }
 
             if (deleteRecords)
@@ -177,7 +173,7 @@ namespace PowerApps.Samples
             if (prompt)
             {
                 Console.WriteLine("\nDo you want to delete ALL audit records? (y/n) [n]: ");
-                String answer = Console.ReadLine();
+                string answer = Console.ReadLine();
 
                 deleteRecords = (answer.StartsWith("y") || answer.StartsWith("Y"));
             }
@@ -225,7 +221,31 @@ namespace PowerApps.Samples
                     Console.WriteLine("There were no audit records that could be deleted.");
             }
         }
+        /// <summary>
+        /// Returns a string value for the type
+        /// </summary>
+        /// <param name="typedValue"></param>
+        /// <returns></returns>
+        public static string GetTypedValueAsString(object typedValue)
+        {
 
+            string value = string.Empty;
 
+            switch (typedValue)
+            {
+                case OptionSetValue o:
+                    value = o.Value.ToString();
+                    break;
+                case EntityReference e:
+                    value = $"LogicalName:{e.LogicalName},Id:{e.Id},Name:{e.Name}";
+                    break;
+                default:
+                    value = typedValue.ToString();
+                    break;
+            }
+
+            return value;
+
+        }
     }
 }
