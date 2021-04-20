@@ -1267,7 +1267,7 @@ function CustomerConnectorUpdateTests
     }
 }
 
-function ReplacePolicyEnvironmentsForOnlyEnvironmentType
+function UpdatePolicyEnvironmentsForTeams
 {
     param
     (

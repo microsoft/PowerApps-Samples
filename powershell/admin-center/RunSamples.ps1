@@ -142,7 +142,7 @@ function RunTests
     # 2. Get the specified policy
     # 3. Relace environments for OnlyEnvironments type
     # 4. Add environments to ExceptEnvironments policy
-    ReplacePolicyEnvironmentsForOnlyEnvironmentType  `
+    UpdatePolicyEnvironmentsForTeams  `
         -PolicyName "9d903089-f712-4877-8e99-f6c96bd615b7" `
         -PolicyDisplayName "Policy test for Teams" `
         -ExceptionPolicyName "2ab49607-12fc-4b7d-8ee7-d21576561081" `
