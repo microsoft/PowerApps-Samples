@@ -1275,7 +1275,16 @@ function ReplacePolicyEnvironmentsForOnlyEnvironmentType
         [string]$PolicyName,
 
         [Parameter(Mandatory = $true)]
-        [string]$PolicyDisplayName
+        [string]$PolicyDisplayName,
+
+        [Parameter(Mandatory = $false)]
+        [string]$ExceptionPolicyName,
+
+        [Parameter(Mandatory = $false)]
+        [string]$ExceptionPolicyDisplayName,
+
+        [Parameter(Mandatory = $false)]
+        [string[]]$ExceptionEnvironmentIds
     )
 
     Write-Host "ReplacePolicyEnvironmentsForOnlyEnvironmentType start."
@@ -1303,6 +1312,47 @@ function ReplacePolicyEnvironmentsForOnlyEnvironmentType
 
         StringsAreEqual -Expect $PolicyName -Actual $response.Internal.name
         Write-Host "Policy is updated."
+    }
+
+    if (-not [string]::IsNullOrWhiteSpace($ExceptionPolicyName) -and
+        -not [string]::IsNullOrWhiteSpace($ExceptionPolicyDisplayName) -and
+        $ExceptionEnvironmentIds -ne $null)
+    {
+        $policy = Get-DlpPolicy -PolicyName $ExceptionPolicyName
+
+        if ($policy.environmentType -eq "ExceptEnvironments" -and
+            $policy.displayName -eq $ExceptionPolicyDisplayName)
+        {
+            if ($policy.environments -eq $null)
+            {
+                $policy.environments = @()
+            }
+            
+            foreach ($environmentId in $ExceptionEnvironmentIds)
+            {
+                $environment = $policy.environments | where {$_.id -eq $environmentId}
+                if ($environment -eq $null)
+                {
+                    # add the environment into the policy
+                    $environment = Get-AdminPowerAppEnvironment -EnvironmentName $environmentId
+                    if ($environment -ne $null)
+                    {
+                        $item = [pscustomobject]@{
+                            id = $environment.Internal.id
+                            name = $environment.Internal.name
+                            type = $environment.Internal.type
+                        }
+                        $policy.environments += $item
+                    }
+                }
+            }
+
+            $policy.environments = $teamEnvironments
+            $response = Set-DlpPolicy -PolicyName $policy.name -UpdatedPolicy $policy
+
+            StringsAreEqual -Expect $PolicyName -Actual $response.Internal.name
+            Write-Host "Exception policy is updated."
+        }
     }
 }
 
