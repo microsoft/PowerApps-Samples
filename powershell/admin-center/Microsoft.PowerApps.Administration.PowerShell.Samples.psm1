@@ -1315,8 +1315,7 @@ function UpdatePolicyEnvironmentsForTeams
     }
 
     if (-not [string]::IsNullOrWhiteSpace($ExceptionPolicyName) -and
-        -not [string]::IsNullOrWhiteSpace($ExceptionPolicyDisplayName) -and
-        $ExceptionEnvironmentIds -ne $null)
+        -not [string]::IsNullOrWhiteSpace($ExceptionPolicyDisplayName))
     {
         $policy = Get-DlpPolicy -PolicyName $ExceptionPolicyName
 
@@ -1328,26 +1327,38 @@ function UpdatePolicyEnvironmentsForTeams
                 $policy.environments = @()
             }
             
-            foreach ($environmentId in $ExceptionEnvironmentIds)
+            # add teams environment into ExceptEnvironments policy
+            foreach ($environment in $teamEnvironments)
             {
-                $environment = $policy.environments | where {$_.id -eq $environmentId}
-                if ($environment -eq $null)
+                if (($policy.environments | where {$_.id -eq $environment.Id}) -eq $null)
                 {
-                    # add the environment into the policy
-                    $environment = Get-AdminPowerAppEnvironment -EnvironmentName $environmentId
-                    if ($environment -ne $null)
+                    # add teams environment
+                    $policy.environments += $environment
+                }
+            }
+
+            if ($ExceptionEnvironmentIds -ne $null)
+            {
+                foreach ($environmentId in $ExceptionEnvironmentIds)
+                {
+                    $environment = $policy.environments | where {$_.id -eq $environmentId}
+                    if ($environment -eq $null)
                     {
-                        $item = [pscustomobject]@{
-                            id = $environment.Internal.id
-                            name = $environment.Internal.name
-                            type = $environment.Internal.type
+                        # add the environment from $ExceptionEnvironmentIds into the policy
+                        $environment = Get-AdminPowerAppEnvironment -EnvironmentName $environmentId
+                        if ($environment -ne $null)
+                        {
+                            $item = [pscustomobject]@{
+                                id = $environment.Internal.id
+                                name = $environment.Internal.name
+                                type = $environment.Internal.type
+                            }
+                            $policy.environments += $item
                         }
-                        $policy.environments += $item
                     }
                 }
             }
 
-            $policy.environments = $teamEnvironments
             $response = Set-DlpPolicy -PolicyName $policy.name -UpdatedPolicy $policy
 
             StringsAreEqual -Expect $PolicyName -Actual $response.Internal.name
