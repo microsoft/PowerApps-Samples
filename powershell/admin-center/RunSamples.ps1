@@ -152,7 +152,7 @@ function RunTests
         -PolicyName "9d903089-f712-4877-8e99-f6c96bd615b7" `
         -PolicyDisplayName "Policy test for Teams" `
         -ExceptionPolicyName "2ab49607-12fc-4b7d-8ee7-d21576561081" `
-        -ExceptionPolicyDisplayName "Exception policy test for teams"
+        -ExceptionPolicyDisplayName "Exception policy test for teams" `
         -ExceptionEnvironmentIds $environmentIds
 
     $EndTime = Get-Date
