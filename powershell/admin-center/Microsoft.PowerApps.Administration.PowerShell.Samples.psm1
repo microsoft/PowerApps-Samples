@@ -1341,7 +1341,7 @@ function UpdatePolicyEnvironmentsForTeams
             {
                 foreach ($environmentId in $ExceptionEnvironmentIds)
                 {
-                    $environment = $policy.environments | where {$_.id -eq $environmentId}
+                    $environment = $policy.environments | where {$_.name -eq $environmentId}
                     if ($environment -eq $null)
                     {
                         # add the environment from $ExceptionEnvironmentIds into the policy
@@ -1361,7 +1361,7 @@ function UpdatePolicyEnvironmentsForTeams
 
             $response = Set-DlpPolicy -PolicyName $policy.name -UpdatedPolicy $policy
 
-            StringsAreEqual -Expect $PolicyName -Actual $response.Internal.name
+            StringsAreEqual -Expect $ExceptionPolicyName -Actual $response.Internal.name
             Write-Host "Exception policy is updated."
         }
     }
