@@ -1,0 +1,10 @@
+name: inference_environment
+dependencies:
+- python=3.6.8
+- pip:
+    - azureml-defaults
+    - pillow==7.2.0
+    - onnxruntime==1.4.0
+    - inference-schema
+    - azureml-contrib-services
+    - numpy
