@@ -1,7 +1,3 @@
----
-title: Bring your own model tutorial
----
-
 # Bring your own model tutorial
 
 
