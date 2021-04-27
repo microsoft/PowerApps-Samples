@@ -1272,22 +1272,45 @@ function UpdatePolicyEnvironmentsForTeams
     param
     (
         [Parameter(Mandatory = $true)]
-        [string]$PolicyName,
+        [string]$OnlyEnvironmentsPolicyName,
 
         [Parameter(Mandatory = $true)]
-        [string]$PolicyDisplayName,
+        [string]$OnlyEnvironmentsPolicyDisplayName,
 
         [Parameter(Mandatory = $false)]
-        [string]$ExceptionPolicyName,
+        [string]$ExceptEnvironmentsPolicyName,
 
         [Parameter(Mandatory = $false)]
-        [string]$ExceptionPolicyDisplayName,
+        [string]$ExceptEnvironmentsPolicyDisplayName,
 
         [Parameter(Mandatory = $false)]
         [string[]]$ExceptionEnvironmentIds
     )
 
-    Write-Host "ReplacePolicyEnvironmentsForOnlyEnvironmentType start."
+    Write-Host "UpdatePolicyEnvironmentsForTeams starts."
+
+    $onlyEnvironmentsPolicy = Get-DlpPolicy -PolicyName $OnlyEnvironmentsPolicyName
+    if ($onlyEnvironmentsPolicy.environmentType -ne "OnlyEnvironments" -or
+        $onlyEnvironmentsPolicy.displayName -ne $OnlyEnvironmentsPolicyDisplayName)
+    {
+        Write-Host "Invalid OnlyEnvironments policy."
+        return
+    }
+
+    $exceptionEnvironmentsPolicy = $null
+    if (-not [string]::IsNullOrWhiteSpace($ExceptEnvironmentsPolicyName) -and
+        -not [string]::IsNullOrWhiteSpace($ExceptEnvironmentsPolicyDisplayName)
+    {
+        $exceptionEnvironmentsPolicy = Get-DlpPolicy -PolicyName $ExceptEnvironmentsPolicyName
+        if ($exceptionEnvironmentsPolicy.environmentType -ne "ExceptEnvironments" -or
+            $exceptionEnvironmentsPolicy.displayName -ne $ExceptEnvironmentsPolicyDisplayName)
+        {
+            Write-Host "Invalid ExceptEnvironments policy."
+            return        
+        }
+    }
+
+    # get Teams environments
     $environments = Get-AdminPowerAppEnvironment -EnvironmentSku "Teams" -ApiVersion "2020-06-01"
 
     $teamEnvironments = @()
@@ -1301,70 +1324,69 @@ function UpdatePolicyEnvironmentsForTeams
         $teamEnvironments += $item
     }
 
-    $policy = Get-DlpPolicy -PolicyName $PolicyName
-    
-    if ($policy.environmentType -eq "OnlyEnvironments" -and
-        $policy.displayName -eq $PolicyDisplayName -and
-        $teamEnvironments.Count -gt 0)
+    if ($teamEnvironments.Count -gt 0)
     {
-        $policy.environments = $teamEnvironments
-        $response = Set-DlpPolicy -PolicyName $policy.name -UpdatedPolicy $policy
+        $onlyEnvironmentsPolicy.environments = $teamEnvironments
+        $response = Set-DlpPolicy -PolicyName $onlyEnvironmentsPolicy.name -UpdatedPolicy $onlyEnvironmentsPolicy
 
-        StringsAreEqual -Expect $PolicyName -Actual $response.Internal.name
-        Write-Host "Policy is updated."
+        StringsAreEqual -Expect $OnlyEnvironmentsPolicyName -Actual $response.Internal.name
+        Write-Host "OnlyEnvironments policy is updated."
+    }
+    else
+    {
+        Write-Host "There is no Teams environment found."
     }
 
-    if (-not [string]::IsNullOrWhiteSpace($ExceptionPolicyName) -and
-        -not [string]::IsNullOrWhiteSpace($ExceptionPolicyDisplayName))
+    if ($exceptionEnvironmentsPolicy -ne $null)
     {
-        $policy = Get-DlpPolicy -PolicyName $ExceptionPolicyName
-
-        if ($policy.environmentType -eq "ExceptEnvironments" -and
-            $policy.displayName -eq $ExceptionPolicyDisplayName)
-        {
-            if ($policy.environments -eq $null)
-            {
-                $policy.environments = @()
-            }
+        $exceptionEnvironmentsPolicy.environments = @()
             
-            # add teams environment into ExceptEnvironments policy
-            foreach ($environment in $teamEnvironments)
+        # add teams environment into ExceptEnvironments policy
+        foreach ($environment in $teamEnvironments)
+        {
+            if (($exceptionEnvironmentsPolicy.environments | where {$_.id -eq $environment.Id}) -eq $null)
             {
-                if (($policy.environments | where {$_.id -eq $environment.Id}) -eq $null)
-                {
-                    # add teams environment
-                    $policy.environments += $environment
-                }
+                # add teams environment
+                $exceptionEnvironmentsPolicy.environments += $environment
             }
+        }
 
-            if ($ExceptionEnvironmentIds -ne $null)
+        if ($ExceptionEnvironmentIds -ne $null)
+        {
+            foreach ($environmentId in $ExceptionEnvironmentIds)
             {
-                foreach ($environmentId in $ExceptionEnvironmentIds)
+                $environment = $exceptionEnvironmentsPolicy.environments | where {$_.name -eq $environmentId}
+                if ($environment -eq $null)
                 {
-                    $environment = $policy.environments | where {$_.name -eq $environmentId}
-                    if ($environment -eq $null)
+                    # add the environment from $ExceptionEnvironmentIds into the policy
+                    $environment = Get-AdminPowerAppEnvironment -EnvironmentName $environmentId
+                    if ($environment -ne $null)
                     {
-                        # add the environment from $ExceptionEnvironmentIds into the policy
-                        $environment = Get-AdminPowerAppEnvironment -EnvironmentName $environmentId
-                        if ($environment -ne $null)
-                        {
-                            $item = [pscustomobject]@{
-                                id = $environment.Internal.id
-                                name = $environment.Internal.name
-                                type = $environment.Internal.type
-                            }
-                            $policy.environments += $item
+                        $item = [pscustomobject]@{
+                            id = $environment.Internal.id
+                            name = $environment.Internal.name
+                            type = $environment.Internal.type
                         }
+                        $exceptionEnvironmentsPolicy.environments += $item
                     }
                 }
             }
+        }
 
-            $response = Set-DlpPolicy -PolicyName $policy.name -UpdatedPolicy $policy
+        if ($exceptionEnvironmentsPolicy.environments.Count -gt 0)
+        {
+            $response = Set-DlpPolicy -PolicyName $exceptionEnvironmentsPolicy.name -UpdatedPolicy $exceptionEnvironmentsPolicy
 
-            StringsAreEqual -Expect $ExceptionPolicyName -Actual $response.Internal.name
-            Write-Host "Exception policy is updated."
+            StringsAreEqual -Expect $ExceptEnvironmentsPolicyDisplayName -Actual $response.Internal.name
+            Write-Host "ExceptEnvironments policy is updated."
+        }
+        else
+        {
+            Write-Host "ExceptEnvironments policy is not updated."
         }
     }
+
+    Write-Host "UpdatePolicyEnvironmentsForTeams completes."
 }
 
 #internal, helper function
