@@ -1360,7 +1360,7 @@ function UpdatePolicyEnvironmentsForTeams
                 {
                     # add the environment from $ExceptionEnvironmentIds into the policy
                     $environment = Get-AdminPowerAppEnvironment -EnvironmentName $environmentId
-                    if ($environment -ne $null)
+                    if ($environment.Internal.id -ne $null)
                     {
                         $item = [pscustomobject]@{
                             id = $environment.Internal.id
@@ -1368,6 +1368,10 @@ function UpdatePolicyEnvironmentsForTeams
                             type = $environment.Internal.type
                         }
                         $exceptionEnvironmentsPolicy.environments += $item
+                    }
+                    else
+                    {
+                        Write-Host "Get environment fails.`r`n$($environment.Internal.Message)"
                     }
                 }
             }
@@ -1377,8 +1381,15 @@ function UpdatePolicyEnvironmentsForTeams
         {
             $response = Set-DlpPolicy -PolicyName $exceptionEnvironmentsPolicy.name -UpdatedPolicy $exceptionEnvironmentsPolicy
 
-            StringsAreEqual -Expect $ExceptEnvironmentsPolicyName -Actual $response.Internal.name
-            Write-Host "ExceptEnvironments policy is updated."
+            if ($response.Internal.name -ne $null)
+            {
+                StringsAreEqual -Expect $ExceptEnvironmentsPolicyName -Actual $response.Internal.name
+                Write-Host "ExceptEnvironments policy is updated."
+            }
+            else
+            {
+                Write-Host "ExceptEnvironments policy update fails.`r`n$response.Error"
+            }
         }
         else
         {
