@@ -1299,7 +1299,7 @@ function UpdatePolicyEnvironmentsForTeams
 
     $exceptionEnvironmentsPolicy = $null
     if (-not [string]::IsNullOrWhiteSpace($ExceptEnvironmentsPolicyName) -and
-        -not [string]::IsNullOrWhiteSpace($ExceptEnvironmentsPolicyDisplayName)
+        -not [string]::IsNullOrWhiteSpace($ExceptEnvironmentsPolicyDisplayName))
     {
         $exceptionEnvironmentsPolicy = Get-DlpPolicy -PolicyName $ExceptEnvironmentsPolicyName
         if ($exceptionEnvironmentsPolicy.environmentType -ne "ExceptEnvironments" -or
@@ -1377,7 +1377,7 @@ function UpdatePolicyEnvironmentsForTeams
         {
             $response = Set-DlpPolicy -PolicyName $exceptionEnvironmentsPolicy.name -UpdatedPolicy $exceptionEnvironmentsPolicy
 
-            StringsAreEqual -Expect $ExceptEnvironmentsPolicyDisplayName -Actual $response.Internal.name
+            StringsAreEqual -Expect $ExceptEnvironmentsPolicyName -Actual $response.Internal.name
             Write-Host "ExceptEnvironments policy is updated."
         }
         else
