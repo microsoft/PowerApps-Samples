@@ -138,12 +138,22 @@ function RunTests
         -EnvironmentAdminName $EnvironmentAdminName `
         -EnvironmentAdminPassword $EnvironmentAdminPassword
 
+    <# Read environment Ids from file .\environmentIds.txt:
+        a337c8e0-01bb-42a0-8a96-c979b8e988a0
+        f4554dd6-7c3f-4c46-9a9b-b51af94f36e7
+    #>
+    [string[]]$environmentIds = Get-Content -Path .\environmentIds.txt
+
     # 1. Get Teams environments
     # 2. Get the specified policy
     # 3. Relace environments for OnlyEnvironments type
-    ReplacePolicyEnvironmentsForOnlyEnvironmentType  `
-        -PolicyName "9d903089-f712-4877-8e99-f6c96bd615b7" `
-        -PolicyDisplayName "Policy test for Teams"
+    # 4. Add environments to ExceptEnvironments policy
+    UpdatePolicyEnvironmentsForTeams  `
+        -OnlyEnvironmentsPolicyName "9d903089-f712-4877-8e99-f6c96bd615b7" `
+        -OnlyEnvironmentsPolicyDisplayName "Policy test for Teams" `
+        -ExceptEnvironmentsPolicyName "2ab49607-12fc-4b7d-8ee7-d21576561081" `
+        -ExceptEnvironmentsPolicyDisplayName "Exception policy test for teams" `
+        -ExceptionEnvironmentIds $environmentIds
 
     $EndTime = Get-Date
     $TimeSpan = New-TimeSpan -Start $StartTime -End $EndTime
