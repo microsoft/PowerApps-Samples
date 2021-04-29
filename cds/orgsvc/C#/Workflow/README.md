@@ -28,7 +28,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Setup
 
-Each sample creates any required entity instances that the demonstration code requires. This is done in the `CreateRequiredRecords()` method.
+Each sample creates any required table instances that the demonstration code requires. This is done in the `CreateRequiredRecords()` method.
 
 ### Demonstrate
 
@@ -38,4 +38,4 @@ The main demonstration code for each sample is found in the `Demonstrate` region
 
 The `DeleteRequiredRecords()` method displays an option in the console window to delete any records created by the sample(s).
 
-The deletion is optional in case you want to examine the entity instances (records) created by the sample(s). Typically, you would not respond to the delete prompt in the console window until after you view the new organization records in your browser. You can manually delete the created records any time after the program terminates to achieve the same result.
+The deletion is optional in case you want to examine the table instances (records) created by the sample(s). Typically, you would not respond to the delete prompt in the console window until after you view the new organization records in your browser. You can manually delete the created records any time after the program terminates to achieve the same result.

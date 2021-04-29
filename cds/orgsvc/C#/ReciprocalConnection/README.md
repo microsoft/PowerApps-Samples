@@ -26,7 +26,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 1. Perform initial request and cache the results, including the `DataToken`
 1. Update the records created in [Setup](#setup)
 1. Perform a second request, this time passing the `DataVersion` with the `DataToken` value retrieved from the initial request.
-1. Show the entity changes returned by the second request
+1. Show the table changes returned by the second request
 
 ### Clean up
 

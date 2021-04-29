@@ -20,8 +20,8 @@ Checks for the current version of the org.
 
 ### Demonstrate
 
-1. Creates a contact to send an email to (To: field).
-2. The `WhoAmIRequest` retrieves the system user to send the email (From: field).
+1. Creates a contact to send an email to (To: column).
+2. The `WhoAmIRequest` retrieves the system user to send the email (From: column).
 3. The `DeliverPromoteEmailRequest` message creates the request and also executes it.
 4. Verify the success by defining anonymous types that define possible values for email status.
 5. Queries the delivered email, and verify the status code is `sent`.

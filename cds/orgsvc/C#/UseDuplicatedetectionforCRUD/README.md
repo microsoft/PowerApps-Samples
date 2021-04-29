@@ -1,6 +1,6 @@
 # Sample: Use duplicate detection when creating and updating records
 
-This sample shows how to invoke duplicate detection for creating and updating entity records.
+This sample shows how to invoke duplicate detection for creating and updating table records.
 
 ## How to run this sample
 

@@ -1,6 +1,6 @@
 # Create a connection (early bound)
 
-This sample shows how to create a connection between an account and a contact entity that have matching connection roles.  
+This sample shows how to create a connection between an account and a contact table that have matching connection roles.  
   
 ## How to run this sample
 
@@ -16,13 +16,13 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Setup
 
-1. Creates a connection role for account and contact entity.
-2. Creates a related connection role object type code for account and contact entity.
+1. Creates a connection role for account and contact table.
+2. Creates a related connection role object type code for account and contact table.
 3. Associates the connection role with itself.
 
 ### Demonstrate
 
-1. Creates a connection between account and contact entity.
+1. Creates a connection between account and contact table.
 2. Assigns a connection role to a record.
 
 ### Clean up

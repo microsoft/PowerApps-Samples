@@ -1,6 +1,6 @@
-# Associate and disassociate entities
+# Associate and disassociate tables
 
-This sample shows how to associate and disassociate entities using the [IOrganizationService.Associate](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.associate?view=dynamics-general-ce-9) and [IOrganization.Disassociate](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.disassociate?view=dynamics-general-ce-9) messages. 
+This sample shows how to associate and disassociate tables using the [IOrganizationService.Associate](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.associate?view=dynamics-general-ce-9) and [IOrganization.Disassociate](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.disassociate?view=dynamics-general-ce-9) messages. 
 
 ## How to run this sample
 
@@ -8,11 +8,11 @@ See [How to run this sample](https://github.com/microsoft/PowerApps-Samples/blob
 
 ## What this sample does
 
-Entity records are associated to each other using lookup attributes on the related entity. The simplest way to associate two entity records in a one-to-many relationship is to use an EntityReference to set the value of a lookup attribute on the related entity.
+Table records are associated to each other using lookup columns on the related table. The simplest way to associate two table records in a one-to-many relationship is to use an `EntityReference` to set the value of a lookup columns on the related table.
 
-The simplest way to disassociate two entity records in a one-to-many relationship is to set the value of the lookup attribute to null.
+The simplest way to disassociate two table records in a one-to-many relationship is to set the value of the lookup columns to null.
 
-Relationships using an many-to-many relationship also depend on lookup attributes on the intersect entity that supports the many-to-many relationship. These relationship are defined by the existence of entity records in that intersect entity. While you can interact with the intersect entity directly, it is much easier to use the API to do this for you.
+Relationships using an many-to-many relationship also depend on lookup columns on the intersect table that supports the many-to-many relationship. These relationship are defined by the existence of table records in that intersect table. While you can interact with the intersect table directly, it is much easier to use the API to do this for you.
 
 ## How this sample works
 

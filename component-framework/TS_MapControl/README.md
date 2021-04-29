@@ -1,6 +1,6 @@
 # Power Apps component framework: Map component
 
-This sample component changes the user experience of interacting with address fields on the form. Along with the text values of the address, this component provides the ability to visually identify a particular address on a map without navigating to another tab or screen. 
+This sample component changes the user experience of interacting with address columns on the form. Along with the text values of the address, this component provides the ability to visually identify a particular address on a map without navigating to another tab or screen. 
 
 ## Before you can try the sample components
 
@@ -19,7 +19,7 @@ To try the sample components, you must first:
 
 ## What this sample does
 
-In the manifest file, we defined property of type Single line of Text. We use this to bind it to the address field on the form. Create a variable name `MAPS_API_KEY` that can be accessed in the context of the component. Google Map API allows you only to render the maps inside an `IFRAME`. So, you need to create an IFRAME element that is going to render the map using the URL we generate. By default, we are setting the map to be hidden and display it only when the address value exists on the form.
+In the manifest file, we defined property of type Single line of Text. We use this to bind it to the address columns on the form. Create a variable name `MAPS_API_KEY` that can be accessed in the context of the component. Google Map API allows you only to render the maps inside an `IFRAME`. So, you need to create an IFRAME element that is going to render the map using the URL we generate. By default, we are setting the map to be hidden and display it only when the address value exists on the form.
 
 `buildMapUrl` and `renderMap` (you can even merge them into one) takes the address string and embeds it onto the map URL by encoding the address string and then sets the IFRAME element’s src element to the URL respectively. Also, call the `notifyOutputChanged` method to ensure we notify the component that the rendering has changed.
 

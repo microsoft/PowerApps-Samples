@@ -21,8 +21,8 @@ Checks for the current version of the org.
 ### Demonstrate
 
 1. Defines some anonymous types to define the range of possible connection property values.
-2. Creates a connection role for account and contact entity.
-3. Creates a connection role object type code record for account and contact entity.
+2. Creates a connection role for account and contact table.
+3. Creates a connection role object type code record for account and contact table.
 
 ### Clean up
 

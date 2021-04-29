@@ -34,7 +34,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 1. The `ExecuteMultipleRequest` method creates the `ExecuteMultipleRequest` object.
 1. The `ExecutingMultipleSettings` method assigns settings that define execution behavior: continue on error, return responses.
 1. The `OrganizationRequestCollection` method creates an empty organization request collection.
-1. The `CreateRequest` method is added for each entity to the request collection.
+1. The `CreateRequest` method is added for each table to the request collection.
 1. The `GetCollectionOdEntitiesToUpdate` class updates the entities that are previously created.
 
 

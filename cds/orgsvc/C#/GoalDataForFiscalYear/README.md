@@ -1,4 +1,4 @@
-# Rollup goal data for a fiscal period against the strech target count
+# Rollup goal data for a fiscal period against the stretch target count
 
 This sample shows how to roll up goal data for a fiscal period against stretch target count representing a number of completed phone calls.
 
@@ -36,15 +36,15 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 1. Checks for the version of the org.
 2. Retrieves the sales manager and 2 sales representatives created manually in **Office 365**.
 3. Creates a PhoneCall record and supporting account record for the sample.
-4. Creates ActivityPartys for the phone calla "From" field.
+4. Creates ActivityPartys for the phone calla "From" column.
 5. Creates an open phone call.
 6. Closes the first phone call and creates a second one.
 7. Closes the second phone call.
 
 ### Demonstrate
 
-1. Creates Metric, and setting the Metric type to "count" and enabling strech tracking.
-2. Creates a Rollup field which targets completed (received) phone calls.
+1. Creates Metric, and setting the Metric type to "count" and enabling stretch tracking.
+2. Creates a Rollup column which targets completed (received) phone calls.
 3. The `GoalRollupQuery` creates the goal rollup queries, locating the incoming and outgoing closed phone calls.
 4. Creates three goals, one parent goal and two child goals.
 5. The `RecalculateRequest` calculates the rollup for goals. 

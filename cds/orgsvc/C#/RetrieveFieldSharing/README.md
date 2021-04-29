@@ -1,6 +1,6 @@
-# Retrieve field sharing records
+# Retrieve column sharing records
 
-This sample shows how to retrieve the `PrincipalObjectAttributeAccess` (field sharing) records for an entity.
+This sample shows how to retrieve the `PrincipalObjectAttributeAccess` (column sharing) records for a table.
 
 ## How to run this sample
 
@@ -8,7 +8,7 @@ See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/mas
 
 ## What this sample does
 
-The `PrincipleObjectAttributeAccess` message is intended to be used in a scenario where it retrieves the field sharing records for an entity.
+The `PrincipleObjectAttributeAccess` message is intended to be used in a scenario where it retrieves the column sharing records for a table.
 
 ## How this sample works
 
@@ -17,14 +17,14 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Setup
 
 1. Checks for the current version of the org.
-2. The `CreateAttributeRequest` method creates the custom fields required for the sample.
+2. The `CreateAttributeRequest` method creates the custom columns required for the sample.
 
 ### Demonstrate
 
 1. The `WhoAMIRequest` retrieves the current user's information.
 2. The `RetrieveUserPrivilegesRequest` message checks if the current user has `prvReadPOAA`.
-3. The `PrincipalObjectAttributeAccess` creates `POAA`entity for the custom fields created in the Setup(#setup).
-4. Using the `QueryExpression` retrieve user shared attribute permissions.
+3. The `PrincipalObjectAttributeAccess` creates `POAA` table for the custom columns created in the Setup(#setup).
+4. Using the `QueryExpression` retrieve user shared permissions.
 
 ### Clean up
 

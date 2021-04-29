@@ -16,7 +16,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Setup
 
 1. Checks for the current version of the org.
-1. Import a managed solution (UpsertSample_1_0_0_0_managed.zip) that creates a `sample_product` entity that has an alternate key named `sample_productcode`. Verify that the indexes to support the alternate key are active.
+1. Import a managed solution (UpsertSample_1_0_0_0_managed.zip) that creates a `sample_product` table that has an alternate key named `sample_productcode`. Verify that the indexes to support the alternate key are active.
 
 ### Demonstrate
 

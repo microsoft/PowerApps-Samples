@@ -20,16 +20,16 @@ Checks the current version of the org.
 
 ### Demonstrate
 
-1. Uses the CreateImageAttributeDemoEntity method to create a custom entity with the schema name `sample_ImageAttributeDemo` and a primary attribute with the schema name `sample_Name`.
-2. Create an image attribute with the schema name `EntityImage`. All image attributes use this name.
+1. Uses the `CreateImageAttributeDemoEntity` method to create a custom table with the schema name `sample_ImageAttributeDemo` and a primary column with the schema name `sample_Name`.
+2. Create a image column with the schema name `EntityImage`. All image columns use this name.
 
-3. Retrieve and update the main form for the `sample_ImageAttributeDemo` entity to set the `showImage` attribute to true so that the image is displayed in the form.
+3. Retrieve and update the main form for the `sample_ImageAttributeDemo` table to set the `showImage` column to true so that the image is displayed in the form.
 
-4. Publish the `sample_ImageAttributeDemo` entity.
+4. Publish the `sample_ImageAttributeDemo` table.
 
-5. Creates five new records for the `sample_ImageAttributeDemo` entity using five different sized images located in the Images folder as shown here.After each record is created you have the opportunity to view the record in the web browser application using the `ShowEntityFormInBrowser` method so that you can see how the source images are resized to fit the space available in the form.
-6. Retrieves the records with the `entityimage` attribute and saves the resized files. After you run the sample you can find the files saved in the `\bin\Debug` folder.
-7. Retrieves the records with the `entityimage_url` attribute and displays the relative URL values you can include in your application to access the images. This query should be more responsive because the amount of data transferred is smaller.
+5. Creates five new records for the `sample_ImageAttributeDemo` table using five different sized images located in the Images folder as shown here.After each record is created you have the opportunity to view the record in the web browser application using the `ShowEntityFormInBrowser` method so that you can see how the source images are resized to fit the space available in the form.
+6. Retrieves the records with the `entityimage` column and saves the resized files. After you run the sample you can find the files saved in the `\bin\Debug` folder.
+7. Retrieves the records with the `entityimage_url` column and displays the relative URL values you can include in your application to access the images. This query should be more responsive because the amount of data transferred is smaller.
 
 ### Clean up
 

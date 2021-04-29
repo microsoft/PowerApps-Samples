@@ -17,4 +17,4 @@ This sample uses a conditional (If-Match, If-None-Match) message header along wi
 
 ## Clean up
 
-Prior to termination, the program will display a console prompt asking if you want any created entity records deleted. If you want to view created records after the sample terminates, answer 'n' or 'no' and press \[Enter\].
+Prior to termination, the program will display a console prompt asking if you want any created table records deleted. If you want to view created records after the sample terminates, answer 'n' or 'no' and press \[Enter\].

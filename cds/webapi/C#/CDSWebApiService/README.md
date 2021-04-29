@@ -18,18 +18,18 @@ This class provides the following public methods:
 
 ### PostCreate
 
-Creates an entity synchronously and returns the URI
+Creates a table synchronously and returns the URI
 
 #### Parameters
 
 |Name  |Type  |Description  |
 |---------|---------|---------|
-|entitySetName|string|The entity set name of the type of entity to create. |
-|body|JObject|Contains the data for the entity to create|
+|entitySetName|string|The entity set name of the type of table to create. |
+|body|JObject|Contains the data for the table to create|
 
 #### Return Value
 
-The Uri of the created entity
+The Uri of the created table
 
 #### Remarks
 
@@ -58,7 +58,7 @@ A JObject containing the response.
 
 #### Remarks
 
-This method can be used for any operation using the POST http method, but it only includes the response content. Use PostCreate to create entities and return only the URI of the created entity.
+This method can be used for any operation using the POST http method, but it only includes the response content. Use PostCreate to create entities and return only the URI of the created table.
 
 
 ### PostAsync
@@ -73,7 +73,7 @@ Sends a PATCH request synchronously.
 
 |Name  |Type  |Description  |
 |---------|---------|---------|
-|uri|Uri|The relative path to send the request. Frequently the Uri for a specific entity|
+|uri|Uri|The relative path to send the request. Frequently the Uri for a specific table|
 |body|JObject|The payload to send|
 |headers|Dictionary<string, List<string>>|(Optional) Any headers needed to apply special behaviors|
 
@@ -133,7 +133,7 @@ Sends a PUT request synchronously.
 
 #### Remarks
 
-Put is used to update specific entity properties.
+Put is used to update specific table properties.
 
 **Note**: The Http PUT method is also used to update Metadata. This method cannot be used for that purpose. It is specifically for business data.
 

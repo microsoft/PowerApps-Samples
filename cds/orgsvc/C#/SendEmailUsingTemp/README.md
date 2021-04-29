@@ -17,7 +17,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Setup
 
 1. Checks for the current version of the org.
-2. Creates a contact record to send an email to (To: field).
+2. Creates a contact record to send an email to (To: column).
 
 ### Demonstrate
 

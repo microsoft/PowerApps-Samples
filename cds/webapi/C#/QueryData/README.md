@@ -1,6 +1,6 @@
-﻿# Query entity data using the Web API
+﻿# Query table data using the Web API
 
-This sample demonstrates how to define and perform data queries on Microsoft Dataverse entity instances using the Web API. The sample solution includes a shared project named CDSWebApiService that provides helper methods for message sending and receiving, performance enhancements, and error processing.
+This sample demonstrates how to define and perform data queries on Microsoft Dataverse table using the Web API. The sample solution includes a shared project named CDSWebApiService that provides helper methods for message sending and receiving, performance enhancements, and error processing.
 
 More information: [CDSWebApiService class](https://docs.microsoft.com/powerapps/developer/common-data-service/webapi/samples/cdswebapiservice), [Web API Query Data Sample](https://docs.microsoft.com/powerapps/developer/common-data-service/webapi/web-api-query-data-sample)
 
@@ -16,7 +16,7 @@ More information: [CDSWebApiService class](https://docs.microsoft.com/powerapps/
 
 ## Demonstrates
 
-This sample demonstrates how to perform the following queries on entity instance data:
+This sample demonstrates how to perform the following queries on table data:
 
 - Selecting specific properties
 - Using Query Functions
@@ -29,4 +29,4 @@ This sample demonstrates how to perform the following queries on entity instance
 
 ## Clean up
 
-Prior to termination, the program will display a console prompt asking if you want any created entity records deleted. If you want to view created records after the sample terminates, answer 'n' or 'no' and press \[Enter\].
+Prior to termination, the program will display a console prompt asking if you want any created table records deleted. If you want to view created records after the sample terminates, answer 'n' or 'no' and press \[Enter\].

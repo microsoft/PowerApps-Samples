@@ -8,7 +8,7 @@ page_type: sample
 description: "This sample shows how to create, retrieve, update, and delete operations on an account using the early bound class in Microsoft Dataverse. [SOAP]"
 ---
 
-# Early-bound entity operations
+# Early-bound table operations
 
 This sample shows how to create, retrieve, update, and delete operations on an account using the early bound class. This sample uses the following common methods:
 
@@ -23,7 +23,7 @@ See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/mas
 
 ## What this sample does
 
-The `IOrganizationService` message is intended to be used in a scenario where it provides programmatic access to the metadata and data for an organization.
+The `IOrganizationService` message is intended to be used in a scenario where it provides programmatic access to the table definitions and data for an organization.
 
 ## How this sample works
 
@@ -37,9 +37,9 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Demonstrate
 
 1. Instantiate an account object.
-1. Retrieves the account containing its attributes .
+1. Retrieves the account containing its columns .
 1. Retrieves the version number of the account.
-1. Updates the account with postal1 code attribute. 
+1. Updates the account with postal1 code column. 
 
 
 ### Clean up

@@ -8,7 +8,7 @@ See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/mas
 
 ## What this sample does
 
-The `MergeRequest` message is intended to be used in a scenario where it contains the data that’s needed to merge the information from two entity records of the same type.
+The `MergeRequest` message is intended to be used in a scenario where it contains the data that’s needed to merge the information from two table records of the same type.
 
 ## How this sample works
 
@@ -17,12 +17,12 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Setup
 
 1. Checks for the current version of the org.
-2. The `CreateRequiredRecords` method creates any entity records that this sample requires.
+2. The `CreateRequiredRecords` method creates any table records that this sample requires.
 
 ### Demonstrate
 
 1. The `MergeRequest` method creates the request. 
-2. The `Account` message creates another account to hold new data to merge into the entity.
+2. The `Account` message creates another account to hold new data to merge into the table.
 
 
 ### Clean up

@@ -23,7 +23,7 @@ Creates three contact records which are required for this sample.
 
 1. Retrieves the contact records that are created in the [Setup](#Setup). 
 2. Creates the activity party records for each contact.
-3. Also creates Letter activity and set **From** and **To** fields to the respective Activity Party entities.
+3. Also creates Letter activity and set **From** and **To** columns to the respective Activity Party entities.
 
 ### Clean up
 

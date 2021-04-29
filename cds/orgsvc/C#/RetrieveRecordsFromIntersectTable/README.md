@@ -17,10 +17,10 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Setup
 
 1. Checks for the current version of the org. 
-1. The `CreateRequireRecords` method creates entity records that are used by the sample.
+1. The `CreateRequireRecords` method creates table records that are used by the sample.
 1. The `QueryExpression` message is used to retrieve the default business unit needed to create the team.
 1. The `WhoAmIRequest` gets the GUID of the current user.
-1. The `Role` message instantiate a role entity record and set its property values.
+1. The `Role` message instantiate a role table record and set its property values.
 1. The `AssociateRequest` assigns the user to the Managers role. 
 
 ### Demonstrate

@@ -26,27 +26,27 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 You must customize your environment as stated below for the indicated custom activities to function properly.
 
 **UpdateNextBirthday**  
-A custom field named *Contact*.new_nextbirthday must exist for this custom workflow activity to work.
+A custom column named *Contact*.new_nextbirthday must exist for this custom workflow activity to work.
 
 **RetrieveCreditScore**  
 The following customizations must exist for this custom workflow activity to work:
 
-Custom entity schema name: *new_loanapplication*  
-Attribute: new_loanapplicationid as the primary key  
-Attribute: new_creditscore of type int with min of 0 and max of 1000 (if it is to be updated)  
-Attribute: new_loanamount of type money with default min/max  
-Customize the form to include the attribute new_loanapplicantid  
+Custom table schema name: *new_loanapplication*  
+Column: new_loanapplicationid as the primary key  
+Column: new_creditscore of type int with min of 0 and max of 1000 (if it is to be updated)  
+Column: new_loanamount of type money with default min/max  
+Customize the form to include the column new_loanapplicantid  
 
-The *contact* entity must have the following customizations:  
-Attribute: new_ssn as Single Line of Text with max length of 15  
+The *contact* table must have the following customizations:  
+Column: new_ssn as Single Line of Text with max length of 15  
 One-To-Many Relationship with these properties:  
 Relationship Definition Schema Name: new_loanapplicant  
-Relationship Definition Related Entity Display Name: Loan Application  
-Relationship Attribute Schema Name: new_loanapplicantid  
+Relationship Definition Related table Display Name: Loan Application  
+Relationship column Schema Name: new_loanapplicantid  
 Relationship Behavior Type: Referential
 
 ### See Also
 
 [Workflow extensions](https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/workflow/workflow-extensions)  
 [Tutorial: Create workflow extension](https://docs.microsoft.com/powerapps/developer/common-data-service/workflow/tutorial-create-workflow-extension)  
-[Create a custom entity](https://docs.microsoft.com/powerapps/maker/common-data-service/data-platform-create-entity)
+[Create a custom table](https://docs.microsoft.com/powerapps/maker/common-data-service/data-platform-create-entity)

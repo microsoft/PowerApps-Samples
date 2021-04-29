@@ -27,7 +27,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 1. Checks for the version of the org.
 2. Retrieves the sales manager created manually in **Office 365**.
 3. Creates a PhoneCall record and supporting account record for the sample.
-4. Creates ActivityPartys for the phone calla "From" field.
+4. Creates ActivityPartys for the phone calla "From" column.
 5. Creates an open phone call.
 6. Closes the first phone call and creates a second one.
 7. Closes the second phone call.
@@ -35,7 +35,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Demonstrate
 
 1. Creates Metric, and setting the Metric type to `count` and also setting `IsAmount` to false.
-2. The `RollupFields` creates a Rollup field which targets completed (received) phone calls.
+2. The `RollupFields` creates a Rollup column which targets completed (received) phone calls.
 3. The `GoalRollupQuery` creates the goal rollup queries, locating the incoming and outgoing closed phone calls. 
 4. Creates a goal to track the open incoming phone calls.
 5. The `RecalculateRequest` calculates the rollup for goals.

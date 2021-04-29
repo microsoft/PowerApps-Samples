@@ -22,13 +22,13 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Setup
 
 1. Checks for the current version of the org.
-1. The `CreateRequiredRecords` method creates entity records that is required for the sample.
+1. The `CreateRequiredRecords` method creates table records that is required for the sample.
 
 ### Demonstrate
 
 1. The `presentationXml` method sets the presentation XML string. 
 2. The `dataXml` method sets the data XML string.
-3. The `newUserOwnedVisualization` method creates the visualization entity instance.
+3. The `newUserOwnedVisualization` method creates the visualization table.
 4. The `retrievedOrgOwnedVisualization` method retrieves the visualization.
 5. The `newDataXml` method updates the name and the data description string.
 

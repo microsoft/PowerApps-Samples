@@ -1,6 +1,6 @@
 # Power Apps component framework: IFRAME component
 
-This sample describes how to bind a code component to different fields on the form and use the value of these fields as input properties to the component.
+This sample describes how to bind a code component to different columns on the form and use the value of these columns as input properties to the component.
 
 ## Before you can try the sample components
 
@@ -19,17 +19,17 @@ To try the sample components, you must first:
 
 ## What this sample does
 
-This sample component renders an `IFRAME` which displays `Bing Maps UR`L. The component is bound to two floating point fields on the form, which are passed as parameters to the component and injected into the `IFRAME URL` to update the Bing Map to the latitude and longitude of the provided inputs.
+This sample component renders an `IFRAME` which displays `Bing Maps UR`L. The component is bound to two floating point columns on the form, which are passed as parameters to the component and injected into the `IFRAME URL` to update the Bing Map to the latitude and longitude of the provided inputs.
 
-Update the manifest file to include binding to two additional fields on the form. This change informs the Power Apps component framework that these bound fields need to be passed to the component during initialization and whenever one of the values is updated.
+Update the manifest file to include binding to two additional columns on the form. This change informs the Power Apps component framework that these bound columns need to be passed to the component during initialization and whenever one of the values is updated.
 
-Additional bound properties may be required or not. This will be enforced during the component configuration when the component is being bound to the form. This can be configured by setting the `required` attribute of the property node in the component manifest. Set the value to false if you don't want to require the component property be bound to a field.
+Additional bound properties may be required or not. This will be enforced during the component configuration when the component is being bound to the form. This can be configured by setting the `required` column of the property node in the component manifest. Set the value to false if you don't want to require the component property be bound to a column.
 
-`ComponentFramework.d.ts` needs to be updated to add two fields to `IInputs` interface. This is the format the Power Apps component framework passes the field values. Adding these values to the IInputs interface allows your TypeScript file to reference the values and compile successfully.
+`ComponentFramework.d.ts` needs to be updated to add two columns to `IInputs` interface. This is the format the Power Apps component framework passes the column values. Adding these values to the IInputs interface allows your TypeScript file to reference the values and compile successfully.
 
-The initial rendering generates an `IFRAME` element and appends it to the controls container. This `IFRAM`E is used to display the Bing Map. The url of the IFRAME is set to a Bing Map URL and includes the bound fields (latitudeValue and longitudeValue) in the url to center the map at the provided location.
+The initial rendering generates an `IFRAME` element and appends it to the controls container. This `IFRAM`E is used to display the Bing Map. The url of the IFRAME is set to a Bing Map URL and includes the bound columns (latitudeValue and longitudeValue) in the url to center the map at the provided location.
 
-The `updateView` method is invoked whenever one of these fields are updated on the form. This method updates the url of the Bing Map IFRAME to use the new latitude and longitude values passed to the component. To view this component in run time, bind the component to a field on the form like any other code component.
+The `updateView` method is invoked whenever one of these columns are updated on the form. This method updates the url of the Bing Map IFRAME to use the new latitude and longitude values passed to the component. To view this component in run time, bind the component to a column on the form like any other code component.
 
 ## How to run the sample
 

@@ -1,6 +1,6 @@
 # Query connection role by entity type code (early bound)
 
-This sample shows how to use a query to find a connection role for an account entity by specifying an entity type code.
+This sample shows how to use a query to find a connection role for an account table by specifying an entity type code.
 
 ## How to run this sample
 
@@ -8,7 +8,7 @@ See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/mas
 
 ## What this sample does
 
-This sample shows how to use a query to find a connection role for an account entity by specifying an entity type code.
+This sample shows how to use a query to find a connection role for an account table by specifying an entity type code.
 
 ## How this sample works
 
@@ -23,7 +23,7 @@ Checks the version of the org.
 1. Defines some anonymous types to define the range of possible connection property values.
 2. The `ConnectionRole` creates a connection role.
 3. The `QueryExpression` queries all the connection roles.
-4. The `ConnectionRoleObjectTypeCode` creates a connection role object type code record for account entity.
+4. The `ConnectionRoleObjectTypeCode` creates a connection role object type code record for account table.
 
 ### Clean up
 

@@ -17,7 +17,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Setup
 
 1. Checks for the current version of the org.
-2. The `CreateRequiredRecords` method creates entity records that are required for the sample.
+2. The `CreateRequiredRecords` method creates table records that are required for the sample.
 
 ### Demonstrate
 
