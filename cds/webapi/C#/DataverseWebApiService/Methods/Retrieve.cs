@@ -16,7 +16,7 @@ namespace PowerApps.Samples
         /// <param name="query">The OData query</param>
         /// <param name="formattedValues">Whether to include formatted values</param>
         /// <returns></returns>
-        public static async Task<T> Retrieve<T>(this Service service, EntityReference entityReference, string query, bool formattedValues) where T : IEntity
+        public static async Task<T> Retrieve<T>(this Service service, EntityReference entityReference, string query, bool formattedValues = false) where T : IEntity
         {
 
             try
