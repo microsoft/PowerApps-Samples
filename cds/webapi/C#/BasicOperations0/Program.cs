@@ -80,10 +80,12 @@ namespace PowerApps.Samples
                 Console.WriteLine($"Contact '{contact1.firstname} {contact1.lastname}" +
                         "' updated with jobtitle and annual income.");
 
+                string contactQuery1 = "$select=fullname,annualincome,jobtitle,description";
+
                 //Retrieve a contact
                 var retrievedContact1 = await service.Retrieve<Contact>(
                     contact1Ref,
-                    "$select=fullname,annualincome,jobtitle,description");
+                    contactQuery1);
 
                 Console.WriteLine($"Contact '{retrievedContact1.fullname}' retrieved: \n" +
                 $"\tAnnual income: {retrievedContact1.annualincome}\n" +
@@ -149,7 +151,9 @@ namespace PowerApps.Samples
                 Console.WriteLine($"Account '{account1.name}' created.");
                 Console.WriteLine($"Account URI: {account1Ref.GetPath()}");
 
-                string accountQuery1 = "$select=name&$expand=primarycontactid($select=fullname,jobtitle,annualincome)";
+                string accountQuery1 = "$select=name&" +
+                    "$expand=primarycontactid(" +
+                    "$select=fullname,jobtitle,annualincome)";
 
                 //Retrieve the account
                 var retrievedAccount1 = await service.Retrieve<Account>(account1Ref, accountQuery1);
@@ -220,7 +224,9 @@ namespace PowerApps.Samples
 
                 Console.WriteLine($"Account URI: {account2Ref.GetPath()}");
 
-                string accountQuery2 = "$select=name,&$expand=primarycontactid($select=fullname,jobtitle,annualincome;$expand=Contact_Tasks($select=subject,description,scheduledstart,scheduledend))";
+                string accountQuery2 = "$select=name,&" +
+                    "$expand=primarycontactid(" +
+                    "$select=fullname,jobtitle,annualincome)";
 
                 var retrievedAccount2 = await service.Retrieve<Account>(account2Ref, accountQuery2);
 
@@ -234,9 +240,13 @@ namespace PowerApps.Samples
                 Console.WriteLine($"\tJob title: {retrievedAccount2.primarycontactid.jobtitle} \n" +
                         $"\tAnnual income: {retrievedAccount2.primarycontactid.annualincome}");
 
-                string contactQuery1 = "$select=fullname&$expand=Contact_Tasks($select=subject,description,scheduledstart,scheduledend)";
 
-                var retrievedcontact2 = await service.Retrieve<Contact>(retrievedcontact2Ref, contactQuery1);
+                //Next retrieve same contact and her assigned tasks.
+                string contactQuery2 = "$select=fullname&" +
+                    "$expand=Contact_Tasks(" +
+                    "$select=subject,description,scheduledstart,scheduledend)";
+
+                var retrievedcontact2 = await service.Retrieve<Contact>(retrievedcontact2Ref, contactQuery2);
 
                 Console.WriteLine($"Contact '{retrievedcontact2.fullname}' has the following assigned tasks:");
                 foreach (TaskActivity task in retrievedcontact2.Contact_Tasks)
@@ -249,6 +259,12 @@ namespace PowerApps.Samples
                 }
 
                 #endregion Section 3: Create related entities
+
+                #region Section 4: Associate and Disassociate entities
+
+                //TODO
+
+                #endregion Section 4: Associate and Disassociate entities
 
                 #region Section 5: Delete sample entities
 
