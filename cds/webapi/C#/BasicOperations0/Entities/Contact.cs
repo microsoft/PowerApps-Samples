@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace PowerApps.Samples
@@ -31,5 +32,7 @@ namespace PowerApps.Samples
         public decimal annualincome { get; set; }
         public string jobtitle { get; set; }
         public string description { get; set; }
+
+        public List<TaskActivity> Contact_Tasks { get; set; }
     }
 }
