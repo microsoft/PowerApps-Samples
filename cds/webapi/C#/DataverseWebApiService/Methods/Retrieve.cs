@@ -29,7 +29,7 @@ namespace PowerApps.Samples
                 HttpRequestMessage request = new HttpRequestMessage
                 {
                     Method = HttpMethod.Get,
-                    RequestUri = new Uri(service.BaseAddress + entityReference.GetPath() + query),
+                    RequestUri = new Uri(service.BaseAddress + entityReference.Path + query),
 
                 };
                 if (formattedValues)

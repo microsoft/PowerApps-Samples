@@ -12,17 +12,32 @@ namespace PowerApps.Samples
         {
             try
             {
-                var val = JsonSerializer.Serialize(value);
+                    
+                string path = service.BaseAddress + entityReference.Path + "/" + property;
+                string val = string.Empty;
+
+
+                switch (value) {
+
+                    case EntityReference er:
+                        val = $"{{ \"@odata.id\": \"{service.BaseAddress}{er.Path}\" }}";
+                        path += "/$ref";
+                        break;
+                    default:
+                        val = $"{{\"value\": {JsonSerializer.Serialize(value)}}}";                            
+                        break;                    
+                }
                 
 
                 HttpRequestMessage request = new HttpRequestMessage
                 {
                     Method = HttpMethod.Put,
-                    RequestUri = new Uri(service.BaseAddress + entityReference.GetPath()+"/"+property),
-                    Content = new StringContent($"{{\"value\": {val}}}", Encoding.UTF8, "application/json")
+                    RequestUri = new Uri(path),
+                    Content = new StringContent(val, Encoding.UTF8, "application/json")
                 };
 
-                await service.SendAsync(request);             
+               var response = await service.SendAsync(request);
+                response.Dispose();
             }
             catch (Exception ex)
             {

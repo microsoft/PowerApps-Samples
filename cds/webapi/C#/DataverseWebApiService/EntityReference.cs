@@ -38,10 +38,7 @@ namespace PowerApps.Samples
         public string Name { get; set; }
         public string RowVersion { get; set; }
         public string SetName { get; set; }
-        public string GetPath()
-        {
-            return $"{SetName}({Id})";
-        }
+        public string Path => $"{SetName}({Id})";
 
 
     }

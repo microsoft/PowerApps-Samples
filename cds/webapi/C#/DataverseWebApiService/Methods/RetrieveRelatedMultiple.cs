@@ -8,7 +8,7 @@ namespace PowerApps.Samples
     public static partial class Extensions
     {
 
-        public static async Task<EntityCollection<T>> RetrieveMultiple<T>(this Service service, string query, bool formattedValues = false) where T : IEntity
+        public static async Task<EntityCollection<T>> RetrieveRelatedMultiple<T>(this Service service, EntityReference parent, string navigationProperty, string query, bool formattedValues = false) where T : IEntity
         {
 
             try
@@ -23,7 +23,7 @@ namespace PowerApps.Samples
                 HttpRequestMessage request = new HttpRequestMessage
                 {
                     Method = HttpMethod.Get,
-                    RequestUri = new Uri(service.BaseAddress + SetName + query),
+                    RequestUri = new Uri(service.BaseAddress + $"{parent.Path}/{navigationProperty}/{query}"),
 
                 };
                 if (formattedValues)
@@ -39,7 +39,7 @@ namespace PowerApps.Samples
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error in RetrieveMultiple: {ex.Message}", ex);
+                throw new Exception($"Error in RetrieveRelated: {ex.Message}", ex);
             }
         }
     }

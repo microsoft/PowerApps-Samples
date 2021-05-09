@@ -23,21 +23,21 @@ namespace QuickStart
             .WithAuthority(appSettings["Authority"])
             .Build();
 
+        //Configures the service
+        private static readonly Config config = new Config
+        {
+            Url = appSettings["Url"],
+            GetAccessToken = GetToken, //Function defined in app (below) to manage getting OAuth token
+            //Optional settings that have defaults if not specified:
+            MaxRetries = byte.Parse(appSettings["MaxRetries"]), //Default: 2
+            TimeoutInSeconds = ushort.Parse(appSettings["TimeoutInSeconds"]), //Default: 120
+            Version = appSettings["Version"], //Default 9.1
+            CallerObjectId = new Guid(appSettings["CallerObjectId"]) //Default empty Guid
+        };
 
         static async Task Main(string[] args)
         {
-            //Configures the service
-            var config = new Config
-            {
-                Url = appSettings["Url"],
-                GetAccessToken = GetToken, //Function defined in app (below) to manage getting OAuth token
-                //Optional settings that have defaults if not specified:
-                MaxRetries = byte.Parse(appSettings["MaxRetries"]), //Default: 2
-                TimeoutInSeconds = ushort.Parse(appSettings["TimeoutInSeconds"]), //Default: 120
-                Version = appSettings["Version"], //Default 9.1
-                CallerObjectId = new Guid(appSettings["CallerObjectId"]) //Default empty Guid
-            };
-
+            
             var service = new Service(config);
 
             try

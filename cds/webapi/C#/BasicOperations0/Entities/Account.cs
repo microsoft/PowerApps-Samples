@@ -55,7 +55,7 @@ namespace PowerApps.Samples
         /// <param name="value">A reference to a Contact record</param>
         public void Setprimarycontactid(Contact value)
         {
-            primarycontactid_ref = value.ToEntityReference().GetPath();
+            primarycontactid_ref = value.ToEntityReference().Path;
             primarycontactid = null;
         }
 

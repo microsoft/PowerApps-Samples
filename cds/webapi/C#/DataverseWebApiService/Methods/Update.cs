@@ -24,13 +24,14 @@ namespace PowerApps.Samples
                 HttpRequestMessage request = new HttpRequestMessage
                 {
                     Method = HttpMethod.Patch,
-                    RequestUri = new Uri(service.BaseAddress + entity.ToEntityReference().GetPath()),
+                    RequestUri = new Uri(service.BaseAddress + entity.ToEntityReference().Path),
                     Content = new StringContent(content, Encoding.UTF8, "application/json")
                 };
                 //Prevent Create
                 request.Headers.Add("If-Match", "*");
 
                 var response = await service.SendAsync(request);
+                response.Dispose();
 
             }
             catch (Exception ex)

@@ -6,17 +6,18 @@ namespace PowerApps.Samples
 {
     public static partial class Extensions
     {
-        public static async Task Delete(this Service service, EntityReference entityreference)
+        public static async Task Delete(this Service service, EntityReference entityReference)
         {
             try
             {
                 HttpRequestMessage request = new HttpRequestMessage
                 {
                     Method = HttpMethod.Delete,
-                    RequestUri = new Uri(service.BaseAddress + entityreference.GetPath())
+                    RequestUri = new Uri(service.BaseAddress + entityReference.Path)
                 };
 
-                await service.SendAsync(request);
+              var response =  await service.SendAsync(request);
+                response.Dispose();
             }
             catch (Exception ex)
             {

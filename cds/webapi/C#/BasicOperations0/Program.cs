@@ -50,77 +50,80 @@ namespace PowerApps.Samples
                 Console.WriteLine("--Section 1 started--");
 
                 //Create a contact
-                var contact1 = new Contact
+                var contactRafelShillo = new Contact
                 {
                     firstname = "Rafel",
                     lastname = "Shillo"
                 };
 
                 //Create the Contact
-                var contact1Ref = await service.Create(contact1);
+                var contactRafelShilloRef = await service.Create( entity: contactRafelShillo);
 
-                Console.WriteLine($"Contact '{contact1.firstname} " +
-                        $"{contact1.lastname}' created.");
+                Console.WriteLine($"Contact '{contactRafelShillo.firstname} " +
+                        $"{contactRafelShillo.lastname}' created.");
 
-                entityRefs.Add(contact1Ref); //To delete later
+                entityRefs.Add(contactRafelShilloRef); //To delete later
 
-                Console.WriteLine($"Contact URI: {contact1Ref.GetPath()}");
+                Console.WriteLine($"Contact URI: {contactRafelShilloRef.Path}");
 
                 //Update a contact
-                var contact1Add = new Contact
+                var contactRafelShilloUpdate1 = new Contact
                 {
-                    contactid = contact1Ref.Id,
+                    contactid = contactRafelShilloRef.Id,
                     annualincome = 80000,
                     jobtitle = "Junior Developer"
                 };
 
                 //Update the Contact
-                await service.Update(contact1Add);
+                await service.Update(entity: contactRafelShilloUpdate1);
 
-                Console.WriteLine($"Contact '{contact1.firstname} {contact1.lastname}" +
-                        "' updated with jobtitle and annual income.");
-
-                string contactQuery1 = "$select=fullname,annualincome,jobtitle,description";
+                Console.WriteLine($"Contact '{contactRafelShillo.firstname} {contactRafelShillo.lastname}" +
+                        "' updated with jobtitle and annual income.");               
 
                 //Retrieve a contact
-                var retrievedContact1 = await service.Retrieve<Contact>(
-                    contact1Ref,
-                    contactQuery1);
+                var retrievedContactRafelShillo = await service.Retrieve<Contact>(
+                    entityReference: contactRafelShilloRef,
+                    query: "$select=fullname,annualincome,jobtitle,description");
 
-                Console.WriteLine($"Contact '{retrievedContact1.fullname}' retrieved: \n" +
-                $"\tAnnual income: {retrievedContact1.annualincome}\n" +
-                $"\tJob title: {retrievedContact1.jobtitle} \n" +
+                Console.WriteLine($"Contact '{retrievedContactRafelShillo.fullname}' retrieved: \n" +
+                $"\tAnnual income: {retrievedContactRafelShillo.annualincome}\n" +
+                $"\tJob title: {retrievedContactRafelShillo.jobtitle} \n" +
                 //description is initialized empty.
-                $"\tDescription: {retrievedContact1.description}.");
+                $"\tDescription: {retrievedContactRafelShillo.description}.");
 
                 //Modify specific properties and then update entity instance.
-                var contact1Update = new Contact
+                var contactRafelShilloUpdate2 = new Contact
                 {
-                    contactid = contact1Ref.Id,
+                    contactid = contactRafelShilloRef.Id,
                     jobtitle = "Senior Developer",
                     annualincome = 95000,
                     description = "Assignment to-be-determined"
                 };
 
                 //Update the contact
-                await service.Update(contact1Update);
+                await service.Update(entity: contactRafelShilloUpdate2);
 
-                Console.WriteLine($"Contact '{retrievedContact1.fullname}' updated:\n" +
-                   $"\tJob title: {contact1Update.jobtitle}\n" +
-                   $"\tAnnual income: {contact1Update.annualincome}\n" +
-                   $"\tDescription: {contact1Update.description}\n");
+                Console.WriteLine($"Contact '{retrievedContactRafelShillo.fullname}' updated:\n" +
+                   $"\tJob title: {contactRafelShilloUpdate2.jobtitle}\n" +
+                   $"\tAnnual income: {contactRafelShilloUpdate2.annualincome}\n" +
+                   $"\tDescription: {contactRafelShilloUpdate2.description}\n");
 
                 // Change just one property
                 string telephone1 = "555-0105";
 
                 //Change the property value
-                await service.Set(contact1Ref, "telephone1", telephone1);
+                await service.Set(
+                    entityReference: contactRafelShilloRef, 
+                    property: "telephone1", 
+                    value: telephone1);
 
-                Console.WriteLine($"Contact '{retrievedContact1.fullname}' " +
+                Console.WriteLine($"Contact '{retrievedContactRafelShillo.fullname}' " +
                         $"phone number updated.");
 
                 //Now retrieve just the single property.
-                var telephone1Value = await service.Get<string>(contact1Ref, "telephone1");
+                var telephone1Value = await service.Get<string>(
+                    entityReference: contactRafelShilloRef, 
+                    property: "telephone1");
 
                 Console.WriteLine($"Contact's telephone # is: {telephone1Value}.");
 
@@ -135,33 +138,35 @@ namespace PowerApps.Samples
                 ///
                 Console.WriteLine("\n--Section 2 started--");
 
-                var account1 = new Account
+                var accountContoso = new Account
                 {
                     name = "Contoso Ltd",
                     telephone1 = "555-5555"
                 };
                 //Sets the primary contact value
-                account1.Setprimarycontactid(retrievedContact1);
+                accountContoso.Setprimarycontactid(retrievedContactRafelShillo);
 
                 //Create the account
-                var account1Ref = await service.Create(account1);
+                var accountContosoRef = await service.Create(entity: accountContoso);
 
-                entityRefs.Add(account1Ref); //To delete later
+                entityRefs.Add(item: accountContosoRef); //To delete later
 
-                Console.WriteLine($"Account '{account1.name}' created.");
-                Console.WriteLine($"Account URI: {account1Ref.GetPath()}");
+                Console.WriteLine($"Account '{accountContoso.name}' created.");
+                Console.WriteLine($"Account URI: {accountContosoRef.Path}");
 
                 string accountQuery1 = "$select=name&" +
                     "$expand=primarycontactid(" +
                     "$select=fullname,jobtitle,annualincome)";
 
                 //Retrieve the account
-                var retrievedAccount1 = await service.Retrieve<Account>(account1Ref, accountQuery1);
+                var retrievedAccountContoso = await service.Retrieve<Account>( 
+                    entityReference: accountContosoRef, 
+                    query: accountQuery1);
 
-                Console.WriteLine($"Account '{retrievedAccount1.name}' has primary contact " +
-                    $"'{retrievedAccount1.primarycontactid.fullname}':");
-                Console.WriteLine($"\tJob title: {retrievedAccount1.primarycontactid.jobtitle} \n" +
-                    $"\tAnnual income: {retrievedAccount1.primarycontactid.annualincome}");
+                Console.WriteLine($"Account '{retrievedAccountContoso.name}' has primary contact " +
+                    $"'{retrievedAccountContoso.primarycontactid.fullname}':");
+                Console.WriteLine($"\tJob title: {retrievedAccountContoso.primarycontactid.jobtitle} \n" +
+                    $"\tAnnual income: {retrievedAccountContoso.primarycontactid.annualincome}");
 
                 #endregion Section 2: Create record associated to another
 
@@ -179,7 +184,7 @@ namespace PowerApps.Samples
                 //       |---[Primary] Contact (N-to-1)
                 //              |---Tasks (1-to-N)
 
-                var account2 = new Account
+                var accountFourthCoffee = new Account
                 {
                     name = "Fourth Coffee",
                     primarycontactid = new Contact
@@ -215,30 +220,32 @@ namespace PowerApps.Samples
                 };
 
                 //Create the account, contact, and related tasks
-                var account2Ref = await service.Create(account2);
+                var accountFourthCoffeeRef = await service.Create(entity: accountFourthCoffee);
 
-                Console.WriteLine($"Account '{account2.name}  created.");
+                Console.WriteLine($"Account '{accountFourthCoffee.name}  created.");
 
-                entityRefs.Add(account2Ref); //To delete later
+                entityRefs.Add(accountFourthCoffeeRef); //To delete later
                 
 
-                Console.WriteLine($"Account URI: {account2Ref.GetPath()}");
+                Console.WriteLine($"Account URI: {accountFourthCoffeeRef.Path}");
 
                 string accountQuery2 = "$select=name,&" +
                     "$expand=primarycontactid(" +
                     "$select=fullname,jobtitle,annualincome)";
 
-                var retrievedAccount2 = await service.Retrieve<Account>(account2Ref, accountQuery2);
+                var retrievedAccountFourthCoffee = await service.Retrieve<Account>(
+                    entityReference: accountFourthCoffeeRef, 
+                    query: accountQuery2);
 
-                var retrievedcontact2Ref = retrievedAccount2.primarycontactid.ToEntityReference();
+                var retrievedContactSusieCurtisRef = retrievedAccountFourthCoffee.primarycontactid.ToEntityReference();
 
-                entityRefs.Add(retrievedcontact2Ref);// To Delete later
+                entityRefs.Add(retrievedContactSusieCurtisRef);// To Delete later
 
-                Console.WriteLine($"Account '{retrievedAccount2.name}' " +
-                        $"has primary contact '{retrievedAccount2.primarycontactid.fullname}':");
+                Console.WriteLine($"Account '{retrievedAccountFourthCoffee.name}' " +
+                        $"has primary contact '{retrievedAccountFourthCoffee.primarycontactid.fullname}':");
 
-                Console.WriteLine($"\tJob title: {retrievedAccount2.primarycontactid.jobtitle} \n" +
-                        $"\tAnnual income: {retrievedAccount2.primarycontactid.annualincome}");
+                Console.WriteLine($"\tJob title: {retrievedAccountFourthCoffee.primarycontactid.jobtitle} \n" +
+                        $"\tAnnual income: {retrievedAccountFourthCoffee.primarycontactid.annualincome}");
 
 
                 //Next retrieve same contact and her assigned tasks.
@@ -246,10 +253,12 @@ namespace PowerApps.Samples
                     "$expand=Contact_Tasks(" +
                     "$select=subject,description,scheduledstart,scheduledend)";
 
-                var retrievedcontact2 = await service.Retrieve<Contact>(retrievedcontact2Ref, contactQuery2);
+                var retrievedContactSusieCurtis = await service.Retrieve<Contact>(
+                    entityReference: retrievedContactSusieCurtisRef, 
+                    query: contactQuery2);
 
-                Console.WriteLine($"Contact '{retrievedcontact2.fullname}' has the following assigned tasks:");
-                foreach (TaskActivity task in retrievedcontact2.Contact_Tasks)
+                Console.WriteLine($"Contact '{retrievedContactSusieCurtis.fullname}' has the following assigned tasks:");
+                foreach (TaskActivity task in retrievedContactSusieCurtis.Contact_Tasks)
                 {
                     Console.WriteLine(
                         $"Subject: {task.subject}, \n" +
@@ -262,7 +271,84 @@ namespace PowerApps.Samples
 
                 #region Section 4: Associate and Disassociate entities
 
-                //TODO
+                /// <summary>
+                /// Demonstrates associating and disassociating of existing entity instances.
+                /// </summary>
+                Console.WriteLine("\n--Section 4 started--");
+                //Add 'Rafel Shillo' to the contact list of 'Fourth Coffee',
+                // a 1-to-N relationship.
+                await service.Add(
+                    entityReference: accountFourthCoffeeRef, 
+                    collectionName: "contact_customer_accounts", 
+                    entityToAdd: contactRafelShilloRef);
+
+                //Retrieve and output all contacts for account 'Fourth Coffee'
+
+                var contacts = await service.RetrieveRelatedMultiple<Contact>(
+                    parent: accountFourthCoffeeRef, 
+                    navigationProperty: "contact_customer_accounts", 
+                    query: "$select=fullname,jobtitle");
+
+                Console.WriteLine($"Contact list for account '{retrievedAccountFourthCoffee.name}':");
+
+                foreach (Contact contact in contacts.Value)
+                {
+                    Console.WriteLine($"\tName: {contact.fullname}, Job title: {contact.jobtitle}");
+                }
+
+                //Dissociate the contact from the account. 
+                await service.Remove(
+                    entityReference: accountFourthCoffeeRef, 
+                    navigationProperty: "contact_customer_accounts", 
+                    collectionItem: contactRafelShilloRef);
+
+                //'Rafel Shillo' was removed from the the contact list of 'Fourth Coffe
+
+                //Associate an opportunity to a competitor, an N-to-N relationship.
+
+                var competitorAW = new Competitor { 
+                    name = "Adventure Works",
+                    strengths = "Strong promoter of private tours for multi-day outdoor adventures"
+                };
+
+                var competitorAWRef = await service.Create(entity: competitorAW);
+                entityRefs.Add(item: competitorAWRef); //To delete later
+
+                var oppor1 = new Opportunity { 
+                    name = "River rafting adventure",
+                    description = "Sales team on a river-rafting offsite and team building"
+                };
+
+                var oppor1Ref = await service.Create(entity: oppor1);
+                entityRefs.Add(item: oppor1Ref); //To delete later
+
+                //Associate opportunity to competitor via opportunitycompetitors_association.
+                await service.Add(
+                    entityReference: oppor1Ref, 
+                    collectionName: "opportunitycompetitors_association", 
+                    entityToAdd: competitorAWRef);
+
+                //Retrieve all opportunities for competitor 'Adventure Works'
+                var retrievedOpporList1 = await service.RetrieveRelatedMultiple<Opportunity>(
+                    parent: competitorAWRef, 
+                    navigationProperty: "opportunitycompetitors_association", 
+                    query: "$select=name,description");
+
+
+                Console.WriteLine($"Competitor '{competitorAW.name}' has the following opportunities:");
+                foreach (Opportunity op in retrievedOpporList1.Value)
+                {
+                    Console.WriteLine($"\tName: {op.name}, \n" +
+                        $"\tDescription: {op.description}");
+                }
+
+                //Dissociate opportunity from competitor.
+                await service.Remove(
+                    entityReference: oppor1Ref, 
+                    navigationProperty: "opportunitycompetitors_association", 
+                    collectionItem: competitorAWRef);
+
+                // 'River rafting adventure' opportunity disassociated with 'Adventure Works' competitor
 
                 #endregion Section 4: Associate and Disassociate entities
 
@@ -287,7 +373,7 @@ namespace PowerApps.Samples
 
                 foreach (EntityReference reference in entityRefs)
                 {
-                    await service.Delete(reference);
+                    await service.Delete(entityReference: reference);
                 }
 
                 #endregion Section 5: Delete sample entities
