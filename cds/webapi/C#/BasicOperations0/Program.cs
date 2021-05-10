@@ -33,6 +33,8 @@ namespace PowerApps.Samples
             CallerObjectId = new Guid(appSettings["CallerObjectId"]) //Default empty Guid
         };
 
+        
+
         public static async Task Main()
         {
             //List of references for records created in this sample
