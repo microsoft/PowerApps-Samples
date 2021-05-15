@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace PowerApps.Samples
 {
-    public class EntityCollection
+    public class EntityCollection<T> where T : IEntity
     {
 
         [JsonPropertyName("@Microsoft.Dynamics.CRM.totalrecordcount")]
@@ -18,7 +17,7 @@ namespace PowerApps.Samples
         public bool TotalRecordCountExceeded { get; set; }
 
         [JsonPropertyName("value")]
-        public List<Dictionary<string,JsonElement>> Value { get; set; }
+        public List<T> Value { get; set; }
 
         [JsonPropertyName("@odata.nextLink")]
         public Uri NextLink { get; set; }

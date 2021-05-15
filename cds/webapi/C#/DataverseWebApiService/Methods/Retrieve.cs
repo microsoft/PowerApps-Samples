@@ -16,7 +16,7 @@ namespace PowerApps.Samples
         /// <param name="query">The OData query</param>
         /// <param name="formattedValues">Whether to include formatted values</param>
         /// <returns></returns>
-        public static async Task<T> Retrieve<T>(this Service service, EntityReference entityReference, string query, bool formattedValues = false) where T : IEntity
+        public static async Task<T> Retrieve<T>(this Service service, EntityReference entityReference, string query, bool formattedValues = false, string eTag = null) where T : IEntity
         {
 
             try
@@ -32,6 +32,12 @@ namespace PowerApps.Samples
                     RequestUri = new Uri(service.BaseAddress + entityReference.Path + query),
 
                 };
+                if (eTag != null) {
+
+                    //Will prevent retrieve if eTag value is current.
+                    request.Headers.Add("If-None-Match", eTag);
+                }
+
                 if (formattedValues)
                 {
                     request.Headers.Add("Prefer", "odata.include-annotations=\"OData.Community.Display.V1.FormattedValue\"");

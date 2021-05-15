@@ -26,6 +26,9 @@ namespace PowerApps.Samples
             return new EntityReference(opportunityid, SetName);
         }
 
+        [JsonPropertyName("@odata.etag")]
+        public string ETag { get; init; }
+
         public string name { get; set; }
         public string description { get; set; }
 

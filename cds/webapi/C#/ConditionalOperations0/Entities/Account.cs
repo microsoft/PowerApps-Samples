@@ -4,35 +4,36 @@ using System.Text.Json.Serialization;
 
 namespace PowerApps.Samples
 {
-    public class Opportunity : IEntity
+   public class Account : IEntity
     {
         [JsonIgnore]
-        public Guid? Id => opportunityid;
+        public Guid? Id => accountid;
 
         [JsonIgnore]
-        public static string SetName => "opportunities";
+        public static string SetName => "accounts";
 
         [JsonIgnore]
-        public static string LogicalName => "opportunity";
+        public static string LogicalName => "account";
 
         [JsonPropertyName("@odata.type")]
         public string ODataType => $"Microsoft.Dynamics.CRM.{LogicalName}";
 
 
-        public Guid? opportunityid { get; init; }
+        public Guid? accountid { get; init; }
 
         public EntityReference ToEntityReference()
         {
-            return new EntityReference(opportunityid, SetName);
+            return new EntityReference(accountid, SetName);
         }
 
         [JsonPropertyName("@odata.etag")]
         public string ETag { get; init; }
 
         public string name { get; set; }
+        public string telephone1 { get; set; }
+        public decimal revenue { get; set; }
         public string description { get; set; }
 
-        public List<Competitor> opportunitycompetitors_association { get; set; }
 
     }
 }

@@ -6,7 +6,7 @@ namespace PowerApps.Samples
 {
     public static partial class Extensions
     {
-        public static async Task Delete(this Service service, EntityReference entityReference)
+        public static async Task Delete(this Service service, EntityReference entityReference, string eTag = null)
         {
             try
             {
@@ -15,8 +15,13 @@ namespace PowerApps.Samples
                     Method = HttpMethod.Delete,
                     RequestUri = new Uri(service.BaseAddress + entityReference.Path)
                 };
+                if (eTag != null)
+                {
+                    //Will prevent delete if eTag value is not current for the record.
+                    request.Headers.Add("If-Match", eTag);
+                }
 
-              var response =  await service.SendAsync(request);
+                var response =  await service.SendAsync(request);
                 response.Dispose();
             }
             catch (Exception ex)

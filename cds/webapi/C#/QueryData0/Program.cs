@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Security;
+using System.Text.Json;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace PowerApps.Samples
 {
@@ -232,18 +234,217 @@ namespace PowerApps.Samples
 
                 #endregion Limit results
 
+                #region Expanding results
 
-                //TODO
+                //The expand option retrieves related information.
+                //To retrieve information on associated entities in the same request, use the $expand
+                //query option on navigation properties.
+                //  1) Expand using single-valued navigation properties (e.g.: via the 'primarycontactid')
+                //  2) Expand using partner property (e.g.: from contact to account via the 'account_primary_contact')
+                //  3) Expand using collection-valued navigation properties (e.g.: via the 'contact_customer_accounts')
+                //  4) Expand using multiple navigation property types in a single request.
+                //  5) Multi-level expands
+
+                // Tip: For performance best practice, always use $select statement in an expand option.
+                Console.WriteLine("\n-- Expanding Results --");
+
+                //1) Expand using the 'primarycontactid' single-valued navigation property of Contoso.
+
+                var expandPrimaryContactIdQuery = "$select=name&" +
+                        "$expand=primarycontactid($select=fullname,jobtitle,annualincome)";
+
+                var accountContoso = await service.Retrieve<Account>(accountContosoRef, expandPrimaryContactIdQuery);
+
+                Console.WriteLine($"\nAccount {accountContoso.name} has the following primary contact person:\n" +
+                     $"\tFullname: {accountContoso.primarycontactid.fullname} \n" +
+                     $"\tJobtitle: {accountContoso.primarycontactid.jobtitle} \n" +
+                     $"\tAnnualincome: {accountContoso.primarycontactid.annualincome}");
+
+
+                //2) Expand using the 'account_primary_contact' partner property.
+
+                var expandAccountPrimaryContactQuery = "$select=fullname,jobtitle,annualincome&" +
+                    "$expand=account_primary_contact($select=name)";
+
+                 contactYvonneMcKay = await service.Retrieve<Contact>(contactYvonneMcKayRef, expandAccountPrimaryContactQuery);
+
+                Console.WriteLine($"\nContact '{contactYvonneMcKay.fullname}' is the primary contact for the following accounts:");
+                foreach (Account account in contactYvonneMcKay.account_primary_contact)
+                {
+                    Console.WriteLine($"\t{account.name}");
+                }
+
+                //3) Expand using the collection-valued 'contact_customer_accounts' navigation property.
+
+                var expandContactCustomerAccountsQuery = "$select=name&" +
+                        "$expand=contact_customer_accounts($select=fullname,jobtitle,annualincome)";
+
+                accountContoso = await service.Retrieve<Account>(accountContosoRef, expandContactCustomerAccountsQuery, true);
+
+                WriteContactResultsTable(
+                        $"Account '{accountContoso.name}' has the following contact customers:",
+                        accountContoso.contact_customer_accounts);
+
+                //4) Expand using multiple navigation property types in a single request, specifically:
+                //   primarycontactid, contact_customer_accounts, and Account_Tasks.
+
+                Console.WriteLine("\n-- Expanding multiple property types in one request -- ");
+
+                var expandMultipleQuery = "$select=name&" +
+                        "$expand=primarycontactid($select=fullname,jobtitle,annualincome)," +
+                        "contact_customer_accounts($select=fullname,jobtitle,annualincome)," +
+                        "Account_Tasks($select=subject,description)";
+
+                accountContoso = await service.Retrieve<Account>(accountContosoRef, expandMultipleQuery, true);
+
+                Console.WriteLine($"\nAccount {accountContoso.name} has the following primary contact person:\n" +
+                                    $"\tFullname: {accountContoso.primarycontactid.fullname} \n" +
+                                    $"\tJobtitle: {accountContoso.primarycontactid.jobtitle} \n" +
+                                    $"\tAnnualincome: {accountContoso.primarycontactid.annualincome}");
+
+                WriteContactResultsTable(
+                        $"Account '{accountContoso.name}' has the following contact customers:",
+                        accountContoso.contact_customer_accounts);
+
+                Console.WriteLine($"\nAccount '{accountContoso.name}' has the following tasks:");
+
+                foreach (TaskActivity task in accountContoso.Account_Tasks)
+                {
+                    Console.WriteLine($"\t{task.subject}");
+                }
+
+                // 5) Multi-level expands
+                //The following query applies nested expands to single-valued navigation properties
+                // starting with Task entities related to contacts created for this sample.
+
+                var multiLevelExpandQuery = "$select=subject&" +
+                        $"$filter=regardingobjectid_contact_task/_accountid_value eq {contosoId}" +
+                        "&$expand=regardingobjectid_contact_task($select=fullname;" +
+                        "$expand=parentcustomerid_account($select=name;" +
+                        "$expand=createdby($select=fullname)))";
+
+                var contosoTasks = await service.RetrieveMultiple<TaskActivity>(multiLevelExpandQuery, true);
+
+                Console.WriteLine("\nExpanded values from Task:");
+
+                DisplayExpandedValuesFromTask(contosoTasks.Value);
+
+                #endregion Expanding results
+
+                #region Aggregate results
+
+                //Get aggregated salary information about Contacts working for Contoso
+
+                Console.WriteLine("\nAggregated Annual Income information for Contoso contacts:");
+
+                string applyExpression = "aggregate(annualincome with average as average, " +
+                        $"annualincome with sum as total, " +
+                        $"annualincome with min as minimum, " +
+                        $"annualincome with max as maximum)";
+
+                Dictionary<string, JsonElement> results = await service.Apply(accountContosoRef.Path + "/contact_customer_accounts", applyExpression, true);
+
+
+                Console.WriteLine($"\tAverage income: {results["average@OData.Community.Display.V1.FormattedValue"]}");
+                Console.WriteLine($"\tTotal income: {results["total@OData.Community.Display.V1.FormattedValue"]}");
+                Console.WriteLine($"\tMinium income: {results["minimum@OData.Community.Display.V1.FormattedValue"]}");
+                Console.WriteLine($"\tMaximum income: {results["maximum@OData.Community.Display.V1.FormattedValue"]}");
+
+
+                #endregion Aggregate results
+
+                #region FetchXML queries
+
+                //Use FetchXML to query for all contacts whose fullname contains '(sample)'.
+                //Note: XML string must be URI encoded. For more information, see:
+                //https://docs.microsoft.com/powerapps/developer/common-data-service/webapi/retrieve-and-execute-predefined-queries#use-custom-fetchxml
+                Console.WriteLine("\n-- FetchXML -- ");
+                string fetchXmlQuery =
+                    $@"<fetch mapping='logical'>
+                         <entity name ='contact'>
+                          <attribute name ='fullname' />
+                          <attribute name ='jobtitle' />
+                          <attribute name ='annualincome' />
+                          <order descending ='true' attribute='fullname' />
+                          <filter type ='and'>
+                           <condition value ='%(sample)%' attribute='fullname' operator='like' />
+                           <condition value ='{contosoId}' attribute='parentcustomerid' operator='eq' />
+                          </filter>
+                         </entity>
+                        </fetch>";
+
+                //Fetch returns a 'flat' structure that doesn't allow for typed serialization
+                var contacts = await service.Fetch("contacts",XDocument.Parse(fetchXmlQuery), true);
+
+                WriteContactFetchResultsTable($"Contacts Fetched by fullname containing '(sample)':", contacts);
+
+
+                #endregion FetchXML queries
+
+
+                #region Using predefined queries
+
+                //Use predefined queries of the following two types:
+                //  1) Saved query (system view)
+                //  2) User query (saved view)
+                //For more info, see:
+                //https://docs.microsoft.com/powerapps/developer/common-data-service/webapi/retrieve-and-execute-predefined-queries#predefined-queries
+
+                //1) Saved Query - retrieve "Active Accounts", run it, then display the results.
+                Console.WriteLine("\n-- Saved Query -- ");
+
+                var savedQueryResults = await service.RetrieveMultiple<SavedQuery>("$select=savedqueryid&$filter=name eq 'Active Accounts'");
+                var savedqueryid = (Guid)savedQueryResults.Value[0].savedqueryid;             
+
+                var activeAccounts = await service.RetrieveQuery("accounts", QueryType.savedQuery, savedqueryid, true);
+
+                DisplayFormattedEntities("\nActive Accounts", activeAccounts);
+
+                //2) Create a user query, then retrieve and execute it to display its results.
+                //For more info, see:
+                //https://docs.microsoft.com/powerapps/developer/common-data-service/saved-queries
+                Console.WriteLine("\n-- User Query -- ");
+
+                var userQuery = new UserQuery { 
+                name = "My User Query",
+                description = "User query to display contact info.",
+                querytype = 0,
+                returnedtypecode = "contact",
+                fetchxml = @"<fetch mapping='logical' output-format='xml-platform' version='1.0' distinct='false'>
+                                <entity name ='contact'>
+                                    <attribute name ='fullname' />
+                                    <attribute name ='contactid' />
+                                    <attribute name ='jobtitle' />
+                                    <attribute name ='annualincome' />
+                                    <order descending ='false' attribute='fullname' />
+                                    <filter type ='and'>
+                                        <condition value ='%(sample)%' attribute='fullname' operator='like' />
+                                        <condition value ='%Manager%' attribute='jobtitle' operator='like' />
+                                        <condition value ='55000' attribute='annualincome' operator='gt' />
+                                    </filter>
+                                </entity>
+                             </fetch>"
+                };
+
+                var userQueryRef = await service.Create(userQuery);
+                entityRefs.Add(userQueryRef); //To delete later
+
+                //Use the query to return results:
+                var userQueryResults = await service.RetrieveQuery("contacts", QueryType.userQuery, userQueryRef.Id);
+
+                DisplayFormattedEntities(userQuery.name, userQueryResults);
+
+                #endregion Using predefined queries
+
 
                 DeleteRequiredRecords(service);
+                Console.WriteLine("\n--Query Data Completed--");
             }
             catch (Exception)
             {
 
                 throw;
             }
-
-            
 
         }
 
@@ -584,6 +785,29 @@ namespace PowerApps.Samples
             Console.WriteLine("\nData created for this sample deleted.");
         }
 
+        private static void WriteContactFetchResultsTable(string message, EntityCollection collection)
+        {
+            //Display column widths for contact results table
+            const int col1 = -27;
+            const int col2 = -35;
+            const int col3 = -15;
+
+            Console.WriteLine($"\n{message}");
+            //header
+            Console.WriteLine($"\t|{"Full Name",col1}|" +
+                $"{"Job Title",col2}|" +
+                $"{"Annual Income",col3}");
+            Console.WriteLine($"\t|{new string('-', col1 * -1),col1}|" +
+                $"{new string('-', col2 * -1),col2}|" +
+                $"{new string('-', col3 * -1),col3}");
+            //rows
+            foreach (var contact in collection.Value)
+            {
+                Console.WriteLine($"\t|{contact["fullname"],col1}|" +
+                    $"{contact["jobtitle"],col2}|" +
+                    $"{contact["annualincome@OData.Community.Display.V1.FormattedValue"],col3}");
+            }
+        }
 
         private static void WriteContactResultsTable(string message, List<Contact> collection)
         {
@@ -607,6 +831,69 @@ namespace PowerApps.Samples
                     $"{contact.jobtitle,col2}|" +
                     $"{contact.annualincome_display,col3}");
             }
+        }
+
+        private static void DisplayExpandedValuesFromTask(List<TaskActivity> collection)
+        {
+
+            //Display column widths for task Lookup Values Table
+            const int col1 = -30;
+            const int col2 = -30;
+            const int col3 = -25;
+            const int col4 = -20;
+
+            Console.WriteLine($"\t|{"Subject",col1}|" +
+            $"{"Contact",col2}|" +
+            $"{"Account",col3}|" +
+            $"{"Account CreatedBy",col4}");
+            Console.WriteLine($"\t|{new string('-', col1 * -1),col1}|" +
+                $"{new string('-', col2 * -1),col2}|" +
+                $"{new string('-', col3 * -1),col3}|" +
+                $"{new string('-', col4 * -1),col4}");
+            //rows
+            foreach (TaskActivity task in collection)
+            {
+                Console.WriteLine($"\t|{task.subject,col1}|" +
+                    $"{task.regardingobjectid_contact_task.fullname,col2}|" +
+                    $"{task.regardingobjectid_contact_task.parentcustomerid_account.name,col3}|" +
+                    $"{task.regardingobjectid_contact_task.parentcustomerid_account.createdby.fullname,col4}");
+
+            }
+        }
+
+        /// <summary> Displays formatted entity collections to the console. </summary>
+        /// <param name="label">Descriptive text output before collection contents </param>
+        /// <param name="collection"> EntityCollection containing array of entities to output by property </param>
+        /// <param name="properties"> Array of properties within each entity to output. </param>
+        private static void DisplayFormattedEntities(string label, EntityCollection entities)
+        {
+           
+
+            Console.Write(label);
+            int lineNum = 0;
+            foreach (Dictionary<string,JsonElement> entity in entities.Value)
+            {
+                lineNum++;
+                List<string> propsOutput = new List<string>();
+                //Iterate through each requested property and output either formatted value if one
+                //exists, otherwise output plain value.
+                foreach (string key in entity.Keys)
+                {
+                    if (key != "@odata.etag") {
+
+                        if (entity.ContainsKey(key + "@OData.Community.Display.V1.FormattedValue"))
+                        {
+                            propsOutput.Add(entity[key + "@OData.Community.Display.V1.FormattedValue"].ToString());
+                        }
+                        else
+                        {
+                            propsOutput.Add(entity[key].ToString());
+                        }
+                    }                    
+                }
+                Console.Write("\n\t{0}) {1}", lineNum, string.Join(", ", propsOutput));
+            }
+            Console.Write("\n");
         }
 
 

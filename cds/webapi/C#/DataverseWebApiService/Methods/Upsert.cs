@@ -9,10 +9,21 @@ namespace PowerApps.Samples
 {
     public static partial class Extensions
     {
-        public static async Task Update(this Service service, IEntity entity, string eTag = null)
+        public static async Task Upsert(this Service service, IEntity entity)
         {
             try
             {
+                EntityReference entityRef;
+                try
+                {
+                    entityRef = entity.ToEntityReference();
+                }
+                catch (Exception)
+                {
+
+                    throw new Exception("Entity passed to Upsert must have the primary id value set.");
+                }
+
                 JsonSerializerOptions options = new()
                 {
                     DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
@@ -24,19 +35,9 @@ namespace PowerApps.Samples
                 HttpRequestMessage request = new HttpRequestMessage
                 {
                     Method = HttpMethod.Patch,
-                    RequestUri = new Uri(service.BaseAddress + entity.ToEntityReference().Path),
+                    RequestUri = new Uri(service.BaseAddress + entityRef.Path),
                     Content = new StringContent(content, Encoding.UTF8, "application/json")
                 };
-                if (eTag != null)
-                {
-                    //Will prevent update if eTag value is not current for the record.
-                    request.Headers.Add("If-Match", eTag);
-                }
-                else {
-
-                    //Prevent Create
-                    request.Headers.Add("If-Match", "*");
-                }
 
                 var response = await service.SendAsync(request);
                 response.Dispose();
@@ -44,7 +45,7 @@ namespace PowerApps.Samples
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error in Update: {ex.Message}", ex);
+                throw new Exception($"Error in Upsert: {ex.Message}", ex);
             }
         }
 

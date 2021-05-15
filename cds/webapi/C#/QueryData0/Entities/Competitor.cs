@@ -26,6 +26,9 @@ namespace PowerApps.Samples
             return new EntityReference(competitorid, SetName);
         }
 
+        [JsonPropertyName("@odata.etag")]
+        public string ETag { get; init; }
+
         public string name { get; set; }
         public string strengths { get; set; }
 

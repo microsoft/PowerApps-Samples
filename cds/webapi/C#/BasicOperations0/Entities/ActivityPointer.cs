@@ -24,7 +24,10 @@ namespace PowerApps.Samples
         {
             return new EntityReference(activityid, SetName);
         }
-        
+
+        [JsonPropertyName("@odata.etag")]
+        public string ETag { get; init; }
+
         public string subject { get; set; }
         public string description { get; set; }
         public DateTimeOffset scheduledend { get; set; }
