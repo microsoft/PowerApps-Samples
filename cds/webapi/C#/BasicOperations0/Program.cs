@@ -37,6 +37,9 @@ namespace PowerApps.Samples
 
         public static async Task Main()
         {
+            Console.Title = "Basic Operations demonstration";
+
+
             //List of references for records created in this sample
             List<EntityReference> entityRefs = new List<EntityReference>();
             bool deleteCreatedRecords = true;

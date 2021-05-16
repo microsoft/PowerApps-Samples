@@ -39,6 +39,8 @@ namespace PowerApps.Samples
 
         public static async Task Main()
         {
+            Console.Title = "Conditional Operations demonstration";
+
             try
             {
                 var service = new Service(config);
