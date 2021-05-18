@@ -23,10 +23,10 @@ This sample shows how to add dependencies for third-party libraries, showcasing 
 
 The flip component sample consists of a label and a button. When you click on the button, the text on the label toggles.
 
-- When the component is loaded, the label shows the text based on the bind attribute value. The `context.parameters.[property_name].attributes` contains the associated metadata.
-For TwoOptions fields, `context.parameters.[property_name].Options` will include both true and false value option.
+- When the component is loaded, the label shows the text based on the bind column value. The `context.parameters.[property_name].attributes` contains the associated metadata.
+For Yes/No columns, `context.parameters.[property_name].Options` will include both true and false value option.
 - Clicking on the Flip button, the label will update value using `notifyOutputEvents` method, getOutputs method will be called asynchronously and will flow to Power Apps component framework.
-- ClientAPI updates the bind attribute value, and the updated value flows to the component label. You can also use `ClientAPI` to update an attribute value to trigger control's updateView method. The component then updates the third-party model and the label gets updated.
+- ClientAPI updates the bind column value, and the updated value flows to the component label. You can also use `ClientAPI` to update a column value to trigger control's updateView method. The component then updates the third-party model and the label gets updated.
 
 ## How to run the sample
 

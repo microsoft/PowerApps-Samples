@@ -5,12 +5,12 @@ products:
 - power-platform
 - power-apps
 page_type: sample
-description: "This sample shows how to detect and log multiple duplicate records for a specified entity type in Microsoft Dataverse. [SOAP]"
+description: "This sample shows how to detect and log multiple duplicate records for a specified table in Microsoft Dataverse. [SOAP]"
 ---
 
 # Detect multiple duplicate records
 
-This sample shows how to detect and log multiple duplicate records for a specified entity type.
+This sample shows how to detect and log multiple duplicate records for a specified table.
 
 ## How to run this sample
 
@@ -27,7 +27,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Setup
 
 1. Checks for the current version of the org.
-1. The `CreateRequiredRecords` class creates some duplicate entity records for the sample.
+1. The `CreateRequiredRecords` class creates some duplicate table records for the sample.
 1. The `DuplicateRule` method creates a duplicate detection rule.
 1. The  `DuplicateRuleCondition` method creates a duplicate detection rule condition for detecting duplicate records.
 1. The `PublishDuplicateRuleRequest` method publishes the duplicate detection rule.

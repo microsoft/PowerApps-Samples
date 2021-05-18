@@ -21,7 +21,7 @@ To try the sample components, you must first:
 
 This sample provides examples on how to use methods from the `Client`, `UserSettings`, `Utility`, and `Formatting` interfaces. This component also showcases two utility functions, `setFullScreen` and `lookupObjects`. These functions are invoked by clicking the button rendered as part of the code component. The `setFullScreen` button toggles the component in and out of full screen mode. The `lookupObjects` button opens a lookup dialog, and then inject the selected record as text into div.
 
-In this sample, we render an HTML button and attach an onClick event handler `onLookupObjectsButtonClick` to the button. On click of this button, we invoke `context.utils.lookupObjects()` method and pass as a parameter an array of entity names.
+In this sample, we render an HTML button and attach an onClick event handler `onLookupObjectsButtonClick` to the button. On click of this button, we invoke `context.utils.lookupObjects()` method and pass as a parameter an array of table names.
 
 This method returns a Promise object, representing the completion or failure of the call to the lookup dialog. If the promise is resolved successfully, the lookup object which the user selected is passed as a parameter into the callback method and can be referenced as `data.id`, `data.name`, `data.entityType`.
 

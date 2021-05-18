@@ -17,7 +17,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 1. Checks for the current version of the org.
 1. The `ImportMap` method creates an import map.
-1. The `ColumnMapping` method creates a column mapping for a `text` type field.
+1. The `ColumnMapping` method creates a column mapping for a `text` type column.
 1. The `EntityReference` method relates the column mapping with the data map.
 1. The `LookUpMapping` method creates a lookup mapping to the parent account.
 1. The `ImportFile` method creates a import file.

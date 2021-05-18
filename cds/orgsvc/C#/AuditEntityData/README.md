@@ -5,12 +5,12 @@ products:
 - power-platform
 - power-apps
 page_type: sample
-description: "Sample that shows how to enable and disable auditing on an entity and its attributes in Microsoft Dataverse. [SOAP]"
+description: "Sample that shows how to enable and disable auditing on a table and its columns in Microsoft Dataverse. [SOAP]"
 ---
 
-# Audit entity data changes
+# Audit table data changes
 
-This sample shows how to enable and disable auditing on an entity and its attributes, retrieve the data change history of the audited entity, and delete the audit records.
+This sample shows how to enable and disable auditing on a table and its columns, retrieve the data change history of the audited table, and delete the audit records.
 
 ## How to run this sample
 
@@ -18,7 +18,7 @@ See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/mas
 
 ## What this sample does
 
-The `RetrieveRecordChangeHistoryRequest` message is intended to be used in a scenario where it contains data that is needed to retrieve the audit history for an entity.
+The `RetrieveRecordChangeHistoryRequest` message is intended to be used in a scenario where it contains data that is needed to retrieve the audit history for a table.
 
 ## How this sample works
 
@@ -27,13 +27,13 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Setup
 
 1. Checks for the current version of the org.
-2. Creates an sample account entity.
+2. Creates an sample account table.
 
 ### Demonstrate
 
 1. Gets the organization's ID from the system user record.
-2. Enabling auditing on organization and also on the sample account entity.
-3. The `RetrieveRecordChangeHistoryRequest` retrieves the audit history for the account entity and displays the result.
+2. Enabling auditing on organization and also on the sample account table.
+3. The `RetrieveRecordChangeHistoryRequest` retrieves the audit history for the account table and displays the result.
 
 ### Clean up
 

@@ -13,7 +13,7 @@ In order to simulate the scenario described above, the sample will do the follow
 ### Setup
 
 1. Checks for the current version of the org.
-2. The `CreateRequiredRecords` method creates any entity records that this sample requires.
+2. The `CreateRequiredRecords` method creates any table records that this sample requires.
 
 ### Demonstrate
 

@@ -20,9 +20,9 @@ Checks the version of the current org.
 
 ### Demonstrate
 
-1. Creates the custom activity entity using the `CreateEntityRequest` message.
-2. Publishes the created custom activity entity.
-3. Creates few attributes to the custom activity entity using `CreateAttributeRequest` message.
+1. Creates the custom activity table using the `CreateEntityRequest` message.
+2. Publishes the created custom activity table.
+3. Creates few columns to the custom activity table using `CreateAttributeRequest` message.
 
 ### Clean up
 

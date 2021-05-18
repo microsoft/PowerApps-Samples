@@ -15,7 +15,7 @@ See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/mas
 
 ## What this sample does
 
-The `AddToQueueRequest` message is intended to be used in a scenario where it contains data that is needed to move an entity record from a source queue to destination queue.
+The `AddToQueueRequest` message is intended to be used in a scenario where it contains data that is needed to move a table record from a source queue to destination queue.
 
 ## How this sample works
 
@@ -25,8 +25,8 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 1. Checks for the current version of the org.
 2. The `Queue` message creates source and destination queues and store their returned GUIDs in variable.
-3. Creates a Letter entity.
-4. The `AddToQueueRequest` message adds an entity record into a queue, in this sample it associates the letter with first queue.
+3. Creates a Letter table.
+4. The `AddToQueueRequest` message adds a table record into a queue, in this sample it associates the letter with first queue.
 5. Retrievers the user created manually in **Office 365** for assigning the queue items to the user's queue.
 
 ### Demonstrate

@@ -10,7 +10,7 @@ The [CrmServiceClient.Clone Method](https://docs.microsoft.com/dotnet/api/micros
 
 ## Demonstrates
 
-This simple sample will generate a number of account entity records using the [System.Threading.Tasks.Parallel.ForEach Method](https://docs.microsoft.com/dotnet/api/system.threading.tasks.parallel.foreach).
+This simple sample will generate a number of account table records using the [System.Threading.Tasks.Parallel.ForEach Method](https://docs.microsoft.com/dotnet/api/system.threading.tasks.parallel.foreach).
 
 Then it will use that technique again to delete the entities created.
 

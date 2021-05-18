@@ -29,7 +29,7 @@ To try the sample components, you must first:
 
 ## What this sample does
 
-The increment component renders as a textbox with an `Increment` button in the runtime. The text box shows the current value and the `Increment` button is clickable. Whenever you click on the button, the value within the textbox is increased by 1. You can change the increment value when you are configuring the component to the field on the form.
+The increment component renders as a textbox with an `Increment` button in the runtime. The text box shows the current value and the `Increment` button is clickable. Whenever you click on the button, the value within the textbox is increased by 1. You can change the increment value when you are configuring the component to the columns on the form.
 
 The increment value can be changed to any number you wish. The updated value flows to the framework through the *notifyOutputChanged* method.
 

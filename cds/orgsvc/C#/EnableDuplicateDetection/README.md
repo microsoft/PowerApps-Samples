@@ -8,7 +8,7 @@ See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/mas
 
 ## What this sample does
 
-The `IsDuplicateDetectionEnabled` property is intended to be used in a scenario to enable duplicate detection rule for an organization and also for an entity.
+The `IsDuplicateDetectionEnabled` property is intended to be used in a scenario to enable duplicate detection rule for an organization and also for a table.
 
 ## How this sample works
 
@@ -21,9 +21,9 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 1. The `RetrieveDuplicateRequest` method retrieves the duplicate records. 
 1. The `EnableDuplicateDetectionForOrg` class enables duplicate detection for an organization. 
 1. To enable duplicate detection set `IsDuplicateDetectionEnabled = true`.
-1. The `RetrieveEntityRequest` method retrieves the entity metadata. 
+1. The `RetrieveEntityRequest` method retrieves the table definitions. 
 1. Set `IsDuplicateDetectionEnabled = true` to update the duplicate detection flag.
-1. The `UpdateEntityRequest` updates the entity with duplicate detection set to `true`.
+1. The `UpdateEntityRequest` updates the table with duplicate detection set to `true`.
 
 ### Clean up
 

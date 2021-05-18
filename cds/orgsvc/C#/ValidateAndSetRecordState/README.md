@@ -1,6 +1,6 @@
 # Sample: Validate record state and set the state of record
 
-This sample shows how to validate a change of state of an entity and set a state of an entity.
+This sample shows how to validate a change of state of a table and set a state of a table.
 
 ## How to run this sample
 
@@ -17,7 +17,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Setup
 
 1. Checks for the current version of the org.
-2. The `CreateRequiredRecords` method creates any entity records that this sample requires.
+2. The `CreateRequiredRecords` method creates any table records that this sample requires.
 
 ### Demonstrate
 

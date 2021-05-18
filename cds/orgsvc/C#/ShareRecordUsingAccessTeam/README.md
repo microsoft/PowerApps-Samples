@@ -37,7 +37,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 1. The `WhoAMIRequest` gets the ID's of the current user and business unit.
 1. Creates a sample access team. The `AddMembersTeamRequest`adds two sales people to the access team.
 1. The `GrantAccessRequest` grant the team read/write access to the account created in the Setup(#setup).
-1. The `RetrieveAndDisplayEntityAccess` retrieves and displays entity access information.
+1. The `RetrieveAndDisplayEntityAccess` retrieves and displays table access information.
 1. The `RetrieveAndDisplayPrincipalAccess` retrieves and displays principal access information.
 
 ### Clean up

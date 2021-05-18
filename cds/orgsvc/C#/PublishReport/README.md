@@ -18,7 +18,7 @@ Checks for the current version of the org.
 
 1. The `Report` method instantiates the report object.
 2. The `ReportCategory` method sets the report category te report should belong to.
-3. The `ReportEntity` method defines which entity this report uses.
+3. The `ReportEntity` method defines which table this report uses.
 4. The `ReportVisibility` method sets the report visibility.
 
 ### Clean up

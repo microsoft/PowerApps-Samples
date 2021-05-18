@@ -8,7 +8,7 @@ See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/mas
 
 ## What this sample does
 
-This sample shows how to perform CRUD operation on an entity.
+This sample shows how to perform CRUD operation on a table.
 
 ## How this sample works
 

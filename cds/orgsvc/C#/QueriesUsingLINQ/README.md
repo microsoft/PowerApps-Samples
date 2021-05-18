@@ -10,8 +10,9 @@ See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/mas
 ## What this sample does
 
 Read each sample's comments to find out what each sample does. There are samples that:
+
 * Create a simple LINQ query
-* Create a LINQ query using entity late binding
+* Create a LINQ query using table late binding
 * Retrieve multiple records using condition operators
 * Complex queries - a wide assortment of LINQ examples
 
@@ -21,7 +22,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Setup
 
-Creates any entity instances required by the `Demonstrate` region of each `Main`() method.
+Creates any table instances required by the `Demonstrate` region of each `Main`() method.
 
 ### Demonstrate
 

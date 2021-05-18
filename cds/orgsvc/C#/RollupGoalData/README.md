@@ -47,7 +47,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Demonstrate
 
 1. Creates Metric, and setting the Amount Data type to `Money`.
-2. Creates a Rollup fields which targets the estimated values and actual values.
+2. Creates a Rollup columns which targets the estimated values and actual values.
 3. The `GoalRollupQuery` creates the goal rollup queries, locating the opportunities in the sales representative's area.
 4. Creates three goals, one parent goal and two child goals.
 5. The `RecalculateRequest` calculates the rollup for goals.

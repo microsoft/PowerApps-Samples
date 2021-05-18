@@ -1,7 +1,7 @@
 
-# Create and retrieve entity relationships
+# Create and retrieve table relationships
 
-This sample shows how to create and retrieve entity relationships. The following methods are used to create and retrieve the relationships:
+This sample shows how to create and retrieve table relationships. The following methods are used to create and retrieve the relationships:
 
 - [CreateOneToManyRequest](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createonetomanyrequest?view=dynamics-general-ce-9)
 - [CreateManyToManyRequest](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createmanytomanyrequest?view=dynamics-general-ce-9)
@@ -16,7 +16,7 @@ See [How to run this sample](https://github.com/microsoft/PowerApps-Samples/blob
 
 ## What this sample does
 
-The `CreateOneToManyRequest`, `CreateManyToManyRequest`, `CanManyToManyRequest`, `CreateOneToManyRequest`, `CanBeReferencedRequest`, `CanBeReferencingRequest`, and `RetrieveRelationshipRequest` messages are intended to be used in a scenario where it contains the data that is needed to create and retrieve entity relationships.
+The `CreateOneToManyRequest`, `CreateManyToManyRequest`, `CanManyToManyRequest`, `CreateOneToManyRequest`, `CanBeReferencedRequest`, `CanBeReferencingRequest`, and `RetrieveRelationshipRequest` messages are intended to be used in a scenario where it contains the data that is needed to create and retrieve table relationships.
 
 ## How this sample works
 
@@ -31,7 +31,7 @@ Checks for the current version of the org.
 1. The `CreateOneToManyRequest` method creates a new One-to-Many (1:N) relationship. 
 2. The `CreateManyToManyRequest` method creates a new Many-To-Many (N:N) relationship.
 3. The `EligibleCreateManyToManyRelationship` method verifies whether entities can participate in N:N relationship.
-4. The `RetrieveRelationshipRequest` method retrieves the two entity relationships previously created.
+4. The `RetrieveRelationshipRequest` method retrieves the two table relationships previously created.
 
 
 ### Clean up

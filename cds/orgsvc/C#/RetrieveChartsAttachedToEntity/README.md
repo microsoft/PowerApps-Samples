@@ -1,6 +1,6 @@
-# Retrieve all charts attached to an entity
+# Retrieve all charts attached to a table
 
-This sample shows how to retrieve all the organization-owned visualizations attached to an entity by using the [IOrganizationService.RetrieveMultiple](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.retrievemultiple?view=dynamics-general-ce-9) method.
+This sample shows how to retrieve all the organization-owned visualizations attached to a table by using the [IOrganizationService.RetrieveMultiple](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.retrievemultiple?view=dynamics-general-ce-9) method.
 
 ## How to run this sample
 
@@ -20,7 +20,7 @@ Checks for the current version of the org.
 
 ### Demonstrate
 
-The `newSavedQuery` method creates a query for retrieving all organization-owned visualizations that are attached to the account entity.
+The `newSavedQuery` method creates a query for retrieving all organization-owned visualizations that are attached to the account table.
 
 
 ### Clean up

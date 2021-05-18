@@ -15,7 +15,7 @@ You can download the sample from [here](https://github.com/Microsoft/PowerApps-S
 
 1. Download or clone the [Samples](https://github.com/Microsoft/PowerApps-Samples) repo so that you have a local copy. This sample is located under PowerApps-Samples-master\cds\orgsvc\C#\RetrieveMultipleAccountPreOperation.
 1. Open the sample solution in Visual Studio, navigate to the project's properties, and verify the assembly will be signed during the build. Press F6 to build the sample's assembly (RetrieveMultipleAccountPreOperation.dll).
-1. Run the Plug-in Registration tool and register the assembly in Microsoft Dataverse server's sandbox and database for the `PreOperation` stage of the `RetrieveMultiple` message for the `Account` entity. 
+1. Run the Plug-in Registration tool and register the assembly in Microsoft Dataverse server's sandbox and database for the `PreOperation` stage of the `RetrieveMultiple` message for the `Account` table. 
 1. Using an app or write code to retrieve accounts to trigger the plug-in. See [Code to test this sample](#code-to-test-this-sample) below for an example.
 1. When you are done testing, unregister the assembly and step.
 
@@ -36,23 +36,23 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### FetchExpression
 
 1. Parse the [FetchExpression.Query](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.query.fetchexpression.query) value containing the FetchXml into an [XDocument](https://docs.microsoft.com/en-us/dotnet/api/system.xml.linq.xdocument)
-1. Verify that the `entity` element `attribute` attribute specifies the `account` entity.
-1. Examine all the `filter` elements in the query for conditions that test the `statecode` attribute.
-1. Remove any existing conditions based on that attribute.
+1. Verify that the `entity` element `attribute` column specifies the `account` table.
+1. Examine all the `filter` elements in the query for conditions that test the `statecode` column.
+1. Remove any existing conditions based on that column.
 1. Add a new `filter` to the Query that requires that only accounts where the `statecode` is not equal to 1 (Inactive) will be returned.
 1. Set the modified query to the `FetchExpression.Query` value
 
-```
+```csharp
 if (fetchExpressionQuery != null)
 {
     tracingService.Trace("Found FetchExpression Query");
 
     XDocument fetchXmlDoc = XDocument.Parse(fetchExpressionQuery.Query);
-    //The required entity element
+    //The required element
     var entityElement = fetchXmlDoc.Descendants("entity").FirstOrDefault();
     var entityName = entityElement.Attributes("name").FirstOrDefault().Value;
 
-    //Only applying to the account entity
+    //Only applying to the account table
     if (entityName == "account")
     {
         tracingService.Trace("Query on Account confirmed");
@@ -93,12 +93,12 @@ if (fetchExpressionQuery != null)
 
 ### QueryExpression
 
-1. Verify that the [QueryExpression.EntityName](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.query.queryexpression.entityname) is the `account` entity.
+1. Verify that the [QueryExpression.EntityName](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.query.queryexpression.entityname) is the `account` table.
 1. Loop through the [QueryExpression.Criteria.Filters](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.query.filterexpression.filters) collection
-1. Use the recursive `RemoveAttributeConditions` method to look for any [ConditionExpression](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.query.conditionexpression) instances that test the statecode attribute and remove them.
+1. Use the recursive `RemoveAttributeConditions` method to look for any [ConditionExpression](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.query.conditionexpression) instances that test the statecode column and remove them.
 1. Add a new [FilterExpression](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.query.filterexpression) to the `QueryExpression.Criteria.Filters` collection that requires that only accounts where the `statecode` is not equal to 1 (Inactive) will be returned.
 
-```
+```csharp
 if (queryExpressionQuery != null)
 {
     tracingService.Trace("Found Query Expression Query");
@@ -106,10 +106,10 @@ if (queryExpressionQuery != null)
     {
         tracingService.Trace("Query on Account confirmed");
 
-        //Recursively remove any conditions referring to the statecode attribute
+        //Recursively remove any conditions referring to the statecode column
         foreach (FilterExpression fe in queryExpressionQuery.Criteria.Filters)
         {
-            //Remove any existing criteria based on statecode attribute
+            //Remove any existing criteria based on statecode column
             RemoveAttributeConditions(fe, "statecode", tracingService);
         }
 
@@ -125,14 +125,14 @@ if (queryExpressionQuery != null)
 
 #### RemoveAttributeConditions method
 
-A recursive method that removes any conditions for a specific named attribute
+A recursive method that removes any conditions for a specific named column
 
-```
+```csharp
 /// <summary>
-/// Removes any conditions using a specific named attribute
+/// Removes any conditions using a specific named column
 /// </summary>
-/// <param name="filter">The filter that may have a condition using the attribute</param>
-/// <param name="attributeName">The name of the attribute that should not be used in a condition</param>
+/// <param name="filter">The filter that may have a condition using the column</param>
+/// <param name="attributeName">The name of the column that should not be used in a condition</param>
 /// <param name="tracingService">The tracing service to use</param>
 private void RemoveAttributeConditions(FilterExpression filter, string attributeName, ITracingService tracingService)
 {
@@ -166,7 +166,7 @@ Because QueryByAttribute doesn't support complex filters, only write a message t
 
 If you don't want this type of query to be used at all, you could throw an InvalidPluginExecutionException to prevent the operation, but this would be better applied during the `PreValidation` stage.
 
-```
+```csharp
 if (queryByAttributeQuery != null)
 {
     tracingService.Trace("Found Query By Attribute Query");
@@ -179,11 +179,11 @@ if (queryByAttributeQuery != null)
 
 The following code demonstrates 5 different ways to perform the same query that will trigger the plug-in. 
 
-By specifying a specific criteria, in this case the `address1_city` attribute value, which only one active record will match, these queries will return just that record.
+By specifying a specific criteria, in this case the `address1_city` colum value, which only one active record will match, these queries will return just that record.
 
 Then, deactivate that record and run this code a second time. No records will be returned.
 
-```
+```csharp
 try
 {
     string account_city_value = "Redmond";
@@ -302,5 +302,5 @@ catch (Exception ex)
 
 ### See also
 
-[Use plug-ins to extend business processes](https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/plug-ins)<br/>
-[Register a plug-in](https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/register-plug-in)
+[Use plug-ins to extend business processes](https://docs.microsoft.com/powerapps/developer/common-data-service/plug-ins)<br/>
+[Register a plug-in](https://docs.microsoft.com/powerapps/developer/common-data-service/register-plug-in)

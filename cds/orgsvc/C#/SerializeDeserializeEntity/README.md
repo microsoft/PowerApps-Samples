@@ -1,6 +1,6 @@
-# Serialize and deserialize an entity instance 
+# Serialize and deserialize a table 
 
-This sample shows how to serialize early-bound and late-bound entity instances into an XML format, and how to de-serialize from an XML format to an early-bound entity instance.
+This sample shows how to serialize early-bound and late-bound table instances into an XML format, and how to de-serialize from an XML format to an early-bound table instance.
 
 ## How to run this sample
 
@@ -22,7 +22,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Demonstrate
 
 1. The `DataContractSerializer` method serializes the contact records into XML and write it to the hard drive. 
-1. The `earlyBoundSerializer` method deserializes the entity instance.
+1. The `earlyBoundSerializer` method deserializes the table instance.
 
 ### Clean up
 

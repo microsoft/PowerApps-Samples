@@ -17,8 +17,8 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 ### Setup
 
 1. Checks for the current version of the org.
-1. The `Contact` method creates a contact to send an email to `(To: field)`.
-1. The `WhoAmIRequest` method gets the current user information to send the email `(From: field)`.
+1. The `Contact` method creates a contact to send an email to `(To: column)`.
+1. The `WhoAmIRequest` method gets the current user information to send the email `(From: column)`.
 1. The `ActivityParty`method creates  `To` and `From` activity party for the email.
 1. The `Email` method creates an email message.
 

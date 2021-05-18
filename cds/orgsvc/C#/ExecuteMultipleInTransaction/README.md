@@ -25,7 +25,7 @@ Checks for the current version of the org.
 
 1. The `ExecuteTransactionRequest` method creates the `ExecuteTransactionRequest` object.
 2. The `OrganizationRequestCollection` method creates an empty organization request collection.
-3. The `CreateRequest` method is added for each entity to the request collection.
+3. The `CreateRequest` method is added for each table to the request collection.
 
 ### Clean up
 

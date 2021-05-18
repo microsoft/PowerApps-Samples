@@ -1,8 +1,8 @@
-# Dump entity metadata to a file
+# Dump table definitions to a file
 
-This sample shows how to write out all the entity metadata to an `XML` file. It uses the [RetrieveAllEntitiesRequest](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.retrieveallentitiesrequest?view=dynamics-general-ce-9) message.
+This sample shows how to write out table definitions to an `XML` file. It uses the [RetrieveAllEntitiesRequest](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.retrieveallentitiesrequest?view=dynamics-general-ce-9) message.
 
-The following sample creates a new file at `\DumpEntityMetadata\bin\Debug\EntityInfo.xml`. You can open this file in **Office Excel** to see a tabular report. You may need this information to discover the entity type code for a custom entity for use in reports.
+The following sample creates a new file at `\DumpEntityMetadata\bin\Debug\EntityInfo.xml`. You can open this file in **Office Excel** to see a tabular report. You may need this information to discover the entity type code for a custom table for use in reports.
 
 ## How to run this sample
 
@@ -10,7 +10,7 @@ See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/mas
 
 ## What this sample does
 
-The `RetrieveAllEntitiesRequest` message is intended to be used in a scenario that contains data that is needed to retrieve metadata information about all the entities.
+The `RetrieveAllEntitiesRequest` message is intended to be used in a scenario that contains data that is needed to retrieve table definitions information.
 
 ## How this sample works
 
@@ -22,7 +22,7 @@ Checks for the current version of the org.
 
 ### Demonstrate
 
-1. The `RetrieveAllEntitiesRequest` method retrieves the metadata. 
+1. The `RetrieveAllEntitiesRequest` method retrieves the table definitions. 
 1. The `StreamWriter` creates an instance of StreamWriter to write text to a file.
 
 ### Clean up
