@@ -8,7 +8,7 @@ using System.Configuration;
 namespace PowerApps.Samples
 {
     /// <summary>
-    /// This sample has been updated work with PowerPlatform Online Only.
+    /// This sample has been updated work with Power Platform (online only).
     /// </summary>
     public partial class SampleProgram
     {
@@ -22,10 +22,10 @@ namespace PowerApps.Samples
             string username = "yourUserName@yourOrgName.onmicrosoft.com";
             string password = "yourPassword";
 
-            //Set the dataCenter if you know it, otherwise use DataCenter.Unknown to search all.
+            //Set the datacenter if you know it, otherwise use DataCenter.Unknown to search all.
             DataCenter dataCenter = DataCenter.Unknown;
 
-            //Get all environments for the selected data center;
+            //Get all environments for the selected data center.
             List<OrganizationDetail> orgs = GetAllOrganizations(username, password, dataCenter);
 
             if (orgs.Count.Equals(0))

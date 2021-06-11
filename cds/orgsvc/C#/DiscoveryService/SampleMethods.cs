@@ -18,11 +18,11 @@ namespace PowerApps.Samples
         /// </summary>
         /// <param name="username">The user's username</param>
         /// <param name="password">The user's password</param>
-        /// <param name="dataCenter">The DataCenter enum balue that corresponds to the data center if known. Otherwise DataCenter.Unknown</param>
+        /// <param name="dataCenter">The DataCenter enum value that corresponds to the data center if known. Otherwise DataCenter.Unknown</param>
         /// <returns>A List of OrganizationDetail records</returns>
         public static List<OrganizationDetail> GetAllOrganizations(string userName, string password, DataCenter dataCenter)
         {
-            //If DataCenter.Unknown is used, Choose Commercial
+            //If DataCenter.Unknown is used, choose Commercial
             if (dataCenter == DataCenter.Unknown)
             {
                 dataCenter = DataCenter.Commercial;
@@ -34,8 +34,8 @@ namespace PowerApps.Samples
         /// <summary>
         /// Get organization data for a specific known region only
         /// </summary>
-        /// <param name="creds"></param>
-        /// <param name="dataCenter"></param>
+        /// <param name="creds">User's credentials.</param>
+        /// <param name="dataCenter">Target datacenter.</param>
         /// <returns></returns>
         public static List<OrganizationDetail> GetOrganizationsForDataCenter(string userName, string password, DataCenter dataCenter)
         {
@@ -50,13 +50,13 @@ namespace PowerApps.Samples
             var attributes = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
             Uri targeturl = new Uri(((DescriptionAttribute)attributes[0]).Description);
 
-            // Set up user credentials,
+            // Set up user credentials
             var creds = new System.ServiceModel.Description.ClientCredentials();
             creds.UserName.UserName = userName;
             creds.UserName.Password = password;
             Uri appReplyUri = new Uri(redirectUrl);
 
-            // Call to get organizations from global discovery.
+            // Call to get organizations from global discovery
             var organizations = CrmServiceClient.DiscoverGlobalOrganizations(
                     targeturl, creds, null, clientId, appReplyUri, "", false, string.Empty, PromptBehavior.Auto);
 
