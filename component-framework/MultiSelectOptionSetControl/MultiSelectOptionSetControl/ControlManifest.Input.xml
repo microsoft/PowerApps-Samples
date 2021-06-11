@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="SampleNamespace" constructor="MultiSelectOptionSetControl" version="1.0.0" display-name-key="MultiSelectOptionSetControl" description-key="MultiSelectOptionSetControl description" control-type="standard">
+    <property name="controlValue" display-name-key="msosProperty_Display_Key" description-key="msosProperty_Desc_Key" of-type="MultiSelectOptionSet" usage="bound" required="true" />
+    <resources>
+      <code path="index.ts" order="1"/>
+    </resources>
+  </control>
+</manifest>

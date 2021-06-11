@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="SampleNamespace" constructor="MapControl" version="1.1.0" display-name-key="MapControl_Display_Key" description-key="MapControl_Desc_Key" control-type="standard">
+    <property name="controlValue" display-name-key="controlValue_Display_Key" description-key="controlValue_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
+    <property name="controlApiKey" display-name-key="controlApiKey_Display_Key" description-key="controlApiKey_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" />
+    <resources>
+     <code path="index.ts" order="1" />
+     <css path="css/MapControl.css" order="2" />
+     <resx path="strings/MapControl.1033.resx" version="1.0.0" />
+    </resources>
+  </control>
+</manifest>
