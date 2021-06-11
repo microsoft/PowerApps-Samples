@@ -3,7 +3,7 @@
 Follow the steps below to import and try the sample components in your model-driven or canvas app:
 
 1. Navigate to the folder on your computer where you have downloaded the sample components, and extract the .zip file.  
-1. Open Developer Command Prompt for Visual Studio 2017 and navigate to the sample component folder in the extracted folder that you want to see it in runtime. For example, navigate to the \<extracted_folder>/TS_IncrementComponent folder.
+1. Open Developer Command Prompt for Visual Studio 2017 and navigate to the sample component folder in the extracted folder that you want to see it in runtime. For example, navigate to the \<extracted_folder>/IncrementComponent folder.
 1. Run the following command to get all the required dependencies:
     ```
     npm install
