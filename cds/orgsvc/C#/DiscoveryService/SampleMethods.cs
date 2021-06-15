@@ -14,7 +14,7 @@ namespace PowerApps.Samples
     public partial class SampleProgram
     {
         /// <summary>
-        /// Gets organization data for user in commercial region cloud is unknown
+        /// Gets organization data for the specified user.
         /// </summary>
         /// <param name="username">The user's username</param>
         /// <param name="password">The user's password</param>
