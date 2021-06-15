@@ -14,39 +14,39 @@ namespace PowerApps.Samples
     public partial class SampleProgram
     {
         /// <summary>
-        /// Gets organization data for user in all regions when data center is unknown
+        /// Gets organization data for the specified user.
         /// </summary>
         /// <param name="username">The user's username</param>
         /// <param name="password">The user's password</param>
-        /// <param name="dataCenter">The DataCenter enum value that corresponds to the data center if known. Otherwise DataCenter.Unknown</param>
+        /// <param name="cloud">The Cloud enum value that corresponds to the data center if known. Otherwise Cloud.Unknown</param>
         /// <returns>A List of OrganizationDetail records</returns>
-        public static List<OrganizationDetail> GetAllOrganizations(string userName, string password, DataCenter dataCenter)
+        public static List<OrganizationDetail> GetAllOrganizations(string userName, string password, Cloud cloud)
         {
-            //If DataCenter.Unknown is used, choose Commercial
-            if (dataCenter == DataCenter.Unknown)
+            //If Cloud.Unknown is used, choose Commercial
+            if (cloud == Cloud.Unknown)
             {
-                dataCenter = DataCenter.Commercial;
+                cloud = Cloud.Commercial;
             }
             // Get data from Organization
-            return GetOrganizationsForDataCenter(userName, password, dataCenter);
+            return GetOrganizationsForCloud(userName, password, cloud);
         }
 
         /// <summary>
         /// Get organization data for a specific known region only
         /// </summary>
         /// <param name="creds">User's credentials.</param>
-        /// <param name="dataCenter">Target datacenter.</param>
+        /// <param name="cloud">Target Cloud.</param>
         /// <returns></returns>
-        public static List<OrganizationDetail> GetOrganizationsForDataCenter(string userName, string password, DataCenter dataCenter)
+        public static List<OrganizationDetail> GetOrganizationsForCloud(string userName, string password, Cloud cloud)
         {
-            if (dataCenter == DataCenter.Unknown)
+            if (cloud == Cloud.Unknown)
             {
-                throw new ArgumentOutOfRangeException("DataCenter.Unknown cannot be used as a parameter for this method.");
+                throw new ArgumentOutOfRangeException("Cloud.Unknown cannot be used as a parameter for this method.");
             }
 
-            //Get the DataCenter URL from the Description Attribute applied for the DataCenter member
-            var type = typeof(DataCenter);
-            var memInfo = type.GetMember(dataCenter.ToString());
+            //Get the Cloud URL from the Description Attribute applied for the Cloud member
+            var type = typeof(Cloud);
+            var memInfo = type.GetMember(cloud.ToString());
             var attributes = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
             Uri targeturl = new Uri(((DescriptionAttribute)attributes[0]).Description);
 
@@ -67,9 +67,9 @@ namespace PowerApps.Samples
     }
 
     /// <summary>
-    /// An enum for the known data centers
+    /// An enum for the known Clouds
     /// </summary>
-    public enum DataCenter
+    public enum Cloud
     {
         [Description("Unknown")]
         Unknown,

@@ -22,11 +22,11 @@ namespace PowerApps.Samples
             string username = "yourUserName@yourOrgName.onmicrosoft.com";
             string password = "yourPassword";
 
-            //Set the datacenter if you know it, otherwise use DataCenter.Unknown to search all.
-            DataCenter dataCenter = DataCenter.Unknown;
+            //Set the Cloud if you know it, otherwise use Cloud.Unknown to search Commercial.
+            Cloud cloud = Cloud.Unknown;
 
             //Get all environments for the selected data center.
-            List<OrganizationDetail> orgs = GetAllOrganizations(username, password, dataCenter);
+            List<OrganizationDetail> orgs = GetAllOrganizations(username, password, cloud);
 
             if (orgs.Count.Equals(0))
             {
