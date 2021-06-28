@@ -186,7 +186,7 @@ export class LookupSimpleControl implements ComponentFramework.StandardControl<I
 	 */
 	public getOutputs(): IOutputs {
 		// Send the updated selected lookup item back to the ComponentFramework, based on the currently selected item
-		return this._updateSelected1 ? { controlValue: this._selectedItem1 } : { controlValue1: this._selectedItem2 };
+		return this._updateSelected1 ? { controlValue: [this._selectedItem1] } : { controlValue1: [this._selectedItem2] };
 	}
 
 	/** 
