@@ -36,7 +36,7 @@ function stringFormat(template: string, ...args: string[]): string {
     return template;
 }
 
-export class GridProps {
+export interface GridProps {
     width?: number;
     height?: number;
     columns: ComponentFramework.PropertyHelper.DataSetApi.Column[];
