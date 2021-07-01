@@ -111,6 +111,13 @@ namespace QuickStartXRMToolingWPFClient.LoginWindow
             // if you are using an unmanaged client, excel for example, and need to store the config in the users local directory
             // set this option to true. 
             mgr.UseUserLocalDirectoryForConfigStore = true;
+
+            // Enabled OAuth Flows
+            // Client ID to use for oAuth.  ID: 51f81489-12ee-4a9e-aaae-a2591f45987d is a sample ID that should be replaced by a ID created for your use. 
+            mgr.ClientId = "51f81489-12ee-4a9e-aaae-a2591f45987d";
+            // Redirect URI required for oAuth.
+            mgr.RedirectUri = new Uri("app://58145B91-0C36-4500-8554-080854F2AC97");
+
             // if you are using an unmanaged client,  you need to provide the name of an exe to use to create app config key's for. 
             //mgr.HostApplicatioNameOveride = "MyExecName.exe";
             // CrmLoginCtrl is the Login control,  this sets the CrmConnection Manager into it. 
