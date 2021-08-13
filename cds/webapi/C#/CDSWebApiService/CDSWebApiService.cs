@@ -499,7 +499,7 @@ namespace PowerApps.Samples
                         //Otherwise, use an exponential backoff strategy
                         seconds = (int)Math.Pow(2, retryCount);
                     }
-                    Thread.Sleep(TimeSpan.FromSeconds(seconds));
+                    await Task.Delay(TimeSpan.FromSeconds(seconds));
 
                     return await SendAsync(request, httpCompletionOption, retryCount);
                 }
