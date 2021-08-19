@@ -38,5 +38,5 @@ This creates 3 Dataverse entities - Object Detection Product, Health Feedback, a
 
 - **Prediction** : Follow the instructions in [Prediction data preparation](https://docs.microsoft.com/ai-builder/binary-classification-data-prep) to upload the **Online Shopping Intent** data.
 - **Category classification** : Go to **Lab Data/Text Classification** folder within the lab files and then upload data from **pai_healthcare_feedbacks**. Follow the instructions in [Before you build a category classification model](https://docs.microsoft.com/ai-builder/before-you-build-text-classification-model).
-- **Entity extraction** : Go to **Lab Data/EntityClassification** folder with the lab files and then upload data from **aib_travelfeedback**.  Follow the instructions in [Use sample data to do entity extraction](https://docs.microsoft.com/en-us/ai-builder/entity-extraction-sample-data).
+- **Entity extraction** : Go to **Lab Data/EntityClassification** folder with the lab files and then upload data from **aib_travelfeedback**.  Follow the instructions in [Use sample data to do entity extraction](https://docs.microsoft.com/ai-builder/entity-extraction-sample-data).
 - **Object detection** : Go to **Lab Data/ObjectDetection** folder and then upload data from **aib_objectdetectionproducts**. Follow the same instructions as above for data upload.
