@@ -76,7 +76,6 @@ namespace PowerApps.Samples
             Console.WriteLine("The Image Attribute Demo entity has been created.");
 
             //Create an Image attribute for the custom entity
-            // Only one Image attribute can be added to an entity that doesn't already have one.
             CreateAttributeRequest createEntityImageRequest = new CreateAttributeRequest
             {
                 EntityName = _customEntityName.ToLower(),
