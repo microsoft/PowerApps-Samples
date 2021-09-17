@@ -39,4 +39,4 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Clean up
 
-The program does not automatically delete the imported solution. You should manually deleted the solution named "Contoso_sample" from your test environment.
+The program does not automatically delete the imported solution. You should manually delete the solution named "Contoso_sample" from your test environment.
