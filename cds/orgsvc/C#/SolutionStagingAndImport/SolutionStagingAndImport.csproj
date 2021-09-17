@@ -111,8 +111,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="..\..\..\App.config">
+      <Link>App.config</Link>
     </None>
     <None Include="Contoso_sample_1_0_0_1_managed.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
