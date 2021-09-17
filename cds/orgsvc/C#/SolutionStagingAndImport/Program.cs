@@ -29,16 +29,23 @@ namespace PowerApps.Samples
 
             if (stagingResults.StageSolutionStatus == StageSolutionStatus.Failed)
             {
+                Console.WriteLine("The solution staging failed.");
+
                 var validationResults = stagingResults.SolutionValidationResults;
                 // TODO Check or log solution validation results
             }
 
             else // Staging was a success
             {
+                Console.WriteLine("The solution staging completed successfully.");
+
                 // Import the solution and check the import status
                 var response = ImportSolution(service, stagingResults);
                 CheckImportStatus(service, response.AsyncOperationId, Guid.Parse(response.ImportJobKey));
             }
+
+            // Pause program execution by waiting for a key press.
+            Console.ReadKey();
         }
 
         /// <summary>
@@ -155,11 +162,13 @@ namespace PowerApps.Samples
             OptionSetValue statuscode = (OptionSetValue)asyncOperation["statuscode"];
             if (statuscode.Value == 30)
             {
-                // Nothing to do right now
+                Console.WriteLine("The solution import completed successfully.");
             }
 
             else if (asyncOperation["statuscode"].ToString() == "31")  // Solution import failed
             {
+                Console.WriteLine("The solution import failed.");
+
                 var getLogReq = new RetrieveFormattedImportJobResultsRequest { ImportJobId = importJobKey };
                 var importJob = service.Execute(getLogReq) as RetrieveFormattedImportJobResultsResponse;
                 // TODO Do something with the import job results

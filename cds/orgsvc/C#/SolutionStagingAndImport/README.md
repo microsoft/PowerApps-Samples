@@ -29,7 +29,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Setup
 
-1. Invokes the SampleHelpers.Connect() method to authenticate the user and return a web service reference. 
+1. Invokes the `SampleHelpers.Connect` method to authenticate the user and return a web service reference. 
 
 ### Demonstrate
 
@@ -39,4 +39,4 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Clean up
 
-Displays an option to delete all the data created in the sample. The deletion is optional in case you want to examine the data created by the sample. You can manually delete the data to achieve same results.
+The program does not automatically delete the imported solution. You should manually deleted the solution named "Contoso_sample" from your test environment.
