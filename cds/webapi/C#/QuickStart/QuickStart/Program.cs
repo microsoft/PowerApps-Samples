@@ -41,7 +41,8 @@ namespace PowerApps.Samples
 
             var client = new HttpClient
             {
-                BaseAddress = new Uri(resource + "/api/data/v9.0/"),
+                // See https://docs.microsoft.com/powerapps/developer/data-platform/webapi/compose-http-requests-handle-errors#web-api-url-and-versions
+                BaseAddress = new Uri(resource + "/api/data/v9.1/"),
                 Timeout = new TimeSpan(0, 2, 0)    // Standard two minute timeout on web service calls.
             };
 
@@ -78,7 +79,7 @@ namespace PowerApps.Samples
             }
             #endregion Web API call
 
-            // Pause program execution.
+            // Pause program execution by waiting for a key press.
             Console.ReadKey();
         }
     }
