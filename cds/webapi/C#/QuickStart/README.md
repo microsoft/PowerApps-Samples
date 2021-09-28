@@ -6,7 +6,7 @@ This sample shows how to authenticate with the Dataverse web service and invoke 
 
 1. Download or clone the repo so that you have a local copy.
 1. Open the sample solution in Visual Studio 2019.
-1. Edit line 14 pf program.cs to set the URL for your Dataverse test environment.
+1. Edit line 14 of Program.cs to set the URL for your Dataverse test environment.
 1. Press F5 to run the sample.
 1. You will be prompted to choose a valid Dataverse user, and then enter your logon password.
 1. When the sample is finished, press any key to exit.
