@@ -11,7 +11,7 @@ namespace PowerApps.Samples
         static void Main()
         {
             // TODO Specify the Dataverse environment name to connect with.
-            string resource = "https://<env-name>.crm.dynamics.com";
+            string resource = "https://<env-name>.api.<region>.dynamics.com";
 
             // Azure Active Directory app registration shared by all Power App samples.
             // For your custom apps, you will need to register them with Azure AD yourself.
@@ -42,7 +42,7 @@ namespace PowerApps.Samples
             var client = new HttpClient
             {
                 // See https://docs.microsoft.com/powerapps/developer/data-platform/webapi/compose-http-requests-handle-errors#web-api-url-and-versions
-                BaseAddress = new Uri(resource + "/api/data/v9.1/"),
+                BaseAddress = new Uri(resource + "/api/data/v9.2/"),
                 Timeout = new TimeSpan(0, 2, 0)    // Standard two minute timeout on web service calls.
             };
 
