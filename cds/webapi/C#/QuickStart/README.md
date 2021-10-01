@@ -1,6 +1,6 @@
 ﻿# A quick start to the Dataverse Web API
 
-This sample shows how to authenticate with the Dataverse web service and invoke a Web API.
+This sample shows how to authenticate with the Dataverse web service and invoke a Web API. The solution contains two projects that differ only in the authentication library employed (either ADAL or MSAL) for web service authentication.
 
 ## How to run this sample
 
@@ -25,7 +25,7 @@ This sample doesn't require any setup other that specifying the test environment
 
 ### Demonstrate
 
-- Active Directory Authentication Library (ADAL) online authentication
+- Active Directory Authentication Library (ADAL) or Microsoft Authentication Library (MSAL) for service authentication
 - Web client configuration
 - Web API unbound function invocation and web service response parsing
 
