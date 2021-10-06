@@ -2,9 +2,9 @@
 
 | **C#** | **.NET 5** |
 
-This sample shows how to authenticate with the Microsoft Dataverse web service and invoke a Dataverse Web API. The sample uses the [Microsoft Authentication Library](/azure/active-directory/develop/msal-overview) (MSAL) for web service authentication, and invokes the Web API function <xref:Microsoft.Dynamics.CRM.WhoAmI>.
+This sample shows how to authenticate with the Microsoft Dataverse web service and invoke a Dataverse Web API. The sample uses the [Microsoft Authentication Library](https://docs.microsoft.com/azure/active-directory/develop/msal-overview) (MSAL) for web service authentication, and invokes the Web API function [WhoAmI](https://docs.microsoft.com/dynamics365/customer-engagement/web-api/whoami).
 
-More information: [Quick Start: Web API sample (C#)](/powerapps/developer/data-platform/webapi/quick-start-console-app-csharp?tabs=msal)
+More information: [Quick Start: Web API sample (C#)](https://docs.microsoft.com/powerapps/developer/data-platform/webapi/quick-start-console-app-csharp?tabs=msal)
 
 ## How to run this sample
 
