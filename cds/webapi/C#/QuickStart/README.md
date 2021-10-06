@@ -1,5 +1,7 @@
 ﻿# A quick start to the Dataverse Web API
 
+| **C#** | **.NET Framework 4.6** |
+
 This sample shows how to authenticate with the Dataverse web service and invoke a Web API. The solution contains two projects that differ only in the authentication library employed (either ADAL or MSAL) for web service authentication.
 
 ## How to run this sample
