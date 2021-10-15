@@ -21,7 +21,7 @@ namespace PowerApps.Samples
             // For your custom apps, you will need to register them with Azure AD yourself.
             // See https://docs.microsoft.com/powerapps/developer/data-platform/walkthrough-register-app-azure-active-directory
             var clientId = "51f81489-12ee-4a9e-aaae-a2591f45987d";
-            var redirectUri = "http://localhost";
+            var redirectUri = "http://localhost"; // Loopback for the interactive login.
 
             #region Authentication
 
