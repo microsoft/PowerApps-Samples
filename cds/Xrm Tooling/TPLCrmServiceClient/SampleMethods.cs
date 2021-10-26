@@ -36,7 +36,7 @@ namespace PowerApps.Samples
             var createdEntityReferences = new ConcurrentBag<EntityReference>();
 
             Parallel.ForEach(entities,
-                new ParallelOptions() { MaxDegreeOfParallelism = maxDegreeOfParallelism },
+                new ParallelOptions() { MaxDegreeOfParallelism = svc.RecommendedDegreesOfParallelism },
                 () =>
                 {
                     //Clone the CrmServiceClient for each thread
@@ -76,7 +76,7 @@ namespace PowerApps.Samples
         private static void DeleteEntities(CrmServiceClient svc, List<EntityReference> entityReferences)
         {
             Parallel.ForEach(entityReferences,
-                new ParallelOptions() { MaxDegreeOfParallelism = maxDegreeOfParallelism },
+                new ParallelOptions() { MaxDegreeOfParallelism = svc.RecommendedDegreesOfParallelism },
                 () =>
                 {
                     //Clone the CrmServiceClient for each thread
@@ -105,7 +105,7 @@ namespace PowerApps.Samples
         /// the desired connection configuration by name.
         /// </summary>
         /// <returns>A string containing web service connection configuration information.</returns>
-        private static String GetServiceConfiguration()
+        private static string GetServiceConfiguration()
         {
             // Get available connection strings from app.config.
             int count = ConfigurationManager.ConnectionStrings.Count;
@@ -176,7 +176,7 @@ namespace PowerApps.Samples
         /// Verifies if a connection string is valid for Common Data Service.
         /// </summary>
         /// <returns>True for a valid string, otherwise False.</returns>
-        private static Boolean isValidConnectionString(String connectionString)
+        private static bool isValidConnectionString(String connectionString)
         {
             // At a minimum, a connection string must contain one of these arguments.
             if (connectionString.Contains("Url=") ||
