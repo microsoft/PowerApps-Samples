@@ -2,7 +2,9 @@
 
 SecondaryRecordSource is a sample implementation of an IRecordSource to configure as part of TimelineWallControl's custom connector feature.
 
-The custom connector feature for the timeline is a way for developers to surface information, such as records, within the TimelineWallControl component. It allows for a broader set of scenarios in addition to the existing out-of-box notes, posts, and activities.
+Custom connectors is a feature that provides a way for developers to surface information such as Dataverse table rows, external data sources, and so forth, as records entries within the TimelineWallControl component. It allows for a broader set of scenarios in addition to the existing out-of-box notes, posts, and activities.
+
+For more information, see [Use custom connectors with the timeline control](https://docs.microsoft.com/powerapps/maker/model-driven-apps/custom-connectors-timeline-control).
 
 ## What this sample does
 
