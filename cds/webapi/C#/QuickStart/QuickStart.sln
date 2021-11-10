@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickStart-ADAL", "QuickStart\QuickStart-ADAL.csproj", "{1F837844-46A1-43DC-9581-0A84A2FAA7B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickStart-MSAL", "QuickStartMSAL\QuickStart-MSAL.csproj", "{C1E9CBE5-7BD4-4393-ACD9-97F62FEE8672}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1F837844-46A1-43DC-9581-0A84A2FAA7B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F837844-46A1-43DC-9581-0A84A2FAA7B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F837844-46A1-43DC-9581-0A84A2FAA7B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F837844-46A1-43DC-9581-0A84A2FAA7B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1E9CBE5-7BD4-4393-ACD9-97F62FEE8672}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1E9CBE5-7BD4-4393-ACD9-97F62FEE8672}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1E9CBE5-7BD4-4393-ACD9-97F62FEE8672}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1E9CBE5-7BD4-4393-ACD9-97F62FEE8672}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7C416FF8-3C24-435B-A180-D0AC962404C3}
+	EndGlobalSection
+EndGlobal
