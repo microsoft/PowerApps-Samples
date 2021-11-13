@@ -64,18 +64,24 @@ namespace PowerApps.Samples
 
             if (response.IsSuccessStatusCode)
             {
-                Guid userId = Guid.NewGuid();
-
                 // Parse the JSON formatted service response (WhoAmIResponse) to obtain the user ID value.
                 // See https://docs.microsoft.com/dynamics365/customer-engagement/web-api/whoamiresponse
-                using (JsonDocument doc = 
-                    JsonDocument.Parse(response.Content.ReadAsStringAsync().Result))
+                Guid userId = new Guid();
+
+                String jsonContent = response.Content.ReadAsStringAsync().Result;
+
+                using (JsonDocument doc = JsonDocument.Parse(jsonContent))
                 {
                     JsonElement root = doc.RootElement;
                     JsonElement userIdElement = root.GetProperty("UserId");
-                    userId = (Guid)userIdElement.GetGuid();
+                    userId = userIdElement.GetGuid();
                 }
-                Console.WriteLine("Your user ID is {0}", userId);
+
+                // Alternate code, but requires that the WhoAmIResponse class be defined (see below).
+                //WhoAmIResponse whoAmIresponse = JsonSerializer.Deserialize<WhoAmIResponse>(jsonContent);
+                //userId = whoAmIresponse.UserId;
+
+                Console.WriteLine("Your user ID is {0}", userId.ToString());
             }
             else
             {
@@ -87,5 +93,17 @@ namespace PowerApps.Samples
             // Pause program execution by waiting for a key press.
             Console.ReadKey();
         }
+    }
+
+    /// <summary>
+    /// WhoAmIResponse class definition 
+    /// </summary>
+    /// <remarks>To be used for JSON deserialization.</remarks>
+    /// <see cref="https://docs.microsoft.com/dynamics365/customer-engagement/web-api/whoamiresponse"/>
+    public class WhoAmIResponse
+    {
+        public Guid BusinessUnitId { get; set; }
+        public Guid UserId { get; set; }
+        public Guid OrganizationId { get; set; }
     }
 }
