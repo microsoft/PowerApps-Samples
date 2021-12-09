@@ -6,14 +6,3 @@
     /* Large Icon */
     font-size: 300%; 
 }
-
-/* Work-around for Fluent UI StickyHeader appearing on top of the View Selector and Command Bar Flyouts */ 
-div[id^="ViewSelector"] {
-    z-index: 20;
-}
-div[id^="DialogContainer"] {
-    z-index: 20;
-}
-#__flyoutRootNode .flexbox {
-    z-index: 20;
-}

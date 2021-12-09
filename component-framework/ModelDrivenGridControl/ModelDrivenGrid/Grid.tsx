@@ -294,7 +294,7 @@ export const Grid = React.memo((props: GridProps) => {
 
     return (
         <Stack verticalFill grow style={rootContainerStyle}>
-            <Stack.Item grow style={{ position: 'relative', backgroundColor: 'white' }}>
+            <Stack.Item grow style={{ position: 'relative', backgroundColor: 'white', zIndex: 0 }}>
                 {!itemsLoading && !isComponentLoading && items && items.length === 0 && (
                     <Stack grow horizontalAlign="center" className={'noRecords'}>
                         <Icon iconName="PageList"></Icon>
