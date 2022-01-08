@@ -1,12 +1,6 @@
 ﻿using Microsoft.Crm.Sdk.Messages;
-using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Tooling.Connector;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PowerApps.Samples
 {
@@ -29,13 +23,15 @@ namespace PowerApps.Samples
                     Console.WriteLine(" Initializing new Account from the initial Account");
 
                     // Create the request object
-                    var initialize = new InitializeFromRequest();
+                    var initialize = new InitializeFromRequest
+                    {
 
-                    // Set the properties of the request object
-                    initialize.TargetEntityName = Account.EntityLogicalName.ToString();
+                        // Set the properties of the request object
+                        TargetEntityName = Account.EntityLogicalName.ToString(),
 
-                    // Create the EntityMoniker
-                    initialize.EntityMoniker = _initialAccount.ToEntityReference();
+                        // Create the EntityMoniker
+                        EntityMoniker = _initialAccount.ToEntityReference()
+                    };
 
                     // Execute the request
                     InitializeFromResponse initialized =

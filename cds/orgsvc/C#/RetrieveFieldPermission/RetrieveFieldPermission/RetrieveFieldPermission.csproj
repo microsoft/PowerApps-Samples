@@ -4,21 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-<<<<<<< HEAD
-    <ProjectGuid>{8EB36BBB-2978-46FC-A4C4-C3D914F3B430}</ProjectGuid>
-=======
     <ProjectGuid>{C650F770-934E-45D5-84D4-1922A02742F1}</ProjectGuid>
->>>>>>> e17f0bedd03f33aec18be3f488aee58b5c2fbc6a
     <OutputType>Exe</OutputType>
     <RootNamespace>RetrieveFieldPermission</RootNamespace>
     <AssemblyName>RetrieveFieldPermission</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-<<<<<<< HEAD
-    <TargetFrameworkProfile />
-=======
->>>>>>> e17f0bedd03f33aec18be3f488aee58b5c2fbc6a
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -50,11 +42,7 @@
       <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.22.302111727\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-<<<<<<< HEAD
-      <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.CoreAssembly.9.0.2.4\lib\net452\Microsoft.Rest.ClientRuntime.dll</HintPath>
-=======
       <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.CoreAssembly.9.0.2.5\lib\net452\Microsoft.Rest.ClientRuntime.dll</HintPath>
->>>>>>> e17f0bedd03f33aec18be3f488aee58b5c2fbc6a
     </Reference>
     <Reference Include="Microsoft.Xrm.Sdk, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.5\lib\net452\Microsoft.Xrm.Sdk.dll</HintPath>
@@ -66,11 +54,7 @@
       <HintPath>..\packages\Microsoft.CrmSdk.Workflow.9.0.2.4\lib\net452\Microsoft.Xrm.Sdk.Workflow.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xrm.Tooling.Connector, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-<<<<<<< HEAD
-      <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.CoreAssembly.9.0.2.4\lib\net452\Microsoft.Xrm.Tooling.Connector.dll</HintPath>
-=======
       <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.CoreAssembly.9.0.2.5\lib\net452\Microsoft.Xrm.Tooling.Connector.dll</HintPath>
->>>>>>> e17f0bedd03f33aec18be3f488aee58b5c2fbc6a
     </Reference>
     <Reference Include="Microsoft.Xrm.Tooling.CrmConnectControl, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.WpfControls.9.0.2.5\lib\net452\Microsoft.Xrm.Tooling.CrmConnectControl.dll</HintPath>
@@ -83,10 +67,7 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
-<<<<<<< HEAD
-=======
       <Private>True</Private>
->>>>>>> e17f0bedd03f33aec18be3f488aee58b5c2fbc6a
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -118,11 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\..\..\LoginUX\ExampleLoginForm.xaml.cs">
-<<<<<<< HEAD
-      <Link>LoginUx\ExampleLoginForm.xaml.cs</Link>
-=======
       <Link>LoginUX\ExampleLoginForm.xaml.cs</Link>
->>>>>>> e17f0bedd03f33aec18be3f488aee58b5c2fbc6a
     </Compile>
     <Compile Include="..\..\MyOrganizationSdkTypes.cs">
       <Link>MyOrganizationSdkTypes.cs</Link>
@@ -139,11 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="..\..\..\..\LoginUX\ExampleLoginForm.xaml">
-<<<<<<< HEAD
-      <Link>LoginUx\ExampleLoginForm.xaml</Link>
-=======
       <Link>LoginUX\ExampleLoginForm.xaml</Link>
->>>>>>> e17f0bedd03f33aec18be3f488aee58b5c2fbc6a
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

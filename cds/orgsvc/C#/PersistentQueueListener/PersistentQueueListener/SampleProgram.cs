@@ -1,11 +1,5 @@
-﻿using System;
-using System.Diagnostics;
-using System.Threading;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.ServiceModel.Channels;
-using System.ServiceModel.Description;
-using Microsoft.Xrm.Sdk;
+﻿using Microsoft.Xrm.Sdk;
+using System;
 
 namespace PowerApps.Samples
 {

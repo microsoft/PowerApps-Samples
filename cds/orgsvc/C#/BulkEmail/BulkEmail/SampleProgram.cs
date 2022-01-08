@@ -4,13 +4,10 @@ using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Tooling.Connector;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PowerApps.Samples
 {
-   public partial class SampleProgram
+    public partial class SampleProgram
     {
         private static List<Guid> _contactsIds = new List<Guid>();
         private const int ARBITRARY_MAX_POLLING_TIME = 60;
