@@ -1,18 +1,13 @@
 ﻿using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Tooling.Connector;
-using Microsoft.Xrm.Sdk.Client;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xrm.Sdk.Messages;
 
 namespace PowerApps.Samples
 {
-   public partial class SampleProgram
+    public partial class SampleProgram
     {
         [STAThread] // Added to support UX
         static void Main(string[] args)

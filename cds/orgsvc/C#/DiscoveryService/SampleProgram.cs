@@ -3,7 +3,6 @@ using Microsoft.Xrm.Sdk.Discovery;
 using Microsoft.Xrm.Tooling.Connector;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 
 namespace PowerApps.Samples
 {

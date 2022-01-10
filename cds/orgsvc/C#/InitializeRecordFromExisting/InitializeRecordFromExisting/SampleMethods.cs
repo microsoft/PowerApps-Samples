@@ -1,9 +1,5 @@
 ﻿using Microsoft.Xrm.Tooling.Connector;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PowerApps.Samples
 {
@@ -11,7 +7,7 @@ namespace PowerApps.Samples
     {
 
         private static Account _initialAccount;
-        private static Opportunity _initialOpportunity;
+        private static Lead _initialLead;
         private static bool prompt = true;
         /// <summary>
         /// Function to set up the sample.
@@ -50,7 +46,7 @@ namespace PowerApps.Samples
             Console.WriteLine("  Created initial Account (Name={0})",
                 _initialAccount.Name);
 
-            _initialOpportunity = new Opportunity()
+            _initialLead = new Lead()
             {
                 Subject = "A Sample Lead",
                 LastName = "Wilcox",
@@ -77,7 +73,7 @@ namespace PowerApps.Samples
             if (prompt)
             {
                 Console.WriteLine("\nDo you want these entity records deleted? (y/n)");
-                String answer = Console.ReadLine();
+                string answer = Console.ReadLine();
 
                 deleteRecords = (answer.StartsWith("y") || answer.StartsWith("Y"));
             }

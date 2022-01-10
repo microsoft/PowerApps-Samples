@@ -1,15 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-<<<<<<< HEAD
-VisualStudioVersion = 15.0.26228.9
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetrieveFieldPermission", "RetrieveFieldPermission\RetrieveFieldPermission.csproj", "{8EB36BBB-2978-46FC-A4C4-C3D914F3B430}"
-=======
 VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetrieveFieldPermission", "RetrieveFieldPermission\RetrieveFieldPermission.csproj", "{C650F770-934E-45D5-84D4-1922A02742F1}"
->>>>>>> e17f0bedd03f33aec18be3f488aee58b5c2fbc6a
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,25 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-<<<<<<< HEAD
-		{8EB36BBB-2978-46FC-A4C4-C3D914F3B430}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8EB36BBB-2978-46FC-A4C4-C3D914F3B430}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8EB36BBB-2978-46FC-A4C4-C3D914F3B430}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8EB36BBB-2978-46FC-A4C4-C3D914F3B430}.Release|Any CPU.Build.0 = Release|Any CPU
-=======
 		{C650F770-934E-45D5-84D4-1922A02742F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C650F770-934E-45D5-84D4-1922A02742F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C650F770-934E-45D5-84D4-1922A02742F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C650F770-934E-45D5-84D4-1922A02742F1}.Release|Any CPU.Build.0 = Release|Any CPU
->>>>>>> e17f0bedd03f33aec18be3f488aee58b5c2fbc6a
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-<<<<<<< HEAD
-=======
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CD3C067F-78A4-479F-8086-6D3DEF416568}
 	EndGlobalSection
->>>>>>> e17f0bedd03f33aec18be3f488aee58b5c2fbc6a
 EndGlobal
