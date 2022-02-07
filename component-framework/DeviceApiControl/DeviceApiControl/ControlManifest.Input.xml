@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-  <control namespace="SampleNamespace" constructor="DeviceApiControl" version="0.1.11" display-name-key="DeviceApiControl_Display_Key" description-key="DeviceApiControl_Desc_Key" control-type="standard">
+  <control namespace="SampleNamespace" constructor="DeviceApiControl" version="0.1.12" display-name-key="DeviceApiControl_Display_Key" description-key="DeviceApiControl_Desc_Key" control-type="standard">
     <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
     <property name="Location" display-name-key="Location_Display_Key" description-key="Location_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
     <resources>
@@ -12,10 +12,10 @@
       <uses-feature name="Device.getCurrentPosition" required="false" />
       <uses-feature name="Device.captureImage" required="false" />
       <uses-feature name="Device.pickFile" required="true" />
-      <!-- 
       <uses-feature name="Device.captureAudio" required="true" />
       <uses-feature name="Device.captureVideo" required="true" />
       <uses-feature name="Device.getBarcodeValue" required="true" />
+	  <!--
       <uses-feature name="Utility" required="true" />
       <uses-feature name="WebAPI" required="true" />
       -->
