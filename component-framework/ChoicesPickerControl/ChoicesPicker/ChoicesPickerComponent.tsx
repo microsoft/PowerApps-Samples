@@ -1,10 +1,7 @@
-import { ChoiceGroup } from '@fluentui/react/lib/components/ChoiceGroup/ChoiceGroup';
-import { IChoiceGroupOption } from '@fluentui/react/lib/components/ChoiceGroup/ChoiceGroup.types';
+import { ChoiceGroup, IChoiceGroupOption } from '@fluentui/react/lib/ChoiceGroup';
+import { Dropdown, IDropdownOption } from '@fluentui/react/lib/Dropdown';
+import { Icon } from '@fluentui/react/lib/Icon';
 import * as React from 'react';
-import { Dropdown } from '@fluentui/react/lib/components/Dropdown/Dropdown';
-import { IDropdownOption } from '@fluentui/react/lib/components/Dropdown/Dropdown.types';
-import { Icon } from '@fluentui/react/lib/components/Icon/Icon';
-
 export interface ChoicesPickerComponentProps {
     label: string;
     value: number | null;
