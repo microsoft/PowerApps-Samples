@@ -2,9 +2,9 @@
 
 This sample shows how to write a plug-in that supports a Custom API named `sample_IsSystemAdmin`. You can download the sample from [here](https://github.com/Microsoft/PowerApps-Samples/tree/master/cds/orgsvc/C%23/IsSystemAdminCustomAPI).
 
-This sample creates a plug-in for the main operation for the `sample_IsSystemAdmin` Custom API that will detect whether a user has the System Administrator security role. 
+This sample creates a plug-in for the main operation of the `sample_IsSystemAdmin` Custom API. This Custom API will detect whether a user has the System Administrator security role. 
 
-Detecting whether a user has the System Administrator security role may require two separate queries depending on whether the user has been assigned the security role directly or whether they have it because of team that they belong to. This Custom API encapsulates these queries into a single API call which will return a boolean value.
+Detecting whether a user has the System Administrator security role may require two separate queries depending on whether the user has been assigned the security role directly or whether they have it because of team that they belong to. This Custom API encapsulates these queries into a single API call which will return a boolean value. This makes it easier to use by delegating the operation to the Dataverse server.
 
 ## How to run this sample
 
@@ -54,9 +54,11 @@ This Custom API is defined with the following data:
 }
 ```
 
+You can use this data to create the Custom API using Postman by following the example here: [Create a Custom API using the Web API](https://docs.microsoft.com/powerapps/developer/data-platform/create-custom-api-with-code#create-a-custom-api-using-the-web-api)
+
 This Custom API is a function bound to the `systemuser` table. It has a single boolean response property `HasRole` which will return `true` when the user has the System Administrator security role.
 
-After you create the create the Custom API as defined above, build this project to generate a plug-in assembly named `IsSystemAdminCustomAPI.dll`. This assembly will have a single plug-in type named `PowerApps.Samples.IsSystemAdmin`.
+After you create the create the Custom API as defined above, build this .NET Class Library project to generate a plug-in assembly named `IsSystemAdminCustomAPI.dll`. This assembly will have a single plug-in type named `PowerApps.Samples.IsSystemAdmin`.
 
 You must register the plug-in assembly created by using the Plug-in registration tool as described here: [Register plug-in](https://docs.microsoft.com/powerapps/developer/data-platform/tutorial-write-plug-in#register-plug-in)
 
@@ -84,7 +86,7 @@ The Web API is easiest to try because you don't need to write any code. You can 
 1. In this browser tab, compose the following URL using your Web API Url and the `systemuserid` value: <br />
     `https://<your org url>/api/data/v9.2/systemusers(<The systemuserid value>)/Microsoft.Dynamics.CRM.sample_IsSystemAdmin`<br />
     You must include the `Microsoft.Dynamics.CRM` namespace because this is a bound function. More information: [Bound Functions](https://docs.microsoft.com/powerapps/developer/data-platform/webapi/use-web-api-functions#bound-functions)
-1. You should see results like the following:<br />
+1. You should see results like the following when you send the request:<br />
 
 ```
 {
@@ -97,7 +99,7 @@ The `HasRole` value indicates if the user has the System Administrator security 
 ### Using Organization Service
 
 1. You can use the Organization Service Quick Start sample instructions to create a .NET Framework Console application with C#. See [Quickstart: Organization service sample (C#)](https://docs.microsoft.com/en-us/powerapps/developer/data-platform/org-service/quick-start-org-service-console-app)
-1. Add the following static method to the program class.
+1. Add the following static method to the program class. This creates a re-usable method.
 
    ```csharp
    static bool IsSystemAdmin(IOrganizationService svc, Guid systemuserid)
@@ -131,15 +133,17 @@ The `HasRole` value indicates if the user has the System Administrator security 
        Console.WriteLine($"{user["fullname"]} is{(isAdmin? string.Empty: " not")} an administrator");                    
    }
    ```
+  This code will retrieve 10 users and loop through each one, testing whether they are a system administrator or not, writing the results to the console.
 
 ### Demonstrate
 
 1. How to query to detect if the user is a system administrator
-2. How to invoke a Custom API function using the Web API
-3. How to invoke a Custom API using the Organization service
+1. How to write a plug-in to support a Custom API
+1. How to invoke a Custom API function using the Web API
+1. How to invoke a Custom API using the Organization service
 
 ### See also
 
-[Create and use Custom APIs](https://docs.microsoft.com/powerapps/developer/data-platform/custom-api)
-[Write a plug-in](https://docs.microsoft.com/powerapps/developer/common-data-service/write-plug-in)  
+[Create and use Custom APIs](https://docs.microsoft.com/powerapps/developer/data-platform/custom-api)<br />
+[Write a plug-in](https://docs.microsoft.com/powerapps/developer/common-data-service/write-plug-in)<br />
 [Register a plug-in](https://docs.microsoft.com/powerapps/developer/common-data-service/register-plug-in)
