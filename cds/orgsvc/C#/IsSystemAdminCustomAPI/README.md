@@ -30,6 +30,7 @@ This Custom API is defined with the following data:
   "bindingtype": 1,
   "boundentitylogicalname": "systemuser",
   "description": "Returns whether the user has the System Administrator security role",
+  "name": "Is System Administrator",
   "displayname": "Is System Administrator",
   "executeprivilegename": null,
   "isfunction": true,
@@ -54,7 +55,14 @@ This Custom API is defined with the following data:
 }
 ```
 
-You can use this data to create the Custom API using Postman by following the example here: [Create a Custom API using the Web API](https://docs.microsoft.com/powerapps/developer/data-platform/create-custom-api-with-code#create-a-custom-api-using-the-web-api)
+You can use this data to create the Custom API using Postman and the Web API by following the example here: [Create a Custom API using the Web API](https://docs.microsoft.com/powerapps/developer/data-platform/create-custom-api-with-code#create-a-custom-api-using-the-web-api)
+
+For information about the values passed see these topics:
+
+- [CustomAPI Table Columns](https://docs.microsoft.com/en-us/powerapps/developer/data-platform/customapi-table-columns)
+- [CustomAPIRequestParameter Table Columns](https://docs.microsoft.com/en-us/powerapps/developer/data-platform/customapirequestparameter-table-columns)
+- [CustomAPIResponseProperty Table Columns](https://docs.microsoft.com/en-us/powerapps/developer/data-platform/customapiresponseproperty-table-columns)
+
 
 This Custom API is a function bound to the `systemuser` table. It has a single boolean response property `HasRole` which will return `true` when the user has the System Administrator security role.
 
@@ -121,15 +129,20 @@ The `HasRole` value indicates if the user has the System Administrator security 
 1. Replace the code that is calling `WhoAmIRequest` with the following:
 
    ```csharp
+    //Compose a query to retrieve top 10 users
    QueryExpression query = new QueryExpression("systemuser");
    query.ColumnSet = new ColumnSet("fullname");
    query.TopCount = 10;
-
+    
+    //Execute the query to retrieve the data
    EntityCollection users = svc.RetrieveMultiple(query);
+
    foreach (Entity user in users.Entities)
    {
+        //Test each record returned using  the Custom API
        bool isAdmin = IsSystemAdmin(svc, user.Id);
 
+        //Show the results in the console
        Console.WriteLine($"{user["fullname"]} is{(isAdmin? string.Empty: " not")} an administrator");                    
    }
    ```
