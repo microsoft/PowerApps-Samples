@@ -104,46 +104,7 @@ namespace PowerApps.Samples
             return attr.Value;
         }
 
-        public static string CreateXml(CrmServiceClient service, string xml, string cookie, int page, int count)
-        {
-            StringReader stringReader = new StringReader(xml);
-            var reader = new XmlTextReader(stringReader);
 
-            // Load document
-            XmlDocument doc = new XmlDocument();
-            doc.Load(reader);
-
-            return CreateXml(service, doc, cookie, page, count);
-        }
-
-        public static string CreateXml(CrmServiceClient service , XmlDocument doc, string cookie, int page, int count)
-        {
-            XmlAttributeCollection attrs = doc.DocumentElement.Attributes;
-
-            if (cookie != null)
-            {
-                XmlAttribute pagingAttr = doc.CreateAttribute("paging-cookie");
-                pagingAttr.Value = cookie;
-                attrs.Append(pagingAttr);
-            }
-
-            XmlAttribute pageAttr = doc.CreateAttribute("page");
-            pageAttr.Value = System.Convert.ToString(page);
-            attrs.Append(pageAttr);
-
-            XmlAttribute countAttr = doc.CreateAttribute("count");
-            countAttr.Value = System.Convert.ToString(count);
-            attrs.Append(countAttr);
-
-            StringBuilder sb = new StringBuilder(1024);
-            StringWriter stringWriter = new StringWriter(sb);
-
-            XmlTextWriter writer = new XmlTextWriter(stringWriter);
-            doc.WriteTo(writer);
-            writer.Close();
-
-            return sb.ToString();
-        }
         /// <summary>
         /// Deletes any entity records that were created for this sample.
         /// <param name="prompt">Indicates whether to prompt the user to delete the records created in this sample.</param>
