@@ -28,7 +28,7 @@
         callback = callbackFn;
         
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             url: `/_services/auth/token?client_id=${clientId}`,
             cache: false,
             success: handleGetAuthenticationTokenSuccess,
