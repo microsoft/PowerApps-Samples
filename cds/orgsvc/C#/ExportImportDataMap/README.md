@@ -8,7 +8,7 @@ See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/mas
 
 ## What this sample does
 
-The `BulkDeleteRequest` message is intended to be used in a scenario where it contains data that is needed to create the bulk delete request.
+See the text description in the [Setup](#setup) section as the program's primary functionality is performed during setup.
 
 ## How this sample works
 
@@ -16,10 +16,11 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Setup
 
-1. Checks for the current version of the org.
+1. Checks for the current version of the org. 
 2. The `CreateImportMapping` method creates the import mapping record.
-3. The `RetrieveMappingXML` method exports the mapping that is created.
-4. The `ChangeMappingName` method parse the xml to change the name attribute.
+3. The `RetrieveMappingXML` method exports the mapping (Xml) that is created.
+4. The `ChangeMappingName` method parses the Xml to change the name column.
+5. The `ImportMappingsByXml` method creates a mapping from the (previously exported) Xml.
 
 ### Clean up
 
