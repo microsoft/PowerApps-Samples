@@ -2,6 +2,8 @@
 
 This collection of samples demonstrates authoring code for Microsoft Dataverse using the newly released [Microsoft.PowerPlatform.Dataverse.Client](https://www.nuget.org/packages/Microsoft.PowerPlatform.Dataverse.Client/) NuGet package. Specifically, using the [ServiceClient](https://docs.microsoft.com/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient) class to authenticate the logged on user, connect to the web service, and execute message requests.
 
+More information: [Transition apps to Dataverse ServiceClient](https://docs.microsoft.com/power-apps/developer/data-platform/sdk-client-transition)
+
 The provided code samples are listed below.
 
 |Sample folder|Description|Build target|
