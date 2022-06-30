@@ -7,15 +7,15 @@ namespace PowerApps.Samples
     /// </summary>
     public enum Cloud
     {
-        [Description("https://globaldisco.crm.dynamics.com/api/discovery/v2.0/Instances")]
+        [Description("https://globaldisco.crm.dynamics.com")]
         Commercial,
-        [Description("https://globaldisco.crm9.dynamics.com/api/discovery/v2.0/Instances")]
+        [Description("https://globaldisco.crm9.dynamics.com")]
         GCC,
-        [Description("https://globaldisco.crm.microsoftdynamics.us/api/discovery/v2.0/Instances")]
+        [Description("https://globaldisco.crm.microsoftdynamics.us")]
         USG,
-        [Description("https://globaldisco.crm.appsplatform.us/api/discovery/v2.0/Instances")]
+        [Description("https://globaldisco.crm.appsplatform.us")]
         DOD,
-        [Description("https://globaldisco.crm.dynamics.cn/api/discovery/v2.0/Instances")]
+        [Description("https://globaldisco.crm.dynamics.cn")]
         CHINA
     }
 }
