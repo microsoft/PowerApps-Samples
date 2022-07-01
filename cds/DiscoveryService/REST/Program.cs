@@ -22,7 +22,6 @@ namespace PowerApps.Samples
 
         static async Task Main()
         {
-
             string username = "yourUserName@yourOrgName.onmicrosoft.com";
             string password = "yourPassword";
 
@@ -98,41 +97,48 @@ namespace PowerApps.Samples
         /// <exception cref="Exception"></exception>
         static async Task<List<Instance>> GetInstances(string username, string password, Cloud cloud)
         {
-
-            //Get the Cloud URL from the Description Attribute applied for the Cloud enum member
-            //i.e. Commercial is "https://globaldisco.crm.dynamics.com"
-            var type = typeof(Cloud);
-            var memInfo = type.GetMember(cloud.ToString());
-            var attributes = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
-            string baseUrl = ((DescriptionAttribute)attributes[0]).Description;
-
-            HttpClient client = new();
-            string token = await GetToken(baseUrl, username, password);
-            client.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue(scheme: "Bearer", parameter: token);
-            client.Timeout = new TimeSpan(0, 2, 0);
-            client.BaseAddress = new Uri(baseUrl);
-
-            HttpResponseMessage response = await client
-                .GetAsync("/api/discovery/v2.0/Instances", HttpCompletionOption.ResponseHeadersRead);
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                //Get the response content and parse it.
-                string result = await response.Content.ReadAsStringAsync();
-                JObject body = JObject.Parse(result);
-                JArray values = (JArray)body.GetValue("value");
+                //Get the Cloud URL from the Description Attribute applied for the Cloud enum member
+                //i.e. Commercial is "https://globaldisco.crm.dynamics.com"
+                var type = typeof(Cloud);
+                var memInfo = type.GetMember(cloud.ToString());
+                var attributes = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
+                string baseUrl = ((DescriptionAttribute)attributes[0]).Description;
 
-                if (!values.HasValues)
+                HttpClient client = new();
+                string token = await GetToken(baseUrl, username, password);
+                client.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue(scheme: "Bearer", parameter: token);
+                client.Timeout = new TimeSpan(0, 2, 0);
+                client.BaseAddress = new Uri(baseUrl);
+
+                HttpResponseMessage response = await client
+                    .GetAsync("/api/discovery/v2.0/Instances", HttpCompletionOption.ResponseHeadersRead);
+
+                if (response.IsSuccessStatusCode)
                 {
-                    return new List<Instance>();
-                }
+                    //Get the response content and parse it.
+                    string result = await response.Content.ReadAsStringAsync();
+                    JObject body = JObject.Parse(result);
+                    JArray values = (JArray)body.GetValue("value");
 
-                return JsonConvert.DeserializeObject<List<Instance>>(values.ToString());
+                    if (!values.HasValues)
+                    {
+                        return new List<Instance>();
+                    }
+
+                    return JsonConvert.DeserializeObject<List<Instance>>(values.ToString());
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
             }
-            else
+            catch (Exception)
             {
-                throw new Exception(response.ReasonPhrase);
+
+                throw;
             }
         }
 
@@ -146,48 +152,58 @@ namespace PowerApps.Samples
         /// <exception cref="Exception"></exception>
         internal static async Task<string> GetToken(string baseUrl, string username, string password)
         {
-
-            List<string> scopes = new() { $"{baseUrl}//user_impersonation" };
-            var accounts = await app.GetAccountsAsync();
-
-            AuthenticationResult? result;
-            if (accounts.Any())
+            try
             {
-                result = await app.AcquireTokenSilent(scopes, accounts.FirstOrDefault())
-                                  .ExecuteAsync();
-            }
-            else
-            {
-                try
+                List<string> scopes = new() { $"{baseUrl}//user_impersonation" };
+                var accounts = await app.GetAccountsAsync();
+
+                AuthenticationResult? result;
+                if (accounts.Any())
                 {
-                    SecureString securePassword = new NetworkCredential("", password).SecurePassword;
-
-                    // Flow not recommended for production
-                    result = await app.AcquireTokenByUsernamePassword(scopes.ToArray(), username, securePassword)
-                        .ExecuteAsync();
+                    result = await app.AcquireTokenSilent(scopes, accounts.FirstOrDefault())
+                                      .ExecuteAsync();
                 }
-                catch (MsalUiRequiredException)
+                else
                 {
+                    try
+                    {
+                        SecureString securePassword = new NetworkCredential("", password).SecurePassword;
 
-                    // When MFA is required
-                    result = await app.AcquireTokenInteractive(scopes)
-                                .ExecuteAsync();
+                        // Flow not recommended for production
+                        result = await app.AcquireTokenByUsernamePassword(scopes.ToArray(), username, securePassword)
+                            .ExecuteAsync();
+                    }
+                    catch (MsalUiRequiredException)
+                    {
 
+                        // When MFA is required
+                        result = await app.AcquireTokenInteractive(scopes)
+                                    .ExecuteAsync();
+
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
                 }
-                catch (Exception)
+
+                if (result != null && !string.IsNullOrEmpty(result.AccessToken))
                 {
-                    throw;
+                    return result.AccessToken;
+                }
+                else
+                {
+                    throw new Exception("Failed to get accesstoken.");
                 }
             }
+            catch (Exception)
+            {
 
-            if (result != null && !string.IsNullOrEmpty(result.AccessToken))
-            {
-                return result.AccessToken;
+                throw;
             }
-            else
-            {
-                throw new Exception("Failed to get accesstoken.");
-            }
+
+
+
         }
 
         /// <summary>
@@ -199,23 +215,31 @@ namespace PowerApps.Samples
         /// <returns></returns>
         private static async Task ShowUserId(Instance instance, string username, string password)
         {
-            HttpClient client = new();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await GetToken(instance.ApiUrl, username, password));
-            client.Timeout = new TimeSpan(0, 2, 0);
-            client.BaseAddress = new Uri(instance.ApiUrl);
-
-            HttpResponseMessage response = client.GetAsync("/api/data/v9.2/WhoAmI", HttpCompletionOption.ResponseHeadersRead).GetAwaiter().GetResult();
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                JObject content = JObject.Parse(await response.Content.ReadAsStringAsync());
-                string userId = content["UserId"].ToString();
+                HttpClient client = new();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await GetToken(instance.ApiUrl, username, password));
+                client.Timeout = new TimeSpan(0, 2, 0);
+                client.BaseAddress = new Uri(instance.ApiUrl);
 
-                Console.WriteLine($"Your UserId for {instance.FriendlyName} is: {userId}");
+                HttpResponseMessage response = client.GetAsync("/api/data/v9.2/WhoAmI", HttpCompletionOption.ResponseHeadersRead).GetAwaiter().GetResult();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    JObject content = JObject.Parse(await response.Content.ReadAsStringAsync());
+                    string userId = content["UserId"].ToString();
+
+                    Console.WriteLine($"Your UserId for {instance.FriendlyName} is: {userId}");
+                }
+                else
+                {
+                    Console.WriteLine($"Error calling WhoAmI: StatusCode {response.StatusCode} Reason: {response.ReasonPhrase}");
+                }
             }
-            else
+            catch (Exception)
             {
-                Console.WriteLine($"Error calling WhoAmI: StatusCode {response.StatusCode} Reason: {response.ReasonPhrase}");
+
+                throw;
             }
         }
     }

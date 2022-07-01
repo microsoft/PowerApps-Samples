@@ -1,7 +1,7 @@
 ﻿using Microsoft.Crm.Sdk.Messages;
 using Microsoft.PowerPlatform.Dataverse.Client;
-using Microsoft.PowerPlatform.Dataverse.Client.Model;
 using Microsoft.PowerPlatform.Dataverse.Client.Auth;
+using Microsoft.PowerPlatform.Dataverse.Client.Model;
 using Microsoft.Xrm.Sdk.Discovery;
 using System.ComponentModel;
 
@@ -86,29 +86,44 @@ namespace PowerApps.Samples
         /// <returns>A List of OrganizationDetail records</returns>
         public static async Task<DiscoverOrganizationsResult> GetAllOrganizations(string userName, string password, Cloud cloud)
         {
+            try
+            {
+                //Get the Cloud URL from the Description Attribute applied for the Cloud member
+                var type = typeof(Cloud);
+                var memInfo = type.GetMember(cloud.ToString());
+                var attributes = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
+                string cloudRegionUrl = ((DescriptionAttribute)attributes[0]).Description;
 
-            //Get the Cloud URL from the Description Attribute applied for the Cloud member
-            var type = typeof(Cloud);
-            var memInfo = type.GetMember(cloud.ToString());
-            var attributes = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
-            string cloudRegionUrl = ((DescriptionAttribute)attributes[0]).Description;
+                // Set up user credentials
+                var creds = new System.ServiceModel.Description.ClientCredentials();
+                creds.UserName.UserName = userName;
+                creds.UserName.Password = password;
 
-            // Set up user credentials
-            var creds = new System.ServiceModel.Description.ClientCredentials();
-            creds.UserName.UserName = userName;
-            creds.UserName.Password = password;
+                try
+                {
+                    //Call DiscoverOnlineOrganizationsAsync
+                    DiscoverOrganizationsResult organizationsResult = await ServiceClient.DiscoverOnlineOrganizationsAsync(
+                           discoveryServiceUri: new Uri($"{cloudRegionUrl}/api/discovery/v2.0/Instances"),
+                           clientCredentials: creds,
+                           clientId: clientId,
+                           redirectUri: new Uri(redirectUrl),
+                           isOnPrem: false,
+                           authority: "https://login.microsoftonline.com/organizations/",
+                           promptBehavior: PromptBehavior.Auto);
 
-            //Call DiscoverOnlineOrganizationsAsync
-            DiscoverOrganizationsResult organizationsResult = await ServiceClient.DiscoverOnlineOrganizationsAsync(
-                   discoveryServiceUri: new Uri($"{cloudRegionUrl}/api/discovery/v2.0/Instances"),
-                   clientCredentials: creds,
-                   clientId: clientId,
-                   redirectUri: new Uri(redirectUrl),
-                   isOnPrem: false,
-                   authority: "https://login.microsoftonline.com/organizations/",
-                   promptBehavior: PromptBehavior.Auto);
+                    return organizationsResult;
+                }
+                catch (Exception)
+                {
 
-            return organizationsResult;
+                    throw;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         /// <summary>
@@ -119,7 +134,9 @@ namespace PowerApps.Samples
         /// <param name="password">The user's password</param>
         private static void ShowUserId(OrganizationDetail org, string username, string password)
         {
-            string conn = $@"AuthType=OAuth;
+            try
+            {
+                string conn = $@"AuthType=OAuth;
                          Url={org.Endpoints[EndpointType.OrganizationService]};
                          UserName={username};
                          Password={password};
@@ -127,24 +144,30 @@ namespace PowerApps.Samples
                          RedirectUri={redirectUrl};
                          Prompt=Auto;
                          RequireNewInstance=True";
-            ServiceClient svc = new(conn);
+                ServiceClient svc = new(conn);
 
-            if (svc.IsReady)
-            {
-                try
+                if (svc.IsReady)
                 {
-                    var response = (WhoAmIResponse)svc.Execute(new WhoAmIRequest());
+                    try
+                    {
+                        var response = (WhoAmIResponse)svc.Execute(new WhoAmIRequest());
 
-                    Console.WriteLine($"Your UserId for {org.FriendlyName} is: {response.UserId}");
+                        Console.WriteLine($"Your UserId for {org.FriendlyName} is: {response.UserId}");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    Console.WriteLine(ex.Message);
+                    Console.WriteLine(svc.LastError);
                 }
             }
-            else
+            catch (Exception)
             {
-                Console.WriteLine(svc.LastError);
+
+                throw;
             }
         }
     }
