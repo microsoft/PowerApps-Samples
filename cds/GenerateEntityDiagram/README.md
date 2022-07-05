@@ -6,6 +6,7 @@ Visual representation of metadata can be very useful, especially when you are tr
 ## Prerequisites
 
 1. Download and install Microsoft Visio.
+1. Launch the Visual Studio installer and verify that the **Visual Studio Tools for Office** component is installed. If it is not, then install it.
 
 ## How to run this sample
 
