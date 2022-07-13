@@ -25,7 +25,7 @@ from inference_schema.schema_decorators import input_schema, output_schema
 logging.basicConfig(level=logging.DEBUG)
 
 sample_input = PandasParameterType(pd.DataFrame([{'image': 'xd8\xe1\xb7\xeb\xa8\xe5 \xd2\xb7\xe1'}]))
-sample_prediction = {"Prediction": "PNEUMONIA", "Confidences": [5.102448583982629e-34, 1.0]}
+sample_prediction = {"Prediction": "NORMAL", "Confidence": 0.9}
 sample_output_schema = PandasParameterType(pd.DataFrame([sample_prediction]))
 
 def get_model_and_sig(model_dir):
@@ -41,8 +41,6 @@ def get_model_and_sig(model_dir):
 def load_model(model_file):
     """Load the model from path to model file"""
     # Load ONNX model as session.
-    print("Creating Inference session from ONNX file")
-    print(model_file)
     return rt.InferenceSession(path_or_bytes=model_file)
 
 
@@ -72,7 +70,10 @@ def get_prediction(image, session, signature):
         val = outputs[i].tolist()[0]
         if isinstance(val, bytes):
             val = val.decode()
-        results[key] = val
+        if key == "Confidences":
+            results["Confidence"] = max(val)
+        else:
+            results[key] = val
 
     return results
 
@@ -124,8 +125,6 @@ def init():
 @input_schema("request", sample_input, convert_to_provided_type=False)
 @output_schema(sample_output_schema)
 def run(request):
-    print("Processing request...")    
-    print(f"POST Request: {request}")
     df = pd.DataFrame(request)
     image = get_base64image_from_request(df)
     if image:
@@ -135,7 +134,6 @@ def run(request):
         return AMLResponse("bad request", 400)
 
 def get_base64image_from_request(request):
-    print(request)
     image_string = request.iloc[0]["image"]
     image_bytes = base64.b64decode(image_string)
     image = Image.open(io.BytesIO(image_bytes))
