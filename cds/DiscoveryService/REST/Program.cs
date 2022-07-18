@@ -201,9 +201,6 @@ namespace PowerApps.Samples
 
                 throw;
             }
-
-
-
         }
 
         /// <summary>
@@ -222,7 +219,7 @@ namespace PowerApps.Samples
                 client.Timeout = new TimeSpan(0, 2, 0);
                 client.BaseAddress = new Uri(instance.ApiUrl);
 
-                HttpResponseMessage response = client.GetAsync("/api/data/v9.2/WhoAmI", HttpCompletionOption.ResponseHeadersRead).GetAwaiter().GetResult();
+                HttpResponseMessage response = await client.GetAsync("/api/data/v9.2/WhoAmI", HttpCompletionOption.ResponseHeadersRead);
 
                 if (response.IsSuccessStatusCode)
                 {
