@@ -58,8 +58,15 @@ namespace PowerApps.Samples
 
             // Call to get organizations from global discovery
             var organizations = CrmServiceClient.DiscoverGlobalOrganizations(
-                    targeturl, creds, null, clientId, appReplyUri, "", false, string.Empty, PromptBehavior.Auto);
-
+                  discoveryServiceUri:targeturl, 
+                  clientCredentials: creds, 
+                  user: null, 
+                  clientId: clientId,
+                  redirectUri: appReplyUri, 
+                  tokenCachePath: "",
+                  isOnPrem: false,
+                  authority: string.Empty, 
+                  promptBehavior: PromptBehavior.Auto);
 
             return organizations.ToList();
         }
