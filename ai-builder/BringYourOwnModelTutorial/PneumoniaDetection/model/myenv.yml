@@ -3,10 +3,10 @@ dependencies:
 - python=3.6.8
 - pip
 - pip:
-    - azureml-defaults
-    - pillow>=7.2.0
-    - onnxruntime>=1.4.0
-    - inference-schema
-    - azureml-contrib-services
-    - numpy
-    - pandas
+    - azureml-defaults==1.32.0
+    - pillow==7.2.0
+    - onnxruntime==1.4.0
+    - inference-schema==1.4.1
+    - azureml-contrib-services==1.43.0
+    - numpy==1.19.5
+    - pandas==1.1.5
