@@ -18,18 +18,18 @@ export interface PAOneGridCustomizer {
 /**
  * Provide cell renderer overrides per column data type.
  */
-export type CellRendererOverrides = Partial<{
-  [dataType in ColumnDataType]: (props: CellRendererProps, rendererParams: GetRendererParams)
+export type CellRendererOverrides = {
+  [dataType in ColumnDataType]?: (props: CellRendererProps, rendererParams: GetRendererParams)
     => React.ReactElement | null | undefined;
-}>;
+};
 
 /**
  * Provide cell editor overrides per column data type.
  */
-export type CellEditorOverrides = Partial<{
-  [dataType in ColumnDataType]: (defaultProps: CellEditorProps, rendererParams: GetEditorParams)
+export type CellEditorOverrides = {
+  [dataType in ColumnDataType]?: (defaultProps: CellEditorProps, rendererParams: GetEditorParams)
     => React.ReactElement | null | undefined;
-}>;
+};
 
 export interface GridCustomizer {
   /** Returns react element for the column headers */
