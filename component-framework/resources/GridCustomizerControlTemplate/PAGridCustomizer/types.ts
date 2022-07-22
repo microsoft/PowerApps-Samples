@@ -15,15 +15,21 @@ export interface PAOneGridCustomizer {
   cellEditorOverrides?: CellEditorOverrides;
 }
 
-export interface CellRendererOverrides {
-  [dataType: string]: (props: CellRendererProps, rendererParams: GetRendererParams)
+/**
+ * Provide cell renderer overrides for each column data type.
+ */
+export type CellRendererOverrides = Partial<{
+  [dataType in ColumnDataType]: (props: CellRendererProps, rendererParams: GetRendererParams)
     => React.ReactElement | null | undefined;
-}
+}>;
 
-export interface CellEditorOverrides {
-  [dataType: string]: (defaultProps: CellEditorProps, rendererParams: GetEditorParams)
+/**
+ * Provide cell editor overrides for each column data type.
+ */
+export type CellEditorOverrides = Partial<{
+  [dataType in ColumnDataType]: (defaultProps: CellEditorProps, rendererParams: GetEditorParams)
     => React.ReactElement | null | undefined;
-}
+}>;
 
 export interface GridCustomizer {
   /** Returns react element for the column headers */
@@ -39,73 +45,102 @@ export interface GridCustomizer {
 }
 
 export interface CellRendererProps {
+  /** Raw value of the cell */
   value: unknown;
+  /** True when grid is in RTL mode */
   isRTLMode?: boolean;
+  /** Callback indicating the grid cell has been clicked */
   onCellClicked?: (event?: React.MouseEvent<HTMLElement, MouseEvent> | MouseEvent) => void;
+  /** Returns the validation error for the cell */
   validationError?: Error | null;
+  /** True when cell should be right aligned */
   isRightAligned?: boolean;
+  /** Callback to pragmatically start editing the cell */
   startEditing?: (editorInitValue?: unknown) => void;
+  /** True when cell is on the last row of the grid */
   isLastRow?: boolean;
+  /** Grid row height in pixels */
   rowHeight?: number;
+  /** Cell column data type */
   columnDataType?: ColumnDataType;
+  /** Formatted value of the cell */
   formattedValue?: string;
+  /** HTML element containing the cell */
   cellContainerElement?: HTMLElement;
+  /** Cell error label Id */
   cellErrorLabelId?: string;
+  /** True when the cell column is editable */
   columnEditable?: boolean;
 }
 
 export interface GetRendererParams {
+  /** Column definitions for all visible columns in the grid */
   colDefs: ColumnDefinition[];
+  /** Cell column index */
   columnIndex: number;
+  /** Cell row data */
   rowData?: RowData;
-  /** Renderer can call this function to switch the cell to edit mode */
-  startEditing?: (editorInitValue?: unknown) => void;
-  isMobileLayout?: boolean;
-  isRTLMode?: boolean;
-  cellElement?: HTMLElement;
+  /** True when tab navigation is allowed in the grid */
   allowTabKeyNavigation?: boolean;
-  setExpanded?: (isExpanded: boolean) => void;
-  getExpanded?: () => boolean;
 }
 
 export interface CellEditorProps {
+  /** True when cell is secured */
   secured?: boolean;
+  /** Raw value of the cell */
   value: unknown;
+  /** True when grid is in RTL mode */
   isRTLMode?: boolean;
+  /** Grid row height in pixels */
   rowHeight?: number;
+  /** True when the cell value is required to be set */
   isRequired?: boolean;
+  /** Callback to return the formatted value of the cell */
   onFormat?: (newValue: unknown) => unknown;
+  /** Callback to validate the give value for the cell */
   onValidate?: (newValue: unknown) => string;
+  /** Passing the first character pressed starting the cell editing */
   charPress?: string | null;
+  /** Cell column data type */
   columnDataType?: ColumnDataType;
+  /** Callback to notify the grid when value of the cell editor is changed */
   onChange(newValue: unknown): void;
 }
 
 export interface GetEditorParams {
+  /** Column definitions for all visible columns in the grid */
   colDefs: ColumnDefinition[];
+  /** Cell column index */
   columnIndex: number;
+  /** Callback to notify the grid when value of the cell editor is changed */
   onCellValueChanged: (newValue: unknown) => void;
+  /** Cell row data */
   rowData?: RowData;
-  isMobileLayout?: boolean;
-  isRTLMode?: boolean;
-  /** the character pressed when the editor was activated */
-  charPress?: string | null;
+  /** Callback to programmatically stop the cell editing */
   stopEditing: (cancel?: boolean) => void;
 }
 
 export interface GetHeaderParams {
+  /** Column definitions for all visible columns in the grid */
   colDefs: ColumnDefinition[];
+  /** Cell column index */
   columnIndex: number;
+  /** True when header cell is the first column header */
   isFirstVisualColumn?: boolean;
+  /** True when header cell is the last column header */
   isLastVisualColumn?: boolean;
+  /** Cell row data */
   rowData?: RowData;
-  isMobileLayout?: boolean;
+  /** True when grid is in RTL mode */
   isRTLMode?: boolean;
+  /** True when tab navigation is allowed in the grid */
   allowTabKeyNavigation?: boolean;
 }
 
 export interface NoRowsOverlayConfig {
+  /** Component to render when no rows are present */
   component: React.ComponentClass | undefined;
+  /** Properties to pass to the no row component */
   props: unknown | undefined;
 }
 
