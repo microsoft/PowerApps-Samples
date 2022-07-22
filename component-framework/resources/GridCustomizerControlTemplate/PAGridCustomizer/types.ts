@@ -16,7 +16,7 @@ export interface PAOneGridCustomizer {
 }
 
 /**
- * Provide cell renderer overrides for each column data type.
+ * Provide cell renderer overrides per column data type.
  */
 export type CellRendererOverrides = Partial<{
   [dataType in ColumnDataType]: (props: CellRendererProps, rendererParams: GetRendererParams)
@@ -24,7 +24,7 @@ export type CellRendererOverrides = Partial<{
 }>;
 
 /**
- * Provide cell editor overrides for each column data type.
+ * Provide cell editor overrides per column data type.
  */
 export type CellEditorOverrides = Partial<{
   [dataType in ColumnDataType]: (defaultProps: CellEditorProps, rendererParams: GetEditorParams)
