@@ -46,95 +46,91 @@ export interface GridCustomizer {
 
 export interface CellRendererProps {
   /** Raw value of the cell */
-  value: unknown;
+  readonly value: unknown;
   /** True when grid is in RTL mode */
-  isRTLMode?: boolean;
+  readonly isRTLMode?: boolean;
   /** Callback indicating the grid cell has been clicked */
-  onCellClicked?: (event?: React.MouseEvent<HTMLElement, MouseEvent> | MouseEvent) => void;
+  readonly onCellClicked?: (event?: React.MouseEvent<HTMLElement, MouseEvent> | MouseEvent) => void;
   /** Returns the validation error for the cell */
-  validationError?: Error | null;
+  readonly validationError?: Error | null;
   /** True when cell should be right aligned */
-  isRightAligned?: boolean;
+  readonly isRightAligned?: boolean;
   /** Callback to pragmatically start editing the cell */
-  startEditing?: (editorInitValue?: unknown) => void;
+  readonly startEditing?: (editorInitValue?: unknown) => void;
   /** True when cell is on the last row of the grid */
-  isLastRow?: boolean;
+  readonly isLastRow?: boolean;
   /** Grid row height in pixels */
-  rowHeight?: number;
+  readonly rowHeight?: number;
   /** Cell column data type */
-  columnDataType?: ColumnDataType;
+  readonly columnDataType?: ColumnDataType;
   /** Formatted value of the cell */
-  formattedValue?: string;
+  readonly formattedValue?: string;
   /** HTML element containing the cell */
-  cellContainerElement?: HTMLElement;
+  readonly cellContainerElement?: HTMLElement;
   /** Cell error label Id */
-  cellErrorLabelId?: string;
+  readonly cellErrorLabelId?: string;
   /** True when the cell column is editable */
-  columnEditable?: boolean;
+  readonly columnEditable?: boolean;
 }
 
 export interface GetRendererParams {
   /** Column definitions for all visible columns in the grid */
-  colDefs: ColumnDefinition[];
+  readonly colDefs: ColumnDefinition[];
   /** Cell column index */
-  columnIndex: number;
+  readonly columnIndex: number;
   /** Cell row data */
-  rowData?: RowData;
+  readonly rowData?: RowData;
   /** True when tab navigation is allowed in the grid */
-  allowTabKeyNavigation?: boolean;
+  readonly allowTabKeyNavigation?: boolean;
 }
 
 export interface CellEditorProps {
   /** True when cell is secured */
-  secured?: boolean;
+  readonly secured?: boolean;
   /** Raw value of the cell */
-  value: unknown;
+  readonly value: unknown;
   /** True when grid is in RTL mode */
-  isRTLMode?: boolean;
+  readonly isRTLMode?: boolean;
   /** Grid row height in pixels */
-  rowHeight?: number;
+  readonly rowHeight?: number;
   /** True when the cell value is required to be set */
-  isRequired?: boolean;
-  /** Callback to return the formatted value of the cell */
-  onFormat?: (newValue: unknown) => unknown;
-  /** Callback to validate the give value for the cell */
-  onValidate?: (newValue: unknown) => string;
+  readonly isRequired?: boolean;
   /** Passing the first character pressed starting the cell editing */
-  charPress?: string | null;
+  readonly charPress?: string | null;
   /** Cell column data type */
-  columnDataType?: ColumnDataType;
+  readonly columnDataType?: ColumnDataType;
   /** Callback to notify the grid when value of the cell editor is changed */
-  onChange(newValue: unknown): void;
+  readonly onChange: (newValue: unknown) => void;
 }
 
 export interface GetEditorParams {
   /** Column definitions for all visible columns in the grid */
-  colDefs: ColumnDefinition[];
+  readonly colDefs: ColumnDefinition[];
   /** Cell column index */
-  columnIndex: number;
+  readonly columnIndex: number;
   /** Callback to notify the grid when value of the cell editor is changed */
-  onCellValueChanged: (newValue: unknown) => void;
+  readonly onCellValueChanged: (newValue: unknown) => void;
   /** Cell row data */
-  rowData?: RowData;
+  readonly rowData?: RowData;
   /** Callback to programmatically stop the cell editing */
-  stopEditing: (cancel?: boolean) => void;
+  readonly stopEditing: (cancel?: boolean) => void;
 }
 
 export interface GetHeaderParams {
   /** Column definitions for all visible columns in the grid */
-  colDefs: ColumnDefinition[];
+  readonly colDefs: ColumnDefinition[];
   /** Cell column index */
-  columnIndex: number;
+  readonly columnIndex: number;
   /** True when header cell is the first column header */
-  isFirstVisualColumn?: boolean;
+  readonly isFirstVisualColumn?: boolean;
   /** True when header cell is the last column header */
-  isLastVisualColumn?: boolean;
+  readonly isLastVisualColumn?: boolean;
   /** Cell row data */
-  rowData?: RowData;
+  readonly rowData?: RowData;
   /** True when grid is in RTL mode */
-  isRTLMode?: boolean;
+  readonly isRTLMode?: boolean;
   /** True when tab navigation is allowed in the grid */
-  allowTabKeyNavigation?: boolean;
+  readonly allowTabKeyNavigation?: boolean;
 }
 
 export interface NoRowsOverlayConfig {
@@ -147,33 +143,33 @@ export interface NoRowsOverlayConfig {
 export const RECID = '__rec_id';
 export interface RowData {
   /** Unique id for the row */
-  [RECID]: string;
+  readonly [RECID]: string;
 }
 
 export interface ColumnDefinition {
   /** Field name (should be unique) */
-  name: string;
+  readonly name: string;
   /** Column display name. Will be shown as column header.If none provided shimmer will be shown in place of header */
-  displayName?: string;
+  readonly displayName?: string;
   /** The unique ID to give the column. This is optional. If missing, the ID will default to the name.
    * If defined, this ID will be used to identify the column in the API for sorting and filtering. */
-  colId?: string;
+  readonly colId?: string;
   /** Data type for the values in the column. */
-  dataType: string;
+  readonly dataType: string;
   /** Custom Renderer type to be used for this column when custom renderer override is provided. */
-  CustomRendererType?: string;
+  readonly CustomRendererType?: string;
   /** Width of the column. Auto calculated if not set. */
-  width?: number;
+  readonly width?: number;
   /** Min width, in pixels, of the cell */
-  minWidth?: number;
+  readonly minWidth?: number;
   /** Max width, in pixels, of the cell */
-  maxWidth?: number;
+  readonly maxWidth?: number;
   /** True if column is initially hidden
    * @Notice To show/hide columns after the first render use PAGridAPI.setColumnVisible()
    */
-  hide?: boolean;
+  readonly hide?: boolean;
   /** Column is primary field */
-  isPrimary: boolean;
+  readonly isPrimary: boolean;
 }
 
 export type ColumnDataType =
