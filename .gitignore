@@ -288,3 +288,5 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 
+# MAC OS
+.DS_Store
