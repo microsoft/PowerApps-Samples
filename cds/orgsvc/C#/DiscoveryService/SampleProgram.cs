@@ -18,8 +18,9 @@ namespace PowerApps.Samples
 
         static void Main(string[] args)
         {
-            string username = "yourUserName@yourOrgName.onmicrosoft.com";
-            string password = "yourPassword";
+            //TODO Replace these values with those for your test environment.
+            string username = "someone@myorg.onmicrosoft.com";
+            string password = "mypassword";
 
             //Set the Cloud if you know it, otherwise use Cloud.Unknown to search Commercial.
             Cloud cloud = Cloud.Unknown;
@@ -36,7 +37,7 @@ namespace PowerApps.Samples
 
             }
 
-            Console.WriteLine("Type the number of the environments you want to use and press Enter.");
+            Console.WriteLine("Type the number of the environment you want to use and press <Enter>.");
 
             int number = 0;
             orgs.ForEach(o =>
