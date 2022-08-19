@@ -29,7 +29,7 @@ namespace PowerApps.Samples
                     #endregion Set up
                     #region Demonstrate
 
-                    String entityLogicalName = "incident";
+                    String entityLogicalName = "email"; // Also try "incident"
                     // Retrieve status options for the Incident entity
 
                     //Retrieve just the incident entity and its attributes

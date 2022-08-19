@@ -122,18 +122,15 @@ namespace PowerApps.Samples
                                     {
                                         stateValue = statusOption.State.Value;
                                         stateLabel = GetOptionSetLabel(service, stateAttribute, stateValue.Value);
+                                        validStatusOptions.Add(new StatusOption()
+                                        {
+                                            StateLabel = stateLabel,
+                                            StateValue = stateValue.Value,
+                                            StatusLabel = statusLabel,
+                                            StatusValue = statusOptionValue
+                                        });
                                     }
-
                                 }
-
-
-                                validStatusOptions.Add(new StatusOption()
-                                {
-                                    StateLabel = stateLabel,
-                                    StateValue = stateValue.Value,
-                                    StatusLabel = statusLabel,
-                                    StatusValue = option.Value.Value
-                                });
                             }
                         }
                     }
