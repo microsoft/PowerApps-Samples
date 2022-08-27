@@ -17,10 +17,6 @@ namespace PowerApps.Samples.Messages
             - Metadata resources such as EntityDefinitions
         */
 
-
-        private int _maxPageSize;
-        private bool _includeAnnotations;
-
         /// <summary>
         /// Initializes the RetrieveMultipleRequest
         /// </summary>

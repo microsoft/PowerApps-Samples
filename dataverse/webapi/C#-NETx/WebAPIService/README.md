@@ -17,9 +17,9 @@ This library demonstrates:
 
 This library does not:
 
-- Manage authentication. It depends on a function passed from an application that will provide the access token to use. All samples depend on a shared [App class](../App.cs) that manages authentication using the [Microsoft Authentication Library (MSAL)](https://docs.microsoft.com/azure/active-directory/develop/msal-overview).  MSAL supports several different types of Authentication flows. These samples use the [Username/password (ROPC)](https://docs.microsoft.com/azure/active-directory/develop/msal-authentication-flows#usernamepassword-ropc) flow for simplicity but this is not recommended. For your apps, you should use one of the other flows. More information: [Authentication flow support in the Microsoft Authentication Library](https://docs.microsoft.com/azure/active-directory/develop/msal-authentication-flows).
-- Provide for any code generation capabilities. Any classes used in the samples are written by hand. All business entity data uses the well-known [Json.NET JObject Class](https://www.newtonsoft.com/json/help/html/t_newtonsoft_json_linq_jobject.htm) rather than a class representing the entity type.
-- Provide an object model for composing OData queries. All queries are represented as strings.
+- **Manage authentication**. It depends on a function passed from an application that will provide the access token to use. All samples depend on a shared [App class](../App.cs) that manages authentication using the [Microsoft Authentication Library (MSAL)](https://docs.microsoft.com/azure/active-directory/develop/msal-overview).  MSAL supports several different types of Authentication flows. These samples use the [Username/password (ROPC)](https://docs.microsoft.com/azure/active-directory/develop/msal-authentication-flows#usernamepassword-ropc) flow for simplicity but this is not recommended. For your apps, you should use one of the other flows. More information: [Authentication flow support in the Microsoft Authentication Library](https://docs.microsoft.com/azure/active-directory/develop/msal-authentication-flows).
+- **Provide for any code generation capabilities**. Any classes used in the samples are written by hand. All business entity data uses the well-known [Json.NET JObject Class](https://www.newtonsoft.com/json/help/html/t_newtonsoft_json_linq_jobject.htm) rather than a class representing the entity type.
+- **Provide an object model for composing OData queries**. All queries are represented as strings.
 
 ## Class listing
 
@@ -27,7 +27,11 @@ The following are classes included in the WebAPIService.
 
 ### Service
 
-The [Service class](Service.cs) constructor accepts a [Config class](#config) instance which contains two required properties: `GetAccessToken` and `Url`. All the other properties represent options that have defaults.
+The [Service class](Service.cs) provides methods to send requests to Dataverse through an [HttpClient](https://docs.microsoft.com/dotnet/api/system.net.http.httpclient?view=net-6.0&viewFallbackFrom=dotnet-plat-ext-6.0) managed using [IHttpClientFactory](https://docs.microsoft.com/dotnet/api/system.net.http.ihttpclientfactory?view=dotnet-plat-ext-6.0).
+
+The Service is the core component for all samples and can be used by itself to complete any operations demonstrated with sample code. Everything else that is included in the WebAPIService or any of the samples using it simply provides for re-use of code and allows for the capabilities of the Dataverse Web API to be demonstrated at a higher level.
+
+The Service constructor accepts a [Config class](#config) instance which contains two required properties: `GetAccessToken` and `Url`. All the other properties represent options that have defaults.
 
 The constructor uses dependency injection to create an [IHttpClientFactory](https://docs.microsoft.com/dotnet/api/system.net.http.ihttpclientfactory?view=dotnet-plat-ext-6.0) that can return a named [HttpClient](https://docs.microsoft.com/dotnet/api/system.net.http.httpclient?view=net-6.0&viewFallbackFrom=dotnet-plat-ext-6.0) with the properties specified in the `ConfigureHttpClient` function. Whether or not this client will use cookies is based on whether the `Config.DisableCookies` parameter is set. In the constructor the policy defined by the static `GetRetryPolicy` method that controls how transient errors and Dataverse service protection limits will be managed.
 
@@ -35,29 +39,28 @@ The constructor uses dependency injection to create an [IHttpClientFactory](http
 
 The Service class has the following methods:
 
-##### SendAsync(HttpRequestMessage) Method
+##### SendAsync Method
 
 This is the single method ultimately responsible for all operations.
 
 This method:
-
+- Has an [HttpRequestMessage](https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httprequestmessage?view=net-6.0) parameter.
 - Returns `Task<HttpResponseMessage>`
 - Exposes the same signature as the [HttpClient.SendAsync(HttpRequestMessage)](https://docs.microsoft.com/dotnet/api/system.net.http.httpclient.sendasync?view=net-6.0#system-net-http-httpclient-sendasync(system-net-http-httprequestmessage)) and can be used in the same way.
 - Calls the function set in the `Config.GetAccessToken` method to set the `Authorization` header value for the request.
 - Uses the [IHttpClientFactory.CreateClient Method](https://docs.microsoft.com/dotnet/api/system.net.http.ihttpclientfactory.createclient?view=dotnet-plat-ext-6.0) to get the named [HttpClient](https://docs.microsoft.com/dotnet/api/system.net.http.httpclient?view=net-6.0&viewFallbackFrom=dotnet-plat-ext-6.0) to send the request.
-- Will throw a [ServiceException](#serviceexception) if the [HttpResponseMessage.IsSuccessStatusCode Property](https://docs.microsoft.com/dotnet/api/system.net.http.httpresponsemessage.issuccessstatuscode?view=net-6.0) is false, so you don't need to check this this when using this method.
+- Will throw a [ServiceException](#serviceexception) if the [HttpResponseMessage.IsSuccessStatusCode Property](https://docs.microsoft.com/dotnet/api/system.net.http.httpresponsemessage.issuccessstatuscode?view=net-6.0) is false, so you don't need to check this when using this method.
 
-##### SendAsync&lt;T&gt;(HttpRequestMessage) Method
+##### SendAsync&lt;T&gt; Method
 
-This method facilitates returning a class that includes properties found in the Complex Types returned by OData actions and functions.
+This method facilitates returning a class that includes properties found in the [ComplexTypes](https://docs.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/complextypes?view=dataverse-latest) returned by OData [Actions](https://docs.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/actions?view=dataverse-latest) and [Functions](https://docs.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/functions?view=dataverse-latest) in Dataverse Web API.
 
+- Has an [HttpRequestMessage](https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httprequestmessage?view=net-6.0) parameter. When using this method it is expected, but not required, that the `request` parameter is one of the [*Response classes](#response-classes)  that derive from `HttpRequestMessage`.
 - Returns `Task<T>` where `T` is a class derived from [HttpResponseMessage](https://docs.microsoft.com/dotnet/api/system.net.http.httpresponsemessage?view=net-6.0). See [*Response classes](#response-classes) for more information.
-- Calls the [SendAsync(HttpRequestMessage) Method](#sendasynchttprequestmessage-method).
+- Calls the [SendAsync Method](#sendasync-method).
 - Uses the [HttpResponseMessage.As&lt;T&gt;](#httpresponsemessage-ast) extension method to return the requested type.
 
-When using this method it is expected, but not required, that the `request` parameter is one of the [*Response classes](#response-classes)  that derive from [HttpRequestMessage](https://docs.microsoft.com/dotnet/api/system.net.http.httprequestmessage?view=net-6.0)
-
-The following examples shows use with the [WhoAmI function](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/whoami):
+The following example shows use with the [WhoAmI function](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/whoami):
 
 ```csharp
 static async Task WhoAmI(Service service)
@@ -68,9 +71,9 @@ static async Task WhoAmI(Service service)
 }
 ```
 
-##### ParseError(HttpResponseMessage) Method
+##### ParseError Method
 
-This method will parse the content of an `HttpResponseMessage` to return an `ServiceException`. It is used within [SendAsync(HttpRequestMessage)](#sendasynchttprequestmessage-method) when the [HttpResponseMessage.IsSuccessStatusCode Property](https://docs.microsoft.com/dotnet/api/system.net.http.httpresponsemessage.issuccessstatuscode?view=net-6.0) is false. You can also use it to extract error information from `HttpResponseMessage` instances returned by `BatchResponse.HttpResponseMessages` when the `BatchRequest.ContinueOnError` property is set to true. More information: [Batch](#batch)
+This method will parse the content of an `HttpResponseMessage` to return an `ServiceException`. It is used within the [SendAsync method](#sendasync-method) when the [HttpResponseMessage.IsSuccessStatusCode Property](https://docs.microsoft.com/dotnet/api/system.net.http.httpresponsemessage.issuccessstatuscode?view=net-6.0) is false. You can also use it to extract error information from `HttpResponseMessage` instances returned by `BatchResponse.HttpResponseMessages` when the `BatchRequest.ContinueOnError` property is set to true. More information: [Batch](#batch)
 
 #### Service Properties
 
@@ -99,7 +102,7 @@ In the samples that use WebAPIService, the data for these properties is set in t
 
 ### EntityReference
 
-An the [EntityReference class](EntityReference.cs) represents a reference to a record in a Dataverse table. In OData resources are identified by a URL. `EntityReference` provides methods to expose specific properties to make managing URLs easier.
+An the [EntityReference class](EntityReference.cs) represents a reference to a record in a Dataverse table. In OData resources are identified by a URL. `EntityReference` provides methods to make it easier create and access properties of Urls.
 
 #### EntityReference Constructors
 
@@ -107,11 +110,11 @@ Use the following constructors to instantiate an `EntityReference`.
 
 ##### EntityReference(string entitySetName, Guid? id)
 
-Creates an entity reference using the EntitySetName and a Guid.
+Creates an entity reference using the `EntitySetName` and a `Guid`.
 
 ##### EntityReference(string uri)
 
-Parses an absolute or relative url to create an entity reference.
+Parses an absolute or relative url to create an entity reference, including Urls that use alternate keys.
 
 ##### EntityReference(string setName, Dictionary&lt;string, string&gt;? keyAttributes)
 
@@ -153,7 +156,7 @@ WebAPIService has one extension method from a .NET type.
 
 ### HttpResponseMessage As&lt;T&gt;
 
-This extension instantiates an instance of `T` where `T` is derived from [HttpResponseMessage](https://docs.microsoft.com/dotnet/api/system.net.http.httpresponsemessage?view=net-6.0) and copies the properties of the `HttpResponseMessage` to the derived class. It is used by the `Service` [SendAsync&lt;T&gt; method](#sendasynclttgthttprequestmessage-method) but can also be used separately. For example, when using the `BatchRequest` class, the items in the B`atchResponse.HttpResponseMessages` will be `HttpResponseMessage` types. You can use this extension to convert them to the appropriate derived class to facilitate accessing any properties.
+This extension instantiates an instance of `T` where `T` is derived from [HttpResponseMessage](https://docs.microsoft.com/dotnet/api/system.net.http.httpresponsemessage?view=net-6.0) and copies the properties of the `HttpResponseMessage` to the derived class. It is used by the `Service` [SendAsync&lt;T&gt; method](#sendasynclttgt-method) but can also be used separately. For example, when using the `BatchRequest` class, the items in the `BatchResponse.HttpResponseMessages` will be `HttpResponseMessage` types. You can use this extension to convert them to the appropriate derived class to facilitate accessing any properties.
 
 ## Messages
 
@@ -161,28 +164,160 @@ The `Messages` folder includes classes that inherit from [HttpRequestMessage](ht
 
 These classes provide re-usable definitions of requests and responses that correspond to OData operations you can use in any Dataverse environment.
 
-Within an application, you may also create custom messages, for example representing a Custom API in your environment, using the same pattern. These are modular classes and are not required to be included in the `Messages` folder.
+Within an application, you may also create custom messages, for example representing a Custom API in your environment, using the same pattern. These are modular classes and are not required to be included in the `WebAPIService.Messages` folder.
 
 ### *Request classes
 
 These classes will generally have a constructor with parameters that will instantiate a [HttpRequestMessage](https://docs.microsoft.com/dotnet/api/system.net.http.httprequestmessage?view=net-6.0) with the data needed to perform the operation. They may have separate properties as appropriate.
 
-The names of these classes may align with the Dataverse SDK Message classes but are not limited to those operations. Web API provides for performing some operations that cannot be done with the SDK, for example [CreateRetrieveRequest](Messages/CreateRetrieveRequest.cs) is message that will create a record and retrieve it. The SDK doesn't provide this capability in a single request.
+The most simple example of this pattern is the [WhoAmIRequest class](Messages/WhoAmIRequest.cs).
+
+```csharp
+namespace PowerApps.Samples.Messages
+{
+    /// <summary>
+    /// Contains the data to perform the WhoAmI function
+    /// </summary>
+    public sealed class WhoAmIRequest : HttpRequestMessage
+    {
+        /// <summary>
+        /// Initializes the WhoAmIRequest
+        /// </summary>
+        public WhoAmIRequest()
+        {
+            Method = HttpMethod.Get;
+            RequestUri = new Uri(
+                uriString: "WhoAmI", 
+                uriKind: UriKind.Relative);
+        }
+    }
+}
+```
+
+The names of these classes may align with the classes in the Dataverse SDK [Microsoft.Xrm.Sdk.Messages Namespace](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.messages?view=dataverse-sdk-latest) but are not limited to those operations. Web API provides for performing some operations that cannot be done with the SDK, for example [CreateRetrieveRequest](Messages/CreateRetrieveRequest.cs) is message that will create a record and retrieve it. The Dataverse SDK doesn't provide this capability in a single request.
 
 ### *Response classes
 
-When \*Request classes returns a value there will be a corresponding \*Response class to access the returned properties. If the \*Request returns `204 No Content`, the operation will return an [HttpResponseMessage](https://docs.microsoft.com/dotnet/api/system.net.http.httpresponsemessage?view=net-6.0) but there will be no derived class. Use the [SendAsync(HttpRequestMessage) method](#sendasynchttprequestmessage-method) to send these requests.
+When \*Request classes returns a value there will be a corresponding \*Response class to access the returned properties. If the \*Request returns `204 No Content`, the operation will return an [HttpResponseMessage](https://docs.microsoft.com/dotnet/api/system.net.http.httpresponsemessage?view=net-6.0) but there will be no derived class. Use the [SendAsync(HttpRequestMessage) method](#sendasync-method) to send these requests.
 
-\*Response classes provide typed properties that access the `HttpResponseMessage` `Headers` or `Content` properties and parse them to provide access to the Complex Type returned by the operation. An example of this is the [WhoAmIResponse class](Messages/WhoAmIResponse.cs). Within this class you can find all the code needed to extract the properties of the [WhoAmIResponse ComplexType](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/whoamiresponse?view=dataverse-latest). 
+\*Response classes provide typed properties that access the `HttpResponseMessage` `Headers` or `Content` properties and parse them to provide access to the Complex Type returned by the operation.
 
-These classes can only be properly instantiated when returned by the [SendAsync&lt;T&gt; method](#sendasynclttgthttprequestmessage-method) or by using the [HttpResponseMessage As&lt;T&gt;](#httpresponsemessage-aslttgt) extension on an `HttpResponseMessage` that was returned by a `BatchResponse.HttpResponseMessages` property.
+An example of this is the [WhoAmIResponse class](Messages/WhoAmIResponse.cs). Within this class you can find all the code needed to extract the properties of the [WhoAmIResponse ComplexType](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/whoamiresponse?view=dataverse-latest).
 
+```csharp
+using Newtonsoft.Json.Linq;
 
+namespace PowerApps.Samples.Messages
+{
+    // This class must be instantiated by either:
+    // - The Service.SendAsync<T> method
+    // - The HttpResponseMessage.As<T> extension in Extensions.cs
+
+    /// <summary>
+    /// Contains the response from the WhoAmIRequest
+    /// </summary>
+    public sealed class WhoAmIResponse : HttpResponseMessage
+    {
+
+        // Cache the async content
+        private string? _content;
+
+        //Provides JObject for property getters
+        private JObject _jObject
+        {
+            get
+            {
+                _content ??= Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+                return JObject.Parse(_content);
+            }
+        }
+
+        /// <summary>
+        /// Gets the ID of the business to which the logged on user belongs.
+        /// </summary>
+        public Guid BusinessUnitId => (Guid)_jObject.GetValue(nameof(BusinessUnitId));
+
+        /// <summary>
+        /// Gets ID of the user who is logged on.
+        /// </summary>
+        public Guid UserId => (Guid)_jObject.GetValue(nameof(UserId));
+
+        /// <summary>
+        /// Gets ID of the organization that the user belongs to.
+        /// </summary>
+        public Guid OrganizationId => (Guid)_jObject.GetValue(nameof(OrganizationId));
+    }
+}
+
+```
+
+These classes can only be properly instantiated when returned by the [SendAsync&lt;T&gt; method](#sendasynclttgt-method) or by using the [HttpResponseMessage As&lt;T&gt;](#httpresponsemessage-aslttgt) extension on an `HttpResponseMessage` that was returned by a `BatchResponse.HttpResponseMessages` property.
 
 ## Batch
 
+The [Batch folder](Batch) contains three classes to manage sending OData $`batch` requests. More information: [Execute batch operations using the Web API](https://docs.microsoft.com/en-us/power-apps/developer/data-platform/webapi/execute-batch-operations-using-web-api).
+
+### BatchRequest
+
+The [BatchRequest](Batch/BatchRequest.cs) constructor initializes an `HttpRequestMessage` that can be used with [SendAsync<T> Method](#sendasynclttgt-method) to send requests in batches. The constructor requires the `Service.BaseAddress` value to be passed as a parameter.
+
+`BatchRequest` has the following properties.
+
+
+|Property|Type|Description|
+|---------|---------|---------|
+|`ContinueOnError`|`Bool`|Controls whether the batch operation should continue when an error occurs.|
+|`ChangeSets` |`List<ChangeSet>`|One or more change sets to be included in the batch.|
+|`Requests`|`List<HttpRequestMessage>` |One or more `HttpMessageRequest` to be sent outside of any `ChangeSet`. |
+
+When `ChangeSets` or `Requests` are set they are encapsulated into [HttpMessageContent](https://docs.microsoft.com/en-us/previous-versions/aspnet/hh834416(v=vs.118)) and added to the `Content` of the request. The private `ToMessageContent` method applies the required changes to headers and returns the `HttpMessageContent` for both `ChangeSets` and `Requests` properties.
+
+### ChangeSet
+
+A change set represents a group of requests that must complete within a transaction. 
+
+It contains a single property:
+
+|Property|Type|Description|
+|---------|---------|---------|
+|`Requests`|`List<HttpRequestMessage>`|One or more `HttpMessageRequest` to be performed within the transaction. |
+
+### BatchResponse
+
+`BatchResponse` has a single property:
+
+|Property|Type|Description|
+|---------|---------|---------|
+|`HttpResponseMessages`|`List<HttpResponseMessage>`|The responses from the $batch operation. |
+
+`BatchResponse` has a private `ParseMultipartContent` method used by the `HttpResponseMessages` property getter to parse the `MultipartContent` returned into individual `HttpResponseMessage`.
+
+To access type properties of the `HttpResponseMessage` instances returned, you can use the [HttpResponseMessage As<T> extension method](#httpresponsemessage-aslttgt).
+
 ## Methods
+
+For operations that are frequently performed, the [Methods folder](Methods) contains extensions of the `Service` class. These allow for using the corresponding *Request classes in a single line.
+
+The following methods are included:
+
+
+|Method |Return Type |Description |
+|---------|---------|---------|
+|Create|`Task<EntityReference>`|Creates a new record.|
+|CreateRetrieve |`Task<JObject>`|Creates a new record and retrieves it.|
+|Delete|`Task`|Deletes a record. |
+|Retrieve |`Task<JObject>`|Retrieves a record.|
+|RetrieveMultiple |`Task<RetrieveMultipleResponse>`|Retrieves multiple records. |
+|Update |`Task`|Updates a record. |
+|Upsert |`Task<UpsertResponse>`|Performs an Upsert on a record.|
+
+Within an application, you may also create custom methods, for example representing a Custom API in your environment, using the same pattern of extending the `Service` class.
 
 ## Types
 
+This folder contains any classes or enums that correspond to [ComplexTypes](https://docs.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/complextypes?view=dataverse-latest) or [EnumTypes](https://docs.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/enumtypes?view=dataverse-latest) needed as parameters or response properties for messages.
 
+## Metadata
+
+This folder contains Messages and Types specific to operations that work with Dataverse Schema definitions. These are frequently classes with many properties that return complex types.

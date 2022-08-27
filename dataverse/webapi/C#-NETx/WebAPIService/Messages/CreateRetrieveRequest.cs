@@ -2,12 +2,14 @@
 
 namespace PowerApps.Samples.Messages
 {
+    /// <summary>
+    /// Contains the data to create and retrieve a record.
+    /// </summary>
     public sealed class CreateRetrieveRequest : HttpRequestMessage
     {
-        private bool _includeAnnotations;
 
         /// <summary>
-        /// Contains the data to create and retrieve a record.
+        /// Initializes a CreateRetrieveRequest
         /// </summary>
         /// <param name="entitySetName">The name of the entity set</param>
         /// <param name="record">The record to create.</param>

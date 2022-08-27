@@ -15,7 +15,7 @@ namespace PowerApps.Samples.Methods
         /// <returns></returns>
         public static async Task<RetrieveMultipleResponse> RetrieveMultiple(
             this Service service,
-            string? queryUri,
+            string queryUri,
             int? maxPageSize = null,
             bool includeAnnotations = false)
         {
