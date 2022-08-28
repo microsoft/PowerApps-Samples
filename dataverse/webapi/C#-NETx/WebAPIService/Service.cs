@@ -3,7 +3,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Polly;
 using Polly.Extensions.Http;
-using System.Diagnostics;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text.Json;
@@ -13,12 +12,11 @@ namespace PowerApps.Samples
 {
     public class Service : IDisposable
     {
-
+        // Service configuration data passed into the constructor
         private readonly Config config;
 
         private static IServiceProvider _serviceProvider { get; set; }
         private readonly string WebAPIClientName = "WebAPI";
-        // To detect redundant calls
         private bool _disposedValue;
 
 
@@ -63,25 +61,32 @@ namespace PowerApps.Samples
 
             builder.ConfigureLogging(logging => {
                 // Removing default logging providers
-                // So that output is not sent to console
+                // so that output is not sent to console.
+                // You may wish to enable logging.
                 // More information:
                 // https://docs.microsoft.com/dotnet/core/extensions/logging-providers
                 logging.ClearProviders();
             });
 
-
+            // Add the named HttpClient configuration to the service provider.
             _serviceProvider = builder.Build().Services;
 
         }
 
+        /// <summary>
+        /// HttpClient configuration set in the service constructor
+        /// </summary>
+        /// <param name="httpClient"></param>
         void ConfigureHttpClient(HttpClient httpClient)
         {
             httpClient.BaseAddress = BaseAddress;
             httpClient.Timeout = TimeSpan.FromSeconds(config.TimeoutInSeconds);
+            httpClient.DefaultRequestHeaders.Add("User-Agent", $"WebAPIService/{Assembly.GetExecutingAssembly().GetName().Version}");
+            // Set default headers for all requests
+            // See https://docs.microsoft.com/en-us/power-apps/developer/data-platform/webapi/compose-http-requests-handle-errors#http-headers
             httpClient.DefaultRequestHeaders.Add("OData-MaxVersion", "4.0");
             httpClient.DefaultRequestHeaders.Add("OData-Version", "4.0");
-            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("If-None-Match", "null");
-            httpClient.DefaultRequestHeaders.Add("User-Agent", $"DVWebAPIService/{Assembly.GetExecutingAssembly().GetName().Version}");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("If-None-Match", "null");           
             httpClient.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
@@ -103,6 +108,9 @@ namespace PowerApps.Samples
                         int seconds;
                         HttpResponseHeaders headers = response.Result.Headers;
 
+                        // Use the value of the Retry-After header if it exists
+                        // See https://docs.microsoft.com/en-us/power-apps/developer/data-platform/api-limits#retry-operations
+
                         if (headers.Contains("Retry-After"))
                         {
 
@@ -111,8 +119,6 @@ namespace PowerApps.Samples
                         else
                         {
                             seconds = (int)Math.Pow(2, count);
-
-                            Debug.WriteLine($"Waiting for {seconds} seconds.");
                         }
                         return TimeSpan.FromSeconds(seconds);
                     },
@@ -120,10 +126,41 @@ namespace PowerApps.Samples
                 );
         }
 
+        /// <summary>
+        /// Provides access to the IHttpClientFactory from the service provider.
+        /// </summary>
+        /// <returns></returns>
         private static IHttpClientFactory GetHttpClientFactory()
         {
             return (IHttpClientFactory)_serviceProvider.GetService(typeof(IHttpClientFactory));
 
+        }
+
+
+
+        /// <summary>
+        /// Processes requests and returns responses. Manages Service Protection Limit errors.
+        /// </summary>
+        /// <param name="request">The request to send.</param>
+        /// <returns>The response from the HttpClient</returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
+        {
+            // Set the access token using the function from the Config passed to the constructor
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", await config.GetAccessToken());
+
+            // Get the named HttpClient from the IHttpClientFactory
+            var client = GetHttpClientFactory().CreateClient(WebAPIClientName);
+
+            HttpResponseMessage response = await client.SendAsync(request);
+
+            // Throw an exception if the request is not successful
+            if (!response.IsSuccessStatusCode)
+            {
+                ServiceException exception = await ParseError(response);
+                throw exception;
+            }
+            return response;
         }
 
         /// <summary>
@@ -134,40 +171,10 @@ namespace PowerApps.Samples
         /// <returns></returns>
         public async Task<T> SendAsync<T>(HttpRequestMessage request) where T : HttpResponseMessage
         {
-
             HttpResponseMessage response = await SendAsync(request);
 
             // 'As' method is Extension of HttpResponseMessage see Extensions.cs
             return response.As<T>();
-
-
-        }
-
-        /// <summary>
-        /// Processes requests and returns responses. Manages Service Protection Limit errors.
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
-        {
-            HttpResponseMessage response;
-
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", await config.GetAccessToken());
-
-            var client = GetHttpClientFactory().CreateClient("WebAPI");
-
-            response = await client.SendAsync(request);
-
-
-
-            if (!response.IsSuccessStatusCode)
-            {
-                ServiceException exception = await ParseError(response);
-                throw exception;
-
-            }
-            return response;
         }
 
         public static async Task<ServiceException> ParseError(HttpResponseMessage response)
@@ -192,7 +199,7 @@ namespace PowerApps.Samples
             }
             catch (Exception)
             {
-                //Error may not be in correct OData Error format, so keep trying...
+                // Error may not be in correct OData Error format, so keep trying...
             }
 
             if (oDataError?.Error != null)
@@ -207,8 +214,6 @@ namespace PowerApps.Samples
                     RequestId = requestId
                 };
                 return exception;
-
-
             }
             else
             {
