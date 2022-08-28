@@ -45,7 +45,7 @@ This is the single method ultimately responsible for all operations.
 
 This method:
 - Has an [HttpRequestMessage](https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httprequestmessage?view=net-6.0) parameter.
-- Returns `Task<HttpResponseMessage&gt;`
+- Returns `Task<HttpResponseMessage>`
 - Exposes the same signature as the [HttpClient.SendAsync(HttpRequestMessage)](https://docs.microsoft.com/dotnet/api/system.net.http.httpclient.sendasync?view=net-6.0#system-net-http-httpclient-sendasync(system-net-http-httprequestmessage)) and can be used in the same way.
 - Calls the function set in the `Config.GetAccessToken` method to set the `Authorization` header value for the request.
 - Uses the [IHttpClientFactory.CreateClient Method](https://docs.microsoft.com/dotnet/api/system.net.http.ihttpclientfactory.createclient?view=dotnet-plat-ext-6.0) to get the named [HttpClient](https://docs.microsoft.com/dotnet/api/system.net.http.httpclient?view=net-6.0&viewFallbackFrom=dotnet-plat-ext-6.0) to send the request.
@@ -56,7 +56,7 @@ This method:
 This method facilitates returning a class that includes properties found in the [ComplexTypes](https://docs.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/complextypes?view=dataverse-latest) returned by OData [Actions](https://docs.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/actions?view=dataverse-latest) and [Functions](https://docs.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/functions?view=dataverse-latest) in Dataverse Web API.
 
 - Has an [HttpRequestMessage](https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httprequestmessage?view=net-6.0) parameter. When using this method it is expected, but not required, that the `request` parameter is one of the [*Response classes](#response-classes)  that derive from `HttpRequestMessage`.
-- Returns `Task<T&gt;` where `T` is a class derived from [HttpResponseMessage](https://docs.microsoft.com/dotnet/api/system.net.http.httpresponsemessage?view=net-6.0). See [*Response classes](#response-classes) for more information.
+- Returns `Task<T>` where `T` is a class derived from [HttpResponseMessage](https://docs.microsoft.com/dotnet/api/system.net.http.httpresponsemessage?view=net-6.0). See [*Response classes](#response-classes) for more information.
 - Calls the [SendAsync Method](#sendasync-method).
 - Uses the [HttpResponseMessage.As&lt;T&gt;](#httpresponsemessage-ast) extension method to return the requested type.
 
@@ -274,8 +274,8 @@ The [BatchRequest](Batch/BatchRequest.cs) constructor initializes an `HttpReques
 |Property|Type|Description|
 |---------|---------|---------|
 |`ContinueOnError`|`Bool`|Controls whether the batch operation should continue when an error occurs.|
-|`ChangeSets` |`List<ChangeSet&gt;`|One or more change sets to be included in the batch.|
-|`Requests`|`List<HttpRequestMessage&gt;` |One or more `HttpMessageRequest` to be sent outside of any `ChangeSet`. |
+|`ChangeSets` |`List<ChangeSet>`|One or more change sets to be included in the batch.|
+|`Requests`|`List<HttpRequestMessage>` |One or more `HttpMessageRequest` to be sent outside of any `ChangeSet`. |
 
 When `ChangeSets` or `Requests` are set they are encapsulated into [HttpMessageContent](https://docs.microsoft.com/en-us/previous-versions/aspnet/hh834416(v=vs.118)) and added to the `Content` of the request. The private `ToMessageContent` method applies the required changes to headers and returns the `HttpMessageContent` for both `ChangeSets` and `Requests` properties.
 
@@ -287,7 +287,7 @@ It contains a single property:
 
 |Property|Type|Description|
 |---------|---------|---------|
-|`Requests`|`List<HttpRequestMessage&gt;`|One or more `HttpMessageRequest` to be performed within the transaction. |
+|`Requests`|`List<HttpRequestMessage>`|One or more `HttpMessageRequest` to be performed within the transaction. |
 
 ### BatchResponse
 
@@ -295,7 +295,7 @@ It contains a single property:
 
 |Property|Type|Description|
 |---------|---------|---------|
-|`HttpResponseMessages`|`List<HttpResponseMessage&gt;`|The responses from the $batch operation. |
+|`HttpResponseMessages`|`List<HttpResponseMessage>`|The responses from the $batch operation. |
 
 `BatchResponse` has a private `ParseMultipartContent` method used by the `HttpResponseMessages` property getter to parse the `MultipartContent` returned into individual `HttpResponseMessage`.
 
@@ -310,16 +310,16 @@ The following methods are included:
 
 |Method |Return Type |Description |
 |---------|---------|---------|
-|`Create`|`Task<EntityReference&gt;`|Creates a new record.|
-|`CreateRetrieve` |`Task<JObject&gt;`|Creates a new record and retrieves it.|
+|`Create`|`Task<EntityReference>`|Creates a new record.|
+|`CreateRetrieve` |`Task<JObject>`|Creates a new record and retrieves it.|
 |`Delete`|`Task`|Deletes a record. |
-|`FetchXml`|Task<FetchXmlResponse>|Retrieves the results of a FetchXml query. Request is sent with `POST` to $batch to mitigate issues where long URLs sent with `GET` can exceed limits.|
-|`GetColumnValue<T>`|T`ask<T>`|Retrieves a single column value from a table row.|
-|`Retrieve` |`Task<JObject&gt;`|Retrieves a record.|
-|`RetrieveMultiple` |`Task<RetrieveMultipleResponse&gt;`|Retrieves multiple records. |
+|`FetchXml`|`Task<FetchXmlResponse>`|Retrieves the results of a FetchXml query. Request is sent with `POST` using `$batch` to mitigate issues where long URLs sent with `GET` can exceed limits.|
+|`GetColumnValue<T>`|`Task<T>`|Retrieves a single column value from a table row.|
+|`Retrieve` |`Task<JObject>`|Retrieves a record.|
+|`RetrieveMultiple` |`Task<RetrieveMultipleResponse>`|Retrieves multiple records. |
 |`SetColumnValue<T>`|`Task`|Sets the value of a column for a table row.|
 |`Update` |`Task`|Updates a record. |
-|`Upsert` |`Task<UpsertResponse&gt;`|Performs an Upsert on a record.|
+|`Upsert` |`Task<UpsertResponse>`|Performs an Upsert on a record.|
 
 Within an application, you may also create custom methods, for example representing a Custom API in your environment, using the same pattern of extending the `Service` class.
 
