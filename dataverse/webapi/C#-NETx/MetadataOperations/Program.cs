@@ -1276,7 +1276,6 @@ namespace MetadataOperations
             }
             finally
             {
-
                 #region Section 9: Delete sample records  
                 Console.WriteLine("Starting Section 9: Delete sample records");
                 Console.WriteLine();
@@ -1316,15 +1315,14 @@ namespace MetadataOperations
                     await service.SendAsync(batchRequest);
                 }
 
-                #endregion Section 9: Delete sample records
-
-                
+                #endregion Section 9: Delete sample records                
             }
 
             // Only attempt this if the managedsolution was exported
             if (ManagedSolutionExported)
             {
                 #region  Section 10: Import and Delete managed solution
+
                 Console.WriteLine("Starting Section 10: Import managed solution");
                 Console.WriteLine();
 
@@ -1356,7 +1354,7 @@ namespace MetadataOperations
 
                         #region delete managed solution
 
-                        Console.WriteLine($"Sending request to delelte the {ExampleSolutionUniqueName} solution...");
+                        Console.WriteLine($"Sending request to delete the {ExampleSolutionUniqueName} solution...");
                         //Delete the managed solution
                         await service.Delete(exampleSolutionReference);
 
