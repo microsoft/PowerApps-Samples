@@ -2,16 +2,11 @@
 using PowerApps.Samples;
 using PowerApps.Samples.Messages;
 using System.Collections.Concurrent;
-using System.Net.Security;
-using System.Reflection.PortableExecutable;
 
 namespace ParallelOperations
 {
     internal class Program
     {
-        // Controls the max degree of parallelism
-        // Set this to match the x-ms-dop-hint response header returned from the environment.
-       // static readonly int maxDegreeOfParallelism = 4;
         // How many records to create and delete with this sample.
         static readonly int numberOfRecords = 100;
 
@@ -36,6 +31,7 @@ namespace ParallelOperations
 
             Console.WriteLine("--Starting Parallel Operations sample--");
 
+            // Send a simple request to access the recommended degree of parallelism (DOP).
             HttpResponseMessage whoAmIResponse = await service.SendAsync(new WhoAmIRequest());
             int maxDegreeOfParallelism = int.Parse(whoAmIResponse.Headers.GetValues("x-ms-dop-hint").FirstOrDefault());
 
