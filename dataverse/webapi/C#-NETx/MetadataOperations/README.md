@@ -1,6 +1,6 @@
 # Web API Metadata operations sample
 
-This .NET 6.0 sample demonstrates how to work with APIs to work with the following using the Dataverse Web API:
+This .NET 6.0 sample demonstrates how to work with the following using the Dataverse Web API:
 
 - Table definitions
 - Column definitions
@@ -93,7 +93,7 @@ Operations:
 - Verify that the `contact` table is eligible to be reference other tables in a 1:N relationship using the WebAPIService [CanBeReferencingRequest](../WebAPIService/Metadata/Messages/CanBeReferencingRequest.cs) and [CanBeReferencingResponse](../WebAPIService/Metadata/Messages/CanBeReferencingResponse.cs) classes.
 - Identify what other tables can reference the `sample_BankAccount` table in a 1:N relationship using the WebAPIService [GetValidReferencingEntitiesRequest](../WebAPIService/Metadata/Messages/GetValidReferencingEntitiesRequest.cs) and [GetValidReferencingEntitiesResponse](../WebAPIService/Metadata/Messages/GetValidReferencingEntitiesResponse.cs) classes.
 - Create a 1:N relationship between `sample_BankAccount` and `contact` tables using the WebAPIService [CreateRelationshipRequest](../WebAPIService/Metadata/Messages/CreateRelationshipRequest.cs) and [CreateRelationshipResponse](../WebAPIService/Metadata/Messages/CreateRelationshipResponse.cs) classes.
-- Retrieve the 1:N relationship using the WebAPIService [RetrieveRelationshipRequest](../WebAPIService/Metadata/Messages/RetrieveRelationshipRequest.cs) and [RetrieveRelationshipResponse&lt;T&gt;]](../WebAPIService/Metadata/Messages/RetrieveRelationshipResponse.cs) classes.
+- Retrieve the 1:N relationship using the WebAPIService [RetrieveRelationshipRequest](../WebAPIService/Metadata/Messages/RetrieveRelationshipRequest.cs) and [RetrieveRelationshipResponse&lt;T&gt;](../WebAPIService/Metadata/Messages/RetrieveRelationshipResponse.cs) classes.
 
 ### Section 6: Create and retrieve a many-to-one relationship
 
