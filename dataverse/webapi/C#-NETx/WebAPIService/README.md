@@ -321,12 +321,14 @@ The following methods are included:
 |`Update` |`Task`|Updates a record. |
 |`Upsert` |`Task<UpsertResponse>`|Performs an Upsert on a record.|
 
-Within an application, you may also create custom methods, for example representing a Custom API in your environment, using the same pattern of extending the `Service` class.
+Within an a sample application using WebAPIService when the operation doesn't represent an API found in Dataverse by default, the method will be defined in the application rather than in the WebAPIService. The [FunctionsAndActions Sample](../FunctionsAndActions) has this custom method included: [/Methods/IsSystemAdmin.cs](../FunctionsAndActions/Methods/IsSystemAdmin.cs)
 
 ## Types
 
-This folder contains any classes or enums that correspond to [ComplexTypes](https://docs.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/complextypes?view=dataverse-latest) or [EnumTypes](https://docs.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/enumtypes?view=dataverse-latest) needed as parameters or response properties for messages.
+[This folder](Types) contains any classes or enums that correspond to [ComplexTypes](https://docs.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/complextypes?view=dataverse-latest) or [EnumTypes](https://docs.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/enumtypes?view=dataverse-latest) needed as parameters or response properties for messages.
 
 ## Metadata
 
-This folder contains Messages and Types specific to operations that work with Dataverse Schema definitions. These are frequently classes with many properties that return complex types.
+[This folder](Metadata) contains [Messages](Metadata/Messages) and [Types](Metadata/Types) specific to operations that work with Dataverse Schema definitions. These are frequently classes with many properties that return complex types.
+
+These are used by the [MetadataOperations sample](../MetadataOperations).
