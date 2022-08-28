@@ -10,9 +10,6 @@ namespace TPLDataFlowParallelOperations
 
     internal class Program
     {
-        // Controls the max degree of parallelism
-        // Set this to match the x-ms-dop-hint response header returned from the environment.
-        static readonly int maxDegreeOfParallelism = 4;
         // How many records to create and delete with this sample.
         static readonly int numberOfRecords = 100;
 
@@ -37,9 +34,14 @@ namespace TPLDataFlowParallelOperations
 
             #endregion Optimize Connection
 
+            // Send a simple request to access the recommended degree of parallelism (DOP).
+            HttpResponseMessage whoAmIResponse = await service.SendAsync(new WhoAmIRequest());
+            int recommendedDegreeOfParallelism = int.Parse(whoAmIResponse.Headers.GetValues("x-ms-dop-hint").FirstOrDefault());
+            Console.WriteLine($"The recommended degree of parallelism for this environment is {recommendedDegreeOfParallelism}.");
+
             var executionDataflowBlockOptions = new ExecutionDataflowBlockOptions
             {
-                MaxDegreeOfParallelism = maxDegreeOfParallelism
+                MaxDegreeOfParallelism = recommendedDegreeOfParallelism
             };
 
             var count = 0;
@@ -82,9 +84,7 @@ namespace TPLDataFlowParallelOperations
             var createAccounts = new TransformBlock<CreateRequest, CreateResponse>(
                 async createRequest =>
                 {
-
                     return await service.SendAsync<CreateResponse>(createRequest);
-
                 },
                     executionDataflowBlockOptions
                 );

@@ -33,11 +33,11 @@ namespace ParallelOperations
 
             // Send a simple request to access the recommended degree of parallelism (DOP).
             HttpResponseMessage whoAmIResponse = await service.SendAsync(new WhoAmIRequest());
-            int maxDegreeOfParallelism = int.Parse(whoAmIResponse.Headers.GetValues("x-ms-dop-hint").FirstOrDefault());
+            int recommendedDegreeOfParallelism = int.Parse(whoAmIResponse.Headers.GetValues("x-ms-dop-hint").FirstOrDefault());
 
-            Console.WriteLine($"Recommended degree of parallelism for this environment is {maxDegreeOfParallelism}.");
+            Console.WriteLine($"Recommended degree of parallelism for this environment is {recommendedDegreeOfParallelism}.");
 
-            var parallelOptions = new ParallelOptions() { MaxDegreeOfParallelism = maxDegreeOfParallelism };
+            var parallelOptions = new ParallelOptions() { MaxDegreeOfParallelism = recommendedDegreeOfParallelism };
 
             var count = 0;
 
