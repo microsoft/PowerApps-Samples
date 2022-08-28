@@ -1,6 +1,6 @@
 # Web API Query Data sample
 
-This .NET 6.0 sample demonstrates how to use capabilities to query data using the Dataverse Web API:
+This .NET 6.0 sample demonstrates how to use capabilities to query data using the Dataverse Web API.
 
 This sample uses the common helper code in the [WebAPIService](../WebAPIService) class library project.
 
@@ -38,8 +38,8 @@ This is the data that will be used in this sample.
 
 Operations:
 
-- Using $select against a contact entity to get the properties you want.
-- Including annotations provides access to formatted values with the `@OData.Community.Display.V1.FormattedValue `annotation
+- Using `$select `against a contact entity to get the properties you want.
+- Including annotations provides access to formatted values with the `@OData.Community.Display.V1.FormattedValue` annotation
 
 ### Section 2 Using query functions
 
@@ -86,8 +86,8 @@ Operations: Sending requests using fetchXml using `?fetchXml=`
 
 Operations:
 
-Using `{entitysetname}?savedQuery={savedqueryid}` to return the results of a saved query (system view)
-Using `{entitysetname}?userQuery={userquery}` to return the results of a user query (saved view)
+- Using `{entitysetname}?savedQuery={savedqueryid}` to return the results of a saved query (system view)
+- Using `{entitysetname}?userQuery={userquery}` to return the results of a user query (saved view)
 
 ### Section 9: Delete sample records
 
