@@ -117,7 +117,7 @@ Operations: Export the solution containing the items created in this sample usin
 
 ### Section 9: Delete sample records
 
-Operations: A reference to each record created in this sample was added to a list as it was created. In this sample the records are deleted using a `$batch` operation.
+Operations: A reference to each record created in this sample was added to a list as it was created. In this sample the records are deleted using a `$batch` operation using the WebAPIService [BatchRequest class](../WebAPIService/Batch/BatchRequest.cs).
 
 ### Section 10: Import and Delete managed solution
 
