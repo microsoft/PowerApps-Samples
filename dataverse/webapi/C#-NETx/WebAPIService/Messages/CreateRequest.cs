@@ -40,8 +40,6 @@ namespace PowerApps.Samples.Messages
                 //If duplicate detection enabled for table only
                 Headers.Add("MSCRM.SuppressDuplicateDetection", "false");
             }
-
-
         }
     }
 }
