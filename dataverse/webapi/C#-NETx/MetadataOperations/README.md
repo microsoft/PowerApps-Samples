@@ -100,7 +100,7 @@ Operations:
 Operations:
 
 - Create a N:1 relationship between `sample_BankAccount` and `account` tables using the WebAPIService [CreateRelationshipRequest](../WebAPIService/Metadata/Messages/CreateRelationshipRequest.cs) and [CreateRelationshipResponse](../WebAPIService/Metadata/Messages/CreateRelationshipResponse.cs) classes.
-- Retrieve the N:1 relationship using the WebAPIService [RetrieveRelationshipRequest](../WebAPIService/Metadata/Messages/RetrieveRelationshipRequest.cs) and [RetrieveRelationshipResponse&lt;T&gt;]](../WebAPIService/Metadata/Messages/RetrieveRelationshipResponse.cs) classes.
+- Retrieve the N:1 relationship using the WebAPIService [RetrieveRelationshipRequest](../WebAPIService/Metadata/Messages/RetrieveRelationshipRequest.cs) and [RetrieveRelationshipResponse&lt;T&gt;](../WebAPIService/Metadata/Messages/RetrieveRelationshipResponse.cs) classes.
 
 ### Section 7: Create and retrieve a many-to-many relationship
 
@@ -109,11 +109,11 @@ Operations:
 - Verify that the `sample_BankAccount` and `contact` tables are eligible to participate in a N:N relationship using the WebAPIService [CanManyToManyRequest](../WebAPIService/Metadata/Messages/CanManyToManyRequest.cs) and [CanManyToManyResponse](../WebAPIService/Metadata/Messages/CanManyToManyResponse.cs) classes.
 - Verify that the `sample_BankAccount` and `contact` tables are eligible to participate in a N:N relationship using the WebAPIService [GetValidManyToManyRequest](../WebAPIService/Metadata/Messages/GetValidManyToManyRequest.cs) and [GetValidManyToManyResponse](../WebAPIService/Metadata/Messages/GetValidManyToManyResponse.cs) classes.
 - Create a N:N relationship between `sample_BankAccount` and `contact` tables using the WebAPIService [CreateRelationshipRequest](../WebAPIService/Metadata/Messages/CreateRelationshipRequest.cs) and [CreateRelationshipResponse](../WebAPIService/Metadata/Messages/CreateRelationshipResponse.cs) classes.
-- Retrieve the N:N relationship using the WebAPIService [RetrieveRelationshipRequest](../WebAPIService/Metadata/Messages/RetrieveRelationshipRequest.cs) and [RetrieveRelationshipResponse&lt;T&gt;]](../WebAPIService/Metadata/Messages/RetrieveRelationshipResponse.cs) classes.
+- Retrieve the N:N relationship using the WebAPIService [RetrieveRelationshipRequest](../WebAPIService/Metadata/Messages/RetrieveRelationshipRequest.cs) and [RetrieveRelationshipResponse&lt;T&gt;](../WebAPIService/Metadata/Messages/RetrieveRelationshipResponse.cs) classes.
 
 ### Section 8: Export managed solution
 
-Operations: Export the solution containing the items created in this sample using the WebAPIService [ExportSolutionRequest](../WebAPIService/Metadata/Messages/ExportSolutionRequest.cs) and [ExportSolutionResponse]](../WebAPIService/Metadata/Messages/ExportSolutionResponse.cs) classes.
+Operations: Export the solution containing the items created in this sample using the WebAPIService [ExportSolutionRequest](../WebAPIService/Metadata/Messages/ExportSolutionRequest.cs) and [ExportSolutionResponse](../WebAPIService/Metadata/Messages/ExportSolutionResponse.cs) classes.
 
 ### Section 9: Delete sample records
 
