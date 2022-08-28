@@ -26,7 +26,7 @@ This sample uses the common helper code in the [WebAPIService](../WebAPIService)
 
 ## Demonstrates
 
-This sample has 3 regions:
+This sample has 4 regions:
 
 ### Section 0: Create sample records
 
@@ -54,10 +54,10 @@ Operations:
 
 ### Section 3: Delete sample records
 
-Operations: A reference to each record created in this sample was added to a list as it was created. This section loops through that list and deletes each record.
+Operations: A reference to each record created in this sample was added to a list as it was created. In this sample the records are deleted using a `$batch` operation.
 
 ## Clean up
 
-By default this sample will delete all the records created in it. In this sample the records are deleted using a `$batch` operation.
+By default this sample will delete all the records created in it.
 
 If you want to view created records after the sample is completed, change the `deleteCreatedRecords` variable to `false` and you will be prompted to decide if you want to delete the records.
