@@ -123,7 +123,7 @@ Operations: A reference to each record created in this sample was added to a lis
 
 Operations:
 
-- Import the solution exported in [Section 8](#section-8-export-managed-solution) using the WebAPIService [ImportSolutionRequest class](../WebAPIService/Metadata/Messages/ImportSolutionRequest.cs).
+- Import the solution exported in [Section 8](#section-8-export-managed-solution) using the WebAPIService [ImportSolutionRequest class](../WebAPIService/Messages/ImportSolutionRequest.cs).
 - Query the solution table to get the id of the imported solution
 - Delete the imported solution.
 
