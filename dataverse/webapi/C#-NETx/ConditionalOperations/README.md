@@ -6,7 +6,7 @@ This sample uses the common helper code in the [WebAPIService](../WebAPIService)
 
 ## Prerequisites
 
-- Microsoft Visual Studio 2022
+- Microsoft Visual Studio 2022.
 - Access to Dataverse with privileges to perform data operations.
 
 ## How to run the sample

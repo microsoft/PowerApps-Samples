@@ -40,6 +40,7 @@ namespace FunctionsAndActions
             #endregion Section 1: Unbound Functions: WhoAmI
 
             #region Section 2: Unbound Functions: FormatAddress
+
             Console.WriteLine("Starting Section 2: Unbound Functions: FormatAddress");
             Console.WriteLine();
 
@@ -82,6 +83,7 @@ namespace FunctionsAndActions
             #endregion Section 2: Unbound Functions: FormatAddress
 
             #region Section 3: Unbound Functions: InitializeFrom
+
             Console.WriteLine("Starting Section 3: Unbound Functions: InitializeFrom");
             Console.WriteLine();
             // InitializeFrom returns an entity with default values set based on mapping configuration
@@ -366,7 +368,6 @@ namespace FunctionsAndActions
             Console.WriteLine();
 
             #endregion Section 6: Bound Functions: IsSystemAdmin
-
 
             #region Section 7: Unbound Actions: GrantAccess
 
