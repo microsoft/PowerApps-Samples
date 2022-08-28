@@ -113,7 +113,7 @@ Operations:
 
 ### Section 8: Export managed solution
 
-Operations: Export the solution containing the items created in this sample using the WebAPIService [ExportSolutionRequest](../WebAPIService/Metadata/Messages/ExportSolutionRequest.cs) and [ExportSolutionResponse](../WebAPIService/Metadata/Messages/ExportSolutionResponse.cs) classes.
+Operations: Export the solution containing the items created in this sample using the WebAPIService [ExportSolutionRequest](../WebAPIService/Messages/ExportSolutionRequest.cs) and [ExportSolutionResponse](../WebAPIService/Messages/ExportSolutionResponse.cs) classes.
 
 ### Section 9: Delete sample records
 
