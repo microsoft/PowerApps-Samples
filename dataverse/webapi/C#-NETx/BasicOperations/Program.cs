@@ -17,9 +17,16 @@ namespace BasicOperations
             List<EntityReference> recordsToDelete = new();
             bool deleteCreatedRecords = true;
 
-            Console.WriteLine("--Starting Basic Operations--");
+            Console.WriteLine("--Starting Basic Operations sample--");
 
             #region Section 1: Basic Create and Update operations
+
+            // This sample begins by using Service.SendAsyc with
+            // HttpRequestMessage and HttpResponseMessage but
+            // will then use the corresponding Messages/
+            // *Request and *Response classes and the 
+            // corresponding methods found in Methods.
+
             Console.WriteLine("--Section 1 started--");
 
             // Create a contact with HttpRequestMessage
@@ -98,7 +105,7 @@ namespace BasicOperations
             // Description is initialized empty.
             $"\tDescription: {retrievedRafelShillo1["description"]}");
 
-            //Modify specific properties and then update contact record.
+            // Modify specific properties and then update contact record.
             JObject rafelShilloUpdate2 = new()
             {
                 { "jobtitle", "Senior Developer" },
@@ -106,7 +113,7 @@ namespace BasicOperations
                 { "description", "Assignment to-be-determined" }
             };
 
-            //Update using UpdateRequest
+            // Update using Messages/UpdateRequest
             UpdateRequest rafelShilloUpdateRequest2 = new(
                 entityReference: rafelShilloReference,
                 record: rafelShilloUpdate2);
@@ -166,16 +173,16 @@ namespace BasicOperations
 
             Console.WriteLine("\n--Section 2 started--");
 
-            //Create a new account and associate with existing contact in one operation. 
+            // Create a new account and associate with existing contact in one operation. 
             var accountContoso = new JObject
             {
                 { "name", "Contoso Ltd" },
                 { "telephone1", "555-5555" },
-                //EntityReference.Path provides a relative URL
+                // EntityReference.Path provides a relative URL
                 { "primarycontactid@odata.bind", rafelShilloReference.Path }
             };
 
-            //Create using Create method
+            //Create using Methods/Create method
             EntityReference accountContosoReference =
                 await service.Create(
                 entitySetName: "accounts",
@@ -187,7 +194,7 @@ namespace BasicOperations
             Console.WriteLine($"Account URI: {accountContosoReference.Path}");
 
             // Retrieve account name and primary contact info
-            // Using Retrieve method
+            // Using Methods/Retrieve method
             JObject retrievedAccountContoso =
                 await service.Retrieve(
                 entityReference: accountContosoReference,
@@ -319,7 +326,7 @@ namespace BasicOperations
 
             // Next retrieve same contact and their assigned tasks.
             // Don't have a saved URI for contact 'Susie Curtis', so create one 
-            // from entitySet Name and Id (and add it to collection for cleanup).
+            // from entitySet Name and Id (and add it to recordsToDelete collection for cleanup).
             EntityReference contactSusieCurtisReference = new(
                 entitySetName: "contacts",
                 id: (Guid)retrievedAccountFourthCoffee["primarycontactid"]["contactid"]);
@@ -334,7 +341,7 @@ namespace BasicOperations
                     includeAnnotations: true);
 
             Console.WriteLine($"Contact '{retrievedContactSusieCurtis["fullname"]}' has the following assigned tasks:");
-            foreach (JObject task in retrievedContactSusieCurtis["Contact_Tasks"])
+            foreach (JObject task in retrievedContactSusieCurtis["Contact_Tasks"].Cast<JObject>())
             {
                 Console.WriteLine(
                     $"Subject: {task["subject"]}, \n" +
@@ -351,9 +358,9 @@ namespace BasicOperations
             /// </summary>
             Console.WriteLine("\n--Section 4 started--");
 
-            //Add 'Rafel Shillo' to the contact list of 'Fourth Coffee', 
+            // Add 'Rafel Shillo' to the contact list of 'Fourth Coffee', 
             // a 1-to-N relationship.
-            // Using HttpRequestMessage
+            // Using HttpRequestMessage rather than Messages/AssociateRequest
             HttpRequestMessage associateContactToAccountRequest = new(
                 method: HttpMethod.Post,
                 requestUri: $"{accountFourthCoffeeReference.Path}/contact_customer_accounts/$ref")
@@ -370,7 +377,7 @@ namespace BasicOperations
             await service.SendAsync(request: associateContactToAccountRequest);
 
             // Retrieve and output all contacts for account 'Fourth Coffee'.
-            // Using HttpRequestMessage
+            // Using HttpRequestMessage rather than Messages/RetrieveMultipleRequest
             HttpRequestMessage fourthCoffeeContactsRequest = new(
                 method: HttpMethod.Get,
                 requestUri: $"{accountFourthCoffeeReference.Path}/contact_customer_accounts?$select=fullname,jobtitle");
@@ -392,6 +399,7 @@ namespace BasicOperations
             });
 
             // Disassociate the contact from the account.
+            // Using HttpRequestMessage rather than Messages/DisassociateRequest
             HttpRequestMessage disassociateContactFromAccountRequest = new(
                 method: HttpMethod.Delete,
                 requestUri: $"{accountFourthCoffeeReference.Path}/contact_customer_accounts({rafelShilloReference.Id})/$ref");
@@ -401,7 +409,7 @@ namespace BasicOperations
 
             // Create role and assign it to systemuser using systemuserroles_association
 
-            //Get my BusinessUnitId and UserId using WhoAmI
+            // Get your BusinessUnitId and UserId using WhoAmI
             var whoIAm = await service.SendAsync<WhoAmIResponse>(new WhoAmIRequest());
 
             //Define a new security role
@@ -433,6 +441,13 @@ namespace BasicOperations
                         mediaType: "application/json")
             };
 
+            // The Messages/AssociateRequest class could be used instead to simplify the HttpRequestMessage above:
+            // AssociateRequest associateRoleToMeRequest = new(
+            //    baseAddress: service.BaseAddress,
+            //    entityWithCollection: new EntityReference("systemusers", whoIAm.UserId),
+            //    collectionName: "systemuserroles_association",
+            //    entityToAdd: exampleSecurityRoleRef);
+
             //Response has no content
             await service.SendAsync(associateRoleToMeRequest);
 
@@ -458,6 +473,12 @@ namespace BasicOperations
                     uriString: $"systemusers({whoIAm.UserId})/systemuserroles_association({exampleSecurityRoleRef.Id})/$ref",
                     uriKind: UriKind.Relative)
             };
+
+            // The Messages/DisassociateRequest class could be used instead to simplify the HttpRequestMessage above:
+            // DisassociateRequest disassociateRoleToMeRequest = new(
+            //    entityWithCollection: new EntityReference("systemusers", whoIAm.UserId),
+            //    collectionName: "systemuserroles_association", 
+            //    entityToRemove: exampleSecurityRoleRef);
 
             //Response has no content
             await service.SendAsync(disassociateRoleToMeRequest);
@@ -502,6 +523,8 @@ namespace BasicOperations
                 await service.SendAsync(request: deleteRequest);
             }
             #endregion Section 5: Delete sample entities
+
+            Console.WriteLine("--Basic Operations sample complete--");
         }
     }
 }

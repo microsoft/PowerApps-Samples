@@ -5,6 +5,9 @@ using System.Security;
 
 namespace PowerApps.Samples
 {
+    /// <summary>
+    /// Manages authentication and initializing samples using WebAPIService
+    /// </summary>
     public class App
     {
         private static readonly IConfiguration appSettings = new ConfigurationBuilder()
@@ -18,6 +21,10 @@ namespace PowerApps.Samples
             .WithAuthority(appSettings["Authority"])
             .Build();
 
+        /// <summary>
+        /// Returns a Config to pass to the Service constructor.
+        /// </summary>
+        /// <returns></returns>
         public static Config InitializeApp()
         {
             //Used to configure the service
@@ -39,6 +46,11 @@ namespace PowerApps.Samples
 
         }
 
+        /// <summary>
+        /// Returns an Access token for the app based on username and password from appsettings.json
+        /// </summary>
+        /// <returns>An Access token</returns>
+        /// <exception cref="Exception"></exception>
         internal static async Task<string> GetToken()
         {
             List<string> scopes = new() { $"{appSettings["Url"]}/user_impersonation" };
@@ -53,6 +65,8 @@ namespace PowerApps.Samples
             }
             else
             {
+                // These samples use username/password for simplicity, but it is not a recommended pattern.
+                // More information: 
                 //https://docs.microsoft.com/azure/active-directory/develop/scenario-desktop-acquire-token?tabs=dotnet#username-and-password
 
                 if (!string.IsNullOrEmpty(appSettings["Password"]) && !string.IsNullOrEmpty(appSettings["UserPrincipalName"]))
