@@ -244,10 +244,10 @@ namespace PowerApps.Samples.Messages
         /// </summary>
         public Guid BusinessUnitId => (Guid)_jObject.GetValue(nameof(BusinessUnitId));
 
-        /// <summary&gt;
+        /// <summary>
         /// Gets ID of the user who is logged on.
-        /// </summary&gt;
-        public Guid UserId =&gt; (Guid)_jObject.GetValue(nameof(UserId));
+        /// </summary>
+        public Guid UserId => (Guid)_jObject.GetValue(nameof(UserId));
 
         /// <summary>
         /// Gets ID of the organization that the user belongs to.
