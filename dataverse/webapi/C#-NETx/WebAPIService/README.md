@@ -92,7 +92,7 @@ The [Config class](Config.cs) contains properties that control the behavior of t
 |---------|---------|---------|
 |`GetAccessToken`|`Func<Task<string&gt;&gt;?`|A function provided by the client application to return an access token.|
 |`Url`|`string?`|The base Url of the environment. i.e.: `https://org.api.crm.dynamics.com`|
-|`CallerObjectId`|`Guid`|The [SystemUser.ActiveDirectoryGuid](https://docs.microsoft.com/en-us/power-apps/developer/data-platform/reference/entities/systemuser#BKMK_ActiveDirectoryGuid) value to apply for impersonation. Default is [Guid.Empty](https://docs.microsoft.com/dotnet/api/system.guid.empty?view=net-6.0)<br /&gt; More information: [Impersonate another user using the Web API](https://docs.microsoft.com/en-us/power-apps/developer/data-platform/webapi/impersonate-another-user-web-api?view=dataverse-latest)|
+|`CallerObjectId`|`Guid`|The [SystemUser.ActiveDirectoryGuid](https://docs.microsoft.com/en-us/power-apps/developer/data-platform/reference/entities/systemuser#BKMK_ActiveDirectoryGuid) value to apply for impersonation. Default is [Guid.Empty](https://docs.microsoft.com/dotnet/api/system.guid.empty?view=net-6.0)<br /> More information: [Impersonate another user using the Web API](https://docs.microsoft.com/en-us/power-apps/developer/data-platform/webapi/impersonate-another-user-web-api?view=dataverse-latest)|
 |`TimeoutInSeconds`|`ushort`|How long to wait for a timeout. Default is 120 seconds.|
 |`MaxRetries`|`byte`|Maximum number of times to re-try when service protection limits occur. Default is 3.|
 |`Version`     |`string`|The version of the service to use. Default is `v9.2`|
