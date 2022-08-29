@@ -38,7 +38,7 @@ This sample has 11 regions:
 
 Operations: Create a solution record and an associated publisher record.
 
-- All solution components created in this sample will be associate to the solution so that they can be exported.
+- All solution components created in this sample will be associate to the solution so that they can be exported. This association is created using the `MSCRM.SolutionUniqueName` request header setting the solution unique name set as the value.
 - All names of solution components are prefixed using the publisher customization prefix.
 
 ### Section 1: Create, Retrieve and Update Table
