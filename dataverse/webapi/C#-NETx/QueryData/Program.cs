@@ -453,9 +453,32 @@ namespace QueryData
 
             #endregion Section 4 Limit and count results
 
-            #region Section 5 Expanding results
+            #region Section 5 Pagination
 
             Console.WriteLine("\n--Section 5 started--");
+
+            RetrieveMultipleResponse firstPageResults = 
+                await service.RetrieveMultiple(
+                    queryUri: "contacts?$select=fullname,jobtitle,annualincome&$filter=contains(fullname,'(sample)')&$count=true",
+                    maxPageSize: 4,
+                    includeAnnotations: true);
+
+            WriteContactResultsTable($"Contacts total: {firstPageResults.TotalRecordCount}    Contacts per page: 4.  \r\nPage 1 of 3:", firstPageResults.Records);
+
+            RetrieveMultipleResponse secondPageResults =
+                await service.RetrieveMultiple(
+                    queryUri: firstPageResults.NextLink,
+                    maxPageSize: 4,
+                    includeAnnotations: true);
+
+            WriteContactResultsTable($"Page 2 of 3:", secondPageResults.Records);
+
+
+            #endregion Section 5 Pagination
+
+            #region Section 6 Expanding results
+
+            Console.WriteLine("\n--Section 6 started--");
 
             // The $expand option retrieves related information.
             // To retrieve information on associated entities in the same request, use the $expand
@@ -557,11 +580,11 @@ namespace QueryData
 
             DisplayExpandedValuesFromTask(contosoTasks.Records);
 
-            #endregion Section 5 Expanding results
+            #endregion Section 6 Expanding results
 
-            #region Section 6 Aggregate results
+            #region Section 7 Aggregate results
 
-            Console.WriteLine("\n--Section 6 started--");
+            Console.WriteLine("\n--Section 7 started--");
 
             // Get aggregated salary information about Contacts working for Contoso
 
@@ -580,11 +603,11 @@ namespace QueryData
             Console.WriteLine($"\tMinium income: {contactData.Records[0]["minimum@OData.Community.Display.V1.FormattedValue"]}");
             Console.WriteLine($"\tMaximum income: {contactData.Records[0]["maximum@OData.Community.Display.V1.FormattedValue"]}");
 
-            #endregion Section 6 Aggregate results
+            #endregion Section 7 Aggregate results
 
-            #region Section 7 FetchXML queries
+            #region Section 8 FetchXML queries
 
-            Console.WriteLine("\n--Section 7 started--");
+            Console.WriteLine("\n--Section 8 started--");
            
             // Use FetchXML to query for all contacts whose fullname contains '(sample)'.
             // Note: XML string must be URI encoded. For more information, see:
@@ -619,11 +642,11 @@ namespace QueryData
                 message: $"Contacts Fetched by fullname containing '(sample)':",
                 collection: contacts.Records);
 
-            #endregion Section 7 FetchXML queries
+            #endregion Section 8 FetchXML queries
 
-            #region Section 8 Using predefined queries
+            #region Section 9 Using predefined queries
 
-            Console.WriteLine("\n--Section 8 started--");
+            Console.WriteLine("\n--Section 9 started--");
 
             // Use predefined queries of the following two types:
             //   1) Saved query (system view)
@@ -695,11 +718,11 @@ namespace QueryData
 
             WriteContactResultsTable($"Contacts Fetched by My User Query:", myUserQueryResults.Records);
 
-            #endregion Section 8 Using predefined queries
+            #endregion Section 9 Using predefined queries
 
-            #region Section 9: Delete sample records
+            #region Section 10: Delete sample records
 
-            Console.WriteLine("\n--Section 9 started--");
+            Console.WriteLine("\n--Section 10 started--");
             // Delete all the created sample records.  Note that explicit deletion is not required  
             // for contact tasks because these are automatically cascade-deleted with owner.  
 
@@ -735,7 +758,7 @@ namespace QueryData
             await service.SendAsync(batchRequest);
 
 
-            #endregion Section 9: Delete sample records
+            #endregion Section 10: Delete sample records
 
             Console.WriteLine("--Query Data sample complete--");
         }
