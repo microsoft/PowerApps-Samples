@@ -129,7 +129,7 @@ EntityReference has the following public properties:
 |Property  |Type   |Description  |
 |---------|---------|---------|
 |`Id`|`Guid?`|The primary key value of the record when not using an alternate key.|
-|`KeyAttributes`|`Dictionary<string, string&gt;?`|The string values that represent alternate key values used in a url.|
+|`KeyAttributes`|`Dictionary<string, string>`|The string values that represent alternate key values used in a url.|
 |`SetName`|`string`|The `EntitySetName` of the entity type.|
 |`Path`|`string`|A relative url to the record.|
 
@@ -181,14 +181,14 @@ The most simple example of this pattern is the [WhoAmIRequest class](Messages/Wh
 ```csharp
 namespace PowerApps.Samples.Messages
 {
-    /// <summary&gt;
+    /// <summary>
     /// Contains the data to perform the WhoAmI function
-    /// </summary&gt;
+    /// </summary>
     public sealed class WhoAmIRequest : HttpRequestMessage
     {
-        /// <summary&gt;
+        /// <summary>
         /// Initializes the WhoAmIRequest
-        /// </summary&gt;
+        /// </summary>
         public WhoAmIRequest()
         {
             Method = HttpMethod.Get;
@@ -216,12 +216,12 @@ using Newtonsoft.Json.Linq;
 namespace PowerApps.Samples.Messages
 {
     // This class must be instantiated by either:
-    // - The Service.SendAsync<T&gt; method
-    // - The HttpResponseMessage.As<T&gt; extension in Extensions.cs
+    // - The Service.SendAsync<T> method
+    // - The HttpResponseMessage.As<T> extension in Extensions.cs
 
-    /// <summary&gt;
+    /// <summary>
     /// Contains the response from the WhoAmIRequest
-    /// </summary&gt;
+    /// </summary>
     public sealed class WhoAmIResponse : HttpResponseMessage
     {
 
@@ -239,20 +239,20 @@ namespace PowerApps.Samples.Messages
             }
         }
 
-        /// <summary&gt;
+        /// <summary>
         /// Gets the ID of the business to which the logged on user belongs.
-        /// </summary&gt;
-        public Guid BusinessUnitId =&gt; (Guid)_jObject.GetValue(nameof(BusinessUnitId));
+        /// </summary>
+        public Guid BusinessUnitId => (Guid)_jObject.GetValue(nameof(BusinessUnitId));
 
         /// <summary&gt;
         /// Gets ID of the user who is logged on.
         /// </summary&gt;
         public Guid UserId =&gt; (Guid)_jObject.GetValue(nameof(UserId));
 
-        /// <summary&gt;
+        /// <summary>
         /// Gets ID of the organization that the user belongs to.
-        /// </summary&gt;
-        public Guid OrganizationId =&gt; (Guid)_jObject.GetValue(nameof(OrganizationId));
+        /// </summary>
+        public Guid OrganizationId => (Guid)_jObject.GetValue(nameof(OrganizationId));
     }
 }
 
