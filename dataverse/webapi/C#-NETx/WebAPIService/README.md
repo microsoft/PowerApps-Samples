@@ -65,7 +65,7 @@ The following example shows use with the [WhoAmI function](https://docs.microsof
 ```csharp
 static async Task WhoAmI(Service service)
 {
-   var response = await service.SendAsync<WhoAmIResponse&gt;(new WhoAmIRequest());
+   var response = await service.SendAsync<WhoAmIResponse>(new WhoAmIRequest());
 
    Console.WriteLine($"Your user ID is {response.UserId}");
 }
