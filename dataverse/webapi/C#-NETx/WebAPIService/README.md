@@ -102,7 +102,7 @@ In the samples that use WebAPIService, the data for these properties is set in t
 
 ### EntityReference
 
-An the [EntityReference class](EntityReference.cs) represents a reference to a record in a Dataverse table. In OData resources are identified by a URL. `EntityReference` provides methods to make it easier create and access properties of Urls.
+The [EntityReference class](EntityReference.cs) represents a reference to a record in a Dataverse table. In OData resources are identified by a URL. `EntityReference` provides methods to make it easier create and access properties of Urls.
 
 #### EntityReference Constructors
 
