@@ -26,7 +26,7 @@ This sample uses the common helper code in the [WebAPIService](../WebAPIService)
 
 ## Demonstrates
 
-This sample has 10 regions:
+This sample has 11 regions:
 
 ### Section 0: Create Records to query
 
@@ -64,7 +64,14 @@ Operations:
 - Limiting results using `$top`.
 - Get a count value using `$count`.
 
-### Section 5 Expanding results
+### Section 5 Pagination
+
+Operations:
+
+- Use the `Prefer: odata.maxpagesize` request header to limit the number of rows returned.
+- Use the url returned with the `@odata.nextLink` annotation to retrieve the next set of records.
+
+### Section 6 Expanding results
 
 Operations:
 
@@ -74,22 +81,22 @@ Operations:
 - `$expand` with multiple navigation property types in a single request.
 - Multi-level `$expand`.
 
-### Section 6 Aggregate results
+### Section 7 Aggregate results
 
 Operations: Using `$apply=aggregate` with `average`, `sum`, `min`, & `max`.
 
-### Section 7 FetchXML queries
+### Section 8 FetchXML queries
 
 Operations: Sending requests using fetchXml using `?fetchXml=`
 
-### Section 8 Using predefined queries
+### Section 9 Using predefined queries
 
 Operations:
 
 - Using `{entitysetname}?savedQuery={savedqueryid}` to return the results of a saved query (system view)
 - Using `{entitysetname}?userQuery={userquery}` to return the results of a user query (saved view)
 
-### Section 9: Delete sample records
+### Section 10: Delete sample records
 
 Operations: A reference to each record created in this sample was added to a list as it was created. In this sample the records are deleted using a `$batch` operation using the WebAPIService [BatchRequest class](../WebAPIService/Batch/BatchRequest.cs).
 
