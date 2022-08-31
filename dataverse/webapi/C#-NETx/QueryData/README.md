@@ -87,7 +87,10 @@ Operations: Using `$apply=aggregate` with `average`, `sum`, `min`, & `max`.
 
 ### Section 8 FetchXML queries
 
-Operations: Sending requests using fetchXml using `?fetchXml=`
+Operations: 
+
+ - Sending requests using fetchXml using `?fetchXml=`
+ - Simple paging using `page` and `count` attributes
 
 ### Section 9 Using predefined queries
 
