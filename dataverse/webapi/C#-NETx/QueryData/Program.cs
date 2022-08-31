@@ -642,6 +642,31 @@ namespace QueryData
                 message: $"Contacts Fetched by fullname containing '(sample)':",
                 collection: contacts.Records);
 
+            #region fetchXml Paging
+
+            XDocument fetchXmlQueryDoc = XDocument.Parse(fetchXmlQuery);
+
+            // Add attribute to set the page size
+            fetchXmlQueryDoc.Root.Add(new XAttribute("count", "4"));
+
+            // Add attribute to set the page
+            fetchXmlQueryDoc.Root.Add(new XAttribute("page", "2"));
+
+            // Use FetchXmlRequest this time. Uses GET rather than POST
+            FetchXmlRequest page2Request = new FetchXmlRequest(
+                entitySetName: "contacts",
+                fetchXml: fetchXmlQueryDoc,
+                includeAnnotations: true);
+
+            FetchXmlResponse page2Response =
+                await service.SendAsync<FetchXmlResponse>(page2Request);
+
+            WriteContactResultsTable(
+                message: $"Contacts Fetched by fullname containing '(sample)' - Page 2:",
+                collection: page2Response.Records);
+
+            #endregion fetchXml Paging
+
             #endregion Section 8 FetchXML queries
 
             #region Section 9 Using predefined queries
