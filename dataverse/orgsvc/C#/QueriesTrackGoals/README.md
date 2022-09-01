@@ -2,7 +2,7 @@
 
 This sample shows how to use rollup queries to track goals.
 
-This sample requires additional three users that are not in your system. Create the three required users **as is** shown below manually in **Office 365**.
+This sample requires additional licensed users that may not exist in your system. Create the required users manually in **Office 365** or Azure AD (as appropriate), then adding them to your test environment, in order to run the sample without any errors. For this sample, create licensed user profiles as shown below.
 
 **First Name**: Nancy<br/>
 **Last Name**: Anderson<br/>
@@ -18,6 +18,8 @@ This sample requires additional three users that are not in your system. Create 
 **Last Name**: Cook<br/>
 **Security Role**: SalesManager<br/>
 **UserName**: kcook@yourorg.onmicrosoft.com<br/>
+
+Alternately, you can substitute any licensed user profiles in your test environment as long as they are assigned the correct role indicated above. In the SystemUserProvider.cs file shared by several code samples, change the `Retrieve*()` method code that uses the above profiles to use your replacement user profiles.
 
 ## How to run this sample
 
