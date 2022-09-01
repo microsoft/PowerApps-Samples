@@ -2,7 +2,7 @@
 
 This sample shows how to allow access to a record using an access team. All members of the team receive the same access to the record as is granted to the team.
 
-This sample requires additional users that are not in your system. Create the required users manually in **Office 365** in order to run the sample without any errors. For this sample create a user profile **as is** shown below.
+This sample requires additional users that may not exist in your system. Create the required users manually in **Office 365** or Azure AD (as appropriate) in order to run the sample without any errors. For this sample, create two licensed user profiles as shown below.
 
 **First Name**: Nancy<br/>
 **Last Name**: Anderson<br/>
@@ -13,6 +13,8 @@ This sample requires additional users that are not in your system. Create the re
 **Last Name**: Bristol<br/>
 **Security Role**: SalesPerson<br/>
 **UserName**: dbristol@yourorg.onmicrosoft.com<br/>
+
+Alternately, you can substitute any two licensed user profiles in your test environment as long as they are assigned the SalesPerson role. In the SystemUserProvider.cs file, change the code for the two `reps.Add()` calls to use your replacement user profiles.  
 
 ## How to run this sample
 
