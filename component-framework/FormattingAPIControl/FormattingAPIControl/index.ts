@@ -26,6 +26,8 @@ export class FormattingAPIControl implements ComponentFramework.StandardControl<
 	// Flag if control view has been rendered
 	private _controlViewRendered: boolean;
 
+	private _values: IOutputs;
+
 	/**
 	 * Used to initialize the control instance. Controls can kick off remote server calls and other initialization actions here.
 	 * Data-set values are not initialized here, use updateView.
@@ -104,19 +106,19 @@ export class FormattingAPIControl implements ComponentFramework.StandardControl<
 		// Example use of formatCurrency() method 
 		// Change the default currency and the precision or pass in the precision and currency as additional parameters.
 		key = "formatCurrency()";
-		value = this._context.formatting.formatCurrency(10250030);
+		value = this._context.formatting.formatCurrency(this._values.currencyInput || 0.0);
 		tableElement.appendChild(this.createHTMLTableRowElement(key, value, false));
 
 		// Example use of formatDecimal() method 
 		// Change the settings from user settings to see the output change its format accordingly
 		key = "formatDecimal()";
-		value = this._context.formatting.formatDecimal(123456.2782);
+		value = this._context.formatting.formatDecimal(this._values.decimalInput || 0.0);
 		tableElement.appendChild(this.createHTMLTableRowElement(key, value, false));
 
 		// Example use of formatInteger() method
 		// change the settings from user settings to see the output change its format accordingly.
 		key = "formatInteger()";
-		value = this._context.formatting.formatInteger(12345);
+		value = this._context.formatting.formatInteger(this._values.integerInput || 0);
 		tableElement.appendChild(this.createHTMLTableRowElement(key, value, false));
 
 		// Example use of formatLanguage() method
@@ -129,13 +131,13 @@ export class FormattingAPIControl implements ComponentFramework.StandardControl<
 		// Pass a JavaScript Data object set to the current time into formatDateYearMonth method to format the data
 		// and get the return in Year, Month format
 		key = "formatDateYearMonth()";
-		value = this._context.formatting.formatDateYearMonth(new Date());
+		value = this._context.formatting.formatDateYearMonth(this._values.dateInput || new Date());
 		tableElement.appendChild(this.createHTMLTableRowElement(key, value, false));
 
 		// Example of getWeekOfYear() method
 		// Pass a JavaScript Data object set to the current time into getWeekOfYear method to get the value for week of the year
 		key = "getWeekOfYear()";
-		value = this._context.formatting.getWeekOfYear(new Date()).toString();
+		value = this._context.formatting.getWeekOfYear(this._values.dateInput || new Date()).toString();
 		tableElement.appendChild(this.createHTMLTableRowElement(key, value, false));
 
 		return tableElement;
@@ -146,13 +148,20 @@ export class FormattingAPIControl implements ComponentFramework.StandardControl<
 	 * @param context The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to names defined in the manifest, as well as utility functions
 	 */
 	public updateView(context: ComponentFramework.Context<IInputs>): void {
-		if (!this._controlViewRendered) {
-			// Render and add HTMLTable to the custom control container element
-			const tableElement: HTMLTableElement = this.createHTMLTableElement();
-			this._container.appendChild(tableElement);
-
-			this._controlViewRendered = true;
+		this._container.innerHTML = "";
+		this._values = {
+			currencyInput: context.parameters.currencyInput.raw || 0.0,
+			dateInput: context.parameters.dateInput.raw || new Date(),
+			decimalInput: context.parameters.decimalInput.raw || 0.0,
+			integerInput: context.parameters.integerInput.raw || 0
 		}
+
+		// Render and add HTMLTable to the custom control container element
+		const tableElement: HTMLTableElement = this.createHTMLTableElement();
+		this._container.appendChild(tableElement);
+
+		this._controlViewRendered = true;
+
 	}
 
 	/** 
