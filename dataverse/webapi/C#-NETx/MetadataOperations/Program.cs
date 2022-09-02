@@ -241,7 +241,7 @@ namespace MetadataOperations
                 Console.WriteLine("Updated Boolean Column properties");
                 Console.WriteLine();
 
-                //Update option labels
+                #region Update option labels
                 UpdateOptionValueParameters trueOptionParameters = new()
                 {
                     EntityLogicalName = bankAccountEntityLogicalName,
@@ -289,6 +289,8 @@ namespace MetadataOperations
                 Console.WriteLine($"Updated False Option Label:'{newFalseOption.Label.UserLocalizedLabel.Label}' " +
                     $"Value: {newFalseOption.Value.Value}");
                 Console.WriteLine();
+
+                #endregion Update option labels
 
 
                 #endregion Update Boolean Attribute
@@ -604,7 +606,8 @@ namespace MetadataOperations
                 });
                 Console.WriteLine();
 
-                // Add an option to the local optionset
+                #region Add an option to the local optionset
+
                 InsertOptionValueParameters insertOptionValueParameters = new()
                 {
                     EntityLogicalName = bankAccountEntityLogicalName,
@@ -637,6 +640,9 @@ namespace MetadataOperations
                     Console.WriteLine($"\tValue: {o.Value}, Label:{o.Label.UserLocalizedLabel.Label}");
 
                 });
+                #endregion Add an option to the local optionset
+
+                #region Re-order choice column options
 
                 //Re-order the options alphabetically by English (1033) Label value
                 List<int> newOrder = new();
@@ -681,7 +687,10 @@ namespace MetadataOperations
                 });
                 Console.WriteLine();
 
-  
+                #endregion Re-order choice column options
+
+                #region Delete local option value
+
                 Console.WriteLine("Deleting a local option value...");
                 DeleteOptionValueParameters deleteOptionParameters = new()
                 {
@@ -695,6 +704,7 @@ namespace MetadataOperations
                 Console.WriteLine("Local OptionSet option value deleted.");
                 Console.WriteLine();
 
+                #endregion Delete local option value
 
                 #endregion Picklist
 
