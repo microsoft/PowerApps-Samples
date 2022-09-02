@@ -271,15 +271,15 @@ namespace FunctionsAndActions
 
             /* Output looks like this:
                 {
-                  "OrganizationId": "3b0181ba-1a67-4916-9ef8-51b4c6ac7330",
+                  "OrganizationId": "3b0181ba-1a67-4816-9ef8-51b4c6ac7330",
                   "FriendlyName": "SAM trial",
                   "OrganizationVersion": "9.2.22074.142",
-                  "EnvironmentId": "fb837b9e-fdb7-4999-ba5f-66bd1d761197",
-                  "DatacenterId": "dcacf139-fc5b-462d-8198-eefe2da03e13",
-                  "Geo": "SAM",
-                  "TenantId": "9046e390-97ae-44e0-8ca5-677ef6b115df",
-                  "UrlName": "org84641be1",
-                  "UniqueName": "unq9505972cb89e4dcdac7f258037d13",
+                  "EnvironmentId": "fb837b9e-fdb7-4999-ba5f-65bd1d761197",
+                  "DatacenterId": "dcacf239-fc5b-462d-8198-eefe2da03e13",
+                  "Geo": "NA",
+                  "TenantId": "9046e390-97ae-44e0-8ca5-677ef6b115ef",
+                  "UrlName": "yourorg",
+                  "UniqueName": "unq9505972cb89e4dcdac6f258037d13",
                   "Endpoints": {
                     "Count": 3,
                     "IsReadOnly": false,
@@ -289,9 +289,9 @@ namespace FunctionsAndActions
                       "OrganizationDataService"
                     ],
                     "Values": [
-                      "https://org84641be1.crm2.dynamics.com/",
-                      "https://org84641be1.api.crm2.dynamics.com/XRMServices/2011/Organization.svc",
-                      "https://org84641be1.api.crm2.dynamics.com/XRMServices/2011/OrganizationData.svc"
+                      "https://yourorg.crm.dynamics.com/",
+                      "https://yourorg.api.crm.dynamics.com/XRMServices/2011/Organization.svc",
+                      "https://yourorg.api.crm.dynamics.com/XRMServices/2011/OrganizationData.svc"
                     ]
                   },
                   "State": "Enabled"
