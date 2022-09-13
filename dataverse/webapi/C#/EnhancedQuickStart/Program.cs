@@ -31,6 +31,7 @@ namespace EnhancedQuickStart
                         Console.WriteLine("The request failed with a status of '{0}'",
                                     response.ReasonPhrase);
                     }
+
                     Console.WriteLine("Press any key to exit.");
                     Console.ReadLine();
                 }
