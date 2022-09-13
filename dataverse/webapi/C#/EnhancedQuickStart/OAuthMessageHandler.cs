@@ -1,7 +1,7 @@
 ﻿using Microsoft.Identity.Client;
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Security;
 using System.Threading.Tasks;
 
 namespace EnhancedQuickStart
@@ -18,11 +18,9 @@ namespace EnhancedQuickStart
                 HttpMessageHandler innerHandler)
             : base(innerHandler)
         {
-
             string apiVersion = "9.2";
             string webApiUrl = $"{serviceUrl}/api/data/v{apiVersion}/";
 
-            //Build Microsoft.Identity.Client (MSAL) OAuth Token Request
             var authBuilder = PublicClientApplicationBuilder.Create(clientId)
                             .WithAuthority(AadAuthorityAudience.AzureAdMultipleOrgs)
                             .WithRedirectUri(redirectUrl)
@@ -30,20 +28,40 @@ namespace EnhancedQuickStart
             var scope = serviceUrl + "//.default";
             string[] scopes = { scope };
 
-            AuthenticationResult authBuilderResult;
-            if (username != string.Empty && password != string.Empty)
+            // First try to get an authentication token from the cache using a hint.
+            AuthenticationResult authBuilderResult=null;
+            try
             {
-                //Make silent Microsoft.Identity.Client (MSAL) OAuth Token Request
-                var securePassword = new SecureString();
-                foreach (char ch in password) securePassword.AppendChar(ch);
-                authBuilderResult = authBuilder.AcquireTokenByUsernamePassword(scopes, username, securePassword)
-                            .ExecuteAsync().Result;
+                authBuilderResult = authBuilder.AcquireTokenSilent(scopes, username)
+                   .ExecuteAsync().Result;
             }
-            else
+            catch (Exception ex)
             {
-                //Popup authentication dialog box to get token
-                authBuilderResult = authBuilder.AcquireTokenInteractive(scopes)
-                            .ExecuteAsync().Result;
+                System.Diagnostics.Debug.WriteLine(
+                    $"Error acquiring auth token from cache:{System.Environment.NewLine}{ex}");
+
+                // Token cache request failed, so request a new token.
+                try
+                {
+                    if (username != string.Empty && password != string.Empty)
+                    {
+                        // Request a token based on username/password credentials.
+                        authBuilderResult = authBuilder.AcquireTokenByUsernamePassword(scopes, username, password)
+                                    .ExecuteAsync().Result;
+                    }
+                    else
+                    {
+                        // Prompt the user for credentials and get the token.
+                        authBuilderResult = authBuilder.AcquireTokenInteractive(scopes)
+                                    .ExecuteAsync().Result;
+                    }
+                }
+                catch (Exception msalex)
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        $"Error acquiring auth token with user credentials:{System.Environment.NewLine}{msalex}");
+                    throw;
+                }
             }
 
             //Note that an Azure AD access token has finite lifetime, default expiration is 60 minutes.
