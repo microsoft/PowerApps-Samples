@@ -3,6 +3,7 @@ using PowerApps.Samples;
 using PowerApps.Samples.Batch;
 using PowerApps.Samples.Messages;
 using PowerApps.Samples.Methods;
+using System.Web;
 using System.Xml.Linq;
 
 namespace QueryData
@@ -611,7 +612,7 @@ namespace QueryData
            
             // Use FetchXML to query for all contacts whose fullname contains '(sample)'.
             // Note: XML string must be URI encoded. For more information, see:
-            // https://docs.microsoft.com/power-apps/developer/data-platform/webapi/retrieve-and-execute-predefined-queries#use-custom-fetchxml
+            // https://docs.microsoft.com/power-apps/developer/data-platform/webapi/use-fetchxml-web-api
             // In this sample the FetchXmlResponse class encodes the URI.
             Console.WriteLine("\n-- FetchXML -- ");
             string fetchXmlQuery =
@@ -642,7 +643,10 @@ namespace QueryData
                 message: $"Contacts Fetched by fullname containing '(sample)':",
                 collection: contacts.Records);
 
-            #region fetchXml Paging
+            #region Simple fetchXml Paging
+
+            Console.WriteLine();
+            Console.WriteLine("Simple Paging");
 
             XDocument fetchXmlQueryDoc = XDocument.Parse(fetchXmlQuery);
 
@@ -653,7 +657,7 @@ namespace QueryData
             fetchXmlQueryDoc.Root.Add(new XAttribute("page", "2"));
 
             // Use FetchXmlRequest this time. Uses GET rather than POST
-            FetchXmlRequest page2Request = new FetchXmlRequest(
+            FetchXmlRequest page2Request = new(
                 entitySetName: "contacts",
                 fetchXml: fetchXmlQueryDoc,
                 includeAnnotations: true);
@@ -665,7 +669,70 @@ namespace QueryData
                 message: $"Contacts Fetched by fullname containing '(sample)' - Page 2:",
                 collection: page2Response.Records);
 
-            #endregion fetchXml Paging
+            #endregion Simple fetchXml Paging
+
+            #region FetchXML paging with paging cookie
+
+            Console.WriteLine();
+            Console.WriteLine("Paging with PagingCookie");
+
+            int page = 1;
+
+            // Using the same FetchXml
+            // Add attribute to set the paging cookie
+            fetchXmlQueryDoc.Root.Add(new XAttribute("paging-cookie", ""));
+
+            // Reset the page
+            fetchXmlQueryDoc.Root.Attribute("page").Value = page.ToString();
+
+            // Reset the count
+            fetchXmlQueryDoc.Root.Attribute("count").Value = "3";
+
+            // Send first request
+            FetchXmlResponse cookiePagedContacts = await service.FetchXml(
+                entitySetName: "contacts",
+                fetchXml: fetchXmlQueryDoc,
+                includeAnnotations: true);
+
+            // Output results of first request
+            WriteContactResultsTable(
+            message: $"Paging with fetchxml cookie - Page {page}:",
+            collection: cookiePagedContacts.Records);
+
+            // Loop through subsequent requests while more records match criteria
+            while (cookiePagedContacts.MoreRecords) {
+
+                page++;
+
+                fetchXmlQueryDoc.Root.Attribute("page").Value = page.ToString();
+
+                // Extract the FetchxmlPagingCookie XML document value from the response.
+                var cookieDoc = XDocument.Parse(cookiePagedContacts.FetchxmlPagingCookie);
+
+                // Extract the encoded pagingcookie attribute value from the FetchxmlPagingCookie XML document
+                string pagingCookie = cookieDoc.Root.Attribute("pagingcookie").Value;
+
+                // Double URL decode the pagingCookie string value
+                string decodedPagingCookie = HttpUtility.UrlDecode(HttpUtility.UrlDecode(pagingCookie));
+
+                // Set the paging cookie value in the FetchXML paging-cookie attribute
+                fetchXmlQueryDoc.Root.Attribute("paging-cookie").Value = decodedPagingCookie;
+
+                // Send the request
+                cookiePagedContacts = await service.FetchXml(
+                entitySetName: "contacts",
+                fetchXml: fetchXmlQueryDoc,
+                includeAnnotations: true);
+
+                // Output results of subsequent requests
+                WriteContactResultsTable(
+                message: $"Paging with fetchxml cookie - Page {page}:",
+                collection: cookiePagedContacts.Records);
+
+            }
+
+
+            #endregion FetchXML paging with paging cookie
 
             #endregion Section 8 FetchXML queries
 
