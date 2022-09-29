@@ -199,4 +199,5 @@ export type ColumnDataType =
   | 'Image'
   | 'File'
   | 'Persona'
-  | 'RichText';
+  | 'RichText'
+  | 'UniqueIdentifier';
