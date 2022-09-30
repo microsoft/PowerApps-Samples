@@ -26,7 +26,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
             Program app = new();
 
             // Grab the settings from the appsettings.json file
-            var connectionString = app.Configuration.GetConnectionString("source");
+            var connectionString = app.Configuration.GetConnectionString("default");
             var publisherPrefix = app.Configuration.GetSection("SolutionSettings").GetValue<string>("publisherPrefix");
             var attributeSuffix = app.Configuration.GetSection("SolutionSettings").GetValue<string>("attributeSuffix");
             var solutionUniqueName = app.Configuration.GetSection("SolutionSettings").GetValue<string>("solutionUniqueName");

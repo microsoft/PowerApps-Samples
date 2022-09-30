@@ -18,5 +18,11 @@
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0-rc.1.22426.10" />
 		<PackageReference Include="Microsoft.PowerPlatform.Dataverse.Client" Version="1.0.9" />
 	</ItemGroup>
+	
+	<ItemGroup>
+	  <None Update="appsettings.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
 
 </Project>
