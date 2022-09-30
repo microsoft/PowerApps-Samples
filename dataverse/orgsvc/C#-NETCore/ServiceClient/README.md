@@ -11,6 +11,7 @@ The provided code samples are listed below.
 |WhoAmI|Demonstrates connecting to the Organization service and executing a simple message (WhoAmI).|.NET 6|
 |CreateUpdateDelete|Demonstrates connecting to the Organization service and executing Create, Update, Retrieve, and Delete data operations.|.NET 6|
 |TelemetryUsingILogger|Demonstrates connecting to the Organization service and executing a simple message. In addition, processing by the web service is logged through the `ILogger` interface to the console.|.NET 6|
+|SolutionAttributeExport|Demonstrates connecting to the Organization service, creating an unmanaged solution, finding specific attributes and adding them to the solution, then exporting the managed version of the solution.|.NET 6|
 
 ## Instructions
 
