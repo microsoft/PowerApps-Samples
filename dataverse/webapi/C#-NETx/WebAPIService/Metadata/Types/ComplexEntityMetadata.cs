@@ -43,6 +43,8 @@ namespace PowerApps.Samples.Metadata.Types
 
         public string CollectionSchemaName { get; set; }
 
+        public DateTime CreatedOn { get; set; }
+
         public Guid? DataProviderId { get; set; }
 
         public Guid? DataSourceId { get; set; }
