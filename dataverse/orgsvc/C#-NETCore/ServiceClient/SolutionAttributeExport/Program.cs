@@ -143,6 +143,16 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 throw new Exception("Unable to retrieve entity metadata.");
             }
 
+            ExecuteMultipleRequest multipleRequest = new ExecuteMultipleRequest
+            {
+                Requests = new OrganizationRequestCollection(),
+                Settings = new ExecuteMultipleSettings
+                {
+                    ContinueOnError = false,
+                    ReturnResponses = true
+                }
+            };
+
             // For all the entities that start with the given publisher prefix, find all the attributes that end with the given suffix.
             // Add each one to the solution.
             entitiesResponse.EntityMetadata.Where(e => e.LogicalName.StartsWith(publisherPrefix)).ToList().ForEach(
@@ -158,10 +168,14 @@ namespace PowerPlatform.Dataverse.CodeSamples
                             AddRequiredComponents = false
                         };
 
-                        Console.Write($"Attempting to add {a.LogicalName} in {a.EntityLogicalName} to the solution...");
-                        serviceClient.Execute(addAttributeToSolutionRequest);
+                        Console.Write($"Attempting to add {a.LogicalName} in {a.EntityLogicalName} to the list of requests...");
+                        multipleRequest.Requests.Add(addAttributeToSolutionRequest);
                         Console.WriteLine("done.");
                     }));
+
+            Console.Write($"Attempting to execute the list of requests...");
+            serviceClient.Execute(multipleRequest);
+            Console.WriteLine("done.");
         }
 
         private void ExportManagedSolution(ServiceClient serviceClient, string solutionUniqueName)
