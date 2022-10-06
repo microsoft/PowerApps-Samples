@@ -6,13 +6,13 @@ Related article: [Quickstart: Execute an Organization service request](https://d
 
 The included code sample is listed below.
 
-|Sample folder|Description|Build target|
+|Sample|Description|Build target|
 |---|---|---|
 |ConsoleApp|Demonstrates connecting to the Organization service and executing a simple message (WhoAmI).|.NET 6|
 
 ## Instructions
 
-1. Download the solution folder from GitHub.
+1. Download the quickstart-execute-request folder from GitHub.
 
 1. Open the solution file (*.sln) in Visual Studio 2022.
 
