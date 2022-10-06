@@ -18,7 +18,7 @@ namespace PowerApps.Samples.Metadata.Messages
         public CreateAttributeRequest(
             string entityLogicalName, 
             AttributeMetadata attributeMetadata, 
-            string? solutionUniqueName)
+            string? solutionUniqueName = null)
         {
             Method = HttpMethod.Post;
             RequestUri = new Uri(
