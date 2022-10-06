@@ -2,7 +2,7 @@
 
 This console app demonstrates how to connect to the Organization web service using a connection string, execute a web service message request, and access some data in the response.
 
-Related article: [Quickstart: Execute an Organization service request](https://docs.microsoft.com/power-apps/developer/data-platform/quick-start-org-service-console-app)
+Related article: [Quickstart: Execute an Organization service request](https://docs.microsoft.com/power-apps/developer/data-platform/org-service/quick-start-org-service-console-app)
 
 The included code sample is listed below.
 
