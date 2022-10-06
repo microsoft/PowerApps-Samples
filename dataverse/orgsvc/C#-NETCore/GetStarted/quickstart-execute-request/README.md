@@ -12,7 +12,7 @@ The included code sample is listed below.
 
 ## Instructions
 
-1. Download the quickstart-execute-request folder from GitHub.
+1. Download the sample's folder from GitHub.
 
 1. Open the solution file (*.sln) in Visual Studio 2022.
 
