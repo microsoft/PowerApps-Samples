@@ -24,6 +24,7 @@ namespace RetrieveMetadataChanges
 
             #region Define query
 
+            // Define query for all Picklist Choice columns from Contact table
             var query = new EntityQueryExpression
             {
                 Properties = new MetadataPropertiesExpression("LogicalName", "Attributes"),
@@ -32,12 +33,13 @@ namespace RetrieveMetadataChanges
                     Conditions = new List<MetadataConditionExpression>{
                         {
                             new MetadataConditionExpression(
-                            propertyName:"LogicalName",
-                            conditionOperator: MetadataConditionOperator.Equals,
-                            value: new PowerApps.Samples.Metadata.Types.Object{
-                                Type = ObjectType.String,
-                                Value = "contact"
-                            })
+                                propertyName:"LogicalName",
+                                conditionOperator: MetadataConditionOperator.Equals,
+                                value: new PowerApps.Samples.Metadata.Types.Object{
+                                        Type = ObjectType.String,
+                                        Value = "contact"
+                                    }
+                                )
                         }
                     }
                 },
@@ -48,6 +50,7 @@ namespace RetrieveMetadataChanges
                     {
                         Conditions = new List<MetadataConditionExpression>{
                             {
+                                // Only Picklist Option type
                                 new MetadataConditionExpression(
                                     propertyName:"AttributeTypeName",
                                     conditionOperator:MetadataConditionOperator.Equals,
@@ -61,7 +64,7 @@ namespace RetrieveMetadataChanges
                 }
             };
 
-            // Return only user language if they have a preference
+            // Return only user language if they have a preference.
             if (userLanguagePreference.HasValue)
             {
                 query.LabelQuery = new LabelQueryExpression
@@ -117,7 +120,9 @@ namespace RetrieveMetadataChanges
                 }
             };
 
-            var createChoiceColumnRequest = new CreateAttributeRequest(entityLogicalName: "contact", attributeMetadata: choiceColumn);
+            var createChoiceColumnRequest = new CreateAttributeRequest(
+                entityLogicalName: "contact", 
+                attributeMetadata: choiceColumn);
 
             await service.SendAsync(createChoiceColumnRequest);
 
@@ -165,7 +170,7 @@ namespace RetrieveMetadataChanges
             // There should be only one representing the choice column just added
             Console.WriteLine($"\nColumns in second response:{secondResponse.EntityMetadata.FirstOrDefault().Attributes.Count}");
 
-            // Update cache
+            // Update cache to add new items.
             secondResponse.EntityMetadata.FirstOrDefault().Attributes.ToList().ForEach(att =>
             {
                 if (!cachedAttributes.Contains(att))
@@ -185,6 +190,7 @@ namespace RetrieveMetadataChanges
 
             #region Delete Choice Column
             Console.WriteLine($"\nDeleting the choice column named {choiceColumnSchemaName}...");
+
             var deleteChoiceColumnRequest = new DeleteAttributeRequest(
                 entityLogicalName: "contact",
                 logicalName: choiceColumnSchemaName.ToLower());
@@ -263,6 +269,7 @@ namespace RetrieveMetadataChanges
             RetrieveMultipleResponse response =
                 await service.RetrieveMultiple($"usersettingscollection?" +
                 $"$select=uilanguageid&$filter=systemuserid eq {whoIAm.UserId}&$top=1&$count=true");
+
             if (response.Count > 0) {
                 return (int)response.Records[0]["uilanguageid"];
             }
