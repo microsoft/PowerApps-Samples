@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using PowerApps.Samples.Metadata.Types;
 using System.Text;
-using System.Web;
 
 namespace PowerApps.Samples.Metadata.Messages
 {
@@ -133,7 +132,9 @@ namespace PowerApps.Samples.Metadata.Messages
             if (_deletedMetadataFilters != null)
             {
                 parameters.Add("DeletedMetadataFilters=@p2");
+
                 parameterValues.Add($"@p2=Microsoft.Dynamics.CRM.DeletedMetadataFilters'{_deletedMetadataFilters}'");
+                          
             }
 
             if (!string.IsNullOrEmpty(_clientVersionStamp))

@@ -16,12 +16,7 @@ namespace RetrieveMetadataChanges
         {
             Config config = App.InitializeApp();
 
-            var service = new Service(config);
-             
-            
-            await TestDeletedMetadataFilters(service);
-
-            return;
+            var service = new Service(config);                        
 
             // A simple list of column definitions to represent the cache
             List<ComplexAttributeMetadata> cachedAttributes = new();
@@ -86,6 +81,7 @@ namespace RetrieveMetadataChanges
 
             #region Initialize cache
 
+            // Retrieve all contact table columns in this first request
             var initialRequest = new RetrieveMetadataChangesRequest { Query = query };
 
             var initialResponse = await service.SendAsync<RetrieveMetadataChangesResponse>(initialRequest);
@@ -94,6 +90,8 @@ namespace RetrieveMetadataChanges
 
             // Initialize the cache
             cachedAttributes = initialResponse.EntityMetadata.FirstOrDefault().Attributes.ToList();
+
+            Console.WriteLine($"Columns added to cache.");
 
             // Set the client version
             clientVersionStamp = initialResponse.ServerVersionStamp;
@@ -132,8 +130,8 @@ namespace RetrieveMetadataChanges
             var createChoiceColumnRequest = new CreateAttributeRequest(
                 entityLogicalName: "contact", 
                 attributeMetadata: choiceColumn);
-
-            await service.SendAsync(createChoiceColumnRequest);
+           
+           var createChoiceColumnResponse = await service.SendAsync<CreateAttributeResponse>(createChoiceColumnRequest);
 
             Console.WriteLine($"\nCreated Choice column: {choiceColumnSchemaName}");
 
@@ -147,7 +145,7 @@ namespace RetrieveMetadataChanges
                 Query = query, //Same query as before
                 // This time passing client version stamp value from previous request
                 ClientVersionStamp = clientVersionStamp,
-                DeletedMetadataFilters = DeletedMetadataFilters.All
+                DeletedMetadataFilters = DeletedMetadataFilters.Attribute //We are only interested in attribute changes
             };
 
             RetrieveMetadataChangesResponse secondResponse;
@@ -167,7 +165,7 @@ namespace RetrieveMetadataChanges
                 {
                     // TODO
                     // Add code to re-initialize cache
-                    return;
+                    throw new NotImplementedException("TODO: Manage case where cache must be re-initialized.");
 
                 }
                 else
@@ -187,9 +185,10 @@ namespace RetrieveMetadataChanges
                     cachedAttributes.Add(att);
                 }
             });
+            Console.WriteLine($"New column added to cache.");
 
             // List the current cached Choice columns
-            Console.WriteLine($"\nThe current cached choice columns:");
+            Console.WriteLine($"\nThe current {cachedAttributes.Count} cached choice columns:");
             cachedAttributes
                 .ForEach(att =>
                 {
@@ -238,7 +237,7 @@ namespace RetrieveMetadataChanges
                 {
                     // TODO
                     // Add code to re-initialize cache
-                    return;
+                    throw new NotImplementedException("TODO: Manage case where cache must be re-initialized.");
 
                 }
                 else
@@ -248,18 +247,26 @@ namespace RetrieveMetadataChanges
             }
 
             // Remove deleted choice column from the cache
-            thirdResponse.DeletedMetadata[DeletedMetadataFilters.Attribute]
-                .ToList()
-                .ForEach(guidCollection =>
+
+            // Confirm that the id of the column created and deleted exists in the 
+            // DeletedMetadata:
+            bool existsInDeletedMetadata = thirdResponse
+                .DeletedMetadata[DeletedMetadataFilters.Attribute].Items
+                .Contains(createChoiceColumnResponse.AttributeId);
+
+            Console.WriteLine($"\nThe deleted column {(existsInDeletedMetadata? "exists": "does not exist")} in the DeletedMetadata.");
+
+            // Remove it from the cache
+            thirdResponse.DeletedMetadata[DeletedMetadataFilters.Attribute].Items
+                .ForEach(id =>
                 {
-                    guidCollection.Items.ForEach(id => {
-                        cachedAttributes.RemoveAll(a => a.MetadataId == id);
-                    });
+                   cachedAttributes.RemoveAll(a => a.MetadataId == id);
                 });
+            Console.WriteLine($"Deleted column removed from cache.");
 
             // List the current cached options again.
             // The deleted choice column is no longer cached.
-            Console.WriteLine($"\nThe current cached choice columns:");
+            Console.WriteLine($"\nThe current {cachedAttributes.Count} cached choice columns:");
             cachedAttributes
                 .ForEach(att =>
                 {
@@ -270,7 +277,15 @@ namespace RetrieveMetadataChanges
 
             #endregion Detect deleted column
 
+            Console.WriteLine("\nSample complete.");
+
         }
+
+        /// <summary>
+        /// Retrieves the users preferred language code or null
+        /// </summary>
+        /// <param name="service"></param>
+        /// <returns></returns>
         protected static async Task<int?> RetrieveUserUILanguageCode(Service service) {
 
             var whoIAm = await service.SendAsync<WhoAmIResponse>(new WhoAmIRequest());
@@ -285,398 +300,5 @@ namespace RetrieveMetadataChanges
             return null;        
         }
 
-
-
-        static async Task TestDeletedMetadataFilters(Service service) {
-
-            string clientVersionStamp = string.Empty;
-
-            List<EntityReference> recordsToDelete = new();
-            bool deleteCreatedRecords = true;
-
-            string ExamplePublisherCustomizationPrefix = "sample";
-            string ExampleSolutionUniqueName = "examplesolution";
-            int PublisherCustomizationOptionValuePrefix = 72700;
-
-            Console.WriteLine("--Starting Metadata Operations sample--");
-
-            #region Section 0: Create Publisher and Solution
-
-            Console.WriteLine("Starting Section 0: Create Publisher and Solution");
-            Console.WriteLine();
-
-            // Create a publisher
-            JObject examplepublisher = new() {
-                    {"friendlyname","Example Publisher" },
-                    {"uniquename","examplepublisher" },
-                    {"description","An example publisher for samples" },
-                    {"customizationprefix",ExamplePublisherCustomizationPrefix },
-                    {"customizationoptionvalueprefix",PublisherCustomizationOptionValuePrefix }
-                };
-
-            EntityReference examplePublisherReference = await service.Create(
-                entitySetName: "publishers",
-                record: examplepublisher);
-
-            Console.WriteLine($"Created publisher {examplepublisher["friendlyname"]}");
-
-            recordsToDelete.Add(examplePublisherReference);
-
-            // Create a solution related to the publisher
-            JObject exampleSolution = new() {
-                    {"friendlyname","Example Solution" },
-                    {"uniquename",ExampleSolutionUniqueName },
-                    {"description","An example solution for samples" },
-                    {"version","1.0.0.0" },
-                    {"publisherid@odata.bind",examplePublisherReference.Path }
-                };
-
-            EntityReference exampleSolutionReference = await service.Create(
-                entitySetName: "solutions",
-                record: exampleSolution);
-
-            Console.WriteLine($"Created solution {exampleSolution["friendlyname"]}");
-            Console.WriteLine();
-
-            //Must be deleted before publisher, so Insert to top of list!
-            recordsToDelete.Insert(0, exampleSolutionReference);
-
-            #endregion Section 0: Create Publisher and Solution
-
-            // Create Entity
-            #region Section 1: Create, Retrieve and Update Table
-
-            Console.WriteLine("Starting Section 1: Create, Retrieve and Update Table");
-            Console.WriteLine();
-
-            var bankAccountEntitySchemaName = $"{ExamplePublisherCustomizationPrefix}_BankAccount";
-            var bankAccountEntityLogicalName = bankAccountEntitySchemaName.ToLower();
-
-            EntityMetadata bankAccountEntityMetadata = new()
-            {
-                SchemaName = bankAccountEntitySchemaName, //Required
-                DisplayName = new Label("Bank Account", 1033),//Required
-                DisplayCollectionName = new Label("Bank Accounts", 1033),//Required
-                HasNotes = false, //Required
-                HasActivities = false, //Required
-                Description = new Label(
-                        "A table to store information about customer bank accounts", 1033),
-                OwnershipType = OwnershipTypes.UserOwned,
-                PrimaryNameAttribute = $"{ExamplePublisherCustomizationPrefix}_Name".ToLower(),
-                Attributes = new List<AttributeMetadata>() {
-                        {
-                            new StringAttributeMetadata(){
-                            SchemaName = $"{ExamplePublisherCustomizationPrefix}_Name", //Required
-                            MaxLength = 100,//Required
-                            DisplayName = new Label("Account Name", 1033), //Required
-                            RequiredLevel = new AttributeRequiredLevelManagedProperty(
-                                AttributeRequiredLevel.None),
-                            Description = new Label(
-                                "The primary attribute for the Bank Account entity.", 1033),
-                            IsPrimaryName = true //Required                            
-                            }
-                        }
-                    }
-            };
-
-            CreateEntityRequest createEntityRequest = new(
-                entityMetadata: bankAccountEntityMetadata,
-                solutionUniqueName: ExampleSolutionUniqueName);
-
-            Console.WriteLine($"Sending request to create the {bankAccountEntitySchemaName} table...");
-
-            var createEntityResponse =
-                await service.SendAsync<CreateEntityResponse>(createEntityRequest);
-
-            Console.WriteLine($"Created {bankAccountEntitySchemaName} table.");
-
-            // Delete the entity first, so Insert at top of list
-            recordsToDelete.Insert(0, createEntityResponse.TableReference);
-
-            // Retrieve the entire entity definition with no filter or $expanded navigation properties
-            // This data is used to update the entity definition later in the sample
-            RetrieveEntityDefinitionRequest retrieveEntityDefinitionRequest =
-                new(logicalName: bankAccountEntityLogicalName);
-            var retrieveEntityDefinitionResponse =
-                await service.SendAsync<RetrieveEntityDefinitionResponse>(retrieveEntityDefinitionRequest);
-
-            EntityMetadata retrievedBankAccountEntity = retrieveEntityDefinitionResponse.EntityMetadata;
-
-
-            #endregion Section 1: Create, Retrieve and Update Table
-
-            #region Section 2: Create, Retrieve and Update Columns
-            // Create Attribute
-            PicklistAttributeMetadata choiceColumn = new()
-            {
-                SchemaName = $"{ExamplePublisherCustomizationPrefix}_Choice",
-                DisplayName = new Label("Sample Choice", 1033),
-                RequiredLevel = new AttributeRequiredLevelManagedProperty(
-                                       AttributeRequiredLevel.None),
-                Description = new Label("Choice Attribute", 1033),
-                OptionSet = new OptionSetMetadata
-                {
-                    IsGlobal = false,
-                    OptionSetType = OptionSetType.Picklist,
-                    Options = new List<OptionMetadata> {
-                                   new OptionMetadata
-                                   {
-                                       Label = new Label("Bravo",1033),
-                                       Value = int.Parse($"{PublisherCustomizationOptionValuePrefix}0000")
-                                   },
-                                   new OptionMetadata
-                                   {
-                                       Label = new Label("Delta",1033),
-                                       Value = int.Parse($"{PublisherCustomizationOptionValuePrefix}0001")
-                                   },
-                                   new OptionMetadata
-                                   {
-                                       Label = new Label("Alpha",1033),
-                                       Value = int.Parse($"{PublisherCustomizationOptionValuePrefix}0002")
-                                   },
-                                   new OptionMetadata
-                                   {
-                                       Label = new Label("Charlie",1033),
-                                       Value = int.Parse($"{PublisherCustomizationOptionValuePrefix}0003")
-                                   },
-                                   new OptionMetadata
-                                   {
-                                       Label = new Label("Foxtrot",1033),
-                                       Value = int.Parse($"{PublisherCustomizationOptionValuePrefix}0004")
-                                   }
-                               }
-                }
-            };
-
-            CreateAttributeRequest createChoiceColumnRequest = new(
-                entityLogicalName: bankAccountEntityLogicalName,
-                attributeMetadata: choiceColumn,
-                solutionUniqueName: ExampleSolutionUniqueName
-                );
-
-            // Create Choice column
-            var createChoiceColumnResponse =
-                await service.SendAsync<CreateAttributeResponse>(createChoiceColumnRequest);
-            Console.WriteLine($"Created Choice column with id:{createChoiceColumnResponse.AttributeId}");
-            Console.WriteLine();
-            #endregion Section 2: Create, Retrieve and Update Columns
-
-            // Create Relationship
-
-            #region Section 5: Create and retrieve a one-to-many relationship
-            // This creates a lookup column on the contact table to associate a contact to a bank account.
-
-            Console.WriteLine("Starting Section 5: Create and retrieve a one-to-many relationship");
-            Console.WriteLine();
-
-            #region Create 1:N relationship
-
-            Console.WriteLine("Creating a one-to-many relationship...");
-
-            OneToManyRelationshipMetadata oneToManyRelationshipMetadata = new()
-            {
-                SchemaName = $"{ExamplePublisherCustomizationPrefix}_BankAccount_Contacts",
-                ReferencedAttribute = retrievedBankAccountEntity.PrimaryIdAttribute,
-                ReferencedEntity = bankAccountEntityLogicalName,
-                ReferencingEntity = "contact",
-                Lookup = new LookupAttributeMetadata()
-                {
-                    SchemaName = $"{ExamplePublisherCustomizationPrefix}_BankAccountId",
-                    DisplayName = new Label("Bank Account", 1033),
-                    Description =
-                         new Label("The bank account this contact has access to.", 1033)
-                },
-                AssociatedMenuConfiguration = new AssociatedMenuConfiguration
-                {
-                    Behavior = AssociatedMenuBehavior.UseLabel,
-                    Group = AssociatedMenuGroup.Details,
-                    Label = new Label("Cardholders", 1033),
-                    Order = 10000
-                },
-                CascadeConfiguration = new CascadeConfiguration
-                {
-                    Assign = CascadeType.NoCascade,
-                    Share = CascadeType.NoCascade,
-                    Unshare = CascadeType.NoCascade,
-                    RollupView = CascadeType.NoCascade,
-                    Reparent = CascadeType.NoCascade,
-                    Delete = CascadeType.RemoveLink,
-                    Merge = CascadeType.Cascade
-                }
-
-            };
-
-            CreateRelationshipRequest createOneToManyRequest = new(
-                relationship: oneToManyRelationshipMetadata,
-                solutionUniqueName: ExampleSolutionUniqueName);
-
-            // Send the request to create the new one-to-many relationship
-            var createOneToManyResponse =
-                await service.SendAsync<CreateRelationshipResponse>(createOneToManyRequest);
-
-            Console.WriteLine($"Created one-to-many relationship: {createOneToManyResponse.RelationshipReference.Path}");
-
-            // Insert at top to be deleted first. Otherwise will block deletion of the bank account table
-            // because it creates a lookup on the contact table
-            recordsToDelete.Insert(0, createOneToManyResponse.RelationshipReference);
-
-            #endregion Create 1:N relationship
-
-            #region Retrieve 1:N relationship
-
-            RetrieveRelationshipRequest retrieveOneToManyRelationshipRequest = new(
-                type: RelationshipType.OneToManyRelationship,
-                metadataId: createOneToManyResponse.RelationshipReference.Id);
-
-            // Retrieve the relationship
-            var retrieveOneToManyRelationshipResponse =
-                await service.SendAsync<RetrieveRelationshipResponse<OneToManyRelationshipMetadata>>(retrieveOneToManyRelationshipRequest);
-
-            Console.WriteLine($"Retrieved relationship: {retrieveOneToManyRelationshipResponse.RelationshipMetadata.SchemaName}");
-            Console.WriteLine();
-            #endregion Retrieve 1:N relationship
-
-            #endregion Section 5: Create and retrieve a one-to-many relationship
-
-            // Create Label
-
-
-
-            // Create OptionSet
-
-            InsertOptionValueParameters insertOptionValueParameters = new()
-            {
-                EntityLogicalName = bankAccountEntityLogicalName,
-                AttributeLogicalName = choiceColumn.SchemaName.ToLower(),
-                Label = new Label("Echo", 1033),
-                Value = int.Parse($"{PublisherCustomizationOptionValuePrefix}0005"),
-                SolutionUniqueName = ExampleSolutionUniqueName
-            };
-
-            await service.SendAsync(new InsertOptionValueRequest(parameters: insertOptionValueParameters));
-            Console.WriteLine("Added new option with label 'Echo'");
-
-            // RetrieveMetadataChanges
-
-            // Define query for all Picklist Choice columns from Contact table
-            var query = new EntityQueryExpression
-            {
-                Properties = new MetadataPropertiesExpression("LogicalName", "Attributes"),
-                Criteria = new MetadataFilterExpression(filterOperator: LogicalOperator.And)
-                {
-                    Conditions = new List<MetadataConditionExpression>{
-                        {
-                            new MetadataConditionExpression(
-                                propertyName:"CreatedOn",
-                                conditionOperator: MetadataConditionOperator.GreaterThan,
-                                value: new PowerApps.Samples.Metadata.Types.Object{
-                                        Type = ObjectType.DateTime,
-                                        Value = "10/06/2022"
-                                    }
-                                )
-                        }
-                    }
-                },
-                AttributeQuery = new AttributeQueryExpression
-                {
-                    Properties = new MetadataPropertiesExpression("LogicalName", "OptionSet", "AttributeTypeName"),
-                    Criteria = new MetadataFilterExpression(filterOperator: LogicalOperator.And)
-                    {
-                        Conditions = new List<MetadataConditionExpression>{
-                            {
-                                // Only Picklist Option type
-                                new MetadataConditionExpression(
-                                    propertyName:"CreatedOn",
-                                    conditionOperator:MetadataConditionOperator.GreaterThan,
-                                    value: new PowerApps.Samples.Metadata.Types.Object(
-                                        type:ObjectType.DateTime,
-                                        value:"10/06/2022")
-                                    )
-                            }
-                        }
-                    }
-                }, 
-                RelationshipQuery = new RelationshipQueryExpression { 
-                    Properties = new MetadataPropertiesExpression("SchemaName"),
-                    Criteria = new MetadataFilterExpression(filterOperator: LogicalOperator.And)
-                    {
-                        Conditions = new List<MetadataConditionExpression>{
-                            {
-                                // Only Picklist Option type
-                                new MetadataConditionExpression(
-                                    propertyName:"SchemaName",
-                                    conditionOperator:MetadataConditionOperator.Equals,
-                                    value: new PowerApps.Samples.Metadata.Types.Object(
-                                        type:ObjectType.String,
-                                        value:$"{ExamplePublisherCustomizationPrefix}_BankAccount_Contacts")
-                                    )
-                            }
-                        }
-                    }
-                }
-            };
-
-            var initialRequest = new RetrieveMetadataChangesRequest { Query = query };
-
-            var initialResponse = await service.SendAsync<RetrieveMetadataChangesResponse>(initialRequest);
-
-            clientVersionStamp = initialResponse.ServerVersionStamp;
-
-
-            // Delete OptionSet
-            // RetrieveMetadataChanges
-            // Delete Label
-            // RetrieveMetadataChanges
-            // Delete Relationship
-            // RetrieveMetadataChanges
-            // Delete Attribute
-            // RetrieveMetadataChanges
-            // Delete Entity
-            // RetrieveMetadataChanges
-
-
-            #region Section 9: Delete sample records  
-            Console.WriteLine("Starting Section 9: Delete sample records");
-            Console.WriteLine();
-            // Delete all the created sample records.
-
-            if (!deleteCreatedRecords)
-            {
-                Console.Write("\nDo you want these entity records deleted? (y/n) [y]: ");
-                string answer = Console.ReadLine();
-                answer = answer.Trim();
-                if (!(answer.StartsWith("y") || answer.StartsWith("Y") || answer == string.Empty))
-                { recordsToDelete.Clear(); }
-                else
-                {
-                    Console.WriteLine("\nDeleting created records...");
-                }
-            }
-            else
-            {
-                Console.WriteLine("\nDeleting created records...");
-            }
-
-            List<HttpRequestMessage> deleteRequests = new();
-
-            foreach (EntityReference recordToDelete in recordsToDelete)
-            {
-                deleteRequests.Add(new DeleteRequest(recordToDelete));
-            }
-
-            BatchRequest batchRequest = new(service.BaseAddress)
-            {
-                Requests = deleteRequests
-            };
-
-            if (deleteRequests.Count > 0)
-            {
-                await service.SendAsync(batchRequest);
-            }
-
-            #endregion Section 9: Delete sample records
-
-
-        }
     }
 }
