@@ -8,7 +8,7 @@ The provided code samples are listed below.
 
 |Sample folder|Description|Build target|
 |---|---|---|
-|RetrieveMetadataChanges|Demonstrates the use of the [RetrieveMetadataChangesRequest](https://learn.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.messages.retrievemetadatachangesrequest) and [RetrieveMetadataChangesResponse](https://learn.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.messages.retrievemetadatachangesresponse) classes to create a simple client-side persistent cache of Dataverse schema data.|.NET 6|
+|[RetrieveMetadataChanges](RetrieveMetadataChanges)|Demonstrates the use of the [RetrieveMetadataChangesRequest](https://learn.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.messages.retrievemetadatachangesrequest) and [RetrieveMetadataChangesResponse](https://learn.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.messages.retrievemetadatachangesresponse) classes to create a simple client-side persistent cache of Dataverse schema data.|.NET 6|
 
 
 ## Instructions
