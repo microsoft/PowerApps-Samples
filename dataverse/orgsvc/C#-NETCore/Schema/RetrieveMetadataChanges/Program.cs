@@ -1,26 +1,66 @@
-﻿using PowerApps.Samples;
-using PowerApps.Samples.Messages;
-using PowerApps.Samples.Metadata.Messages;
-using PowerApps.Samples.Metadata.Types;
-using PowerApps.Samples.Methods;
+﻿using Microsoft.Crm.Sdk.Messages;
+using Microsoft.Xrm.Sdk.Messages;
+using Microsoft.Xrm.Sdk.Metadata.Query;
+using Microsoft.Xrm.Sdk.Metadata;
+using Microsoft.Xrm.Sdk.Query;
+using Microsoft.Xrm.Sdk;
+using System.ServiceModel;
+using Microsoft.Extensions.Configuration;
+using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace PowerPlatform.Dataverse.CodeSamples
 {
+    /// <summary>
+    /// Demonstrates use of the RetrieveMetadataChanges message to create and maintain a cache
+    /// of Dataverse schema data.
+    /// </summary>
+    /// <remarks>Set the appropriate Url and Username values for your test
+    /// environment in the appsettings.json file before running this program.
+    /// You will be prompted in the default browser to enter a password.</remarks>
+    /// <see cref="https://docs.microsoft.com/power-apps/developer/data-platform/xrm-tooling/use-connection-strings-xrm-tooling-connect#connection-string-parameters"/>
+    /// <permission cref="https://github.com/microsoft/PowerApps-Samples/blob/master/LICENSE"
+    /// <author>Jim Daly</author>
     class Program
     {
-        static async Task Main()
-        {
-            Config config = App.InitializeApp();
 
-            var service = new Service(config);                        
+        /// <summary>
+        /// Contains the application's configuration settings. 
+        /// </summary>
+        IConfiguration Configuration { get; }
+
+
+        /// <summary>
+        /// Constructor. Loads the application configuration settings from a JSON file.
+        /// </summary>
+        Program()
+        {
+
+            // Get the path to the appsettings file. If the environment variable is set,
+            // use that file path. Otherwise, use the runtime folder's settings file.
+            string? path = Environment.GetEnvironmentVariable("DATAVERSE_APPSETTINGS");
+            if (path == null) path = "appsettings.json";
+
+            // Load the app's configuration settings from the JSON file.
+            Configuration = new ConfigurationBuilder()
+                .AddJsonFile(path, optional: false, reloadOnChange: true)
+                .Build();
+        }
+
+        static void Main(string[] args)
+        {
+            Program app = new();
+
+            // Create a Dataverse service client using the default connection string.
+            ServiceClient serviceClient =
+                new(app.Configuration.GetConnectionString("default"));
 
             // A simple list of column definitions to represent the cache
-            List<ComplexAttributeMetadata> cachedAttributes = new();
+            List<AttributeMetadata> cachedAttributes = new();
             string clientVersionStamp = string.Empty;
             // The name of a column to create when demonstrating changes
             string choiceColumnSchemaName = "sample_ChoiceColumnForSample";
             // Language code value from usersettingscollection.
-            int? userLanguagePreference = await RetrieveUserUILanguageCode(service);
+            int? userLanguagePreference = RetrieveUserUILanguageCode(serviceClient);
 
             #region Define query
 
@@ -30,16 +70,13 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 Properties = new MetadataPropertiesExpression("LogicalName", "Attributes"),
                 Criteria = new MetadataFilterExpression(filterOperator: LogicalOperator.And)
                 {
-                    Conditions = new List<MetadataConditionExpression>{
+                    Conditions =
+                    {
                         {
                             new MetadataConditionExpression(
                                 propertyName:"LogicalName",
                                 conditionOperator: MetadataConditionOperator.Equals,
-                                value: new PowerApps.Samples.Metadata.Types.Object{
-                                        Type = ObjectType.String,
-                                        Value = "contact"
-                                    }
-                                )
+                                value:"contact")
                         }
                     }
                 },
@@ -48,28 +85,27 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     Properties = new MetadataPropertiesExpression("LogicalName", "OptionSet", "AttributeTypeName"),
                     Criteria = new MetadataFilterExpression(filterOperator: LogicalOperator.And)
                     {
-                        Conditions = new List<MetadataConditionExpression>{
-                            {
-                                // Only Picklist Option type
+                        Conditions =
+                        {
+                           {    // Only Picklist Option type
                                 new MetadataConditionExpression(
-                                    propertyName:"AttributeTypeName",
-                                    conditionOperator:MetadataConditionOperator.Equals,
-                                    value: new PowerApps.Samples.Metadata.Types.Object(
-                                        type:ObjectType.AttributeTypeDisplayName,
-                                        value:"PicklistType")
-                                    )
+                                propertyName:"AttributeTypeName",
+                                conditionOperator: MetadataConditionOperator.Equals,
+                                value:AttributeTypeDisplayName.PicklistType)
                             }
                         }
                     }
                 }
             };
 
-            // Return only user language if they have a preference.
+            // Return only user language if they have a preference
             if (userLanguagePreference.HasValue)
             {
                 query.LabelQuery = new LabelQueryExpression
                 {
-                    FilterLanguages = new List<int>() { userLanguagePreference.Value }
+                    FilterLanguages = {
+                        { userLanguagePreference.Value }
+                    }
                 };
             }
 
@@ -77,10 +113,9 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
             #region Initialize cache
 
-            // Retrieve all contact table columns in this first request
             RetrieveMetadataChangesRequest initialRequest = new() { Query = query };
 
-            var initialResponse = await service.SendAsync<RetrieveMetadataChangesResponse>(initialRequest);
+            var initialResponse = (RetrieveMetadataChangesResponse)serviceClient.Execute(initialRequest);
 
             Console.WriteLine($"Columns in initial response:{initialResponse.EntityMetadata.FirstOrDefault().Attributes.Count()}");
 
@@ -95,12 +130,10 @@ namespace PowerPlatform.Dataverse.CodeSamples
             #endregion Initialize cache
 
             #region Add Choice column
-
             Console.WriteLine($"\nAdding a new choice column named {choiceColumnSchemaName}...");
             // Add a new Choice column
-            PicklistAttributeMetadata choiceColumn = new()
+            PicklistAttributeMetadata choiceColumn = new(choiceColumnSchemaName)
             {
-                SchemaName = choiceColumnSchemaName,
                 DisplayName = new Label("Choice column for sample", 1033),
                 RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None),
                 Description = new Label("Description", 1033),
@@ -108,26 +141,25 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 {
                     IsGlobal = false,
                     OptionSetType = OptionSetType.Picklist,
-                    Options = new List<OptionMetadata>
+                    Options =
                     {
-                        new OptionMetadata{
-                            Label = new ("Choice 1", 1033)
-                        },
-                        new OptionMetadata{
-                            Label = new ("Choice 2", 1033)
-                        },
-                        new OptionMetadata{
-                            Label = new ("Choice 3", 1033)
-                        }
+                        new OptionMetadata(
+                            new Label("Choice 1", 1033), null),
+                        new OptionMetadata(
+                            new Label("Choice 2", 1033), null),
+                        new OptionMetadata(
+                            new Label("Choice 3", 1033), null)
                     }
                 }
             };
 
-            CreateAttributeRequest createChoiceColumnRequest = new(
-                entityLogicalName: "contact", 
-                attributeMetadata: choiceColumn);
-           
-           var createChoiceColumnResponse = await service.SendAsync<CreateAttributeResponse>(createChoiceColumnRequest);
+            CreateAttributeRequest createChoiceColumnRequest = new()
+            {
+                EntityName = "contact",
+                Attribute = choiceColumn
+            };
+
+            var createAttributeResponse = (CreateAttributeResponse)serviceClient.Execute(createChoiceColumnRequest);
 
             Console.WriteLine($"\nCreated Choice column: {choiceColumnSchemaName}");
 
@@ -141,23 +173,24 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 Query = query, //Same query as before
                 // This time passing client version stamp value from previous request
                 ClientVersionStamp = clientVersionStamp,
-                DeletedMetadataFilters = DeletedMetadataFilters.Attribute //We are only interested in attribute changes
+                DeletedMetadataFilters = DeletedMetadataFilters.Attribute
             };
+
 
             RetrieveMetadataChangesResponse secondResponse;
 
             try
             {
-                secondResponse = await service.SendAsync<RetrieveMetadataChangesResponse>(secondRequest);
+                secondResponse = (RetrieveMetadataChangesResponse)serviceClient.Execute(secondRequest);
                 // Re-set the client version stamp
                 clientVersionStamp = secondResponse.ServerVersionStamp;
             }
-            catch (ServiceException ex)
+            catch (FaultException<OrganizationServiceFault> ex)
             {
                 // Check for ErrorCodes.ExpiredVersionStamp (0x80044352)
                 // Message: Version stamp associated with the client has expired. Please perform a full sync.
                 // Will occur when the timestamp exceeds the Organization.ExpireSubscriptionsInDays value, which is 90 by default.
-                if (ex.ODataError.Error.Code == "0x80044352")
+                if (ex.Detail.ErrorCode == unchecked((int)0x80044352))
                 {
                     // TODO
                     // Add code to re-initialize cache
@@ -171,7 +204,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
             }
 
             // There should be only one representing the choice column just added
-            Console.WriteLine($"\nColumns in second response:{secondResponse.EntityMetadata.FirstOrDefault().Attributes.Count}");
+            Console.WriteLine($"\nColumns in second response:{secondResponse.EntityMetadata.FirstOrDefault().Attributes.Length}");
 
             // Update cache to add new items.
             secondResponse.EntityMetadata.FirstOrDefault().Attributes.ToList().ForEach(att =>
@@ -192,14 +225,17 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 });
             #endregion Detect added column
 
+
             #region Delete Choice Column
             Console.WriteLine($"\nDeleting the choice column named {choiceColumnSchemaName}...");
 
-            DeleteAttributeRequest deleteChoiceColumnRequest = new(
-                entityLogicalName: "contact",
-                logicalName: choiceColumnSchemaName.ToLower());
+            DeleteAttributeRequest deleteChoiceColumnRequest = new()
+            {
+                EntityLogicalName = "contact",
+                LogicalName = choiceColumnSchemaName.ToLower()
+            };
 
-            await service.SendAsync(deleteChoiceColumnRequest);
+            serviceClient.Execute(deleteChoiceColumnRequest);
 
             Console.WriteLine($"\nDeleted choice column: {choiceColumnSchemaName}");
 
@@ -219,17 +255,17 @@ namespace PowerPlatform.Dataverse.CodeSamples
             RetrieveMetadataChangesResponse thirdResponse;
             try
             {
-                thirdResponse = await service.SendAsync<RetrieveMetadataChangesResponse>(thirdRequest);
+                thirdResponse = (RetrieveMetadataChangesResponse)serviceClient.Execute(thirdRequest);
                 // Re-set the client version stamp
                 clientVersionStamp = thirdResponse.ServerVersionStamp;
 
             }
-            catch (ServiceException ex)
+            catch (FaultException<OrganizationServiceFault> ex)
             {
                 // Check for ErrorCodes.ExpiredVersionStamp (0x80044352)
                 // Message: Version stamp associated with the client has expired. Please perform a full sync.
                 // Will occur when the timestamp exceeds the Organization.ExpireSubscriptionsInDays value, which is 90 by default.
-                if (ex.ODataError.Error.Code == "0x80044352")
+                if (ex.Detail.ErrorCode == unchecked((int)0x80044352))
                 {
                     // TODO
                     // Add code to re-initialize cache
@@ -247,16 +283,17 @@ namespace PowerPlatform.Dataverse.CodeSamples
             // Confirm that the id of the column created and deleted exists in the 
             // DeletedMetadata:
             bool existsInDeletedMetadata = thirdResponse
-                .DeletedMetadata[DeletedMetadataFilters.Attribute].Items
-                .Contains(createChoiceColumnResponse.AttributeId);
+                .DeletedMetadata[DeletedMetadataFilters.Attribute]
+                .Contains(createAttributeResponse.AttributeId);
 
-            Console.WriteLine($"\nThe deleted column {(existsInDeletedMetadata? "exists": "does not exist")} in the DeletedMetadata.");
+            Console.WriteLine($"\nThe deleted column {(existsInDeletedMetadata ? "exists" : "does not exist")} in the DeletedMetadata.");
 
             // Remove it from the cache
-            thirdResponse.DeletedMetadata[DeletedMetadataFilters.Attribute].Items
+            thirdResponse.DeletedMetadata[DeletedMetadataFilters.Attribute]
+                .ToList()
                 .ForEach(id =>
                 {
-                   cachedAttributes.RemoveAll(a => a.MetadataId == id);
+                    cachedAttributes.RemoveAll(a => a.MetadataId == id);
                 });
             Console.WriteLine($"Deleted column removed from cache.");
 
@@ -274,27 +311,41 @@ namespace PowerPlatform.Dataverse.CodeSamples
             #endregion Detect deleted column
 
             Console.WriteLine("\nSample complete.");
-
         }
 
         /// <summary>
-        /// Retrieves the users preferred language code or null
+        /// Retrieves user's UI language preference
         /// </summary>
         /// <param name="service"></param>
         /// <returns></returns>
-        protected static async Task<int?> RetrieveUserUILanguageCode(Service service) {
+        protected static int? RetrieveUserUILanguageCode(IOrganizationService service)
+        {
+            // To get the current user's systemuserid
+            var whoIAm = (WhoAmIResponse)service.Execute(new WhoAmIRequest());
 
-            var whoIAm = await service.SendAsync<WhoAmIResponse>(new WhoAmIRequest());
+            var query = new QueryExpression("usersettings")
+            {
+                ColumnSet = new ColumnSet("uilanguageid", "systemuserid"),
+                Criteria = new FilterExpression
+                {
+                    Conditions = {
+                         {
+                             new ConditionExpression(
+                                 attributeName:"systemuserid",
+                                 conditionOperator:ConditionOperator.Equal,
+                                 value: whoIAm.UserId)
+                         }
+                     }
+                },
+                TopCount = 1
+            };
 
-            RetrieveMultipleResponse response =
-                await service.RetrieveMultiple($"usersettingscollection?" +
-                $"$select=uilanguageid&$filter=systemuserid eq {whoIAm.UserId}&$top=1&$count=true");
-
-            if (response.Count > 0) {
-                return (int)response.Records[0]["uilanguageid"];
+            EntityCollection userSettings = service.RetrieveMultiple(query: query);
+            if (userSettings.Entities.Count > 0)
+            {
+                return (int)userSettings.Entities[0]["uilanguageid"];
             }
-            return null;        
+            return null;
         }
-
     }
 }
