@@ -8,7 +8,9 @@ This sample depends on the [WebAPIService Class Library project](https://learn.m
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
 
-1. Open the *Schema.sln* solution file in Visual Studio 2022.
+1. Locate the /dataverse/webapi/C#-NETx/RetrieveMetadataChanges/ folder.
+
+1. Open the *RetrieveMetadataChanges.sln* solution file in Visual Studio 2022.
 
 1. Edit the `appsettings.json` file to set the following property values:
 
