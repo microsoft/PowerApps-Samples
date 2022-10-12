@@ -13,7 +13,9 @@ The provided code samples are listed below.
 
 ## Instructions
 
-1. Download the solution folder from GitHub.
+1. Clone or download the PowerApps-Samples repository.
+
+1. Locate the /dataverse/orgsvc/C#-NETx/Schema/ folder.
 
 1. Open the *Schema.sln* solution file in Visual Studio 2022.
 
