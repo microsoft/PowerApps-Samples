@@ -1,4 +1,4 @@
-# Getting started with the Dataverse ServiceClient
+# Getting started with the Dataverse ServiceClient working with Solutions
 
 This collection of samples demonstrates authoring code for Microsoft Dataverse using the newly released [Microsoft.PowerPlatform.Dataverse.Client](https://www.nuget.org/packages/Microsoft.PowerPlatform.Dataverse.Client/) NuGet package. Specifically, using the [ServiceClient](https://docs.microsoft.com/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient) class to authenticate the logged on user, connect to the web service, and execute message requests.
 
@@ -8,15 +8,13 @@ The provided code samples are listed below.
 
 |Sample folder|Description|Build target|
 |---|---|---|
-|WhoAmI|Demonstrates connecting to the Organization service and executing a simple message (WhoAmI).|.NET 6|
-|CreateUpdateDelete|Demonstrates connecting to the Organization service and executing Create, Update, Retrieve, and Delete data operations.|.NET 6|
-|TelemetryUsingILogger|Demonstrates connecting to the Organization service and executing a simple message. In addition, processing by the web service is logged through the `ILogger` interface to the console.|.NET 6|
+|SolutionAttributeExport|Demonstrates connecting to the Organization service, creating an unmanaged solution, finding specific attributes and adding them to the solution, then exporting the managed version of the solution.|.NET 6|
 
 ## Instructions
 
 1. Download the solution folder from GitHub.
 
-1. Open the *ServiceClient.sln* solution file in Visual Studio 2022.
+1. Open the *Solutions.sln* solution file in Visual Studio 2022.
 
 1. Edit the *appsettings.json* file in the **Solution Items** folder of Solution Explorer. Set the connection string `Url` and `Username` parameters as appropriate for your test environment.
 
