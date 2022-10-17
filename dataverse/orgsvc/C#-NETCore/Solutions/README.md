@@ -1,8 +1,6 @@
-# Getting started with the Dataverse ServiceClient working with Solutions
+# Working with Dataverse solutions
 
-This collection of samples demonstrates authoring code for Microsoft Dataverse using the newly released [Microsoft.PowerPlatform.Dataverse.Client](https://www.nuget.org/packages/Microsoft.PowerPlatform.Dataverse.Client/) NuGet package. Specifically, using the [ServiceClient](https://docs.microsoft.com/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient) class to authenticate the logged on user, connect to the web service, and execute message requests.
-
-More information: [Transition apps to Dataverse ServiceClient](https://docs.microsoft.com/power-apps/developer/data-platform/sdk-client-transition)
+This sample demonstrates using the Dataverse solution APIs to work with solutions.
 
 The provided code samples are listed below.
 
@@ -12,9 +10,9 @@ The provided code samples are listed below.
 
 ## Instructions
 
-1. Download the solution folder from GitHub.
+1. Clone the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
 
-1. Open the *Solutions.sln* solution file in Visual Studio 2022.
+1. Open the *Solutions.sln* solution file in Visual Studio 2022 located under dataverse/orgsvc/C#-NETCore/Solutions/SolutionAttributeExport/.
 
 1. Edit the *appsettings.json* file in the **Solution Items** folder of Solution Explorer. Set the connection string `Url` and `Username` parameters as appropriate for your test environment.
 
@@ -22,7 +20,7 @@ The provided code samples are listed below.
 
 1. Build the solution, and then run the desired project.
 
-When each sample runs, you will be prompted in the default browser to select an environment user account and enter a password. To avoid having to do this every time you run a sample, insert a password parameter into the connection string in the appsettings.json file. For example:
+When the sample runs, you will be prompted in the default browser to select an environment user account and enter a password. To avoid having to do this every time you run a sample, insert a password parameter into the connection string in the appsettings.json file. For example:
 
 ```json
 {
@@ -31,6 +29,3 @@ When each sample runs, you will be prompted in the default browser to select an 
   }
 }
 ```
-
-**Tip**: You can set a user environment variable named DATAVERSE_APPSETTINGS to the file path of the appsettings.json file stored anywhere on your computer. The samples will use that appsettings file if the environment variable exists and is not null. Be sure to log out and back in again after you define the variable for it to take affect. To set an environment variable, go to **Settings > System > About**, select **Advanced system settings**, and then choose **Environment variables**. 
-
