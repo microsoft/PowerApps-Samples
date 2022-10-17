@@ -12,7 +12,7 @@ The included code sample is listed below.
 
 ## Instructions
 
-1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
+1. Clone the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
 
 1. Locate the sample folder.
 

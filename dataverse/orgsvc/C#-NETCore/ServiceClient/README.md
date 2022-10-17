@@ -14,7 +14,7 @@ The provided code samples are listed below.
 
 ## Instructions
 
-1. Clone or download the PowerApps-Samples repository.
+1. Clone the PowerApps-Samples repository.
 
 1. Locate the /dataverse/orgsvc/C#-NETx/ServiceClient/ folder.
 
