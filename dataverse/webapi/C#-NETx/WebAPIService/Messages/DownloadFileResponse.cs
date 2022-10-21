@@ -7,7 +7,6 @@
     /// <summary>
     /// Contains the data from the GetColumnValueRequest.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
     public sealed class DownloadFileResponse : HttpResponseMessage
     {
         /// <summary>
