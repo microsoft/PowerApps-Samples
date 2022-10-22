@@ -8,7 +8,6 @@
 
         public DownloadFileChunkRequest(EntityReference entityReference,
             string fileColumnLogicalName,
-            string uploadFileName,
             int offSet,
             int chunkSize
             )

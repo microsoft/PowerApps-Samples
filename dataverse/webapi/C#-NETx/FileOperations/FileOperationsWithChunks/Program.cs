@@ -77,11 +77,9 @@ namespace PowerApps.Samples
             byte[] file = null;
             do
             {
-
                 DownloadFileChunkRequest downloadFileChunkRequest = new(
                     entityReference: createdAccountRef,
                     fileColumnLogicalName: fileColumnLogicalName,
-                    uploadFileName: fileName,
                     offSet: offSet,
                     chunkSize: downloadChunkSize);
 
