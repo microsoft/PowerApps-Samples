@@ -8,16 +8,14 @@ namespace PowerApps.Samples
     /// </summary>
     public class Utility
     {
-        static public readonly string fileColumnSchemaName = "sample_FileColumn";
-
         /// <summary>
-        /// Creates a custom file column on the account table named 'sample_FileColumn'.
+        /// Creates a custom file column on the designated table named 'sample_FileColumn'.
         /// </summary>
         /// <param name="service">The service to use.</param>
         /// <returns></returns>
-        public static async Task CreateFileColumn(Service service)
+        public static async Task CreateFileColumn(Service service, string entityLogicalName, string fileColumnSchemaName)
         {
-            Console.WriteLine($"Creating file column named '{fileColumnSchemaName}' ...");
+            Console.WriteLine($"Creating file column named '{fileColumnSchemaName}' on the {entityLogicalName} table ...");
 
             FileAttributeMetadata fileColumn = new()
             {
@@ -31,31 +29,33 @@ namespace PowerApps.Samples
             };
 
             CreateAttributeRequest createfileColumnRequest = new(
-                entityLogicalName: "account",
+                entityLogicalName: entityLogicalName,
                 attributeMetadata: fileColumn
                 );
 
-            var createfileColumnResponse =
-                await service.SendAsync<CreateAttributeResponse>(createfileColumnRequest);
+            await service.SendAsync<CreateAttributeResponse>(createfileColumnRequest);
 
-            Console.WriteLine($"Created file column named '{fileColumnSchemaName}' in the account table with id:{createfileColumnResponse.AttributeId}");
+            Console.WriteLine($"Created file column named '{fileColumnSchemaName}' in the {entityLogicalName} table.");
         }
 
         /// <summary>
-        /// Deletes a custom file column on the account table named 'sample_FileColumn'.
+        /// Deletes a custom file column on the table 
         /// </summary>
         /// <param name="service">The service to use</param>
         /// <returns></returns>
-        public static async Task DeleteFileColumn(Service service) {
+        public static async Task DeleteFileColumn(Service service, string entityLogicalName, string fileColumnSchemaName)
+        {
+
+            Console.WriteLine($"Deleting the file column named '{fileColumnSchemaName}' on the {entityLogicalName} table ...");
 
             DeleteAttributeRequest deletefileColumnRequest = new(
-                entityLogicalName: "account", 
-                logicalName: fileColumnSchemaName.ToLower(), 
+                entityLogicalName: entityLogicalName,
+                logicalName: fileColumnSchemaName.ToLower(),
                 strongConsistency: true);
 
-           await service.SendAsync(deletefileColumnRequest);
+            await service.SendAsync(deletefileColumnRequest);
 
-            Console.WriteLine($"Deleted the file column named '{fileColumnSchemaName}' in the account table.");
+            Console.WriteLine($"Deleted the file column named '{fileColumnSchemaName}' in the {entityLogicalName} table.");
         }
     }
 }

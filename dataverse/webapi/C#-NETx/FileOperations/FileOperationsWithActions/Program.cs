@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
-using PowerApps.Samples;
+﻿using Microsoft.AspNetCore.StaticFiles;
+using Newtonsoft.Json.Linq;
 using PowerApps.Samples.Messages;
 using PowerApps.Samples.Methods;
 using System.Text;
@@ -14,13 +14,16 @@ namespace PowerApps.Samples
 
             var service = new Service(config);
 
+            string entityLogicalName = "account";
+            string primaryKeyLogicalName = "accountid";
+            string fileColumnSchemaName = "sample_FileColumn";
+            string filePropertyName = fileColumnSchemaName.ToLower();
             string fileName = "25mb.pdf";
             string filePath = $"Files\\{fileName}";
             string fileMimeType = "application/pdf";
-            string fileColumnLogicalName = Utility.fileColumnSchemaName.ToLower(); //sample_filecolumn
 
             // Create the File Column
-            await Utility.CreateFileColumn(service);
+            await Utility.CreateFileColumn(service,entityLogicalName,fileColumnSchemaName);
      
             #region create account record
 
@@ -35,82 +38,38 @@ namespace PowerApps.Samples
 
             #endregion create account record
 
-            #region upload File
+            Console.WriteLine($"Uploading file {filePath} ...");
 
-            // Initialize the upload
-            InitializeFileBlocksUploadRequest initializeFileBlocksUploadRequest = new(
-                entityLogicalName: "account",
-                primaryKeyLogicalName: "accountid",
+            // Upload the file
+            Guid fileId = await UploadFile(
+                service: service,
+                entityLogicalName: entityLogicalName,
+                primaryKeyLogicalName: primaryKeyLogicalName,
                 entityId: createdAccountRef.Id.Value,
-                fileAttributeName: fileColumnLogicalName,
-                fileName: fileName);
+                filePropertyName: filePropertyName,
+                fileInfo: new FileInfo(filePath),
+                fileMimeType:fileMimeType);
 
-            InitializeFileBlocksUploadResponse initializeFileBlocksUploadResponse =
-                await service.SendAsync<InitializeFileBlocksUploadResponse>(initializeFileBlocksUploadRequest);
-            string uploadFileContinuationToken = initializeFileBlocksUploadResponse.FileContinuationToken;
+            Console.WriteLine($"Uploaded file {filePath}");
 
-            Console.WriteLine($"Initialized upload of file {fileName}.");
+            // Download the file
+            Console.WriteLine($"Downloading file from {createdAccountRef.Path}/{filePropertyName} ...");
 
-            // Capture blockids while uploading
-            List<string> blocks = new();
-
-            // Upload the file in blocks
-            await UploadBlocks(service, filePath, uploadFileContinuationToken, blocks);
-
-            // Commit the upload
-            CommitFileBlocksUploadRequest commitFileBlocksUploadRequest = new(
-                fileName: fileName,
-                mimeType: fileMimeType,
-                blockList: blocks,
-                fileContinuationToken: uploadFileContinuationToken);
-
-            CommitFileBlocksUploadResponse commitFileBlocksUploadResponse =
-                await service.SendAsync<CommitFileBlocksUploadResponse>(commitFileBlocksUploadRequest);
-
-            Console.WriteLine($"Committed upload of file {fileName}.");
-
-            // Id can be used with DeleteFile message
-            Guid fileId = commitFileBlocksUploadResponse.FileId;
-
-            Console.WriteLine($"Uploaded {fileName} to account {fileColumnLogicalName} column.");
-            Console.WriteLine($"FileId:{fileId}" +
-                $"\nFileSizeInBytes:{commitFileBlocksUploadResponse.FileSizeInBytes}");
-
-            #endregion upload 
-
-            #region download File
-
-            InitializeFileBlocksDownloadRequest initializeFileBlocksDownloadRequest = new(
-                entityLogicalName: "account",
-                primaryKeyLogicalName: "accountid",
+            byte[] file = await DownloadFile(service: service,
+                entityLogicalName: entityLogicalName,
+                primaryKeyLogicalName: primaryKeyLogicalName,
                 entityId: createdAccountRef.Id.Value,
-                fileAttributeName: fileColumnLogicalName);
-
-            Console.WriteLine($"Initialized download of file from {fileColumnLogicalName} column of account with id {createdAccountRef.Id.Value}.");
-
-            InitializeFileBlocksDownloadResponse initializeFileBlocksDownloadResponse =
-                await service.SendAsync<InitializeFileBlocksDownloadResponse>(initializeFileBlocksDownloadRequest);
-
-            string downloadfileContinuationToken = initializeFileBlocksDownloadResponse.FileContinuationToken;
-            long fileSizeInBytes = initializeFileBlocksDownloadResponse.FileSizeInBytes;
-
-
-            byte[] file = await DownloadBlocks(
-                    service: service,
-                    fileContinuationToken: downloadfileContinuationToken,
-                    fileSizeInBytes: fileSizeInBytes);
+                filePropertyName: filePropertyName);
 
             // File written to FileOperationsWithActions\bin\Debug\net6.0
             File.WriteAllBytes($"downloaded-{fileName}", file);
-
-
-            #endregion download File
+            Console.WriteLine($"Downloaded the file to {Environment.CurrentDirectory}//downloaded-{fileName}.");
 
             #region delete File
 
             DeleteFileRequest deleteFileRequest = new(fileId: fileId);
             await service.SendAsync(deleteFileRequest);
-            Console.WriteLine("Deleted file using FileId.");
+            Console.WriteLine("Deleted the file using FileId.");
 
             #endregion delete File
 
@@ -119,33 +78,52 @@ namespace PowerApps.Samples
             Console.WriteLine("Deleted the account record.");
 
             // Delete the file column
-            await Utility.DeleteFileColumn(service);
+            await Utility.DeleteFileColumn(service,entityLogicalName,fileColumnSchemaName);
 
         }
 
         /// <summary>
-        /// Calls the UploadBlock action as many times as needed to upload a file in blocks.
+        /// Uploads a file using Web API Actions
         /// </summary>
         /// <param name="service">The service</param>
-        /// <param name="filePath">The path to the file.</param>
-        /// <param name="fileContinuationToken">The file continuation token value</param>
-        /// <param name="blockIds">List of block Ids to write to</param>
+        /// <param name="entityLogicalName">The logical name of the table</param>
+        /// <param name="primaryKeyLogicalName">The logical name of the primary key for the table</param>
+        /// <param name="entityId">The Id of the record.</param>
+        /// <param name="filePropertyName">The name of the file column property.</param>
+        /// <param name="fileInfo">Information about the file to upload.</param>
+        /// <param name="fileMimeType">The mime type of the file, if known.</param>
         /// <returns></returns>
-        private static async Task UploadBlocks(
-            Service service,
-            string filePath,
-            string fileContinuationToken,
-            List<string> blockIds)
+        private static async Task<Guid> UploadFile(Service service, 
+                string entityLogicalName,
+                string primaryKeyLogicalName,
+                Guid entityId,
+                string filePropertyName,
+                FileInfo fileInfo,
+                string fileMimeType = null) 
         {
-            using Stream file = File.OpenRead(filePath);
+            // Initialize the upload
+            InitializeFileBlocksUploadRequest initializeFileBlocksUploadRequest = new(
+                entityLogicalName: entityLogicalName,
+                primaryKeyLogicalName: primaryKeyLogicalName,
+                entityId: entityId,
+                fileAttributeName: filePropertyName,
+                fileName: fileInfo.Name);
+
+            InitializeFileBlocksUploadResponse initializeFileBlocksUploadResponse =
+                await service.SendAsync<InitializeFileBlocksUploadResponse>(initializeFileBlocksUploadRequest);
+            string fileContinuationToken = initializeFileBlocksUploadResponse.FileContinuationToken;
+
+            // Capture blockids while uploading
+            List<string> blockIds = new();
+
+            using Stream file = fileInfo.OpenRead();
 
             int blockSize = 4 * 1024 * 1024; // 4 MB
 
             byte[] buffer = new byte[blockSize];
             int bytesRead = 0;
-            FileInfo f = new(filePath);
 
-            long fileSize = f.Length;
+            long fileSize = fileInfo.Length;
             // The number of iterations that will be required:
             // int blocksCount = (int)Math.Ceiling(fileSize / (float)blockSize);
             int blockNumber = 0;
@@ -165,7 +143,7 @@ namespace PowerApps.Samples
                 // 1 = "MDAwMDAwMDAwMDAwMDAwMQ=="
                 // 2 = "MDAwMDAwMDAwMDAwMDAwMg=="
                 string blockId = Convert.ToBase64String(Encoding.UTF8.GetBytes(blockNumber.ToString().PadLeft(16, '0')));
-                
+
                 // List<string> is a reference type, so this will update the value passed into the function.
                 blockIds.Add(blockId);
 
@@ -181,23 +159,60 @@ namespace PowerApps.Samples
 
                 // Send the request
                 await service.SendAsync(uploadBlockRequest);
-
-                Console.WriteLine($"\tUploaded blockId {blockId}");
             }
+
+            // Try to get the mimetype if not provided.
+            if (string.IsNullOrEmpty(fileMimeType))
+            {
+                var provider = new FileExtensionContentTypeProvider();
+
+                if (!provider.TryGetContentType(fileInfo.Name, out fileMimeType))
+                {
+                    fileMimeType = "application/octet-stream";
+                }
+            }
+
+            // Commit the upload
+            CommitFileBlocksUploadRequest commitFileBlocksUploadRequest = new(
+                fileName: fileInfo.Name,
+                mimeType: fileMimeType,
+                blockList: blockIds,
+                fileContinuationToken: fileContinuationToken);
+
+            CommitFileBlocksUploadResponse commitFileBlocksUploadResponse =
+                await service.SendAsync<CommitFileBlocksUploadResponse>(commitFileBlocksUploadRequest);
+
+            // Id can be used with DeleteFile message
+            return commitFileBlocksUploadResponse.FileId;
+
         }
 
         /// <summary>
-        /// Calls the DownloadBlock action as many times as needed to download a file in blocks.
+        /// Downloads a feil using Web API Actions
         /// </summary>
-        /// <param name="service">The Service</param>
-        /// <param name="fileContinuationToken">The file continuation token</param>
-        /// <param name="fileSizeInBytes">The total size of the file.</param>
-        /// <returns>The file bytes</returns>
-        private static async Task<byte[]> DownloadBlocks(
-            Service service,
-            string fileContinuationToken,
-            long fileSizeInBytes)
+        /// <param name="service">The service</param>
+        /// <param name="entityLogicalName">The logical name of the table</param>
+        /// <param name="primaryKeyLogicalName">The logical name of the primary key for the table</param>
+        /// <param name="entityId">The Id of the record.</param>
+        /// <param name="filePropertyName">The name of the file column property.</param>
+        /// <returns></returns>
+        private static async Task<byte[]> DownloadFile(Service service,
+                string entityLogicalName,
+                string primaryKeyLogicalName,
+                Guid entityId,
+                string filePropertyName) 
         {
+            InitializeFileBlocksDownloadRequest initializeFileBlocksDownloadRequest = new(
+                entityLogicalName: entityLogicalName,
+                primaryKeyLogicalName: primaryKeyLogicalName,
+                entityId: entityId,
+                fileAttributeName: filePropertyName);
+
+            InitializeFileBlocksDownloadResponse initializeFileBlocksDownloadResponse =
+                await service.SendAsync<InitializeFileBlocksDownloadResponse>(initializeFileBlocksDownloadRequest);
+
+            string fileContinuationToken = initializeFileBlocksDownloadResponse.FileContinuationToken;
+            long fileSizeInBytes = initializeFileBlocksDownloadResponse.FileSizeInBytes;
 
             List<byte> bytes = new();
 
@@ -222,8 +237,6 @@ namespace PowerApps.Samples
                 DownloadBlockResponse downloadBlockResponse =
                            await service.SendAsync<DownloadBlockResponse>(downLoadBlockRequest);
 
-                Console.WriteLine($"\t Downloading block offset:{offset} blocklength:{blockSizeDownload}");
-
                 // Add the block returned to the list
                 bytes.AddRange(downloadBlockResponse.Data);
 
@@ -234,7 +247,6 @@ namespace PowerApps.Samples
                 // Increment the offset to start at the beginning of the next block.
                 offset += blockSizeDownload;
             }
-
             return bytes.ToArray();
         }
     }

@@ -12,12 +12,14 @@ namespace PowerApps.Samples
 
             var service = new Service(config);
 
+            string entityLogicalName = "account";
+            string fileColumnSchemaName = "sample_FileColumn";
+            string filePropertyName = fileColumnSchemaName.ToLower();
             string fileName = "4094kb.txt";
             string filePath = $"Files\\{fileName}";
-            string fileColumnLogicalName = Utility.fileColumnSchemaName.ToLower(); //sample_filecolumn
 
             // Create the File Column
-            await Utility.CreateFileColumn(service);
+            await Utility.CreateFileColumn(service,entityLogicalName,fileColumnSchemaName);
 
             #region create account
 
@@ -32,25 +34,24 @@ namespace PowerApps.Samples
 
             #endregion create account
 
-            #region upload file
+            Console.WriteLine($"Uploading file {filePath} ...");
 
+            // Upload file
             UploadFileRequest uploadFileRequest = new(
                  entityReference: createdAccountRef,
-                 columnName: fileColumnLogicalName,
+                 columnName: filePropertyName,
                  fileContent: File.OpenRead(filePath),
                  fileName: fileName);
 
             await service.SendAsync(uploadFileRequest);
 
-            Console.WriteLine($"Uploaded file {fileName}.");
+            Console.WriteLine($"Uploaded file {filePath}");
 
-            #endregion upload file
-
-            #region download file
-
+            Console.WriteLine($"Downloading file from {createdAccountRef.Path}/{filePropertyName} ...");
+            // Download file
             DownloadFileRequest downloadFileRequest = new(
                 entityReference: createdAccountRef,
-                property: fileColumnLogicalName);
+                property: filePropertyName);
 
             try
             {
@@ -58,10 +59,11 @@ namespace PowerApps.Samples
 
                 // File written to FileOperationsWithStream\bin\Debug\net6.0
                 File.WriteAllBytes($"downloaded-{fileName}", downloadFileResponse.File);
+                Console.WriteLine($"Downloaded the file to {Environment.CurrentDirectory}//downloaded-{fileName}.");
             }
             catch (ServiceException se)
             {
-                // Change fileName to 25mb.pdf to encounter this error
+                // Change fileName to 25mb.pdf to encounter this error.
 
                 if (se.ODataError.Error.Code.Equals("0x80090001"))
                 {
@@ -74,31 +76,22 @@ namespace PowerApps.Samples
                     Console.WriteLine(se.ODataError.Error.Message);
                 }
             }
-
-            #endregion download file
-
-            #region delete file
+           
+            // Delete file
             DeleteColumnValueRequest deleteColumnValueRequest = new(
                 entityReference: createdAccountRef,
-                propertyName: fileColumnLogicalName);
+                propertyName: filePropertyName);
             await service.SendAsync(deleteColumnValueRequest);
 
             Console.WriteLine($"Deleted file at: {deleteColumnValueRequest.RequestUri}.");
-
-            #endregion delete file
-
+  
             // Delete the account record
             await service.Delete(createdAccountRef);
             Console.WriteLine("Deleted the account record.");
 
             // Delete the file column
-            await Utility.DeleteFileColumn(service);
+            await Utility.DeleteFileColumn(service,entityLogicalName,fileColumnSchemaName);
 
         }
-
-
-
     }
-
-
 }

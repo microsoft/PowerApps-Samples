@@ -12,14 +12,16 @@ namespace PowerApps.Samples
 
             var service = new Service(config);
 
+            string entityLogicalName = "account";
+            string fileColumnSchemaName = "sample_FileColumn";
+            string filePropertyName = fileColumnSchemaName.ToLower();
             string fileName = "25mb.pdf";
             string filePath = $"Files\\{fileName}";
-            string fileColumnLogicalName = Utility.fileColumnSchemaName.ToLower(); //sample_filecolumn
 
             // Create the File Column
-            await Utility.CreateFileColumn(service);
+            await Utility.CreateFileColumn(service, entityLogicalName, fileColumnSchemaName);
 
-            #region create account
+            #region create account record
 
             JObject account = new() {
 
@@ -30,47 +32,107 @@ namespace PowerApps.Samples
 
             Console.WriteLine($"Created account record with accountid:{createdAccountRef.Id.Value}");
 
-            #endregion create account
+            #endregion create account record
 
-            #region upload file
 
-            InitializeChunkedFileUploadRequest initializeChunkedFileUploadRequest = new(
+            Console.WriteLine($"Uploading file {filePath} ...");
+
+            // Upload the file
+            await UploadFile(
+                service: service, 
+                filePropertyName:  filePropertyName, 
+                fileInfo: new FileInfo(filePath),  
+                entityReference: createdAccountRef);
+
+            Console.WriteLine($"Uploaded file {filePath}");
+
+
+            // Download the file
+            Console.WriteLine($"Downloading file from {createdAccountRef.Path}/{filePropertyName} ...");
+
+            byte[] file = await DownloadFile(
+                service: service, 
+                filePropertyName: filePropertyName, 
+                entityReference: createdAccountRef);
+
+            // File written to FileOperationsWithChunks\bin\Debug\net6.0
+            File.WriteAllBytes($"downloaded-{fileName}", file);
+            Console.WriteLine($"Downloaded the file to {Environment.CurrentDirectory}//downloaded-{fileName}.");
+
+
+            #region delete File
+
+            DeleteColumnValueRequest deleteColumnValueRequest = new(
                 entityReference: createdAccountRef,
-                fileColumnLogicalName: fileColumnLogicalName,
-                uploadFileName: fileName);
+                propertyName: filePropertyName);
+            await service.SendAsync(deleteColumnValueRequest);
+
+            Console.WriteLine($"Deleted file at: {deleteColumnValueRequest.RequestUri}.");
+
+            #endregion delete File            
+
+            // Delete the account record.
+            await service.Delete(createdAccountRef);
+            Console.WriteLine("Deleted the account record.");
+
+            // Delete the file column
+            await Utility.DeleteFileColumn(service, entityLogicalName, fileColumnSchemaName);
+
+        }
+
+
+        /// <summary>
+        /// Uploads a file in chunks
+        /// </summary>
+        /// <param name="service">The service</param>
+        /// <param name="filePropertyName">The logical name of the file column</param>
+        /// <param name="fileInfo">Information about the file to upload.</param>
+        /// <param name="entityReference">A reference to the record that has the file.</param>
+        /// <returns></returns>
+        private static async Task UploadFile(
+            Service service, 
+            string filePropertyName, 
+            FileInfo fileInfo, 
+            EntityReference entityReference)
+        {
+            InitializeChunkedFileUploadRequest initializeChunkedFileUploadRequest = new(
+                            entityReference: entityReference,
+                            fileColumnLogicalName: filePropertyName,
+                            uploadFileName: fileInfo.Name);
 
             var initializeChunkedFileUploadResponse =
                 await service.SendAsync<InitializeChunkedFileUploadResponse>(initializeChunkedFileUploadRequest);
 
-            Console.WriteLine($"Initialized upload of file {fileName}.");
-
             int uploadChunkSize = initializeChunkedFileUploadResponse.ChunkSize;
             Uri Url = initializeChunkedFileUploadResponse.Url;
 
-
-            var fileBytes = await File.ReadAllBytesAsync(filePath);
+            var fileBytes = await File.ReadAllBytesAsync(fileInfo.FullName); 
 
             for (var offset = 0; offset < fileBytes.Length; offset += uploadChunkSize)
             {
-
                 UploadFileChunkRequest uploadFileChunkRequest = new(
                     url: Url,
-                    uploadFileName: fileName,
+                    uploadFileName: fileInfo.Name,
                     chunkSize: uploadChunkSize,
                     fileBytes: fileBytes,
                     offSet: offset);
 
                 await service.SendAsync(uploadFileChunkRequest);
-
-                Console.WriteLine($"\tUploaded chunk offset:{offset} ChunkSize:{uploadChunkSize}");
             }
+        }
 
-            #endregion upload file 
-
-            #region download file
-
-            Console.WriteLine($"Starting download of file from {fileColumnLogicalName} column of account with id {createdAccountRef.Id.Value}.");
-
+        /// <summary>
+        /// Downloads a file in chunks
+        /// </summary>
+        /// <param name="service">The service</param>
+        /// <param name="filePropertyName">The name of the column property.</param>
+        /// <param name="entityReference">A reference to the record that has the file.</param>
+        /// <returns></returns>
+        private static async Task<byte[]> DownloadFile(
+            Service service, 
+            string filePropertyName, 
+            EntityReference entityReference)
+        {
             int downloadChunkSize = 4 * 1024 * 1024; // 4 MB
             int offSet = 0;
             var fileSize = 0;
@@ -78,15 +140,13 @@ namespace PowerApps.Samples
             do
             {
                 DownloadFileChunkRequest downloadFileChunkRequest = new(
-                    entityReference: createdAccountRef,
-                    fileColumnLogicalName: fileColumnLogicalName,
+                    entityReference: entityReference,
+                    fileColumnLogicalName: filePropertyName,
                     offSet: offSet,
                     chunkSize: downloadChunkSize);
 
                 var downloadFileChunkResponse =
                     await service.SendAsync<DownloadFileChunkResponse>(downloadFileChunkRequest);
-
-                Console.WriteLine($"\tDownloaded chunk offSet:{offSet} ChunkSize:{downloadChunkSize}");
 
                 if (file == null)
                 {
@@ -99,29 +159,7 @@ namespace PowerApps.Samples
 
             } while (offSet < fileSize);
 
-            // File written to FileOperationsWithChunks\bin\Debug\net6.0
-            File.WriteAllBytes($"downloaded-{fileName}", file);
-
-            #endregion download File
-
-            #region delete File
-
-            DeleteColumnValueRequest deleteColumnValueRequest = new(
-                entityReference: createdAccountRef,
-                propertyName: fileColumnLogicalName);
-            await service.SendAsync(deleteColumnValueRequest);
-
-            Console.WriteLine($"Deleted file at: {deleteColumnValueRequest.RequestUri}.");
-
-            #endregion delete File            
-
-            // Delete the account record.
-            await service.Delete(createdAccountRef);
-            Console.WriteLine("Deleted the account record.");
-
-            // Delete the file column
-            await Utility.DeleteFileColumn(service);
-
+            return file;
         }
     }
 }
