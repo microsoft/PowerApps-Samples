@@ -246,7 +246,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
             var initializeFileBlocksDownloadResponse =
                 (InitializeFileBlocksDownloadResponse)service.Execute(initializeFileBlocksDownloadRequest);
 
-            string downloadfileContinuationToken = initializeFileBlocksDownloadResponse.FileContinuationToken;
+            string fileContinuationToken = initializeFileBlocksDownloadResponse.FileContinuationToken;
             long fileSizeInBytes = initializeFileBlocksDownloadResponse.FileSizeInBytes;
 
             List<byte> fileBytes = new();
@@ -266,7 +266,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 DownloadBlockRequest downLoadBlockRequest = new()
                 {
                     BlockLength = blockSizeDownload,
-                    FileContinuationToken = downloadfileContinuationToken,
+                    FileContinuationToken = fileContinuationToken,
                     Offset = offset
                 };
 

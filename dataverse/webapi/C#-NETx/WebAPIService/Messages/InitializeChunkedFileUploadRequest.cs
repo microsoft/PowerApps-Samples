@@ -11,11 +11,10 @@
         {
             Method = HttpMethod.Patch;
             RequestUri = new Uri(
-                uriString: $"{entityReference.Path}/{fileColumnLogicalName}",
+                uriString: $"{entityReference.Path}/{fileColumnLogicalName}?x-ms-file-name={uploadFileName}",
                 uriKind: UriKind.Relative);
 
             Headers.Add("x-ms-transfer-mode", "chunked");
-            Headers.Add("x-ms-file-name", uploadFileName);
         }
     }
 }
