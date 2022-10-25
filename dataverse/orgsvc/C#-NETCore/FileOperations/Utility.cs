@@ -39,12 +39,12 @@ namespace PowerPlatform.Dataverse.CodeSamples
         }
 
         /// <summary>
-        /// Update the MaxSizeInKB for a file
+        /// Update the MaxSizeInKB for a file column
         /// </summary>
         /// <param name="service">The service</param>
-        /// <param name="entityLogicalName"></param>
-        /// <param name="fileColumnLogicalName"></param>
-        /// <param name="maxSizeInKB"></param>
+        /// <param name="entityLogicalName">The logical name of the table that has the column.</param>
+        /// <param name="fileColumnLogicalName">The logical name of the file column.</param>
+        /// <param name="maxSizeInKB">The new value for MaxSizeInKB</param>
         public static void UpdateFileColumnMaxSizeInKB(IOrganizationService service, string entityLogicalName, string fileColumnLogicalName, int maxSizeInKB) {
 
             RetrieveAttributeRequest retrieveAttributeRequest = new() { 
