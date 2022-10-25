@@ -60,6 +60,9 @@ namespace PowerPlatform.Dataverse.CodeSamples
             // Create the File Column
             Utility.CreateFileColumn(serviceClient, entityLogicalName, fileColumnSchemaName);
 
+            // Update the MaxSizeInKB
+            Utility.UpdateFileColumnMaxSizeInKB(serviceClient, entityLogicalName, fileColumnSchemaName.ToLower(), 100 * 1024);
+
             #region create account record
 
             Entity account = new("account")

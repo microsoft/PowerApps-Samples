@@ -9,9 +9,11 @@ namespace PowerApps.Samples
     public class Utility
     {
         /// <summary>
-        /// Creates a custom file column on the designated table named 'sample_FileColumn'.
+        /// Creates a custom file column on the designated table with the specified schema name.
         /// </summary>
         /// <param name="service">The service to use.</param>
+        /// <param name="entityLogicalName">The logical name of the table to create the file column in.</param>
+        /// <param name="fileColumnSchemaName">The schema name of the file column.</param>
         /// <returns></returns>
         public static async Task CreateFileColumn(Service service, string entityLogicalName, string fileColumnSchemaName)
         {
@@ -36,6 +38,41 @@ namespace PowerApps.Samples
             await service.SendAsync<CreateAttributeResponse>(createfileColumnRequest);
 
             Console.WriteLine($"Created file column named '{fileColumnSchemaName}' in the {entityLogicalName} table.");
+        }
+
+
+        /// <summary>
+        /// Update the MaxSizeInKB for a file column
+        /// </summary>
+        /// <param name="entityLogicalName">The logical name of the table that has the column.</param>
+        /// <param name="fileColumnLogicalName">The logical name of the file column.</param>
+        /// <param name="maxSizeInKB">The new value for MaxSizeInKB</param>
+        /// <returns></returns>
+        public static async Task UpdateFileColumnMaxSizeInKB(Service service, string entityLogicalName, string fileColumnLogicalName, int maxSizeInKB)
+        {
+            // Retrieve the full column definition
+            RetrieveAttributeRequest retrieveAttributeRequest = new(
+                entityLogicalName: entityLogicalName, 
+                logicalName: fileColumnLogicalName, 
+                type: AttributeType.FileAttributeMetadata);
+
+            var retrieveAttributeResponse = 
+                await service.SendAsync<RetrieveAttributeResponse<FileAttributeMetadata>>(retrieveAttributeRequest);
+
+            FileAttributeMetadata fileColumn = retrieveAttributeResponse.AttributeMetadata;
+
+            // Update the MaxSizeInKB value
+            fileColumn.MaxSizeInKB = maxSizeInKB;
+
+            // Create the request
+            UpdateAttributeRequest updateAttributeRequest = new(
+                entityLogicalName: entityLogicalName, 
+                attributeLogicalName: fileColumnLogicalName, 
+                attributeMetadata: fileColumn);
+
+            // Send the update request
+            await service.SendAsync(updateAttributeRequest);
+
         }
 
         /// <summary>
