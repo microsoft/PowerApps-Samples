@@ -21,6 +21,9 @@ namespace PowerApps.Samples
             // Create the File Column
             await Utility.CreateFileColumn(service, entityLogicalName, fileColumnSchemaName);
 
+            // Update the MaxSizeInKB value
+            await Utility.UpdateFileColumnMaxSizeInKB(service, entityLogicalName, fileColumnSchemaName.ToLower(), 100 * 1024);
+
             #region create account record
 
             JObject account = new() {
