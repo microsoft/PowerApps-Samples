@@ -56,12 +56,17 @@ namespace PowerPlatform.Dataverse.CodeSamples
             string filePath = $"Files\\{fileName}";
             FileInfo fileInfo = new(filePath);
             string fileMimeType = "application/pdf";
+            int fileColumnMaxSizeInKb;
+            Guid? fileId = null;
 
             // Create the File Column
             Utility.CreateFileColumn(serviceClient, entityLogicalName, fileColumnSchemaName);
 
-            // Update the MaxSizeInKB
+            // Update the MaxSizeInKB: Comment this line to get error about file too large for column.
             Utility.UpdateFileColumnMaxSizeInKB(serviceClient, entityLogicalName, fileColumnSchemaName.ToLower(), 100 * 1024);
+
+            //Get the configured size of the column in KB
+            fileColumnMaxSizeInKb = Utility.GetFileColumnMaxSizeInKb(serviceClient, entityLogicalName, fileColumnSchemaName.ToLower());
 
             #region create account record
 
@@ -83,36 +88,48 @@ namespace PowerPlatform.Dataverse.CodeSamples
             Console.WriteLine($"Uploading file {filePath} ...");
 
             // Upload the file
-            Guid fileId = UploadFile(service: serviceClient,
+            try
+            {
+                fileId = UploadFile(service: serviceClient,
                    entityReference: accountReference,
                    fileAttributeName: fileColumnLogicalName,
                    fileInfo: fileInfo,
-                   fileMimeType: fileMimeType);
+                   fileMimeType: fileMimeType,
+                   fileColumnMaxSizeInKb: fileColumnMaxSizeInKb);
 
-            Console.WriteLine($"Uploaded file {filePath}");
+                Console.WriteLine($"Uploaded file {filePath}");
+            }
+            catch (Exception ex)
+            {                
+                Console.WriteLine(ex.Message);
+            }
 
             // Download the file
-            Console.WriteLine($"Downloading file...");
 
-            byte[] downloadedFile = DownloadFile(
-                service: serviceClient,
-                entityReference: accountReference,
-                fileAttributeName: fileColumnLogicalName);
+            if (fileId.HasValue) {
 
+                Console.WriteLine($"Downloading file...");
 
-            // File written to FileOperations\bin\Debug\net6.0
-            File.WriteAllBytes($"downloaded-{fileName}", downloadedFile);
-            Console.WriteLine($"Downloaded the file to {Environment.CurrentDirectory}//downloaded-{fileName}.");
+                byte[] downloadedFile = DownloadFile(
+                    service: serviceClient,
+                    entityReference: accountReference,
+                    fileAttributeName: fileColumnLogicalName);
 
+                // File written to FileOperations\bin\Debug\net6.0
+                File.WriteAllBytes($"downloaded-{fileName}", downloadedFile);
+                Console.WriteLine($"Downloaded the file to {Environment.CurrentDirectory}//downloaded-{fileName}.");
 
-            // Delete the file
-            DeleteFileRequest deleteFileRequest = new()
-            {
-                FileId = fileId
-            };
-            serviceClient.Execute(deleteFileRequest);
-            Console.WriteLine("Deleted file using FileId.");
-            // There is no other way to delete a file using the SDK.
+                // Delete the file
+                DeleteFileRequest deleteFileRequest = new()
+                {
+                    FileId = fileId.Value
+                };
+
+                serviceClient.Execute(deleteFileRequest);
+                Console.WriteLine("Deleted file using FileId.");
+                // There is no other way to delete a file using the SDK.
+
+            }
 
             // Delete the account record
             serviceClient.Delete(accountReference.LogicalName, accountReference.Id);
@@ -133,13 +150,15 @@ namespace PowerPlatform.Dataverse.CodeSamples
         /// <param name="fileAttributeName">The name of the file column</param>
         /// <param name="fileInfo">Information about the file to upload.</param>
         /// <param name="fileMimeType">The mime type of the file, if known.</param>
+        /// <param name="fileColumnMaxSizeInKb">The size limit of the column, if known.</param>
         /// <returns></returns>
         static Guid UploadFile(
                 IOrganizationService service,
                 EntityReference entityReference,
                 string fileAttributeName,
                 FileInfo fileInfo,
-                string fileMimeType = null)
+                string fileMimeType = null,
+                int? fileColumnMaxSizeInKb = null)
         {
 
             // Initialize the upload
@@ -166,6 +185,12 @@ namespace PowerPlatform.Dataverse.CodeSamples
             int bytesRead = 0;
 
             long fileSize = fileInfo.Length;
+
+            if (fileColumnMaxSizeInKb.HasValue && (fileInfo.Length/1024) > fileColumnMaxSizeInKb.Value) {
+                throw new Exception($"The file is too large to be uploaded to this column.");
+            }
+
+
             // The number of iterations that will be required:
             // int blocksCount = (int)Math.Ceiling(fileSize / (float)blockSize);
             int blockNumber = 0;
@@ -181,7 +206,8 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
                 blockNumber++;
 
-                string blockId = Convert.ToBase64String(Encoding.UTF8.GetBytes(blockNumber.ToString().PadLeft(16, '0')));
+                //string blockId = Convert.ToBase64String(Encoding.UTF8.GetBytes(blockNumber.ToString().PadLeft(16, '0')));
+                string blockId = Convert.ToBase64String(Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()));
 
                 blockIds.Add(blockId);
 

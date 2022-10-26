@@ -9,15 +9,21 @@
             EntityReference entityReference,
             string columnName,
             Stream fileContent,
-            string fileName)
+            string fileName,
+            int? fileColumnMaxSizeInKb = null)
         {
+            if (fileColumnMaxSizeInKb.HasValue && (fileContent.Length / 1024) > fileColumnMaxSizeInKb.Value)
+            {
+                throw new Exception($"The file is too large to be uploaded to this column.");
+            }
+
             Method = HttpMethod.Patch;
             RequestUri = new Uri(
-                uriString: $"{entityReference.Path}/{columnName}",
+                uriString: $"{entityReference.Path}/{columnName}?x-ms-file-name={fileName}",
                 uriKind: UriKind.Relative);
             Content = new StreamContent(fileContent);
             Content.Headers.Add("Content-Type", "application/octet-stream");
-            Content.Headers.Add("x-ms-file-name", fileName);
+            //Content.Headers.Add("x-ms-file-name", fileName);
         }
     }
 }

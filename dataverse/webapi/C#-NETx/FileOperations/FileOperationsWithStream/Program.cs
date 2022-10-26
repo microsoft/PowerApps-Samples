@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using PowerApps.Samples.Messages;
 using PowerApps.Samples.Methods;
+using System.IO;
 
 namespace PowerApps.Samples
 {
@@ -17,12 +18,17 @@ namespace PowerApps.Samples
             string filePropertyName = fileColumnSchemaName.ToLower();
             string fileName = "4094kb.txt";
             string filePath = $"Files\\{fileName}";
+            bool fileUploaded = false;
+            int? fileColumnMaxSizeInKb;
 
-            // Create the File Column
-            await Utility.CreateFileColumn(service,entityLogicalName,fileColumnSchemaName);
+            // Create the File Column with 10MB limit
+            await Utility.CreateFileColumn(service, entityLogicalName, fileColumnSchemaName);
 
-            // Update the MaxSizeInKB value
+            // Update the MaxSizeInKB value to 100MB.
             await Utility.UpdateFileColumnMaxSizeInKB(service, entityLogicalName, fileColumnSchemaName.ToLower(), 100 * 1024);
+
+            //Get the configured size of the column in KB
+            fileColumnMaxSizeInKb = await Utility.GetFileColumnMaxSizeInKb(service, entityLogicalName, fileColumnSchemaName.ToLower());
 
             #region create account
 
@@ -37,63 +43,78 @@ namespace PowerApps.Samples
 
             #endregion create account
 
-            Console.WriteLine($"Uploading file {filePath} ...");
 
-            // Upload file
-            UploadFileRequest uploadFileRequest = new(
-                 entityReference: createdAccountRef,
-                 columnName: filePropertyName,
-                 fileContent: File.OpenRead(filePath),
-                 fileName: fileName);
-
-            await service.SendAsync(uploadFileRequest);
-
-            Console.WriteLine($"Uploaded file {filePath}");
-
-            Console.WriteLine($"Downloading file from {createdAccountRef.Path}/{filePropertyName} ...");
-            // Download file
-            DownloadFileRequest downloadFileRequest = new(
-                entityReference: createdAccountRef,
-                property: filePropertyName);
 
             try
             {
-                var downloadFileResponse = await service.SendAsync<DownloadFileResponse>(downloadFileRequest);
+                Console.WriteLine($"Uploading file {filePath} ...");
 
-                // File written to FileOperationsWithStream\bin\Debug\net6.0
-                File.WriteAllBytes($"downloaded-{fileName}", downloadFileResponse.File);
-                Console.WriteLine($"Downloaded the file to {Environment.CurrentDirectory}//downloaded-{fileName}.");
+                // Upload file
+                UploadFileRequest uploadFileRequest = new(
+                     entityReference: createdAccountRef,
+                     columnName: filePropertyName,
+                     fileContent: File.OpenRead(filePath),
+                     fileName: fileName,
+                     fileColumnMaxSizeInKb: fileColumnMaxSizeInKb);
+
+                await service.SendAsync(uploadFileRequest);
+
+                Console.WriteLine($"Uploaded file {filePath}");
+
+                fileUploaded = true;
             }
-            catch (ServiceException se)
+            catch (Exception ex)
             {
-                // Change fileName to 25mb.pdf to encounter this error.
-
-                if (se.ODataError.Error.Code.Equals("0x80090001"))
-                {
-                    //{
-                    //  "error": {
-                    //      "code": "0x80090001",
-                    //      "message": "Maximum file size supported for download is [16] MB. File of [24 MB] size may only be downloaded using staged chunk download."
-                    //    }
-                    //}
-                    Console.WriteLine(se.ODataError.Error.Message);
-                }
+                Console.WriteLine(ex.Message);
             }
-           
-            // Delete file
-            DeleteColumnValueRequest deleteColumnValueRequest = new(
-                entityReference: createdAccountRef,
-                propertyName: filePropertyName);
-            await service.SendAsync(deleteColumnValueRequest);
 
-            Console.WriteLine($"Deleted file at: {deleteColumnValueRequest.RequestUri}.");
-  
+            if (fileUploaded)
+            {
+                Console.WriteLine($"Downloading file from {createdAccountRef.Path}/{filePropertyName} ...");
+                // Download file
+                DownloadFileRequest downloadFileRequest = new(
+                    entityReference: createdAccountRef,
+                    property: filePropertyName);
+
+                try
+                {
+                    var downloadFileResponse = await service.SendAsync<DownloadFileResponse>(downloadFileRequest);
+
+                    // File written to FileOperationsWithStream\bin\Debug\net6.0
+                    File.WriteAllBytes($"downloaded-{fileName}", downloadFileResponse.File);
+                    Console.WriteLine($"Downloaded the file to {Environment.CurrentDirectory}//downloaded-{fileName}.");
+                }
+                catch (ServiceException se)
+                {
+                    // Change fileName to 25mb.pdf to encounter this error.
+
+                    if (se.ODataError.Error.Code.Equals("0x80090001"))
+                    {
+                        //{
+                        //  "error": {
+                        //      "code": "0x80090001",
+                        //      "message": "Maximum file size supported for download is [16] MB. File of [24 MB] size may only be downloaded using staged chunk download."
+                        //    }
+                        //}
+                        Console.WriteLine(se.ODataError.Error.Message);
+                    }
+                }
+
+                // Delete file
+                DeleteColumnValueRequest deleteColumnValueRequest = new(
+                    entityReference: createdAccountRef,
+                    propertyName: filePropertyName);
+                await service.SendAsync(deleteColumnValueRequest);
+
+                Console.WriteLine($"Deleted file at: {deleteColumnValueRequest.RequestUri}.");
+            }
+
             // Delete the account record
             await service.Delete(createdAccountRef);
             Console.WriteLine("Deleted the account record.");
 
             // Delete the file column
-            await Utility.DeleteFileColumn(service,entityLogicalName,fileColumnSchemaName);
+            await Utility.DeleteFileColumn(service, entityLogicalName, fileColumnSchemaName.ToLower());
 
         }
     }

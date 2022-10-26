@@ -26,7 +26,7 @@ namespace PowerApps.Samples
                 RequiredLevel = new AttributeRequiredLevelManagedProperty(
                       AttributeRequiredLevel.None),
                 Description = new Label("Sample File Column for FileOperation samples", 1033),
-                MaxSizeInKB = 30 * 1024 // 30 MB
+                MaxSizeInKB = 1 * 1024 // 10 MB
 
             };
 
@@ -52,11 +52,11 @@ namespace PowerApps.Samples
         {
             // Retrieve the full column definition
             RetrieveAttributeRequest retrieveAttributeRequest = new(
-                entityLogicalName: entityLogicalName, 
-                logicalName: fileColumnLogicalName, 
+                entityLogicalName: entityLogicalName,
+                logicalName: fileColumnLogicalName,
                 type: AttributeType.FileAttributeMetadata);
 
-            var retrieveAttributeResponse = 
+            var retrieveAttributeResponse =
                 await service.SendAsync<RetrieveAttributeResponse<FileAttributeMetadata>>(retrieveAttributeRequest);
 
             FileAttributeMetadata fileColumn = retrieveAttributeResponse.AttributeMetadata;
@@ -66,8 +66,8 @@ namespace PowerApps.Samples
 
             // Create the request
             UpdateAttributeRequest updateAttributeRequest = new(
-                entityLogicalName: entityLogicalName, 
-                attributeLogicalName: fileColumnLogicalName, 
+                entityLogicalName: entityLogicalName,
+                attributeLogicalName: fileColumnLogicalName,
                 attributeMetadata: fileColumn);
 
             // Send the update request
@@ -75,24 +75,56 @@ namespace PowerApps.Samples
 
         }
 
+
+        /// <summary>
+        /// Retrieves the MaxSizeInKb property of a file column.
+        /// </summary>
+        /// <param name="service">The service.</param>
+        /// <param name="entityLogicalName">The logical name of the table that has the column</param>
+        /// <param name="fileColumnLogicalName">The logical name of the file column.</param>
+        /// <returns></returns>
+        public static async Task<int> GetFileColumnMaxSizeInKb(Service service, string entityLogicalName, string fileColumnLogicalName)
+        {
+            RetrieveAttributeRequest retrieveAttributeRequest = new(
+                entityLogicalName: entityLogicalName,
+                logicalName: fileColumnLogicalName,
+                type: AttributeType.FileAttributeMetadata, query: "?$select=MaxSizeInKB");
+
+            try
+            {
+                var retrieveAttributeResponse =
+                await service.SendAsync<RetrieveAttributeResponse<FileAttributeMetadata>>(retrieveAttributeRequest);
+
+                return retrieveAttributeResponse.AttributeMetadata.MaxSizeInKB;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
+
         /// <summary>
         /// Deletes a custom file column on the table 
         /// </summary>
         /// <param name="service">The service to use</param>
+        /// <param name="entityLogicalName">The logical name of the table with the file column.</param>
+        /// <param name="fileColumnLogicalName">The logical name of the file column.</param>
         /// <returns></returns>
-        public static async Task DeleteFileColumn(Service service, string entityLogicalName, string fileColumnSchemaName)
+        public static async Task DeleteFileColumn(Service service, string entityLogicalName, string fileColumnLogicalName)
         {
 
-            Console.WriteLine($"Deleting the file column named '{fileColumnSchemaName}' on the {entityLogicalName} table ...");
+            Console.WriteLine($"Deleting the file column named '{fileColumnLogicalName}' on the {entityLogicalName} table ...");
 
             DeleteAttributeRequest deletefileColumnRequest = new(
                 entityLogicalName: entityLogicalName,
-                logicalName: fileColumnSchemaName.ToLower(),
+                logicalName: fileColumnLogicalName,
                 strongConsistency: true);
 
             await service.SendAsync(deletefileColumnRequest);
 
-            Console.WriteLine($"Deleted the file column named '{fileColumnSchemaName}' in the {entityLogicalName} table.");
+            Console.WriteLine($"Deleted the file column named '{fileColumnLogicalName}' in the {entityLogicalName} table.");
         }
     }
 }

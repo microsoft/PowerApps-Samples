@@ -21,13 +21,18 @@ namespace PowerApps.Samples
             string fileName = "25mb.pdf";
             string filePath = $"Files\\{fileName}";
             string fileMimeType = "application/pdf";
+            int fileColumnMaxSizeInKb;
+            Guid? fileId = null;
 
-            // Create the File Column
+            // Create the File Column with 10MB limit
             await Utility.CreateFileColumn(service,entityLogicalName,fileColumnSchemaName);
 
-            // Update the MaxSizeInKB value
+            // Update the MaxSizeInKB value: Comment this line to get error about file too large for column.
             await Utility.UpdateFileColumnMaxSizeInKB(service, entityLogicalName, fileColumnSchemaName.ToLower(), 100 * 1024);
-     
+
+
+            fileColumnMaxSizeInKb = await Utility.GetFileColumnMaxSizeInKb(service, entityLogicalName, fileColumnSchemaName.ToLower());
+
             #region create account record
 
             JObject account = new() {
@@ -41,47 +46,61 @@ namespace PowerApps.Samples
 
             #endregion create account record
 
-            Console.WriteLine($"Uploading file {filePath} ...");
 
-            // Upload the file
-            Guid fileId = await UploadFile(
-                service: service,
-                entityLogicalName: entityLogicalName,
-                primaryKeyLogicalName: primaryKeyLogicalName,
-                entityId: createdAccountRef.Id.Value,
-                filePropertyName: filePropertyName,
-                fileInfo: new FileInfo(filePath),
-                fileMimeType:fileMimeType);
+            try
+            {
+                Console.WriteLine($"Uploading file {filePath} ...");
 
-            Console.WriteLine($"Uploaded file {filePath}");
+                // Upload the file
+                fileId = await UploadFile(
+                    service: service,
+                    entityLogicalName: entityLogicalName,
+                    primaryKeyLogicalName: primaryKeyLogicalName,
+                    entityId: createdAccountRef.Id.Value,
+                    filePropertyName: filePropertyName,
+                    fileInfo: new FileInfo(filePath),
+                    fileMimeType: fileMimeType, 
+                    fileColumnMaxSizeInKb: fileColumnMaxSizeInKb);
 
-            // Download the file
-            Console.WriteLine($"Downloading file from {createdAccountRef.Path}/{filePropertyName} ...");
+                Console.WriteLine($"Uploaded file {filePath}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
-            byte[] file = await DownloadFile(service: service,
-                entityLogicalName: entityLogicalName,
-                primaryKeyLogicalName: primaryKeyLogicalName,
-                entityId: createdAccountRef.Id.Value,
-                filePropertyName: filePropertyName);
+            if (fileId.HasValue)
+            {
+                // Download the file
+                Console.WriteLine($"Downloading file from {createdAccountRef.Path}/{filePropertyName} ...");
 
-            // File written to FileOperationsWithActions\bin\Debug\net6.0
-            File.WriteAllBytes($"downloaded-{fileName}", file);
-            Console.WriteLine($"Downloaded the file to {Environment.CurrentDirectory}//downloaded-{fileName}.");
+                byte[] file = await DownloadFile(service: service,
+                    entityLogicalName: entityLogicalName,
+                    primaryKeyLogicalName: primaryKeyLogicalName,
+                    entityId: createdAccountRef.Id.Value,
+                    filePropertyName: filePropertyName);
 
-            #region delete File
+                // File written to FileOperationsWithActions\bin\Debug\net6.0
+                File.WriteAllBytes($"downloaded-{fileName}", file);
+                Console.WriteLine($"Downloaded the file to {Environment.CurrentDirectory}//downloaded-{fileName}.");
 
-            DeleteFileRequest deleteFileRequest = new(fileId: fileId);
-            await service.SendAsync(deleteFileRequest);
-            Console.WriteLine("Deleted the file using FileId.");
+                #region delete File
 
-            #endregion delete File
+                DeleteFileRequest deleteFileRequest = new(fileId: fileId.Value);
+                await service.SendAsync(deleteFileRequest);
+                Console.WriteLine("Deleted the file using FileId.");
+
+                #endregion delete File
+            }
+
+
 
             // Delete the account record
             await service.Delete(createdAccountRef);
             Console.WriteLine("Deleted the account record.");
 
             // Delete the file column
-            await Utility.DeleteFileColumn(service,entityLogicalName,fileColumnSchemaName);
+            await Utility.DeleteFileColumn(service,entityLogicalName,fileColumnSchemaName.ToLower());
 
         }
 
@@ -102,7 +121,8 @@ namespace PowerApps.Samples
                 Guid entityId,
                 string filePropertyName,
                 FileInfo fileInfo,
-                string fileMimeType = null) 
+                string? fileMimeType = null,
+                int? fileColumnMaxSizeInKb = null) 
         {
             // Initialize the upload
             InitializeFileBlocksUploadRequest initializeFileBlocksUploadRequest = new(
@@ -127,8 +147,16 @@ namespace PowerApps.Samples
             int bytesRead = 0;
 
             long fileSize = fileInfo.Length;
+
+            if (fileColumnMaxSizeInKb.HasValue && (fileInfo.Length / 1024) > fileColumnMaxSizeInKb.Value)
+            {
+                throw new Exception($"The file is too large to be uploaded to this column.");
+            }
+
+
             // The number of iterations that will be required:
             // int blocksCount = (int)Math.Ceiling(fileSize / (float)blockSize);
+
             int blockNumber = 0;
 
             // While there is unread data from the file
@@ -141,11 +169,8 @@ namespace PowerApps.Samples
                 }
 
                 blockNumber++;
-                // Generates string blockId value based on number:
-                // 0 = "MDAwMDAwMDAwMDAwMDAwMA=="
-                // 1 = "MDAwMDAwMDAwMDAwMDAwMQ=="
-                // 2 = "MDAwMDAwMDAwMDAwMDAwMg=="
-                string blockId = Convert.ToBase64String(Encoding.UTF8.GetBytes(blockNumber.ToString().PadLeft(16, '0')));
+                // Generates base64 string blockId values based on a Guid value so they are always the same length.
+                string blockId = Convert.ToBase64String(Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()));
 
                 // List<string> is a reference type, so this will update the value passed into the function.
                 blockIds.Add(blockId);
