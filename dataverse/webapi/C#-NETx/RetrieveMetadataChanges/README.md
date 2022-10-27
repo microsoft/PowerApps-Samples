@@ -5,7 +5,7 @@ products:
 - power-platform
 - power-apps
 page_type: sample
-description: "This sample demonstrates how to use capabilities to query data using the Dataverse Web API."
+description: "This sample demonstrates how to use capabilities to efficiently query schema data and maintain a cache of the data as it changes over time."
 ---
 # RetrieveMetadataChanges Sample
 
