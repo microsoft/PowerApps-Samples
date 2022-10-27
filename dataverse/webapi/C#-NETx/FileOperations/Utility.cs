@@ -26,7 +26,7 @@ namespace PowerApps.Samples
                 RequiredLevel = new AttributeRequiredLevelManagedProperty(
                       AttributeRequiredLevel.None),
                 Description = new Label("Sample File Column for FileOperation samples", 1033),
-                MaxSizeInKB = 1 * 1024 // 10 MB
+                MaxSizeInKB = 10 * 1024 // 10 MB
 
             };
 

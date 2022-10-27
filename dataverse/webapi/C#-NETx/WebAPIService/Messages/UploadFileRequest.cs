@@ -23,7 +23,6 @@
                 uriKind: UriKind.Relative);
             Content = new StreamContent(fileContent);
             Content.Headers.Add("Content-Type", "application/octet-stream");
-            //Content.Headers.Add("x-ms-file-name", fileName);
         }
     }
 }

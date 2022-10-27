@@ -24,7 +24,7 @@ namespace PowerApps.Samples
             // Create the File Column with 10MB limit
             await Utility.CreateFileColumn(service, entityLogicalName, fileColumnSchemaName);
 
-            // Update the MaxSizeInKB value to 100MB.
+            // Update the MaxSizeInKB value to 100MB. Comment this line to get error about file too large for column.
             await Utility.UpdateFileColumnMaxSizeInKB(service, entityLogicalName, fileColumnSchemaName.ToLower(), 100 * 1024);
 
             //Get the configured size of the column in KB

@@ -28,9 +28,9 @@ namespace PowerApps.Samples
             await Utility.CreateFileColumn(service,entityLogicalName,fileColumnSchemaName);
 
             // Update the MaxSizeInKB value: Comment this line to get error about file too large for column.
-            await Utility.UpdateFileColumnMaxSizeInKB(service, entityLogicalName, fileColumnSchemaName.ToLower(), 100 * 1024);
+             await Utility.UpdateFileColumnMaxSizeInKB(service, entityLogicalName, fileColumnSchemaName.ToLower(), 100 * 1024);
 
-
+            // Retrieve the MaxSizeInKb value.
             fileColumnMaxSizeInKb = await Utility.GetFileColumnMaxSizeInKb(service, entityLogicalName, fileColumnSchemaName.ToLower());
 
             #region create account record
