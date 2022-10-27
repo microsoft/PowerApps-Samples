@@ -12,12 +12,12 @@ This sample uses the common helper code in the [WebAPIService](../WebAPIService)
 ## How to run the sample
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
-1. Open the [FileOperations.sln](FileOperations.sln) file using Visual Studio 2022
+1. Open the [PowerApps-Samples/dataverse/webapi/C#-NETx/FileOperations/FileOperations.sln](FileOperations.sln) file using Visual Studio 2022.
 1. Edit the [appsettings.json](../appsettings.json) file to set the following property values:
 
    |Property|Instructions  |
    |---------|---------|
-   |`Url`|The Url for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. See [View developer resources](https://docs.microsoft.com/en-us/power-apps/developer/data-platform/view-download-developer-resources) to find this. |
+   |`Url`|The Url for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. See [View developer resources](https://docs.microsoft.com/power-apps/developer/data-platform/view-download-developer-resources) to find this. |
    |`UserPrincipalName`|Replace the placeholder `you@yourorg.onmicrosoft.com` value with the UPN value you use to access the environment.|
    |`Password`|Replace the placeholder `yourPassword` value with the password you use.|
 
@@ -48,8 +48,8 @@ Deleted the file column named 'sample_filecolumn' in the account table.
 This sample is a solution  with three projects. Each project performs the same operations in a different manner. See the respective README files for details on each project.
 
 - [Web API File Operations with actions sample README](FileOperationsWithActions/README.md)
-- [Web API File Operations with chunks sample README](FileOperationsWithActions/README.md)
-- [Web API File Operations with stream sample README](FileOperationsWithActions/README.md)
+- [Web API File Operations with chunks sample README](FileOperationsWithChunks/README.md)
+- [Web API File Operations with stream sample README](FileOperationsWithStream/README.md)
 
 Each project uses a shared `Utility` class to perform common operations.
 
@@ -62,6 +62,8 @@ The `Utility.CreateFileColumn` function creates a file column named `sample_File
 ### Update a file column
 
 The `Utility.UpdateFileColumnMaxSizeInKB` function updates the `MaxSizeInKb` value of the `sample_FileColumn` file column to 100MB.
+
+> **Tip**: If you want to create some error scenarios because the file column size is too small, comment out this line.
 
 ### Retrieve the file column MaxSizeInKb value
 

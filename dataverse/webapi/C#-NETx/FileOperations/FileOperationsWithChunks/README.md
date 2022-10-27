@@ -6,7 +6,9 @@ This document describes the how the `FileOperationsWithChunks` project implement
 
 The `FileOperationsWithChunks` project demonstrates how to work with files using standard Http methods and the Dataverse Web API.
 
-This sample uses classes defined within the [WebAPIService project Messages folder](../../WebAPIService/Messages/) so that they can be re-used. These classes inherit from the .NET [HttpRequestMessage](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httprequestmessage?view=net-6.0) and [HttpResponseMessage](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpresponsemessage?view=net-6.0) classes. These classes have constructors that accept the relevant variables to compose the requests to send, or to deserialize the responses into standard properties.
+This sample uses classes defined within the [WebAPIService project Messages folder](../../WebAPIService/Messages/) so that they can be re-used. These classes inherit from the .NET [HttpRequestMessage](https://learn.microsoft.com/dotnet/api/system.net.http.httprequestmessage?view=net-6.0) and [HttpResponseMessage](https://learn.microsoft.com/dotnet/api/system.net.http.httpresponsemessage?view=net-6.0) classes. These classes have constructors that accept the relevant variables to compose the requests to send, or to deserialize the responses into standard properties.
+
+The code for this sample is in the [Program.cs](Program.cs) file.
 
 ## Upload File
 
@@ -28,4 +30,4 @@ To download the PDF file named `25MB.pdf` that was just uploaded to the `sample_
 
 ## Delete File
 
-1. If the file was succesfully uploaded, use the [DeleteColumnValueRequest class](../../WebAPIService/Messages/DeleteColumnValueRequest.cs) to delete the file.This method can be used to delete the value of any type of column. This request doesn't have any response value to process.
+If the file was succesfully uploaded, use the [DeleteColumnValueRequest class](../../WebAPIService/Messages/DeleteColumnValueRequest.cs) to delete the file.This method can be used to delete the value of any type of column. This request doesn't have any response value to process.

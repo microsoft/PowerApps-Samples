@@ -27,11 +27,7 @@ namespace PowerApps.Samples.Messages
         {
             get
             {
-                return (byte[])_jObject["Data"];
-
-
-                //string filestring = _jObject["Data"].ToString();
-                //return Convert.FromBase64String(filestring);
+                return (byte[])_jObject[nameof(Data)];
             }
         }
     }

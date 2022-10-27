@@ -9,7 +9,9 @@ The `FileOperationsWithStream` project demonstrates how to upload or download fi
 > **Important**
 > This method can only be used to download files less than 16MB in size and upload files less than 128 MB.
 
-This sample uses classes defined within the [WebAPIService project Messages folder](../../WebAPIService/Messages/) so that they can be re-used. These classes inherit from the .NET [HttpRequestMessage](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httprequestmessage?view=net-6.0) and [HttpResponseMessage](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpresponsemessage?view=net-6.0) classes. These classes have constructors that accept the relevant variables to compose the requests to send, or to deserialize the responses into standard properties.
+This sample uses classes defined within the [WebAPIService project Messages folder](../../WebAPIService/Messages/) so that they can be re-used. These classes inherit from the .NET [HttpRequestMessage](https://learn.microsoft.com/dotnet/api/system.net.http.httprequestmessage?view=net-6.0) and [HttpResponseMessage](https://learn.microsoft.com/dotnet/api/system.net.http.httpresponsemessage?view=net-6.0) classes. These classes have constructors that accept the relevant variables to compose the requests to send, or to deserialize the responses into standard properties.
+
+The code for this sample is in the [Program.cs](Program.cs) file.
 
 ## Upload File
 
@@ -18,7 +20,7 @@ To upload a PDF file named `4094kb.txt` to the `sample_FileColumn` file column o
 
 ## Download File
 
-If the file was succesfully uploaded, to download the PDF file named `4094kb.txt` that was just uploaded to the `sample_FileColumn` file column on the account record, this sample uses the [DownloadFileRequest class](../../WebAPIService/Messages/DownloadFileRequest.cs).
+If the file was succesfully uploaded, to download the text file named `4094kb.txt` that was just uploaded to the `sample_FileColumn` file column on the account record, this sample uses the [DownloadFileRequest class](../../WebAPIService/Messages/DownloadFileRequest.cs).
 
 To process the response the [DownloadFileResponse class](../../WebAPIService/Messages/DownloadFileResponse.cs) simply reads the response content as a byte[] to get the entire file.
 
