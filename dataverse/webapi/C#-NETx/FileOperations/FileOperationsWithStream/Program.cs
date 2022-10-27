@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using PowerApps.Samples.Messages;
 using PowerApps.Samples.Methods;
-using System.IO;
 
 namespace PowerApps.Samples
 {
@@ -16,7 +15,7 @@ namespace PowerApps.Samples
             string entityLogicalName = "account";
             string fileColumnSchemaName = "sample_FileColumn";
             string filePropertyName = fileColumnSchemaName.ToLower();
-            string fileName = "4094kb.txt";
+            string fileName = "25mb.pdf";
             string filePath = $"Files\\{fileName}";
             bool fileUploaded = false;
             int? fileColumnMaxSizeInKb;
@@ -42,7 +41,6 @@ namespace PowerApps.Samples
             Console.WriteLine($"Created account record with accountid:{createdAccountRef.Id.Value}");
 
             #endregion create account
-
 
 
             try
@@ -76,29 +74,12 @@ namespace PowerApps.Samples
                     entityReference: createdAccountRef,
                     property: filePropertyName);
 
-                try
-                {
-                    var downloadFileResponse = await service.SendAsync<DownloadFileResponse>(downloadFileRequest);
+                var downloadFileResponse = await service.SendAsync<DownloadFileResponse>(downloadFileRequest);
 
-                    // File written to FileOperationsWithStream\bin\Debug\net6.0
-                    File.WriteAllBytes($"downloaded-{fileName}", downloadFileResponse.File);
-                    Console.WriteLine($"Downloaded the file to {Environment.CurrentDirectory}//downloaded-{fileName}.");
-                }
-                catch (ServiceException se)
-                {
-                    // Change fileName to 25mb.pdf to encounter this error.
+                // File written to FileOperationsWithStream\bin\Debug\net6.0
+                File.WriteAllBytes($"downloaded-{fileName}", downloadFileResponse.File);
+                Console.WriteLine($"Downloaded the file to {Environment.CurrentDirectory}//downloaded-{fileName}.");
 
-                    if (se.ODataError.Error.Code.Equals("0x80090001"))
-                    {
-                        //{
-                        //  "error": {
-                        //      "code": "0x80090001",
-                        //      "message": "Maximum file size supported for download is [16] MB. File of [24 MB] size may only be downloaded using staged chunk download."
-                        //    }
-                        //}
-                        Console.WriteLine(se.ODataError.Error.Message);
-                    }
-                }
 
                 // Delete file
                 DeleteColumnValueRequest deleteColumnValueRequest = new(
