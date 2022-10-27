@@ -1,3 +1,12 @@
+---
+languages:
+- csharp
+products:
+- power-platform
+- power-apps
+page_type: sample
+description: "This sample demonstrates how to use capabilities to query data using the Dataverse Web API."
+---
 # RetrieveMetadataChanges Sample
 
 This sample demonstrates the use of the [RetrieveMetadataChanges Function](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/retrievemetadatachanges) using the Dataverse Web API.

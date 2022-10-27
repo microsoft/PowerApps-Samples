@@ -1,3 +1,12 @@
+---
+languages:
+- csharp
+products:
+- power-platform
+- power-apps
+page_type: sample
+description: "This sample demonstrates how to perform conditional data operations using the Dataverse Web API."
+---
 # Web API Conditional Operations sample
 
 This .NET 6.0 sample demonstrates how to perform conditional data operations using the Dataverse Web API.

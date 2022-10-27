@@ -1,4 +1,13 @@
-﻿# Work with Discovery Service
+﻿---
+languages:
+- csharp
+products:
+- power-platform
+- power-apps
+page_type: sample
+description: "This sample code shows how to use the discovery service using the OData service and HttpClient."
+---
+# Work with Discovery Service
 
 This sample code shows how to use the discovery service using the OData service and HttpClient.
 
