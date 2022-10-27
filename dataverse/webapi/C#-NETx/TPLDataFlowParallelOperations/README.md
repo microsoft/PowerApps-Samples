@@ -1,3 +1,12 @@
+---
+languages:
+- csharp
+products:
+- power-platform
+- power-apps
+page_type: sample
+description: "This sample demonstrates the use of Task Parallel Library (TPL) Dataflow components using Dataverse Web API to improve throughput."
+---
 # Web API TPL DataFlow ParallelOperations sample
 
 This .NET 6.0 sample demonstrates the use of Task Parallel Library (TPL) Dataflow components. More information: [Dataflow (Task Parallel Library)](https://docs.microsoft.com/dotnet/standard/parallel-programming/dataflow-task-parallel-library).
