@@ -1,6 +1,6 @@
 ﻿# SDK for .NET File Operations Sample
 
-This .NET 6.0 sample demonstrates how to perform operations with file columns using the Dataverse Web API.
+This .NET 6.0 sample demonstrates how to perform operations with file columns using the Dataverse SDK for .NET.
 
 This sample uses the [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient Class](https://learn.microsoft.com/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient).
 
