@@ -51,7 +51,7 @@ Deleted the file column named 'sample_filecolumn' in the account table.
 
 ## Demonstrates
 
-The project uses a shared `Utility` class to perform operations involving creating or retrieving schema data.
+The project uses a `Utility` class to perform operations involving creating or retrieving schema data.
 
 The code for this sample is in the [Program.cs](Program.cs) file.
 
