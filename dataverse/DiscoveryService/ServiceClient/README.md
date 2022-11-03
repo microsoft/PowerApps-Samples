@@ -1,4 +1,12 @@
-﻿
+﻿---
+languages:
+- csharp
+products:
+- power-platform
+- power-apps
+page_type: sample
+description: "This sample code shows how to use the Discovery service with Dataverse ServiceClient."
+---
 # Work with Discovery Service
 
 This sample code shows how to use the discovery service with Dataverse ServiceClient.

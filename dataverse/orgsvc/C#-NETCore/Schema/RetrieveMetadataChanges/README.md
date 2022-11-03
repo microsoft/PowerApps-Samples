@@ -1,7 +1,16 @@
+---
+languages:
+- csharp
+products:
+- power-platform
+- power-apps
+page_type: sample
+description: "This sample code shows how to use efficiently retrieve schema data and maintain a cache the RetrieveMetadataChangesRequest"
+---
 # RetrieveMetadataChanges Sample
 
-This sample demonstrates the use of the [RetrieveMetadataChangesRequest](https://learn.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.messages.retrievemetadatachangesrequest) 
-and [RetrieveMetadataChangesResponse](https://learn.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.messages.retrievemetadatachangesresponse) classes to create a 
+This sample demonstrates the use of the [RetrieveMetadataChangesRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.retrievemetadatachangesrequest) 
+and [RetrieveMetadataChangesResponse](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.retrievemetadatachangesresponse) classes to create a 
 simple client-side persistent cache of Dataverse schema data.
 
 ## Instructions

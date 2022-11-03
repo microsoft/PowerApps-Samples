@@ -1,3 +1,12 @@
+---
+languages:
+- csharp
+products:
+- power-platform
+- power-apps
+page_type: sample
+description: "This sample demonstrates how to use capabilities to efficiently query schema data and maintain a cache of the data as it changes over time."
+---
 # RetrieveMetadataChanges Sample
 
 This sample demonstrates the use of the [RetrieveMetadataChanges Function](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/retrievemetadatachanges) using the Dataverse Web API.

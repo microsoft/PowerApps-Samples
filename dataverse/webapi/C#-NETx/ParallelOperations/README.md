@@ -1,3 +1,12 @@
+---
+languages:
+- csharp
+products:
+- power-platform
+- power-apps
+page_type: sample
+description: "This sample demonstrates how to achieve higher throughput by sending requests in parallel to the Dataverse Web API."
+---
 # Web API Parallel Operations sample
 
 This .NET 6.0 sample demonstrates how to achieve higher throughput by sending requests in parallel to the Dataverse Web API.

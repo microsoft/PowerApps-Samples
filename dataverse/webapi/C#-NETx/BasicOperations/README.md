@@ -1,3 +1,12 @@
+---
+languages:
+- csharp
+products:
+- power-platform
+- power-apps
+page_type: sample
+description: "This sample demonstrates how to perform common data operations using the Dataverse Web API."
+---
 # Web API Basic Operations sample
 
 This .NET 6.0 sample demonstrates how to perform common data operations using the Dataverse Web API.
@@ -11,7 +20,7 @@ This sample uses the common helper code in the [WebAPIService](../WebAPIService)
 
 ## How to run the sample
 
-1. Clone or download the [PowerApps-Samples](../../../../../PowerApps-Samples) repository.
+1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
 1. Open the [BasicOperations.sln](BasicOperations.sln) file using Visual Studio 2022
 1. Edit the [appsettings.json](../appsettings.json) file to set the following property values:
 

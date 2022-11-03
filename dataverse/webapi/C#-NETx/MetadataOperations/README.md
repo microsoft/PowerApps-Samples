@@ -1,3 +1,12 @@
+---
+languages:
+- csharp
+products:
+- power-platform
+- power-apps
+page_type: sample
+description: "This sample demonstrates how to work with schema definitions using the Dataverse Web API."
+---
 # Web API Metadata operations sample
 
 This .NET 6.0 sample demonstrates how to work with the following using the Dataverse Web API:
