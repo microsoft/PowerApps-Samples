@@ -154,6 +154,8 @@ namespace PowerApps.Samples
 
             HttpResponseMessage response = await client.SendAsync(request);
 
+            //SampleGenerator.WriteHttpSample(request, response, BaseAddress, "LOCAL PATH");
+
             // Throw an exception if the request is not successful
             if (!response.IsSuccessStatusCode)
             {

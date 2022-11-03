@@ -21,7 +21,7 @@ namespace PowerApps.Samples.Metadata.Messages
             string entityLogicalName, 
             string attributeLogicalName, 
             AttributeMetadata attributeMetadata, 
-            string? solutionUniqueName, 
+            string? solutionUniqueName = null, 
             bool doNotMergeLabels = false)
         {
             Method = HttpMethod.Put;
