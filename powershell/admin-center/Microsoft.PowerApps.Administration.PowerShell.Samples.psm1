@@ -1400,19 +1400,19 @@ function UpdatePolicyEnvironmentsForTeams
     Write-Host "UpdatePolicyEnvironmentsForTeams completes."
 }
 
-function EnableManagementForEnvironment
+function EnableManagedEnvironments
 {
     <#
      .SYNOPSIS
-     Enables management for the given environment.
+     Enables Managed Environments for the given environment.
      .DESCRIPTION
-     The EnableManagementForEnvironment cmdlet enables management for the given environment by updating its governance configuration.
-     Use Get-Help EnableManagementForEnvironment -Examples for more details.
+     The EnableManagedEnvironments cmdlet enables Managed Environments for the given environment by updating its governance configuration.
+     Use Get-Help EnableManagedEnvironments -Examples for more details.
      .PARAMETER EnvironmentId
      The id (usually a GUID) of the environment.
      .EXAMPLE
-     EnableManagementForEnvironment -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4
-     Enables management for environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4.
+     EnableManagedEnvironments -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4
+     Enables Managed Environments for environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4.
     #>
     param
     (
@@ -1442,27 +1442,27 @@ function EnableManagementForEnvironment
     $response = Set-AdminPowerAppEnvironmentGovernanceConfiguration -EnvironmentName $EnvironmentId -UpdatedGovernanceConfiguration $GovernanceConfiguration
     if ($response.Code -ne 202)
     {
-        Write-Host "Failed to enable Management for the specified environment."
+        Write-Host "Failed to enable Managed Environments for the specified environment."
         Write-Host $response.Internal.Message
         return
     }
     
-    Write-Host "Enabled Management for the specified environment."    
+    Write-Host "Enabled Managed Environments for the specified environment."    
 }
 
-function DisableManagementForEnvironment
+function DisableManagedEnvironments
 {
     <#
      .SYNOPSIS
-     Disables management for the given environment.
+     Disables Managed Environments for the given environment.
      .DESCRIPTION
-     The DisableManagementForEnvironment cmdlet enables management for the given environment by updating its governance configuration.
-     Use Get-Help DisableManagementForEnvironment -Examples for more details.
+     The DisableManagedEnvironments cmdlet enables Managed Environments for the given environment by updating its governance configuration.
+     Use Get-Help DisableManagedEnvironments -Examples for more details.
      .PARAMETER EnvironmentId
      The id (usually a GUID) of the environment.
      .EXAMPLE
-     DisableManagementForEnvironment -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4
-     Disables management for environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4.
+     DisableManagedEnvironments -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4
+     Disables Managed Environments for environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4.
     #>
     param
     (
@@ -1492,27 +1492,27 @@ function DisableManagementForEnvironment
     $response = Set-AdminPowerAppEnvironmentGovernanceConfiguration -EnvironmentName $EnvironmentId -UpdatedGovernanceConfiguration $GovernanceConfiguration
     if ($response.Code -ne 202)
     {
-        Write-Host "Failed to disable Management for the specified environment."
+        Write-Host "Failed to disable Managed Environments for the specified environment."
         Write-Host $response.Internal.Message
         return
     }
     
-    Write-Host "Disabled Management for the specified environment."    
+    Write-Host "Disabled Managed Environments for the specified environment."    
 }
 
-function IncludeInsightsForManagedEnvironmentInWeeklyEmailDigest
+function IncludeInsightsForManagedEnvironmentsInWeeklyEmailDigest
 {
     <#
      .SYNOPSIS
-     Includes insights for the specified managed environment from weekly email digest.
+     Includes insights for the specified Managed environment from weekly email digest.
      .DESCRIPTION
-     The IncludeInsightsForManagedEnvironmentInWeeklyEmailDigest cmdlet includes insights for the specified managed environment from weekly email digest.
-     Use Get-Help IncludeInsightsForManagedEnvironmentInWeeklyEmailDigest -Examples for more details.
+     The IncludeInsightsForManagedEnvironmentsInWeeklyEmailDigest cmdlet includes insights for the specified Managed environment from weekly email digest.
+     Use Get-Help IncludeInsightsForManagedEnvironmentsInWeeklyEmailDigest -Examples for more details.
      .PARAMETER EnvironmentId
      The id (usually a GUID) of the environment.
      .EXAMPLE
-     IncludeInsightsForManagedEnvironmentInWeeklyEmailDigest -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4
-     Includes insights for managed environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4 in the weekly email digest.
+     IncludeInsightsForManagedEnvironmentsInWeeklyEmailDigest -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4
+     Includes insights for Managed environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4 in the weekly email digest.
     #>
     param
     (
@@ -1556,19 +1556,19 @@ function IncludeInsightsForManagedEnvironmentInWeeklyEmailDigest
     Write-Host "Included insights for the specified environment in weekly email digest."    
 }
 
-function ExcludeInsightsForManagedEnvironmentInWeeklyEmailDigest
+function ExcludeInsightsForManagedEnvironmentsInWeeklyEmailDigest
 {
     <#
      .SYNOPSIS
-     Excludes insights for the specified managed environment from weekly email digest.
+     Excludes insights for the specified Managed environment from weekly email digest.
      .DESCRIPTION
-     The ExcludeInsightsForManagedEnvironmentInWeeklyEmailDigest cmdlet excludes insights for the specified managed environment from weekly email digest.
-     Use Get-Help ExcludeInsightsForManagedEnvironmentInWeeklyEmailDigest -Examples for more details.
+     The ExcludeInsightsForManagedEnvironmentsInWeeklyEmailDigest cmdlet excludes insights for the specified Managed environment from weekly email digest.
+     Use Get-Help ExcludeInsightsForManagedEnvironmentsInWeeklyEmailDigest -Examples for more details.
      .PARAMETER EnvironmentId
      The id (usually a GUID) of the environment.
      .EXAMPLE
-     ExcludeInsightsForManagedEnvironmentInWeeklyEmailDigest -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4
-     Excludes insights for managed environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4 in the weekly email digest.
+     ExcludeInsightsForManagedEnvironmentsInWeeklyEmailDigest -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4
+     Excludes insights for Managed environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4 in the weekly email digest.
     #>
     param
     (
@@ -2171,57 +2171,4 @@ function WriteStack
     Write-Host $_.Exception.Message -ForegroundColor red
     Write-Host $_.ScriptStackTrace -ForegroundColor red
     Write-Host ('=' * 70) -ForegroundColor red
-}
-
-function CoalesceGovernanceConfiguration
-{
-<#
- .SYNOPSIS
- Internal helper method. Coalesces the given governance configuration object by initializing it if it is null.
- .DESCRIPTION
- The CoalesceGovernanceConfiguration cmdlet returns a non-null copy of the given governance configuration object.
- Use Get-Help CoalesceGovernanceConfiguration -Examples for more details.
- .PARAMETER GovernanceConfiguration
- The governance configuration property of an environment.
- .EXAMPLE
-$GovernanceConfiguration = $null
-CoalesceGovernanceConfiguration -GovernanceConfiguration $GovernanceConfiguration
-Returns a governance configuration object with protectionLevel set to "Basic" and empty settings.
- .EXAMPLE
-$GovernanceConfiguration = [pscustomobject]@{
-	protectionLevel = "Basic"
-	settings = [pscustomobject]@{
-		extendedSettings = @{}
-	}
-}
-CoalesceGovernanceConfiguration -GovernanceConfiguration $GovernanceConfiguration
-Returns the provided governance configuration object as is.
- #>
-    param
-    (
-        [Parameter(Mandatory = $true)]
-        [object]$GovernanceConfiguration
-    )
-	
-	if ($GovernanceConfiguration -eq $null -or $GovernanceConfiguration.protectionLevel -eq $null)
-	{
-		$GovernanceConfiguration = [pscustomobject]@{
-			protectionLevel = "Basic"
-			settings = [pscustomobject]@{
-				extendedSettings = @{}
-			}
-		}
-	}
-	
-	if ($GovernanceConfiguration.settings -eq $null -or $GovernanceConfiguration.settings.extendedSettings -eq $null)
-	{
-		$GovernanceConfiguration = [pscustomobject]@{
-			protectionLevel = $GovernanceConfiguration.protectionLevel
-			settings = [pscustomobject]@{
-				extendedSettings = @{}
-			}
-		}
-	}
-	
-	return $GovernanceConfiguration
 }
