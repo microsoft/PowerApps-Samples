@@ -1339,8 +1339,6 @@ function UpdatePolicyEnvironmentsForTeams
 
     if ($exceptionEnvironmentsPolicy -ne $null)
     {
-        $exceptionEnvironmentsPolicy.environments = @()
-            
         # add teams environment into ExceptEnvironments policy
         foreach ($environment in $teamEnvironments)
         {
