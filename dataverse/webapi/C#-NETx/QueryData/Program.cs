@@ -16,6 +16,9 @@ namespace QueryData
 
             var service = new Service(config);
 
+
+
+
             List<EntityReference> recordsToDelete = new();
             bool deleteCreatedRecords = true;
 
@@ -259,354 +262,354 @@ namespace QueryData
 
             #endregion Section 0: Create Records to query
 
-            #region Section 1 Selecting specific properties
+            //#region Section 1 Selecting specific properties
 
-            Console.WriteLine("\n--Section 1 started--");
+            //Console.WriteLine("\n--Section 1 started--");
 
-            // Basic query: Query using $select against a contact entity to get the properties you want.
-            // For performance best practice, always use $select, otherwise all properties are returned
-            // Including annotations provides access to formatted values with the
-            // @OData.Community.Display.V1.FormattedValue annotation
-            Console.WriteLine("-- Basic Query --");
+            //// Basic query: Query using $select against a contact entity to get the properties you want.
+            //// For performance best practice, always use $select, otherwise all properties are returned
+            //// Including annotations provides access to formatted values with the
+            //// @OData.Community.Display.V1.FormattedValue annotation
+            //Console.WriteLine("-- Basic Query --");
 
-            JObject retrievedContactYvonne = await service.Retrieve(
-                entityReference: contactYvonneRef,
-                query: "?$select=fullname,jobtitle,annualincome",
-                includeAnnotations: true // Adds Request header: "Prefer", "odata.include-annotations=\"*\""
-                );
+            //JObject retrievedContactYvonne = await service.Retrieve(
+            //    entityReference: contactYvonneRef,
+            //    query: "?$select=fullname,jobtitle,annualincome",
+            //    includeAnnotations: true // Adds Request header: "Prefer", "odata.include-annotations=\"*\""
+            //    );
 
-            Console.WriteLine($"Contact basic info:\n" +
-                        $"\tFullname: {retrievedContactYvonne["fullname"]}\n" +
-                        $"\tJobtitle: {retrievedContactYvonne["jobtitle"]}\n" +
-                        $"\tAnnualincome (unformatted): {retrievedContactYvonne["annualincome"]} \n" +
-                        $"\tAnnualincome (formatted): {retrievedContactYvonne["annualincome@OData.Community.Display.V1.FormattedValue"]} \n");
+            //Console.WriteLine($"Contact basic info:\n" +
+            //            $"\tFullname: {retrievedContactYvonne["fullname"]}\n" +
+            //            $"\tJobtitle: {retrievedContactYvonne["jobtitle"]}\n" +
+            //            $"\tAnnualincome (unformatted): {retrievedContactYvonne["annualincome"]} \n" +
+            //            $"\tAnnualincome (formatted): {retrievedContactYvonne["annualincome@OData.Community.Display.V1.FormattedValue"]} \n");
 
-            #endregion Section 1 Selecting specific properties
+            //#endregion Section 1 Selecting specific properties
 
-            #region Section 2 Using query functions
-            Console.WriteLine("\n--Section 2 started--");
+            //#region Section 2 Using query functions
+            //Console.WriteLine("\n--Section 2 started--");
 
-            // Filter criteria:
-            // Applying filters to get targeted data.
-            // 1) Using standard query functions (e.g.: contains, endswith, startswith)
-            // 2) Using Dataverse query functions (e.g.: LastXhours, Last7Days, Today, Between, In, ...)
-            // 3) Using filter operators and logical operators (e.g.: eq, ne, gt, and, or, etc…)
-            // 4) Set precedence using parenthesis (e.g.: ((criteria1) and (criteria2)) or (criteria3)
-            // For more info, see:
-            // https://docs.microsoft.com/power-apps/developer/data-platform/webapi/query-data-web-api#filter-results
+            //// Filter criteria:
+            //// Applying filters to get targeted data.
+            //// 1) Using standard query functions (e.g.: contains, endswith, startswith)
+            //// 2) Using Dataverse query functions (e.g.: LastXhours, Last7Days, Today, Between, In, ...)
+            //// 3) Using filter operators and logical operators (e.g.: eq, ne, gt, and, or, etc…)
+            //// 4) Set precedence using parenthesis (e.g.: ((criteria1) and (criteria2)) or (criteria3)
+            //// For more info, see:
+            //// https://docs.microsoft.com/power-apps/developer/data-platform/webapi/query-data-web-api#filter-results
 
-            Console.WriteLine("-- Filter Criteria --");
-            // Filter 1: Using standard query functions to filter results. This operation
-            // will query for all contacts with fullname containing the string "(sample)".
+            //Console.WriteLine("-- Filter Criteria --");
+            //// Filter 1: Using standard query functions to filter results. This operation
+            //// will query for all contacts with fullname containing the string "(sample)".
 
-            RetrieveMultipleResponse containsSampleinFullNameCollection =
-                await service.RetrieveMultiple(queryUri: "contacts?" +
-                        "$select=fullname,jobtitle,annualincome&" +
-                        "$filter=contains(fullname,'(sample)') and " +
-                        $"_parentcustomerid_value eq {accountContosoRef.Id}",
-                        includeAnnotations: true);
+            //RetrieveMultipleResponse containsSampleinFullNameCollection =
+            //    await service.RetrieveMultiple(queryUri: "contacts?" +
+            //            "$select=fullname,jobtitle,annualincome&" +
+            //            "$filter=contains(fullname,'(sample)') and " +
+            //            $"_parentcustomerid_value eq {accountContosoRef.Id}",
+            //            includeAnnotations: true);
 
-            WriteContactResultsTable(
-                message: "Contacts filtered by fullname containing '(sample)':",
-                collection: containsSampleinFullNameCollection.Records);
+            //WriteContactResultsTable(
+            //    message: "Contacts filtered by fullname containing '(sample)':",
+            //    collection: containsSampleinFullNameCollection.Records);
 
-            // Filter 2: Using Dataverse query functions to filter results. In this operation, we will query
-            // for all contacts that were created in the last hour. For complete list of Dataverse query
-            // functions, see: https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/queryfunctions
+            //// Filter 2: Using Dataverse query functions to filter results. In this operation, we will query
+            //// for all contacts that were created in the last hour. For complete list of Dataverse query
+            //// functions, see: https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/queryfunctions
 
-            RetrieveMultipleResponse createdInLastHourCollection =
-                await service.RetrieveMultiple(queryUri: "contacts?" +
-                        "$select=fullname,jobtitle,annualincome" +
-                        "&$filter=Microsoft.Dynamics.CRM.LastXHours(PropertyName=@p1,PropertyValue=@p2) and " +
-                        $"_parentcustomerid_value eq {accountContosoRef.Id}" +
-                        $"&@p1='createdon'" +
-                        $"&@p2='1'",
-                        includeAnnotations: true);
+            //RetrieveMultipleResponse createdInLastHourCollection =
+            //    await service.RetrieveMultiple(queryUri: "contacts?" +
+            //            "$select=fullname,jobtitle,annualincome" +
+            //            "&$filter=Microsoft.Dynamics.CRM.LastXHours(PropertyName=@p1,PropertyValue=@p2) and " +
+            //            $"_parentcustomerid_value eq {accountContosoRef.Id}" +
+            //            $"&@p1='createdon'" +
+            //            $"&@p2='1'",
+            //            includeAnnotations: true);
 
-            WriteContactResultsTable(
-                "Contacts that were created within the last 1hr:",
-                createdInLastHourCollection.Records);
+            //WriteContactResultsTable(
+            //    "Contacts that were created within the last 1hr:",
+            //    createdInLastHourCollection.Records);
 
-            // Filter 3: Using operators. Building on the previous operation, this will further limit
-            // the results by the contact's income. For more info on standard filter operators,
-            // https://docs.microsoft.com/power-apps/developer/data-platform/webapi/query-data-web-api#filter-results
+            //// Filter 3: Using operators. Building on the previous operation, this will further limit
+            //// the results by the contact's income. For more info on standard filter operators,
+            //// https://docs.microsoft.com/power-apps/developer/data-platform/webapi/query-data-web-api#filter-results
 
-            RetrieveMultipleResponse highIncomeContacts =
-                await service.RetrieveMultiple(queryUri: "contacts?" +
-                        "$select=fullname,jobtitle,annualincome&" +
-                        "$filter=contains(fullname,'(sample)') and " +
-                        "annualincome gt 55000  and " +
-                        $"_parentcustomerid_value eq {accountContosoRef.Id}",
-                        includeAnnotations: true);
+            //RetrieveMultipleResponse highIncomeContacts =
+            //    await service.RetrieveMultiple(queryUri: "contacts?" +
+            //            "$select=fullname,jobtitle,annualincome&" +
+            //            "$filter=contains(fullname,'(sample)') and " +
+            //            "annualincome gt 55000  and " +
+            //            $"_parentcustomerid_value eq {accountContosoRef.Id}",
+            //            includeAnnotations: true);
 
-            WriteContactResultsTable(
-               message: "Contacts with '(sample)' in name and income above $55,000:",
-               collection: highIncomeContacts.Records);
+            //WriteContactResultsTable(
+            //   message: "Contacts with '(sample)' in name and income above $55,000:",
+            //   collection: highIncomeContacts.Records);
 
-            // Filter 4: Set precedence using parentheses. Continue building on the previous
-            // operation, this will further limit results by job title. Parentheses and the order of
-            // filter statements can impact results returned.
+            //// Filter 4: Set precedence using parentheses. Continue building on the previous
+            //// operation, this will further limit results by job title. Parentheses and the order of
+            //// filter statements can impact results returned.
 
-            RetrieveMultipleResponse seniorOrSpecialistsCollection =
-                await service.RetrieveMultiple(queryUri: "contacts?" +
-                        "$select=fullname,jobtitle,annualincome&" +
-                        "$filter=contains(fullname,'(sample)') and " +
-                        "(contains(jobtitle, 'senior') or " +
-                        "contains(jobtitle,'manager')) and " +
-                        "annualincome gt 55000 and " +
-                        $"_parentcustomerid_value eq {accountContosoRef.Id}",
-                        includeAnnotations: true);
+            //RetrieveMultipleResponse seniorOrSpecialistsCollection =
+            //    await service.RetrieveMultiple(queryUri: "contacts?" +
+            //            "$select=fullname,jobtitle,annualincome&" +
+            //            "$filter=contains(fullname,'(sample)') and " +
+            //            "(contains(jobtitle, 'senior') or " +
+            //            "contains(jobtitle,'manager')) and " +
+            //            "annualincome gt 55000 and " +
+            //            $"_parentcustomerid_value eq {accountContosoRef.Id}",
+            //            includeAnnotations: true);
 
-            WriteContactResultsTable(
-                message: "Contacts with '(sample)' in name senior jobtitle or high income:",
-                collection: seniorOrSpecialistsCollection.Records);
+            //WriteContactResultsTable(
+            //    message: "Contacts with '(sample)' in name senior jobtitle or high income:",
+            //    collection: seniorOrSpecialistsCollection.Records);
 
-            #endregion Section 2 Using query functions
+            //#endregion Section 2 Using query functions
 
-            #region Section 3 Ordering and aliases
+            //#region Section 3 Ordering and aliases
 
-            Console.WriteLine("\n--Section 3 started--");
+            //Console.WriteLine("\n--Section 3 started--");
 
-            Console.WriteLine("\n-- Order Results --");
+            //Console.WriteLine("\n-- Order Results --");
 
-            RetrieveMultipleResponse orderedResults =
-                await service.RetrieveMultiple("contacts?" +
-                        "$select=fullname,jobtitle,annualincome&" +
-                        "$filter=contains(fullname,'(sample)')and " +
-                        $"_parentcustomerid_value eq {accountContosoRef.Id}&" +
-                        "$orderby=jobtitle asc, annualincome desc",
-                        includeAnnotations: true);
+            //RetrieveMultipleResponse orderedResults =
+            //    await service.RetrieveMultiple("contacts?" +
+            //            "$select=fullname,jobtitle,annualincome&" +
+            //            "$filter=contains(fullname,'(sample)')and " +
+            //            $"_parentcustomerid_value eq {accountContosoRef.Id}&" +
+            //            "$orderby=jobtitle asc, annualincome desc",
+            //            includeAnnotations: true);
 
-            WriteContactResultsTable(
-                "Contacts ordered by jobtitle (Ascending) and annualincome (descending)",
-                orderedResults.Records);
+            //WriteContactResultsTable(
+            //    "Contacts ordered by jobtitle (Ascending) and annualincome (descending)",
+            //    orderedResults.Records);
 
-            // Parameterized aliases can be used as parameters in a query. Use these parameters
-            // in $filter and $orderby options. Using the previous operation as basis, parameterizing the
-            // query will give us the same results. For more info, see:
-            // https://docs.microsoft.com/power-apps/developer/data-platform/webapi/use-web-api-functions#passing-parameters-to-a-function
+            //// Parameterized aliases can be used as parameters in a query. Use these parameters
+            //// in $filter and $orderby options. Using the previous operation as basis, parameterizing the
+            //// query will give us the same results. For more info, see:
+            //// https://docs.microsoft.com/power-apps/developer/data-platform/webapi/use-web-api-functions#passing-parameters-to-a-function
 
-            Console.WriteLine("\n-- Parameterized Aliases --");
+            //Console.WriteLine("\n-- Parameterized Aliases --");
 
-            RetrieveMultipleResponse orderedResultsWithParams =
-                await service.RetrieveMultiple("contacts?" +
-                        "$select=fullname,jobtitle,annualincome&" +
-                        "$filter=contains(@p1,'(sample)') and " +
-                        "@p2 eq @p3&" +
-                        "$orderby=@p4 asc, @p5 desc&" +
-                        "@p1=fullname&" +
-                        "@p2=_parentcustomerid_value&" +
-                        $"@p3={accountContosoRef.Id}&" +
-                        "@p4=jobtitle&" +
-                        "@p5=annualincome",
-                        includeAnnotations: true);
+            //RetrieveMultipleResponse orderedResultsWithParams =
+            //    await service.RetrieveMultiple("contacts?" +
+            //            "$select=fullname,jobtitle,annualincome&" +
+            //            "$filter=contains(@p1,'(sample)') and " +
+            //            "@p2 eq @p3&" +
+            //            "$orderby=@p4 asc, @p5 desc&" +
+            //            "@p1=fullname&" +
+            //            "@p2=_parentcustomerid_value&" +
+            //            $"@p3={accountContosoRef.Id}&" +
+            //            "@p4=jobtitle&" +
+            //            "@p5=annualincome",
+            //            includeAnnotations: true);
 
-            WriteContactResultsTable(
-                "Contacts ordered by jobtitle (Ascending) and annualincome (descending)",
-                orderedResultsWithParams.Records);
+            //WriteContactResultsTable(
+            //    "Contacts ordered by jobtitle (Ascending) and annualincome (descending)",
+            //    orderedResultsWithParams.Records);
 
-            #endregion Section 3 Ordering and aliases
+            //#endregion Section 3 Ordering and aliases
 
-            #region Section 4 Limit and count results
+            //#region Section 4 Limit and count results
 
-            Console.WriteLine("\n--Section 4 started--");
+            //Console.WriteLine("\n--Section 4 started--");
            
-            // To limit records returned, use the $top query option.  Specifying a limit number for $top
-            // returns at most that number of results per request. Extra results are ignored.
-            // For more information, see:
-            // https://docs.microsoft.com/power-apps/developer/data-platform/webapi/query-data-web-api#use-top-query-option
-            Console.WriteLine("\n-- Top Results --");
+            //// To limit records returned, use the $top query option.  Specifying a limit number for $top
+            //// returns at most that number of results per request. Extra results are ignored.
+            //// For more information, see:
+            //// https://docs.microsoft.com/power-apps/developer/data-platform/webapi/query-data-web-api#use-top-query-option
+            //Console.WriteLine("\n-- Top Results --");
 
-            RetrieveMultipleResponse topFive =
-                await service.RetrieveMultiple("contacts?" +
-                        "$select=fullname,jobtitle,annualincome&" +
-                        "$filter=contains(fullname,'(sample)') and " +
-                        $"_parentcustomerid_value eq {accountContosoRef.Id}&" +
-                        "$top=5",
-                        includeAnnotations: true);
+            //RetrieveMultipleResponse topFive =
+            //    await service.RetrieveMultiple("contacts?" +
+            //            "$select=fullname,jobtitle,annualincome&" +
+            //            "$filter=contains(fullname,'(sample)') and " +
+            //            $"_parentcustomerid_value eq {accountContosoRef.Id}&" +
+            //            "$top=5",
+            //            includeAnnotations: true);
 
-            WriteContactResultsTable("Contacts top 5 results:", topFive.Records);
+            //WriteContactResultsTable("Contacts top 5 results:", topFive.Records);
 
-            // Result count - count the number of results matching the filter criteria.
-            // Tip: Use count together with the "odata.maxpagesize" to calculate the number of pages in
-            // the query.  Note: Dataverse has a max record limit of 5000 records per response.
-            Console.WriteLine("\n-- Result Count --");
+            //// Result count - count the number of results matching the filter criteria.
+            //// Tip: Use count together with the "odata.maxpagesize" to calculate the number of pages in
+            //// the query.  Note: Dataverse has a max record limit of 5000 records per response.
+            //Console.WriteLine("\n-- Result Count --");
 
-            //1) Get a count of a collection without the data.
+            ////1) Get a count of a collection without the data.
 
-            GetCollectionCountRequest countRequest = new("contacts");
-            var countResponse = await service.SendAsync<GetCollectionCountResponse>(countRequest);
-            Console.WriteLine($"\nThe contacts collection has {countResponse.Count} contacts.");
+            //GetCollectionCountRequest countRequest = new("contacts");
+            //var countResponse = await service.SendAsync<GetCollectionCountResponse>(countRequest);
+            //Console.WriteLine($"\nThe contacts collection has {countResponse.Count} contacts.");
 
-            //  2) Get a count along with the data by including $count=true
+            ////  2) Get a count along with the data by including $count=true
 
-            RetrieveMultipleResponse countWithData =
-                await service.RetrieveMultiple("contacts?" +
-                        "$select=fullname,jobtitle,annualincome&" +
-                        "$filter=(contains(jobtitle,'senior') or contains(jobtitle, 'manager')) and " +
-                        $"_parentcustomerid_value eq {accountContosoRef.Id}" +
-                        "&$count=true",
-                        includeAnnotations: true);
+            //RetrieveMultipleResponse countWithData =
+            //    await service.RetrieveMultiple("contacts?" +
+            //            "$select=fullname,jobtitle,annualincome&" +
+            //            "$filter=(contains(jobtitle,'senior') or contains(jobtitle, 'manager')) and " +
+            //            $"_parentcustomerid_value eq {accountContosoRef.Id}" +
+            //            "&$count=true",
+            //            includeAnnotations: true);
 
-            WriteContactResultsTable($"{countWithData.Count} " +
-                $"Contacts with 'senior' or 'manager' in job title:",
-                countWithData.Records);
+            //WriteContactResultsTable($"{countWithData.Count} " +
+            //    $"Contacts with 'senior' or 'manager' in job title:",
+            //    countWithData.Records);
 
-            #endregion Section 4 Limit and count results
+            //#endregion Section 4 Limit and count results
 
-            #region Section 5 Pagination
+            //#region Section 5 Pagination
 
-            Console.WriteLine("\n--Section 5 started--");
+            //Console.WriteLine("\n--Section 5 started--");
 
-            RetrieveMultipleResponse firstPageResults = 
-                await service.RetrieveMultiple(
-                    queryUri: "contacts?$select=fullname,jobtitle,annualincome&$filter=contains(fullname,'(sample)')&$count=true",
-                    maxPageSize: 4,
-                    includeAnnotations: true);
+            //RetrieveMultipleResponse firstPageResults = 
+            //    await service.RetrieveMultiple(
+            //        queryUri: "contacts?$select=fullname,jobtitle,annualincome&$filter=contains(fullname,'(sample)')&$count=true",
+            //        maxPageSize: 4,
+            //        includeAnnotations: true);
 
-            WriteContactResultsTable($"Contacts total: {firstPageResults.TotalRecordCount}    Contacts per page: 4.  \r\nPage 1 of 3:", firstPageResults.Records);
+            //WriteContactResultsTable($"Contacts total: {firstPageResults.TotalRecordCount}    Contacts per page: 4.  \r\nPage 1 of 3:", firstPageResults.Records);
 
-            RetrieveMultipleResponse secondPageResults =
-                await service.RetrieveMultiple(
-                    queryUri: firstPageResults.NextLink,
-                    maxPageSize: 4,
-                    includeAnnotations: true);
+            //RetrieveMultipleResponse secondPageResults =
+            //    await service.RetrieveMultiple(
+            //        queryUri: firstPageResults.NextLink,
+            //        maxPageSize: 4,
+            //        includeAnnotations: true);
 
-            WriteContactResultsTable($"Page 2 of 3:", secondPageResults.Records);
-
-
-            #endregion Section 5 Pagination
-
-            #region Section 6 Expanding results
-
-            Console.WriteLine("\n--Section 6 started--");
-
-            // The $expand option retrieves related information.
-            // To retrieve information on associated entities in the same request, use the $expand
-            // query option on navigation properties.
-            //   1) Expand using single-valued navigation properties (e.g.: via the 'primarycontactid')
-            //   2) Expand using partner property (e.g.: from contact to account via the 'account_primary_contact')
-            //   3) Expand using collection-valued navigation properties (e.g.: via the 'contact_customer_accounts')
-            //   4) Expand using multiple navigation property types in a single request.
-            //   5) Multi-level expands
-
-            // Tip: For performance best practice, always use $select statement in an expand option.
-
-            Console.WriteLine("\n-- Expanding Results --");
-
-            //1) Expand using the 'primarycontactid' single-valued navigation property of account Contoso.
-
-            retrievedAccountContoso = await service.Retrieve(
-               entityReference: accountContosoRef,
-               query: "?$select=name" +
-               "&$expand=primarycontactid($select=fullname,jobtitle,annualincome)",
-               includeAnnotations: true);
-
-            Console.WriteLine($"\nAccount {retrievedAccountContoso["name"]} has the following primary contact person:\n" +
-             $"\tFullname: {retrievedAccountContoso["primarycontactid"]["fullname"]} \n" +
-             $"\tJobtitle: {retrievedAccountContoso["primarycontactid"]["jobtitle"]} \n" +
-             $"\tAnnualincome: {retrievedAccountContoso["primarycontactid"]["annualincome"]}");
-
-            //2) Expand using the 'account_primary_contact' partner property.
-
-            retrievedContactYvonne =
-               await service.Retrieve(
-                   entityReference: contactYvonneRef,
-                   query: "?$select=fullname,jobtitle,annualincome&$expand=account_primary_contact($select=name)");
-
-            Console.WriteLine($"\nContact '{retrievedContactYvonne["fullname"]}' is the primary contact for the following accounts:");
-
-            foreach (JObject account in retrievedContactYvonne["account_primary_contact"].Cast<JObject>())
-            {
-                Console.WriteLine($"\t{account["name"]}");
-            }
-
-            //3) Expand using the collection-valued 'contact_customer_accounts' navigation property.
-
-            retrievedAccountContoso =
-                await service.Retrieve(
-                    entityReference: accountContosoRef,
-                    query: "?$select=name&$expand=contact_customer_accounts($select=fullname,jobtitle,annualincome)",
-                    includeAnnotations: true);
+            //WriteContactResultsTable($"Page 2 of 3:", secondPageResults.Records);
 
 
-            WriteContactResultsTable(
-                $"Account '{retrievedAccountContoso["name"]}' has the following contact customers:",
-                retrievedAccountContoso["contact_customer_accounts"]);
+            //#endregion Section 5 Pagination
+
+            //#region Section 6 Expanding results
+
+            //Console.WriteLine("\n--Section 6 started--");
+
+            //// The $expand option retrieves related information.
+            //// To retrieve information on associated entities in the same request, use the $expand
+            //// query option on navigation properties.
+            ////   1) Expand using single-valued navigation properties (e.g.: via the 'primarycontactid')
+            ////   2) Expand using partner property (e.g.: from contact to account via the 'account_primary_contact')
+            ////   3) Expand using collection-valued navigation properties (e.g.: via the 'contact_customer_accounts')
+            ////   4) Expand using multiple navigation property types in a single request.
+            ////   5) Multi-level expands
+
+            //// Tip: For performance best practice, always use $select statement in an expand option.
+
+            //Console.WriteLine("\n-- Expanding Results --");
+
+            ////1) Expand using the 'primarycontactid' single-valued navigation property of account Contoso.
+
+            //retrievedAccountContoso = await service.Retrieve(
+            //   entityReference: accountContosoRef,
+            //   query: "?$select=name" +
+            //   "&$expand=primarycontactid($select=fullname,jobtitle,annualincome)",
+            //   includeAnnotations: true);
+
+            //Console.WriteLine($"\nAccount {retrievedAccountContoso["name"]} has the following primary contact person:\n" +
+            // $"\tFullname: {retrievedAccountContoso["primarycontactid"]["fullname"]} \n" +
+            // $"\tJobtitle: {retrievedAccountContoso["primarycontactid"]["jobtitle"]} \n" +
+            // $"\tAnnualincome: {retrievedAccountContoso["primarycontactid"]["annualincome"]}");
+
+            ////2) Expand using the 'account_primary_contact' partner property.
+
+            //retrievedContactYvonne =
+            //   await service.Retrieve(
+            //       entityReference: contactYvonneRef,
+            //       query: "?$select=fullname,jobtitle,annualincome&$expand=account_primary_contact($select=name)");
+
+            //Console.WriteLine($"\nContact '{retrievedContactYvonne["fullname"]}' is the primary contact for the following accounts:");
+
+            //foreach (JObject account in retrievedContactYvonne["account_primary_contact"].Cast<JObject>())
+            //{
+            //    Console.WriteLine($"\t{account["name"]}");
+            //}
+
+            ////3) Expand using the collection-valued 'contact_customer_accounts' navigation property.
+
+            //retrievedAccountContoso =
+            //    await service.Retrieve(
+            //        entityReference: accountContosoRef,
+            //        query: "?$select=name&$expand=contact_customer_accounts($select=fullname,jobtitle,annualincome)",
+            //        includeAnnotations: true);
 
 
-            //4) Expand using multiple navigation property types in a single request, specifically:
-            //   primarycontactid, contact_customer_accounts, and Account_Tasks.
+            //WriteContactResultsTable(
+            //    $"Account '{retrievedAccountContoso["name"]}' has the following contact customers:",
+            //    retrievedAccountContoso["contact_customer_accounts"]);
 
-            Console.WriteLine("\n-- Expanding multiple property types in one request -- ");
 
-            retrievedAccountContoso =
-                await service.Retrieve(entityReference: accountContosoRef,
-                query: "?$select=name&" +
-                        "$expand=primarycontactid($select=fullname,jobtitle,annualincome)," +
-                        "contact_customer_accounts($select=fullname,jobtitle,annualincome)," +
-                        "Account_Tasks($select=subject,description)",
-                includeAnnotations: true);
+            ////4) Expand using multiple navigation property types in a single request, specifically:
+            ////   primarycontactid, contact_customer_accounts, and Account_Tasks.
 
-            Console.WriteLine($"\nAccount {retrievedAccountContoso["name"]} has the following primary contact person:\n" +
-                  $"\tFullname: {retrievedAccountContoso["primarycontactid"]["fullname"]} \n" +
-                  $"\tJobtitle: {retrievedAccountContoso["primarycontactid"]["jobtitle"]} \n" +
-                  $"\tAnnualincome: {retrievedAccountContoso["primarycontactid"]["annualincome"]}");
+            //Console.WriteLine("\n-- Expanding multiple property types in one request -- ");
 
-            WriteContactResultsTable(
-                $"Account '{retrievedAccountContoso["name"]}' has the following contact customers:",
-                retrievedAccountContoso["contact_customer_accounts"]);
+            //retrievedAccountContoso =
+            //    await service.Retrieve(entityReference: accountContosoRef,
+            //    query: "?$select=name&" +
+            //            "$expand=primarycontactid($select=fullname,jobtitle,annualincome)," +
+            //            "contact_customer_accounts($select=fullname,jobtitle,annualincome)," +
+            //            "Account_Tasks($select=subject,description)",
+            //    includeAnnotations: true);
 
-            Console.WriteLine($"\nAccount '{retrievedAccountContoso["name"]}' has the following tasks:");
+            //Console.WriteLine($"\nAccount {retrievedAccountContoso["name"]} has the following primary contact person:\n" +
+            //      $"\tFullname: {retrievedAccountContoso["primarycontactid"]["fullname"]} \n" +
+            //      $"\tJobtitle: {retrievedAccountContoso["primarycontactid"]["jobtitle"]} \n" +
+            //      $"\tAnnualincome: {retrievedAccountContoso["primarycontactid"]["annualincome"]}");
 
-            foreach (JObject task in retrievedAccountContoso["Account_Tasks"])
-            {
-                Console.WriteLine($"\t{task["subject"]}");
-            }
+            //WriteContactResultsTable(
+            //    $"Account '{retrievedAccountContoso["name"]}' has the following contact customers:",
+            //    retrievedAccountContoso["contact_customer_accounts"]);
 
-            // 5) Multi-level expands
+            //Console.WriteLine($"\nAccount '{retrievedAccountContoso["name"]}' has the following tasks:");
 
-            // The following query applies nested expands to single-valued navigation properties
-            // starting with Task entities related to contacts created for this sample.
-            RetrieveMultipleResponse contosoTasks =
-                await service.RetrieveMultiple(queryUri: $"tasks?" +
-                $"$select=subject&" +
-                $"$filter=regardingobjectid_contact_task/_accountid_value eq {accountContosoRef.Id}" +
-                $"&$expand=regardingobjectid_contact_task($select=fullname;" +
-                $"$expand=parentcustomerid_account($select=name;" +
-                $"$expand=createdby($select=fullname)))",
-                includeAnnotations: true);
+            //foreach (JObject task in retrievedAccountContoso["Account_Tasks"])
+            //{
+            //    Console.WriteLine($"\t{task["subject"]}");
+            //}
 
-            Console.WriteLine("\nExpanded values from Task:");
+            //// 5) Multi-level expands
 
-            DisplayExpandedValuesFromTask(contosoTasks.Records);
+            //// The following query applies nested expands to single-valued navigation properties
+            //// starting with Task entities related to contacts created for this sample.
+            //RetrieveMultipleResponse contosoTasks =
+            //    await service.RetrieveMultiple(queryUri: $"tasks?" +
+            //    $"$select=subject&" +
+            //    $"$filter=regardingobjectid_contact_task/_accountid_value eq {accountContosoRef.Id}" +
+            //    $"&$expand=regardingobjectid_contact_task($select=fullname;" +
+            //    $"$expand=parentcustomerid_account($select=name;" +
+            //    $"$expand=createdby($select=fullname)))",
+            //    includeAnnotations: true);
 
-            #endregion Section 6 Expanding results
+            //Console.WriteLine("\nExpanded values from Task:");
 
-            #region Section 7 Aggregate results
+            //DisplayExpandedValuesFromTask(contosoTasks.Records);
 
-            Console.WriteLine("\n--Section 7 started--");
+            //#endregion Section 6 Expanding results
 
-            // Get aggregated salary information about Contacts working for Contoso
+            //#region Section 7 Aggregate results
 
-            Console.WriteLine("\nAggregated Annual Income information for Contoso contacts:");
+            //Console.WriteLine("\n--Section 7 started--");
 
-            RetrieveMultipleResponse contactData =
-                await service.RetrieveMultiple(queryUri: $"{accountContosoRef.Path}/contact_customer_accounts?" +
-                $"$apply=aggregate(annualincome with average as average, " +
-                $"annualincome with sum as total, " +
-                $"annualincome with min as minimum, " +
-                $"annualincome with max as maximum)",
-                includeAnnotations: true);
+            //// Get aggregated salary information about Contacts working for Contoso
 
-            Console.WriteLine($"\tAverage income: {contactData.Records[0]["average@OData.Community.Display.V1.FormattedValue"]}");
-            Console.WriteLine($"\tTotal income: {contactData.Records[0]["total@OData.Community.Display.V1.FormattedValue"]}");
-            Console.WriteLine($"\tMinium income: {contactData.Records[0]["minimum@OData.Community.Display.V1.FormattedValue"]}");
-            Console.WriteLine($"\tMaximum income: {contactData.Records[0]["maximum@OData.Community.Display.V1.FormattedValue"]}");
+            //Console.WriteLine("\nAggregated Annual Income information for Contoso contacts:");
 
-            #endregion Section 7 Aggregate results
+            //RetrieveMultipleResponse contactData =
+            //    await service.RetrieveMultiple(queryUri: $"{accountContosoRef.Path}/contact_customer_accounts?" +
+            //    $"$apply=aggregate(annualincome with average as average, " +
+            //    $"annualincome with sum as total, " +
+            //    $"annualincome with min as minimum, " +
+            //    $"annualincome with max as maximum)",
+            //    includeAnnotations: true);
 
-            #region Section 8 FetchXML queries
+            //Console.WriteLine($"\tAverage income: {contactData.Records[0]["average@OData.Community.Display.V1.FormattedValue"]}");
+            //Console.WriteLine($"\tTotal income: {contactData.Records[0]["total@OData.Community.Display.V1.FormattedValue"]}");
+            //Console.WriteLine($"\tMinium income: {contactData.Records[0]["minimum@OData.Community.Display.V1.FormattedValue"]}");
+            //Console.WriteLine($"\tMaximum income: {contactData.Records[0]["maximum@OData.Community.Display.V1.FormattedValue"]}");
+
+            //#endregion Section 7 Aggregate results
+
+            //#region Section 8 FetchXML queries
 
             Console.WriteLine("\n--Section 8 started--");
            
@@ -634,183 +637,208 @@ namespace QueryData
             // in the body of the request rather than the URI.
             // Use this pattern to mitigate URL length limits for GET requests.
 
-            FetchXmlResponse contacts = await service.FetchXml(
-                entitySetName: "contacts",
+            //FetchXmlResponse contacts = await service.FetchXml(
+            //    entitySetName: "contacts",
+            //    fetchXml: XDocument.Parse(fetchXmlQuery),
+            //    includeAnnotations: true);
+
+            FetchXmlRequest fetchXmlRequest = new(
+                entitySetName:"contacts",
                 fetchXml: XDocument.Parse(fetchXmlQuery),
                 includeAnnotations: true);
+
+            BatchRequest batchTestRequest = new(serviceBaseAddress: service.BaseAddress) { 
+                
+                Requests = new List<HttpRequestMessage> { fetchXmlRequest }
+            };
+
+            FetchXmlResponse contacts;
+            try
+            {
+                BatchResponse batchResponse = await service.SendAsync<BatchResponse>(batchTestRequest);
+
+                 contacts = batchResponse.HttpResponseMessages.FirstOrDefault().As<FetchXmlResponse>();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+           
+
 
             WriteContactResultsTable(
                 message: $"Contacts Fetched by fullname containing '(sample)':",
                 collection: contacts.Records);
 
-            #region Simple fetchXml Paging
+            //#region Simple fetchXml Paging
 
-            Console.WriteLine();
-            Console.WriteLine("Simple Paging");
+            //Console.WriteLine();
+            //Console.WriteLine("Simple Paging");
 
-            XDocument fetchXmlQueryDoc = XDocument.Parse(fetchXmlQuery);
+            //XDocument fetchXmlQueryDoc = XDocument.Parse(fetchXmlQuery);
 
-            // Add attribute to set the page size
-            fetchXmlQueryDoc.Root.Add(new XAttribute("count", "4"));
+            //// Add attribute to set the page size
+            //fetchXmlQueryDoc.Root.Add(new XAttribute("count", "4"));
 
-            // Add attribute to set the page
-            fetchXmlQueryDoc.Root.Add(new XAttribute("page", "2"));
+            //// Add attribute to set the page
+            //fetchXmlQueryDoc.Root.Add(new XAttribute("page", "2"));
 
-            // Use FetchXmlRequest this time. Uses GET rather than POST
-            FetchXmlRequest page2Request = new(
-                entitySetName: "contacts",
-                fetchXml: fetchXmlQueryDoc,
-                includeAnnotations: true);
+            //// Use FetchXmlRequest this time. Uses GET rather than POST
+            //FetchXmlRequest page2Request = new(
+            //    entitySetName: "contacts",
+            //    fetchXml: fetchXmlQueryDoc,
+            //    includeAnnotations: true);
 
-            FetchXmlResponse page2Response =
-                await service.SendAsync<FetchXmlResponse>(page2Request);
+            //FetchXmlResponse page2Response =
+            //    await service.SendAsync<FetchXmlResponse>(page2Request);
 
-            WriteContactResultsTable(
-                message: $"Contacts Fetched by fullname containing '(sample)' - Page 2:",
-                collection: page2Response.Records);
+            //WriteContactResultsTable(
+            //    message: $"Contacts Fetched by fullname containing '(sample)' - Page 2:",
+            //    collection: page2Response.Records);
 
-            #endregion Simple fetchXml Paging
+            //#endregion Simple fetchXml Paging
 
-            #region FetchXML paging with paging cookie
+            //#region FetchXML paging with paging cookie
 
-            Console.WriteLine();
-            Console.WriteLine("Paging with PagingCookie");
+            //Console.WriteLine();
+            //Console.WriteLine("Paging with PagingCookie");
 
-            int page = 1;
+            //int page = 1;
 
-            // Using the same FetchXml
-            // Add attribute to set the paging cookie
-            fetchXmlQueryDoc.Root.Add(new XAttribute("paging-cookie", ""));
+            //// Using the same FetchXml
+            //// Add attribute to set the paging cookie
+            //fetchXmlQueryDoc.Root.Add(new XAttribute("paging-cookie", ""));
 
-            // Reset the page
-            fetchXmlQueryDoc.Root.Attribute("page").Value = page.ToString();
+            //// Reset the page
+            //fetchXmlQueryDoc.Root.Attribute("page").Value = page.ToString();
 
-            // Reset the count
-            fetchXmlQueryDoc.Root.Attribute("count").Value = "3";
+            //// Reset the count
+            //fetchXmlQueryDoc.Root.Attribute("count").Value = "3";
 
-            // Send first request
-            FetchXmlResponse cookiePagedContacts = await service.FetchXml(
-                entitySetName: "contacts",
-                fetchXml: fetchXmlQueryDoc,
-                includeAnnotations: true);
+            //// Send first request
+            //FetchXmlResponse cookiePagedContacts = await service.FetchXml(
+            //    entitySetName: "contacts",
+            //    fetchXml: fetchXmlQueryDoc,
+            //    includeAnnotations: true);
 
-            // Output results of first request
-            WriteContactResultsTable(
-            message: $"Paging with fetchxml cookie - Page {page}:",
-            collection: cookiePagedContacts.Records);
+            //// Output results of first request
+            //WriteContactResultsTable(
+            //message: $"Paging with fetchxml cookie - Page {page}:",
+            //collection: cookiePagedContacts.Records);
 
-            // Loop through subsequent requests while more records match criteria
-            while (cookiePagedContacts.MoreRecords) {
+            //// Loop through subsequent requests while more records match criteria
+            //while (cookiePagedContacts.MoreRecords) {
 
-                page++;
+            //    page++;
 
-                fetchXmlQueryDoc.Root.Attribute("page").Value = page.ToString();
+            //    fetchXmlQueryDoc.Root.Attribute("page").Value = page.ToString();
 
-                // Extract the FetchxmlPagingCookie XML document value from the response.
-                var cookieDoc = XDocument.Parse(cookiePagedContacts.FetchxmlPagingCookie);
+            //    // Extract the FetchxmlPagingCookie XML document value from the response.
+            //    var cookieDoc = XDocument.Parse(cookiePagedContacts.FetchxmlPagingCookie);
 
-                // Extract the encoded pagingcookie attribute value from the FetchxmlPagingCookie XML document
-                string pagingCookie = cookieDoc.Root.Attribute("pagingcookie").Value;
+            //    // Extract the encoded pagingcookie attribute value from the FetchxmlPagingCookie XML document
+            //    string pagingCookie = cookieDoc.Root.Attribute("pagingcookie").Value;
 
-                // Double URL decode the pagingCookie string value
-                string decodedPagingCookie = HttpUtility.UrlDecode(HttpUtility.UrlDecode(pagingCookie));
+            //    // Double URL decode the pagingCookie string value
+            //    string decodedPagingCookie = HttpUtility.UrlDecode(HttpUtility.UrlDecode(pagingCookie));
 
-                // Set the paging cookie value in the FetchXML paging-cookie attribute
-                fetchXmlQueryDoc.Root.Attribute("paging-cookie").Value = decodedPagingCookie;
+            //    // Set the paging cookie value in the FetchXML paging-cookie attribute
+            //    fetchXmlQueryDoc.Root.Attribute("paging-cookie").Value = decodedPagingCookie;
 
-                // Send the request
-                cookiePagedContacts = await service.FetchXml(
-                entitySetName: "contacts",
-                fetchXml: fetchXmlQueryDoc,
-                includeAnnotations: true);
+            //    // Send the request
+            //    cookiePagedContacts = await service.FetchXml(
+            //    entitySetName: "contacts",
+            //    fetchXml: fetchXmlQueryDoc,
+            //    includeAnnotations: true);
 
-                // Output results of subsequent requests
-                WriteContactResultsTable(
-                message: $"Paging with fetchxml cookie - Page {page}:",
-                collection: cookiePagedContacts.Records);
+            //    // Output results of subsequent requests
+            //    WriteContactResultsTable(
+            //    message: $"Paging with fetchxml cookie - Page {page}:",
+            //    collection: cookiePagedContacts.Records);
 
-            }
+            //}
 
 
-            #endregion FetchXML paging with paging cookie
+            //#endregion FetchXML paging with paging cookie
 
-            #endregion Section 8 FetchXML queries
+            //#endregion Section 8 FetchXML queries
 
-            #region Section 9 Using predefined queries
+            //#region Section 9 Using predefined queries
 
-            Console.WriteLine("\n--Section 9 started--");
+            //Console.WriteLine("\n--Section 9 started--");
 
-            // Use predefined queries of the following two types:
-            //   1) Saved query (system view)
-            //   2) User query (saved view)
-            // For more info, see:
-            // https://docs.microsoft.com/power-apps/developer/data-platform/webapi/retrieve-and-execute-predefined-queries#predefined-queries
+            //// Use predefined queries of the following two types:
+            ////   1) Saved query (system view)
+            ////   2) User query (saved view)
+            //// For more info, see:
+            //// https://docs.microsoft.com/power-apps/developer/data-platform/webapi/retrieve-and-execute-predefined-queries#predefined-queries
 
-            // 1) Saved Query - retrieve "Active Accounts", run it, then display the results.
-            Console.WriteLine("\n-- Saved Query -- ");
+            //// 1) Saved Query - retrieve "Active Accounts", run it, then display the results.
+            //Console.WriteLine("\n-- Saved Query -- ");
 
-            // Get the 'Active Accounts' Saved Query Id
-            RetrieveMultipleResponse activeAccountsSavedQueryIdResponse =
-                await service.RetrieveMultiple(
-                    queryUri: "savedqueries?$select=name,savedqueryid" +
-                    "&$filter=name eq 'Active Accounts'");
-            var activeAccountsSavedQueryId = (Guid)activeAccountsSavedQueryIdResponse.Records.FirstOrDefault()["savedqueryid"];
+            //// Get the 'Active Accounts' Saved Query Id
+            //RetrieveMultipleResponse activeAccountsSavedQueryIdResponse =
+            //    await service.RetrieveMultiple(
+            //        queryUri: "savedqueries?$select=name,savedqueryid" +
+            //        "&$filter=name eq 'Active Accounts'");
+            //var activeAccountsSavedQueryId = (Guid)activeAccountsSavedQueryIdResponse.Records.FirstOrDefault()["savedqueryid"];
 
-            // Get 3 accounts using the saved query
-            RetrieveMultipleResponse activeAccounts =
-                await service.RetrieveMultiple(
-                    queryUri: $"accounts?savedQuery={activeAccountsSavedQueryId}",
-                    maxPageSize: 3,
-                    includeAnnotations: true);
+            //// Get 3 accounts using the saved query
+            //RetrieveMultipleResponse activeAccounts =
+            //    await service.RetrieveMultiple(
+            //        queryUri: $"accounts?savedQuery={activeAccountsSavedQueryId}",
+            //        maxPageSize: 3,
+            //        includeAnnotations: true);
 
-            DisplayFormattedEntities(
-                label: "\nActive Accounts",
-                entities: activeAccounts.Records,
-                properties: new string[] { "name", "_primarycontactid_value", "telephone1" });
+            //DisplayFormattedEntities(
+            //    label: "\nActive Accounts",
+            //    entities: activeAccounts.Records,
+            //    properties: new string[] { "name", "_primarycontactid_value", "telephone1" });
 
-            // 2) Create a user query, then retrieve and execute it to display its results.
-            // For more info, see:
-            // https://docs.microsoft.com/power-apps/developer/data-platform/saved-queries
-            Console.WriteLine("\n-- User Query -- ");
+            //// 2) Create a user query, then retrieve and execute it to display its results.
+            //// For more info, see:
+            //// https://docs.microsoft.com/power-apps/developer/data-platform/saved-queries
+            //Console.WriteLine("\n-- User Query -- ");
 
             
-            var userQuery = new JObject()
-            {
-                { "name","My User Query"},
-                { "description","User query to display contact info."},
-                { "querytype",0},
-                { "returnedtypecode", "contact" },
-                { "fetchxml", @"<fetch mapping='logical' output-format='xml-platform' version='1.0' distinct='false'>
-                    <entity name ='contact'>
-                        <attribute name ='fullname' />
-                        <attribute name ='contactid' />
-                        <attribute name ='jobtitle' />
-                        <attribute name ='annualincome' />
-                        <order descending ='false' attribute='fullname' />
-                        <filter type ='and'>
-                            <condition value ='%(sample)%' attribute='fullname' operator='like' />
-                            <condition value ='%Manager%' attribute='jobtitle' operator='like' />
-                            <condition value ='55000' attribute='annualincome' operator='gt' />
-                        </filter>
-                    </entity>
-                 </fetch>" }
-            };
+            //var userQuery = new JObject()
+            //{
+            //    { "name","My User Query"},
+            //    { "description","User query to display contact info."},
+            //    { "querytype",0},
+            //    { "returnedtypecode", "contact" },
+            //    { "fetchxml", @"<fetch mapping='logical' output-format='xml-platform' version='1.0' distinct='false'>
+            //        <entity name ='contact'>
+            //            <attribute name ='fullname' />
+            //            <attribute name ='contactid' />
+            //            <attribute name ='jobtitle' />
+            //            <attribute name ='annualincome' />
+            //            <order descending ='false' attribute='fullname' />
+            //            <filter type ='and'>
+            //                <condition value ='%(sample)%' attribute='fullname' operator='like' />
+            //                <condition value ='%Manager%' attribute='jobtitle' operator='like' />
+            //                <condition value ='55000' attribute='annualincome' operator='gt' />
+            //            </filter>
+            //        </entity>
+            //     </fetch>" }
+            //};
 
-            EntityReference myUserQueryRef = await service.Create(
-                entitySetName: "userqueries",
-                record: userQuery);
-            recordsToDelete.Add(myUserQueryRef); //To delete later
+            //EntityReference myUserQueryRef = await service.Create(
+            //    entitySetName: "userqueries",
+            //    record: userQuery);
+            //recordsToDelete.Add(myUserQueryRef); //To delete later
 
-            // Use the query to return results:
-            RetrieveMultipleResponse myUserQueryResults =
-                await service.RetrieveMultiple(
-                    queryUri: $"contacts?userQuery={myUserQueryRef.Id}",
-                    maxPageSize: 3,
-                    includeAnnotations: true);
+            //// Use the query to return results:
+            //RetrieveMultipleResponse myUserQueryResults =
+            //    await service.RetrieveMultiple(
+            //        queryUri: $"contacts?userQuery={myUserQueryRef.Id}",
+            //        maxPageSize: 3,
+            //        includeAnnotations: true);
 
-            WriteContactResultsTable($"Contacts Fetched by My User Query:", myUserQueryResults.Records);
+            //WriteContactResultsTable($"Contacts Fetched by My User Query:", myUserQueryResults.Records);
 
-            #endregion Section 9 Using predefined queries
+            //#endregion Section 9 Using predefined queries
 
             #region Section 10: Delete sample records
 
