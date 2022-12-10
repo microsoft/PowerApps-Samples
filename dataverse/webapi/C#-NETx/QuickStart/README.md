@@ -1,8 +1,8 @@
 ﻿# A quick start to the Dataverse Web API
 
-| **C#** | **.NET 5** |
+| **C#** | **.NET 6** |
 
-This sample shows how to authenticate with the Microsoft Dataverse web service and invoke a Dataverse Web API. The sample uses the [Microsoft Authentication Library](https://docs.microsoft.com/azure/active-directory/develop/msal-overview) (MSAL) for web service authentication, and invokes the Web API function [WhoAmI](https://docs.microsoft.com/dynamics365/customer-engagement/web-api/whoami?view=dynamics-ce-odata-9).
+This sample shows how to authenticate with the Microsoft Dataverse web service and invoke a Dataverse Web API. The sample uses the [Microsoft Authentication Library](https://docs.microsoft.com/azure/active-directory/develop/msal-overview) (MSAL) for web service authentication, and invokes the Web API function [WhoAmI](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/whoamiresponse).
 
 More information: [Quick Start: Web API sample (C#)](https://docs.microsoft.com/powerapps/developer/data-platform/webapi/quick-start-console-app-csharp?tabs=msal)
 
@@ -10,7 +10,7 @@ More information: [Quick Start: Web API sample (C#)](https://docs.microsoft.com/
 
 1. Download or clone the repo so that you have a local copy.
 1. Open the solution (.sln) file in Visual Studio 2019.
-1. Edit line 15 of Program.cs to set the URL for your Dataverse test environment.<br/>
+1. Edit line 19 of Program.cs to set the URL for your Dataverse test environment.<br/>
     `string resource = "https://<env-name>.api.<region>.dynamics.com";`
 1. Press F5 to run the sample.
 1. You will be prompted to choose a valid Dataverse user, and then enter your logon password.
