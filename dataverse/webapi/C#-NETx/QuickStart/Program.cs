@@ -84,7 +84,7 @@ namespace PowerApps.Samples
                 // WhoAmIResponse whoAmIresponse = JsonSerializer.Deserialize<WhoAmIResponse>(jsonContent);
                 // userId = whoAmIresponse.UserId;
 
-                Console.WriteLine("Your user ID is {0}", userId.ToString());
+                Console.WriteLine($"Your user ID is {userId}");
             }
             else
             {
