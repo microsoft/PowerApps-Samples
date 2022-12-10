@@ -25,7 +25,7 @@ Input parameters :
     - resourceGroup : The resource group where CMK enterprise policy needs to be created
     - enterprisePolicyName : The name of the CMK enterprise policy resource
     - enterprisePolicyLocation : The Azure geo where CMK enterprise policy needs to be created. Example: unitedstates, europe, australia.</br>
-      To get the complete supported locations for enterprise policy, below az command can be used:</br>
+      To get the complete supported locations for enterprise policy, below as command can be used:</br>
       ((Get-AzResourceProvider -ProviderNamespace Microsoft.PowerPlatform).ResourceTypes | Where-Object ResourceTypeName -eq enterprisePolicies).Locations
     - keyVaultId : The ARM resource ID of the key vault used for CMK
     - keyName : The name of the key in the key vault used for CMK
@@ -72,7 +72,7 @@ Sample Output :</br>
 ![alt text](./ReadMeImages/GetCMKInResourceGroup2.png)</br>
 
 5. **Validate Azure Key Vault** : This script checks if the Key Vault is setup correctly according to the pre-requisites required by the Power Platform CMK Enterprise Policy</br>
-    - Soft-delete : if not enabled, then a warning message is displayed (soft-delete is a read only property and can’t be fixed. Follow the instructions at
+    - Soft-delete : if not enabled, then a warning message is displayed (soft-delete is a read only property and can’t be fixed). Follow the instructions at
       https://docs.microsoft.com/en-us/azure/key-vault/general/soft-delete-change to update the soft delete property.
     - Purge protection - if not enabled, then enables it for the customer
     - Adds the access policies to the Key Vault with permission GET, UNWRAPKEY, WRAPKEY for the given enterprise policy</br>
