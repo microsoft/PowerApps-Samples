@@ -63,7 +63,7 @@ namespace PowerApps.Samples
 
                     AuditDetailCollection details = changeResponse.AuditDetailCollection;
 
-                    foreach (AttributeAuditDetail detail in details.AuditDetails)
+                    foreach (AuditDetail detail in details.AuditDetails)
                     {
                         // Display some of the detail information in each audit record. 
                         DisplayAuditDetails(service,detail);
