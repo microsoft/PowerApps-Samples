@@ -55,7 +55,7 @@ export class ChoicesPicker implements ComponentFramework.StandardControl<IInputs
             masked = !value.security.readable;
         }
 
-        if (value && value.attributes && configuration && configuration) {
+        if (value && value.attributes && configuration) {
             ReactDOM.render(
                 React.createElement(ChoicesPickerComponent, {
                     label: value.attributes.DisplayName,
