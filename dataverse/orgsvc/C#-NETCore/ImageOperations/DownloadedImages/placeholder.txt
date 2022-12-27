@@ -1,0 +1,1 @@
+﻿This file exists so that the DownloadImages folder will be copied to the output folder with this file.

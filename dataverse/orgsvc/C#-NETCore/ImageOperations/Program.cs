@@ -1,5 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Crm.Sdk.Messages;
+using Microsoft.Extensions.Configuration;
 using Microsoft.PowerPlatform.Dataverse.Client;
+using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
+using System.ServiceModel;
 
 namespace PowerPlatform.Dataverse.CodeSamples
 {
@@ -42,15 +46,182 @@ namespace PowerPlatform.Dataverse.CodeSamples
             Program app = new();
 
             // Create a Dataverse service client using the default connection string.
-            ServiceClient serviceClient =
+            ServiceClient service =
                 new(app.Configuration.GetConnectionString("default"));
 
             string entityLogicalName = "account";
             string imageColumnSchemaName = "sample_ImageColumn";
             string imageColumnLogicalName = imageColumnSchemaName.ToLower();
+            string originalAccountPrimaryImageAttributeName = Utility.GetTablePrimaryImageName(service, entityLogicalName);
+            List<Guid> accountsWithImagesIds = new List<Guid>();
+            List<string> fileNames = new List<string>() { "144x144.png", "144x400.png", "400x144.png", "400x500.png", "60x80.png" };
+
 
             // Create the Image Column
-            Utility.CreateImageColumn(serviceClient, entityLogicalName, imageColumnSchemaName);
+            Utility.CreateImageColumn(service, entityLogicalName, imageColumnSchemaName);
+
+            // Update the image column to set it as the primary image
+            // Only primary image columns can be set during Create
+            Utility.SetTablePrimaryImageName(service, entityLogicalName, imageColumnLogicalName, isPrimaryImage: true);
+
+            // Create account records with each size image
+            foreach (string fileName in fileNames)
+            {
+                Entity account = new Entity(entityLogicalName);
+                account["name"] = $"CanStoreFullImage false {fileName}";
+                account[imageColumnLogicalName] = File.ReadAllBytes($"Images\\{fileName}");
+                accountsWithImagesIds.Add(service.Create(account));
+            }
+
+
+            // Changing the CanStoreFullImage behavior
+            Utility.UpdateCanStoreFullImage(service, entityLogicalName, imageColumnSchemaName, canStoreFullImage: true);
+
+
+            // Create account records with each size image
+            foreach (string fileName in fileNames)
+            {
+                Entity account = new Entity(entityLogicalName);
+                account["name"] = $"CanStoreFullImage true {fileName}";
+                account[imageColumnLogicalName] = File.ReadAllBytes($"Images\\{fileName}");
+                accountsWithImagesIds.Add(service.Create(account));
+            }
+
+            //Retrieve the accounts just created
+            QueryExpression query = new QueryExpression("account")
+            {
+                ColumnSet = new ColumnSet("name", imageColumnLogicalName, $"{imageColumnLogicalName}_url"),
+                Criteria = new FilterExpression(LogicalOperator.And)
+                {
+                    Conditions = {
+                        new ConditionExpression(
+                            attributeName: "accountid",
+                            conditionOperator: ConditionOperator.In,
+                            values: accountsWithImagesIds.ToArray())
+                    }
+                }
+            };
+
+            EntityCollection accountsWithImages = service.RetrieveMultiple(query);
+
+            // Images retrieved this way are always thumbnails
+            foreach (Entity account in accountsWithImages.Entities)
+            {
+                string recordName = (string)account["name"];
+                string downloadedFileName = $"{recordName}_retrieved.png";
+                File.WriteAllBytes($"DownloadedImages\\{downloadedFileName}", (byte[])account[imageColumnLogicalName]);
+            }
+
+            foreach (Entity account in accountsWithImages.Entities)
+            {
+                try
+                {
+                    byte[] downloadedFile = DownloadFile(service, account.ToEntityReference(), imageColumnLogicalName);
+
+                    string recordName = (string)account["name"];
+                    string downloadedFileName = $"{recordName}_downloaded.png";
+                    File.WriteAllBytes($"DownloadedImages\\{downloadedFileName}", downloadedFile);
+                }
+                catch (FaultException<OrganizationServiceFault> faultException)
+                {
+                    int errorCode = faultException.Detail.ErrorCode;
+                    if (errorCode == -2147220969)
+                    {
+                        // ObjectDoesNotExist error
+                        // No FileAttachment records found for imagedescriptorId: <guid> for image attribute: sample_imagecolumn of account record with id <guid>
+                        // These 5 images were created while CanStoreFullImage was false
+                        Console.WriteLine($"{faultException.Message}");
+                    }
+                    else
+                    {
+                        throw faultException;
+                    }
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+
+            }
+
+            foreach (Guid id in accountsWithImagesIds)
+            {
+                service.Delete("account", id);
+            }
+
+
+
+            // Set the account primaryImage back to the original value
+            Utility.SetTablePrimaryImageName(service, entityLogicalName, originalAccountPrimaryImageAttributeName, isPrimaryImage: true);
+
+            // Delete the Image Column
+            Utility.DeleteImageColumn(service, entityLogicalName, imageColumnSchemaName);
+        }
+
+
+
+        /// <summary>
+        /// Downloads a file using InitializeFileBlocksDownload and DownloadBlock messages
+        /// </summary>
+        /// <param name="service">The service</param>
+        /// <param name="entityReference">A reference to the record with the file column</param>
+        /// <param name="fileAttributeName">The name of the file column</param>
+        /// <returns></returns>
+        private static byte[] DownloadFile(
+                    IOrganizationService service,
+                    EntityReference entityReference,
+                    string fileAttributeName)
+        {
+            InitializeFileBlocksDownloadRequest initializeFileBlocksDownloadRequest = new()
+            {
+                Target = entityReference,
+                FileAttributeName = fileAttributeName
+            };
+
+            var initializeFileBlocksDownloadResponse =
+                (InitializeFileBlocksDownloadResponse)service.Execute(initializeFileBlocksDownloadRequest);
+
+            string fileContinuationToken = initializeFileBlocksDownloadResponse.FileContinuationToken;
+            long fileSizeInBytes = initializeFileBlocksDownloadResponse.FileSizeInBytes;
+
+            List<byte> fileBytes = new();
+
+            long offset = 0;
+            long blockSizeDownload = 4 * 1024 * 1024; // 4 MB
+
+            // File size may be smaller than defined block size
+            if (fileSizeInBytes < blockSizeDownload)
+            {
+                blockSizeDownload = fileSizeInBytes;
+            }
+
+            while (fileSizeInBytes > 0)
+            {
+                // Prepare the request
+                DownloadBlockRequest downLoadBlockRequest = new()
+                {
+                    BlockLength = blockSizeDownload,
+                    FileContinuationToken = fileContinuationToken,
+                    Offset = offset
+                };
+
+                // Send the request
+                var downloadBlockResponse =
+                           (DownloadBlockResponse)service.Execute(downLoadBlockRequest);
+
+                // Add the block returned to the list
+                fileBytes.AddRange(downloadBlockResponse.Data);
+
+                // Subtract the amount downloaded,
+                // which may make fileSizeInBytes < 0 and indicate
+                // no further blocks to download
+                fileSizeInBytes -= (int)blockSizeDownload;
+                // Increment the offset to start at the beginning of the next block.
+                offset += blockSizeDownload;
+            }
+
+            return fileBytes.ToArray();
         }
     }
 }
