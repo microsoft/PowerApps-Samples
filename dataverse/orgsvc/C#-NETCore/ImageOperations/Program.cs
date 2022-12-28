@@ -53,8 +53,8 @@ namespace PowerPlatform.Dataverse.CodeSamples
             string imageColumnSchemaName = "sample_ImageColumn";
             string imageColumnLogicalName = imageColumnSchemaName.ToLower();
             string originalAccountPrimaryImageAttributeName = Utility.GetTablePrimaryImageName(service, entityLogicalName);
-            List<Guid> accountsWithImagesIds = new List<Guid>();
-            List<string> fileNames = new List<string>() { "144x144.png", "144x400.png", "400x144.png", "400x500.png", "60x80.png" };
+            List<Guid> accountsWithImagesIds = new();
+            List<string> fileNames = new() { "144x144.png", "144x400.png", "400x144.png", "400x500.png", "60x80.png" };
 
 
             // Create the Image Column
@@ -64,31 +64,40 @@ namespace PowerPlatform.Dataverse.CodeSamples
             // Only primary image columns can be set during Create
             Utility.SetTablePrimaryImageName(service, entityLogicalName, imageColumnLogicalName, isPrimaryImage: true);
 
+            Console.WriteLine("Create 5 records while CanStoreFullImage is false.");
+
             // Create account records with each size image
             foreach (string fileName in fileNames)
             {
-                Entity account = new Entity(entityLogicalName);
-                account["name"] = $"CanStoreFullImage false {fileName}";
+                string name = $"CanStoreFullImage false {fileName}";
+
+                Entity account = new(entityLogicalName);
+                account["name"] = name;
                 account[imageColumnLogicalName] = File.ReadAllBytes($"Images\\{fileName}");
                 accountsWithImagesIds.Add(service.Create(account));
+                Console.WriteLine($"\tCreated account: '{name}'");
             }
 
 
             // Changing the CanStoreFullImage behavior
             Utility.UpdateCanStoreFullImage(service, entityLogicalName, imageColumnSchemaName, canStoreFullImage: true);
 
+            Console.WriteLine("Create 5 records while CanStoreFullImage is true.");
 
             // Create account records with each size image
             foreach (string fileName in fileNames)
             {
-                Entity account = new Entity(entityLogicalName);
-                account["name"] = $"CanStoreFullImage true {fileName}";
+                string name = $"CanStoreFullImage true {fileName}";
+
+                Entity account = new(entityLogicalName);
+                account["name"] = name;
                 account[imageColumnLogicalName] = File.ReadAllBytes($"Images\\{fileName}");
                 accountsWithImagesIds.Add(service.Create(account));
+                Console.WriteLine($"\tCreated account: '{name}'");
             }
 
             //Retrieve the accounts just created
-            QueryExpression query = new QueryExpression("account")
+            QueryExpression query = new("account")
             {
                 ColumnSet = new ColumnSet("name", imageColumnLogicalName, $"{imageColumnLogicalName}_url"),
                 Criteria = new FilterExpression(LogicalOperator.And)
@@ -112,6 +121,9 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 File.WriteAllBytes($"DownloadedImages\\{downloadedFileName}", (byte[])account[imageColumnLogicalName]);
             }
 
+            Console.WriteLine("Attempt to download full-size images for all 10 records.");
+            // Attempt to download the full image of the files.
+            // Expect that 5 of 10 will fail because they were created while CanStoreFullImage was false.
             foreach (Entity account in accountsWithImages.Entities)
             {
                 try
@@ -130,7 +142,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                         // ObjectDoesNotExist error
                         // No FileAttachment records found for imagedescriptorId: <guid> for image attribute: sample_imagecolumn of account record with id <guid>
                         // These 5 images were created while CanStoreFullImage was false
-                        Console.WriteLine($"{faultException.Message}");
+                        Console.WriteLine($"\tDownload failed: {faultException.Message}");
                     }
                     else
                     {
@@ -145,11 +157,13 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
             }
 
+
+            // Delete the records that were created by this sample
             foreach (Guid id in accountsWithImagesIds)
             {
                 service.Delete("account", id);
             }
-
+            Console.WriteLine("Deleted the records created for this sample.");
 
 
             // Set the account primaryImage back to the original value
@@ -157,6 +171,8 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
             // Delete the Image Column
             Utility.DeleteImageColumn(service, entityLogicalName, imageColumnSchemaName);
+
+            Console.WriteLine("Sample completed.");
         }
 
 

@@ -27,5 +27,15 @@ namespace PowerApps.Samples.Metadata.Types
         /// The maximum width of the image.
         /// </summary>
         public short MaxWidth { get; set; }
+
+        /// <summary>
+        /// The maximum size for the image.
+        /// </summary>
+        public int MaxSizeInKB { get; set; }
+
+        /// <summary>
+        /// Whether the image can store full-sized images
+        /// </summary>
+        public bool CanStoreFullImage { get; set; }
     }
 }

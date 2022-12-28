@@ -14,8 +14,23 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Content Include="..\..\..\SharedResources\Images\144x144.png" Link="Images\144x144.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="..\..\..\SharedResources\Images\144x400.png" Link="Images\144x400.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="..\..\..\SharedResources\Images\400x144.png" Link="Images\400x144.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="..\..\..\SharedResources\Images\400x500.png" Link="Images\400x500.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="..\..\..\SharedResources\Images\60x80.png" Link="Images\60x80.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 		<Content Include="..\appsettings.json" Link="appsettings.json">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
 
@@ -27,6 +42,16 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\WebAPIService\WebAPIService.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Images\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="DownloadedImages\placeholder.txt">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 
 
