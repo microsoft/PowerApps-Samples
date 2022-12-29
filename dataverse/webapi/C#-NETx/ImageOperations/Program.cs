@@ -14,6 +14,7 @@ namespace ImageOperations
             var service = new Service(config);
 
             string entityLogicalName = "account";
+            string entitySetName = "accounts";
             string imageColumnSchemaName = "sample_ImageColumn";
             string imageColumnLogicalName = imageColumnSchemaName.ToLower();
             string originalAccountPrimaryImageAttributeName = await Utility.GetTablePrimaryImageName(service, entityLogicalName);
@@ -69,6 +70,7 @@ namespace ImageOperations
 
             }
 
+           
             //Retrieve the accounts just created
             string query = $"accounts?" +
                 $"$select=name,{imageColumnLogicalName},{imageColumnLogicalName}_url&" +
@@ -88,16 +90,18 @@ namespace ImageOperations
 
             Console.WriteLine("Attempt to download full-size images for all 10 records.");
             // Attempt to download the full image of the files.
+            Console.WriteLine("Download full-sized files with actions:");
             // Expect that 5 of 10 will fail because they were created while CanStoreFullImage was false.
             foreach (JObject account in accountsWithImagesResponse.Records.Cast<JObject>())
             {
                 try
                 {
+                    // It is not possible to request thumbnail sized images using actions.
                     byte[] downloadedFile = await DownloadImageWithActions(
                         service,
-                        entityLogicalName:"account",
-                        primaryKeyLogicalName:"accountid", 
-                        entityId: (Guid)account["accountid"], 
+                        entityLogicalName: entityLogicalName,
+                        primaryKeyLogicalName: "accountid",
+                        entityId: (Guid)account["accountid"],
                         imagePropertyName: imageColumnLogicalName);
 
                     string recordName = (string)account["name"];
@@ -125,6 +129,70 @@ namespace ImageOperations
                 }
             }
 
+            // Attempt to download the full-sized image of the files with chunks
+            Console.WriteLine("Download full-sized files with chunks:");
+            // Expect that 5 of 10 will fail because they were created while CanStoreFullImage was false.
+            foreach (JObject account in accountsWithImagesResponse.Records.Cast<JObject>())
+            {
+                try
+                {
+                    byte[] downloadedFile = await DownloadImageWithChunks(
+                        service,
+                        entitySetName: entitySetName,
+                        entityId: (Guid)account["accountid"],
+                        imagePropertyName: imageColumnLogicalName,
+                        returnFullSizeImage: true);
+
+                    string recordName = (string)account["name"];
+                    string downloadedFileName = $"{recordName}_downloaded_with_chunks_full-sized.png";
+                    File.WriteAllBytes($"DownloadedImages\\{downloadedFileName}", downloadedFile);
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message == "No content returned with request")
+                    {
+
+                        Console.WriteLine("No image data returned because record was created while CanStoreFullImage was false.");
+                    }
+                    else
+                    {
+                        throw ex;
+                    }
+                }
+            }
+
+            // Attempt to download the full-sized image of the files as stream
+            Console.WriteLine("Download full-sized files in single requests:");
+            // Expect that 5 of 10 will fail because they were created while CanStoreFullImage was false.
+            foreach (JObject account in accountsWithImagesResponse.Records.Cast<JObject>())
+            {
+                try
+                {
+                    byte[] downloadedFile = await DownloadImageWithStream(
+                        service,
+                        entitySetName: entitySetName,
+                        entityId: (Guid)account["accountid"],
+                        imagePropertyName: imageColumnLogicalName,
+                        returnFullSizeImage: true);
+
+                    string recordName = (string)account["name"];
+                    string downloadedFileName = $"{recordName}_downloaded_with_stream_full-sized.png";
+                    File.WriteAllBytes($"DownloadedImages\\{downloadedFileName}", downloadedFile);
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message == "No content returned with request")
+                    {
+
+                        Console.WriteLine("No image data returned because record was created while CanStoreFullImage was false.");
+                    }
+                    else
+                    {
+                        throw ex;
+                    }
+                }
+            }
+
             // Delete the records that were created by this sample
             foreach (Guid id in accountsWithImagesIds)
             {
@@ -149,7 +217,7 @@ namespace ImageOperations
         /// <param name="primaryKeyLogicalName">The logical name of the primary key for the table</param>
         /// <param name="entityId">The Id of the record.</param>
         /// <param name="imagePropertyName">The name of the image column property.</param>
-        /// <returns></returns>
+        /// <returns>The requested Image</returns>
         private static async Task<byte[]> DownloadImageWithActions(Service service,
                 string entityLogicalName,
                 string primaryKeyLogicalName,
@@ -203,5 +271,93 @@ namespace ImageOperations
             }
             return bytes.ToArray();
         }
+
+        /// <summary>
+        /// Downloads an image in chunks using Web API
+        /// </summary>
+        /// <param name="service">The service</param>
+        /// <param name="entitySetName">The entity set name of the table</param>
+        /// <param name="entityId">The Id of the record.</param>
+        /// <param name="imagePropertyName">The name of the image column property.</param>
+        /// <param name="returnFullSizeImage">Whether to return the full-sized image. Otherwise the thumbnail-sized image will be retrieved.</param>
+        /// <returns>The requested Image</returns>
+        private static async Task<byte[]> DownloadImageWithChunks(Service service,
+                string entitySetName,
+                Guid entityId,
+                string imagePropertyName,
+                bool returnFullSizeImage) 
+        {
+
+            EntityReference entityReference = new(entitySetName, entityId);
+
+            int downloadChunkSize = 4 * 1024 * 1024; // 4 MB
+            int offSet = 0;
+            var fileSize = 0;
+            byte[] file = null;
+            do
+            {
+                DownloadFileChunkRequest downloadFileChunkRequest = new(
+                    entityReference: entityReference,
+                    fileColumnLogicalName: imagePropertyName,
+                    offSet: offSet,
+                    chunkSize: downloadChunkSize,
+                    returnFullSizedImage: returnFullSizeImage);
+
+                var downloadFileChunkResponse =
+                    await service.SendAsync<DownloadFileChunkResponse>(downloadFileChunkRequest);
+
+                if (downloadFileChunkResponse.StatusCode == System.Net.HttpStatusCode.NoContent)
+                {
+                    throw new Exception("No content returned with request");
+                }
+
+                if (file == null)
+                {
+                    fileSize = downloadFileChunkResponse.FileSize;
+                    file = new byte[fileSize];
+                }
+                downloadFileChunkResponse.Data.CopyTo(file, offSet);
+
+                offSet += downloadChunkSize;
+
+            } while (offSet < fileSize);
+
+            return file;
+
+        }
+
+        /// <summary>
+        /// Downloads an image in one request using Web API
+        /// </summary>
+        /// <param name="service">The service</param>
+        /// <param name="entitySetName">The entity set name of the table</param>
+        /// <param name="entityId">The Id of the record.</param>
+        /// <param name="imagePropertyName">The name of the image column property.</param>
+        /// <param name="returnFullSizeImage">Whether to return the full-sized image. Otherwise the thumbnail-sized image will be retrieved.</param>
+        /// <returns>The requested Image</returns>
+        private static async Task<byte[]> DownloadImageWithStream(Service service,
+                string entitySetName,
+                Guid entityId,
+                string imagePropertyName,
+                bool returnFullSizeImage) 
+        {
+            EntityReference entityReference = new(entitySetName, entityId);
+
+            DownloadFileRequest downloadFileRequest = new(
+                entityReference: entityReference,
+                property: imagePropertyName, 
+                returnFullSizedImage: returnFullSizeImage);
+
+            var downloadFileResponse = await service.SendAsync<DownloadFileResponse>(downloadFileRequest);
+
+            if (downloadFileResponse.StatusCode == System.Net.HttpStatusCode.NoContent)
+            {
+                throw new Exception("No content returned with request");
+            }
+
+            return downloadFileResponse.File;
+
+        }
+
     }
 }

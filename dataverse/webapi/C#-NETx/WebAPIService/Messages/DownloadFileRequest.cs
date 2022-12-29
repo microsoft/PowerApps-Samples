@@ -10,11 +10,17 @@
         /// </summary>
         /// <param name="entityReference">A reference to the record to get the column data from.</param>
         /// <param name="property">The name of the column.</param>
-        public DownloadFileRequest(EntityReference entityReference, string property)
+        /// <param name="returnFullSizedImage">When downloading image file, whether to return the full-sized image. Otherwise the thumbnail-sized image will be returned.</param>
+        public DownloadFileRequest(EntityReference entityReference, string property, bool returnFullSizedImage = false)
         {
+            string uriString = $"{entityReference.Path}/{property}/$value";
+
+            if (returnFullSizedImage)
+                uriString += "?size=full";
+
             Method = HttpMethod.Get;
             RequestUri = new Uri(
-                uriString: $"{entityReference.Path}/{property}/$value",
+                uriString: uriString,
                 uriKind: UriKind.Relative);
         }
     }
