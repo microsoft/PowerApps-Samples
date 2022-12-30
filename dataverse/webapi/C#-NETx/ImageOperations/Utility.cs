@@ -2,23 +2,23 @@
 using PowerApps.Samples.Metadata.Messages;
 using PowerApps.Samples.Metadata.Types;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace ImageOperations
 {
+    /// <summary>
+    /// Contains methods to work with ImageAttributeMetadata to support ImageOperations sample.
+    /// </summary>
     internal class Utility
     {
         /// <summary>
-        /// Creates an image column that is the primary image column.
+        /// Creates an image column if it doesn't already exist.
         /// </summary>
         /// <param name="service">The service.</param>
         /// <param name="entityLogicalName">The logical name of the table to create the image column in.</param>
         /// <param name="imageColumnSchemaName">The schema name of the image column.</param>
-        public static async Task CreateImageColumn(Service service, string entityLogicalName, string imageColumnSchemaName) {
+        public static async Task CreateImageColumn(
+            Service service, 
+            string entityLogicalName, 
+            string imageColumnSchemaName) {
 
             Console.WriteLine($"Creating image column named '{imageColumnSchemaName}' on the {entityLogicalName} table ...");
 
@@ -27,14 +27,16 @@ namespace ImageOperations
                 SchemaName = imageColumnSchemaName,
                 DisplayName = new Label("Sample Image Column", 1033),
                 RequiredLevel = new AttributeRequiredLevelManagedProperty(
-              AttributeRequiredLevel.None),
+                    AttributeRequiredLevel.None),
                 Description = new Label("Sample Image Column for ImageOperation samples", 1033),
-                //IsPrimaryImage = true, // Overriding current primary image column?? Doesn't seem to work on Create, at least when another primary image attribute exists.
                 MaxSizeInKB = 30 * 1024 // 30 MB is maximum size.
+                // IsPrimaryImage cannot be set on Create, only Update.
 
             };
 
-            CreateAttributeRequest createfileColumnRequest = new(entityLogicalName: entityLogicalName, attributeMetadata: imageColumn);
+            CreateAttributeRequest createfileColumnRequest = new(
+                entityLogicalName: entityLogicalName, 
+                attributeMetadata: imageColumn);
 
             try
             {
@@ -53,7 +55,7 @@ namespace ImageOperations
                     }
                     else
                     {
-                        throw ex;
+                        throw serviceException;
                     }
                 }
                 else
@@ -70,11 +72,16 @@ namespace ImageOperations
         /// <param name="service">The service.</param>
         /// <param name="entityLogicalName">The logical name of the table the image column exists in.</param>
         /// <param name="imageColumnSchemaName">The schema name of the image column.</param>
-        public static async Task DeleteImageColumn(Service service, string entityLogicalName, string imageColumnSchemaName) {
+        public static async Task DeleteImageColumn(
+            Service service, 
+            string entityLogicalName, 
+            string imageColumnSchemaName) {
 
             Console.WriteLine($"Deleting the image column named '{imageColumnSchemaName}' on the {entityLogicalName} table ...");
 
-            DeleteAttributeRequest deleteImageColumnRequest = new(entityLogicalName: entityLogicalName, logicalName: imageColumnSchemaName.ToLower());
+            DeleteAttributeRequest deleteImageColumnRequest = new(
+                entityLogicalName: entityLogicalName, 
+                logicalName: imageColumnSchemaName.ToLower());
 
             await service.SendAsync(deleteImageColumnRequest);
 
@@ -89,7 +96,11 @@ namespace ImageOperations
         /// <param name="entityLogicalName">The logical name of the table that has the column.</param>
         /// <param name="imageColumnSchemaName">The logical name of the image column.</param>
         /// <param name="canStoreFullImage">The new value for CanStoreFullImage</param>
-        public static async Task UpdateCanStoreFullImage(Service service, string entityLogicalName, string imageColumnSchemaName, bool canStoreFullImage) {
+        public static async Task UpdateCanStoreFullImage(
+            Service service, 
+            string entityLogicalName, 
+            string imageColumnSchemaName, 
+            bool canStoreFullImage) {
 
             RetrieveAttributeRequest retrieveAttributeRequest = new(
                 entityLogicalName: entityLogicalName,
@@ -118,7 +129,9 @@ namespace ImageOperations
         /// <param name="service">The service</param>
         /// <param name="entityLogicalName">The logical name of the table that has the column.</param>
         /// <returns>The EntityMetadata.PrimaryImageAttribute value.</returns>
-        public static async Task<string> GetTablePrimaryImageName(Service service, string entityLogicalName) {
+        public static async Task<string> GetTablePrimaryImageName(
+            Service service, 
+            string entityLogicalName) {
 
             RetrieveEntityDefinitionRequest request = new(
                 logicalName: entityLogicalName, 
@@ -131,14 +144,18 @@ namespace ImageOperations
         }
 
         /// <summary>
-        /// Sets an ImageAttribute IsPrimaryImage property
+        /// Set ImageAttributeMetadata IsPrimaryImage property
         /// </summary>
         /// <param name="service">The service.</param>
         /// <param name="entityLogicalName">The logical name of the table that has the image column.</param>
         /// <param name="imageAttributeName">The logical name of the image column.</param>
         /// <param name="isPrimaryImage">The value to set.</param>
         /// <returns></returns>
-        public static async Task SetTablePrimaryImageName(Service service, string entityLogicalName, string imageAttributeName, bool isPrimaryImage) {
+        public static async Task SetTablePrimaryImageName(
+            Service service, 
+            string entityLogicalName, 
+            string imageAttributeName, 
+            bool isPrimaryImage) {
 
             RetrieveAttributeRequest retrieveRequest = new(
                 entityLogicalName: entityLogicalName, 
@@ -151,7 +168,7 @@ namespace ImageOperations
 
             imageColumnDefinition.IsPrimaryImage = isPrimaryImage;
 
-            UpdateAttributeRequest updateAttributeRequest = new UpdateAttributeRequest(
+            UpdateAttributeRequest updateAttributeRequest = new(
                 entityLogicalName: entityLogicalName, 
                 attributeLogicalName: imageAttributeName, 
                 attributeMetadata: imageColumnDefinition);

@@ -52,12 +52,14 @@ namespace PowerPlatform.Dataverse.CodeSamples
             string entityLogicalName = "account";
             string imageColumnSchemaName = "sample_ImageColumn";
             string imageColumnLogicalName = imageColumnSchemaName.ToLower();
+            // Capture this so it can be set back at the end of the sample.
             string originalAccountPrimaryImageAttributeName = Utility.GetTablePrimaryImageName(service, entityLogicalName);
             List<Guid> accountsWithImagesIds = new();
+            // The names of the image files in the Images folder
             List<string> fileNames = new() { "144x144.png", "144x400.png", "400x144.png", "400x500.png", "60x80.png" };
 
 
-            // Create the Image Column
+            // Create the Image Column with CanStoreFullImage = false.
             Utility.CreateImageColumn(service, entityLogicalName, imageColumnSchemaName);
 
             // Update the image column to set it as the primary image
@@ -80,7 +82,11 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
 
             // Changing the CanStoreFullImage behavior
-            Utility.UpdateCanStoreFullImage(service, entityLogicalName, imageColumnSchemaName, canStoreFullImage: true);
+            Utility.UpdateCanStoreFullImage(
+                service,
+                entityLogicalName,
+                imageColumnSchemaName,
+                canStoreFullImage: true);
 
             Console.WriteLine("Create 5 records while CanStoreFullImage is true.");
 
@@ -92,6 +98,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 Entity account = new(entityLogicalName);
                 account["name"] = name;
                 account[imageColumnLogicalName] = File.ReadAllBytes($"Images\\{fileName}");
+
                 accountsWithImagesIds.Add(service.Create(account));
                 Console.WriteLine($"\tCreated account: '{name}'");
             }
@@ -113,15 +120,17 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
             EntityCollection accountsWithImages = service.RetrieveMultiple(query);
 
+            Console.WriteLine($"Retrieving records with thumbnail images:");
             // Images retrieved this way are always thumbnails
             foreach (Entity account in accountsWithImages.Entities)
             {
                 string recordName = (string)account["name"];
                 string downloadedFileName = $"{recordName}_retrieved.png";
                 File.WriteAllBytes($"DownloadedImages\\{downloadedFileName}", (byte[])account[imageColumnLogicalName]);
+                Console.WriteLine($"\tThumbnail-sized file column data saved to DownloadedImages\\{downloadedFileName}");
             }
 
-            Console.WriteLine("Attempt to download full-size images for all 10 records.");
+            Console.WriteLine("Attempt to download full-size images for all 10 records. 5 should fail.");
             // Attempt to download the full image of the files.
             // Expect that 5 of 10 will fail because they were created while CanStoreFullImage was false.
             foreach (Entity account in accountsWithImages.Entities)
@@ -133,6 +142,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     string recordName = (string)account["name"];
                     string downloadedFileName = $"{recordName}_downloaded.png";
                     File.WriteAllBytes($"DownloadedImages\\{downloadedFileName}", downloadedFile);
+                    Console.WriteLine($"\tFull-sized file downloaded to DownloadedImages\\{downloadedFileName}");
                 }
                 catch (FaultException<OrganizationServiceFault> faultException)
                 {
@@ -157,6 +167,29 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
             }
 
+            // Delete Image data with Update.
+            foreach (Entity account in accountsWithImages.Entities)
+            {
+                Entity deleteImageAccount = new("account");
+                deleteImageAccount.Id= account.Id;
+                deleteImageAccount[imageColumnLogicalName] = null;
+
+                service.Update(deleteImageAccount);
+            }
+
+            // Verify that the images are deleted:
+            // Retrieve the accounts again using the same query as before:
+            EntityCollection accountsWithOutImages = service.RetrieveMultiple(query);
+
+            foreach (Entity account in accountsWithOutImages.Entities)
+            {
+                if (account.Attributes.Contains(imageColumnLogicalName))
+                {
+                    // This should not occur
+                    Console.WriteLine($"Error: {account["accountid"]} {imageColumnLogicalName} has an image value.");
+                }
+            }
+
 
             // Delete the records that were created by this sample
             foreach (Guid id in accountsWithImagesIds)
@@ -167,10 +200,17 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
 
             // Set the account primaryImage back to the original value
-            Utility.SetTablePrimaryImageName(service, entityLogicalName, originalAccountPrimaryImageAttributeName, isPrimaryImage: true);
+            Utility.SetTablePrimaryImageName(
+                service, 
+                entityLogicalName, 
+                originalAccountPrimaryImageAttributeName, 
+                isPrimaryImage: true);
 
             // Delete the Image Column
-            Utility.DeleteImageColumn(service, entityLogicalName, imageColumnSchemaName);
+            Utility.DeleteImageColumn(
+                service, 
+                entityLogicalName, 
+                imageColumnSchemaName);
 
             Console.WriteLine("Sample completed.");
         }
@@ -178,7 +218,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
 
         /// <summary>
-        /// Downloads a file using InitializeFileBlocksDownload and DownloadBlock messages
+        /// Downloads a full-sized file using InitializeFileBlocksDownload and DownloadBlock messages
         /// </summary>
         /// <param name="service">The service</param>
         /// <param name="entityReference">A reference to the record with the file column</param>
@@ -239,5 +279,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
             return fileBytes.ToArray();
         }
+
+
     }
 }
