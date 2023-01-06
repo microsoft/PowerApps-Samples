@@ -28,7 +28,7 @@ namespace ImageOperations
 
             // Update the image column to set it as the primary image
             // Only primary image columns can be set during Create
-            await Utility.SetTablePrimaryImageName(service, entityLogicalName, imageColumnLogicalName, isPrimaryImage: true);
+            await Utility.SetTablePrimaryImageName(service, entityLogicalName, imageColumnLogicalName);
 
             Console.WriteLine("Create 5 records while CanStoreFullImage is false.");
 
@@ -266,8 +266,7 @@ namespace ImageOperations
             await Utility.SetTablePrimaryImageName(
                 service, 
                 entityLogicalName, 
-                originalAccountPrimaryImageAttributeName, 
-                isPrimaryImage: true);
+                originalAccountPrimaryImageAttributeName);
 
             // Delete the Image Column
             await Utility.DeleteImageColumn(
@@ -277,6 +276,7 @@ namespace ImageOperations
 
             Console.WriteLine("Sample completed.");
         }
+
 
         /// <summary>
         /// Downloads an image using Web API InitializeFileBlocksDownload and DownloadBlock Actions

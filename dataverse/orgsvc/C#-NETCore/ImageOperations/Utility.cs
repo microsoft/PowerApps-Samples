@@ -14,10 +14,12 @@ namespace PowerPlatform.Dataverse.CodeSamples
         /// <param name="service">The service.</param>
         /// <param name="entityLogicalName">The logical name of the table to create the image column in.</param>
         /// <param name="imageColumnSchemaName">The schema name of the image column.</param>
+        /// <param name="maxSizeInKb">The maximum size of image the column will store.</param>
         public static void CreateImageColumn(
             IOrganizationService service,
             string entityLogicalName,
-            string imageColumnSchemaName)
+            string imageColumnSchemaName,
+            int maxSizeInKB = 30720) // 30 MB is maximum size.
         {
             Console.WriteLine($"Creating image column named '{imageColumnSchemaName}' on the {entityLogicalName} table ...");
 
@@ -28,7 +30,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 RequiredLevel = new AttributeRequiredLevelManagedProperty(
                       AttributeRequiredLevel.None),
                 Description = new Label("Sample Image Column for ImageOperation samples", 1033),
-                MaxSizeInKB = 30 * 1024 // 30 MB is maximum size.
+                MaxSizeInKB = maxSizeInKB 
                 // IsPrimaryImage cannot be set on Create, only Update.
 
             };
@@ -158,17 +160,15 @@ namespace PowerPlatform.Dataverse.CodeSamples
         }
 
         /// <summary>
-        /// Sets an ImageAttribute IsPrimaryImage property
+        /// Sets an ImageAttribute IsPrimaryImage property to true
         /// </summary>
         /// <param name="service">The service</param>
         /// <param name="entityLogicalName">The logical name of the table that has the image column.</param>
         /// <param name="imageAttributeName">The logical name of the image column.</param>
-        /// <param name="isPrimaryImage">The value to set.</param>
         public static void SetTablePrimaryImageName(
             IOrganizationService service,
             string entityLogicalName,
-            string imageAttributeName,
-            bool isPrimaryImage)
+            string imageAttributeName)
         {
 
             RetrieveAttributeRequest retrieveRequest = new()
@@ -181,7 +181,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
             ImageAttributeMetadata imageColumnDefinition = (ImageAttributeMetadata)retrieveResponse.AttributeMetadata;
 
-            imageColumnDefinition.IsPrimaryImage = isPrimaryImage;
+            imageColumnDefinition.IsPrimaryImage = true;
 
             UpdateAttributeRequest updateAttributeRequest = new()
             {

@@ -64,7 +64,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
             // Update the image column to set it as the primary image
             // Only primary image columns can be set during Create
-            Utility.SetTablePrimaryImageName(service, entityLogicalName, imageColumnLogicalName, isPrimaryImage: true);
+            Utility.SetTablePrimaryImageName(service, entityLogicalName, imageColumnLogicalName);
 
             Console.WriteLine("Create 5 records while CanStoreFullImage is false.");
 
@@ -203,8 +203,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
             Utility.SetTablePrimaryImageName(
                 service, 
                 entityLogicalName, 
-                originalAccountPrimaryImageAttributeName, 
-                isPrimaryImage: true);
+                originalAccountPrimaryImageAttributeName);
 
             // Delete the Image Column
             Utility.DeleteImageColumn(
