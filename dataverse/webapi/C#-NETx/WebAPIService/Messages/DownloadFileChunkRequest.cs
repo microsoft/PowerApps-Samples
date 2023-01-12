@@ -12,15 +12,22 @@
         /// <param name="fileColumnLogicalName">The logical name of the file column.</param>
         /// <param name="offSet">The size of the offset in bytes.</param>
         /// <param name="chunkSize">The number of bytes being sent.</param>
+        /// <param name="returnFullSizedImage">When downloading image file, whether to return the full-sized image. Otherwise the thumbnail-sized image will be returned.</param>
         public DownloadFileChunkRequest(EntityReference entityReference,
             string fileColumnLogicalName,
             int offSet,
-            int chunkSize
+            int chunkSize,
+            bool returnFullSizedImage = false
             )
         {
+            string uriString = $"{entityReference.Path}/{fileColumnLogicalName}/$value";
+
+            if (returnFullSizedImage)
+                uriString += "?size=full";
+
             Method = HttpMethod.Get;
             RequestUri = new Uri(
-                uriString: $"{entityReference.Path}/{fileColumnLogicalName}/$value",
+                uriString: uriString,
                 uriKind: UriKind.Relative);
             Headers.Range = new System.Net.Http.Headers.RangeHeaderValue(offSet, offSet + chunkSize - 1);
 

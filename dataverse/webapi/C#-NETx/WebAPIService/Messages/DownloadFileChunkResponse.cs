@@ -24,7 +24,15 @@
         {
             get
             {
-                return int.Parse(Headers.GetValues("x-ms-file-size").First());
+                // 'x-ms-file-size' Header not included for images unless '?size=full' included in URL
+                if (Headers.Contains("x-ms-file-size"))
+                {
+                    return int.Parse(Headers.GetValues("x-ms-file-size").First());
+                }
+                else
+                {
+                    return Data.Length;
+                }                
             }
         }
     }
