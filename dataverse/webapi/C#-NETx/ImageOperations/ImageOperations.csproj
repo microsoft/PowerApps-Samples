@@ -45,11 +45,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Images\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <None Update="DownloadedImages\placeholder.txt">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Images\placeholder.txt">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>
