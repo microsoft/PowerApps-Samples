@@ -5,6 +5,7 @@ using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Sdk;
 using System.Text;
 using Microsoft.PowerPlatform.Dataverse.Client;
+using System.ServiceModel;
 
 namespace PowerPlatform.Dataverse.CodeSamples
 {
@@ -147,21 +148,38 @@ namespace PowerPlatform.Dataverse.CodeSamples
             {
                 Attributes =
                 {
-                    { "annotationid", annotationid },
+                    //{ "annotationid", annotationid },
+                    { "subject", "large PDF file" },
                     { "filename", pdfDoc.Name },
-                    { "notetext", "Please see new attached pdf file." }
+                    { "notetext", "Please see new attached pdf file." },
+                    // Associate with the account
+                    { "objectid", new EntityReference("account", accountid) }
                 }
             };
 
 
-            // Can only be used for existing note.
-            // note must contain annotationid
-            int fileSizeInBytes = UploadNote(
-                service: serviceClient, 
+            // Can only be used for existing note?
+            // note must contain annotationid?
+
+            try
+            {
+                int fileSizeInBytes = UploadNote(
+                service: serviceClient,
                 annotation: updateNoteWithLargeFile,
                 fileInfo: excelDoc);
 
-            Console.WriteLine($"Uploaded {excelDoc.Name} FileSizeInBytes: {fileSizeInBytes}");
+                Console.WriteLine($"Uploaded {excelDoc.Name} FileSizeInBytes: {fileSizeInBytes}");
+            }
+            catch (FaultException<OrganizationServiceFault> osf)
+            {
+                Console.WriteLine(osf.Message );
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
 
             //Download the file
             var (bytes, fileName) = DownloadNote(
@@ -201,10 +219,10 @@ namespace PowerPlatform.Dataverse.CodeSamples
             {
                 throw new ArgumentException("The annotation parameter must be an annotation entity", nameof(annotation));
             }
-            if (!annotation.Attributes.Contains("annotationid") || annotation.Id != Guid.Empty)
-            {
-                throw new ArgumentException("The annotation parameter must include a valid annotationid value.", nameof(annotation));
-            }
+            //if (!annotation.Attributes.Contains("annotationid") || annotation.Id != Guid.Empty)
+            //{
+            //    throw new ArgumentException("The annotation parameter must include a valid annotationid value.", nameof(annotation));
+            //}
 
             // documentbody value in annotation not needed. Remove if found.
             if (annotation.Contains("documentbody")) {
