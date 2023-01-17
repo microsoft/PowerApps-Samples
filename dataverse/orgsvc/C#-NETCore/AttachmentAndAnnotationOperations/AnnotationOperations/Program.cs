@@ -6,7 +6,7 @@ using Microsoft.Xrm.Sdk;
 using System.Text;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
-namespace AnnotationOperations
+namespace PowerPlatform.Dataverse.CodeSamples
 {
     class Program
     {

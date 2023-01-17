@@ -2,7 +2,7 @@
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 
-namespace AnnotationOperations
+namespace PowerPlatform.Dataverse.CodeSamples
 {
     public class Utility
     {

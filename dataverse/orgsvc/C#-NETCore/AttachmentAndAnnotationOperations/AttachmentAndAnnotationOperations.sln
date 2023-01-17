@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnnotationOperations", "AnnotationOperations\AnnotationOperations.csproj", "{5390B912-D218-4517-9DAE-91C6338A7FBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnnotationOperations", "AnnotationOperations\AnnotationOperations.csproj", "{5390B912-D218-4517-9DAE-91C6338A7FBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActivityMimeAttachmentOperations", "ActivityMimeAttachmentOperations\ActivityMimeAttachmentOperations.csproj", "{08B2EBA7-282E-4621-A5C5-93BD9452194F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{5390B912-D218-4517-9DAE-91C6338A7FBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5390B912-D218-4517-9DAE-91C6338A7FBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5390B912-D218-4517-9DAE-91C6338A7FBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08B2EBA7-282E-4621-A5C5-93BD9452194F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08B2EBA7-282E-4621-A5C5-93BD9452194F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08B2EBA7-282E-4621-A5C5-93BD9452194F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08B2EBA7-282E-4621-A5C5-93BD9452194F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
