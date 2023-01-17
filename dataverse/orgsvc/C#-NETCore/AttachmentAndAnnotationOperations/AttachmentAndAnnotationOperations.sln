@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AttachmentAndAnnotationOperations", "AttachmentAndAnnotationOperations.csproj", "{61868A37-9641-44E9-ABF7-0A5F2213A4D7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnnotationOperations", "AnnotationOperations\AnnotationOperations.csproj", "{5390B912-D218-4517-9DAE-91C6338A7FBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{61868A37-9641-44E9-ABF7-0A5F2213A4D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{61868A37-9641-44E9-ABF7-0A5F2213A4D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{61868A37-9641-44E9-ABF7-0A5F2213A4D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{61868A37-9641-44E9-ABF7-0A5F2213A4D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5390B912-D218-4517-9DAE-91C6338A7FBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5390B912-D218-4517-9DAE-91C6338A7FBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5390B912-D218-4517-9DAE-91C6338A7FBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5390B912-D218-4517-9DAE-91C6338A7FBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Extensions.Configuration;
-using Microsoft.PowerPlatform.Dataverse.Client;
-using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
-using System.ServiceModel;
+using Microsoft.Xrm.Sdk;
 using System.Text;
 
-namespace AttachmentAndAnnotationOperations
+namespace AnnotationOperations
 {
     class Program
     {
@@ -153,7 +151,7 @@ namespace AttachmentAndAnnotationOperations
             var (bytes, fileName) = DownloadNote(service: serviceClient, retrievedNote2.ToEntityReference());
 
             File.WriteAllBytes($"Downloaded{fileName}", bytes);
-            
+
             //Delete account
             serviceClient.Delete("account", accountid);
 
@@ -178,7 +176,8 @@ namespace AttachmentAndAnnotationOperations
             {
                 throw new ArgumentException("The annotation parameter must be an annotation entity", nameof(annotation));
             }
-            if (!annotation.Attributes.Contains("annotationid") || annotation.Id == Guid.Empty) {
+            if (!annotation.Attributes.Contains("annotationid") || annotation.Id == Guid.Empty)
+            {
 
                 throw new ArgumentException("The annotation parameter must include a valid annotationid value.", nameof(annotation));
             }
@@ -274,9 +273,11 @@ namespace AttachmentAndAnnotationOperations
         /// <param name="service">The IOrganizationService to use.</param>
         /// <param name="target">A reference to the annotation record that has the file.</param>
         /// <returns></returns>
-        static (byte[] bytes, string fileName) DownloadNote(IOrganizationService service, EntityReference target) {
+        static (byte[] bytes, string fileName) DownloadNote(IOrganizationService service, EntityReference target)
+        {
 
-            if (target.LogicalName != "annotation") { 
+            if (target.LogicalName != "annotation")
+            {
                 throw new ArgumentException("The target parameter must refer to an annotation record", nameof(target));
             }
 

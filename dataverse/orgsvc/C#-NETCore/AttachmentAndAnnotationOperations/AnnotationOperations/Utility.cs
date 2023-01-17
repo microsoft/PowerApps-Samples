@@ -2,7 +2,7 @@
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 
-namespace AttachmentAndAnnotationOperations
+namespace AnnotationOperations
 {
     public class Utility
     {
