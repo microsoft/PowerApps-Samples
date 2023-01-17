@@ -28,12 +28,12 @@ namespace AnnotationOperations
         /// <returns>The current system configured MaxUploadFileSize</returns>
         public static int GetMaxUploadFileSize(IOrganizationService service) {
             QueryExpression query = new("organization") { 
-                 ColumnSet = new ColumnSet("maxuploadfilesize"),
-                 TopCount = 1
+                 ColumnSet = new ColumnSet("maxuploadfilesize")
             };
 
             EntityCollection organizations = service.RetrieveMultiple(query);
 
+            // There is only one row in organization table
             return (int)organizations.Entities.FirstOrDefault()["maxuploadfilesize"];
         }
 
@@ -51,12 +51,12 @@ namespace AnnotationOperations
 
             QueryExpression query = new("organization")
             {
-                ColumnSet = new ColumnSet("organizationid"),
-                TopCount = 1
+                ColumnSet = new ColumnSet("organizationid")
             };
 
             EntityCollection organizations = service.RetrieveMultiple(query);
 
+            // There is only one row in organization table
             Entity organization = organizations.Entities.FirstOrDefault();
             organization["maxuploadfilesize"] = maxUploadFileSizeInBytes;
 

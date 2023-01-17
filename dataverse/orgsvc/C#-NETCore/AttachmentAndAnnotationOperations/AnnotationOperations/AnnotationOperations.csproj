@@ -8,7 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="..\appsettings.json" Link="appsettings.json" />
+    <Content Include="..\appsettings.json" Link="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +24,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\..\..\..\SharedResources\Files\25mb.pdf" Link="Files\25mb.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="..\..\..\..\SharedResources\Files\ExcelDoc.xlsx" Link="Files\ExcelDoc.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

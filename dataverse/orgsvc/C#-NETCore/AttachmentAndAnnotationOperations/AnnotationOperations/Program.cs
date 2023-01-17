@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Sdk;
 using System.Text;
+using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace AnnotationOperations
 {
@@ -34,29 +35,26 @@ namespace AnnotationOperations
 
         static void Main()
         {
+            // Files used in this sample
             FileInfo wordDoc = new("Files/WordDoc.docx");
             FileInfo excelDoc = new("Files/ExcelDoc.xlsx");
+            FileInfo pdfDoc = new("Files/25mb.pdf");
+
 
             Program app = new();
 
             // Create a Dataverse service client using the default connection string.
             ServiceClient serviceClient =
-                new(app.Configuration.GetConnectionString("default"));
+                new(app.Configuration.GetConnectionString("default"))
+                {
+                    UseWebApi = false
+                };
 
-            serviceClient.UseWebApi = false;
+            // Get current MaxUploadFileSize
+            int originalMaxUploadFileSize = Utility.GetMaxUploadFileSize(serviceClient);
+            Console.WriteLine($"Current MaxUploadFileSize: {originalMaxUploadFileSize}");
 
-            int maxuploadfilesize = Utility.GetMaxUploadFileSize(serviceClient);
-            Console.WriteLine($"MaxUploadFileSize: {maxuploadfilesize}");
-
-            Utility.SetMaxUploadFileSize(serviceClient, 131072000);
-
-            Console.WriteLine($"MaxUploadFileSize: {Utility.GetMaxUploadFileSize(serviceClient)}");
-
-            Utility.SetMaxUploadFileSize(serviceClient, 5120000);
-
-            Console.WriteLine($"MaxUploadFileSize: {Utility.GetMaxUploadFileSize(serviceClient)}");
-
-            // Create account
+            // Create account to associate note with.
             Entity account = new("account")
             {
                 Attributes =
@@ -67,14 +65,13 @@ namespace AnnotationOperations
 
             Guid accountid = serviceClient.Create(account);
 
-            // Create Note
+            // Create note
             Entity note = new("annotation")
             {
                 Attributes =
                 {
                     { "subject", "Example Note" },
                     { "filename", wordDoc.Name },
-                    // Byte[] value can be set directly using late-bound style when serviceClient.UseWebApi = true;
                     { "documentbody", Convert.ToBase64String(File.ReadAllBytes(wordDoc.FullName))},
                     { "notetext", "Please see attached file." },
                     // mimetype is optional. Will be set to "application/octet-stream" if not specified.
@@ -85,25 +82,28 @@ namespace AnnotationOperations
                 }
             };
 
-            // Create annotation
+            // Create note
             Guid annotationid = serviceClient.Create(note);
-
+            Console.WriteLine($"Created note with attached Word document.");
 
 
             // Retrieve the note
             Entity retrievedNote = serviceClient.Retrieve(
                 entityName: "annotation",
                 id: annotationid,
-                columnSet: new ColumnSet("documentbody", "mimetype"));
+                columnSet: new ColumnSet("documentbody", "mimetype","filename"));
 
-            // mimetype uses the value saved: 
-            Console.WriteLine($"mimetype: {retrievedNote["mimetype"]}");
+            Console.WriteLine($"\tRetrieved note with attached Word document.");
 
             //Save the file
-            File.WriteAllBytes("DownloadedWordDoc.docx", Convert.FromBase64String((string)retrievedNote["documentbody"]));
+            File.WriteAllBytes( 
+                path: $"Downloaded{retrievedNote["filename"]}", 
+                bytes: Convert.FromBase64String((string)retrievedNote["documentbody"]));
+
+            Console.WriteLine($"\tSaved the Word document to \\bin\\Debug\\net6.0\\Downloaded{retrievedNote["filename"]}.");
 
             // File to update
-            Entity updateNoteWithSmallFile = new("annotation")
+            Entity annotationForUpdate = new("annotation")
             {
                 Attributes =
                 {
@@ -116,52 +116,77 @@ namespace AnnotationOperations
                 }
             };
 
-            serviceClient.Update(updateNoteWithSmallFile);
+            // Update the note
+            serviceClient.Update(annotationForUpdate);
 
-            //// File to update
-            //Entity updateNoteWithLargeFile = new("annotation")
-            //{
-            //    Attributes =
-            //    {
-            //        { "annotationid", annotationid },
-            //        { "filename", excelDoc.Name },
-            //        { "notetext", "Please see new attached file." },
-            //        // This will be 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-            //        { "mimetype", Utility.GetMimeType(excelDoc)},
-            //    }
-            //};
-
-
-            //// Can only be used for existing Note. Target Must contain annotationid
-            //int fileSizeInBytes = UploadNote(serviceClient, updateNoteWithLargeFile, excelDoc);
-            //Console.WriteLine($"FileSizeInBytes: {fileSizeInBytes}");
-
-
+            Console.WriteLine($"Updated note with attached Excel document.");
 
             // Retrieve the note
-            Entity retrievedNote2 = serviceClient.Retrieve(
+            Entity retrievedUpdatedNote = serviceClient.Retrieve(
                 entityName: "annotation",
                 id: annotationid,
-                columnSet: new ColumnSet("documentbody", "mimetype"));
+                columnSet: new ColumnSet("documentbody", "filename"));
 
-            // mimetype uses the value saved: 
-            Console.WriteLine($"mimetype: {retrievedNote2["mimetype"]}");
+            Console.WriteLine($"\tRetrieved note with attached Excel document.");
+
+            //Save the file
+            File.WriteAllBytes(
+                path: $"Downloaded{(string)retrievedUpdatedNote["filename"]}",
+                bytes: Convert.FromBase64String((string)retrievedUpdatedNote["documentbody"]));
+
+            Console.WriteLine($"\tSaved the Excel document to \\bin\\Debug\\net6.0\\Downloaded{retrievedUpdatedNote["filename"]}.");
+
+            // Set MaxUploadFileSize to the maximum value
+            Utility.SetMaxUploadFileSize(serviceClient, 131072000);
+
+            Console.WriteLine($"Updated MaxUploadFileSize to: {Utility.GetMaxUploadFileSize(serviceClient)}");
+
+
+            // Note to update
+            Entity updateNoteWithLargeFile = new("annotation")
+            {
+                Attributes =
+                {
+                    { "annotationid", annotationid },
+                    { "filename", pdfDoc.Name },
+                    { "notetext", "Please see new attached pdf file." }
+                }
+            };
+
+
+            // Can only be used for existing note.
+            // note must contain annotationid
+            int fileSizeInBytes = UploadNote(
+                service: serviceClient, 
+                annotation: updateNoteWithLargeFile,
+                fileInfo: excelDoc);
+
+            Console.WriteLine($"Uploaded {excelDoc.Name} FileSizeInBytes: {fileSizeInBytes}");
 
             //Download the file
-            var (bytes, fileName) = DownloadNote(service: serviceClient, retrievedNote2.ToEntityReference());
+            var (bytes, fileName) = DownloadNote(
+                service: serviceClient, 
+                target: retrievedUpdatedNote.ToEntityReference());
 
             File.WriteAllBytes($"Downloaded{fileName}", bytes);
+            Console.WriteLine($"\tSaved the PDF document to \\bin\\Debug\\net6.0\\Downloaded{fileName}.");
 
-            //Delete account
+
+            //Delete account, which will delete all notes associated with it
             serviceClient.Delete("account", accountid);
+
+            // Return MaxUploadFileSize to the original value
+            Utility.SetMaxUploadFileSize(serviceClient, originalMaxUploadFileSize);
+
+            Console.WriteLine($"Current MaxUploadFileSize: {Utility.GetMaxUploadFileSize(serviceClient)}");
 
         }
 
         /// <summary>
-        /// Uploads an annotation record with file.
+        /// Uploads an note record with file.
         /// </summary>
         /// <param name="service">The IOrganizationService to use.</param>
-        /// <param name="annotation">The data to update for an existing annotation record.</param>
+        /// <param name="annotation">The data to update for an existing note record.</param>
         /// <param name="fileInfo">A reference to the file to upload.</param>
         /// <param name="fileMimeType">The mimetype for the file, if known.</param>
         /// <returns>The FileSizeInBytes</returns>
@@ -176,23 +201,39 @@ namespace AnnotationOperations
             {
                 throw new ArgumentException("The annotation parameter must be an annotation entity", nameof(annotation));
             }
-            if (!annotation.Attributes.Contains("annotationid") || annotation.Id == Guid.Empty)
+            if (!annotation.Attributes.Contains("annotationid") || annotation.Id != Guid.Empty)
             {
-
                 throw new ArgumentException("The annotation parameter must include a valid annotationid value.", nameof(annotation));
             }
 
+            // documentbody value in annotation not needed. Remove if found.
+            if (annotation.Contains("documentbody")) {
+                annotation.Attributes.Remove("documentbody");
+            }
+
+            // Try to get the mimetype if not provided.
+            if (string.IsNullOrEmpty(fileMimeType))
+            {
+                var provider = new FileExtensionContentTypeProvider();
+
+                if (!provider.TryGetContentType(fileInfo.Name, out fileMimeType))
+                {
+                    fileMimeType = "application/octet-stream";
+                }
+            }
+
+            annotation["mimetype"] = fileMimeType;
 
             // Initialize the upload
-            InitializeAnnotationBlocksUploadRequest initializeAnnotationBlocksUploadRequest = new()
+            InitializeAnnotationBlocksUploadRequest initializeRequest = new()
             {
                 Target = annotation
             };
 
-            var initializeAnnotationBlocksUploadResponse =
-                (InitializeAnnotationBlocksUploadResponse)service.Execute(initializeAnnotationBlocksUploadRequest);
+            var initializeResponse =
+                (InitializeAnnotationBlocksUploadResponse)service.Execute(initializeRequest);
 
-            string fileContinuationToken = initializeAnnotationBlocksUploadResponse.FileContinuationToken;
+            string fileContinuationToken = initializeResponse.FileContinuationToken;
 
             // Capture blockids while uploading
             List<string> blockIds = new();
@@ -241,57 +282,47 @@ namespace AnnotationOperations
                 service.Execute(uploadBlockRequest);
             }
 
-            // Try to get the mimetype if not provided.
-            if (string.IsNullOrEmpty(fileMimeType))
-            {
-                var provider = new FileExtensionContentTypeProvider();
-
-                if (!provider.TryGetContentType(fileInfo.Name, out fileMimeType))
-                {
-                    fileMimeType = "application/octet-stream";
-                }
-            }
-
             // Commit the upload
-            CommitAnnotationBlocksUploadRequest commitAnnotationBlocksUploadRequest = new()
+            CommitAnnotationBlocksUploadRequest commitRequest = new()
             {
                 BlockList = blockIds.ToArray(),
                 FileContinuationToken = fileContinuationToken,
                 Target = annotation
             };
 
-            var commitFileBlocksUploadResponse =
-                (CommitAnnotationBlocksUploadResponse)service.Execute(commitAnnotationBlocksUploadRequest);
+            var commitResponse =
+                (CommitAnnotationBlocksUploadResponse)service.Execute(commitRequest);
 
-            return commitFileBlocksUploadResponse.FileSizeInBytes;
+            return commitResponse.FileSizeInBytes;
 
         }
 
         /// <summary>
-        /// Downloads the documentbody of an annotation.
+        /// Downloads the documentbody and filename of an note.
         /// </summary>
         /// <param name="service">The IOrganizationService to use.</param>
-        /// <param name="target">A reference to the annotation record that has the file.</param>
-        /// <returns></returns>
-        static (byte[] bytes, string fileName) DownloadNote(IOrganizationService service, EntityReference target)
+        /// <param name="target">A reference to the note record that has the file.</param>
+        /// <returns>Tuple containing bytes and filename</returns>
+        static (byte[] bytes, string fileName) DownloadNote(
+            IOrganizationService service, 
+            EntityReference target)
         {
-
             if (target.LogicalName != "annotation")
             {
-                throw new ArgumentException("The target parameter must refer to an annotation record", nameof(target));
+                throw new ArgumentException("The target parameter must refer to an note record.", nameof(target));
             }
 
-            InitializeAnnotationBlocksDownloadRequest initializeAnnotationBlocksDownloadRequest = new()
+            InitializeAnnotationBlocksDownloadRequest initializeRequest = new()
             {
                 Target = target
             };
 
-            var initializeAnnotationBlocksDownloadResponse =
-                (InitializeAnnotationBlocksDownloadResponse)service.Execute(initializeAnnotationBlocksDownloadRequest);
+            var response =
+                (InitializeAnnotationBlocksDownloadResponse)service.Execute(initializeRequest);
 
-            string fileContinuationToken = initializeAnnotationBlocksDownloadResponse.FileContinuationToken;
-            int fileSizeInBytes = initializeAnnotationBlocksDownloadResponse.FileSizeInBytes;
-            string fileName = initializeAnnotationBlocksDownloadResponse.FileName;
+            string fileContinuationToken = response.FileContinuationToken;
+            int fileSizeInBytes = response.FileSizeInBytes;
+            string fileName = response.FileName;
 
             List<byte> fileBytes = new();
 
@@ -330,7 +361,6 @@ namespace AnnotationOperations
             }
 
             return (fileBytes.ToArray(), fileName);
-
         }
     }
 }
