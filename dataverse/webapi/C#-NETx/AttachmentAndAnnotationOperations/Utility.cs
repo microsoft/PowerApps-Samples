@@ -1,8 +1,10 @@
 ﻿using System;
 
-public class Class1
+namespace PowerApps.Samples
 {
-	public Class1()
-	{
-	}
+    public class Utility
+    {
+
+    }
 }
+
