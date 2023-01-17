@@ -150,18 +150,12 @@ namespace AttachmentAndAnnotationOperations
             Console.WriteLine($"mimetype: {retrievedNote2["mimetype"]}");
 
             //Download the file
-            var downloadNoteResult = DownloadNote(service: serviceClient, retrievedNote2.ToEntityReference());
+            var (bytes, fileName) = DownloadNote(service: serviceClient, retrievedNote2.ToEntityReference());
 
-            File.WriteAllBytes($"Downloaded{downloadNoteResult.fileName}", downloadNoteResult.bytes);
+            File.WriteAllBytes($"Downloaded{fileName}", bytes);
             
-
-
-
             //Delete account
             serviceClient.Delete("account", accountid);
-
-
-
 
         }
 
