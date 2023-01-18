@@ -153,7 +153,8 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     { "filename", pdfDoc.Name },
                     { "notetext", "Please see new attached pdf file." },
                     // Associate with the account
-                    { "objectid", new EntityReference("account", accountid) }
+                    { "objectid", new EntityReference("account", accountid) },
+                    { "objectidtypecode", "account" }
                 }
             };
 

@@ -14,7 +14,10 @@ namespace PowerApps.Samples.Messages
         /// <param name="target">The target entity.</param>
         /// <param name="blockList">The IDs of the uploaded data blocks, in the correct sequence, that will result in the final annotation when the data blocks are combined.</param>
         /// <param name="fileContinuationToken">A token that uniquely identifies a sequence of related data uploads.</param>
-        public CommitAnnotationBlocksUploadRequest(EntityReference target, List<string> blockList, string fileContinuationToken)
+        public CommitAnnotationBlocksUploadRequest(
+            EntityReference target, 
+            List<string> blockList, 
+            string fileContinuationToken)
         {
             Method = HttpMethod.Post;
             RequestUri = new Uri(
@@ -24,8 +27,8 @@ namespace PowerApps.Samples.Messages
             JObject body = new()
             {
                 { "Target", target.AsJObject(
-                    entityLogicalName:"annotation",
-                    primaryKeyLogicalName:"annotationid")},
+                    entityLogicalName:"annotation", 
+                    primaryKeyLogicalName:"annotationid") },
                 { "BlockList", JToken.FromObject(blockList.ToArray()) },
                 { "FileContinuationToken", fileContinuationToken}
             };

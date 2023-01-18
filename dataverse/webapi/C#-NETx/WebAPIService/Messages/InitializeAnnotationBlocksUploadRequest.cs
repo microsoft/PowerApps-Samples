@@ -19,9 +19,9 @@ namespace PowerApps.Samples.Messages
 
             JObject body = new()
             {
-                {"Target",target.AsJObject(
-                            entityLogicalName: "annotation",
-                            primaryKeyLogicalName: "annotationid") }
+                {"Target", target.AsJObject(
+                    entityLogicalName:"annotation",
+                    primaryKeyLogicalName:"annotationid") }
             };
 
             Content = new StringContent(
