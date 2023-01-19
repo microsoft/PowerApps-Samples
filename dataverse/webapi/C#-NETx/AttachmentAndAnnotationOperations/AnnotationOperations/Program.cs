@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.StaticFiles;
-using Microsoft.Identity.Client;
 using Newtonsoft.Json.Linq;
 using PowerApps.Samples.Messages;
 using PowerApps.Samples.Methods;
@@ -96,22 +95,31 @@ namespace PowerApps.Samples
 
             Console.WriteLine($"Updated MaxUploadFileSize to: {await Utility.GetMaxUploadFileSize(service)}");
 
-            // Upload large file
-                int fileSizeInBytes = await UploadNote(
-                    service: service,
-                    annotationReference: noteRef,
-                    fileInfo: pdfDoc) ;
-
-                Console.WriteLine($"Uploaded {pdfDoc.Name} FileSizeInBytes: {fileSizeInBytes}");
-
-            // Update the note with details about the uploaded file
+            // Note to update
             JObject updateNoteWithLargeFile = new() {
+                    { "annotationid", noteRef.Id }, // Required
                     { "subject", "large PDF file" },
                     { "filename", pdfDoc.Name },
                     { "notetext", "Please see new attached pdf file." },
-                    {"mimetype", Utility.GetMimeType(pdfDoc)},
+                    { "mimetype", Utility.GetMimeType(pdfDoc)}
+                // Don't include documentbody
             };
-            await service.Update(entityReference: noteRef,record: updateNoteWithLargeFile);
+
+            // Upload large file
+            int fileSizeInBytes = await UploadNote(
+                    service: service,
+                    annotation: updateNoteWithLargeFile,
+                    fileInfo: pdfDoc);
+
+            Console.WriteLine($"Uploaded {pdfDoc.Name} FileSizeInBytes: {fileSizeInBytes}");
+
+            //Download the large file
+            var (bytes, fileName) = await DownloadNote(
+                service: service,
+                target: noteRef);
+
+            File.WriteAllBytes($"Downloaded{fileName}", bytes);
+            Console.WriteLine($"\tSaved the PDF document to \\bin\\Debug\\net6.0\\Downloaded{fileName}.");
 
             //Delete account, which will delete all notes associated with it
             await service.Delete(accountRef);
@@ -123,19 +131,59 @@ namespace PowerApps.Samples
             Console.WriteLine($"Current MaxUploadFileSize: {await Utility.GetMaxUploadFileSize(service)}");
         }
 
+        /// <summary>
+        /// Uploads an note record and updates annotation.
+        /// </summary>
+        /// <param name="service">The WebAPIService to use.</param>
+        /// <param name="annotation">The data to update for an existing note record.</param>
+        /// <param name="fileInfo">A reference to the file to upload.</param>
+        /// <returns>The FileSizeInBytes</returns>
         static async Task<int> UploadNote(
-            Service service, 
-            EntityReference annotationReference, 
+            Service service,
+            JObject annotation,
             FileInfo fileInfo,
-            string? fileMimeType = null) 
+            string? fileMimeType = null)
         {
-            // Initialize the upload
-            InitializeAnnotationBlocksUploadRequest initializeAnnotationBlocksUploadRequest = new(
-                target: annotationReference);
 
-            InitializeAnnotationBlocksUploadResponse initializeAnnotationBlocksUploadResponse =
-                await service.SendAsync<InitializeAnnotationBlocksUploadResponse>(initializeAnnotationBlocksUploadRequest);
-            string fileContinuationToken = initializeAnnotationBlocksUploadResponse.FileContinuationToken;
+
+
+            if (!annotation.ContainsKey("@odata.type"))
+            {
+                annotation.Add("@odata.type", "Microsoft.Dynamics.CRM.annotation");
+            }
+
+            // documentbody value in annotation not needed. Remove if found.
+            if (annotation.ContainsKey("documentbody"))
+            {
+                annotation.Remove("documentbody");
+            }
+
+            // Try to get the mimetype if not provided.
+            if (string.IsNullOrEmpty(fileMimeType))
+            {
+                var provider = new FileExtensionContentTypeProvider();
+
+                if (!provider.TryGetContentType(fileInfo.Name, out fileMimeType))
+                {
+                    fileMimeType = "application/octet-stream";
+                }
+            }
+            // Don't override what might be included in the annotation.
+            if (!annotation.ContainsKey("mimetype"))
+            {
+                annotation.Add("mimetype", fileMimeType);
+            }
+
+            // Initialize the upload
+            InitializeAnnotationBlocksUploadRequest initializeRequest = new(
+                target: annotation);
+
+            var initializeResponse =
+                await service.SendAsync<InitializeAnnotationBlocksUploadResponse>(
+                    request: initializeRequest);
+
+            string fileContinuationToken =
+                initializeResponse.FileContinuationToken;
 
             // Capture blockids while uploading
             List<string> blockIds = new();
@@ -185,15 +233,71 @@ namespace PowerApps.Samples
             }
 
             // Commit the upload
-            CommitAnnotationBlocksUploadRequest commitAnnotationBlocksUploadRequest = new(
-                target: annotationReference, 
+            CommitAnnotationBlocksUploadRequest commitRequest = new(
+                target: annotation,
                 blockList: blockIds,
                 fileContinuationToken: fileContinuationToken);
 
-            CommitAnnotationBlocksUploadResponse commitAnnotationBlocksUploadResponse =
-                await service.SendAsync<CommitAnnotationBlocksUploadResponse>(commitAnnotationBlocksUploadRequest);
+            var commitResponse =
+                await service.SendAsync<CommitAnnotationBlocksUploadResponse>(commitRequest);
 
-            return commitAnnotationBlocksUploadResponse.FileSizeInBytes;
+            return commitResponse.FileSizeInBytes;
+        }
+
+        /// <summary>
+        /// Downloads the documentbody and filename of an note.
+        /// </summary>
+        /// <param name="service">The WebAPIService to use.</param>
+        /// <param name="target">A reference to the note record that has the file.</param>
+        /// <returns>Tuple containing bytes and filename.</returns>
+        static async Task<(byte[] bytes, string fileName)> DownloadNote(
+            Service service,
+            EntityReference target)
+        {
+            InitializeAnnotationBlocksDownloadRequest initializeRequest = new(target: target);
+
+            var response =
+                await service.SendAsync<InitializeAnnotationBlocksDownloadResponse>(request: initializeRequest);
+
+            string fileContinuationToken = response.FileContinuationToken;
+            int fileSizeInBytes = response.FileSizeInBytes;
+            string fileName = response.FileName;
+
+            List<byte> fileBytes = new();
+
+            long offset = 0;
+            long blockSizeDownload = 4 * 1024 * 1024; // 4 MB
+
+            // File size may be smaller than defined block size
+            if (fileSizeInBytes < blockSizeDownload)
+            {
+                blockSizeDownload = fileSizeInBytes;
+            }
+
+            while (fileSizeInBytes > 0)
+            {
+                // Prepare the request
+                DownloadBlockRequest downLoadBlockRequest = new(
+                    offset: offset,
+                    blockLength: blockSizeDownload, fileContinuationToken: fileContinuationToken);
+
+
+                // Send the request
+                var downloadBlockResponse =
+                           await service.SendAsync<DownloadBlockResponse>(request: downLoadBlockRequest);
+
+                // Add the block returned to the list
+                fileBytes.AddRange(downloadBlockResponse.Data);
+
+                // Subtract the amount downloaded,
+                // which may make fileSizeInBytes < 0 and indicate
+                // no further blocks to download
+                fileSizeInBytes -= (int)blockSizeDownload;
+                // Increment the offset to start at the beginning of the next block.
+                offset += blockSizeDownload;
+            }
+
+            return (fileBytes.ToArray(), fileName);
         }
     }
 }

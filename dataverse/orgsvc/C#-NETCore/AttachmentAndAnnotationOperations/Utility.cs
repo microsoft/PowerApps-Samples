@@ -41,7 +41,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
         /// Set the current system configured MaxUploadFileSize
         /// </summary>
         /// <param name="service">The IOrganizationService to use.</param>
-        /// <param name="maxUploadFileSizeInBytes">The value to set</param>
+        /// <param name="maxUploadFileSizeInBytes">The value to set.</param>
         /// <exception cref="ArgumentOutOfRangeException">The maxUploadFileSizeInBytes parameter must be less than 131072000 bytes and greater than 0 bytes.</exception>
         public static void SetMaxUploadFileSize(IOrganizationService service, int maxUploadFileSizeInBytes)
         {

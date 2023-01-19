@@ -60,11 +60,12 @@ namespace PowerPlatform.Dataverse.CodeSamples
             {
                 Attributes =
                 {
-                   { "name","Test Account" }
+                   { "name","Test Account for AnnotationOperations" }
                 }
             };
 
             Guid accountid = serviceClient.Create(account);
+            Console.WriteLine("Created an account record to associate notes with.");
 
             // Create note
             Entity note = new("annotation")
@@ -92,13 +93,13 @@ namespace PowerPlatform.Dataverse.CodeSamples
             Entity retrievedNote = serviceClient.Retrieve(
                 entityName: "annotation",
                 id: annotationid,
-                columnSet: new ColumnSet("documentbody", "mimetype","filename"));
+                columnSet: new ColumnSet("documentbody", "mimetype", "filename"));
 
             Console.WriteLine($"\tRetrieved note with attached Word document.");
 
             //Save the file
-            File.WriteAllBytes( 
-                path: $"Downloaded{retrievedNote["filename"]}", 
+            File.WriteAllBytes(
+                path: $"Downloaded{retrievedNote["filename"]}",
                 bytes: Convert.FromBase64String((string)retrievedNote["documentbody"]));
 
             Console.WriteLine($"\tSaved the Word document to \\bin\\Debug\\net6.0\\Downloaded{retrievedNote["filename"]}.");
@@ -148,43 +149,26 @@ namespace PowerPlatform.Dataverse.CodeSamples
             {
                 Attributes =
                 {
-                    //{ "annotationid", annotationid },
+                    { "annotationid", annotationid }, // Required
                     { "subject", "large PDF file" },
                     { "filename", pdfDoc.Name },
                     { "notetext", "Please see new attached pdf file." },
-                    // Associate with the account
-                    { "objectid", new EntityReference("account", accountid) },
-                    { "objectidtypecode", "account" }
+                    { "mimetype", Utility.GetMimeType(pdfDoc)}
+                    // Don't include documentbody
                 }
             };
 
+            // Upload large file
+            int fileSizeInBytes = UploadNote(
+            service: serviceClient,
+            annotation: updateNoteWithLargeFile,
+            fileInfo: pdfDoc);
 
-            // Can only be used for existing note?
-            // note must contain annotationid?
-
-            try
-            {
-                int fileSizeInBytes = UploadNote(
-                service: serviceClient,
-                annotation: updateNoteWithLargeFile,
-                fileInfo: excelDoc);
-
-                Console.WriteLine($"Uploaded {excelDoc.Name} FileSizeInBytes: {fileSizeInBytes}");
-            }
-            catch (FaultException<OrganizationServiceFault> osf)
-            {
-                Console.WriteLine(osf.Message );
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-            
+            Console.WriteLine($"Uploaded {pdfDoc.Name} FileSizeInBytes: {fileSizeInBytes}");
 
             //Download the file
             var (bytes, fileName) = DownloadNote(
-                service: serviceClient, 
+                service: serviceClient,
                 target: retrievedUpdatedNote.ToEntityReference());
 
             File.WriteAllBytes($"Downloaded{fileName}", bytes);
@@ -193,6 +177,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
             //Delete account, which will delete all notes associated with it
             serviceClient.Delete("account", accountid);
+            Console.WriteLine("Deleted the account record.");
 
             // Return MaxUploadFileSize to the original value
             Utility.SetMaxUploadFileSize(serviceClient, originalMaxUploadFileSize);
@@ -202,7 +187,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
         }
 
         /// <summary>
-        /// Uploads an note record with file.
+        /// Uploads an note record and updates annotation.
         /// </summary>
         /// <param name="service">The IOrganizationService to use.</param>
         /// <param name="annotation">The data to update for an existing note record.</param>
@@ -213,20 +198,25 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 IOrganizationService service,
                 Entity annotation,
                 FileInfo fileInfo,
-                string fileMimeType = null)
+                string? fileMimeType = null)
         {
 
             if (annotation.LogicalName != "annotation")
             {
-                throw new ArgumentException("The annotation parameter must be an annotation entity", nameof(annotation));
+                throw new ArgumentException(
+                    message: "The annotation parameter must be an annotation entity",
+                    paramName: nameof(annotation));
             }
-            //if (!annotation.Attributes.Contains("annotationid") || annotation.Id != Guid.Empty)
-            //{
-            //    throw new ArgumentException("The annotation parameter must include a valid annotationid value.", nameof(annotation));
-            //}
+            if (!annotation.Attributes.Contains("annotationid") || annotation.Id != Guid.Empty)
+            {
+                throw new ArgumentException(
+                    message: "The annotation parameter must include a valid annotationid value.",
+                    paramName: nameof(annotation));
+            }
 
             // documentbody value in annotation not needed. Remove if found.
-            if (annotation.Contains("documentbody")) {
+            if (annotation.Contains("documentbody"))
+            {
                 annotation.Attributes.Remove("documentbody");
             }
 
@@ -240,9 +230,11 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     fileMimeType = "application/octet-stream";
                 }
             }
-
-            annotation["mimetype"] = fileMimeType;
-
+            // Don't override what might be included in the annotation.
+            if (!annotation.Contains("mimetype")) {
+                annotation["mimetype"] = fileMimeType;
+            }
+           
             // Initialize the upload
             InitializeAnnotationBlocksUploadRequest initializeRequest = new()
             {
@@ -280,7 +272,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 }
 
                 blockNumber++;
-
+                // Generates base64 string blockId values based on a Guid value so they are always the same length.
                 string blockId = Convert.ToBase64String(Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()));
 
                 blockIds.Add(blockId);
@@ -321,9 +313,9 @@ namespace PowerPlatform.Dataverse.CodeSamples
         /// </summary>
         /// <param name="service">The IOrganizationService to use.</param>
         /// <param name="target">A reference to the note record that has the file.</param>
-        /// <returns>Tuple containing bytes and filename</returns>
+        /// <returns>Tuple containing bytes and filename.</returns>
         static (byte[] bytes, string fileName) DownloadNote(
-            IOrganizationService service, 
+            IOrganizationService service,
             EntityReference target)
         {
             if (target.LogicalName != "annotation")

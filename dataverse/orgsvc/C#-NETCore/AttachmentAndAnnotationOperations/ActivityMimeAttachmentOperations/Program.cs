@@ -3,7 +3,10 @@ using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Extensions.Configuration;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Messages;
+using Microsoft.Xrm.Sdk.Query;
 using System.Text;
+using System.Xml.Linq;
 
 namespace PowerPlatform.Dataverse.CodeSamples
 {
@@ -63,6 +66,8 @@ namespace PowerPlatform.Dataverse.CodeSamples
             };
 
             Guid emailid = serviceClient.Create(email);
+            email.Id= emailid;
+
             Console.WriteLine("Created an email activity.");
 
             List<FileInfo> smallFiles = new() { wordDoc, excelDoc };
@@ -104,13 +109,57 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     }
             };
 
+            // Creates the activitymimeattachment record with a file, but doesn't return id.
             int fileSizeInBytes = UploadAttachment(
                 service: serviceClient, 
                 attachment: largeAttachment, 
                 fileInfo: pdfDoc);
 
+            Console.WriteLine($"Uploaded {pdfDoc.Name} as attachment.");
 
-            // Delete the email activity
+            // Retrieve information about the attachments related to the email
+            RelationshipQueryCollection relationshipQueryCollection = new();
+
+            // The named relationship between email and activitymimeattachment
+            Relationship email_attachments = new("email_activity_mime_attachment");
+            // Details about what to retrieve
+            QueryExpression relatedAttachments = new("activitymimeattachment")
+            {
+                ColumnSet = new ColumnSet("filename")
+            };
+
+            relationshipQueryCollection.Add(
+                key: email_attachments, 
+                value:relatedAttachments);
+
+            RetrieveRequest retrieveRequest = new()
+            {
+                ColumnSet = new ColumnSet("activityid"),
+                RelatedEntitiesQuery = relationshipQueryCollection,
+                Target = email.ToEntityReference()
+            };
+
+            var retrieveResponse = (RetrieveResponse)serviceClient.Execute(retrieveRequest);
+            Entity retrievedEmail = retrieveResponse.Entity;
+
+            EntityCollection attachments = retrievedEmail.RelatedEntities[email_attachments];
+
+            Console.WriteLine("Download attached files:");
+
+            foreach (Entity attachment in attachments.Entities)
+            {
+                string filename = (string)attachment["filename"];
+                Console.WriteLine($"\tDownloading filename: {filename}...");
+
+               var (bytes,name) = DownloadAttachment(
+                   service:serviceClient, 
+                   target: attachment.ToEntityReference());
+
+                File.WriteAllBytes($"Downloaded{name}", bytes);
+                Console.WriteLine($"\tSaved the attachment to \\bin\\Debug\\net6.0\\Downloaded{name}.");
+            }
+
+            // Delete the email activity and the attachments will be deleted as well
             serviceClient.Delete("email", emailid);
 
             // Return MaxUploadFileSize to the original value
@@ -119,6 +168,15 @@ namespace PowerPlatform.Dataverse.CodeSamples
             Console.WriteLine($"Current MaxUploadFileSize: {Utility.GetMaxUploadFileSize(serviceClient)}");
         }
 
+        /// <summary>
+        /// Creates or updates an activitymimeattachment with file.
+        /// </summary>
+        /// <param name="service">The IOrganizationService instance to use.</param>
+        /// <param name="attachment">The activitymimeattachment data to create or update.</param>
+        /// <param name="fileInfo">A reference to the file to upload.</param>
+        /// <param name="fileMimeType">The mimetype of the file.</param>
+        /// <returns>FileSizeInBytes</returns>
+        /// <exception cref="ArgumentException">The attachment parameter must be an activitymimeattachment entity.</exception>
         static int UploadAttachment(
                 IOrganizationService service,
                 Entity attachment,
@@ -128,7 +186,9 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
             if (attachment.LogicalName != "activitymimeattachment")
             {
-                throw new ArgumentException("The attachment parameter must be an activitymimeattachment entity", nameof(attachment));
+                throw new ArgumentException(
+                    "The attachment parameter must be an activitymimeattachment entity.", 
+                    nameof(attachment));
             }
 
             // body value in activitymimeattachment not needed. Remove if found.
@@ -147,9 +207,11 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     fileMimeType = "application/octet-stream";
                 }
             }
-
-            attachment["mimetype"] = fileMimeType;
-
+            // Don't overwrite mimetype value if it exists
+            if (!attachment.Contains("mimetype")) {
+                attachment["mimetype"] = fileMimeType;
+            }
+            
             // Initialize the upload
             InitializeAttachmentBlocksUploadRequest initializeRequest = new()
             {
@@ -222,14 +284,22 @@ namespace PowerPlatform.Dataverse.CodeSamples
             return commitResponse.FileSizeInBytes;
         }
 
-
+        /// <summary>
+        /// Downloads the file for an activitymimeattachment
+        /// </summary>
+        /// <param name="service">The IOrganizationService instance to use.</param>
+        /// <param name="target">A reference to the activitymimeattachment</param>
+        /// <returns>Tuple of bytes and fileName</returns>
+        /// <exception cref="ArgumentException">"The target parameter must refer to an activitymimeattachment record."</exception>
         static (byte[] bytes, string fileName) DownloadAttachment(
             IOrganizationService service,
             EntityReference target)
         {
             if (target.LogicalName != "activitymimeattachment")
             {
-                throw new ArgumentException("The target parameter must refer to an activitymimeattachment record.", nameof(target));
+                throw new ArgumentException(
+                    "The target parameter must refer to an activitymimeattachment record.", 
+                    nameof(target));
             }
 
             InitializeAttachmentBlocksDownloadRequest initializeRequest = new()

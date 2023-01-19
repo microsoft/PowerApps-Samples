@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Text;
 
 namespace PowerApps.Samples.Messages
 {
     /// <summary>
-    /// Contains the data to initialize download of an note
+    /// Contains the data to initialize download of an note.
     /// </summary>
     public sealed class InitializeAnnotationBlocksDownloadRequest : HttpRequestMessage
     {
@@ -18,10 +19,14 @@ namespace PowerApps.Samples.Messages
 
             Content = new StringContent(
                     content: JsonConvert.SerializeObject(
-                        target.AsJObject(
-                            entityLogicalName: "annotation",
-                            primaryKeyLogicalName: "annotationid"), 
-                        Formatting.Indented),
+                        value: new JObject() {
+                            {
+                                "Target", target.AsJObject(
+                                    entityLogicalName:"annotation", 
+                                    primaryKeyLogicalName:"annotationid")
+                            }
+                        },
+                       formatting: Formatting.Indented),
                     encoding: Encoding.UTF8,
                     mediaType: "application/json");
         }

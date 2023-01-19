@@ -15,10 +15,16 @@ namespace PowerApps.Samples.Messages
         /// <param name="blockList">The IDs of the uploaded data blocks, in the correct sequence, that will result in the final annotation when the data blocks are combined.</param>
         /// <param name="fileContinuationToken">A token that uniquely identifies a sequence of related data uploads.</param>
         public CommitAnnotationBlocksUploadRequest(
-            EntityReference target, 
+            JObject target, 
             List<string> blockList, 
             string fileContinuationToken)
         {
+
+            if (!target.ContainsKey("@odata.type"))
+            {
+                target.Add("@odata.type", "Microsoft.Dynamics.CRM.annotation");
+            }
+
             Method = HttpMethod.Post;
             RequestUri = new Uri(
                 uriString: "CommitAnnotationBlocksUpload",
@@ -26,9 +32,7 @@ namespace PowerApps.Samples.Messages
 
             JObject body = new()
             {
-                { "Target", target.AsJObject(
-                    entityLogicalName:"annotation", 
-                    primaryKeyLogicalName:"annotationid") },
+                { "Target", target },
                 { "BlockList", JToken.FromObject(blockList.ToArray()) },
                 { "FileContinuationToken", fileContinuationToken}
             };
