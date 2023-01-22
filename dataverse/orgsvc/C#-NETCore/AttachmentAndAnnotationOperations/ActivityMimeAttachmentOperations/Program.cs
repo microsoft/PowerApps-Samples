@@ -5,7 +5,6 @@ using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Query;
-using System.Net.Mail;
 using System.Text;
 
 namespace PowerPlatform.Dataverse.CodeSamples
@@ -26,7 +25,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
             // Get the path to the appsettings file. If the environment variable is set,
             // use that file path. Otherwise, use the runtime folder's settings file.
             string? path = Environment.GetEnvironmentVariable("DATAVERSE_APPSETTINGS");
-            if (path == null) path = "appsettings.json";
+            path ??= "appsettings.json";
 
             // Load the app's configuration settings from the JSON file.
             Configuration = new ConfigurationBuilder()
@@ -45,7 +44,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
             List<FileInfo> smallFiles = new() { wordDoc, excelDoc };
             List<FileInfo> allFiles = new() { wordDoc, excelDoc, pdfDoc };
 
-            List<Guid> reusableAttachmentIds = new();
+            List<(string FileName, Guid ActivityMimeAttachmentId)> reusableAttachments = new();
 
 
             Program app = new();
@@ -95,7 +94,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 serviceClient.Create(attachment);
 
             });
-            Console.WriteLine("Created two e-mail attachments for the e-mail activity.");
+            Console.WriteLine("Created two e-mail attachments with small files for the e-mail activity.");
 
             // Set MaxUploadFileSize to the maximum value
             Utility.SetMaxUploadFileSize(serviceClient, 131072000);
@@ -109,18 +108,20 @@ namespace PowerPlatform.Dataverse.CodeSamples
                         { "objectid", new EntityReference("email", emailid)},
                         { "objecttypecode", "email" },
                         { "subject", $"Sample attached {pdfDoc.Name}" },
+                        // Do not set the body
                         { "filename", pdfDoc.Name},
                         { "mimetype", Utility.GetMimeType(pdfDoc)}
                     }
             };
 
-            // Creates the activitymimeattachment record with a file, but doesn't return id.
-            int fileSizeInBytes = UploadAttachment(
+            // Creates the activitymimeattachment record with a file.
+            CommitAttachmentBlocksUploadResponse uploadAttachmentResponse = UploadAttachment(
                 service: serviceClient,
                 attachment: largeAttachment,
                 fileInfo: pdfDoc);
 
-            Console.WriteLine($"Uploaded {pdfDoc.Name} as attachment.");
+            Console.WriteLine($"Uploaded {pdfDoc.Name} as attachment. " +
+                $"ActivityMimeAttachmentId:{uploadAttachmentResponse.ActivityMimeAttachmentId} FileSizeInBytes: {uploadAttachmentResponse.FileSizeInBytes}");
 
             // Retrieve information about the attachments related to the email
             RelationshipQueryCollection relationshipQueryCollection = new();
@@ -171,10 +172,11 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
             #region Create re-usable attachments
 
-            // TODO: Create an email template to add the re-usable attachments to
+            // Create an email template to add the re-usable attachments to
             // Attachment objectid and objecttypecode are required
 
-            Entity template = new("template") { 
+            Entity template = new("template")
+            {
                 Attributes = {
                     { "body", "<?xml version=\"1.0\" ?><xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\"><xsl:output method=\"text\" indent=\"no\"/><xsl:template match=\"/data\"><![CDATA[<div>Text for the example account template.</div>]]></xsl:template></xsl:stylesheet>" },
                     { "description", "The description of the Example Account Template" },
@@ -187,73 +189,97 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     { "subjectsafehtml", "Example Account Template Subject" },
                     { "templatetypecode", "account" },
                     { "title", "Example Account Template" }
-                }            
+                }
             };
 
-            
-
+            // Create the template
             Guid templateId = serviceClient.Create(template);
 
             Console.WriteLine("Created an email template.");
 
-            smallFiles.ForEach(smallFile =>
+            // Add all files (large and small) as attachments to the template in the same way.
+            allFiles.ForEach(file =>
             {
-
                 Entity attachment = new("activitymimeattachment")
                 {
                     Attributes =
                     {
                         { "objectid", new EntityReference("template", templateId)},
                         { "objecttypecode", "template" },
-                        { "subject", $"Reusable attachment {smallFile.Name}" },
-                        { "body", Convert.ToBase64String(File.ReadAllBytes(smallFile.FullName)) },
-                        { "filename", smallFile.Name},
-                        { "mimetype", Utility.GetMimeType(smallFile)}
+                        { "subject", $"Reusable attachment {file.Name}" },
+                        // Does not include the body
+                        { "filename", file.Name},
+                        { "mimetype", Utility.GetMimeType(file)}
                     }
                 };
 
-                reusableAttachmentIds.Add(serviceClient.Create(attachment));
+                // Create the attachment with upload
+                CommitAttachmentBlocksUploadResponse uploadAttachmentResponse = UploadAttachment(
+                    service: serviceClient,
+                    attachment: attachment,
+                    fileInfo: file);
+
+                reusableAttachments.Add((file.Name, uploadAttachmentResponse.ActivityMimeAttachmentId));
+                Console.WriteLine($"\tAdded {file.Name} to the email template.");
 
             });
 
-            Console.WriteLine("Added small files as attachment to email template.");
-
-            // Create large attachment
-
-            Entity largeAttachmentForTemplate = new("activitymimeattachment")
+            // Create new email to re-use attachments from Template
+            Entity email2 = new("email")
             {
                 Attributes =
-                    {
-                        { "objectid", new EntityReference("template", templateId)},
-                        { "objecttypecode", "template" },
-                        { "subject", $"Reusable attachment {pdfDoc.Name}" },
-                        // Does not include the body
-                        { "filename", pdfDoc.Name},
-                        { "mimetype", Utility.GetMimeType(pdfDoc)}
-                    }
+                {
+                    {"subject", "This is an example email with re-used attachments." }
+                }
             };
-            Guid largeattachmentId = serviceClient.Create(largeAttachmentForTemplate);
-            //Largeattachment.Id= largeattachmentId; //Set Id so UploadAttachment will work.
-            Console.WriteLine("Create Large attachment with no body.");
-            reusableAttachmentIds.Add(largeattachmentId);
 
-            // Upload the larger file separately
-            UploadAttachment(
-                service: serviceClient, 
-                attachment: largeAttachmentForTemplate, 
-                fileInfo: pdfDoc);
+            Guid email2Id = serviceClient.Create(email2);
 
-            Console.WriteLine("Uploaded the large file to the existing attachment.");
+            Console.WriteLine("Created a second email activity.");
 
-            // clean up
-
-            foreach (Guid id in reusableAttachmentIds)
+            foreach ((string FileName, Guid ActivityMimeAttachmentId) in reusableAttachments)
             {
-                serviceClient.Delete("activitymimeattachment", id);
+                Entity attachment = new("activitymimeattachment")
+                {
+                    Attributes =
+                    {
+                        { "objectid", new EntityReference("email", email2Id)},
+                        { "objecttypecode", "email" },
+                        { "subject", $"Sample attached {FileName}" },
+                        { "attachmentid", new EntityReference("activitymimeattachment", ActivityMimeAttachmentId) } // Only set attachmentid
+                        // Do not set body, filename, or mimetype
+                    }
+                };
+
+                serviceClient.Create(attachment);
+
+                Console.WriteLine($"Attached {FileName} to the second email");
+
             }
 
-            //TODO: there are two 25mb.pdf attachments and I don't have the id for one of them.
-            serviceClient.Delete("template", templateId);
+            // Delete the second email
+            serviceClient.Delete("email", email2Id);
+            Console.WriteLine($"Deleted the second email.");
+
+            // Verify the re-used attachments still exist
+            foreach ((string FileName, Guid ActivityMimeAttachmentId) in reusableAttachments)
+            {
+                Entity attachment = serviceClient.Retrieve(
+                    entityName: "activitymimeattachment",
+                    id: ActivityMimeAttachmentId,
+                    columnSet: new ColumnSet("filename"));
+
+                if ((string)attachment["filename"] == FileName)
+                {
+                    Console.WriteLine($"\tAttachment for {FileName} still exists.");
+                }
+            }
+
+            // Clean up
+
+            // Delete the template
+            serviceClient.Delete("template", templateId); //Will delete re-usable attachments
+
 
             #endregion Create re-usable attachments
             // Return MaxUploadFileSize to the original value
@@ -269,9 +295,9 @@ namespace PowerPlatform.Dataverse.CodeSamples
         /// <param name="attachment">The activitymimeattachment data to create or update.</param>
         /// <param name="fileInfo">A reference to the file to upload.</param>
         /// <param name="fileMimeType">The mimetype of the file.</param>
-        /// <returns>FileSizeInBytes</returns>
+        /// <returns>Tuple containing ActivityMimeAttachmentId and FileSizeInBytes</returns>
         /// <exception cref="ArgumentException">The attachment parameter must be an activitymimeattachment entity.</exception>
-        static int UploadAttachment(
+        static CommitAttachmentBlocksUploadResponse UploadAttachment(
                 IOrganizationService service,
                 Entity attachment,
                 FileInfo fileInfo,
@@ -372,11 +398,9 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 FileContinuationToken = fileContinuationToken,
                 Target = attachment
             };
+           
+             return  (CommitAttachmentBlocksUploadResponse)service.Execute(commitRequest);
 
-            var commitResponse =
-                (CommitAttachmentBlocksUploadResponse)service.Execute(commitRequest);
-
-            return commitResponse.FileSizeInBytes;
         }
 
         /// <summary>

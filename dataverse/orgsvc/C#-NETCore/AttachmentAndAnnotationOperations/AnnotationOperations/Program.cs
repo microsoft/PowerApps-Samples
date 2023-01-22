@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Xrm.Sdk.Query;
-using Microsoft.Xrm.Sdk;
-using System.Text;
 using Microsoft.PowerPlatform.Dataverse.Client;
+using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 using System.ServiceModel;
+using System.Text;
 
 namespace PowerPlatform.Dataverse.CodeSamples
 {
@@ -25,7 +25,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
             // Get the path to the appsettings file. If the environment variable is set,
             // use that file path. Otherwise, use the runtime folder's settings file.
             string? path = Environment.GetEnvironmentVariable("DATAVERSE_APPSETTINGS");
-            if (path == null) path = "appsettings.json";
+            path ??= "appsettings.json";
 
             // Load the app's configuration settings from the JSON file.
             Configuration = new ConfigurationBuilder()
@@ -64,7 +64,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 }
             };
 
-            Guid accountid = serviceClient.Create(account);
+            Guid accountid = serviceClient.Create(account); // To delete later
             Console.WriteLine("Created an account record to associate notes with.");
 
             // Create note
@@ -159,15 +159,15 @@ namespace PowerPlatform.Dataverse.CodeSamples
             };
 
             // Upload large file
-            int fileSizeInBytes = UploadNote(
+            CommitAnnotationBlocksUploadResponse uploadNoteResponse = UploadNote(
             service: serviceClient,
             annotation: updateNoteWithLargeFile,
             fileInfo: pdfDoc);
 
-            Console.WriteLine($"Uploaded {pdfDoc.Name} FileSizeInBytes: {fileSizeInBytes}");
+            Console.WriteLine($"Uploaded {pdfDoc.Name} AnnotationId: {uploadNoteResponse.AnnotationId} FileSizeInBytes: {uploadNoteResponse.FileSizeInBytes}");
 
             //Download the file
-            var (bytes, fileName) = DownloadNote(
+            (byte[] bytes, string fileName) = DownloadNote(
                 service: serviceClient,
                 target: retrievedUpdatedNote.ToEntityReference());
 
@@ -193,8 +193,8 @@ namespace PowerPlatform.Dataverse.CodeSamples
         /// <param name="annotation">The data to update for an existing note record.</param>
         /// <param name="fileInfo">A reference to the file to upload.</param>
         /// <param name="fileMimeType">The mimetype for the file, if known.</param>
-        /// <returns>The FileSizeInBytes</returns>
-        static int UploadNote(
+        /// <returns>Tuple AnnotationId and FileSizeInBytes</returns>
+        static CommitAnnotationBlocksUploadResponse UploadNote(
                 IOrganizationService service,
                 Entity annotation,
                 FileInfo fileInfo,
@@ -300,12 +300,8 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 FileContinuationToken = fileContinuationToken,
                 Target = annotation
             };
-
-            var commitResponse =
-                (CommitAnnotationBlocksUploadResponse)service.Execute(commitRequest);
-
-            return commitResponse.FileSizeInBytes;
-
+         
+              return  (CommitAnnotationBlocksUploadResponse)service.Execute(commitRequest);
         }
 
         /// <summary>

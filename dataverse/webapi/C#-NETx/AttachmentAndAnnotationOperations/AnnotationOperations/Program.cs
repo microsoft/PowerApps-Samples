@@ -106,12 +106,12 @@ namespace PowerApps.Samples
             };
 
             // Upload large file
-            int fileSizeInBytes = await UploadNote(
+            CommitAnnotationBlocksUploadResponse uploadNoteResponse = await UploadNote(
                     service: service,
                     annotation: updateNoteWithLargeFile,
                     fileInfo: pdfDoc);
 
-            Console.WriteLine($"Uploaded {pdfDoc.Name} FileSizeInBytes: {fileSizeInBytes}");
+            Console.WriteLine($"Uploaded {pdfDoc.Name} FileSizeInBytes: {uploadNoteResponse.FileSizeInBytes}");
 
             //Download the large file
             var (bytes, fileName) = await DownloadNote(
@@ -138,14 +138,12 @@ namespace PowerApps.Samples
         /// <param name="annotation">The data to update for an existing note record.</param>
         /// <param name="fileInfo">A reference to the file to upload.</param>
         /// <returns>The FileSizeInBytes</returns>
-        static async Task<int> UploadNote(
+        static async Task<CommitAnnotationBlocksUploadResponse> UploadNote(
             Service service,
             JObject annotation,
             FileInfo fileInfo,
             string? fileMimeType = null)
         {
-
-
 
             if (!annotation.ContainsKey("@odata.type"))
             {
@@ -238,10 +236,7 @@ namespace PowerApps.Samples
                 blockList: blockIds,
                 fileContinuationToken: fileContinuationToken);
 
-            var commitResponse =
-                await service.SendAsync<CommitAnnotationBlocksUploadResponse>(commitRequest);
-
-            return commitResponse.FileSizeInBytes;
+            return await service.SendAsync<CommitAnnotationBlocksUploadResponse>(commitRequest);            
         }
 
         /// <summary>

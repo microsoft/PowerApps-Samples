@@ -2,7 +2,6 @@
 using Newtonsoft.Json.Linq;
 using PowerApps.Samples.Messages;
 using PowerApps.Samples.Methods;
-using System.Net.Security;
 using System.Text;
 
 namespace PowerApps.Samples
@@ -19,7 +18,7 @@ namespace PowerApps.Samples
             List<FileInfo> smallFiles = new() { wordDoc, excelDoc };
             List<FileInfo> allFiles = new() { wordDoc, excelDoc, pdfDoc };
 
-            List<EntityReference> reusableAttachmentIds = new();
+            List<(string FileName, EntityReference ActivityMimeAttachmentRef)> reusableAttachments = new();
 
             Config config = App.InitializeApp();
 
@@ -42,7 +41,7 @@ namespace PowerApps.Samples
 
             Console.WriteLine("Created an email activity.");
 
-            smallFiles.ForEach(async smallFile =>
+            foreach (FileInfo smallFile in smallFiles)
             {
                 JObject attachment = new() {
                         { "objectid_email@odata.bind", emailRef.Path},
@@ -53,10 +52,10 @@ namespace PowerApps.Samples
                         { "mimetype", Utility.GetMimeType(smallFile)}
                 };
 
-                await service.Create(
+                service.Create(
                     entitySetName: "activitymimeattachments",
-                    record: attachment);
-            });
+                    record: attachment).GetAwaiter().GetResult();
+            }
 
             Console.WriteLine("Created two e-mail attachments for the e-mail activity.");
 
@@ -66,23 +65,23 @@ namespace PowerApps.Samples
             Console.WriteLine($"Updated MaxUploadFileSize to: {await Utility.GetMaxUploadFileSize(service)}");
 
             JObject largeAttachment = new() {
-                        { "objectid_email@odata.bind", emailRef.Path},
-                        { "objecttypecode", "email" },
-                        { "subject", $"Sample attached {pdfDoc.Name}" },
-                        { "filename", pdfDoc.Name},
-                        { "mimetype", Utility.GetMimeType(pdfDoc)}
+                { "objectid_email@odata.bind", emailRef.Path},
+                { "objecttypecode", "email" },
+                { "subject", $"Sample attached {pdfDoc.Name}" },
+                { "filename", pdfDoc.Name},
+                { "mimetype", Utility.GetMimeType(pdfDoc)}
             };
 
-            // Creates the activitymimeattachment record with a file, but doesn't return id.
-            int fileSizeInBytes = await UploadAttachment(
+            // Creates the activitymimeattachment record with a file, but doesn't return id. YES IT DOES!
+            CommitAttachmentBlocksUploadResponse uploadAttachmentResponse = await UploadAttachment(
                 service: service,
                 attachment: largeAttachment,
                 fileInfo: pdfDoc);
 
-            Console.WriteLine($"Uploaded {pdfDoc.Name} as attachment.");
+            Console.WriteLine($"Uploaded {pdfDoc.Name} as attachment. " +
+                $"ActivityMimeAttachmentId:{uploadAttachmentResponse.ActivityMimeAttachmentId} FileSizeInBytes: {uploadAttachmentResponse.FileSizeInBytes}");
 
             // Retrieve information about the attachments related to the email
-
             RetrieveMultipleResponse relatedAttachmentsResponse = await service.RetrieveMultiple(
                 queryUri: $"{emailRef.Path}/activity_pointer_activity_mime_attachment?$select=filename");
 
@@ -95,9 +94,9 @@ namespace PowerApps.Samples
                     entitySetName: "activitymimeattachments",
                     id: (Guid)attachment["activitymimeattachmentid"]);
 
-                var (bytes, name) = await DownloadAttachment(
+                var (bytes, name) = DownloadAttachment(
                     service: service,
-                    target: attachmentRef);
+                    target: attachmentRef).GetAwaiter().GetResult();
 
                 File.WriteAllBytes($"Downloaded{name}", bytes);
                 Console.WriteLine($"\tSaved the attachment to \\bin\\Debug\\net6.0\\Downloaded{name}.");
@@ -109,7 +108,7 @@ namespace PowerApps.Samples
 
             #region Create re-usable attachments
 
-            // TODO: Create an email template to add the re-usable attachments to
+            // Create an email template to add the re-usable attachments to
             // Attachment objectid and objecttypecode are required
 
             JObject template = new() {
@@ -127,72 +126,91 @@ namespace PowerApps.Samples
                     { "title", "Example Account Template" }
             };
 
+            // Create the template
             EntityReference templateRef = await service.Create("templates", template);
 
             Console.WriteLine("Created an email template.");
 
-            smallFiles.ForEach(async smallFile =>
+            // Add all files (large and small) as attachments to the template in the same way.
+
+            foreach (FileInfo file in allFiles)
             {
 
                 JObject attachment = new() {
                         { "objectid_template@odata.bind", templateRef.Path},
                         { "objecttypecode", "template" },
-                        { "subject", $"Reusable attachment {smallFile.Name}" },
-                        { "body", Convert.ToBase64String(File.ReadAllBytes(smallFile.FullName)) },
-                        { "filename", smallFile.Name},
-                        { "mimetype", Utility.GetMimeType(smallFile)}
+                        { "subject", $"Reusable attachment {file.Name}" },
+                        // Does not include the body
+                        { "filename", file.Name},
+                        { "mimetype", Utility.GetMimeType(file)}
                 };
 
-                reusableAttachmentIds.Add(await service.Create("activitymimeattachments", attachment));
-            });
+                // Create the attachment with upload
+                CommitAttachmentBlocksUploadResponse uploadAttachmentResponse2 = UploadAttachment(
+                       service: service,
+                       attachment: attachment,
+                       fileInfo: file).GetAwaiter().GetResult();
 
-            Console.WriteLine("Added small files as attachment to email template.");
+                reusableAttachments.Add((FileName: file.Name,
+                        ActivityMimeAttachmentRef: new EntityReference(
+                            entitySetName: "activitymimeattachments",
+                            id: uploadAttachmentResponse2.ActivityMimeAttachmentId)));
 
-            // Create large attachment
-
-            JObject largeAttachmentForTemplate = new() {
-
-                { "objectid_template@odata.bind", templateRef.Path},
-                { "objecttypecode", "template" },
-                { "subject", $"Reusable attachment {pdfDoc.Name}" },
-                // Does not include the body
-                { "filename", pdfDoc.Name},
-                { "mimetype", Utility.GetMimeType(pdfDoc)}
-            };
-
-            EntityReference largeAttachmentForTemplateRef =
-                 await service.Create("activitymimeattachments", largeAttachmentForTemplate);
-
-            reusableAttachmentIds.Add(largeAttachmentForTemplateRef);
-
-
-            JObject largeAttachmentForTemplateUpdate = new() {
-                { "activitymimeattachmentid", largeAttachmentForTemplateRef.Id },
-                { "objectid_template@odata.bind", templateRef.Path},
-                { "objecttypecode", "template" }
-            };
-
-            service.ReturnAllAnnotations = true;
-            try
-            {
-                // Upload the larger file separately
-              await UploadAttachment(
-                    service: service,
-                    attachment: largeAttachmentForTemplateUpdate,
-                    fileInfo: pdfDoc);
-            }
-            catch (ServiceException se)
-            {
-                Console.WriteLine(se.Message);
-                Console.WriteLine(se.StackTrace);
+                Console.WriteLine($"\tAdded {file.Name} to the email template.");
             }
 
+            Console.WriteLine("Added all files as attachment to email template.");
 
-            Console.WriteLine("Uploaded the large file to the existing attachment.");
+            // Create new email to re-use attachments from Template
+            JObject email2 = new()
+            {
+                {"subject", "This is an example email with re-used attachments." }
+            };
 
-            // clean up
+            EntityReference email2Ref = await service.Create("emails",email2);
 
-            foreach (EntityReference reference in reusableAttachmentIds)
+            Console.WriteLine("Created a second email activity.");
+
+
+            foreach ((string FileName, EntityReference ActivityMimeAttachmentRef) in reusableAttachments)
+            {
+                JObject attachment = new()
+                {
+
+                        { "objectid_email@odata.bind", email2Ref.Path},
+                        { "objecttypecode", "email" },
+                        { "subject", $"Sample attached {FileName}" },
+                        { "attachmentid@odata.bind", ActivityMimeAttachmentRef.Path } // Only set attachmentid
+                        // Do not set body, filename, or mimetype
+
+                };
+
+                await service.Create("activitymimeattachments", attachment);
+
+                Console.WriteLine($"Attached {FileName} to the second email");
+
+            }
+
+            // Delete the second email
+
+            await service.Delete(email2Ref);
+            Console.WriteLine($"Deleted the second email.");
+
+            // Verify the re-used attachments still exist
+            foreach ((string FileName, EntityReference ActivityMimeAttachmentRef) in reusableAttachments) {
+
+                JObject attachment = await service.Retrieve(ActivityMimeAttachmentRef, "?$select=filename");
+
+                if ((string)attachment["filename"] == FileName)
+                {
+                    Console.WriteLine($"\tAttachment for {FileName} still exists.");
+                }
+
+            }
+
+                // clean up
+
+                foreach ((string filename, EntityReference reference) in reusableAttachments)
             {
                 await service.Delete(reference);
             }
@@ -205,10 +223,10 @@ namespace PowerApps.Samples
 
             await Utility.SetMaxUploadFileSize(service, originalMaxUploadFileSize);
 
-            Console.WriteLine($"Current MaxUploadFileSize: {Utility.GetMaxUploadFileSize(service)}");
+            Console.WriteLine($"Current MaxUploadFileSize: {await Utility.GetMaxUploadFileSize(service)}");
         }
 
-        static async Task<int> UploadAttachment(
+        static async Task<CommitAttachmentBlocksUploadResponse> UploadAttachment(
         Service service,
         JObject attachment,
         FileInfo fileInfo,
@@ -304,10 +322,10 @@ namespace PowerApps.Samples
                 blockIds,
                 fileContinuationToken: fileContinuationToken);
 
-            var commitResponse =
-                await service.SendAsync<CommitAttachmentBlocksUploadResponse>(commitRequest);
 
-            return commitResponse.FileSizeInBytes;
+            return await service.SendAsync<CommitAttachmentBlocksUploadResponse>(commitRequest);
+
+
         }
 
         static async Task<(byte[] bytes, string fileName)> DownloadAttachment(
