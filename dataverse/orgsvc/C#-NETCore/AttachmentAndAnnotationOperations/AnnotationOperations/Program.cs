@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
-using System.ServiceModel;
 using System.Text;
 
 namespace PowerPlatform.Dataverse.CodeSamples
@@ -64,7 +63,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 }
             };
 
-            Guid accountid = serviceClient.Create(account); // To delete later
+            Guid accountid = serviceClient.Create(entity: account); // To delete later
             Console.WriteLine("Created an account record to associate notes with.");
 
             // Create note
@@ -85,7 +84,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
             };
 
             // Create note
-            Guid annotationid = serviceClient.Create(note);
+            Guid annotationid = serviceClient.Create(entity:note);
             Console.WriteLine($"Created note with attached Word document.");
 
 
@@ -144,7 +143,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
             Console.WriteLine($"Updated MaxUploadFileSize to: {Utility.GetMaxUploadFileSize(serviceClient)}");
 
 
-            // Note to update
+            // Note to update with large file
             Entity updateNoteWithLargeFile = new("annotation")
             {
                 Attributes =
@@ -158,15 +157,19 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 }
             };
 
+            Console.WriteLine($"Uploading {pdfDoc.Name}...");
+
             // Upload large file
             CommitAnnotationBlocksUploadResponse uploadNoteResponse = UploadNote(
             service: serviceClient,
             annotation: updateNoteWithLargeFile,
             fileInfo: pdfDoc);
 
-            Console.WriteLine($"Uploaded {pdfDoc.Name} AnnotationId: {uploadNoteResponse.AnnotationId} FileSizeInBytes: {uploadNoteResponse.FileSizeInBytes}");
+            Console.WriteLine($"\tUploaded {pdfDoc.Name} " +
+                $"\n\t\tAnnotationId: {uploadNoteResponse.AnnotationId} " +
+                $"\n\t\tFileSizeInBytes: {uploadNoteResponse.FileSizeInBytes}");
 
-            //Download the file
+            //Download the large file
             (byte[] bytes, string fileName) = DownloadNote(
                 service: serviceClient,
                 target: retrievedUpdatedNote.ToEntityReference());
@@ -174,6 +177,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
             File.WriteAllBytes($"Downloaded{fileName}", bytes);
             Console.WriteLine($"\tSaved the PDF document to \\bin\\Debug\\net6.0\\Downloaded{fileName}.");
 
+            //Clean up
 
             //Delete account, which will delete all notes associated with it
             serviceClient.Delete("account", accountid);

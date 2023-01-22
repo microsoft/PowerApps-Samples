@@ -28,7 +28,9 @@ namespace PowerApps.Samples
                 {"name","Test Account for AnnotationOperations" }
             };
 
-            EntityReference accountRef = await service.Create("accounts", account);
+            EntityReference accountRef = await service.Create(
+                entitySetName: "accounts",
+                record: account);// To delete later
             Console.WriteLine("Created an account record to associate notes with.");
 
             // Create note
@@ -73,7 +75,7 @@ namespace PowerApps.Samples
             };
 
             // Update the note
-            await service.Update(noteRef, annotationForUpdate);
+            await service.Update(entityReference: noteRef, record: annotationForUpdate);
 
             Console.WriteLine($"Updated note with attached Excel document.");
 
@@ -95,7 +97,7 @@ namespace PowerApps.Samples
 
             Console.WriteLine($"Updated MaxUploadFileSize to: {await Utility.GetMaxUploadFileSize(service)}");
 
-            // Note to update
+            // Note to update with large file
             JObject updateNoteWithLargeFile = new() {
                     { "annotationid", noteRef.Id }, // Required
                     { "subject", "large PDF file" },
@@ -105,21 +107,37 @@ namespace PowerApps.Samples
                 // Don't include documentbody
             };
 
+            Console.WriteLine($"Uploading {pdfDoc.Name}...");
+
             // Upload large file
             CommitAnnotationBlocksUploadResponse uploadNoteResponse = await UploadNote(
                     service: service,
                     annotation: updateNoteWithLargeFile,
                     fileInfo: pdfDoc);
 
-            Console.WriteLine($"Uploaded {pdfDoc.Name} FileSizeInBytes: {uploadNoteResponse.FileSizeInBytes}");
+            Console.WriteLine($"Uploaded {pdfDoc.Name} " +
+                $"\n\tAnnotationId: {uploadNoteResponse.AnnotationId} " +
+                $"\n\tFileSizeInBytes: {uploadNoteResponse.FileSizeInBytes}");
 
-            //Download the large file
+            //Download the large file in chunks
             var (bytes, fileName) = await DownloadNote(
                 service: service,
                 target: noteRef);
 
             File.WriteAllBytes($"Downloaded{fileName}", bytes);
             Console.WriteLine($"\tSaved the PDF document to \\bin\\Debug\\net6.0\\Downloaded{fileName}.");
+
+            // Download the file in a single request
+            DownloadAnnotationFileRequest downloadFileRequest = new(annotationId: noteRef.Id.Value);
+
+            var downloadFileResponse = 
+                await service.SendAsync<DownloadAnnotationFileResponse>(downloadFileRequest);
+
+            File.WriteAllBytes($"DownloadedAgain{fileName}", downloadFileResponse.File);
+            Console.WriteLine($"\tSaved the PDF document to \\bin\\Debug\\net6.0\\DownloadedAgain{fileName}.");
+
+
+            //Clean up
 
             //Delete account, which will delete all notes associated with it
             await service.Delete(accountRef);
@@ -236,7 +254,7 @@ namespace PowerApps.Samples
                 blockList: blockIds,
                 fileContinuationToken: fileContinuationToken);
 
-            return await service.SendAsync<CommitAnnotationBlocksUploadResponse>(commitRequest);            
+            return await service.SendAsync<CommitAnnotationBlocksUploadResponse>(commitRequest);
         }
 
         /// <summary>
@@ -294,5 +312,6 @@ namespace PowerApps.Samples
 
             return (fileBytes.ToArray(), fileName);
         }
+
     }
 }

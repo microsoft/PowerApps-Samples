@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using PowerApps.Samples.Messages;
 using PowerApps.Samples.Methods;
 using System.Text;
+using System.Xml.Linq;
 
 namespace PowerApps.Samples
 {
@@ -20,8 +21,9 @@ namespace PowerApps.Samples
 
             List<(string FileName, EntityReference ActivityMimeAttachmentRef)> reusableAttachments = new();
 
+            // Get the configuration data from the app
             Config config = App.InitializeApp();
-
+            // Create a WebAPIService service client using the configuration data
             var service = new Service(config);
 
             // Get current MaxUploadFileSize
@@ -29,6 +31,8 @@ namespace PowerApps.Samples
             Console.WriteLine($"Current MaxUploadFileSize: {originalMaxUploadFileSize}");
 
             #region Create single-use attachments
+
+            Console.WriteLine("Start: Create single-use attachments");
 
             // Create email activity
             JObject email = new() {
@@ -41,8 +45,9 @@ namespace PowerApps.Samples
 
             Console.WriteLine("Created an email activity.");
 
-            foreach (FileInfo smallFile in smallFiles)
-            {
+            // Attach the small files to the email directly
+            smallFiles.ForEach(smallFile => {
+
                 JObject attachment = new() {
                         { "objectid_email@odata.bind", emailRef.Path},
                         { "objecttypecode", "email" },
@@ -52,38 +57,46 @@ namespace PowerApps.Samples
                         { "mimetype", Utility.GetMimeType(smallFile)}
                 };
 
+                // Create synchronously while in loop.
                 service.Create(
                     entitySetName: "activitymimeattachments",
                     record: attachment).GetAwaiter().GetResult();
-            }
+            });
 
-            Console.WriteLine("Created two e-mail attachments for the e-mail activity.");
+            Console.WriteLine("Created two e-mail attachments with small files for the e-mail activity.");
 
             // Set MaxUploadFileSize to the maximum value
             await Utility.SetMaxUploadFileSize(service, 131072000);
 
             Console.WriteLine($"Updated MaxUploadFileSize to: {await Utility.GetMaxUploadFileSize(service)}");
 
+            // Prepare data for a large attachment
             JObject largeAttachment = new() {
                 { "objectid_email@odata.bind", emailRef.Path},
                 { "objecttypecode", "email" },
                 { "subject", $"Sample attached {pdfDoc.Name}" },
+                // Do not set the body
                 { "filename", pdfDoc.Name},
                 { "mimetype", Utility.GetMimeType(pdfDoc)}
             };
 
-            // Creates the activitymimeattachment record with a file, but doesn't return id. YES IT DOES!
+            Console.WriteLine($"Adding {pdfDoc.Name}...");
+
+            // Creates the activitymimeattachment record with a file.
             CommitAttachmentBlocksUploadResponse uploadAttachmentResponse = await UploadAttachment(
                 service: service,
                 attachment: largeAttachment,
                 fileInfo: pdfDoc);
 
-            Console.WriteLine($"Uploaded {pdfDoc.Name} as attachment. " +
-                $"ActivityMimeAttachmentId:{uploadAttachmentResponse.ActivityMimeAttachmentId} FileSizeInBytes: {uploadAttachmentResponse.FileSizeInBytes}");
+            Console.WriteLine($"\tUploaded {pdfDoc.Name} as attachment. " +
+                $"\n\t\tActivityMimeAttachmentId:{uploadAttachmentResponse.ActivityMimeAttachmentId} \n\t\tFileSizeInBytes: {uploadAttachmentResponse.FileSizeInBytes}");
 
             // Retrieve information about the attachments related to the email
+            // See https://learn.microsoft.com/power-apps/developer/data-platform/webapi/retrieve-entity-using-web-api#retrieve-navigation-property-values
             RetrieveMultipleResponse relatedAttachmentsResponse = await service.RetrieveMultiple(
                 queryUri: $"{emailRef.Path}/activity_pointer_activity_mime_attachment?$select=filename");
+
+            Console.WriteLine("Download attached files:");
 
             foreach (JObject attachment in relatedAttachmentsResponse.Records.Cast<JObject>())
             {
@@ -94,6 +107,8 @@ namespace PowerApps.Samples
                     entitySetName: "activitymimeattachments",
                     id: (Guid)attachment["activitymimeattachmentid"]);
 
+                // Download synchronously while in loop.
+                // Using blocks with Web API actions
                 var (bytes, name) = DownloadAttachment(
                     service: service,
                     target: attachmentRef).GetAwaiter().GetResult();
@@ -102,25 +117,60 @@ namespace PowerApps.Samples
                 Console.WriteLine($"\tSaved the attachment to \\bin\\Debug\\net6.0\\Downloaded{name}.");
             }
 
+            // Download an attachment file with a single request
+
+            DownloadAttachmentFileRequest downloadAttachmentFileRequest = new(activitymimeattachmentId: uploadAttachmentResponse.ActivityMimeAttachmentId);
+            var downloadAttachmentFileResponse = await service.SendAsync<DownloadAttachmentFileResponse>(request: downloadAttachmentFileRequest);
+
+            File.WriteAllBytes($"DownloadedAgain{pdfDoc.Name}", downloadAttachmentFileResponse.File);
+            Console.WriteLine($"\tSaved the attachment to \\bin\\Debug\\net6.0\\DownloadedAgain{pdfDoc.Name}.");
+
+
+
+
+
             // Delete the email activity and the attachments will be deleted as well
             await service.Delete(emailRef);
+
             #endregion Create single-use attachments
 
             #region Create re-usable attachments
 
-            // Create an email template to add the re-usable attachments to
-            // Attachment objectid and objecttypecode are required
+            Console.WriteLine("\nStart: Create re-usable attachments");
+
+            // Create an email template to add the re-usable attachments to.
+            // ActivityMimeAttachment ObjectId and ObjectTypeCode are SystemRequired.
 
             JObject template = new() {
 
-                    { "body", "<?xml version=\"1.0\" ?><xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\"><xsl:output method=\"text\" indent=\"no\"/><xsl:template match=\"/data\"><![CDATA[<div>Text for the example account template.</div>]]></xsl:template></xsl:stylesheet>" },
+                    { "body", "<?xml version=\"1.0\" ?>" +
+                        "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">" +
+                        "<xsl:output method=\"text\" indent=\"no\"/>" +
+                            "<xsl:template match=\"/data\">" +
+                                "<![CDATA[<div>Text for the example account template.</div>]]>" +
+                            "</xsl:template>" +
+                        "</xsl:stylesheet>" },
                     { "description", "The description of the Example Account Template" },
                     { "ispersonal", false }, //Organization
                     { "languagecode", 1033 }, //English
-                    { "presentationxml", "<template><text><![CDATA[<div>Text for the example account template.</div>]]></text></template>" },
+                    { "presentationxml", "<template>" +
+                            "<text>" +
+                                "<![CDATA[<div>Text for the example account template.</div>]]>" +
+                            "</text>" +
+                        "</template>" },
                     { "safehtml", "<div>Text for the example account template.</div>\n" },
-                    { "subject", "<?xml version=\"1.0\" ?><xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\"><xsl:output method=\"text\" indent=\"no\"/><xsl:template match=\"/data\"><![CDATA[Example Account Template Subject]]></xsl:template></xsl:stylesheet>" },
-                    { "subjectpresentationxml", "<template><text><![CDATA[Example Account Template Subject]]></text></template>" },
+                    { "subject", "<?xml version=\"1.0\" ?>" +
+                        "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">" +
+                        "<xsl:output method=\"text\" indent=\"no\"/>" +
+                            "<xsl:template match=\"/data\">" +
+                                "<![CDATA[Example Account Template Subject]]>" +
+                            "</xsl:template>" +
+                        "</xsl:stylesheet>" },
+                    { "subjectpresentationxml", "<template>" +
+                            "<text>" +
+                                "<![CDATA[Example Account Template Subject]]>" +
+                            "</text>" +
+                        "</template>" },
                     { "subjectsafehtml", "Example Account Template Subject" },
                     { "templatetypecode", "account" },
                     { "title", "Example Account Template" }
@@ -132,20 +182,18 @@ namespace PowerApps.Samples
             Console.WriteLine("Created an email template.");
 
             // Add all files (large and small) as attachments to the template in the same way.
-
-            foreach (FileInfo file in allFiles)
-            {
+            allFiles.ForEach(file => {
 
                 JObject attachment = new() {
                         { "objectid_template@odata.bind", templateRef.Path},
                         { "objecttypecode", "template" },
                         { "subject", $"Reusable attachment {file.Name}" },
-                        // Does not include the body
+                        // Does not include the body.
                         { "filename", file.Name},
                         { "mimetype", Utility.GetMimeType(file)}
                 };
 
-                // Create the attachment with upload
+                // Create the attachment with upload synchronously while in loop.
                 CommitAttachmentBlocksUploadResponse uploadAttachmentResponse2 = UploadAttachment(
                        service: service,
                        attachment: attachment,
@@ -157,7 +205,8 @@ namespace PowerApps.Samples
                             id: uploadAttachmentResponse2.ActivityMimeAttachmentId)));
 
                 Console.WriteLine($"\tAdded {file.Name} to the email template.");
-            }
+
+            });
 
             Console.WriteLine("Added all files as attachment to email template.");
 
@@ -187,7 +236,7 @@ namespace PowerApps.Samples
 
                 await service.Create("activitymimeattachments", attachment);
 
-                Console.WriteLine($"Attached {FileName} to the second email");
+                Console.WriteLine($"\tAttached {FileName} to the second email");
 
             }
 
@@ -208,24 +257,28 @@ namespace PowerApps.Samples
 
             }
 
-                // clean up
+            // Clean up
 
-                foreach ((string filename, EntityReference reference) in reusableAttachments)
-            {
-                await service.Delete(reference);
-            }
 
-            //TODO: there are two 25mb.pdf attachments and I don't have the id for one of them.
-            // Deleting the template will delete both
-            await service.Delete(templateRef);
+            // Delete the template
+            await service.Delete(templateRef); //Will delete re-usable attachments
 
             #endregion Create re-usable attachments
 
+            // Return MaxUploadFileSize to the original value
             await Utility.SetMaxUploadFileSize(service, originalMaxUploadFileSize);
 
             Console.WriteLine($"Current MaxUploadFileSize: {await Utility.GetMaxUploadFileSize(service)}");
         }
 
+        /// <summary>
+        /// Creates an activitymimeattachment with file.
+        /// </summary>
+        /// <param name="service">The WebAPIService instance to use.</param>
+        /// <param name="attachment">The activitymimeattachment data to create.</param>
+        /// <param name="fileInfo">A reference to the file to upload.</param>
+        /// <param name="fileMimeType">The mimetype of the file.</param>
+        /// <returns>CommitAttachmentBlocksUploadResponse containing ActivityMimeAttachmentId and FileSizeInBytes.</returns>
         static async Task<CommitAttachmentBlocksUploadResponse> UploadAttachment(
         Service service,
         JObject attachment,
@@ -318,8 +371,8 @@ namespace PowerApps.Samples
 
             // Commit the upload
             CommitAttachmentBlocksUploadRequest commitRequest = new(
-                target: attachment, blockList:
-                blockIds,
+                target: attachment, 
+                blockList: blockIds,
                 fileContinuationToken: fileContinuationToken);
 
 
@@ -328,6 +381,13 @@ namespace PowerApps.Samples
 
         }
 
+        /// <summary>
+        /// Downloads the file for an activitymimeattachment.
+        /// </summary>
+        /// <param name="service">The WebAPIService instance to use.</param>
+        /// <param name="target">A reference to the activitymimeattachment containing the file.</param>
+        /// <returns>Tuple of bytes and fileName</returns>
+        /// <exception cref="ArgumentException">The target parameter must refer to an activitymimeattachment record.</exception>
         static async Task<(byte[] bytes, string fileName)> DownloadAttachment(
             Service service,
             EntityReference target)
