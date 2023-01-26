@@ -1,7 +1,8 @@
 # Power Platform Enterprise Policies PowerShell Scripts
 
 These scripts automate managing (create, update, get, delete) Power Platform Enterprise Policies as Azure resources.</br>
-In addition, we are providing sample scripts on how to associate these policies with Power Platform environments.
+In addition, we are providing sample scripts on how to associate these policies with Power Platform environments.</br>
+Please note that these scripts are provided under MIT license and its usage is the sole responsibility of the user.
 
 ## How to run setup scripts
 
@@ -285,7 +286,7 @@ Input parameters :
     - policyArmId: The ARM ID of the Subnet Injection Enterprise Policy
 
 Sample Input :</br>
-![alt text](./ReadMeImages/RRevertSubnetInjection1.png)</br>
+![alt text](./ReadMeImages/RevertSubnetInjection1.png)</br>
 
 Sample Output :</br>
 ![alt text](./ReadMeImages/RevertSubnetInjection2.png)</br>
