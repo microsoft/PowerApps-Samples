@@ -70,7 +70,7 @@ namespace PowerApps.Samples
                 { "filename", excelDoc.Name },
                 { "documentbody", Convert.ToBase64String(File.ReadAllBytes(excelDoc.FullName))},
                 { "notetext", "Please see new attached file." },
-                // This will be 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                // mimetype will be 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
                 { "mimetype", Utility.GetMimeType(excelDoc)},
             };
 
