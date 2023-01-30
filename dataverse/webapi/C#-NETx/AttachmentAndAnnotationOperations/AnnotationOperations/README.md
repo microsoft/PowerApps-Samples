@@ -2,7 +2,7 @@
 
 This .NET 6.0 sample demonstrates how to perform operations using file data with `Annotation` (Note) table using the Dataverse Web API.
 
-This project one of two projects included in the `AttachmentAndAnnotationOperations` solution, which provides shared dependencies to run either sample. See [Web API Attachment and Annotation Operations sample README](../README.md) for an overview and how to run this sample.
+This project one of two projects included in the `AttachmentAndAnnotationOperations` solution, which provides shared resources to run either sample. See [Web API Attachment and Annotation Operations sample README](../README.md) for an overview and how to run this sample.
 
 **Note**: This sample uses the common helper code in the [WebAPIService](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/C%23-NETx/WebAPIService) class library project.
 
@@ -65,7 +65,7 @@ The sample performs the following operations:
    - [InitializeAnnotationBlocksDownload Action](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/initializeannotationblocksdownload)
    - [DownloadBlock Action](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/downloadblock)
    
-1. Download the large `25mb.pdf` file individually using `/annotations(<annotationid>)/documentbody/$value`. This returns a Base64 encoded string value that can be converted into `byte[]` and saved.
+1. Download the large `25mb.pdf` file individually using `GET /annotations(<annotationid>)/documentbody/$value`. This returns a Base64 encoded string value that can be converted into `byte[]` and saved.
    
    This is done using the [WebAPIService/Messages/DownloadAnnotationFileRequest](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/DownloadAnnotationFileRequest.cs) and [WebAPIService/Messages/DownloadAnnotationFileResponse](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/DownloadAnnotationFileResponse.cs) classes.
    

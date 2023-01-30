@@ -2,7 +2,7 @@
 
 This .NET 6.0 sample demonstrates how to perform operations using file data with `ActivityMimeAttachment` (Attachment) table using the Dataverse Web API.
 
-This project one of two projects included in the `AttachmentAndAnnotationOperations` solution, which provides shared dependencies to run either sample. See [Web API Attachment and Annotation Operations sample README](../README.md) for an overview and how to run this sample.
+This project one of two projects included in the `AttachmentAndAnnotationOperations` solution, which provides shared resources to run either sample. See [Web API Attachment and Annotation Operations sample README](../README.md) for an overview and how to run this sample.
 
 **Note**: This sample uses the common helper code in the [WebAPIService](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/C%23-NETx/WebAPIService) class library project.
 
@@ -55,7 +55,7 @@ The sample is separated into two regions: **Create single-use attachments** and 
    - [UploadBlock Action](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/uploadblock)
    - [CommitAttachmentBlocksUpload Action](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/CommitAttachmentBlocksUpload)
    
-1. Retrieve the `activitymimeattachmentid` and `filename` of the attachment records associated with the email using the `activity_pointer_activity_mime_attachment` collection valued navigation property.
+1. Retrieve the `activitymimeattachmentid` and `filename` of the attachment records associated with the email using the `activity_pointer_activity_mime_attachment` collection-valued navigation property.
 1. Use that data to download each attachment using the static `DownloadAttachment` method.
    
    The static `DownloadAttachment` method encapsulates the use of these Web API actions:
@@ -63,7 +63,7 @@ The sample is separated into two regions: **Create single-use attachments** and 
    - [InitializeAttachmentBlocksDownload Action](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/InitializeAttachmentBlocksDownload)
    - [DownloadBlock Action](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/DownloadBlock)
    
-1. Download the large `25mb.pdf` file individually using `/activitymimeattachments(<activitymimeattachmentid>)/body/$value`. This returns a Base64 encoded string value that can be converted into `byte[]` and saved. 
+1. Download the large `25mb.pdf` file individually using `GET /activitymimeattachments(<activitymimeattachmentid>)/body/$value`. This returns a Base64 encoded string value that can be converted into `byte[]` and saved. 
    
    This is done using the [WebAPIService/Messages/DownloadAttachmentFileRequest](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/DownloadAttachmentFileRequest.cs) and [WebAPIService/Messages/DownloadAttachmentFileResponse](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/DownloadAttachmentFileResponse.cs) classes.
    
