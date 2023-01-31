@@ -63,11 +63,10 @@ applications</H1>
 <DIV id="mainSection">
 <DIV id="mainBody">
 <P></P>
-<P>The Microsoft Dynamics&nbsp;CRM&nbsp;SDK provides you with a template for 
-Microsoft Visual Studio that enables you to use the common login control in your 
-client applications. The code for CRM authentication, credential storage and 
-retrieval, and diagnostic logging is built into the template so that you can 
-quickly leverage these capabilities in your Windows client applications for CRM. 
+<P>The Microsoft Dataverse SDK for .NET can be used with available XAML code to provide a common login control in your 
+client applications. The code for web service authentication, credential storage and 
+retrieval, and diagnostic logging is built into the control so that you can 
+quickly leverage these capabilities in your (WPF) Windows client applications for Dynamics 365 CE or Dataverse. 
 The common login control is an implementation of the <A href="https://msdn.microsoft.com/en-us/library/microsoft.xrm.tooling.crmconnectcontrol.aspx">Microsoft.Xrm.Tooling.CrmConnectControl</A>, 
 and the control resembles the following image.</P><IMG title="XRM Tooling common login control" 
 id="880a7974-1c2f-4606-8248-ef754a9a2c08" alt="XRM Tooling common login control" 
@@ -93,29 +92,13 @@ common login control template to your existing WPF application</A>
 <H2 class="heading">Prerequisites</H2>
 <DIV class="section" id="sectionSection1">
 <UL>
-  <LI class="unordered">															.NET Framework 4.5.2							 <BR><BR></LI>
-  <LI class="unordered">															Microsoft Visual Studio 2012, Visual 
-  Studio 2013, or Visual Studio 2015<BR><BR></LI>
-  <LI class="unordered">							Nuget Package Manager for <A href="http://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c">Visual 
-  Studio 2012</A>, <A href="http://visualstudiogallery.msdn.microsoft.com/4ec1526c-4a8c-4a84-b702-b21a8f5293ca">Visual 
-  Studio 2013</A>, or <A href="http://visualstudiogallery.msdn.microsoft.com/4ec1526c-4a8c-4a84-b702-b21a8f5293ca">Visual 
-  Studio 2015</A><BR><BR></LI>
-  <LI class="unordered">															Microsoft Dynamics&nbsp;CRM&nbsp;SDK 
-  templates for Visual Studio that contains the common login control template. 
-  You can get it in one of the following ways: <BR><BR>
-  <UL>
-    <LI class="unordered"><A href="http://go.microsoft.com/fwlink/p/?LinkId=400925">Download</A> 
-    the CRM SDK template from Visual Studio gallery, and double-click the 
-    <CODE>CRMSDKTemplates.vsix</CODE> file to install the template in Visual 
-    Studio.<BR><BR></LI>
-    <LI class="unordered"><A href="http://go.microsoft.com/fwlink/p/?LinkId=512122">Download</A> 
-    and extract the CRM SDK package. The templates file, CRMSDKTemplates.vsix, 
-    is located in the SDK\Templates folder. Double-click the 
-    <CODE>CRMSDKTemplates.vsix</CODE> file to install the template in Visual 
-    Studio.<BR><BR></LI></UL></LI></UL></DIV><A id="NewProjectUsingTemplate"></A>    
+  <LI class="unordered">															.NET Framework 4.6.2 or later <BR><BR></LI>
+  <LI class="unordered">															Microsoft Visual Studio 2019 or 2022 <BR><BR></LI>
+  <LI class="unordered">															Common login control 
+    <A href="https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/Xrm%20Tooling/Quick%20start%20for%20XRM%20Tooling%20API/C%23/QuickStartXRMToolingWPFClient/LoginWindow">XAML code</A></LI>
+</UL></DIV><A id="NewProjectUsingTemplate"></A>    
    
-<H2 class="heading">Create a WPF application using the common login control 
-template</H2>
+<H2 class="heading">Create a WPF application using the common login control</H2>
 <DIV class="section" id="sectionSection2">
 <P>Here is a quick way to create a Windows Presentation Foundation (WPF) 
 application that leverages the common login control and the underlying code for 

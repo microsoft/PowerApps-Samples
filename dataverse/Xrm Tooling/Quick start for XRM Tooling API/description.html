@@ -34,13 +34,13 @@
                     <div class="itemBarLong tagsContainer">
                         <label for="Technologies">Technologies</label>
                         <div id="Technologies">
-                            Microsoft Dynamics CRM, Dynamics 365 Customer Engagement
+                            Dynamics 365 Customer Engagement (on-premises)
                         </div>
                     </div>
                     <div class="itemBarLong tagsContainer">
                         <label for="Topics">Topics</label>
                         <div id="Topics">
-                            library assembly, Microsoft Dynamics CRM SDK
+                            library assembly, Microsoft Dataverse SDK for .NET
                         </div>
                     </div>
                 <div class="itemBarLong">
@@ -61,7 +61,7 @@
                 </div>
                 <div class="itemBar">
                     <label for="LastUpdated">Updated</label>
-                    <div id="LastUpdated">12/12/2017</div>
+                    <div id="LastUpdated">01/26/2023</div>
                 </div>
                 <div class="itemBarLong">
                     <label for="License">License</label>
@@ -70,7 +70,7 @@
                 </div>
                 <div class="itemBar">
                     <div class="viewonlinecont">
-                        <a data-link="online" href="https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c">View this sample online</a>
+                        <a data-link="online" href="https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/Xrm%20Tooling/Quick%20start%20for%20XRM%20Tooling%20API/C%23">View this sample online</a>
                     </div>
                 </div>
             </div>
@@ -171,23 +171,14 @@
 <h1 class="title">Quick start for XRM Tooling</h1>
 <div id="mainSection">
 <div id="mainBody">
-<p>Applies To: Dynamics 365 (online), Dynamics 365 (on-premises), Dynamics CRM 2016, Dynamics CRM Online</p>
+<p>Applies To: Dynamics 365 Customer Engagement (on-premises), Microsoft Dataverse</p>
 <div class="introduction">
-<p>The QuickStart sample is a Microsoft .NET Framework managed code sample that shows how to connect to a Microsoft Dynamics 365 instance by using the XRM Tooling APIs, and perform basic create, update, retrieve, and delete operations on an entity. For more
- information about XRM Tooling, see <a href="https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/https://docs.microsoft.com/en-us/dynamics365/customer-engagement/developer/build-windows-client-applications-xrm-tools">
+<p>The QuickStart sample is a Microsoft .NET Framework managed code sample that shows how to connect to a Microsoft Dynamics 365 CE instance by using the XRM Tooling APIs, and perform basic create, update, retrieve, and delete operations on an entity. For more
+ information about XRM Tooling, see <a href="https://docs.microsoft.com/dynamics365/customer-engagement/developer/build-windows-client-applications-xrm-tools">
 Build Windows client applications using the XRM tools</a>.</p>
-<p>Click to see the following files:</p>
-<ul>
-<li><a href="https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/sourcecode?fileId=183598&amp;pathId=621084766">CrmLogin.xaml.cs</a>
-</li><li><a href="https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/sourcecode?fileId=183598&amp;pathId=788624547">AssemblyInfo.cs</a><strong>&nbsp;</strong><em>&nbsp;</em>
-</li><li><a href="https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/sourcecode?fileId=183598&amp;pathId=1434552886">Resources.Designer.cs</a><strong>&nbsp;</strong><em>&nbsp;</em>
-</li><li><a href="https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/sourcecode?fileId=183598&amp;pathId=1523264864">Settings.Designer.cs</a>
-</li><li><a href="https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/sourcecode?fileId=183598&amp;pathId=1001513950">App.xaml.cs</a><strong></strong><em></em>
-</li><li><a href="https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/sourcecode?fileId=183598&amp;pathId=1270463228">MainWindow.xaml.cs</a><strong></strong><em></em>
-</li></ul>
-<p>More information: <a class="selected" href="https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/https://docs.microsoft.com/en-us/dynamics365/customer-engagement/developer/xrm-tooling/sample-quick-start-xrm-tooling-api" tabindex="0">
-Sample: Quick start for XRM Tooling API</a> and <a href="https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/https://docs.microsoft.com/en-us/dynamics365/customer-engagement/developer/xrm-tooling/use-xrm-tooling-classes-generated-code-generation-tool" tabindex="0">
-Use XRM tooling with classes generated using the code-generation tool</a> <strong>
+<p>More information: <a class="selected" href="https://docs.microsoft.com/dynamics365/customer-engagement/developer/xrm-tooling/sample-quick-start-xrm-tooling-api" tabindex="0">
+Sample: Quick start for XRM Tooling API</a> and <a href="https://learn.microsoft.com/dynamics365/customerengagement/on-premises/developer/org-service/create-early-bound-entity-classes-code-generation-tool" tabindex="0">
+Create early bound entity classes with the code generation tool</a> <strong>
 &nbsp;</strong><em>&nbsp;</em></p>
 </div>
 <div class="section">
@@ -199,7 +190,7 @@ Use XRM tooling with classes generated using the code-generation tool</a> <stron
 <ul class="unordered">
 <li>
 <p>The sample code is built using the <strong>WPF Application for Dynamics 365</strong> SDK template that provides a common login control with built-in support for authentication and credential caching and reuse. For more information about the common login
- control and how to use the SDK template in Microsoft Visual Studio, see <a href="https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/https://docs.microsoft.com/en-us/dynamics365/customer-engagement/developer/xrm-tooling/use-xrm-tooling-common-login-control-client-applications">
+ control and how to use the SDK template in Microsoft Visual Studio, see <a href="https://docs.microsoft.com/dynamics365/customer-engagement/developer/xrm-tooling/use-xrm-tooling-common-login-control-client-applications">
 Use the XRM tooling common login control in your client applications</a>.</p>
 </li><li>
 <p>No helper code is used to establish a connection to Dynamics 365.</p>
@@ -234,7 +225,7 @@ Use the XRM tooling common login control in your client applications</a>.</p>
 <div class="codeSnippetContainer" id="code-snippet-1">
 <div class="code">
 <div class="endscriptcode"></div>
-<div class="endscriptcode">More information:&nbsp;<a href="https://code.msdn.microsoft.com/XRM-Tooling-Sample-24a5c55c/https://docs.microsoft.com/en-us/dynamics365/customer-engagement/developer/tutorials-resources-sdk">Tutorials and resources for learning about development for Microsoft Dynamics 365</a>.</div>
+<div class="endscriptcode">More information:&nbsp;<a href="https://docs.microsoft.com/dynamics365/customer-engagement/developer/tutorials-resources-sdk">Tutorials and resources for learning about development for Microsoft Dynamics 365</a>.</div>
 </div>
 </div>
 </div>
