@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace QuickStartXRMToolingWPFClient
+namespace Desktop_app_using_login_control
 {
     /// <summary>
     /// Interaction logic for App.xaml

@@ -1,10 +1,10 @@
-﻿<Window x:Class="QuickStartXRMToolingWPFClient.LoginWindow.CrmLogin"
+﻿<Window x:Class="PowerApps.Samples.LoginUX.ExampleLoginForm"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:CrmLoginCtrl="clr-namespace:Microsoft.Xrm.Tooling.CrmConnectControl;assembly=Microsoft.Xrm.Tooling.CrmConnectControl" 
-        Title="CRM Login" Width="465" Height="471"
+        Title="Sample Application Login Window" Width="465" MinHeight="475"
         ResizeMode="NoResize" 
-        SizeToContent="Height"
+        SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen" 
         WindowStyle="None"
         AllowsTransparency="True" 
@@ -19,6 +19,9 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <CrmLoginCtrl:CrmServerLoginControl Name="CrmLoginCtrl" Grid.Row="1" ShowTitle="False"  Margin="10,5" VerticalAlignment="Bottom" />
+        <StackPanel>
+            <TextBlock Text="Example Login Control for Samples" Margin="5,0,0,0" FontSize="18" FontWeight="Bold"  />
+            <CrmLoginCtrl:CrmServerLoginControl Name="CrmLoginCtrl" Grid.Row="1" ShowTitle="False"  Margin="10,0,10,0" VerticalAlignment="Bottom"  />
+        </StackPanel>
     </Grid>
 </Window>

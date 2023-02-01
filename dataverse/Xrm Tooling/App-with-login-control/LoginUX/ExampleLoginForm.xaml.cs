@@ -1,47 +1,15 @@
-﻿// =====================================================================
-//  This file is part of the Microsoft Dynamics CRM SDK code samples.
-//
-//  Copyright (C) Microsoft Corporation.  All rights reserved.
-//
-//  This source code is intended only as a supplement to Microsoft
-//  Development Tools and/or on-line documentation.  See these other
-//  materials for detailed information regarding Microsoft code samples.
-//
-//  THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
-//  KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
-//  IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
-//  PARTICULAR PURPOSE.
-
-//  This file is auto-generated when you use the CRM SDK Template
-//  (WPF Application for CRM) to create a project. This provides 
-//  a common login control and built in authentication and 
-//  credential-caching support.
-//
-//  For more information, see http://go.microsoft.com/fwlink/?LinkId=521516
-
-using Microsoft.Xrm.Tooling.Connector;
+﻿using Microsoft.Xrm.Tooling.Connector;
 using Microsoft.Xrm.Tooling.CrmConnectControl;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace QuickStartXRMToolingWPFClient.LoginWindow
+namespace PowerApps.Samples.LoginUX
 {
     /// <summary>
-    /// Interaction logic for CrmLogin.xaml
+    /// Interaction logic for ExampleLoginForm.xaml
     /// </summary>
-    public partial class CrmLogin : Window
+    public partial class ExampleLoginForm : Window
     {
         #region Vars
         /// <summary>
@@ -77,7 +45,7 @@ namespace QuickStartXRMToolingWPFClient.LoginWindow
         #endregion
 
 
-        public CrmLogin()
+        public ExampleLoginForm()
         {
             InitializeComponent();
             //// Should be used for testing only.
@@ -112,7 +80,6 @@ namespace QuickStartXRMToolingWPFClient.LoginWindow
             // set this option to true. 
             mgr.UseUserLocalDirectoryForConfigStore = true;
 
-            // Enabled OAuth Flows
             // Client ID to use for oAuth.  ID: 51f81489-12ee-4a9e-aaae-a2591f45987d is a sample ID that should be replaced by a ID created for your use. 
             mgr.ClientId = "51f81489-12ee-4a9e-aaae-a2591f45987d";
             // Redirect URI required for oAuth.
