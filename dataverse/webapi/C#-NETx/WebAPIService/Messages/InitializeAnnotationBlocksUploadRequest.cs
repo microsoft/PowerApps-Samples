@@ -9,9 +9,25 @@ namespace PowerApps.Samples.Messages
     /// </summary>
     public sealed class InitializeAnnotationBlocksUploadRequest : HttpRequestMessage
     {
-
-        public InitializeAnnotationBlocksUploadRequest(EntityReference target)
+        /// <summary>
+        /// Initializes the InitializeAnnotationBlocksUploadRequest
+        /// </summary>
+        /// <param name="target">The annotation record with an 'annotationid' value.</param>
+        /// <exception cref="ArgumentException">The target must contain a valid 'annotationid' value.</exception>
+        public InitializeAnnotationBlocksUploadRequest(JObject target)
         {
+            bool IsValidTarget = target.ContainsKey("annotationid") &&
+                (Guid)target["annotationid"] != Guid.Empty;
+
+            if (!IsValidTarget) {
+                throw new ArgumentException("The target must contain a valid 'annotationid' value.");
+            }
+
+            if (!target.ContainsKey("@odata.type"))
+            {
+                target.Add("@odata.type", "Microsoft.Dynamics.CRM.annotation");
+            }
+
             Method = HttpMethod.Post;
             RequestUri = new Uri(
                 uriString: "InitializeAnnotationBlocksUpload",
@@ -19,9 +35,7 @@ namespace PowerApps.Samples.Messages
 
             JObject body = new()
             {
-                {"Target",target.AsJObject(
-                            entityLogicalName: "annotation",
-                            primaryKeyLogicalName: "annotationid") }
+                {"Target", target}
             };
 
             Content = new StringContent(

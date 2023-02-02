@@ -149,6 +149,7 @@ namespace PowerApps.Samples
             // Set the access token using the function from the Config passed to the constructor
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", await config.GetAccessToken());
 
+
             // Get the named HttpClient from the IHttpClientFactory
             var client = GetHttpClientFactory().CreateClient(WebAPIClientName);
 

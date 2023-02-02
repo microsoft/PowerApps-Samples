@@ -30,5 +30,7 @@
         /// Whether to disable Affinity cookies to gain performance
         /// </summary>
         public bool DisableCookies { get; set; } = false;
+
+
     }
 }

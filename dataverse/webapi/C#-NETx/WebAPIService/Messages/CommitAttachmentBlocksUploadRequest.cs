@@ -1,33 +1,32 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 
 namespace PowerApps.Samples.Messages
 {
     /// <summary>
-    /// Contains the data to commits the uploaded data blocks to the annotation store.
+    /// Contains the data to commits the uploaded data blocks to the activitymimeattachment store.
     /// </summary>
-    public sealed class CommitAnnotationBlocksUploadRequest : HttpRequestMessage
+    public sealed class CommitAttachmentBlocksUploadRequest : HttpRequestMessage
     {
         /// <summary>
-        /// Commits the uploaded data blocks to the annotation store.
+        /// Commits the uploaded data blocks to the activitymimeattachment store.
         /// </summary>
         /// <param name="target">The target entity.</param>
-        /// <param name="blockList">The IDs of the uploaded data blocks, in the correct sequence, that will result in the final annotation when the data blocks are combined.</param>
+        /// <param name="blockList">The IDs of the uploaded data blocks, in the correct sequence, that will result in the final activitymimeattachment when the data blocks are combined.</param>
         /// <param name="fileContinuationToken">A token that uniquely identifies a sequence of related data uploads.</param>
-        public CommitAnnotationBlocksUploadRequest(
-            JObject target, 
-            List<string> blockList, 
+        public CommitAttachmentBlocksUploadRequest(
+            JObject target,
+            List<string> blockList,
             string fileContinuationToken)
         {
 
             if (!target.ContainsKey("@odata.type"))
             {
-                target.Add("@odata.type", "Microsoft.Dynamics.CRM.annotation");
+                target.Add("@odata.type", "Microsoft.Dynamics.CRM.activitymimeattachment");
             }
 
             Method = HttpMethod.Post;
             RequestUri = new Uri(
-                uriString: "CommitAnnotationBlocksUpload",
+                uriString: "CommitAttachmentBlocksUpload",
                 uriKind: UriKind.Relative);
 
             JObject body = new()
