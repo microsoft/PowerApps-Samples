@@ -2,7 +2,7 @@
 
 This .NET 6.0 sample demonstrates how to perform operations using file data with `ActivityMimeAttachment` (Attachment) table using the Dataverse SDK for .NET.
 
-This project one of two projects included in the `AttachmentAndAnnotationOperations` solution, which provides shared resources to run either sample. See [DK for .NET Attachment and Annotation Operations sample README](../README.md) for an overview and how to run this sample.
+This project one of two projects included in the `AttachmentAndAnnotationOperations` solution, which provides shared resources to run either sample. See [SDK for .NET Attachment and Annotation Operations sample README](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/orgsvc/C%23-NETCore/AttachmentAndAnnotationOperations/README.md) for an overview and how to run this sample.
 
 This sample uses the [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient Class](https://learn.microsoft.com/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient).
 

@@ -21,7 +21,7 @@ This sample uses the [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient Cla
    
    In **Solution Explorer**, right-click the project you want to run and choose **Set as Startup Project**.
 
-1. In either project, Edit the *appsettings.json* file. Set the connection string `Url` and `Username` parameters as appropriate for your test environment.
+1. In either project, edit the *appsettings.json* file. Set the connection string `Url` and `Username` parameters as appropriate for your test environment.
 
    The environment Url can be found in the Power Platform admin center. It has the form https://\<environment-name>.crm.dynamics.com.
 
@@ -43,8 +43,8 @@ When the sample runs, you will be prompted in the default browser to select an e
 
 This sample is a solution  with two projects. See the respective README files for details on each project.
 
-- [Web API Attachment (ActivityMimeAttachment) Operations sample README](ActivityMimeAttachmentOperations/README.md)
-- [Web API Annotation (Note) Operations sample README](AnnotationOperations/README.md)
+- [SDK for .NET Attachment (ActivityMimeAttachment) Operations sample README](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/orgsvc/C%23-NETCore/AttachmentAndAnnotationOperations/ActivityMimeAttachmentOperations/README.md)
+- [SDK for .NET Annotation (Note) Operations sample README](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/orgsvc/C%23-NETCore/AttachmentAndAnnotationOperations/AnnotationOperations/README.md)
 
 ## Utility class
 
@@ -56,8 +56,8 @@ Based on a [FileInfo](https://learn.microsoft.com/dotnet/api/system.io.fileinfo?
 
 ### GetMaxUploadFileSize
 
-Using the **WebAPIService** `Service` `service` parameter, this function returns the integer `maxuploadfilesize` value from the `organization` table.
+Using the [IOrganizationService](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice?view=dataverse-sdk-latest) `service` parameter, this function returns the integer `maxuploadfilesize` value from the `organization` table.
 
 ### SetMaxUploadFileSize
 
-Using the **WebAPIService** `Service`  `service` parameter, this function sets the integer `maxuploadfilesize` value from the `organization` table to the value of the integer `maxUploadFileSizeInBytes` parameter.
+Using the [IOrganizationService](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice?view=dataverse-sdk-latest) `service` parameter, this function sets the integer `maxuploadfilesize` value from the `organization` table to the value of the integer `maxUploadFileSizeInBytes` parameter.
