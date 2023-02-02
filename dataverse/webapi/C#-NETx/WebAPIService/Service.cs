@@ -149,10 +149,6 @@ namespace PowerApps.Samples
             // Set the access token using the function from the Config passed to the constructor
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", await config.GetAccessToken());
 
-            if (ReturnAllAnnotations) {
-                    request.Headers.Add("Prefer", "odata.include-annotations=\"*\"");
-            }
-
 
             // Get the named HttpClient from the IHttpClientFactory
             var client = GetHttpClientFactory().CreateClient(WebAPIClientName);
@@ -259,8 +255,6 @@ namespace PowerApps.Samples
         /// The BaseAddress property of the WebAPI httpclient.
         /// </summary>
         public Uri BaseAddress { get; }
-
-        public bool ReturnAllAnnotations { get; set; }
 
         ~Service() => Dispose(false);
 
