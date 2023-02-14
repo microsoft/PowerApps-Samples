@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desktop-app-using-login-control", "Desktop-app-using-login-control.csproj", "{B51A5437-334A-46BB-B42F-49B3D999A915}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B51A5437-334A-46BB-B42F-49B3D999A915}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B51A5437-334A-46BB-B42F-49B3D999A915}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B51A5437-334A-46BB-B42F-49B3D999A915}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B51A5437-334A-46BB-B42F-49B3D999A915}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {02CBB209-3B7F-45B0-8FF1-B776CC451EDA}
+	EndGlobalSection
+EndGlobal

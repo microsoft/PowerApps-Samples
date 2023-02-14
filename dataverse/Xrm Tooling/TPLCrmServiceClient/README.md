@@ -29,4 +29,5 @@ This sample is not configured to disable the Azure Affinity cookies, which is an
 
 ### More information
 
+[Sample: Task Parallel Library with CrmServiceClient](https://learn.microsoft.com/power-apps/developer/data-platform/xrm-tooling/sample-tpl-crmserviceclient)  
 [Task Parallel Library (TPL)](https://docs.microsoft.com/dotnet/standard/parallel-programming/task-parallel-library-tpl)
