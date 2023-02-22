@@ -234,14 +234,10 @@ namespace PowerApps.Samples
                 // List<string> is a reference type, so this will update the value passed into the function.
                 blockIds.Add(blockId);
 
-                // Copy the next block of data to send.
-                var blockData = new byte[buffer.Length];
-                buffer.CopyTo(blockData, 0);
-
                 // Prepare the request
                 UploadBlockRequest uploadBlockRequest = new(
                     blockId: blockId,
-                    blockData: blockData,
+                    blockData: buffer,
                     fileContinuationToken: fileContinuationToken);
 
                 // Send the request
@@ -276,7 +272,7 @@ namespace PowerApps.Samples
             int fileSizeInBytes = response.FileSizeInBytes;
             string fileName = response.FileName;
 
-            List<byte> fileBytes = new();
+            List<byte> fileBytes = new(fileSizeInBytes);
 
             long offset = 0;
             long blockSizeDownload = 4 * 1024 * 1024; // 4 MB
