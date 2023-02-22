@@ -305,7 +305,7 @@ namespace ImageOperations
             string fileContinuationToken = initializeFileBlocksDownloadResponse.FileContinuationToken;
             long fileSizeInBytes = initializeFileBlocksDownloadResponse.FileSizeInBytes;
 
-            List<byte> bytes = new();
+            List<byte> bytes = new((int)fileSizeInBytes);
 
             long offset = 0;
             long blockSizeDownload = 4 * 1024 * 1024; // 4 MB
