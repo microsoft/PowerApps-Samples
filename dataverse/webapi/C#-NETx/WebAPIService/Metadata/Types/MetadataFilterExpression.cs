@@ -16,8 +16,8 @@ namespace PowerApps.Samples.Metadata.Types
             FilterOperator = filterOperator;
         }   
 
-        public List<MetadataConditionExpression> Conditions { get; set; }
+        public List<MetadataConditionExpression> Conditions { get; set; } = new List<MetadataConditionExpression>();
         public LogicalOperator FilterOperator { get; set; }
-        public List<MetadataFilterExpression> Filters { get; set; }
+        public List<MetadataFilterExpression> Filters { get; set; } = new List<MetadataFilterExpression>();
     }
 }

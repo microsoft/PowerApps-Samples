@@ -56,6 +56,7 @@ namespace PowerApps.Samples.Metadata.Types
         public bool? IsValidForRead { get; set; }
 
         public bool? IsValidForUpdate { get; set; }
+        public bool? IsValidODataAttribute { get; set; }
         public Guid? LinkedAttributeId { get; set; }
 
         public string LogicalName { get; set; }
