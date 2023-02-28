@@ -8,7 +8,9 @@ namespace PowerApps.Samples.Metadata.Types
         public int DefaultFormValue { get; set; }
 
         [JsonProperty("@odata.type")]
-        public string ODataType { get; } = "Microsoft.Dynamics.CRM.ComplexEnumAttributeMetadata";
+        public string ODataType { get; } = "Microsoft.Dynamics.CRM.ComplexEnumAttributeMetadata";       
+
+
         public ComplexOptionSetMetadata OptionSet { get; set; }
     }
 }
