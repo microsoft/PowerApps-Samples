@@ -2,15 +2,15 @@
 These samples help customers to perform user management operations across one or multiple environments in the tenant
 
 ## what this sample does
-This sample helps customers to do the following for - an environment / all environments in a geo / all environments in the tenant.
+This sample helps customers to do the following for - an environment / all environments in a geo / all environments in the tenant. This can be run by Global / Power Platform Administrator users.
 1. Generate reports of users having a specified role assignment (Ex : System Administrator)
 2. Remove role assignments from for a list of users 
 3. Add role assignments to a list of users
 
 ## How to run this sample
 
-1. Install Visual studio 2017 or higher
-2. Install .net framework 4.6.2 or higher
+1. Install Visual studio 2017 or higher. [Link](https://visualstudio.microsoft.com/downloads/)
+2. Install .net framework 4.6.2 Developer pack [Link](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net462)
 4. Open Microsoft.PowerPlatform.Administration.Powershell.sln and build the solution. 
 5. Open powershell in administrator mode 
 6. Set Execution Policy to Unrestricted
