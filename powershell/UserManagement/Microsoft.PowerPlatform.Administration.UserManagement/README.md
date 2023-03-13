@@ -11,7 +11,7 @@ This sample helps customers to do the following for - an environment / all envir
 
 1. Install Visual studio 2017 or higher. [Link](https://visualstudio.microsoft.com/downloads/)
 2. Install .net framework 4.6.2 Developer pack [Link](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net462)
-4. Open Microsoft.PowerPlatform.Administration.Powershell.sln and build the solution. 
+4. Open Microsoft.PowerPlatform.Administration.Powershell.sln in administrator mode and build the solution. 
 5. Open powershell in administrator mode 
 6. Set Execution Policy to Unrestricted
 7. Import Microsoft.PowerPlatform.Administration.Powershell module, as shown below
@@ -26,7 +26,7 @@ This sample helps customers to do the following for - an environment / all envir
         - roleName : Localized role name in dataverse (Ex : System Administrator)
         - environmentUrl : Url of Environment, if admin wants to get reports from only one environment
         - processAllEnvironments : Generate reports for all environments the admin user has access to
-        - geo : Generate reports for environments in given geo - GeoCodes[https://learn.microsoft.com/en-us/power-platform/admin/new-datacenter-regions]. If not specified, processes all environments across all geos. 
+        - geo : Generate reports for environments in given geo. [GeoCodes](https://learn.microsoft.com/en-us/power-platform/admin/new-datacenter-regions). If not specified, processes all environments across all geos. 
         - outputLogsDirectory : Location folder for the logs & reports to be written to.
 
 ### 2. To remove role assignments from given list of users
@@ -35,7 +35,7 @@ This sample helps customers to do the following for - an environment / all envir
         - usersFilePath : Path to file containing list of user princiapl names (one per line) 
         - environmentUrl : Url of Environment, if admin wants to get reports from only one environment
         - processAllEnvironments : Generate reports for all environments the admin user has access to
-        - geo : Generate reports for environments in given geo - GeoCodes[https://learn.microsoft.com/en-us/power-platform/admin/new-datacenter-regions]. If not specified, processes all environments across all geos. 
+        - geo : Generate reports for environments in given geo. [GeoCodes](https://learn.microsoft.com/en-us/power-platform/admin/new-datacenter-regions). If not specified, processes all environments across all geos. 
         - outputLogsDirectory : Location folder for the logs & reports to be written to.
 
 ### 3. To add role assignments for a given list of users 
