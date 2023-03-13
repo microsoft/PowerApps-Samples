@@ -7,6 +7,11 @@ This sample helps customers to do the following for - an environment / all envir
 2. Remove role assignments from for a list of users 
 3. Add role assignments to a list of users
 
+## Requirements
+1. Powershell 5.1.22 (default for windows 10 & 11) or lower.
+2. .NET Framework 4.6.2. Developer pack
+3. Visual studio 2017
+
 ## How to run this sample
 
 1. Install Visual studio 2017 or higher. [Link](https://visualstudio.microsoft.com/downloads/)
