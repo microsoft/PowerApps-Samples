@@ -1,0 +1,2305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>Microsoft.Xrm.Sdk.Deployment</name>
+  </assembly>
+  <members>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.AddCrmDatabaseRequest">
+      <summary>Contains the data that is needed to add a Microsoft Dynamics 365 organization database to your deployment from a database backup or from a detached database.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.AddCrmDatabaseRequest.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.AddCrmDatabaseRequest" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.AddCrmDatabaseRequest.DatabaseBackupFileName">
+      <summary>Gets or sets the name of the SQL Server database backup file.</summary>
+      <returns>Type: String
+The name of the SQL Server database backup file. This should be a full backup file of the source Microsoft Dynamics 365 database. This file must be accessible from SQL Server.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.AddCrmDatabaseRequest.DatabaseLogFileName">
+      <summary>Gets or sets the name of the SQL Server database log file (.ldf).</summary>
+      <returns>Type: String
+The name of the SQL Server database log file (.ldf). This file must be accessible from SQL Server.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.AddCrmDatabaseRequest.DatabaseMetadataFileName">
+      <summary>Gets or sets the name of the SQL Server database metadata file (.mdf).</summary>
+      <returns>Type: String
+The name of the SQL Server database metadata file (.mdf). This file must be accessible from SQL Server.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.AddCrmDatabaseRequest.DatabaseName">
+      <summary>Gets or sets the name of the Dynamics 365 organization database to import.</summary>
+      <returns>Type: String
+The name of the Dynamics 365 organization database to import.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.AddCrmDatabaseRequest.SqlServerName">
+      <summary>Gets or sets the name of the SQL Server instance where you want to add the Dynamics 365 organization database.</summary>
+      <returns>Type: String
+The name of the SQL Server instance where you want to add the Dynamics 365 organization database.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.AddCrmDatabaseResponse">
+      <summary>Contains the response from <see cref="T:Microsoft.Xrm.Sdk.Deployment.AddCrmDatabaseRequest" />.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.AddCrmDatabaseResponse.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.AddCrmDatabaseResponse" /> class.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.AddDeploymentAdministratorRequest">
+      <summary>Contains the data that is needed to add a deployment administrator. The user must already exist in Active Directory.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.AddDeploymentAdministratorRequest.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.AddDeploymentAdministratorRequest" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.AddDeploymentAdministratorRequest.Name">
+      <summary>Gets or sets the name of the deployment administrator to be added. Required.</summary>
+      <returns>Type: String
+The name of the deployment administrator to be added, which string must be in the format domain\userid.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.AddDeploymentAdministratorResponse">
+      <summary>Contains the response from the <see cref="T:Microsoft.Xrm.Sdk.Deployment.AddDeploymentAdministratorRequest" />.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.AddDeploymentAdministratorResponse.#ctor">
+      <summary>Initializes a new instance of the  <see cref="T:Microsoft.Xrm.Sdk.Deployment.AddDeploymentAdministratorResponse" /> class.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.AddressScheme">
+      <summary>The address scheme: http or https.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.AddressScheme.http">
+      <summary>The address scheme is hypertext transfer protocol.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.AddressScheme.https">
+      <summary>The address scheme is secure hypertext transfer protocol.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.AsyncSettings">
+      <summary>Contains setting values that can be changed to tune a Microsoft Dynamics 365 deployment.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.AsyncSettings.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.AsyncSettings" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.AsyncSettings.JobTimeoutLockedInterval">
+      <summary>Gets or sets the interval used to query to see if there are any organization maintenance jobs that have timed out.</summary>
+      <returns>Type: Int32
+The interval at which the service will determine if any job has been running longer than <see cref="P:Microsoft.Xrm.Sdk.Deployment.AsyncSettings.MaxJobExecutionTime" />.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.AsyncSettings.MaxJobExecutionTime">
+      <summary>Gets or sets a value used for organization maintenance jobs to determine if a job has timed out.</summary>
+      <returns>Type: Int32
+The timeout value for organization maintenance jobs.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.AsyncSettings.MaxRetries">
+      <summary>Gets or sets the number of times an asynchronous job will retry before it fails or suspends.</summary>
+      <returns>Type: Int32
+The number of retries for an asynchronous job.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.AsyncSettings.MaxStateStatusUpdateMaxRetryCount">
+      <summary>Gets or sets the maximum number of times a database operation will be attempted before failure.</summary>
+      <returns>Type: Int32
+The number of retries for a database operation.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.AsyncSettings.OrgDatabaseMaintenanceJobInterval">
+      <summary>Gets or sets the interval used to query to see if there is a pending organization maintenance job.</summary>
+      <returns>Type: Int32
+The query interval for organization maintenance jobs.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.AsyncSettings.RetryInterval">
+      <summary>Gets or sets the default rate of retries for failed asynchronous operations.</summary>
+      <returns>Type: Int32
+The retry rate for failed asynchronous operations.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.AsyncSettings.SdkRootDomain">
+      <summary>Gets or sets the root domain used for calls into the Microsoft Dynamics 365 service from the asynchronous service.</summary>
+      <returns>Type: String
+The root domain.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.AsyncSettings.SelectInterval">
+      <summary>Gets or sets the interval used to determine if new asynchronous operations should be loaded into memory.</summary>
+      <returns>Type: Int32
+The interval for loading asynchronous operations into memory.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.AsyncSettings.ThrottlingConfiguration">
+      <summary>Gets or sets the throttling configuration.</summary>
+      <returns>Type: String
+The throttling configuration. Example: <c>&amp;quot;BulkDelete=15;Workflow=1;Event=1&amp;quot;</c>.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.AsyncSettings.TimeoutLockedInterval">
+      <summary>Gets or sets the interval used to query to see if there are any asynchronous operations that have timed out.</summary>
+      <returns>Type: Int32
+The query interval.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.AttributeCollection">
+      <summary>Contains a collection of attributes.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.AttributeCollection.#ctor">
+      <summary>Initializes a new instance of the  <see cref="T:Microsoft.Xrm.Sdk.Deployment.AttributeCollection" /> class.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.BaseData">
+      <summary>For internal use only.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.BaseData.#ctor" />
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.BaseData.ExtensionData">
+      <summary>For internal use only.</summary>
+      <returns>Returns <see cref="T:System.Runtime.Serialization.ExtensionDataObject" />.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.BeginCreateOrganizationRequest">
+      <summary>Contains the data that is needed to initiate the asynchronous operation to create an organization.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.BeginCreateOrganizationRequest.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.BeginCreateOrganizationRequest" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.BeginCreateOrganizationRequest.Organization">
+      <summary>Gets or sets the organization instance to be created. Required.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.Organization" />
+The organization instance to be created.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.BeginCreateOrganizationRequest.SysAdminName">
+      <summary>Gets or sets the name of the system administrator for the new organization. Required.</summary>
+      <returns>Type: String
+The name of the system administrator for the new organization.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.BeginCreateOrganizationResponse">
+      <summary>Contains the response from the<see cref="T:Microsoft.Xrm.Sdk.Deployment.BeginCreateOrganizationRequest" />.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.BeginCreateOrganizationResponse.#ctor">
+      <summary>Initializes a new instance of the  <see cref="T:Microsoft.Xrm.Sdk.Deployment.BeginCreateOrganizationResponse" /> class.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.BeginImportOrganizationRequest">
+      <summary>Contains the data that is needed to begin the asynchronous operation to import an organization.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.BeginImportOrganizationRequest.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.BeginImportOrganizationRequest" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.BeginImportOrganizationRequest.DatabaseName">
+      <summary>Gets or sets the database name for the organization. Required.</summary>
+      <returns>Type: String
+The database name for the organization.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.BeginImportOrganizationRequest.FriendlyName">
+      <summary>Gets or sets the sets display name, or long name, of the organization database. Optional.</summary>
+      <returns>Type: String
+The sets display name, or long name, of the organization database.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.BeginImportOrganizationRequest.SqlServerName">
+      <summary>Gets or sets the name of the Microsoft SQL Server where the Microsoft Dynamics 365 organization database is located. Required.</summary>
+      <returns>Type: String
+The name of the Microsoft SQL Server where the Microsoft Dynamics 365 organization database is located.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.BeginImportOrganizationRequest.SrsUrl">
+      <summary>Gets or sets the URL of the Microsoft SQL Server on which the Microsoft Dynamics 365 Connector for SQL Server Reporting Services is installed. Required.</summary>
+      <returns>Type: String
+The URL of the Microsoft SQL Server on which the Microsoft Dynamics 365 Connector for SQL Server Reporting Services is installed.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.BeginImportOrganizationRequest.UniqueName">
+      <summary>Gets or sets the unique name for the organization. Optional.</summary>
+      <returns>Type: String
+The unique name for the organization.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.BeginImportOrganizationRequest.UserMappingMethod">
+      <summary>Gets or sets the mapping method to use to map user accounts from the original server to the new server. Optional.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.ImportUserMappingMethod" />
+The mapping method to use to map user accounts from the original server to the new server.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.BeginImportOrganizationRequest.UserMappingXml">
+      <summary>Gets or sets the XML user account mapping rules. Optional.</summary>
+      <returns>Type: String
+The XML user account mapping rules.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.BeginImportOrganizationResponse">
+      <summary>Contains the response from the <see cref="T:Microsoft.Xrm.Sdk.Deployment.BeginImportOrganizationRequest" />.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.BeginImportOrganizationResponse.#ctor">
+      <summary>Initializes a new instance of the  <see cref="T:Microsoft.Xrm.Sdk.Deployment.BeginImportOrganizationResponse" /> class.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.BeginUpdateOrganizationRequest">
+      <summary>Contains the data that is needed to begin the asynchronous operation to update an organization.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.BeginUpdateOrganizationRequest.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.BeginUpdateOrganizationRequest" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.BeginUpdateOrganizationRequest.Tag">
+      <summary>Gets or sets the ID or instance tag of the organization to update. Required.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.EntityInstanceId" />
+The ID or instance tag of the organization to update.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.BeginUpdateOrganizationResponse">
+      <summary>Contains the response from the<see cref="T:Microsoft.Xrm.Sdk.Deployment.BeginUpdateOrganizationRequest" />.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.BeginUpdateOrganizationResponse.#ctor">
+      <summary>Initializes a new instance of the  <see cref="T:Microsoft.Xrm.Sdk.Deployment.BeginUpdateOrganizationResponse" /> class.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.BeginUpgradeOrganizationRequest">
+      <summary>Contains the data that is needed to begin the asynchronous operation to upgrade an organization.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.BeginUpgradeOrganizationRequest.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.BeginUpgradeOrganizationRequest" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.BeginUpgradeOrganizationRequest.Tag">
+      <summary>Gets or sets the ID or the instance tag of the organization to upgrade. Required.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.EntityInstanceId" />
+The ID or the instance tag of the organization to upgrade.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.BeginUpgradeOrganizationResponse">
+      <summary>Contains the response from the<see cref="T:Microsoft.Xrm.Sdk.Deployment.BeginUpgradeOrganizationRequest" />.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.BeginUpgradeOrganizationResponse.#ctor">
+      <summary>Initializes a new instance of the  <see cref="T:Microsoft.Xrm.Sdk.Deployment.BeginUpgradeOrganizationResponse" /> class.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.Certificate">
+      <summary>Contains information about a certificate.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.Certificate.#ctor">
+      <summary>Initializes a new instance of the  <see cref="T:Microsoft.Xrm.Sdk.Deployment.Certificate" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Certificate.CertificateType">
+      <summary>Gets or sets the certificate type.</summary>
+      <returns>Type: String
+The certificate type.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Certificate.Data">
+      <summary>Gets or sets the certificate data.</summary>
+      <returns>Type: String
+The certificate data.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Certificate.Id">
+      <summary>Gets or sets the certificate ID.</summary>
+      <returns>Type: Guid
+The certificate ID.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Certificate.Name">
+      <summary>Gets or sets the certificate name.</summary>
+      <returns>Type: String
+The certificate name.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Certificate.StoreFindType">
+      <summary>Gets or sets the store find type.</summary>
+      <returns>Type: String
+The store find type.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Certificate.StoreLocation">
+      <summary>Gets or sets the store location.</summary>
+      <returns>Type: String
+The store location.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Certificate.StoreName">
+      <summary>Gets or sets the store name.</summary>
+      <returns>Type: String
+The store name.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.ClaimsSettings">
+      <summary>Contains the settings for claims based authentication using Active Directory Federation Services 2.0 (AD FS 2.0).</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.ClaimsSettings.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.ClaimsSettings" /> class.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.ClaimsSettingsBase">
+      <summary>Base class for claims settings types.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.ClaimsSettingsBase.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.ClaimsSettingsBase" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ClaimsSettingsBase.Enabled">
+      <summary>Gets or sets whether the setting is enabled.</summary>
+      <returns>Type: Boolean
+true if the setting is enabled; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ClaimsSettingsBase.EncryptionCertificate">
+      <summary>Gets or sets the encryption certificate.</summary>
+      <returns>Type: String
+The encryption certificate.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ClaimsSettingsBase.FederationMetadataUrl">
+      <summary>Gets or sets the federation metadata URL.</summary>
+      <returns>Type: String
+The federation metadata URL.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ClaimsSettingsBase.FederationProviderType">
+      <summary>Gets or sets the federation provider type.</summary>
+      <returns>Type: Int32
+The federation provider type: 0 = regular claims, 1 = OAuth.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ClaimsSettingsBase.SessionSecurityTokenLifetimeInHours">
+      <summary>Gets or sets the session security token lifetime.</summary>
+      <returns>Type: Int32
+The session security token lifetime. Specified as the number of hours since the security token was created.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.ConfigurationEntity">
+      <summary>Contains attributes for a specific table in the configuration database.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.ConfigurationEntity.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.ConfigurationEntity" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ConfigurationEntity.Attributes">
+      <summary>Gets or sets the collection of attribute values.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.AttributeCollection" />
+The collection of attribute values.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ConfigurationEntity.Id">
+      <summary>Gets or sets the ID of the configuration entity.</summary>
+      <returns>Type: Guid
+The ID of the configuration entity.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ConfigurationEntity.LogicalName">
+      <summary>Gets or sets the logical name of the configuration entity.</summary>
+      <returns>Type: String
+The logical name of the configuration entity.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.CustomCodeSettings">
+      <summary>Server level settings that control use of custom code.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.CustomCodeSettings.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.CustomCodeSettings" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.CustomCodeSettings.AllowDeclarativeWorkflows">
+      <summary>Gets or sets whether XAML workflows are allowed on the server.</summary>
+      <returns>Type: Boolean
+true if XAML workflows are allowed on the server; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.CustomCodeSettings.AllowExternalCode">
+      <summary>Gets or sets whether plug-ins and custom workflow activities can be registered on the server.</summary>
+      <returns>Type: Boolean
+true if the plug-ins and custom workflow activities can be registered on the server; otherwise, false.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.DashboardSettings">
+      <summary>Server level dashboard settings.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DashboardSettings.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.DashboardSettings" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DashboardSettings.MaximumControlsLimit">
+      <summary>Gets or sets the maximum number of controls allowed on dashboards for the server.</summary>
+      <returns>Type: Int32
+The maximum number of controls allowed on dashboards for the server.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.DeferredOperationError">
+      <summary>Contains information about an error that occurred with a deferred operation.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DeferredOperationError.#ctor">
+      <summary>Initializes a new instance of the  <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeferredOperationError" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DeferredOperationError.ErrorCode">
+      <summary>Gets or sets the error code.</summary>
+      <returns>Type: Int32
+The error code.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DeferredOperationError.ErrorDetails">
+      <summary>Gets or sets the detailed error information.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.ErrorDetailCollection" />
+The collection of error information.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DeferredOperationError.ExtensionData">
+      <summary>Gets or sets the structure that contains extra data.</summary>
+      <returns>Type: ExtensionDataObject
+The extension data.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DeferredOperationError.Message">
+      <summary>Gets or sets the error message.</summary>
+      <returns>Type: String
+The error message.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.DeferredOperationRequest">
+      <summary>Base class for all asynchronous requests for the deployment Web service.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DeferredOperationRequest.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeferredOperationRequest" /> class.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.DeferredOperationResponse">
+      <summary>Base class for all asynchronous responses for the deployment Web service.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DeferredOperationResponse.#ctor">
+      <summary>Initializes a new instance of the  <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeferredOperationResponse" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DeferredOperationResponse.OperationId">
+      <summary>Gets the ID of the asynchronous request.</summary>
+      <returns>Type: Guid
+The ID of the asynchronous request.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.DeferredOperationState">
+      <summary>Describes the possible states for an asynchronous operation.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeferredOperationState.Completed">
+      <summary>Specifies that the operation has completed. Value = 3.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeferredOperationState.Failed">
+      <summary>Specifies that the operation has failed. Value = 4.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeferredOperationState.Processing">
+      <summary>Specifies that the operation is in progress. Value = 2.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeferredOperationState.Queued">
+      <summary>Specifies that the operation is queued but has not been started. Value = 1.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeferredOperationState.Unknown">
+      <summary>Specifies that the operation state is unknown. Value = 0.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.DeferredOperationStatus">
+      <summary>Contains information about the status of a deferred operation.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DeferredOperationStatus.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeferredOperationStatus" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DeferredOperationStatus.AssociatedEntityInstance">
+      <summary>Gets or sets the ID of the deployment entity instance associated with this deferred operation.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.EntityInstanceId" />
+The ID of the deployment entity instance associated with this deferred operation.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DeferredOperationStatus.ProcessingCompletedTime">
+      <summary>Gets or sets the time that the deferred operation processing completed.</summary>
+      <returns>Type: DateTime
+The time that the deferred operation processing completed.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DeferredOperationStatus.ProcessingError">
+      <summary>Gets or sets the error information for the deferred operation.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeferredOperationError" />
+The error information for the deferred operation.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DeferredOperationStatus.ProcessingStartTime">
+      <summary>Gets or sets the time that the deferred operation processing started.</summary>
+      <returns>Type: DateTime
+The time that the deferred operation processing started.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DeferredOperationStatus.State">
+      <summary>Gets or sets the current state of the deferred operation.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeferredOperationState" />
+The current state of the deferred operation.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DeferredOperationStatus.SubmissionTime">
+      <summary>Gets or sets the time that the deferred operation processing was submitted.</summary>
+      <returns>Type: DateTime
+The time that the deferred operation processing was submitted.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.DeleteOrganizationRequest">
+      <summary>Contains the data that’s needed to delete a Microsoft Dynamics 365 organization.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DeleteOrganizationRequest.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeleteOrganizationRequest" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DeleteOrganizationRequest.DetachDatabase">
+      <summary>Gets or sets a value that indicates whether to detach the Dynamics 365 database from the SQL Server instance.</summary>
+      <returns>Type: Boolean
+Indicates whether to detach the Dynamics 365 database from the SQL Server instance.
+<see langword="true" /> to detach the database, otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.DeleteOrganizationResponse">
+      <summary>Contains the response from <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeleteOrganizationRequest" />.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DeleteOrganizationResponse.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeleteOrganizationResponse" /> class.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.DeleteRequest">
+      <summary>Contains the data that is needed to  delete a deployment record.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DeleteRequest.#ctor">
+      <summary>Initializes a new instance of the  <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeleteRequest" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DeleteRequest.EntityType">
+      <summary>Gets or sets the type of deployment entity to be deleted.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType" />
+the type of deployment entity to be deleted.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DeleteRequest.InstanceTag">
+      <summary>Gets or sets the ID or the instance tag for the deployment record to be deleted.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.EntityInstanceId" />
+The ID or the instance tag for the deployment record to be deleted.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.DeleteResponse">
+      <summary>Contains the response from the <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeleteRequest" />.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DeleteResponse.#ctor">
+      <summary>Initializes a new instance of the  <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeleteResponse" /> class.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.DeploymentAdministrator">
+      <summary>Contains information about a deployment administrator in a Microsoft Dynamics 365 deployment.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DeploymentAdministrator.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentAdministrator" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DeploymentAdministrator.Id">
+      <summary>Gets the ID of the deployment administrator.</summary>
+      <returns>Type: Guid
+The ID of the deployment administrator.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DeploymentAdministrator.Name">
+      <summary>Gets or sets the domain name and user ID of the deployment administrator.</summary>
+      <returns>Type: String
+The domain name and user ID of the deployment administrator.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.DeploymentConfigSettings">
+      <summary>Base class for configuration settings entities.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DeploymentConfigSettings.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentConfigSettings" /> class.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.DeploymentEntity">
+      <summary>Base class for deployment entities.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DeploymentEntity.#ctor">
+      <summary>Initializes a new instance of the  <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentEntity" /> class.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType">
+      <summary>Describes the type of deployment entity.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.AsyncSettings">
+      <summary>The asynchronous settings entity. Value = 0.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.Certificate">
+      <summary>The certificate entity. Value = 18.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.ClaimsSettings">
+      <summary>The claims settings entity. Value = 1.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.CustomCodeSettings">
+      <summary>The custom code settings entity. Value = 14.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.DashboardSettings">
+      <summary>The dashboard settings entity. Value = 3.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.DeferredOperationStatus">
+      <summary>The deferred operation status entity. Value = 23.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.DeploymentAdministrator">
+      <summary>The deployment administrator entity. Value = 19.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.DupSettings">
+      <summary>The duplicate detection settings entity. Value = 4.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.EmailConversationViewSettings" />
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.EtmSettings">
+      <summary>The ETM settings entity. Value = 5.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.IfdSettings">
+      <summary>The Internet-facing deployment (IFD) settings entity. Value = 6.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.ImportSettings">
+      <summary>The data import settings entity. Value = 7.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.LicenseProperties">
+      <summary>The license properties entity. Value = 22.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.MarketplaceSettings">
+      <summary>The marketplace settings entity. Value = 13.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.MonitoringSettings">
+      <summary>The monitoring settings entity. Value = 24.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.MultiEntityQuickFindSettings">
+      <summary>The multi-entity quick find settings entity. Value = 16.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.OAuthClaimsSettings">
+      <summary>The OAuth claims settings entity. Value = 2.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.Organization">
+      <summary>The organization entity. Value = 21.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.QuickFindSettings">
+      <summary>The quick find settings entity. Value = 17.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.Server">
+      <summary>The server entity. Value = 20.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.ServerSideSyncACTSettings">
+      <summary>The server side synchronization ACT settings entity. Value = 28.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.ServerSideSyncEmailSettings">
+      <summary>The server-side synchronization email settings entity. Value = 26.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.ServerSideSyncQueueSettings">
+      <summary>The server-side synchronization queue settings entity. Value = 27.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.SqmSettings">
+      <summary>The service quality metrics (SQM) settings entity. Value = 12.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.TeamSettings">
+      <summary>The team settings entity. Value = 15.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.ThrottleSettings">
+      <summary>The throttle settings entity. Value = 8.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.TraceSettings">
+      <summary>The trace settings entity. Value = 9.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.WebAddressSettings">
+      <summary>The web address settings entity. Value = 10.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.WorkflowSettings">
+      <summary>The workflow settings entity. Value = 11.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType.YammerSettings">
+      <summary>The Yammer settings entity. Value = 25.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.DeploymentErrorLevel">
+      <summary>Contains information about an error with the deployment web service.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentErrorLevel.Error">
+      <summary>An error occurred. Value = 4.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentErrorLevel.Info">
+      <summary>Information about the operation. Value = 1.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentErrorLevel.Skipped">
+      <summary>An operation was skipped. Value = 2.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentErrorLevel.Success">
+      <summary>The operation succeeded. Value = 0.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.DeploymentErrorLevel.Warning">
+      <summary>A warning about the operation. Value = 3.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.DeploymentObject">
+      <summary>Base class for deployment Web service entities and settings.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DeploymentObject.#ctor">
+      <summary>Initializes a new instance of the  <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentObject" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DeploymentObject.ExtensionData">
+      <summary>Gets or sets the structure that contains extra data.</summary>
+      <returns>
+        <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentObject" />
+      </returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceClient">
+      <summary>Implements <see cref="T:Microsoft.Xrm.Sdk.Deployment.IDeploymentService" /> interface and provides an authenticated WCF channel to the deployment service..</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceClient.#ctor">
+      <summary>Initializes a new instance of the  <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceClient" /> class.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceClient.#ctor(System.ServiceModel.Channels.Binding,System.ServiceModel.EndpointAddress)">
+      <summary>Initializes a new instance of the  <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceClient" /> class.</summary>
+      <param name="binding">Type: Binding. The binding.</param>
+      <param name="remoteAddress">Type: EndpointAddress. The address of the remote endpoint.</param>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceClient.#ctor(System.String)">
+      <summary>Initializes a new instance of the  <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceClient" /> class.</summary>
+      <param name="endpointConfigurationName">Type: String. The name of the endpoint configuration.</param>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceClient.#ctor(System.String,System.ServiceModel.EndpointAddress)">
+      <summary>Initializes a new instance of the  <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceClient" /> class.</summary>
+      <param name="endpointConfigurationName">Type: String. The name of the endpoint configuration.</param>
+      <param name="remoteAddress">Type: EndpointAddress. The address of the remote endpoint.</param>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceClient.#ctor(System.String,System.String)">
+      <summary>Initializes a new instance of the  <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceClient" /> class.</summary>
+      <param name="endpointConfigurationName">Type: String. The name of the endpoint configuration.</param>
+      <param name="remoteAddress">Type: String. The address of the remote endpoint.</param>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceClient.Delete(Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType,Microsoft.Xrm.Sdk.Deployment.EntityInstanceId)">
+      <summary>Deletes a deployment record.</summary>
+      <param name="entityType">Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType" />. The type of deployment entity specified by the <c>id</c> parameter.</param>
+      <param name="id">Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.EntityInstanceId" />. The ID of the deployment record to delete.</param>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceClient.Execute(Microsoft.Xrm.Sdk.Deployment.DeploymentServiceRequest)">
+      <summary>Executes a deployment service message in the form of a request, and returns a response.</summary>
+      <param name="request">Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceRequest" />. A request instance that defines the action to be performed.</param>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceResponse" />
+The response from the request.</returns>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceClient.Retrieve(Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType,Microsoft.Xrm.Sdk.Deployment.EntityInstanceId)">
+      <summary>Retrieves a deployment record.</summary>
+      <param name="entityType">Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType" />. The type of deployment entity specified by the <c>id</c> parameter.</param>
+      <param name="id">Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.EntityInstanceId" />. The ID of the deployment record to retrieve.</param>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentObject" />
+The deployment record.</returns>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceClient.RetrieveAll(Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType)">
+      <summary>Retrieves all deployment records for the specified deployment entity type.</summary>
+      <param name="entityType">Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType" />. The type of deployment entity for which to retrieve all records.</param>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.DataCollection`1" />&amp;lt;<see cref="T:Microsoft.Xrm.Sdk.Deployment.EntityInstanceId" />&amp;gt;
+The collection of all deployment records.</returns>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceClient.Update(Microsoft.Xrm.Sdk.Deployment.DeploymentObject)">
+      <summary>Updates a deployment record.</summary>
+      <param name="deploymentObject">Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentObject" />. An instance of a deployment record with all values populated. See Remarks.</param>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceFault">
+      <summary>Represents a deployment service fault.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceFault.#ctor">
+      <summary>Initializes a new instance of the  the <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceFault" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceFault.ErrorCode">
+      <summary>Gets or sets the error code.</summary>
+      <returns>Type: Int32
+The error code.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceFault.ErrorDetails">
+      <summary>Gets or sets the collection of detailed information about the error.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.ErrorDetailCollection" />
+The collection of error information.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceFault.ExtensionData">
+      <summary>Gets or sets the structure that contains extra data.</summary>
+      <returns>Type:  ExtensionDataObject
+The extension data.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceFault.InnerFault">
+      <summary>Gets or sets the fault instance that caused the current fault.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceFault" />
+The fault instance.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceFault.Message">
+      <summary>Gets or sets the error message.</summary>
+      <returns>Type: String
+The error message.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceFault.Timestamp">
+      <summary>Gets or sets the date/time value when the error occurred.</summary>
+      <returns>Type: DateTime
+The date/time of the error.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceRequest">
+      <summary>Contains the data that is needed to  execute a request and the base class for all deployment service requests.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceRequest.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceRequest" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceRequest.ExtensionData">
+      <summary>Gets or sets the structure that contains extra data.</summary>
+      <returns>Type: ExtensionDataObject
+The extension data.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceResponse">
+      <summary>Contains the response from the request and the base class for all deployment Web service responses.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceResponse.#ctor">
+      <summary>Initializes a new instance of the  <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceResponse" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceResponse.ExtensionData">
+      <summary>Gets or sets the structure that contains extra data.</summary>
+      <returns>Type: ExtensionDataObject
+The extension data.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.DupSettings">
+      <summary>Contains duplicate detection settings that can be used to tune a deployment.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.DupSettings.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.DupSettings" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DupSettings.BulkDetectBatchSize">
+      <summary>Gets or sets the bulk duplicate detection batch size.</summary>
+      <returns>Type: Int32
+The batch size.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DupSettings.MatchcodeLength">
+      <summary>Gets or sets the length of the match code.</summary>
+      <returns>Type: Int32
+The length of the match code.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DupSettings.MatchcodePersistenceInterval">
+      <summary>Gets or sets the persistence interval for the match code.</summary>
+      <returns>Type: Int32
+The persistence interval.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DupSettings.MaxPublishedRules">
+      <summary>Gets or sets the maximum number of published rules.</summary>
+      <returns>Type: Int32
+The maximum number of published rules.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DupSettings.PublishAsyncPollingInterval">
+      <summary>Gets or sets the polling interval for the asynchronous job.</summary>
+      <returns>Type: Int32
+The polling interval.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.DupSettings.PublishPageSize">
+      <summary>Gets or sets the page size for results.</summary>
+      <returns>Type: Int32
+The page size.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.EmailConversationViewSettings" />
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.EmailConversationViewSettings.#ctor" />
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.EmailConversationViewSettings.EmailConversationViewEnabled" />
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.EntityInstanceId">
+      <summary>Contains the information needed to identify a deployment entity record: deployment entity type and ID.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.EntityInstanceId.#ctor">
+      <summary>Initializes a new instance of the  <see cref="T:Microsoft.Xrm.Sdk.Deployment.EntityInstanceId" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.EntityInstanceId.ExtensionData">
+      <summary>Gets or sets the structure that contains extra data.</summary>
+      <returns>Type: ExtensionDataObject
+The extension data.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.EntityInstanceId.Id">
+      <summary>Gets or sets the ID of the record.</summary>
+      <returns>Type: Guid
+The ID of the record.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.EntityInstanceId.Name">
+      <summary>Gets or sets the name of the deployment entity.</summary>
+      <returns>Type: String
+The name of the deployment entity.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.ErrorDetailCollection">
+      <summary>Contains the collection of error details.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.ErrorDetailCollection.#ctor">
+      <summary>Initializes a new instance of the  <see cref="T:Microsoft.Xrm.Sdk.Deployment.ErrorDetailCollection" /> class.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.EtmSettings">
+      <summary>Contains Enterprise Transaction Monitor (ETM) settings.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.EtmSettings.#ctor">
+      <summary>Initializes a new instance of the  <see langword="EtmSettings" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.EtmSettings.Enabled">
+      <summary>Gets or sets whether Enterprise Transaction Monitor (ETM) is enabled.</summary>
+      <returns>Type: Boolean
+Flag indicating whether Enterprise Transaction Monitor (ETM) is enabled.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.EtmSettings.ThrottlingEnabled">
+      <summary>Gets or sets whether Enterprise Transaction Monitor (ETM) throttling is enabled.</summary>
+      <returns>Type: Boolean
+Flag indicating whether Enterprise Transaction Monitor (ETM) throttling is enabled.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.IDeploymentService">
+      <summary>Provides programmatic access to deployment information.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.IDeploymentService.Delete(Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType,Microsoft.Xrm.Sdk.Deployment.EntityInstanceId)">
+      <summary>Deletes a deployment record.</summary>
+      <param name="entityType">Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType" />. The type of deployment entity specified by the <c>id</c> parameter.</param>
+      <param name="id">Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.EntityInstanceId" />. The ID of the deployment record to delete. See Remarks.</param>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.IDeploymentService.Execute(Microsoft.Xrm.Sdk.Deployment.DeploymentServiceRequest)">
+      <summary>Executes a message in the form of a request, and returns a response.</summary>
+      <param name="request">Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceRequest" />. A request instance that defines the action to be performed.</param>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceResponse" />
+The response from the request. You must cast the return value of this method to the specific instance of the response that corresponds to the <paramref name="Request" /> parameter</returns>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.IDeploymentService.Retrieve(Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType,Microsoft.Xrm.Sdk.Deployment.EntityInstanceId)">
+      <summary>Retrieves a deployment record.</summary>
+      <param name="entityType">Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType" />. The type of deployment entity specified by the <c>id</c> parameter.</param>
+      <param name="id">Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.EntityInstanceId" />. The ID of the deployment record to retrieve. See Remarks.</param>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentObject" />
+The deployment record.</returns>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.IDeploymentService.RetrieveAll(Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType)">
+      <summary>Retrieves all deployment records for the specified deployment entity type.</summary>
+      <param name="entityType">Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType" />. The type of deployment entity for which to retrieve all records.</param>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.DataCollection`1" />&amp;lt;<see cref="T:Microsoft.Xrm.Sdk.Deployment.EntityInstanceId" />&amp;gt;
+The collection of all deployment records.</returns>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.IDeploymentService.Update(Microsoft.Xrm.Sdk.Deployment.DeploymentObject)">
+      <summary>Updates a deployment record.</summary>
+      <param name="deploymentObject">Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentObject" />. An instance of a deployment record with all values populated. See Remarks.</param>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.IDeploymentServiceChannel">
+      <summary>Interface for the deployment web service channel.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.IfdSettings">
+      <summary>Contains settings for configuring Internet-facing deployments (IFDs).</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.IfdSettings.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.IfdSettings" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.IfdSettings.DiscoveryWebServiceRootDomain">
+      <summary>Gets or sets the discovery web service domain.</summary>
+      <returns>Type: String
+The discovery web service domain.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.IfdSettings.Enabled">
+      <summary>Gets or sets a value that indicates whether Internet-facing deployment (IFD) is enabled.</summary>
+      <returns>Type: Boolean
+true if Internet-facing deployment (IFD) is enabled; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.IfdSettings.ExternalDomain">
+      <summary>Gets or sets the external domain value for Internet-facing deployment (IFD).</summary>
+      <returns>Type: String
+The external domain value for IFD.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.IfdSettings.IntranetAccessEnabled">
+      <summary>Gets or sets a value that indicates whether intranet access is enabled.</summary>
+      <returns>Type: Boolean
+true if intranet access is enabled; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.IfdSettings.OrganizationWebServiceRootDomain">
+      <summary>Gets or sets the organization web service domain.</summary>
+      <returns>Type: String
+The organization web service domain.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.IfdSettings.WebApplicationRootDomain">
+      <summary>Gets or sets the web application server domain.</summary>
+      <returns>Type: String
+The web application server domain.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.ImportSettings">
+      <summary>Contains settings that can be changed to tune data import.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.ImportSettings.#ctor">
+      <summary>Initializes a new instance of the <see langword="ImportSettings" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ImportSettings.BatchSize">
+      <summary>Gets or sets the number of items to process in a batch.</summary>
+      <returns>Type: Int32
+The number of items to process in a batch.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ImportSettings.ContentBufferSize">
+      <summary>Gets or sets the size of the content buffer.</summary>
+      <returns>Type: Int32
+The size of the content buffer.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ImportSettings.CountUpdateBatchSize">
+      <summary>Gets or sets the batch size for import count updates.</summary>
+      <returns>Type: Int32
+The batch size for import count updates.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ImportSettings.MaxColumnsAllowed">
+      <summary>Gets or sets the maximum number of columns in an import file.</summary>
+      <returns>Type: Int32
+The maximum number of columns in an import file.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ImportSettings.MaxDataTruncationRetryCount">
+      <summary>Gets or sets the maximum number or retries.</summary>
+      <returns>Type: Int32
+The maximum number or retries.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ImportSettings.ParsedColumnDefaultSize">
+      <summary>Gets or sets the default size of the parsed column.</summary>
+      <returns>Type: Int32
+The default size of the parsed column.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ImportSettings.PickListBatchSize">
+      <summary>Gets or sets the batch size for picklist import.</summary>
+      <returns>Type: Int32
+The batch size for picklist import.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.ImportUserMappingMethod">
+      <summary>Defines the possible methods for mapping users when importing an organization.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ImportUserMappingMethod.ByAccount">
+      <summary>Specifies to automatically map the users' Active Directory account names to Microsoft Dynamics 365 accounts. Value = 1.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ImportUserMappingMethod.ByFullName">
+      <summary>Specifies to look up Active Directory users in the new domain by using the user’s display name . Value = 3.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ImportUserMappingMethod.ByMappingXml">
+      <summary>Specifies custom user account matching options in an XML string. Value = 2.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ImportUserMappingMethod.ByMappingXmlFile">
+      <summary>Specifies to map users with a mapping file. Value = 4.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ImportUserMappingMethod.KeepExisting">
+      <summary>Specifies to keep the existing user mappings in the organization database. Typically, you select this option if you’re importing an organization database that is located in the same Active Directory domain as the Microsoft Dynamics 365 server where the organization is to be imported. For users external to the Active Directory domain, who were added with their UPN, the user information will be mapped across without any changes or validation. Value = 0.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.LicenseProperties">
+      <summary>Contains information about a license for Microsoft Dynamics CRM 2011.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.LicenseProperties.#ctor">
+      <summary>Initializes a new instance of the   <see cref="T:Microsoft.Xrm.Sdk.Deployment.LicenseProperties" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.LicenseProperties.Edition">
+      <summary>Gets or sets the edition of Microsoft Dynamics CRM 2011 for this license.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.LicenseType" />
+The edition of Microsoft Dynamics CRM 2011 for this license.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.LicenseProperties.ProductId">
+      <summary>Gets or sets the ID of the product.</summary>
+      <returns>Type: Int32
+The ID of the product.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.LicenseType">
+      <summary>Indicates the type of license.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.LicenseType.Enterprise">
+      <summary>Microsoft Dynamics CRM Enterprise Edition. Value = 2.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.LicenseType.Live">
+      <summary>Microsoft Dynamics CRM Online Edition. Value = 4.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.LicenseType.Professional">
+      <summary>Microsoft Dynamics CRM Professional Edition. Value = 1.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.LicenseType.SmallBusiness">
+      <summary>Microsoft Dynamics CRM Small Business Edition. Value = 0.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.LicenseType.Spla">
+      <summary>Microsoft Dynamics Partner Hosted CRM Edition. Value = 3.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.MarketplaceSettings">
+      <summary>Contains settings for the Microsoft AppSource.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.MarketplaceSettings.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.MarketplaceSettings" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.MarketplaceSettings.InternetConnectionProxyEndpoint">
+      <summary>Gets or sets the proxy server and port used for outgoing internet requests.</summary>
+      <returns>Type: String
+The proxy server and port.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.MarketplaceSettings.SolutionsMarketplaceEnabled">
+      <summary>Gets or sets whether the solutions marketplace is enabled.</summary>
+      <returns>Type: Boolean</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.MonitoringResultData">
+      <summary>Contains information about the result of a test run by the Microsoft Dynamics 365 monitoring service.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.MonitoringResultData.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.MonitoringResultData" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.MonitoringResultData.EndTime">
+      <summary>Gets or sets the time when monitoring test ended.</summary>
+      <returns>Type DateTime
+Time to filter test results that were reported earlier than the specified time.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.MonitoringResultData.Id">
+      <summary>Gets or sets the ID of the monitoring test.</summary>
+      <returns>Type Guid
+ID of the monitoring test.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.MonitoringResultData.Role">
+      <summary>Gets or sets the Dynamics 365 role for which the monitoring test was run.</summary>
+      <returns>Type <see cref="T:Microsoft.Xrm.Sdk.Deployment.ServerRoles" />
+role for which the monitoring test was run.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.MonitoringResultData.Server">
+      <summary>Gets or sets the Dynamics 365 server name where the test was run.</summary>
+      <returns>Type String
+The Dynamics 365 server name where the test was run.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.MonitoringResultData.StartTime">
+      <summary>Gets or sets the time when monitoring test started.</summary>
+      <returns>Type DateTime
+The time when the test started.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.MonitoringResultData.Status">
+      <summary>Gets or sets the status of the test.</summary>
+      <returns>Type <see cref="T:Microsoft.Xrm.Sdk.Deployment.TestStatus" />
+Status of the test.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.MonitoringResultData.StatusDetail">
+      <summary>Gets or sets the information about the test status.</summary>
+      <returns>Type String
+Information about the test status.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.MonitoringResultData.TestName">
+      <summary>Gets or sets the name of the test.</summary>
+      <returns>Type String
+Name of the test.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.MonitoringSettings">
+      <summary>Contains settings used to manage or configure the monitoring service and the tests executed by the service.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.MonitoringSettings.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.MonitoringSettings" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.MonitoringSettings.CertificateLifetimeNotificationThreshold">
+      <summary>Gets or sets the threshold of the certificate lifetime remaining at which to begin reporting expiration notifications.</summary>
+      <returns>Type: Int32
+The threshold of the certificate lifetime remaining at which to begin reporting expiration notifications. Specified as an integral percentage.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.MonitoringSettings.MonitoringOrganizationUniqueName">
+      <summary>Gets or sets the unique name of the organization that is being monitored.</summary>
+      <returns>Type: String
+The unique name of the organization.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.MonitoringSettings.MonitoringOrganizationUserAccount">
+      <summary>Gets or sets the user account to be used when monitoring the organization.</summary>
+      <returns>Type: String
+The name of a user account.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.MonitoringSettings.MonitoringOrganizationUserPassword">
+      <summary>Gets or sets the user account password to be used when monitoring the organization.</summary>
+      <returns>Type: String
+The password for the user account.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.MonitoringSettings.ResultsToKeep">
+      <summary>Gets or sets the number of monitoring results to keep.</summary>
+      <returns>Type: Int32
+The number of results to keep.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.MonitoringSettings.ResultsToKeepInDatabase">
+      <summary>Gets or sets the number of monitoring results to keep in the database.</summary>
+      <returns>Type: Int32
+Number of monitoring results to keep in the database.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.MonitoringSettings.StoreResultsInDatabase">
+      <summary>Gets or sets whether monitoring results should be kept in the database.</summary>
+      <returns>Type: Boolean
+true if results should be kept in the database; otherwise, false.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.MultiEntityQuickFindSettings">
+      <summary>Contains settings for multi-entity quick find (finds records of different types).</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.MultiEntityQuickFindSettings.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.MultiEntityQuickFindSettings" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.MultiEntityQuickFindSettings.MultiEntityQuickFindDegreeOfParallelism">
+      <summary>Gets or sets the maximum degree of parallelism for multi-entity search queries. Required.</summary>
+      <returns>Type: Int32
+The maximum degree of parallelism for multi-entity search queries.
+The default value for this setting is 5.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.MultiEntityQuickFindSettings.MultiEntityQuickFindEntityLimit">
+      <summary>Gets or sets the upper limit for the number of entities that can participate in a multi-entity search query. Required.</summary>
+      <returns>Type: Int32
+The upper limit for the number of entities that can participate in a multi-entity search query.
+The default value for this setting is 10.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.MultiEntityQuickFindSettings.MultiEntityQuickFindMaxRequestsPerOrgPerServer">
+      <summary>Gets or sets the maximum number of concurrent <see langword="ExecuteQuickFind" /> requests per organization per server. Required.</summary>
+      <returns>Type: Int32
+The maximum number of concurrent <see langword="ExecuteQuickFind" /> requests per organization per server.
+The default value is -1, which means that the requests are not throttled.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.MultiEntityQuickFindSettings.MultiEntityQuickFindMaxRequestsPerServer">
+      <summary>Gets or sets the maximum number of concurrent <see langword="ExecuteQuickFind" /> requests per server. Required.</summary>
+      <returns>Type: Int32
+The maximum number of concurrent <see langword="ExecuteQuickFind" /> requests per server.
+The default value is -1, which means that the requests are not throttled.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.OAuthClaimsSettings">
+      <summary>Contains the settings for claims based OAuth authentication.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.OAuthClaimsSettings.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.OAuthClaimsSettings" /> class.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.Organization">
+      <summary>Contains information about an organization in a Microsoft Dynamics 365 deployment.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.Organization.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.Organization" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Organization.BaseCurrencyCode">
+      <summary>Gets or sets the base currency code for the organization.</summary>
+      <returns>Type: String
+The base currency code for the organization.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Organization.BaseCurrencyName">
+      <summary>Gets or sets the base currency name for the organization.</summary>
+      <returns>Type: String
+The base currency name for the organization.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Organization.BaseCurrencyPrecision">
+      <summary>Gets or sets the number of decimal places that can be used for the base currency.</summary>
+      <returns>Type: Int32
+The number of decimal places for the currency for the organization.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Organization.BaseCurrencySymbol">
+      <summary>Gets or sets the base currency symbol for the organization.</summary>
+      <returns>Type: String
+The base currency symbol for the organization.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Organization.BaseLanguageCode">
+      <summary>Gets or sets the base language code for the organization.</summary>
+      <returns>Type: Int32
+The base language code for the organization.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Organization.DatabaseName">
+      <summary>Gets or sets the database name for the organization.</summary>
+      <returns>Type: String
+The database name for the organization.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Organization.FriendlyName">
+      <summary>Gets or sets the display name, or long name, of the organization database.</summary>
+      <returns>Type: String
+The display name, or long name, of the organization database.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Organization.Id">
+      <summary>Gets the organization ID.</summary>
+      <returns>Type: Guid
+The organization ID.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Organization.SqlCollation">
+      <summary>Gets or sets the SQL collation property that the organization will use to sort and compare data characters.</summary>
+      <returns>Type: String
+The SQL collation property that the organization will use to sort and compare data characters.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Organization.SqlServerName">
+      <summary>Gets or sets the name of the SQL server on which the organization database is installed.</summary>
+      <returns>Type: String
+The name of the SQL server on which the organization database is installed.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Organization.SqmIsEnabled">
+      <summary>Gets or sets whether information is being collected for the customer experience improvement program.</summary>
+      <returns>Type: Boolean
+true if information is being collected for the customer experience improvement program; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Organization.SrsUrl">
+      <summary>Gets or sets the URL of the Microsoft SQL Server on which the Microsoft Dynamics 365 Connector for SQL Server Reporting Services is installed.</summary>
+      <returns>Type: String
+The URL of the Microsoft SQL Server on which the Microsoft Dynamics 365 Connector for SQL Server Reporting Services is installed.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Organization.State">
+      <summary>Gets or sets the organization state.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.OrganizationState" />
+The organization state.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Organization.UniqueName">
+      <summary>Gets or sets the unique name for the organization.</summary>
+      <returns>Type: String
+The unique name for the organization.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Organization.Version">
+      <summary>Gets the current updated version of organization.</summary>
+      <returns>Type: String
+The current updated version of organization.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.OrganizationState">
+      <summary>Describes the state of the organization.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.OrganizationState.Disabled">
+      <summary>Specifies that the organization is disabled. Value = 0.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.OrganizationState.Enabled">
+      <summary>Specifies that the organization is enabled. Value = 1.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.OrganizationState.Failed">
+      <summary>Specifies that the organization is in a failure state. Value = 3.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.OrganizationState.Maintenance">
+      <summary>Specifies that the organization is undergoing maintenance. Value = 4.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.OrganizationState.Pending">
+      <summary>Specifies that the organization is pending. Value = 2.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.OrganizationUserInfo">
+      <summary>Contains information about a user in an organization.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.OrganizationUserInfo.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.OrganizationUserInfo" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.OrganizationUserInfo.CalType">
+      <summary>Gets or sets the type of client access license for the user.</summary>
+      <returns>Type: Int32
+The license type.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.OrganizationUserInfo.DomainName">
+      <summary>Gets or sets the domain name for the user.</summary>
+      <returns>Type: String
+The domain name.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.OrganizationUserInfo.ExtensionData">
+      <summary>Gets or sets the structure that contains extra data.</summary>
+      <returns>Type: ExtensionDataObject</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.OrganizationUserInfo.FullName">
+      <summary>Gets or sets the full name of the user.</summary>
+      <returns>Type:  Int32
+The user’s full name.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.OrganizationUserInfo.LastAccessServer">
+      <summary>Gets or sets the date the server was accessed by the user.</summary>
+      <returns>Type:  String
+A string containing the date of the last server access.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.OrganizationUserInfo.LastAccessTime">
+      <summary>Gets or sets the time the server was accessed by the user.</summary>
+      <returns>Type:  DateTime
+Contains the time of the last server access.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.Proxy.ProxyClientHelper">
+      <summary>Provides helper methods to create a deployment service client class.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.Proxy.ProxyClientHelper.CreateClient(System.Uri)">
+      <summary>Creates a deployment web service client, setting the URL.</summary>
+      <param name="serverAddress">Type: URI. The URL for the deployment Web service.</param>
+      <returns>Returns <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceClient" />.</returns>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.Proxy.ProxyClientHelper.CreateClient(System.Uri,System.TimeSpan)">
+      <summary>Creates a deployment web service client, setting the URL and the timeout.</summary>
+      <param name="serverAddress">Type: URI. The URL for the deployment Web service.</param>
+      <param name="sendTimeout">Type: TimeSpan. The timeout value.</param>
+      <returns>Returns <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentServiceClient" />.</returns>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.Proxy.ProxyClientHelper.DefaultSendTimeout">
+      <summary>Gets the timeout for sending requsts to the web service.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.QuickFindSettings">
+      <summary>Contains settings for quick find (finds records of one type).</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.QuickFindSettings.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.QuickFindSettings" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.QuickFindSettings.QuickFindEntityIndexLimit">
+      <summary>Gets or sets the maximum number of the attributes used in the quick find search query, after which the <see langword="QuickFind" /> indexes are not created. Required.</summary>
+      <returns>Type: Int32
+The maximum number of the attributes used in the quick find search query, after which the <see langword="QuickFind" /> indexes are not created.
+The default value for this setting is 20.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.QuickFindSettings.QuickFindRecordLimit">
+      <summary>Gets or sets the maximum number of records that match the quick find query criteria before an exception error is thrown. This is needed for faster execution of the quick find searches. Required.</summary>
+      <returns>Type: Int32
+The maximum number of records that match the quick find query criteria before an exception error is thrown.
+The default value for this setting is 10000.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.RequestCheckResult">
+      <summary>For internal use only.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.RequestCheckResult.#ctor">
+      <summary>Initializes a new instance of the  <see cref="T:Microsoft.Xrm.Sdk.Deployment.RequestCheckResult" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.RequestCheckResult.Description">
+      <summary>For internal use only.</summary>
+      <returns>Type: String</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.RequestCheckResult.Level">
+      <summary>For internal use only.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentErrorLevel" /></returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.RequestCheckResult.Tag">
+      <summary>For internal use only.</summary>
+      <returns>Type: String</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.RetrieveAdvancedSettingsRequest">
+      <summary>Contains the data that is needed to retrieve advanced settings from the configuration database. For internal use only.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.RetrieveAdvancedSettingsRequest.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.RetrieveAdvancedSettingsRequest" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.RetrieveAdvancedSettingsRequest.ColumnSet">
+      <summary>Gets or sets the set of columns or attributes to be retrieved.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Query.ColumnSet" />
+The set of columns or attributes to be retrieved.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.RetrieveAdvancedSettingsRequest.ConfigurationEntityName">
+      <summary>Gets of sets the name of the configuration entity.</summary>
+      <returns>Type: String
+The name of the configuration entity.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.RetrieveAdvancedSettingsRequest.Id">
+      <summary>Gets or sets the ID of the record to be retrieved.</summary>
+      <returns>Type: Guid
+The ID of the record to be retrieved.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.RetrieveAdvancedSettingsResponse">
+      <summary>Contains the response from the <see cref="T:Microsoft.Xrm.Sdk.Deployment.RetrieveAdvancedSettingsRequest" />.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.RetrieveAdvancedSettingsResponse.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.RetrieveAdvancedSettingsResponse" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.RetrieveAdvancedSettingsResponse.Entity">
+      <summary>Gets or sets the configuration entity that was retrieved.</summary>
+      <returns>Returns <see cref="T:Microsoft.Xrm.Sdk.Deployment.ConfigurationEntity" />
+The configuration entity that was retrieved.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.RetrieveAllRequest">
+      <summary>Contains the data that is needed to retrieve all deployment records of the specified deployment entity type.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.RetrieveAllRequest.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.RetrieveAllRequest" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.RetrieveAllRequest.EntityType">
+      <summary>Gets or sets the type of deployment entity to be retrieved.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType" />
+The type of deployment entity to be retrieved.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.RetrieveAllResponse">
+      <summary>Contains the response from the <see cref="T:Microsoft.Xrm.Sdk.Deployment.RetrieveAllRequest" />.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.RetrieveAllResponse.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.RetrieveAllResponse" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.RetrieveAllResponse.InstanceTags">
+      <summary>Gets or sets the collection of IDs or instance tags for all the deployment records retrieved.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.DataCollection`1" />&amp;lt;<see cref="T:Microsoft.Xrm.Sdk.Deployment.EntityInstanceId" />&amp;gt;
+The collection of IDs or instance tags for all the deployment records retrieved.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.RetrieveMonitoringResultsRequest">
+      <summary>Contains the data that’s required to retrieve results from the monitoring service operation tests for your Microsoft Dynamics 365 deployment.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.RetrieveMonitoringResultsRequest.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.RetrieveMonitoringResultsRequest" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.RetrieveMonitoringResultsRequest.EndTime">
+      <summary>Gets or sets the time to filter test results that were reported earlier than the specified time.</summary>
+      <returns>Type DateTime
+Time to filter test results that were reported earlier than the specified time.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.RetrieveMonitoringResultsRequest.Roles">
+      <summary>Gets or sets the Dynamics 365 roles to filter the test result data.</summary>
+      <returns>Type String
+Roles to filter the test results.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.RetrieveMonitoringResultsRequest.Servers">
+      <summary>Gets or sets the server name to filter the test result data.</summary>
+      <returns>Type String
+Server name to filter the test results.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.RetrieveMonitoringResultsRequest.ServiceHealth">
+      <summary>Gets or sets a value that indicates whether to filter test results data on the deployment service health status.</summary>
+      <returns>Type Boolean
+Indicates whether to filter test results data on the deployment service health status.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.RetrieveMonitoringResultsRequest.StartTime">
+      <summary>Gets or sets the time to filter test results that were reported later than the specified time.</summary>
+      <returns>Type DateTime
+Time to filter test results that were reported later than the specified time.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.RetrieveMonitoringResultsRequest.Status">
+      <summary>Gets or sets the test status to filter the test result data.</summary>
+      <returns>Type String
+Test status to filter the test result data.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.RetrieveMonitoringResultsRequest.TestName">
+      <summary>Gets or sets the name of the test to filter the test result data.</summary>
+      <returns>Type String
+Name of the test to filter the test result data.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.RetrieveMonitoringResultsResponse">
+      <summary>Contains the response from <see cref="T:Microsoft.Xrm.Sdk.Deployment.RetrieveMonitoringResultsRequest" />.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.RetrieveMonitoringResultsResponse.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.RetrieveMonitoringResultsResponse" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.RetrieveMonitoringResultsResponse.MonitoringResults">
+      <summary>Gets or sets the retrieved monitoring results.</summary>
+      <returns>Type <see cref="T:Microsoft.Xrm.Sdk.DataCollection`1" />
+Retrieved monitoring results.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.RetrieveMonitoringResultsResponse.ServiceHealth">
+      <summary>Gets or sets the retrieved service health status.</summary>
+      <returns>Type <see cref="T:Microsoft.Xrm.Sdk.Deployment.ServiceHealthStatus" />
+Retrieved service health status.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.RetrieveRequest">
+      <summary>Contains the data that is needed to retrieve a deployment entity or configuration settings record.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.RetrieveRequest.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.RetrieveRequest" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.RetrieveRequest.EntityType">
+      <summary>Gets or sets the type of deployment entity to be retrieved.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentEntityType" />
+The type of deployment entity to be retrieved.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.RetrieveRequest.InstanceTag">
+      <summary>Gets or sets the ID or instance tag of the deployment record to be retrieved.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.EntityInstanceId" />
+The ID or instance tag of the deployment record to be retrieved.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.RetrieveResponse">
+      <summary>Contains the response from the <see cref="T:Microsoft.Xrm.Sdk.Deployment.RetrieveRequest" />.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.RetrieveResponse.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.RetrieveResponse" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.RetrieveResponse.Entity">
+      <summary>Gets or sets the record that was retrieved.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentObject" />
+The record that was retrieved.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.RetrieveUserMappingRequest">
+      <summary>Contains the data needed to retrieve mapping information of existing users in a Microsoft Dynamics 365 organization.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.RetrieveUserMappingRequest.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.RetrieveUserMappingRequest" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.RetrieveUserMappingRequest.DatabaseName">
+      <summary>Gets or sets the name of the Dynamics 365 database to import from.</summary>
+      <returns>Type String
+Name of the Dynamics 365 database to import from.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.RetrieveUserMappingRequest.SqlServerName">
+      <summary>Gets or sets the name of the Microsoft SQL Server instance that hosts the Dynamics 365 database from where you want to import.</summary>
+      <returns>Type String
+Name of the Microsoft SQL Server instance that hosts the Dynamics 365 database from where you want to import.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.RetrieveUserMappingResponse">
+      <summary>Contains the response from <see cref="T:Microsoft.Xrm.Sdk.Deployment.RetrieveUserMappingRequest" />.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.RetrieveUserMappingResponse.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.RetrieveUserMappingResponse" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.RetrieveUserMappingResponse.UserMapping">
+      <summary>Gets or sets the retrieved user mapping information.</summary>
+      <returns>Type String
+Retrieved user mapping information.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.Server">
+      <summary>Contains information about a server in a Microsoft Dynamics 365 deployment.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.Server.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.Server" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Server.FullName">
+      <summary>Gets or sets the full name of the server.</summary>
+      <returns>Type: String
+The name of the server.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Server.Id">
+      <summary>Gets the organization ID.</summary>
+      <returns>Type: Guid
+The organization ID.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Server.Name">
+      <summary>Gets the name of the server.</summary>
+      <returns>Type: String
+The name of the server.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Server.Roles">
+      <summary>Gets the set of roles configured for the server.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.ServerRoles" />
+The set of roles configured for the server.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Server.State">
+      <summary>Gets or sets the state of the server.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.ServerState" />
+The state of the server.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.Server.Version">
+      <summary>Gets the version number of the server.</summary>
+      <returns>Type: String
+The version number of the server.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.ServerRoles">
+      <summary>Describes specific server functionality, components, and services.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.AdminWebService">
+      <summary>For internal use only.. Value = 0x2000.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.ApiServer">
+      <summary>The role that allows programmatic access to the organization Web service. Value = 0x8000.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.AppServer">
+      <summary>The role that runs the Web application server that is used to connect users to Microsoft Dynamics CRM data. Value = 1.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.AsyncService">
+      <summary>The role that allows processing of queued asynchronous events, such as workflows, asynchronous plug-ins, bulk e-mail, or data import. Value = 2.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.ConfigSqlServer">
+      <summary>For internal use only.. Value = 0x10000.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.ConfigWitnessServer">
+      <summary>For internal use only.. Value = 0x20000.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.DeploymentManagementTools">
+      <summary>The role that allows the use of the Deployment Manager and Windows PowerShell cmdlets. Microsoft Dynamics 365 administrators can use the Windows PowerShell cmdlets to automate Deployment Manager tasks. Deployment Manager is a Microsoft Management Console (MMC) snap-in that system administrators can use to manage organizations, servers, and licenses for deployments of Microsoft Dynamics 365. Value = 0x4000000.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.DeploymentService">
+      <summary>The role that allows programmatic access to deployment management. Value = 0x200000.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.DiscoveryService">
+      <summary>The role that allows discovery of organizations. Value = 8.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.Dns">
+      <summary>For internal use only.. Value = 0x4000.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.EmailConnector">
+      <summary>The role for the email connector. Value = 0x40000000.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.EmailService">
+      <summary>For internal use only.. Value = 0x10.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.GeoSqlServer">
+      <summary>For internal use only.. Value = 0x100000.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.HelpServer">
+      <summary>The role that makes Microsoft Dynamics 365 help available to users. Value = 0x40000.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.LivePlatform">
+      <summary>For internal use only.. Value = 0x800.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.None">
+      <summary>Indicates no roles. Value = 0.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.OnlineAnalyticsServer">
+      <summary>For internal use only.. Value = 0x8000000.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.OnlineAnalyticsSqlServer">
+      <summary>For internal use only.. Value = 0x10000000.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.OpsServer">
+      <summary>For internal use only.. Value = 0x40.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.Portal">
+      <summary>For internal use only..   Value = 0x200.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.Provisioning">
+      <summary>For internal use only..   Value = 0x400.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.SandboxServer">
+      <summary>The role that enables an isolated environment for the execution of custom code, such as plug-ins. This isolated environment reduces the possibility of custom code affecting the operation of the organizations. Value = 0x1000000.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.ScaleGroupProvisioning">
+      <summary>For internal use only.. Value = 0x800000.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.SiteSqlServer">
+      <summary>For internal use only.. Value = 0x400000.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.SqlServer">
+      <summary>The role that installs the configuration database (MSCRM_CONFIG) on the SQL Server. Value = 0x100.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.SrsDataConnector">
+      <summary>The role that provides reporting functionality by interfacing with the Microsoft Dynamics 365 system and Microsoft SQL Server Reporting Services. Value = 4.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.StatsSqlServer">
+      <summary>For internal use only.. Value = 0x80000.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.Support">
+      <summary>For internal use only.. Value = 0x1000.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.VssWriter">
+      <summary>For internal use only.. Value = 0x20000000.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.WebService">
+      <summary>Obsolete. Value = 0x20.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerRoles.WitnessServer">
+      <summary>For internal use only.. Value = 0x80.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncACTSettings" />
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncACTSettings.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncACTSettings" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncACTSettings.ActiveMailboxMaximumBackoffForACT">
+      <summary>Gets or sets the maximum duration, in seconds, after which the service checks an active mailbox for appointments, contacts, or tasks.</summary>
+      <returns>Type: Int32
+The maximum duration.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncACTSettings.ActiveMailboxMinimumBackoffForACT">
+      <summary>Gets or sets the minimum duration, in seconds, after which the service checks an active mailbox for appointments, contacts, or tasks.</summary>
+      <returns>Type: Int32
+The minimum duration.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncACTSettings.IdleMailboxMaximumBackoffForACT">
+      <summary>Gets or sets the maximum duration, in seconds, after which the service checks an idle mailbox for appointments, contacts, or tasks.</summary>
+      <returns>Type: Int32
+The maximum duration.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncACTSettings.IdleMailboxMinimumBackoffForACT">
+      <summary>Gets or sets the minimum duration, in seconds, after which the service checks an idle mailbox for appointments, contacts, or tasks.</summary>
+      <returns>Type: Int32
+The minimum duration.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncACTSettings.MailboxBackoffOnTimeoutForACT">
+      <summary>Gets or sets the duration, in seconds, to postpone synchronizing appointments, contacts, or tasks for a mailbox on an Exchange server request time-out.</summary>
+      <returns>Type: Int32
+The duration.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncACTSettings.MailboxBackoffOnTransientErrorForACT">
+      <summary>Gets or sets the duration, in seconds, to postpone synchronizing appointments, contacts, or tasks for a mailbox after encountering a transient error.</summary>
+      <returns>Type: Int32
+The duration.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncACTSettings.MaximumItemsPerCycleForACT">
+      <summary>Gets or sets the maximum number of appointments, contacts, or tasks processed by an Exchange server in a cycle.</summary>
+      <returns>Type: Int32
+The maximum number.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncACTSettings.MaximumMailboxTransientFailuresForACT">
+      <summary>Gets or sets the maximum number of transient failures that can occur before a mailbox is disabled for synchronizing appointments, contacts, or tasks.</summary>
+      <returns>Type: Int32
+The maximum number.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncACTSettings.MaximumSynchronizationAttemptsForACT">
+      <summary>Gets or sets the maximum number of attempts allowed to synchronize an appointment, contact, or task.</summary>
+      <returns>Type: Int32
+The maximum number.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncACTSettings.RetrievalBatchSizeForACT">
+      <summary>Gets or sets the batch size for retrieving appointments, contacts, tasks from an Exchange server.</summary>
+      <returns>Type: Int32
+The batch size.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings" />
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.#ctor" />
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.ActiveMailboxMaximumBackoff">
+      <summary>Gets or sets the maximum duration, in seconds, after which the service checks an active mailbox for the user’s email.</summary>
+      <returns>Type: Int32
+The maximum duration.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.ActiveMailboxMinimumBackoff">
+      <summary>Gets or sets the minimum duration, in seconds, after which the service checks an active mailbox for the user’s email.</summary>
+      <returns>Type: Int32
+The minimum duration.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.AllowADBasedAuthenticationProtocols">
+      <summary>Gets or sets a value that specifies whether to allow Active Directory based authentication to connect with email servers.</summary>
+      <returns>Type: Boolean
+true to allow Active Directory authentication; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.AllowBasicAuthenticationOnNonSecureChannel">
+      <summary>Gets or sets a value that specifies whether Microsoft Dynamics 365 is allowed to connect to an email server on a non-secure channel using Basic/Clear Text authentication, for both outgoing and incoming email.</summary>
+      <returns>Type: Boolean
+true to allow basic authentication; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.AllowCredentialsEntryViaNonSecureChannels">
+      <summary>Gets or sets a value that specifies whether to allow entering the user credentials via a non-secure channel.</summary>
+      <returns>Type: Boolean
+true to allow non-secure authentication; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.AllowNonSSLEmail">
+      <summary>Gets or sets a value that specifies whether Microsoft Dynamics 365 is allowed to connect to an email server on a non-secure channel, for both outgoing and incoming email.</summary>
+      <returns>Type: Boolean
+true to allow non-secure email; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.EmailRouterMigrationMaxParallelRuns">
+      <summary>Gets or sets the maximum number of parallel migration processes on the server for an organization. Any migration request exceeding this value is rejected.</summary>
+      <returns>Type: Int32
+The maximum number of parallel migration processes.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.ExchangeAutoDiscoverBulkDiscoveryBatchSize">
+      <summary>Gets or sets the maximum batch size for discovering Exchange web services URL in a single request.</summary>
+      <returns>Type: Int32
+The batch size.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.ExchangeAutoDiscoverMaxRedirects">
+      <summary>Gets or sets the maximum redirects honored in an Exchange web services auto-discover request.</summary>
+      <returns>Type: Int32
+The maximum number of redirects.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.IdleMailboxMaximumBackoff">
+      <summary>Gets or sets the maximum duration, in seconds, after which the service checks an idle mailbox for the user’s email.</summary>
+      <returns>Type: Int32
+The maximum duration, in seconds.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.IdleMailboxMinimumBackoff">
+      <summary>Gets or sets the minimum duration, in seconds, after which the service checks an idle mailbox for the user’s email.</summary>
+      <returns>Type: Int32
+The minimum duration, in seconds.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.IncomingEmailExchangeEmailRetrievalBatchSize">
+      <summary>Gets or sets the email retrieval batch size of the Exchange server.</summary>
+      <returns>Type: Int32
+The email retrieval batch size.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.IncomingEmailMaximumSizeLimit">
+      <summary>Gets or sets the maximum limit, in bytes, for the incoming message size. This setting applies to email received from an Exchange or POP3 email server type.</summary>
+      <returns>Type: Int32
+The maximum email size limit.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.IncomingMaximumEmailsPerCycle">
+      <summary>Gets or sets the maximum number of messages that an incoming provider can process in a cycle.</summary>
+      <returns>Type: Int32
+The maximum number of messages.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.LogEwsResponseHttpHeaders">
+      <summary>Gets or sets a value that specifies whether to enable logging of Exchange web services response headers in Microsoft Dynamics 365 traces.</summary>
+      <returns>Type: Boolean
+true if logging is enabled; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.MailboxBackoffOnTimeout">
+      <summary>Gets or sets the duration, in seconds, that sending or receiving email is postponed for a mailbox when a request to the email server times out.</summary>
+      <returns>Type: Int32
+The maximum duration, in seconds.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.MailboxBackoffOnTransientError">
+      <summary>Gets or sets the duration, in seconds, to postpone sending or receiving email for a mailbox after a transient error occurs.</summary>
+      <returns>Type: Int32
+The maximum duration, in seconds.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.MailboxSendBackoffOnSubmissionQuotaExceeded">
+      <summary>Gets or sets the duration, in minutes, that sending email from a mailbox is postponed when the Exchange submission quota is exceeded.</summary>
+      <returns>Type: Int32
+The maximum duration, in seconds.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.MaximumEmailDeliveryAttempts">
+      <summary>Gets or sets the maximum number of attempts that can be made to send an email.</summary>
+      <returns>Type: Int32
+The maximum number of attempts.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.MaximumExchangeWebResponseSize">
+      <summary>Gets or sets the maximum size of response, in KB, from  Exchange using Exchange web services.</summary>
+      <returns>Type: Int32
+The maximum response size in KB.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.MaxMailboxTransientFailures">
+      <summary>Gets or sets the number of transient failures that can occur before the mailbox is automatically disabled.</summary>
+      <returns>Type: Int32
+The maximum number of failures.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.MessageIDCacheCapacity">
+      <summary>Gets or sets the capacity of the message ID cache for server-side synchronization.</summary>
+      <returns>Type: Int32
+The cache capacity.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.MessageIDCacheRetentionTime">
+      <summary>Gets or sets the time, in minutes, that the email message ID is retained in the cache.</summary>
+      <returns>Type: Int32
+The maximum time, in minutes.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.PendingEmailsRetryInterval">
+      <summary>Gets or sets the interval in minutes after which an email in pending send status is picked up for retry.</summary>
+      <returns>Type: Int32
+The maximum interval, in minutes.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.ProcessEmailSinceMaximumDaysAllowed">
+      <summary>Gets or sets the maximum number of days before the current date or time that server-side synchronization can be configured to process email. This information is provided in an email server profile record in Microsoft Dynamics 365.</summary>
+      <returns>Type: Int32
+The maximum number of days.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.SendingEmailsRetryInterval">
+      <summary>Gets or sets the interval, in minutes, after which an email in sending status is picked up for retry.</summary>
+      <returns>Type: Int32
+The maximum interval, in minutes.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncEmailSettings.TestEmailConfigurationRetryInterval">
+      <summary>Gets or sets the interval, in minutes, to attempt the email test configuration again.</summary>
+      <returns>Type: Int32
+The maximum interval, in minutes.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncQueueSettings" />
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncQueueSettings.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncQueueSettings" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncQueueSettings.ActivitiesDequedPerEvent">
+      <summary>Gets or sets the number of activities to be removed from a queue per asynchronous event.</summary>
+      <returns>Type: Int32
+The number of activities to be removed.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncQueueSettings.ActivityQueueItemsInMemoryHigh">
+      <summary>Defines the upper limit of the number of activity batches held in memory at any point of time.</summary>
+      <returns>Type: Int32
+The maximum number of items held in memory.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncQueueSettings.ActivityQueueItemsInMemoryLow">
+      <summary>Defines the lower limit beyond which the service will stop removing activity batches held in memory from the queue.</summary>
+      <returns>Type: Int32
+The minimum number of items held in memory.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncQueueSettings.ActivityQueueMaximumThreadsPercent">
+      <summary>Defines the maximum percentage of worker threads to be used for running asynchronous operations.</summary>
+      <returns>Type: Double
+The maximum percentage of threads.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncQueueSettings.ActivityQueueMaximumThreadsPerCPU">
+      <summary>Defines the maximum number of threads per CPU to be used for running asynchronous operations.</summary>
+      <returns>Type: Int32
+The maximum number of threads.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncQueueSettings.ActivityQueueSelectInterval">
+      <summary>Defines how frequently to poll the organization database activity pointer table to check for any new outgoing emails that have to be sent.</summary>
+      <returns>Type: Int32
+The polling interval, in seconds.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncQueueSettings.MailboxesDequedPerEvent">
+      <summary>Controls the number of mailboxes to be removed from a queue per asynchronous event.</summary>
+      <returns>Type: Int32
+The number of mailboxes removed from a queue.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncQueueSettings.MailboxProcessingDelay" />
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncQueueSettings.MailboxQueueItemsInMemoryHigh">
+      <summary>Gets or sets the upper limit on the number of mailbox batches held in memory, beyond which the service will stop removing mailboxes from the queue.</summary>
+      <returns>Type: Int32
+The maximum number of mailbox batches to be held in memory.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncQueueSettings.MailboxQueueItemsInMemoryLow">
+      <summary>Gest or sets the lower limit on the number of mailbox batches held in memory, beyond which the service will stop removing mailboxes from the queue.</summary>
+      <returns>Type: Int32
+The minimum number of mailbox batches to be held in memory.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncQueueSettings.MailboxQueueMaximumThreadsPercent">
+      <summary>Defines the maximum percentage of worker threads for running asynchronous operations.</summary>
+      <returns>Type: Double
+The maximum percentage of threads.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncQueueSettings.MailboxQueueMaximumThreadsPerCPU">
+      <summary>Defines the maximum number of threads per CPU for running asynchronous operations.</summary>
+      <returns>Type: Int32
+The maximum number of threads.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncQueueSettings.MailboxQueueSelectInterval">
+      <summary>Defines the recurrence period, in seconds, of removing mailboxes from the queue in the database.</summary>
+      <returns>Type: Int32
+The recurrence period, in seconds.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncQueueSettings.MailboxRetryDelay">
+      <summary>Defines the number of minutes after which a locked mailbox record is checked again for incoming email processing in case of a service crash.</summary>
+      <returns>Type: Int32
+The retry delay, in minutes.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncQueueSettings.MaximumActivitiesPerSelect">
+      <summary>Controls the maximum number of activities that can be removed from the queue for an organization per select interval.</summary>
+      <returns>Type: Int32
+The maximum number per interval.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ServerSideSyncQueueSettings.WaitingOperationTimeout">
+      <summary>Defines the maximum time allowed for any call to the email server to complete. If a response isn’t received from the email server within this time period, the request is aborted. This setting applies to both Exchange and POP3/SMTP.</summary>
+      <returns>Type: Int32
+The waiting operation timeout.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.ServerState">
+      <summary>Describes the state of a server.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerState.Disabled">
+      <summary>Specifies that the server is disabled. Value = 0.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerState.Enabled">
+      <summary>Specifies that the server is enabled. Value = 1.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServerState.None">
+      <summary>Specifies that no server state. Value = -1.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.ServiceHealthStatus">
+      <summary>Describes the deployment service health status.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServiceHealthStatus.Healthy">
+      <summary>Tests passed successfully.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServiceHealthStatus.HealthyServiceVerificationOnly">
+      <summary>Tests that didn’t require a test organization passed successfully.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServiceHealthStatus.NoData">
+      <summary>No tests have been run.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.ServiceHealthStatus.NotHealthy">
+      <summary>Tests failed.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.SqmSettings">
+      <summary>Contains settings about the Microsoft customer experience improvement program.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.SqmSettings.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.SqmSettings" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.SqmSettings.SqmEnabled">
+      <summary>Gets or sets the value that indicates whether collection of information for the customer experience improvement program is enabled.</summary>
+      <returns>Type: Boolean
+true if the information collection for the customer experience program is enabled; otherwise, false.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.TeamSettings">
+      <summary>Contains settings for the auto created (system-managed) access teams.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.TeamSettings.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.TeamSettings" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.TeamSettings.MaxAutoCreatedAccessTeamsPerEntity">
+      <summary>Gets or sets the maximum number of auto created (system-managed) access teams per entity. Required.</summary>
+      <returns>Type: Int32
+The maximum number of auto created (system-managed) access teams per entity.
+The default value for this setting is 2.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.TeamSettings.MaxEntitiesEnabledForAutoCreatedAccessTeams">
+      <summary>Gets or sets the maximum number of entities that can be enabled for auto created (system-managed) access teams. Required.</summary>
+      <returns>Type: Int32
+The maximum number of entities that can be enabled for auto created (system-managed) access teams.
+The default value for this setting is 5.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.TestStatus">
+      <summary>Indicates the result of a monitoring service operation test.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.TestStatus.Failed">
+      <summary>Test failed.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.TestStatus.NotExecuted">
+      <summary>Test hasn’t run yet.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.TestStatus.Succeed">
+      <summary>Test succeeded.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.ThrottleSettings">
+      <summary>Contains information about service throttling.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.ThrottleSettings.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.ThrottleSettings" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ThrottleSettings.ExecuteAsyncMaxConnectionsPerServer">
+      <summary>Gets or sets the maximum number of concurrent asynchronous execute operations per organization.</summary>
+      <returns>Type: Int32
+The maximum number.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ThrottleSettings.ExecuteAsyncPerOrgMaxConnectionsPerServer">
+      <summary>Gets or sets the maximum number of concurrent execute multiple operations per organization per server.</summary>
+      <returns>Type: Int32
+The maximum number.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ThrottleSettings.ExecuteMultipleMaxConnectionsPerServer">
+      <summary>Gets or sets the maximum number of concurrent execute multiple operations per organization.</summary>
+      <returns>Type: Int32
+The maximum number of concurrent execute multiple operations per organization.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ThrottleSettings.ExecuteMultiplePerOrgMaxConnectionsPerServer">
+      <summary>Gets or sets the maximum number of concurrent execute multiple operations per organization per server.</summary>
+      <returns>Type: Int32
+The maximum number of concurrent execute multiple operations per organization per server.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ThrottleSettings.FollowInYammerMaxConnectionsPerServer">
+      <summary>For internal use only.</summary>
+      <returns>Type: Int32</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ThrottleSettings.FollowInYammerPerOrgMaxConnectionsPerServer">
+      <summary>For internal use only.</summary>
+      <returns>Type: Int32</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ThrottleSettings.MapiSyncMaxConnectionsPerServer">
+      <summary>Gets or sets the server setting to control the maximum number of MAPI sync operations.</summary>
+      <returns>Type: Int32
+The maximum number of MAPI sync operations.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ThrottleSettings.MapiSyncPerOrgMaxConnectionsPerServer">
+      <summary>Gets or sets the server setting to control the maximum number of MAPI sync operations per organization.</summary>
+      <returns>Type: Int32
+The maximum number of MAPI sync operations per organization.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ThrottleSettings.MaxBackgroundSendEmailRequestsPerOrgPerServer">
+      <summary>Gets or sets the Server setting to control the maximum number of background email send operations per organization.</summary>
+      <returns>Type: Int32
+The maximum number of background email send operations per organization.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ThrottleSettings.MaxBackgroundSendEmailRequestsPerServer">
+      <summary>Gets or sets the server setting to control the maximum number of background email send operations.</summary>
+      <returns>Type: Int32
+The maximum number of background email send operations.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ThrottleSettings.MaxSharepointThreadsperOrganisation">
+      <summary>Gets or sets the maximum number of Microsoft SharePoint threads allowed per organization.</summary>
+      <returns>Type: Int32
+The maximum number of threads allowed.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ThrottleSettings.MaxSharepointThreadsperUser">
+      <summary>Gets or sets the maximum number of Microsoft SharePoint threads allowed per user.</summary>
+      <returns>Type: Int32
+The maximum number of threads allowed.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ThrottleSettings.OfflineSyncMaxConnectionsPerServer">
+      <summary>Gets or sets the server setting to control the maximum number of offline sync operations.</summary>
+      <returns>Type: Int32
+Gets or sets the server setting to control the maximum number of offline sync operations.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ThrottleSettings.OfflineSyncPerOrgMaxConnectionsPerServer">
+      <summary>Gets or sets the server setting to control the maximum number of offline sync operations per organization.</summary>
+      <returns>Type: Int32
+The maximum number of offline sync operations per organization.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ThrottleSettings.OutlookSyncMaxConnectionsPerServer">
+      <summary>Gets or sets the server setting to control the maximum number of Dynamics 365 for Outlook sync operations.</summary>
+      <returns>Type: Int32
+The maximum number of sync operations.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.ThrottleSettings.OutlookSyncPerOrgMaxConnectionsPerServer">
+      <summary>Gets or sets the server setting to control the maximum number of Dynamics 365 for Outlook sync operations per organization.</summary>
+      <returns>Type: Int32
+The maximum number of sync operations per organization.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.TraceSettings">
+      <summary>Contains trace settings for a deployment.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.TraceSettings.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.TraceSettings" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.TraceSettings.CallStack">
+      <summary>Gets or sets whether to save the call stack.</summary>
+      <returns>Type: Boolean
+true if saving the call stack is enabled; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.TraceSettings.Categories">
+      <summary>Gets or sets the categories to trace.</summary>
+      <returns>Type: String
+The categories to trace.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.TraceSettings.Directory">
+      <summary>Gets or sets the directory for the trace files.</summary>
+      <returns>Type: String
+The directory for the trace files.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.TraceSettings.Enabled">
+      <summary>Gets or sets whether tracing is enabled.</summary>
+      <returns>Type: Boolean
+true if tracing is enabled; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.TraceSettings.FileSize">
+      <summary>Gets or sets the trace file size limit (MB).</summary>
+      <returns>Type: Int32
+The size limit of the trace file in MB.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.TrackingLicenseType">
+      <summary>Describes the type of license.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.TrackingLicenseType.AdministrativeCal">
+      <summary>An administrative client access license (CAL). Value = 2.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.TrackingLicenseType.BasicCal">
+      <summary>A basic client access license (CAL). Value = 3.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.TrackingLicenseType.DeviceBasicCal">
+      <summary>A device basic client access license (CAL). Value = 5.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.TrackingLicenseType.DeviceEnterpriseCal">
+      <summary>A device enterprise client access license (CAL). Value = 6.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.TrackingLicenseType.DeviceEssentialCal">
+      <summary>A device essential client access license (CAL). Value = 13.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.TrackingLicenseType.DeviceProfessionalCal">
+      <summary>A device professional client access license (CAL). Value = 4.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.TrackingLicenseType.EnterpriseCal">
+      <summary>An enterprise client access license (CAL). Value = 12.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.TrackingLicenseType.EnterpriseServer">
+      <summary>An enterprise client access license (CAL). Value = 9.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.TrackingLicenseType.EssentialCal">
+      <summary>An essential client access license (CAL). Value = 1.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.TrackingLicenseType.FieldServiceCal" />
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.TrackingLicenseType.OnlineServer">
+      <summary>An online server client access license (CAL). Value =11 .</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.TrackingLicenseType.ProfessionalCal">
+      <summary>A professional client access license (CAL). Value = 0.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.TrackingLicenseType.ProfessionalServer">
+      <summary>A professional server client access license (CAL). Value = 8.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.TrackingLicenseType.ProjectServiceCal" />
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.TrackingLicenseType.SalesCal" />
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.TrackingLicenseType.ServiceCal" />
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.TrackingLicenseType.SplaServer">
+      <summary>A service provider licensing agreement (SPLA) client access license (CAL). Value = 10.</summary>
+    </member>
+    <member name="F:Microsoft.Xrm.Sdk.Deployment.TrackingLicenseType.WorkgroupServer">
+      <summary>A workgroup server client access license (CAL). Value = 7.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.TrackLicenseRequest">
+      <summary>Contains the data that is needed to track the licenses for a deployment.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.TrackLicenseRequest.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.TrackLicenseRequest" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.TrackLicenseRequest.EndDate">
+      <summary>Gets or sets the end date for the license.</summary>
+      <returns>Type: DateTime
+The end date.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.TrackLicenseRequest.LicenseType">
+      <summary>Gets or sets the type of license.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.TrackingLicenseType" />
+The type of license.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.TrackLicenseRequest.StartDate">
+      <summary>Gets or sets the start date for the license.</summary>
+      <returns>Type: DateTime
+The start date.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.TrackLicenseResponse">
+      <summary>Contains the response from the<see cref="T:Microsoft.Xrm.Sdk.Deployment.TrackLicenseRequest" />.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.TrackLicenseResponse.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.TrackLicenseResponse" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.TrackLicenseResponse.Servers">
+      <summary>Gets or sets the servers returned from the license request.</summary>
+      <returns>Type:  <see cref="T:Microsoft.Xrm.Sdk.DataCollection`1" />&amp;lt;String&amp;gt;
+The collection of servers.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.TrackLicenseResponse.Users">
+      <summary>Gets or sets the users returned from the license request.</summary>
+      <returns>Type:<see cref="T:Microsoft.Xrm.Sdk.DataCollection`1" />&amp;lt;<see cref="T:Microsoft.Xrm.Sdk.Deployment.OrganizationUserInfo" />&amp;gt;
+The collection of users.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.UpdateAdvancedSettingsRequest">
+      <summary>Contains the data that is needed to update advanced settings from the configuration database. For internal use only.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.UpdateAdvancedSettingsRequest.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.UpdateAdvancedSettingsRequest" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.UpdateAdvancedSettingsRequest.Entity">
+      <summary>Gets or sets the configuration entity to be updated.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.ConfigurationEntity" />
+The configuration entity to be updated.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.UpdateAdvancedSettingsResponse">
+      <summary>Contains the response from the<see cref="T:Microsoft.Xrm.Sdk.Deployment.UpdateAdvancedSettingsRequest" />.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.UpdateAdvancedSettingsResponse.#ctor">
+      <summary>Initializes a new instance of the  <see cref="T:Microsoft.Xrm.Sdk.Deployment.UpdateAdvancedSettingsResponse" /> class.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.UpdateProductKeyRequest">
+      <summary>Contains the data that is needed to update a product key.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.UpdateProductKeyRequest.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.UpdateProductKeyRequest" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.UpdateProductKeyRequest.ProductKey">
+      <summary>Gets or sets the product key to update.</summary>
+      <returns>Type: String
+The product key to update.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.UpdateProductKeyResponse">
+      <summary>Contains the response from the <see cref="T:Microsoft.Xrm.Sdk.Deployment.UpdateProductKeyRequest" />.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.UpdateProductKeyResponse.#ctor">
+      <summary>Initializes a new instance of the  <see cref="T:Microsoft.Xrm.Sdk.Deployment.UpdateProductKeyResponse" /> class.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.UpdateRequest">
+      <summary>Contains the data that is needed to update a deployment record.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.UpdateRequest.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.UpdateRequest" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.UpdateRequest.Entity">
+      <summary>Gets or sets the configuration entity to be updated.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.DeploymentObject" />
+The configuration entity to be updated.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.UpdateResponse">
+      <summary>Contains the response from the<see cref="T:Microsoft.Xrm.Sdk.Deployment.UpdateRequest" />.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.UpdateResponse.#ctor">
+      <summary>Initializes a new instance of the  <see cref="T:Microsoft.Xrm.Sdk.Deployment.UpdateResponse" /> class.</summary>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.WebAddressSettings">
+      <summary>Contains deployment specific root domain address values.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.WebAddressSettings.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.WebAddressSettings" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.WebAddressSettings.DeploymentSdkRootDomain">
+      <summary>Gets or sets the root domain for the deployment Web service (SDK).</summary>
+      <returns>Type: String
+The root domain for the deployment Web service (SDK).</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.WebAddressSettings.DiscoveryRootDomain">
+      <summary>Gets or sets the root domain for the discovery Web service.</summary>
+      <returns>Type: String
+The root domain for the discovery Web service.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.WebAddressSettings.HelpServerUrl">
+      <summary>Gets or sets the URL for help content server.</summary>
+      <returns>Type: String
+The URL for help content server.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.WebAddressSettings.NlbEnabled">
+      <summary>Gets or sets whether network load balancing (NLB) is enabled.</summary>
+      <returns>Type: Boolean
+true if network load balancing (NLB) is enabled; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.WebAddressSettings.RootDomainScheme">
+      <summary>Gets or sets the root domain scheme: http or https.</summary>
+      <returns>Type: <see cref="T:Microsoft.Xrm.Sdk.Deployment.AddressScheme" />
+The root domain scheme: http or https.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.WebAddressSettings.SdkRootDomain">
+      <summary>Gets or sets the root domain for the organization Web service (SDK).</summary>
+      <returns>Type: String
+The root domain for the organization Web service (SDK).</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.WebAddressSettings.SslHeader">
+      <summary>Gets or sets the secured sockets layer (SSL) header.</summary>
+      <returns>Type: String
+The secured sockets layer (SSL) header.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.WebAddressSettings.WebAppRootDomain">
+      <summary>Gets or sets the root domain for the Web application.</summary>
+      <returns>Type: String
+The root domain for the Web application.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.WorkflowSettings">
+      <summary>Contains workflow setting values which can be changed to tune a Microsoft Dynamics 365 deployment.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.WorkflowSettings.#ctor">
+      <summary>Initializes a new instance of the <see langword="WorkflowSettings" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.WorkflowSettings.MaxDepth">
+      <summary>Gets or sets the maximum depth for a workflow.</summary>
+      <returns>Type: Int32
+The maximum depth for a workflow.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.WorkflowSettings.MinInactiveSeconds">
+      <summary>Gets or sets the maximum number of seconds a workflow can be inactive.</summary>
+      <returns>Type: Int32
+The maximum number of seconds a workflow can be inactive.</returns>
+    </member>
+    <member name="T:Microsoft.Xrm.Sdk.Deployment.YammerSettings">
+      <summary>Contains settings for Yammer.</summary>
+    </member>
+    <member name="M:Microsoft.Xrm.Sdk.Deployment.YammerSettings.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Deployment.YammerSettings" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.YammerSettings.ApplicationId">
+      <summary>Gets or sets the application ID.</summary>
+      <returns>Type: String
+The application ID.
+The application ID is retrieved from yammer.com when you register your application on Yammer.</returns>
+    </member>
+    <member name="P:Microsoft.Xrm.Sdk.Deployment.YammerSettings.ApplicationSecret">
+      <summary>Gets or sets the application secret.</summary>
+      <returns>Type: String
+The application secret.
+The application secret is provided by yammer.com when you register your application on Yammer.</returns>
+    </member>
+  </members>
+</doc>

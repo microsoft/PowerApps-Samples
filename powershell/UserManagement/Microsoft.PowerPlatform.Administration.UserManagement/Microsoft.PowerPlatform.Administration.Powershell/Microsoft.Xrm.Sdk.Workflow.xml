@@ -1,0 +1,342 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Xrm.Sdk.Workflow</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Activities.ActivityReference">
+            <summary>
+            This class is for internal use only
+            </summary>
+        </member>
+        <member name="M:Microsoft.Xrm.Sdk.Workflow.Activities.ActivityReference.ActivityCompleted(System.Activities.NativeActivityContext,System.Activities.ActivityInstance)">
+            <summary>
+            Used as a callback method when activity is completed.
+            We need an explicit ActivityCompleted method in this class so that WF can discover and call it.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="completedInstance">The completed instance.</param>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Activities.ActivityReferenceBase">
+            <summary>
+            This class is for internal use only
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Activities.AssignEntity">
+            <summary>
+            Creates a new entity instance.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Activities.CreateEntity">
+            <summary>
+            Creates a new entity instance.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Activities.GetEntityProperty">
+            <summary>
+            Activity to get the value of an entity property.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Activities.GetPrimaryEntity">
+            <summary>
+            Activity to get a reference to the primary entity.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Activities.Postpone">
+            <summary>
+            Activity to suspend workflow execution.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Activities.ReferenceLiteral`1">
+            <summary>
+            This class is for internal use only
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Activities.RetrieveEntity">
+            <summary>
+            Creates a new entity instance.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Activities.SendEmail">
+            <summary>
+            Creates a new entity instance.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Activities.SendEmailFromTemplate">
+            <summary>
+            Creates a new entity instance.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Activities.SetEntityProperty">
+            <summary>
+            Creates a new entity instance.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Activities.SetState">
+            <summary>
+            Creates a new entity instance.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Activities.StartChildWorkflow">
+            <summary>
+            Creates a new entity instance.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Activities.UpdateEntity">
+            <summary>
+            Creates a new entity instance.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Activities.WebActivityReference">
+            <summary>
+            This class is for internal use only
+            </summary>
+        </member>
+        <member name="M:Microsoft.Xrm.Sdk.Workflow.Activities.WebActivityReference.ActivityCompleted(System.Activities.NativeActivityContext,System.Activities.ActivityInstance)">
+            <summary>
+            Used as a callback method when activity is completed.
+            We need an explicit ActivityCompleted method in this class so that WF can discover and call it.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="completedInstance">The completed instance.</param>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Services.IAssignActivityService">
+            <summary>
+            For internal use only.
+            Defines interface of activity service that supports AssignActivity.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Services.IChildWorkflowActivityService">
+            <summary>
+            For internal use only.
+            Defines interface of activity service that supports ChildWorkflowActivity.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Services.ICreateActivityService">
+            <summary>
+            For internal use only.
+            Defines interface of activity service that supports CreateActivity.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Services.IRetrieveActivityService">
+            <summary>
+            For internal use only.
+            Defines interface of activity service that supports RetrieveActivity.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Services.ISendEmailFromTemplateActivityService">
+            <summary>
+            For internal use only.
+            Defines interface of activity service that supports SendEmailFromTemplateActivity.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Services.ISendEmailWithoutTemplateService">
+            <summary>
+            For internal use only.
+            Defines interface of activity service that supports SendEmailWithoutTemplateActivity.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Services.ISetStateActivityService">
+            <summary>
+            For internal use only.
+            Defines interface of activity service that supports SetStateActivity.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Services.IUpdateActivityService">
+            <summary>
+            For internal use only.
+            Defines interface of activity service that supports UpdateActivity.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Services.IExpressionActivityService">
+            <summary>
+            For internal use only.
+            Defines interface of activity service that supports expression activities.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Services.IWorkflowService">
+            <summary>
+            For internal use only.
+            Defines interface of activity service that supports the root workflow activity.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Services.IActivityReferenceService">
+            <summary>
+            For internal use only.
+            Defines interface of activity service that supports the activity reference
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Services.WorkflowInitializationContext">
+            <summary>
+            This class is used to access the service interfaces during initialization when there is no execution context available
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.ReferenceTargetAttribute">
+            <summary>
+            A required attribute of a parameter if the parameter is of type EntityReference.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Xrm.Sdk.Workflow.ReferenceTargetAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Workflow.ReferenceTargetAttribute"/> class.
+            A required attribute of a parameter if the parameter is of type EntityReference.
+            </summary>
+            <param name="entityName">The name of the target entity</param>
+        </member>
+        <member name="P:Microsoft.Xrm.Sdk.Workflow.ReferenceTargetAttribute.EntityName">
+            <summary>
+            The name of the target entity
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.AttributeTargetAttribute">
+            <summary>
+            A required attribute of a parameter if the parameter is of type OptionSetValue.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Xrm.Sdk.Workflow.AttributeTargetAttribute.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Workflow.AttributeTargetAttribute"/> class.
+            A required attribute of a parameter if the parameter is of type OptionSetValue.
+            </summary>
+            <param name="entityName">The target entity name.</param>
+            <param name="attributeName">The name of the target attribute of the entity.</param>
+        </member>
+        <member name="P:Microsoft.Xrm.Sdk.Workflow.AttributeTargetAttribute.EntityName">
+            <summary>
+            The target entity name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Xrm.Sdk.Workflow.AttributeTargetAttribute.AttributeName">
+            <summary>
+            The name of the target attribute of the entity.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.DefaultAttribute">
+            <summary>
+            A default value that is assigned to a parameter. This attribute is optional.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Xrm.Sdk.Workflow.DefaultAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Workflow.DefaultAttribute"/> class.
+            Set the default value of a parameter.
+            </summary>
+            <param name="value">The default value</param>
+        </member>
+        <member name="M:Microsoft.Xrm.Sdk.Workflow.DefaultAttribute.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Workflow.DefaultAttribute"/> class.
+            Set the default value for an EntityReference.
+            </summary>
+            <param name="value">The value in form of a guid.</param>
+            <param name="entityName">The name of the entity of the value.</param>
+        </member>
+        <member name="P:Microsoft.Xrm.Sdk.Workflow.DefaultAttribute.EntityName">
+            <summary>
+            The name of the entity of the value for an EntityReference.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Xrm.Sdk.Workflow.DefaultAttribute.Value">
+            <summary>
+            The default value.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.ParameterAttribute">
+            <summary>
+            Base class for custom activity parameter types
+            <remarks>For Internal use only.</remarks>
+            </summary>
+        </member>
+        <member name="P:Microsoft.Xrm.Sdk.Workflow.ParameterAttribute.Name">
+            <summary>
+            The name of the parameter that will appears in the UI.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.InputAttribute">
+            <summary>
+            Specify an input parameter.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Xrm.Sdk.Workflow.InputAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Workflow.InputAttribute"/> class.
+            Specify an input parameter
+            </summary>
+            <param name="name">The name of the parameter that will appears in the UI</param>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.OutputAttribute">
+            <summary>
+            Specifiy an output parameter
+            </summary>
+        </member>
+        <member name="M:Microsoft.Xrm.Sdk.Workflow.OutputAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Xrm.Sdk.Workflow.OutputAttribute"/> class.
+            Specify an output parameter
+            </summary>
+            <param name="name">The name of the parameter that will appears in the UI</param>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.Designers.WorkflowDesigner">
+            <summary>
+            WorkflowDesigner
+            </summary>
+        </member>
+        <member name="M:Microsoft.Xrm.Sdk.Workflow.Designers.WorkflowDesigner.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:Microsoft.Xrm.Sdk.Workflow.WorkflowArgument" -->
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.WorkflowDependencyType">
+            <summary>
+            Type of workflow dependency.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Xrm.Sdk.Workflow.WorkflowDependencyType.PrimaryEntityImage">
+             <summary>
+             PrimaryEntityImage depends on the operation that triggered the workflow and can also change over time.
+            
+             For Delete operation, the value is the same as PrimaryEntityPreImage.
+             For Create/Update operation, the initial value is the same as PrimaryEntityPostImage.  When workflow is
+             restarted after wait or delay activity, the value is refreshed with the latest state of the primary entity
+             in the database.
+             </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.ArgumentsCollection">
+            <summary>
+            collection of fields
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.WorkflowStepActivityStatus">
+            <summary>
+            Defines values of Status attribute of entity WorkflowLog.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.IStorageService">
+            <summary>
+            Storage service can be used by CRM activities to store large lists and then retrieve
+            specific indexes at a later time
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.IWaitNotificationService">
+            <summary>
+            Defines interface of a service that can be used to wait for entity modification events.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.WaitSubscription">
+            <summary>
+            Defines a subscription record that is stored in the IWaitNotificationService
+            </summary>
+        </member>
+        <member name="P:Microsoft.Xrm.Sdk.Workflow.WaitSubscription.AttributeName">
+            <summary>
+            Attribute on which waitsubscription is waiting on
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xrm.Sdk.Workflow.ICustomReference">
+            <summary>
+            Interface for the custom reference for the CustomActivityStep and InvokeSdkMessageStep.
+            </summary>
+        </member>
+    </members>
+</doc>

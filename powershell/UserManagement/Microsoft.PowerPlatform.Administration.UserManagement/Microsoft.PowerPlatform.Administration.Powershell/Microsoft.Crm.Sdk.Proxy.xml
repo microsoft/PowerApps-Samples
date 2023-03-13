@@ -1,0 +1,1938 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Crm.Sdk.Proxy</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Crm.Sdk.Messages.AppElementsCollection">
+            <summary>
+            Response Type for RetrieveAppElements API
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppElementsCollection.AppElementInfoCollection">
+            <summary>
+            Collection of AppElements that belong to an app.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppElementsCollection.ExtensionData">
+            <summary>
+            Defines Extension Data
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.AppElementInfo">
+            <summary>
+            Defines AppElement
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppElementInfo.ObjectId">
+            <summary>
+            Id of the app element.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppElementInfo.AppElementType">
+            <summary>
+            Logical name of the type, like entity, systemform, canvasapp etc.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppElementInfo.CanvasAppType">
+            <summary>
+            Canvas app type of the app element
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppElementInfo.ObjectName">
+            <summary>
+            Gets or sets the name of the app element.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppElementInfo.ExtensionData">
+            <summary>
+            Defines Extension Data
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppModuleDetailsCollection.ExtensionData">
+            <summary>
+            Defines Extension Data
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.AppModuleSaveResponse">
+            <summary>
+            Response to the SaveAppModule SDK message.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppModuleSaveResponse.ExtensionData">
+            <summary>
+            Defines Extension Data
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppModuleSaveResponse.AppModule">
+            <summary>
+            Gets or sets identifier for the AppModule record that was created or updated by this operation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppModuleSaveResponse.AppElements">
+            <summary>
+            Gets or sets identifiers for the AppModuleComponent records that were created or updated by this operation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppModuleSaveResponse.UnifiedApp">
+            <summary>
+            Gets or sets identifier for the CanvasApp record that represents the root canvas component for the AppModule that was created or updated by this operation.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.DependencyMetadataCollection">
+            <summary>
+            Response Type for RetrieveDependency API
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependencyMetadataCollection.DependencyMetadataInfoCollection">
+            <summary>
+            Collection of dependency metadata information.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependencyMetadataCollection.ExtensionData">
+            <summary>
+            Defines Extension Data
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.DependencyMetadataInfo">
+            <summary>
+            Defines Dependency metadata information
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependencyMetadataInfo.ExtensionData">
+            <summary>
+            Defines Extension Data
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.FeatureControlSettingCollection">
+            <summary>
+            Response Type for RetrieveFeatureControlSettings API
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.FeatureControlSettingCollection.ExtensionData">
+            <summary>
+            Gets or sets Extension Data
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.FormDisplayOrderCollection.formDisplayOrderCollection">
+            <summary>
+            List of FormDisplayOrder Objects
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.FormDisplayOrderCollection.ExtensionData">
+            <summary>
+            Defines Extension Data
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.FormDisplayOrder.Order">
+            <summary>
+            Display Order of the Form
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.FormDisplayOrder.FormId">
+            <summary>
+            Form ID of the Form
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.FormDisplayOrder.Name">
+            <summary>
+            Name of the Form
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.FormDisplayOrder.IsCustomizable">
+            <summary>
+            Indicates whether the Form is Customizable as a Solution Component
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppModuleCollection.ExtensionData">
+            <summary>
+            Defines Extension Data
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.AppModuleDescriptor">
+            <summary>
+            Defines App Module Descriptor
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppModuleDescriptor.ExtensionData">
+            <summary>
+            Defines Extension Data
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.AppModuleValidationResponse">
+            <summary>
+            Defines return type of validateAppModule API in Services layer
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.AppModuleValidationResponse.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.AppModuleValidationResponse"/> class.
+            Default constructor for searialization.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppModuleValidationResponse.CanBeActivated">
+            <summary>
+            boolean value provides whether app can be actived or not
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppModuleValidationResponse.ValidationIssueList">
+            <summary>
+            List of Errors and Warning
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.ValidationIssue.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.ValidationIssue"/> class.
+            Even though this constructor does not do anything, it is still needed because 
+            XmlSerializer requires public default constructor on the class to be serialized.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ValidationIssue.ErrorType">
+            <summary>
+            Provide type of error i.e. Error or Warning
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ValidationIssue.Message">
+            <summary>
+            Error/Warning message in case of app level validation, objectId in case of dependency check validation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ValidationIssue.DisplayName">
+            <summary>
+            Display Name for Component Id for which we are performing dependency check.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ValidationIssue.ComponentId">
+            <summary>
+            ComponentId for which we are performing dependency check.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ValidationIssue.ComponentType">
+            <summary>
+            Type of component for which we are performing dependency check.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ValidationIssue.ComponentSubType">
+            <summary>
+            Component subtype code (Forms and Views have subtypes)
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ValidationIssue.ParentEntityId">
+            <summary>
+            Parent Entity GUID
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ValidationIssue.ParentEntityName">
+            <summary>
+            Name of parent entity
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ValidationIssue.RequiredComponents">
+            <summary>
+            List of all unresolved dependencies for given componentId
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ValidationIssue.CRMErrorCode">
+            <summary>
+            Crm error code
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.Component.DisplayName">
+            <summary>
+            Display Name for given Component Id
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.Component.SchemaName">
+            <summary>
+            SchemaName for given Component Id
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.Component.ComponentType">
+            <summary>
+            Component type code 
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.Component.ComponentSubType">
+            <summary>
+            Component subtype code (Forms and Views have subtypes)
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.Component.ComponentId">
+            <summary>
+            Unresolved Component Id
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.Component.ParentEntityId">
+            <summary>
+            Parent Entity GUID
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.Component.ParentEntityName">
+            <summary>
+            Name of parent entity
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.ErrorType">
+            <summary>
+            Type of error i.e. Errors and warning
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.AppValidationResponse">
+            <summary>
+            Defines return type of ValidateApp API in Services layer
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.AppValidationResponse.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.AppValidationResponse"/> class.
+            Default constructor for searialization.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppValidationResponse.ValidationSuccess">
+            <summary>
+            boolean value provides whether app can be actived or not
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppValidationResponse.ValidationIssueList">
+            <summary>
+            List of Errors and Warning
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.AppContext">
+            <summary>
+            Defines App Context
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppContext.ExtensionData">
+            <summary>
+            Defines Extension Data
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.AppInfo">
+            <summary>
+            Defines App Info. Basic details about the app.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.AppointmentProposal">
+            <summary>
+            Defines an AppointmentProposal in Services layer.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.AppointmentProposal.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.AppointmentProposal"/> class.
+            Even though this constructor does not do anything, it is still needed because 
+            XmlSerializer requires public default constructor on the class to be serialized.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.AppointmentProposal.#ctor(System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Guid,System.String,Microsoft.Crm.Sdk.Messages.ProposalParty[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.AppointmentProposal"/> class.
+            Initializes an AppointmentProposal object.
+            </summary>
+            <param name="start">Start of the proposed appointment.</param>
+            <param name="end">End of the proposed appointment.</param>
+            <param name="siteId">
+            		Identifier of the site all proposal resources belong to,
+            		or Guid.Empty if resources belong to different sites.</param>
+            <param name="siteName">
+            		Name of the site all proposal resources belong to,
+            		or string.Empty if resources belong to different sites.</param>
+            <param name="proposalParties">Parties included in the proposed appointment.</param>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppointmentProposal.Start">
+            <summary>
+            Start of the proposed appointment.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppointmentProposal.End">
+            <summary>
+            End of the proposed appointment.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppointmentProposal.SiteId">
+            <summary>
+            Unique identificator of the site, if all resources in the proposal belong to the same site.
+            Guid.Empty othersise.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppointmentProposal.SiteName">
+            <summary>
+            Name of the site, if all resources in the proposal belong to the same site.
+            String.Empty othersise.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppointmentProposal.ProposalParties">
+            <summary>
+            Parties included in the proposed appointment.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.SearchDirection">
+            <summary>
+            A copy of Scheduling.SearchDirection enum.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.AppointmentRequest">
+            <summary>
+            Defines an AppointmentRequest in Services layer.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.AppointmentRequest.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.AppointmentRequest"/> class.
+            Even though this constructor does not do anything, it is still needed because 
+            XmlSerializer requires public default constructor on the class to be serialized.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppointmentRequest.ServiceId">
+            <summary>
+            Id of the service being requested.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppointmentRequest.AnchorOffset">
+            <summary>
+            Offset in minutes from midnight
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppointmentRequest.UserTimeZoneCode">
+            <summary>
+            User time zone Name for the search
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppointmentRequest.RecurrenceDuration">
+            <summary>
+            Duration of recurrence pattern in minutes
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppointmentRequest.RecurrenceTimeZoneCode">
+            <summary>
+            Time zone of recurrence pattern
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppointmentRequest.AppointmentsToIgnore">
+            <summary>
+            Array of AppointmentsToIgnore objects.
+            Each element contains an array of appointments per resource to be ignored by scheduling engine. 
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppointmentRequest.RequiredResources">
+            <summary>
+            Array of RequiredResource objects.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppointmentRequest.SearchWindowStart">
+            <summary>
+            Start of the search window.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppointmentRequest.SearchWindowEnd">
+            <summary>
+            End of the search window.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppointmentRequest.SearchRecurrenceStart">
+            <summary>
+            Start of search recurrence rule - relative to RecurrenceTimeZone.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppointmentRequest.SearchRecurrenceRule">
+            <summary>
+            Rule defining search's recurrence pattern.
+            Null for no recurrence pattern.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppointmentRequest.Duration">
+            <summary>
+            Duration of the service in minutes. 0 indicates that the default should be used.
+            Otherwise, overrides the service's default.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppointmentRequest.Constraints">
+            <summary>
+            Array of ConstraintRelation objects defining constraints of the request.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppointmentRequest.Objectives">
+            <summary>
+            Array of ObjectiveRelation objects defining objectives of the request.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppointmentRequest.Direction">
+            <summary>
+            Direction of the search.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppointmentRequest.NumberOfResults">
+            <summary>
+            Number of results desired.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppointmentRequest.Sites">
+            <summary>
+            Sites that the service performs.
+            Empty means search for proposal on any sites.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.AppointmentsToIgnore">
+            <summary>
+            Defines a collection of appointments to be ignored for a specified resource
+            during searching for availability in Services layer.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.AppointmentsToIgnore.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.AppointmentsToIgnore"/> class.
+            Even though this constructor does not do anything, it is still needed because 
+            XmlSerializer requires public default constructor on the class to be serialized.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.AppointmentsToIgnore.#ctor(System.Guid[],System.Guid)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.AppointmentsToIgnore"/> class.
+            Initializes an AppointmentsToIgnore object.
+            </summary>
+            <param name="appointments">Array of Ids of appointments to be ignored 
+            for a specified resource.</param>
+            <param name="resourceId">Id of a resource.</param>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppointmentsToIgnore.Appointments">
+            <summary>
+            Array of Ids of appointments to be ignored for a specified resource.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppointmentsToIgnore.ResourceId">
+            <summary>
+            Id of a resource.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.AttributeAuditDetail">
+            <summary>
+            This class is used while returning the audit details when 
+            the RetrieveAuditDetails call is made
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.AuditDetailCollection">
+            <summary>
+            Collection of objects of AuditDetails class. 
+            Used in returning the change data details of a given audit record
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.AuditDetailCollection.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.AuditDetailCollection"/> class.
+            Default constructor
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AuditDetailCollection.Item(System.Int32)">
+            <summary>
+            Indexor to access the collection. 
+            Gets or sets the element at the specified index
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.AuditDetailCollection.Add(Microsoft.Crm.Sdk.Messages.AuditDetail)">
+            <summary>
+            Adds the value to the AuditDetailsArray
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AuditDetailCollection.AuditDetails">
+            <summary>
+            Return the AuditDetailsArray object
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AuditDetailCollection.Count">
+            <summary>
+            Return the count of elements in auditdetails
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AuditDetailCollection.MoreRecords">
+            <summary>
+            True if there are more records, otherwise False
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AuditDetailCollection.PagingCookie">
+            <summary>
+            Represents a paging cookie.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.AuditPartitionDetail">
+            <summary>
+            This class is used while returning the audit partition details when 
+            the RetrieveAuditpartitionList call is made
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AuditPartitionDetail.PartitionNumber">
+            <summary>
+            Serial number of the partition number
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AuditPartitionDetail.StartDate">
+            <summary>
+            Start date of the partition
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AuditPartitionDetail.EndDate">
+            <summary>
+            End date of the partition
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.AuditPartitionDetailCollection">
+            <summary>
+            Collection of objects of AuditPartitionDetails class. 
+            Used in returning the change data partition details of a given audit record
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AuditPartitionDetailCollection.IsLogicalCollection">
+            <summary>
+            Indicates if the partition list is logical. The list is logical when the SQL Server
+            edition doesn't support partitions. Currently partitioning feature is available only
+            on enterprise edition of SQL Server.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.BusinessProcessFlowContext.#ctor(System.Guid,System.Guid,System.Guid,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.BusinessProcessFlowContext"/> class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.BusinessProcessFlowContext.IsOnDemandRequired">
+            <summary>
+            OnDemand Required
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.BusinessProcessFlowContext.BusinessProcessFlowId">
+            <summary>
+            Business Process Flow Id
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.BusinessProcessFlowContext.BusinessProcessFlowInstanceId">
+            <summary>
+            Business Process Flow Instance Id
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.BusinessProcessFlowContext.ActionStepId">
+            <summary>
+            Action Step Id
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.ChannelAccessProfileWithPrivileges">
+            <summary>
+            Defines Channel Access Profile
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ChannelAccessProfileWithPrivileges.EmailAccess">
+            <summary>
+            Defines Email Access
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ChannelAccessProfileWithPrivileges.FacebookAccess">
+            <summary>
+            Defines Facebook Access
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ChannelAccessProfileWithPrivileges.PhoneAccess">
+            <summary>
+            Define Phone Access
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ChannelAccessProfileWithPrivileges.TwitterAccess">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ChannelAccessProfileWithPrivileges.WebAccess">
+            <summary>
+            Defiens Web Access
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ChannelAccessProfileWithPrivileges.ViewKnowledgeArticles">
+            <summary>
+            Defines View Knowledge Articles
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ChannelAccessProfileWithPrivileges.ViewArticleRating">
+            <summary>
+            Defiens View Article Rating
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ChannelAccessProfileWithPrivileges.RateKnowledgeArticles">
+            <summary>
+            Defines Rate Knowledge Articles
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ChannelAccessProfileWithPrivileges.SubmitFeedback">
+            <summary>
+            Defiens Submit Feeback
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ChannelAccessProfileWithPrivileges.ChannelAccessProfilePrivilegeList">
+            <summary>
+            Defiens Entity Access Array
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ChannelAccessProfileWithPrivileges.ExtensionData">
+            <summary>
+            Defines Extension Data
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.ChannelAccessProfilePrivilege">
+            <summary>
+            Defines ChannelAccess Profile Entity Access
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ChannelAccessProfilePrivilege.ChannelAccessProfilePrivilegeId">
+            <summary>
+            Defines Entity Access Level Id
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ChannelAccessProfilePrivilege.PrivilegeDepth">
+            <summary>
+            Defines Privilege Depth
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ChannelAccessProfilePrivilege.PrivilegeName">
+            <summary>
+            Defines Privilege Name
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ChannelAccessProfilePrivilege.ExtensionData">
+            <summary>
+            Defines Extension Data
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.ConstraintRelation">
+            <summary>
+            Defines a constraint and its association to an engine item.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.ConstraintRelation.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.ConstraintRelation"/> class.
+            Even though this constructor does not do anything, it is still needed because 
+            XmlSerializer requires public default constructor on the class to be serialized.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.ConstraintRelation.#ctor(System.Guid,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.ConstraintRelation"/> class.
+            Initializes a ConstraintRelation object.
+            </summary>
+            <param name="objectId">Id of the object this constraint operates on.</param>
+            <param name="constraintType">Type of constraint (ex. resource selection).</param>
+            <param name="constraints">Array of constraints.</param>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ConstraintRelation.ObjectId">
+            <summary>
+            Id of the object the constraint operates on.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ConstraintRelation.ConstraintType">
+            <summary>
+            Type of constraint, such as preceeds, follows, or resource specification.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ConstraintRelation.Constraints">
+            <summary>
+            Expression describing the constraint that operates on a set of parameters 
+            consistent with the constraint type.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.EntityRelationsWithDependantEntityMetadata">
+            <summary>
+            The data model representing the attributes of given entity, Relational entities with attributes metadata and dependent entity metadata 
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.EntityRelationsWithDependantEntityMetadata.EntityId">
+            <summary>
+            The Entity Id
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.EntityRelationsWithDependantEntityMetadata.LogicalName">
+            <summary>
+            The Logical Name of the Entity
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.EntityRelationsWithDependantEntityMetadata.LogicalCollectionName">
+            <summary>
+            The Logical Collection Name of the Entity
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.EntityRelationsWithDependantEntityMetadata.ObjectTypeCode">
+            <summary>
+            The Entity Object Type Code
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.EntityRelationsWithDependantEntityMetadata.DisplayName">
+            <summary>
+            The Display Name of the Entity
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.EntityRelationsWithDependantEntityMetadata.PrimaryNameAttribute">
+            <summary>
+            The Logical Name of the Primary Name Attribute
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.EntityRelationsWithDependantEntityMetadata.PrimaryIdAttribute">
+            <summary>
+            The Logical Name of the Primary Id Attribute
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.EntityRelationsWithDependantEntityMetadata.AttributesMetadata">
+            <summary>
+            The Entity Attribute Collection
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.EntityRelationsWithDependantEntityMetadata.EntityRelationshipCollection">
+            <summary>
+            The Dependent Relationship Collection
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.EntityRelationsWithDependantEntityMetadata.DependantEntitiesCollection">
+            <summary>
+            The Dependent Entity Collection
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.ErrorInfo">
+            <summary>
+            Error information for each error code.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.ErrorInfo.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.ErrorInfo"/> class.
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.ErrorInfo.#ctor(System.String,Microsoft.Crm.Sdk.Messages.ResourceInfo[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.ErrorInfo"/> class.
+            Constructor.
+            </summary>
+            <param name="errorCode">Error code.</param>
+            <param name="resourceList">Resource list associated with the error code.</param>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ErrorInfo.ResourceList">
+            <summary>
+            Get resource list for this error code.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ErrorInfo.ErrorCode">
+            <summary>
+            Get error code.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.InputArgumentCollection">
+            <summary>
+            Used to collect the input parameter collection for a particular workflow
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.InputArgumentCollection.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.InputArgumentCollection"/> class.
+            Default Constructor
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.InputArgumentCollection.Add(System.String,System.Object)">
+            <summary>
+            Adds the value to the InputArgumentCollection
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.InputArgumentCollection.Count">
+            <summary>
+            Return the count of elements in auditdetails
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.InputArgumentCollection.ContainsKey(System.String)">
+            <summary>
+            Returns true if the collection contains the key, false otherwise
+            </summary>
+            <param name="key">The key to search for</param>
+            <returns>Returns true if the collection contains the key, false otherwise</returns>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.BusinessNotificationParameterType">
+            <summary>
+            Type of business notification parameter.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.BusinessNotificationSeverity">
+            <summary>
+            Severity of entity notifications.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.BusinessNotificationParameter">
+            <summary>
+            Notification parameter.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.BusinessNotificationParameter.ParameterType">
+            <summary>
+            Gets or sets the type of the parameter.
+            </summary>
+            <value>
+            The type of the parameter.
+            </value>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.BusinessNotificationParameter.Data">
+            <summary>
+            Gets or sets the data.
+            </summary>
+            <value>
+            The data.
+            </value>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.BusinessNotification">
+            <summary>
+            A business notification.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.BusinessNotification.Severity">
+            <summary>
+            Gets or sets the severity.
+            </summary>
+            <value>
+            The severity.
+            </value>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.BusinessNotification.Message">
+            <summary>
+            Gets or sets the message.
+            </summary>
+            <value>
+            The message.
+            </value>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.BusinessNotification.Parameters">
+            <summary>
+            Gets or sets the parameters.
+            </summary>
+            <value>
+            The parameters.
+            </value>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.BusinessNotification.#ctor(Microsoft.Crm.Sdk.Messages.BusinessNotificationSeverity,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.BusinessNotification"/> class.
+            </summary>
+            <param name="severity">The severity.</param>
+            <param name="message">The message.</param>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.BusinessNotification.ExtensionData">
+            <summary>
+            Gets or sets the structure that contains extra data.
+            </summary>
+            <returns>
+            An <see cref="T:System.Runtime.Serialization.ExtensionDataObject"/> that contains data that is not recognized as belonging to the data contract.
+            </returns>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.ObjectiveRelation">
+            <summary>
+            Defines an objective, and its relationship to a resource specificaiton.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.ObjectiveRelation.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.ObjectiveRelation"/> class.
+            Even though this constructor does not do anything, it is still needed because 
+            XmlSerializer requires public default constructor on the class to be serialized.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.ObjectiveRelation.#ctor(System.Guid,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.ObjectiveRelation"/> class.
+            Initializes an ObjectiveRelation object.
+            </summary>
+            <param name="resourceSpecId">Id of the resource specificaiton 
+            that this objective applies to.</param>
+            <param name="objectiveExpression">Binding objective expression.</param>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ObjectiveRelation.ResourceSpecId">
+            <summary>
+            Id of the resource specificiation this objective applies to.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ObjectiveRelation.ObjectiveExpression">
+            <summary>
+            Expression describing the objective. This expression must take
+            resource as a parameter and return a double.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.OverridableSettingInfoCollection">
+            <summary>
+            Response Type for RetrieveOverridableSettingsInfo API
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.OverridableSettingInfoCollection.ExtensionData">
+            <summary>
+            Gets or sets Extension Data
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.OverridableSettingInfo">
+            <summary>
+            Response Type for RetrieveOverridableSettingsInfo API
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.OverridableSettingInfo.ExtensionData">
+            <summary>
+            Gets or sets Extension Data
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.AppOverridableSettingInfo.ExtensionData">
+            <summary>
+            Gets or sets Extension Data
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.OrgOverridableSettingInfo.ExtensionData">
+            <summary>
+            Gets or sets Extension Data
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.ProposalParty">
+            <summary>
+            Defines a party in AppointmentProposal.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.ProposalParty.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.ProposalParty"/> class.
+            Even though this constructor does not do anything, it is still needed because 
+            XmlSerializer requires public default constructor on the class to be serialized.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.ProposalParty.#ctor(System.Guid,System.Guid,System.String,System.String,System.Double)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.ProposalParty"/> class.
+            Initializes a ProposalParty object. 
+            </summary>
+            <param name="resourceId">ResourceId of this party.</param>
+            <param name="resourceSpecId">ResourceSpecId of this party.</param>
+            <param name="displayName">Name of party entry.</param>
+            <param name="objectTypeCode">Object type code of party entry.</param>
+            <param name="effortRequired">effort required of party entry.</param>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ProposalParty.ResourceId">
+            <summary>
+            ResourceId of this party.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ProposalParty.ResourceSpecId">
+            <summary>
+            ResourceSpecId of this party.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ProposalParty.DisplayName">
+            <summary>
+            Display name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ProposalParty.EntityName">
+            <summary>
+            Name of entity type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ProposalParty.EffortRequired">
+            <summary>
+            Effort required.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.RelationshipAuditDetail.RelationshipName">
+            <summary>
+            Value of the attribute before change
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.RelationshipAuditDetail.TargetRecords">
+            <summary>
+            Records added/removed as part of the change
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.RequiredResource">
+            <summary>
+            Defines a resource required in AppointmentRequest.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.RequiredResource.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.RequiredResource"/> class.
+            Even though this constructor does not do anything, it is still needed because 
+            XmlSerializer requires public default constructor on the class to be serialized.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.RequiredResource.#ctor(System.Guid,System.Guid)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.RequiredResource"/> class.
+            Initializes a RequiredResource object. 
+            </summary>
+            <param name="resourceId">ResourceId of this required resource.</param>
+            <param name="resourceSpecId">ResourceSpecificationId of the parent ResourceSpecification 
+            of this required resource.</param>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.RequiredResource.ResourceId">
+            <summary>
+            ResourceId of this required resource.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.RequiredResource.ResourceSpecId">
+            <summary>
+            ResourceSpecificationId of the parent ResourceSpecification of this required resource.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.ResourceInfo">
+            <summary>
+            Resource information
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.ResourceInfo.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.ResourceInfo"/> class.
+            Default Constructor for serialization
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.ResourceInfo.#ctor(System.Guid,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.ResourceInfo"/> class.
+            Constructor
+            </summary>
+            <param name="id">Resource Id.</param>
+            <param name="objectTypeCode">Type code of resource.</param>
+            <param name="name">Resource Name.</param>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ResourceInfo.Id">
+            <summary>
+            Id of resource
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ResourceInfo.DisplayName">
+            <summary>
+            Name of resource
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ResourceInfo.EntityName">
+            <summary>
+            Name of entity type.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.RibbonLocationFilters">
+            <summary>
+            Filters used to define a location in ribbon XML
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.QueryWithEntityMetadata">
+            <summary>
+            The data model representing a query along with its dependencies
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.QueryWithEntityMetadata.QueryMetadata">
+            <summary>
+            The saved query metadata
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.QueryWithEntityMetadata.DependantEntitiesCollection">
+            <summary>
+            The dependent entity collection
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.QueryMetadata">
+            <summary>
+            The data model representing the core query metadata
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.QueryMetadata.QueryId">
+            <summary>
+            The query ID
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.QueryMetadata.ReturnedTypeCode">
+            <summary>
+            The returned type code
+            </summary>
+            <remarks>
+            This is the logical name for the entity the query is based on
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.QueryMetadata.ComponentState">
+            <summary>
+            The component state of the query
+            </summary>
+            <remarks>
+            This maps to the Platform Component State (0 = Published, 1 = Unpublished/Draft)
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.QueryMetadata.Name">
+            <summary>
+            The name of the query
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.QueryMetadata.Description">
+            <summary>
+            The description of the query
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.QueryMetadata.FetchXml">
+            <summary>
+            The Fetch XML of the query
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.QueryMetadata.LayoutXml">
+            <summary>
+            The Layout XML of the query
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.QueryMetadata.IsDefault">
+            <summary>
+            Boolean to identify whether the query is the default query or not
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.QueryMetadata.ModifiedOn">
+            <summary>
+            The T-Z timestamp when the query was last modified on
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.QueryMetadata.QueryApi">
+            <summary>
+            The Query API associated with the Query ,if any.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.QueryMetadata.QueryType">
+            <summary>
+            The Query Type of the Query
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.QueryMetadata.IsCustomizable">
+            <summary>
+            Boolean to determine whether the query is customizable or not
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.DependentEntityMetadataCollection">
+            <summary>
+            Collection wrapper for list of <see cref="T:Microsoft.Crm.Sdk.Messages.DependentEntityMetadata"/> 
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentEntityMetadataCollection.DependantEntities">
+            <summary>
+            The list of dependant entities
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentEntityMetadataCollection.Count">
+            <summary>
+            The count of <see cref="P:Microsoft.Crm.Sdk.Messages.DependentEntityMetadataCollection.DependantEntities"/>
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.DependentEntityMetadataCollection.Add(Microsoft.Crm.Sdk.Messages.DependentEntityMetadata)">
+            <summary>
+            Adds to the <see cref="P:Microsoft.Crm.Sdk.Messages.DependentEntityMetadataCollection.DependantEntities"/> 
+            </summary>
+            <param name="dependentEntityMetadata">The <see cref="T:Microsoft.Crm.Sdk.Messages.DependentEntityMetadata"/> instance to add</param>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.DependentEntityMetadataCollection.Contains(Microsoft.Crm.Sdk.Messages.DependentEntityMetadata)">
+            <summary>
+            Checks whether a specific <see cref="T:Microsoft.Crm.Sdk.Messages.DependentEntityMetadata"/> instance is present within the <see cref="P:Microsoft.Crm.Sdk.Messages.DependentEntityMetadataCollection.DependantEntities"/>  
+            </summary>
+            <param name="dependentEntityMetadata">The <see cref="T:Microsoft.Crm.Sdk.Messages.DependentEntityMetadata"/> instance to check</param>
+            <returns></returns>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentEntityMetadataCollection.ExtensionData">
+            <summary>
+            Defines Extension Data
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.DependentEntityMetadata">
+            <summary>
+            Data model for individual dependent Entity metadata
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentEntityMetadata.EntityId">
+            <summary>
+            The Entity Id
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentEntityMetadata.LogicalName">
+            <summary>
+            The Logical Name of the Entity
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentEntityMetadata.LogicalCollectionName">
+            <summary>
+            The Logical Collection Name of the Entity
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentEntityMetadata.ObjectTypeCode">
+            <summary>
+            The Entity Object Type Code
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentEntityMetadata.DisplayName">
+            <summary>
+            The Display Name of the Entity
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentEntityMetadata.PrimaryNameAttribute">
+            <summary>
+            The Logical Name of the Primary Name Attribute
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentEntityMetadata.PrimaryIdAttribute">
+            <summary>
+            The Logical Name of the Primary Id Attribute
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentEntityMetadata.HasHierarchicalRelationship">
+            <summary>
+            Boolean value stating whether entity has a self referential hierarchical relationship
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentEntityMetadata.Attributes">
+            <summary>
+            The Dependent Attribute Collection
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentEntityMetadata.Relationships">
+            <summary>
+            The Dependent Relationship Collection
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadataCollection">
+            <summary>
+            Collection wrapper for list of <see cref="T:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadata"/> 
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadataCollection.DependentAttributes">
+            <summary>
+            The list of dependant attributes
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadataCollection.Count">
+            <summary>
+            The count of <see cref="P:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadataCollection.DependentAttributes"/> 
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadataCollection.Add(Microsoft.Crm.Sdk.Messages.DependentAttributeMetadata)">
+            <summary>
+            Adds to the <see cref="P:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadataCollection.DependentAttributes"/> 
+            </summary>
+            <param name="dependentEntityMetadata">The <see cref="T:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadata"/> instance to add</param>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadataCollection.Contains(Microsoft.Crm.Sdk.Messages.DependentAttributeMetadata)">
+            <summary>
+            Checks whether a specific <see cref="T:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadata"/> instance is present within the <see cref="P:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadataCollection.DependentAttributes"/>  
+            </summary>
+            <param name="dependentEntityMetadata">The <see cref="T:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadata"/> instance to check</param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadata">
+            <summary>
+            Data Model for individual dependent Attribute metadata
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadata.AttributeId">
+            <summary>
+            The Id of the Attribute
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadata.LogicalName">
+            <summary>
+            The Logical Name of the Attribute
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadata.DisplayName">
+            <summary>
+            The Localized Display Name of the Attribute
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadata.AttributeType">
+            <summary>
+            The type of the attribute
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadata.AttributeFormatType">
+            <summary>
+            The format of the attribute
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadata.EntityName">
+            <summary>
+            The logical name of the attribute's parent entity
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadata.IsCustomAttribute">
+            <summary>
+            Identifies whether the attribute is a custom attribute or not
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadata.IsValidForAdvancedFind">
+            <summary>
+            Identifies whether the attribute is valid for displaying in Advanced Find
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadata.IsValidForGrid">
+            <summary>
+            Identifies whether the attribute is valid for displaying in the grid
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadata.YomiOf">
+            <summary>
+            The attribute name for which the current attribute is a phonetic Yomi representation 
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadata.AttributeOf">
+            <summary>
+            The attribute name to which the current attribute is virtually related
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadata.OptionSet">
+            <summary>
+            The Option Set Metadata associated with the attribute
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadata.Targets">
+            <summary>
+            The target set associated with the lookup attribute
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadata.IsRangeBased">
+            <summary>
+            Identifies whether this is a range based attribute
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadata.MinValue">
+            <summary>
+            Identifies the minimum range value
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadata.MaxValue">
+            <summary>
+            Identifies the maximum range value
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadata.Precision">
+            <summary>
+            Identifies the precision for the attribute
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentAttributeMetadata.MaxLength">
+            <summary>
+            Identifies the max length for the attribute
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.DependentRelationshipCollection">
+            <summary>
+            Data Model for collection of 1:n and n:1 dependent relationships
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentRelationshipCollection.DependentRelationships">
+            <summary>
+            The list of dependant relationships
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentRelationshipCollection.Count">
+            <summary>
+            The count of <see cref="P:Microsoft.Crm.Sdk.Messages.DependentRelationshipCollection.DependentRelationships"/> 
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.DependentRelationshipCollection.Add(Microsoft.Crm.Sdk.Messages.DependentRelationship)">
+            <summary>
+            Adds to the <see cref="P:Microsoft.Crm.Sdk.Messages.DependentRelationshipCollection.DependentRelationships"/> 
+            </summary>
+            <param name="dependentRelationship">The <see cref="T:Microsoft.Crm.Sdk.Messages.DependentRelationship"/> instance to add</param>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.DependentRelationshipCollection.Contains(Microsoft.Crm.Sdk.Messages.DependentRelationship)">
+            <summary>
+            Checks whether a specific <see cref="T:Microsoft.Crm.Sdk.Messages.DependentRelationship"/> instance is present within the <see cref="P:Microsoft.Crm.Sdk.Messages.DependentRelationshipCollection.DependentRelationships"/>  
+            </summary>
+            <param name="dependentRelationship">The <see cref="T:Microsoft.Crm.Sdk.Messages.DependentRelationship"/> instance to check</param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.DependentRelationship">
+            <summary>
+            Data Model for an individual 1:n or n:1 dependent relationship
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentRelationship.MetadataId">
+            <summary>
+            The id of the relationship
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentRelationship.Name">
+            <summary>
+            The name of the relationship
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentRelationship.EntityRelationshipType">
+            <summary>
+            Identifies whether the relationship is N:1 (true) or 1:N (false)
+            </summary>
+            <remarks>
+            N:N relationships are not being considered here as these relationships will be used for Query parsing on the runtime.
+            And N:N relationships are not supported in the Filter or the Grid
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentRelationship.ReferencingAttribute">
+            <summary>
+            The referencing attribute of the relationship
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentRelationship.ReferencedAttribute">
+            <summary>
+            The referenced attribute of the relationship
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentRelationship.RelationshipEntity">
+            <summary>
+            The entity with which the parent entity is in a relationship with.
+            </summary>
+            <remarks>
+            This will be the ReferencedEntity for N:1 and ReferencingEntity for 1:N relationships
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentRelationship.IsValidForAdvancedFind">
+            <summary>
+            Identifies whether the relationship is valid for Advanced Find
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentRelationship.HasReadPrivilege">
+            <summary>
+            The entity has read privilege.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentRelationship.IsHierarchical">
+            <summary>
+            Identifies whether the relationship is hierarchical
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentRelationship.ManyToManyRelationshipMetadata">
+            <summary>
+            The ManyToMany relationship Metadata 
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.DependentManyToManyRelationshipMetadata">
+            <summary>
+            Data Model for an individual n:n dependent relationship
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentManyToManyRelationshipMetadata.IntersectEntity">
+            <summary>
+            The entity with which the Intersect entity is in a relationship with.
+            </summary>
+            <remarks>
+            This will be the IntersectEntity for N:N
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentManyToManyRelationshipMetadata.FromEntityAttribute">
+            <summary>
+            The from-attribute of the primary entity
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentManyToManyRelationshipMetadata.ToEntityAttribute">
+            <summary>
+            The to-attribute of the Referenced entity
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentManyToManyRelationshipMetadata.IntersectPrimaryAttribute">
+            <summary>
+            The attributes of the intersect entity mapped to from and to entity respectively
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentManyToManyRelationshipMetadata.IntersectRelatedAttribute">
+            <summary>
+            The attributes of the intersect entity mapped to from and to entity respectively
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentOptionSetMetadata.Name">
+            <summary>
+            The name of the option set
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentOptionSetMetadata.Type">
+            <summary>
+            The type of the option set
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentOptionSetMetadata.TrueOption">
+            <summary>
+            The true option metadata for Boolean Option Set
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentOptionSetMetadata.FalseOption">
+            <summary>
+            The false option metadata for Boolean Option Set
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentOptionSetMetadata.Options">
+            <summary>
+            The collection of option metadata associated with the Option Set
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.DependentOptionMetadataCollection">
+            <summary>
+            Data Model for collection of option sets
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentOptionMetadataCollection.OptionList">
+            <summary>
+            The list of option sets
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentOptionMetadataCollection.Count">
+            <summary>
+            The count of <see cref="P:Microsoft.Crm.Sdk.Messages.DependentOptionMetadataCollection.OptionList"/> 
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.DependentOptionMetadataCollection.Add(Microsoft.Crm.Sdk.Messages.DependentOptionMetadata)">
+            <summary>
+            Adds to the <see cref="P:Microsoft.Crm.Sdk.Messages.DependentOptionMetadataCollection.OptionList"/> 
+            </summary>
+            <param name="option">The <see cref="T:Microsoft.Crm.Sdk.Messages.DependentOptionMetadata"/> instance to add</param>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.DependentOptionMetadataCollection.Contains(Microsoft.Crm.Sdk.Messages.DependentOptionMetadata)">
+            <summary>
+            Checks whether a specific <see cref="T:Microsoft.Crm.Sdk.Messages.DependentOptionMetadata"/> instance is present within the <see cref="P:Microsoft.Crm.Sdk.Messages.DependentOptionMetadataCollection.OptionList"/>  
+            </summary>
+            <param name="option">The <see cref="T:Microsoft.Crm.Sdk.Messages.DependentOptionMetadata"/> instance to check</param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.DependentOptionMetadata">
+            <summary>
+            Data Model for an individual option set metadata
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentOptionMetadata.Label">
+            <summary>
+            The label of the option set
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.DependentOptionMetadata.Value">
+            <summary>
+            THe value of the option set
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.SearchResults">
+            <summary>
+             Search results with possible trace information
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.SearchResults.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.SearchResults"/> class.
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.SearchResults.#ctor(Microsoft.Crm.Sdk.Messages.AppointmentProposal[],Microsoft.Crm.Sdk.Messages.TraceInfo)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.SearchResults"/> class.
+            
+            </summary>
+            <param name="proposals">Appointment proposals.</param>
+            <param name="traceInfo">Trace information.</param>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.SearchResults.Proposals">
+            <summary>
+            Proposals accessor.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.SearchResults.TraceInfo">
+            <summary>
+            Trace information
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.SettingDetail">
+            <summary>
+            Response Type for RetrieveSetting API
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.SettingDetail.ExtensionData">
+            <summary>
+            Defines Extension Data
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.SettingDetailCollection">
+            <summary>
+            Response Type for RetrieveSettingList API
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.SettingDetailCollection.ExtensionData">
+            <summary>
+            Defines Extension Data
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.SolutionComponentCountCollection">
+            <summary>
+            Response Type for RetrieveSolutionUniqueComponentCount API
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.SolutionComponentCountCollection.SolutionComponentCountInfoCollection">
+            <summary>
+            Collection of solution component count information.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.SolutionComponentCountCollection.ExtensionData">
+            <summary>
+            Defines Extension Data
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.SolutionComponentCountInfo">
+            <summary>
+            Defines solution component count information
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.SolutionComponentCountInfo.ExtensionData">
+            <summary>
+            Defines Extension Data
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ShareAuditDetail.Principal">
+            <summary>
+            SecurityPrincipal of the user with whom record is shared
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ShareAuditDetail.OldPrivileges">
+            <summary>
+            Privilges of the user before change.
+            Return type is AccessRights in all the cases, 
+            null in a few cases
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ShareAuditDetail.NewPrivileges">
+            <summary>
+            Privilges of the user after change.
+            Return type is AccessRights in all the cases, 
+            null in a few cases
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.TimeInfo">
+            <summary>
+            Defines .
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.TimeInfo.Start">
+            <summary>
+            Beginning of the time interval.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.TimeInfo.End">
+            <summary>
+            End of the time interval.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.TimeInfo.TimeCode">
+            <summary>
+            High-level classification of the time block.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.TimeInfo.SubCode">
+            <summary>
+            More specific classification of the TimeCode.
+            </summary>	
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.TimeInfo.SourceId">
+            <summary>
+            Unique identifier of the object that generated this instance.
+            </summary>
+            <example>
+            For example, for time block generated by calendar rules, SourceId
+            is equal to calendar rule is.
+            </example>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.TimeInfo.CalendarId">
+            <summary>
+            Unique identifier of the calendar that generated this instance.
+            For TimeInfo that is generated from non-Calendar source, it is Guid.Empty.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.TimeInfo.SourceTypeCode">
+            <summary>
+            CRM object type code of the object that generated this instance.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.TimeInfo.Effort">
+            <summary>
+            Effort required to perform an action.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.TimeInfo.DisplayText">
+            <summary>
+            Text associated with the time block.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.TimeCode">
+            <summary>
+            High-level classification of the period of time.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Crm.Sdk.Messages.TimeCode.Available">
+            <summary>Time is available.</summary>
+        </member>
+        <member name="F:Microsoft.Crm.Sdk.Messages.TimeCode.Busy">
+            <summary>Time is completely or partially busy,</summary>
+        </member>
+        <member name="F:Microsoft.Crm.Sdk.Messages.TimeCode.Unavailable">
+            <summary>Time is completely unavailable.</summary>
+        </member>
+        <member name="F:Microsoft.Crm.Sdk.Messages.TimeCode.Filter">
+            <summary>Block of time represents additional information or restriction.</summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.SubCode">
+            <summary>
+            More specific classification of a particular TimeCode value.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Crm.Sdk.Messages.SubCode.Unspecified">
+            <summary>No specific reason provided.</summary>
+        </member>
+        <member name="F:Microsoft.Crm.Sdk.Messages.SubCode.Schedulable">
+            <summary>Time can be scheduled.</summary>
+        </member>
+        <member name="F:Microsoft.Crm.Sdk.Messages.SubCode.Committed">
+            <summary>Time is committed to perform an action.</summary>
+        </member>
+        <member name="F:Microsoft.Crm.Sdk.Messages.SubCode.Uncommitted">
+            <summary>Time is tentatively committed to perform an action.</summary>
+        </member>
+        <member name="F:Microsoft.Crm.Sdk.Messages.SubCode.Break">
+            <summary>Time cannot be scheduled because of a hard break.</summary>
+        </member>
+        <member name="F:Microsoft.Crm.Sdk.Messages.SubCode.Holiday">
+            <summary>Time cannot be scheduled because of a holiday.</summary>
+        </member>
+        <member name="F:Microsoft.Crm.Sdk.Messages.SubCode.Vacation">
+            <summary>Time cannot be scheduled because of a vacation.</summary>
+        </member>
+        <member name="F:Microsoft.Crm.Sdk.Messages.SubCode.Appointment">
+            <summary>Time cannot be scheduled because of a blocking appointment.</summary>
+        </member>
+        <member name="F:Microsoft.Crm.Sdk.Messages.SubCode.ResourceStartTime">
+            <summary>Filter to restrict appointments started for a resource.</summary>
+        </member>
+        <member name="F:Microsoft.Crm.Sdk.Messages.SubCode.ResourceServiceRestriction">
+            <summary>Restricts time for a resource for a specific service.</summary>
+        </member>
+        <member name="F:Microsoft.Crm.Sdk.Messages.SubCode.ResourceCapacity">
+            <summary>Contain capacity information for a work plan.</summary>
+        </member>
+        <member name="F:Microsoft.Crm.Sdk.Messages.SubCode.ServiceRestriction">
+            <summary>Global service time restriction filter.</summary>
+        </member>
+        <member name="F:Microsoft.Crm.Sdk.Messages.SubCode.ServiceCost">
+            <summary>Service cost overwrite for effort required per resource.</summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.TraceInfo">
+            <summary>
+            Trace information class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.TraceInfo.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.TraceInfo"/> class.
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.TraceInfo.#ctor(Microsoft.Crm.Sdk.Messages.ErrorInfo[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.TraceInfo"/> class.
+            TraceInfo constructor.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.TraceInfo.ErrorInfoList">
+            <summary>
+            Get error information list of ErrorInfo class. 
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.Messages.ValidationResult">
+            <summary>
+            Book result with trace information.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.ValidationResult.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.ValidationResult"/> class.
+            Default constructor for searialization.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Sdk.Messages.ValidationResult.#ctor(System.Boolean,Microsoft.Crm.Sdk.Messages.TraceInfo,System.Guid)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Crm.Sdk.Messages.ValidationResult"/> class.
+            Initiaializes an instance of Book/Validate/ReSchedule result.
+            </summary>
+            <param name="success">Success or not</param>
+            <param name="traceInfo">Trace information.</param>
+            <param name="activityId">Id of Activity</param>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ValidationResult.ValidationSuccess">
+            <summary>
+            Validation success result
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ValidationResult.TraceInfo">
+            <summary>
+            Trace information
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Sdk.Messages.ValidationResult.ActivityId">
+            <summary>
+            Id of Activity.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.BusinessUnitInheritanceMask">
+            <summary>
+            Values for InheritenaceMask attribute of BusinessUnit
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.CalendarRuleExtentCode">
+            <summary>
+            ExtentCode values for CalendarRule
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.ListMemberType">
+            <summary>
+            MemberType values for List
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.OrganizationFiscalYearDisplayCode">
+            <summary>
+            FiscalYearDisplayCode values for Organization
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.SavedQueryQueryType">
+            <summary>
+            QueryType for SavedQuery
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.SdkMessageAvailability">
+            <summary>
+            Availability values for SdkMessage
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.SdkMessageFilterAvailability">
+            <summary>
+            Availability values for SdkMessageFilter
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.SubscriptionSubscriptionType">
+            <summary>
+            SubscriptionType values for Subscription
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.TemplateGenerationTypeCode">
+            <summary>
+            GenerationTypeCode for Template
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.UserQueryQueryType">
+            <summary>
+            QueryType for UserQuery
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.UserSettingsAdvancedFindStartupMode">
+            <summary>
+            AdvancedFindStartupMode for UserSettings
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.UserSettingsDefaultCalendarView">
+            <summary>
+            DefaultCalendarView for UserSettings
+            </summary>
+        </member>
+        <member name="T:Microsoft.Crm.Sdk.UserSettingsFullNameConventionCode">
+            <summary>
+            FullNameConventionCode for UserSettings
+            </summary>
+        </member>
+    </members>
+</doc>
