@@ -1,56 +1,79 @@
 # Microsoft.PowerPlatform.UserManagement.Powershell scripts
-These samples help customers to perform user management operations across one or multiple environments in the tenant
 
-## what this sample does
-This sample helps customers to do the following for - an environment / all environments in a geo / all environments in the tenant. This can be run by Global / Power Platform Administrator users.
-1. Generate reports of users having a specified role assignment (Ex : System Administrator)
-2. Remove role assignments from for a list of users 
-3. Add role assignments to a list of users
+These code samples help customers perform user management operations across one or multiple environments in a tenant.
+
+## What this sample does
+
+This sample helps customers do the following for: an environment, all environments in a geography, all environments in the tenant.
+
+1. Generate reports of users having a specified role assignment (e.g.; System Administrator)
+1. Remove role assignments from for a list of users
+1. Add role assignments to a list of users
+
+This code can be run by Global / Power Platform Administrator users.
 
 ## Requirements
-1. Powershell 5.1.22 (default for windows 10 & 11) or lower.
-2. .NET Framework 4.6.2. Developer pack
-3. Visual studio 2017
+
+- Powershell 5.1.22 (default for windows 10 & 11) or lower
+- .NET Framework 4.6.2 Developer Pack
+- Visual Studio 2017 or a newer version
 
 ## How to run this sample
 
-1. Install Visual studio 2017 or higher. [Link](https://visualstudio.microsoft.com/downloads/)
-2. Install .net framework 4.6.2 Developer pack [Link](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net462)
-4. Open Microsoft.PowerPlatform.Administration.Powershell.sln in administrator mode and build the solution. 
-5. Open powershell in administrator mode 
-6. Set Execution Policy to Unrestricted
-7. Import Microsoft.PowerPlatform.Administration.Powershell module, as shown below
-    - cd Microsoft.PowerPlatform.Administration.Powershell
-    - Import-Module .\Microsoft.PowerPlatform.Administration.UserManagement.psm1
-8. Run the command of your choice from the following commands
-9. Each command will prompt running user to provide credentials to connect to dataverse. Enter user principal name & password.
+1. Install [Visual Studio 2017](https://visualstudio.microsoft.com/downloads/) or higher.
+2. Install the .NET Framework 4.6.2 [Developer Pack](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net462).
+3. Open the solution file (Microsoft.PowerPlatform.Administration.Powershell.sln) in administrator mode and build the solution.
+4. Open PowerShell in administrator mode.
+5. Set Execution Policy to *Unrestricted*.
+6. Import the Microsoft.PowerPlatform.Administration.Powershell module, as shown below.
 
-## Powershell commands 
-### 1. To generate reports of role assignments
-    -  Get-UsersWithRoleAssignment 
-        - roleName : Localized role name in dataverse (Ex : System Administrator)
-        - environmentUrl : Url of Environment, if admin wants to get reports from only one environment
-        - processAllEnvironments : Generate reports for all environments the admin user has access to
-        - geo : Generate reports for environments in given geo. [GeoCodes](https://learn.microsoft.com/en-us/power-platform/admin/new-datacenter-regions). If not specified, processes all environments across all geos. 
-        - outputLogsDirectory : Location folder for the logs & reports to be written to.
+    ```powershell
+    cd Microsoft.PowerPlatform.Administration.Powershell
+    Import-Module .\Microsoft.PowerPlatform.Administration.UserManagement.psm1
+    ```
 
-### 2. To remove role assignments from given list of users
-    -  Remove-RoleAssignmentFromUsers
-        - roleName : Localized role name in dataverse (Ex : System Administrator)
-        - usersFilePath : Path to file containing list of user princiapl names (one per line) 
-        - environmentUrl : Url of Environment, if admin wants to get reports from only one environment
-        - processAllEnvironments : Generate reports for all environments the admin user has access to
-        - geo : Generate reports for environments in given geo. [GeoCodes](https://learn.microsoft.com/en-us/power-platform/admin/new-datacenter-regions). If not specified, processes all environments across all geos. 
-        - outputLogsDirectory : Location folder for the logs & reports to be written to.
+7. Run the command of your choice from the following PowerShell commands (see below).
+8. Each command will prompt the user to provide credentials when connecting to Dataverse. Enter a user principal name and password.
 
-### 3. To add role assignments for a given list of users 
-    -  Add-RoleToUsers
-        - roleName : Localized role name in dataverse (Ex : System Administrator)
-        - usersFilePath : Path to file containing list of user princiapl names (one per line) 
-        - environmentUrl : Url of Environment, if admin wants to get reports from only one environment
-        - processAllEnvironments : Generate reports for all environments the admin user has access to
-        - geo : Generate reports for environments in given geo - [GeoCodes](https://learn.microsoft.com/en-us/power-platform/admin/new-datacenter-regions). If not specified, processes all environments across all geos. 
-        - outputLogsDirectory : Location folder for the logs & reports to be written to.
+## Powershell commands
+
+### Generate reports of role assignments
+
+#### Command: Get-UsersWithRoleAssignment
+
+| Parameter | Description |
+|---|---|
+|roleName|Localized role name in Dataverse (e.g.; System Administrator).|
+|environmentUrl|Url of the environment for when the administrator wants to get reports from only one environment.|
+|processAllEnvironments|Generate reports for all environments that the administrator user has access to.|
+|geo|Generate reports for environments in a given geography. If not specified, processes all environments across all geographies. More information: [GeoCodes](https://learn.microsoft.com/power-platform/admin/new-datacenter-regions). |
+|outputLogsDirectory|Location folder for the logs & reports to be written to.|
+
+### Remove role assignments from given list of users
+
+#### Command: Remove-RoleAssignmentFromUsers
+
+| Parameter | Description |
+|---|---|
+|roleName|Localized role name in Dataverse (e.g.; System Administrator).|
+|usersFilePath|Path to file containing list of user principal names (one per line).|
+|environmentUrl|Url of the environment for when the administrator wants to get reports from only one environment.|
+|processAllEnvironments|Generate reports for all environments the administrator user has access to.|
+|geo|Generate reports for environments in a given geography. If not specified, processes all environments across all geographies. More information: [GeoCodes](https://learn.microsoft.com/power-platform/admin/new-datacenter-regions). |
+|outputLogsDirectory|Location folder for the logs & reports to be written to.|
+
+### Add role assignments for a given list of users
+
+#### Command: Add-RoleToUsers
+
+| Parameter | Description |
+|---|---|
+|roleName|Localized role name in Dataverse (e.g.; System Administrator).|
+|usersFilePath|Path to the file containing a list of user principal names (one per line).|
+|environmentUrl|Url of the environment for when the administrator wants to get reports from only one environment.|
+|processAllEnvironments|Generate reports for all environments the administrator user has access to.|
+|geo|Generate reports for environments in a given geography. If not specified, processes all environments across all geographies. More information: [GeoCodes](https://learn.microsoft.com/power-platform/admin/new-datacenter-regions). |
+|outputLogsDirectory|Location folder for the logs & reports to be written to.|
 
 ## Contributing
 
@@ -59,7 +82,7 @@ Contributor License Agreement (CLA) declaring that you have the right to, and ac
 the rights to use your contribution. For details, visit https://cla.microsoft.com.
 
 When you submit a pull request, a CLA-bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions
+a CLA and decorate the PR appropriately (e.g.; label, comment). Simply follow the instructions
 provided by the bot. You will only need to do this once across all repos using our CLA.
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
@@ -67,4 +90,5 @@ For more information see the [Code of Conduct FAQ](https://opensource.microsoft.
 contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
 ## Security
-For reporting security issues Please refer to this [link](https://github.com/microsoft/PowerApps-Samples/blob/master/SECURITY.md)
+
+For reporting security issues, please refer to this [security](https://github.com/microsoft/PowerApps-Samples/blob/master/SECURITY.md) document.
