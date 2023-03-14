@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueryData", "QueryData.cspr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPIService", "..\WebAPIService\WebAPIService.csproj", "{575CCF9E-DAB0-4557-8154-FE3BD1D67998}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryDataQE", "..\QueryDataQE\QueryDataQE.csproj", "{8D3E096A-D709-4324-80F5-DCC89233B74E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{575CCF9E-DAB0-4557-8154-FE3BD1D67998}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{575CCF9E-DAB0-4557-8154-FE3BD1D67998}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{575CCF9E-DAB0-4557-8154-FE3BD1D67998}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8D3E096A-D709-4324-80F5-DCC89233B74E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8D3E096A-D709-4324-80F5-DCC89233B74E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8D3E096A-D709-4324-80F5-DCC89233B74E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8D3E096A-D709-4324-80F5-DCC89233B74E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
