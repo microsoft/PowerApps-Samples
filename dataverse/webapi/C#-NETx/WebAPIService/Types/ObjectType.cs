@@ -2,12 +2,17 @@
 using Newtonsoft.Json.Converters;
 using System.Runtime.Serialization;
 
-namespace PowerApps.Samples.Metadata.Types
+namespace PowerApps.Samples.Types
 {
+    /// <summary>
+    /// A helper enum to set the correct Object Type value.
+    /// </summary>
+    [Serializable]
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ObjectType
     {
-
+        [EnumMember(Value = "NotSpecified")]
+        NotSpecified,
         [EnumMember(Value = "System.String")]
         String,
         [EnumMember(Value = "System.String[]")]

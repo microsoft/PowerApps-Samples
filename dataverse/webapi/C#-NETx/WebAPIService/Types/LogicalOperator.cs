@@ -1,11 +1,13 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace PowerApps.Samples.Metadata.Types
+namespace PowerApps.Samples.Types
 {
+    [Serializable]
     [JsonConverter(typeof(StringEnumConverter))]
     public enum LogicalOperator
     {
+        NotSpecified,
         And,
         Or
     }
