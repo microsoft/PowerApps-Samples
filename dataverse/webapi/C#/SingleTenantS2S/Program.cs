@@ -1,4 +1,4 @@
-﻿using Microsoft.IdentityModel.Clients.ActiveDirectory;
+﻿using Microsoft.Identity.Client;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Configuration;
@@ -102,12 +102,17 @@ namespace Microsoft.Dynamics365.CustomerEngagement.Samples
         /// <returns></returns>
         public static async Task<string> GetAccessToken(WebApiConfiguration webConfig)
         {
-            var credentials = new ClientCredential(webConfig.ClientId, webConfig.Secret);
-            var authContext = new AuthenticationContext(
-                "https://login.microsoftonline.com/" + webConfig.TenantId);
-            var result = await authContext.AcquireTokenAsync(webConfig.ResourceUri, credentials);
+            var authBuilder = ConfidentialClientApplicationBuilder.Create(webConfig.ClientId)
+                .WithTenantId(webConfig.TenantId)
+                .WithClientSecret(webConfig.Secret)
+                .Build();
 
-            return result.AccessToken;
+            string[] scopes = { webConfig.ResourceUri + "/.default" };
+
+            AuthenticationResult tokenResult =
+                 await authBuilder.AcquireTokenForClient(scopes).ExecuteAsync();
+
+            return tokenResult.AccessToken;
         }
     }
 }
