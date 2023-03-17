@@ -1339,8 +1339,6 @@ function UpdatePolicyEnvironmentsForTeams
 
     if ($exceptionEnvironmentsPolicy -ne $null)
     {
-        $exceptionEnvironmentsPolicy.environments = @()
-            
         # add teams environment into ExceptEnvironments policy
         foreach ($environment in $teamEnvironments)
         {
@@ -1398,6 +1396,218 @@ function UpdatePolicyEnvironmentsForTeams
     }
 
     Write-Host "UpdatePolicyEnvironmentsForTeams completes."
+}
+
+function EnableManagedEnvironments
+{
+    <#
+     .SYNOPSIS
+     Enables Managed Environments for the given environment.
+     .DESCRIPTION
+     The EnableManagedEnvironments cmdlet enables Managed Environments for the given environment by updating its governance configuration.
+     Use Get-Help EnableManagedEnvironments -Examples for more details.
+     .PARAMETER EnvironmentId
+     The id (usually a GUID) of the environment.
+     .EXAMPLE
+     EnableManagedEnvironments -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4
+     Enables Managed Environments for environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4.
+    #>
+    param
+    (
+        [Parameter(Mandatory = $true)]
+        [string]$EnvironmentId
+    )
+
+    Write-Host "Retrieving environment."
+
+    $environment = Get-AdminPowerAppEnvironment -EnvironmentName $EnvironmentId
+    if ($environment -eq $null)
+    {
+        Write-Host "No environment was found with the given id."
+        return
+    }
+
+    $governanceConfiguration = $environment.Internal.properties.governanceConfiguration
+    $governanceConfiguration = CoalesceGovernanceConfiguration -GovernanceConfiguration $governanceConfiguration
+    if ($governanceConfiguration.protectionLevel -eq "Standard")
+    {
+        Write-Host "The specified environment is already managed."
+        return
+    }
+
+    $governanceConfiguration.protectionLevel = "Standard"
+    
+    $response = Set-AdminPowerAppEnvironmentGovernanceConfiguration -EnvironmentName $EnvironmentId -UpdatedGovernanceConfiguration $GovernanceConfiguration
+    if ($response.Code -ne 202)
+    {
+        Write-Host "Failed to enable Managed Environments for the specified environment."
+        Write-Host $response.Internal.Message
+        return
+    }
+    
+    Write-Host "Enabled Managed Environments for the specified environment."    
+}
+
+function DisableManagedEnvironments
+{
+    <#
+     .SYNOPSIS
+     Disables Managed Environments for the given environment.
+     .DESCRIPTION
+     The DisableManagedEnvironments cmdlet enables Managed Environments for the given environment by updating its governance configuration.
+     Use Get-Help DisableManagedEnvironments -Examples for more details.
+     .PARAMETER EnvironmentId
+     The id (usually a GUID) of the environment.
+     .EXAMPLE
+     DisableManagedEnvironments -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4
+     Disables Managed Environments for environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4.
+    #>
+    param
+    (
+        [Parameter(Mandatory = $true)]
+        [string]$EnvironmentId
+    )
+
+    Write-Host "Retrieving environment."
+
+    $environment = Get-AdminPowerAppEnvironment -EnvironmentName $EnvironmentId
+    if ($environment -eq $null)
+    {
+        Write-Host "No environment was found with the given id."
+        return
+    }
+
+    $governanceConfiguration = $environment.Internal.properties.governanceConfiguration
+    $governanceConfiguration = CoalesceGovernanceConfiguration -GovernanceConfiguration $governanceConfiguration
+    if ($governanceConfiguration.protectionLevel -ne "Standard")
+    {
+        Write-Host "The specified environment is not managed."
+        return
+    }
+
+    $governanceConfiguration.protectionLevel = "Basic"
+    
+    $response = Set-AdminPowerAppEnvironmentGovernanceConfiguration -EnvironmentName $EnvironmentId -UpdatedGovernanceConfiguration $GovernanceConfiguration
+    if ($response.Code -ne 202)
+    {
+        Write-Host "Failed to disable Managed Environments for the specified environment."
+        Write-Host $response.Internal.Message
+        return
+    }
+    
+    Write-Host "Disabled Managed Environments for the specified environment."    
+}
+
+function IncludeInsightsForManagedEnvironmentsInWeeklyEmailDigest
+{
+    <#
+     .SYNOPSIS
+     Includes insights for the specified Managed environment from weekly email digest.
+     .DESCRIPTION
+     The IncludeInsightsForManagedEnvironmentsInWeeklyEmailDigest cmdlet includes insights for the specified Managed environment from weekly email digest.
+     Use Get-Help IncludeInsightsForManagedEnvironmentsInWeeklyEmailDigest -Examples for more details.
+     .PARAMETER EnvironmentId
+     The id (usually a GUID) of the environment.
+     .EXAMPLE
+     IncludeInsightsForManagedEnvironmentsInWeeklyEmailDigest -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4
+     Includes insights for Managed environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4 in the weekly email digest.
+    #>
+    param
+    (
+        [Parameter(Mandatory = $true)]
+        [string]$EnvironmentId
+    )
+
+    Write-Host "Retrieving environment."
+
+    $environment = Get-AdminPowerAppEnvironment -EnvironmentName $EnvironmentId
+    if ($environment -eq $null)
+    {
+        Write-Host "No environment was found with the given id."
+        return
+    }
+
+    $governanceConfiguration = $environment.Internal.properties.governanceConfiguration
+    $governanceConfiguration = CoalesceGovernanceConfiguration -GovernanceConfiguration $governanceConfiguration
+    if ($governanceConfiguration.protectionLevel -ne "Standard")
+    {
+        Write-Host "The specified environment is not managed."
+        return
+    }
+
+    if ($governanceConfiguration.settings.extendedSettings.excludeEnvironmentFromAnalysis -ne "True")
+    {
+        Write-Host "The specified environment is already included in weekly email digest."
+        return
+    }
+    
+    $governanceConfiguration.settings.extendedSettings.excludeEnvironmentFromAnalysis = "false"
+
+    $response = Set-AdminPowerAppEnvironmentGovernanceConfiguration -EnvironmentName $EnvironmentId -UpdatedGovernanceConfiguration $GovernanceConfiguration
+    if ($response.Code -ne 202)
+    {
+        Write-Host "Failed to include insights for the specified environment in weekly email digest."
+        Write-Host $response.Internal.Message
+        return
+    }
+    
+    Write-Host "Included insights for the specified environment in weekly email digest."    
+}
+
+function ExcludeInsightsForManagedEnvironmentsInWeeklyEmailDigest
+{
+    <#
+     .SYNOPSIS
+     Excludes insights for the specified Managed environment from weekly email digest.
+     .DESCRIPTION
+     The ExcludeInsightsForManagedEnvironmentsInWeeklyEmailDigest cmdlet excludes insights for the specified Managed environment from weekly email digest.
+     Use Get-Help ExcludeInsightsForManagedEnvironmentsInWeeklyEmailDigest -Examples for more details.
+     .PARAMETER EnvironmentId
+     The id (usually a GUID) of the environment.
+     .EXAMPLE
+     ExcludeInsightsForManagedEnvironmentsInWeeklyEmailDigest -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4
+     Excludes insights for Managed environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4 in the weekly email digest.
+    #>
+    param
+    (
+        [Parameter(Mandatory = $true)]
+        [string]$EnvironmentId
+    )
+
+    Write-Host "Retrieving environment."
+
+    $environment = Get-AdminPowerAppEnvironment -EnvironmentName $EnvironmentId
+    if ($environment -eq $null)
+    {
+        Write-Host "No environment was found with the given id."
+        return
+    }
+
+    $governanceConfiguration = $environment.Internal.properties.governanceConfiguration
+    $governanceConfiguration = CoalesceGovernanceConfiguration -GovernanceConfiguration $governanceConfiguration
+    if ($governanceConfiguration.protectionLevel -ne "Standard")
+    {
+        Write-Host "The specified environment is not managed."
+        return
+    }
+
+    if ($governanceConfiguration.settings.extendedSettings.excludeEnvironmentFromAnalysis -eq "True")
+    {
+        Write-Host "The specified environment is already excluded from weekly email digest."
+        return
+    }
+    
+    $governanceConfiguration.settings.extendedSettings.excludeEnvironmentFromAnalysis = "true"
+
+    $response = Set-AdminPowerAppEnvironmentGovernanceConfiguration -EnvironmentName $EnvironmentId -UpdatedGovernanceConfiguration $GovernanceConfiguration
+    if ($response.Code -ne 202)
+    {
+        Write-Host "Failed to exclude insights for the specified environment in weekly email digest."
+        Write-Host $response.Internal.Message
+        return
+    }
+    
+    Write-Host "Excluded insights for the specified environment in weekly email digest."    
 }
 
 #internal, helper function
@@ -1729,6 +1939,59 @@ function ListGetUpdateRemovePolicy
     Write-Host "Remove $upatedDisplayName1"
     $response = CheckHttpResponse(Remove-DlpPolicy -PolicyName $updatedPolicy1.name)
     StringsAreEqual -Expect "OK" -Actual $response.Description
+}
+
+function CoalesceGovernanceConfiguration
+{
+    <#
+     .SYNOPSIS
+     Internal helper method. Coalesces the given governance configuration object by initializing it if it is null.
+     .DESCRIPTION
+     The CoalesceGovernanceConfiguration cmdlet returns a non-null copy of the given governance configuration object.
+     Use Get-Help CoalesceGovernanceConfiguration -Examples for more details.
+     .PARAMETER GovernanceConfiguration
+     The governance configuration property of an environment.
+     .EXAMPLE
+     $GovernanceConfiguration = $null
+     CoalesceGovernanceConfiguration -GovernanceConfiguration $GovernanceConfiguration
+     Returns a governance configuration object with protectionLevel set to "Basic" and empty settings.
+     .EXAMPLE
+     $GovernanceConfiguration = [pscustomobject]@{
+          protectionLevel = "Basic"
+         settings = [pscustomobject]@{
+             extendedSettings = @{}
+         }
+     }
+     CoalesceGovernanceConfiguration -GovernanceConfiguration $GovernanceConfiguration
+     Returns the provided governance configuration object as is.
+    #>
+    param
+    (
+        [Parameter(Mandatory = $true)]
+        [object]$GovernanceConfiguration
+    )
+    
+    if ($GovernanceConfiguration -eq $null -or $GovernanceConfiguration.protectionLevel -eq $null)
+    {
+        $GovernanceConfiguration = [pscustomobject]@{
+            protectionLevel = "Basic"
+            settings = [pscustomobject]@{
+                extendedSettings = @{}
+            }
+        }
+    }
+    
+    if ($GovernanceConfiguration.settings -eq $null -or $GovernanceConfiguration.settings.extendedSettings -eq $null)
+    {
+        $GovernanceConfiguration = [pscustomobject]@{
+            protectionLevel = $GovernanceConfiguration.protectionLevel
+            settings = [pscustomobject]@{
+                extendedSettings = @{}
+            }
+        }
+    }
+    
+    return $GovernanceConfiguration
 }
 
 function PolicyCheck

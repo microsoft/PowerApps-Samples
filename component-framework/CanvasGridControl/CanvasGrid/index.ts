@@ -122,7 +122,7 @@ export class CanvasGrid implements ComponentFramework.StandardControl<IInputs, I
         if (resetPaging) {
             this.currentPage = 1;
         }
-        if (resetPaging || datasetChanged || this.isTestHarness) {
+        if (resetPaging || datasetChanged || this.isTestHarness || !this.records) {
             this.records = dataset.records;
             this.sortedRecordsIds = dataset.sortedRecordIds;
         }

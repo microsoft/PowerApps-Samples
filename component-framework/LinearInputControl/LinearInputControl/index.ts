@@ -101,7 +101,7 @@ export class LinearInputControl implements ComponentFramework.StandardControl<II
 		// storing the latest context from the control.
 		this._value = context.parameters.controlValue.raw!;
 		this._context = context;
-		this.inputElement.setAttribute("value", context.parameters.controlValue.formatted ? context.parameters.controlValue.formatted : "");
+		this.inputElement.value = context.parameters.controlValue.formatted ? context.parameters.controlValue.formatted : "";
 		this.labelElement.innerHTML = context.parameters.controlValue.formatted ? context.parameters.controlValue.formatted : "";
 	}
 

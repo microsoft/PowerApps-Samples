@@ -1,0 +1,2 @@
+﻿This file exists so that the DownloadImages folder will be copied to the output folder with this file.
+After running the sample, look for the downloaded files in the ImageOperations\bin\Debug\net6.0\DownloadedImages folder.

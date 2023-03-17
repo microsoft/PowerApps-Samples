@@ -1,31 +1,15 @@
-import { useConst } from '@fluentui/react-hooks/lib/useConst';
-import { useForceUpdate } from '@fluentui/react-hooks/lib/useForceUpdate';
-import { IconButton } from '@fluentui/react/lib/components/Button/IconButton/IconButton';
-import { ContextualMenu } from '@fluentui/react/lib/components/ContextualMenu/ContextualMenu';
-import {
-    DirectionalHint,
-    IContextualMenuProps,
-} from '@fluentui/react/lib/components/ContextualMenu/ContextualMenu.types';
-import { DetailsList } from '@fluentui/react/lib/components/DetailsList/DetailsList';
-import {
-    ConstrainMode,
-    DetailsListLayoutMode,
-    IColumn,
-    IDetailsHeaderProps,
-    IDetailsListProps,
-} from '@fluentui/react/lib/components/DetailsList/DetailsList.types';
-import { DetailsRow } from '@fluentui/react/lib/components/DetailsList/DetailsRow';
-import { IDetailsRowStyles } from '@fluentui/react/lib/components/DetailsList/DetailsRow.types';
-import { Link } from '@fluentui/react/lib/components/Link/Link';
-import { Overlay } from '@fluentui/react/lib/components/Overlay/Overlay';
-import { ScrollablePane } from '@fluentui/react/lib/components/ScrollablePane/ScrollablePane';
-import { ScrollbarVisibility } from '@fluentui/react/lib/components/ScrollablePane/ScrollablePane.types';
-import { Stack } from '@fluentui/react/lib/components/Stack/Stack';
-import { Sticky } from '@fluentui/react/lib/components/Sticky/Sticky';
-import { StickyPositionType } from '@fluentui/react/lib/components/Sticky/Sticky.types';
-import { IObjectWithKey, Selection } from '@fluentui/react/lib/Selection';
-import { IRenderFunction, SelectionMode } from '@fluentui/react/lib/Utilities';
+import { useConst, useForceUpdate } from '@fluentui/react-hooks';
 import * as React from 'react';
+import { IObjectWithKey, IRenderFunction, SelectionMode } from '@fluentui/react/lib/Utilities';
+import { ConstrainMode, DetailsList, DetailsListLayoutMode, DetailsRow, IColumn, IDetailsHeaderProps, IDetailsListProps, IDetailsRowStyles } from '@fluentui/react/lib/DetailsList';
+import { Sticky, StickyPositionType } from '@fluentui/react/lib/Sticky';
+import { ContextualMenu, DirectionalHint, IContextualMenuProps } from '@fluentui/react/lib/ContextualMenu';
+import { ScrollablePane, ScrollbarVisibility } from '@fluentui/react/lib/ScrollablePane';
+import { Stack } from '@fluentui/react/lib/Stack';
+import { Overlay } from '@fluentui/react/lib/Overlay';
+import { IconButton } from '@fluentui/react/lib/Button';
+import { Selection } from '@fluentui/react/lib/Selection';
+import { Link } from '@fluentui/react/lib/Link';
 
 type DataSet = ComponentFramework.PropertyHelper.DataSetApi.EntityRecord & IObjectWithKey;
 
