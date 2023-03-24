@@ -1610,20 +1610,20 @@ function ExcludeInsightsForManagedEnvironmentsInWeeklyEmailDigest
     Write-Host "Excluded insights for the specified environment in weekly email digest."    
 }
 
-function SetSolutionCheckerEnforcement
+function SetManagedEnvironmentSolutionCheckerEnforcementLevel
 {
     <#
      .SYNOPSIS
      Sets solution checker enforcement for the specified Managed environment.
      .DESCRIPTION
-     The SetSolutionCheckerEnforcement cmdlet sets solution checker enforcement for the specified Managed environment.
-     Use Get-Help ExcludeInsightsForManagedEnvironmentsInWeeklyEmailDigest -Examples for more details.
+     The SetManagedEnvironmentSolutionCheckerEnforcementLevel cmdlet sets solution checker enforcement for the specified Managed environment.
+     Use Get-Help SetManagedEnvironmentSolutionCheckerEnforcementLevel -Examples for more details.
      .PARAMETER EnvironmentId
      The id (usually a GUID) of the environment.
      .PARAMETER Level
      The enforcement level (none, warn, block).
      .EXAMPLE
-     SetSolutionCheckerEnforcement -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4 -Level block
+     SetManagedEnvironmentSolutionCheckerEnforcementLevel -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4 -Level block
      Sets solution checker enforcement for Managed environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4 to the "block" level.
     #>
     param
