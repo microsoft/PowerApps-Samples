@@ -458,7 +458,7 @@ namespace QueryData
 
             Console.WriteLine("\n--Section 5 started--");
 
-            RetrieveMultipleResponse firstPageResults =
+            RetrieveMultipleResponse firstPageResults = 
                 await service.RetrieveMultiple(
                     queryUri: "contacts?$select=fullname,jobtitle,annualincome&$filter=contains(fullname,'(sample)')&$count=true",
                     maxPageSize: 4,
@@ -584,7 +584,7 @@ namespace QueryData
 
             // 6) Multi level $expand having both single-valued and collection-valued navigation properties
 
-            // The following query applies nested and multiple expands to single-valued and collection-valued navigation properties.
+            // The following query applies nested expands to single-valued and collection-valued navigation properties.
             // Accounts entity is related to AccountTasks and Contacts entities. Contacts entity is further expanded on OwningUser navigation property.
 
             RetrieveMultipleResponse accounts =
@@ -626,7 +626,7 @@ namespace QueryData
             #region Section 8 FetchXML queries
 
             Console.WriteLine("\n--Section 8 started--");
-
+            
             // Use FetchXML to query for all contacts whose fullname contains '(sample)'.
             // Note: XML string must be URI encoded. For more information, see:
             // https://docs.microsoft.com/power-apps/developer/data-platform/webapi/use-fetchxml-web-api
@@ -719,7 +719,7 @@ namespace QueryData
             // Loop through subsequent requests while more records match criteria
             while (cookiePagedContacts.MoreRecords) {
 
-                    page++;
+                page++;
 
                 fetchXmlQueryDoc.Root.Attribute("page").Value = page.ToString();
 
