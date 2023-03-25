@@ -117,7 +117,7 @@ function Remove-RoleAssignmentFromUsers
         [String]$roleName,
 
         [Parameter(Mandatory=$false,
-                    HelpMessage = "Geo name if you want to clean up role assignments only in specific geo.Processes all geos by default. Valid Geo codes - [NA, EMEA, APAC, SAM, OCE, JPN, IND, CAN, GBR, FRA, UAE,ZAF, GER, CHE, KOR, NOR, SGP]
+                    HelpMessage = "Geo name if you want to clean up role assignments only in specific geo.Processes all geos by default. Valid Geo codes - [NA, EMEA, APAC, SAM, OCE, JPN, IND, CAN, GBR, FRA, UAE,ZAF, GER, CHE, KOR, NOR, SGP]")]
         [String]$geo = "",
 
         [Parameter(Mandatory=$false,
@@ -225,7 +225,7 @@ function Add-RoleToUsers
         [String]$roleName,
 
         [Parameter(Mandatory=$false,
-                    HelpMessage = "Adds roles to users for environments in given geo.Valid Geo codes - [NA, EMEA, APAC, SAM, OCE, JPN, IND, CAN, GBR, FRA, UAE,ZAF, GER, CHE, KOR, NOR, SGP]"]
+                    HelpMessage = "Adds roles to users for environments in given geo.Valid Geo codes - [NA, EMEA, APAC, SAM, OCE, JPN, IND, CAN, GBR, FRA, UAE,ZAF, GER, CHE, KOR, NOR, SGP]")]
         [String]$geo = "",
 
         [Parameter(Mandatory=$false,
