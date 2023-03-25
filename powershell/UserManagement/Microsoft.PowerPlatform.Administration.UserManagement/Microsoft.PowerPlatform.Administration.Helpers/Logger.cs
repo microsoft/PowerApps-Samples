@@ -110,6 +110,11 @@ namespace Microsoft.PowerPlatform.Administration.Helpers
             return Path.Combine(logLocation, $"{orgName}_{roleName}_RemovalLog.txt");
         }
 
+        public string GetAddRolesLogPath(string logLocation, string orgName, string roleName)
+        {
+            return Path.Combine(logLocation, $"{orgName}_{roleName}_AllRolesLog.txt");
+        }
+
         public void InitializeRoleAssignmentReport(string logFile)
         {
             File.WriteAllLines(logFile, new string[] { $"SystemUserId, UserPrincipalName, AccessMode, IsDisabled, IsLicensed" });
