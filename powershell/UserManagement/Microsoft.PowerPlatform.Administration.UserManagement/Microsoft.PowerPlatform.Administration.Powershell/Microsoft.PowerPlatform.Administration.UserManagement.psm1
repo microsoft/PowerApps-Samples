@@ -43,20 +43,20 @@ $dlls = Get-ChildItem -path "." -Filter "*.dll"
 
 foreach($dll in $dlls)
 {
-��� try
-��� {
-������� $DLLName = $dll.Name
-������� $fullDLLPath = $dll.FullName�������� 
-        [System.Reflection.Assembly]::LoadFrom($fullDLLPath)
-������� Write-Debug "Loaded $DLLName"
-��� }
-��� catch
-��� {
-������� $message = $_.Exception.GetBaseException().LoaderExceptions
-������� Write-Host "Error loading" $dll.name
-������� Write-Host "exception" $message
-������� exit
-��� }
+    try
+    {
+        $DLLName = $dll.Name
+        $fullDLLPath = $dll.FullName
+            [System.Reflection.Assembly]::LoadFrom($fullDLLPath)
+        Write-Debug "Loaded $DLLName"
+    }
+    catch
+    {
+        $message = $_.Exception.GetBaseException().LoaderExceptions
+        Write-Host "Error loading" $dll.name
+        Write-Host "exception" $message
+        exit
+    }
 }
 
 $OnAssemblyResolve = [System.ResolveEventHandler] {
@@ -99,7 +99,7 @@ Url of Environment, if admin wants to get reports from only one environment
 Removes roles from all environments the admin user has access to
 
 .PARAMETER geo
-Removes roles from environments in given geo.Valid Geo codes - [NA, EMEA, APAC, SAM, OCE, JPN, IND, CAN, GBR, FRA, UAE,ZAF, GER, CHE, KOR, NOR, SGP]
+Removes roles from environments in given geo. Valid Geo codes - [NA, EMEA, APAC, SAM, OCE, JPN, IND, CAN, GBR, FRA, UAE,ZAF, GER, CHE, KOR, NOR, SGP]
 
 .PARAMETER outputLogsDirectory
 Location folder for the logs & reports to be written to.
@@ -207,7 +207,7 @@ Url of Environment, if admin wants to get reports from only one environment
 Generate reports for all environments the admin user has access to
 
 .PARAMETER geo
-Adds roles to users for environments in given geo.Valid Geo codes - [NA, EMEA, APAC, SAM, OCE, JPN, IND, CAN, GBR, FRA, UAE,ZAF, GER, CHE, KOR, NOR, SGP]
+Adds roles to users for environments in given geo. Valid Geo codes - [NA, EMEA, APAC, SAM, OCE, JPN, IND, CAN, GBR, FRA, UAE,ZAF, GER, CHE, KOR, NOR, SGP]
 
 .PARAMETER outputLogsDirectory
 Location folder for the logs & reports to be written to.
@@ -225,7 +225,7 @@ function Add-RoleToUsers
         [String]$roleName,
 
         [Parameter(Mandatory=$false,
-                    HelpMessage = "Adds roles to users for environments in given geo.Valid Geo codes - [NA, EMEA, APAC, SAM, OCE, JPN, IND, CAN, GBR, FRA, UAE,ZAF, GER, CHE, KOR, NOR, SGP]")]
+                    HelpMessage = "Adds roles to users for environments in given geo. Valid Geo codes - [NA, EMEA, APAC, SAM, OCE, JPN, IND, CAN, GBR, FRA, UAE,ZAF, GER, CHE, KOR, NOR, SGP]")]
         [String]$geo = "",
 
         [Parameter(Mandatory=$false,
@@ -314,7 +314,7 @@ Url of Environment, if admin wants to get reports from only one environment
 Generate reports for all environments the admin user has access to
 
 .PARAMETER geo
-Generate reports for environments in given geo.Valid Geo codes - [NA, EMEA, APAC, SAM, OCE, JPN, IND, CAN, GBR, FRA, UAE,ZAF, GER, CHE, KOR, NOR, SGP]
+Generate reports for environments in given geo. Valid Geo codes - [NA, EMEA, APAC, SAM, OCE, JPN, IND, CAN, GBR, FRA, UAE,ZAF, GER, CHE, KOR, NOR, SGP]
 
 .PARAMETER outputLogsDirectory
 Location folder for the logs & reports to be written to.
@@ -332,7 +332,7 @@ function Get-UsersWithRoleAssignment
         [String]$roleName,
 
         [Parameter(Mandatory=$false,
-                    HelpMessage = "Generate reports for environments in given geo.Valid Geo codes - [NA, EMEA, APAC, SAM, OCE, JPN, IND, CAN, GBR, FRA, UAE,ZAF, GER, CHE, KOR, NOR, SGP]")]
+                    HelpMessage = "Generate reports for environments in given geo. Valid Geo codes - [NA, EMEA, APAC, SAM, OCE, JPN, IND, CAN, GBR, FRA, UAE,ZAF, GER, CHE, KOR, NOR, SGP]")]
         [String]$geo = "",
 
         [Parameter(Mandatory=$false,
