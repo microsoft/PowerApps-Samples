@@ -113,7 +113,7 @@ namespace Microsoft.PowerPlatform.Administration.Helpers
 
                 var systemUserHelper = new SystemUserHepler(_logger);
 
-                var filePath = _logger.GetRoleRemovalLogPath(_logger.RoleAssignmentsReportsDir, service.ConnectedOrgFriendlyName.Replace(' ', '_'), roleName.Replace(' ', '.'));
+                var filePath = _logger.GetRoleRemovalLogPath(_logger.RoleRemovalLogsDir, service.ConnectedOrgFriendlyName.Replace(' ', '_'), roleName.Replace(' ', '.'));
 
                 foreach (var userPrincipal in userPrincipalNames)
                 {
@@ -167,7 +167,7 @@ namespace Microsoft.PowerPlatform.Administration.Helpers
                 }
 
                 var systemUserHelper = new SystemUserHepler(_logger);
-                var filePath = _logger.GetRoleRemovalLogPath(_logger.AddRoleLogsDir, service.ConnectedOrgFriendlyName.Replace(' ', '_'), roleName.Replace(' ', '.'));
+                var filePath = _logger.GetAddRolesLogPath(_logger.AddRoleLogsDir, service.ConnectedOrgFriendlyName.Replace(' ', '_'), roleName.Replace(' ', '.'));
 
                 foreach (var userPrincipal in userPrincipalNames)
                 {
