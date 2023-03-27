@@ -1610,6 +1610,61 @@ function ExcludeInsightsForManagedEnvironmentsInWeeklyEmailDigest
     Write-Host "Excluded insights for the specified environment in weekly email digest."    
 }
 
+function SetManagedEnvironmentSolutionCheckerEnforcementLevel
+{
+    <#
+     .SYNOPSIS
+     Sets solution checker enforcement for the specified Managed environment.
+     .DESCRIPTION
+     The SetManagedEnvironmentSolutionCheckerEnforcementLevel cmdlet sets solution checker enforcement for the specified Managed environment.
+     Use Get-Help SetManagedEnvironmentSolutionCheckerEnforcementLevel -Examples for more details.
+     .PARAMETER EnvironmentId
+     The id (usually a GUID) of the environment.
+     .PARAMETER Level
+     The enforcement level (none, warn, block).
+     .EXAMPLE
+     SetManagedEnvironmentSolutionCheckerEnforcementLevel -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4 -Level block
+     Sets solution checker enforcement for Managed environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4 to the "block" level.
+    #>
+    param
+    (
+        [Parameter(Mandatory = $true)]
+        [string]$EnvironmentId,
+
+        [Parameter(Mandatory = $true)]
+        [string][ValidateSet("none", "warn", "block")]$Level
+    )
+
+    Write-Host "Retrieving environment."
+
+    $environment = Get-AdminPowerAppEnvironment -EnvironmentName $EnvironmentId
+    if ($environment -eq $null)
+    {
+        Write-Host "No environment was found with the given id."
+        return
+    }
+
+    $governanceConfiguration = $environment.Internal.properties.governanceConfiguration
+    $governanceConfiguration = CoalesceGovernanceConfiguration -GovernanceConfiguration $governanceConfiguration
+    if ($governanceConfiguration.protectionLevel -ne "Standard")
+    {
+        Write-Host "The specified environment is not managed."
+        return
+    }
+    
+    $governanceConfiguration.settings.extendedSettings.solutionCheckerMode = $Level
+
+    $response = Set-AdminPowerAppEnvironmentGovernanceConfiguration -EnvironmentName $EnvironmentId -UpdatedGovernanceConfiguration $GovernanceConfiguration
+    if ($response.Code -ne 202)
+    {
+        Write-Host "Failed to set solution checker enforcement for the specified environment."
+        Write-Host $response.Internal.Message
+        return
+    }
+    
+    Write-Host "Set solution checker enforcement for the specified environment."    
+}
+
 #internal, helper function
 function CheckHttpResponse
 {
