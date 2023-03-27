@@ -1629,10 +1629,10 @@ function SetManagedEnvironmentSolutionCheckerEnforcementLevel
     param
     (
         [Parameter(Mandatory = $true)]
-        [string]$EnvironmentId
+        [string]$EnvironmentId,
 
         [Parameter(Mandatory = $true)]
-        [string][ValidateSet("none", "warn", "block")]$Level,
+        [string][ValidateSet("none", "warn", "block")]$Level
     )
 
     Write-Host "Retrieving environment."
