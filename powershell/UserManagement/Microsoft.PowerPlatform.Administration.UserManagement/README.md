@@ -46,7 +46,7 @@ This code can be run by Global / Power Platform Administrator users.
 |roleName|Localized role name in Dataverse (e.g.; System Administrator).|
 |environmentUrl|Url of the environment for when the administrator wants to get reports from only one environment.|
 |processAllEnvironments|Generate reports for all environments that the administrator user has access to.|
-|geo|Generate reports for environments in a given geography. If not specified, processes all environments across all geographies. More information: [GeoCodes](https://learn.microsoft.com/power-platform/admin/new-datacenter-regions). |
+|geo|Generate reports for environments in a given geography. If not specified, processes all environments across all geographies. Valid Geo codes - [NA, EMEA, APAC, SAM, OCE, JPN, IND, CAN, GBR, FRA, UAE,ZAF, GER, CHE, KOR, NOR, SGP] |
 |outputLogsDirectory|Location folder for the logs & reports to be written to.|
 
 ### Remove role assignments from given list of users
@@ -59,7 +59,7 @@ This code can be run by Global / Power Platform Administrator users.
 |usersFilePath|Path to file containing list of user principal names (one per line).|
 |environmentUrl|Url of the environment for when the administrator wants to get reports from only one environment.|
 |processAllEnvironments|Generate reports for all environments the administrator user has access to.|
-|geo|Generate reports for environments in a given geography. If not specified, processes all environments across all geographies. More information: [GeoCodes](https://learn.microsoft.com/power-platform/admin/new-datacenter-regions). |
+|geo|Generate reports for environments in a given geography. If not specified, processes all environments across all geographies. Valid Geo codes - [NA, EMEA, APAC, SAM, OCE, JPN, IND, CAN, GBR, FRA, UAE,ZAF, GER, CHE, KOR, NOR, SGP] |
 |outputLogsDirectory|Location folder for the logs & reports to be written to.|
 
 ### Add role assignments for a given list of users
@@ -72,7 +72,7 @@ This code can be run by Global / Power Platform Administrator users.
 |usersFilePath|Path to the file containing a list of user principal names (one per line).|
 |environmentUrl|Url of the environment for when the administrator wants to get reports from only one environment.|
 |processAllEnvironments|Generate reports for all environments the administrator user has access to.|
-|geo|Generate reports for environments in a given geography. If not specified, processes all environments across all geographies. More information: [GeoCodes](https://learn.microsoft.com/power-platform/admin/new-datacenter-regions). |
+|geo|Generate reports for environments in a given geography. If not specified, processes all environments across all geographies. Valid Geo codes - [NA, EMEA, APAC, SAM, OCE, JPN, IND, CAN, GBR, FRA, UAE,ZAF, GER, CHE, KOR, NOR, SGP] |
 |outputLogsDirectory|Location folder for the logs & reports to be written to.|
 
 ## Contributing
