@@ -488,8 +488,8 @@ namespace QueryData
             //   2) Expand using partner property (e.g.: from contact to account via the 'account_primary_contact')
             //   3) Expand using collection-valued navigation properties (e.g.: via the 'contact_customer_accounts')
             //   4) Expand using multiple navigation property types in a single request.
-            //   5) Multi-level expands of single-valued navigation properties.
-            //   6) Multi level $expand having both single-valued and collection-valued navigation properties.
+            //   5) Nested expands of single-valued navigation properties.
+            //   6) Nested $expand having both single-valued and collection-valued navigation properties.
 
             // Tip: For performance best practice, always use $select statement in an expand option.
 
@@ -560,12 +560,12 @@ namespace QueryData
 
             Console.WriteLine($"\nAccount '{retrievedAccountContoso["name"]}' has the following tasks:");
 
-            foreach (JObject task in retrievedAccountContoso["Account_Tasks"])
+            foreach (JObject task in retrievedAccountContoso["Account_Tasks"].Cast<JObject>())
             {
                 Console.WriteLine($"\t{task["subject"]}");
             }
 
-            // 5) Multi-level expands
+            // 5) Nested expands
 
             // The following query applies nested expands to single-valued navigation properties
             // starting with Task entities related to contacts created for this sample.
@@ -582,7 +582,7 @@ namespace QueryData
 
             DisplayExpandedValuesFromTask(contosoTasks.Records);
 
-            // 6) Multi level $expand having both single-valued and collection-valued navigation properties
+            // 6) Nested $expand having both single-valued and collection-valued navigation properties
 
             // The following query applies nested expands to single-valued and collection-valued navigation properties.
             // Accounts entity is related to AccountTasks and Contacts entities. Contacts entity is further expanded on OwningUser navigation property.
@@ -591,8 +591,8 @@ namespace QueryData
                 await service.RetrieveMultiple(queryUri: $"accounts?" +
                 $"$select=name,accountid&" +
                 $"$filter= accountid eq {accountContosoRef.Id} &" +
-                $"$expand=Account_Tasks($select=subject,description),contact_customer_accounts($select=lastname;" +
-                $"$expand=owninguser($select=firstname,systemuserid))",
+                $"$expand=Account_Tasks($select=subject,description),contact_customer_accounts($select=fullname;" +
+                $"$expand=owninguser($select=fullname,systemuserid))",
                 includeAnnotations: true);
 
             Console.WriteLine("\nExpanded values from Accounts:");
@@ -985,14 +985,14 @@ namespace QueryData
             const int col2 = -30;
 
             //rows
-            foreach (JObject account in collection)
+            foreach (JObject account in collection.Cast<JObject>())
             {
                 Console.WriteLine($"Account: {account["name"]}");
 
                 Console.WriteLine($"\t|{"Account Task",col1}|");
                 Console.WriteLine($"\t|{new string('-', col1 * -1),col1}|");
 
-                foreach (JObject accountTasks in account["Account_Tasks"])
+                foreach (JObject accountTasks in account["Account_Tasks"].Cast<JObject>())
                 {
                     Console.WriteLine($"\t|{accountTasks["subject"],col1}|");
                 }
@@ -1001,10 +1001,10 @@ namespace QueryData
                 Console.WriteLine($"\t|{new string('-', col1 * -1),col1}|" +
                     $"{new string('-', col2 * -1),col2}|");
 
-                foreach (JObject contacts in account["contact_customer_accounts"])
+                foreach (JObject contacts in account["contact_customer_accounts"].Cast<JObject>())
                 {
-                    Console.WriteLine($"\t|{contacts["lastname"],col1}|" +
-                        $"{contacts["owninguser"]["firstname"],col2}|");
+                    Console.WriteLine($"\t|{contacts["fullname"],col1}|" +
+                        $"{contacts["owninguser"]["fullname"],col2}|");
                 }
             }
         }
