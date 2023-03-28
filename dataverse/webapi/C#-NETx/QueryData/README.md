@@ -89,7 +89,7 @@ Operations:
 - `$expand` with collection-valued navigation properties.
 - `$expand` with multiple navigation property types in a single request.
 - Nested `$expand`.
-- Nested  $expand having both single-valued and collection-valued navigation properties
+- Nested `$expand` having both single-valued and collection-valued navigation properties
 
 ### Section 7 Aggregate results
 
