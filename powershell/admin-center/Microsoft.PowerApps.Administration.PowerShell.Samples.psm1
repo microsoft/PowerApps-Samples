@@ -1665,6 +1665,127 @@ function SetManagedEnvironmentSolutionCheckerEnforcementLevel
     Write-Host "Set solution checker enforcement for the specified environment."    
 }
 
+function SetManagedEnvironmentMakerOnboardingMarkdownContents
+{
+    <#
+     .SYNOPSIS
+     Sets markedown contents for maker onboarding for the specified Managed environment.
+     .DESCRIPTION
+     The SetManagedEnvironmentMakerOnboardingMarkdownContents cmdlet sets markedown contents for maker onboarding for the specified Managed environment.
+     Use Get-Help SetManagedEnvironmentMakerOnboardingMarkdownContents -Examples for more details.
+     .PARAMETER EnvironmentId
+     The id (usually a GUID) of the environment.
+     .PARAMETER Markdown
+     The maker contents Markdown.
+     .EXAMPLE
+     SetManagedEnvironmentMakerOnboardingMarkdownContents -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4 -Markdown "## Welcome to Power Apps
+### Let's get started"
+
+     Sets Maker onboarding markdown contents for Managed environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4 to
+        ![DF Img](https://i.ibb.co/w0vRLkv/NR-Power-Apps-2.png)
+        ## Welcome to NR Power Apps
+        ### Let's get started
+    #>
+    param
+    (
+        [Parameter(Mandatory = $true)]
+        [string]$EnvironmentId,
+
+        [Parameter(Mandatory = $true)]
+        [string]$Markdown
+    )
+
+    Write-Host "Retrieving environment."
+
+    $environment = Get-AdminPowerAppEnvironment -EnvironmentName $EnvironmentId
+    if ($environment -eq $null)
+    {
+        Write-Host "No environment was found with the given id."
+        return
+    }
+
+    $governanceConfiguration = $environment.Internal.properties.governanceConfiguration
+    $governanceConfiguration = CoalesceGovernanceConfiguration -GovernanceConfiguration $governanceConfiguration
+    if ($governanceConfiguration.protectionLevel -ne "Standard")
+    {
+        Write-Host "The specified environment is not managed."
+        return
+    }
+    
+    $makerOnboardingChangeTimestamp = (Get-Date).ToUniversalTime().ToString("ddd, dd MMM yyyy HH:mm:ss 'GMT'")
+
+    $governanceConfiguration.settings.extendedSettings.makerOnboardingMarkdown = $Markdown
+    $governanceConfiguration.settings.extendedSettings.makerOnboardingTimestamp = $makerOnboardingChangeTimestamp
+
+    $response = Set-AdminPowerAppEnvironmentGovernanceConfiguration -EnvironmentName $EnvironmentId -UpdatedGovernanceConfiguration $GovernanceConfiguration
+    if ($response.Code -ne 202)
+    {
+        Write-Host "Failed to set markedown contents for maker onboarding for the specified environment."
+        Write-Host $response.Internal.Message
+        return
+    }
+    
+    Write-Host "Set markedown contents for maker onboarding for the specified environment."    
+}
+
+function SetManagedEnvironmentMakerOnboardingLearnMoreUrl
+{
+    <#
+     .SYNOPSIS
+     Sets Learn more URL for maker onboarding for the specified Managed environment.
+     .DESCRIPTION
+     The SetManagedEnvironmentMakerOnboardingLearnMoreUrl cmdlet Sets Learn more URL for maker onboarding for the specified Managed environment.
+     Use Get-Help SetManagedEnvironmentMakerOnboardingLearnMoreUrl -Examples for more details.
+     .PARAMETER EnvironmentId
+     The id (usually a GUID) of the environment.
+     .PARAMETER LearnMoreUrl
+     The maker onboarding learn more URL.
+     .EXAMPLE
+     SetManagedEnvironmentMakerOnboardingLearnMoreUrl -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4 LearnMoreUrl "www.microsoft.com"
+     Sets Learn more URL for maker onboarding for Managed environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4 to "www.microsoft.com"
+    #>
+    param
+    (
+        [Parameter(Mandatory = $true)]
+        [string]$EnvironmentId,
+
+        [Parameter(Mandatory = $true)]
+        [string]$LearnMoreUrl
+    )
+
+    Write-Host "Retrieving environment."
+
+    $environment = Get-AdminPowerAppEnvironment -EnvironmentName $EnvironmentId
+    if ($environment -eq $null)
+    {
+        Write-Host "No environment was found with the given id."
+        return
+    }
+
+    $governanceConfiguration = $environment.Internal.properties.governanceConfiguration
+    $governanceConfiguration = CoalesceGovernanceConfiguration -GovernanceConfiguration $governanceConfiguration
+    if ($governanceConfiguration.protectionLevel -ne "Standard")
+    {
+        Write-Host "The specified environment is not managed."
+        return
+    }
+    
+    $makerOnboardingChangeTimestamp = (Get-Date).ToUniversalTime().ToString("ddd, dd MMM yyyy HH:mm:ss 'GMT'")
+
+    $governanceConfiguration.settings.extendedSettings.makerOnboardingUrl = $LearnMoreUrl
+    $governanceConfiguration.settings.extendedSettings.makerOnboardingTimestamp = $makerOnboardingChangeTimestamp
+
+    $response = Set-AdminPowerAppEnvironmentGovernanceConfiguration -EnvironmentName $EnvironmentId -UpdatedGovernanceConfiguration $GovernanceConfiguration
+    if ($response.Code -ne 202)
+    {
+        Write-Host "Failed to set Learn more URL for maker onboarding for the specified environment."
+        Write-Host $response.Internal.Message
+        return
+    }
+    
+    Write-Host "Set Learn more URL for maker onboarding for the specified environment."    
+}
+
 #internal, helper function
 function CheckHttpResponse
 {
