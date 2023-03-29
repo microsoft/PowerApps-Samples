@@ -1669,9 +1669,9 @@ function SetManagedEnvironmentMakerOnboardingMarkdownContent
 {
     <#
      .SYNOPSIS
-     Sets markedown content for maker onboarding for the specified Managed environment.
+     Sets markdown content for maker onboarding for the specified Managed environment.
      .DESCRIPTION
-     The SetManagedEnvironmentMakerOnboardingMarkdownContent cmdlet sets markedown content for maker onboarding for the specified Managed environment.
+     The SetManagedEnvironmentMakerOnboardingMarkdownContent cmdlet sets markdown content for maker onboarding for the specified Managed environment.
      Use Get-Help SetManagedEnvironmentMakerOnboardingMarkdownContent -Examples for more details.
      .PARAMETER EnvironmentId
      The id (usually a GUID) of the environment.
@@ -1719,12 +1719,12 @@ function SetManagedEnvironmentMakerOnboardingMarkdownContent
     $response = Set-AdminPowerAppEnvironmentGovernanceConfiguration -EnvironmentName $EnvironmentId -UpdatedGovernanceConfiguration $GovernanceConfiguration
     if ($response.Code -ne 202)
     {
-        Write-Host "Failed to set markedown content for maker onboarding for the specified environment."
+        Write-Host "Failed to set markdown content for maker onboarding for the specified environment."
         Write-Host $response.Internal.Message
         return
     }
     
-    Write-Host "Set markedown content for maker onboarding for the specified environment."    
+    Write-Host "Set markdown content for maker onboarding for the specified environment."    
 }
 
 function SetManagedEnvironmentMakerOnboardingLearnMoreUrl
