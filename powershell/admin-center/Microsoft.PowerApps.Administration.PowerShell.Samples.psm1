@@ -1741,7 +1741,7 @@ function SetManagedEnvironmentMakerOnboardingLearnMoreUrl
      .PARAMETER LearnMoreUrl
      The maker onboarding learn more URL.
      .EXAMPLE
-     SetManagedEnvironmentMakerOnboardingLearnMoreUrl -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4 LearnMoreUrl "www.microsoft.com"
+     SetManagedEnvironmentMakerOnboardingLearnMoreUrl -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4 -LearnMoreUrl "www.microsoft.com"
      Sets Learn more URL for maker onboarding for Managed environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4 to "www.microsoft.com"
     #>
     param
