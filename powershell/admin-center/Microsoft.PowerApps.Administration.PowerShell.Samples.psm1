@@ -1665,24 +1665,23 @@ function SetManagedEnvironmentSolutionCheckerEnforcementLevel
     Write-Host "Set solution checker enforcement for the specified environment."    
 }
 
-function SetManagedEnvironmentMakerOnboardingMarkdownContents
+function SetManagedEnvironmentMakerOnboardingMarkdownContent
 {
     <#
      .SYNOPSIS
-     Sets markedown contents for maker onboarding for the specified Managed environment.
+     Sets markedown content for maker onboarding for the specified Managed environment.
      .DESCRIPTION
-     The SetManagedEnvironmentMakerOnboardingMarkdownContents cmdlet sets markedown contents for maker onboarding for the specified Managed environment.
-     Use Get-Help SetManagedEnvironmentMakerOnboardingMarkdownContents -Examples for more details.
+     The SetManagedEnvironmentMakerOnboardingMarkdownContent cmdlet sets markedown content for maker onboarding for the specified Managed environment.
+     Use Get-Help SetManagedEnvironmentMakerOnboardingMarkdownContent -Examples for more details.
      .PARAMETER EnvironmentId
      The id (usually a GUID) of the environment.
      .PARAMETER Markdown
-     The maker contents Markdown.
+     The maker content Markdown.
      .EXAMPLE
-     SetManagedEnvironmentMakerOnboardingMarkdownContents -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4 -Markdown "## Welcome to Power Apps
+     SetManagedEnvironmentMakerOnboardingMarkdownContent -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4 -Markdown "## Welcome to Power Apps
 ### Let's get started"
 
-     Sets Maker onboarding markdown contents for Managed environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4 to
-        ![DF Img](https://i.ibb.co/w0vRLkv/NR-Power-Apps-2.png)
+     Sets Maker onboarding markdown content for Managed environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4 to
         ## Welcome to NR Power Apps
         ### Let's get started
     #>
@@ -1720,12 +1719,12 @@ function SetManagedEnvironmentMakerOnboardingMarkdownContents
     $response = Set-AdminPowerAppEnvironmentGovernanceConfiguration -EnvironmentName $EnvironmentId -UpdatedGovernanceConfiguration $GovernanceConfiguration
     if ($response.Code -ne 202)
     {
-        Write-Host "Failed to set markedown contents for maker onboarding for the specified environment."
+        Write-Host "Failed to set markedown content for maker onboarding for the specified environment."
         Write-Host $response.Internal.Message
         return
     }
     
-    Write-Host "Set markedown contents for maker onboarding for the specified environment."    
+    Write-Host "Set markedown content for maker onboarding for the specified environment."    
 }
 
 function SetManagedEnvironmentMakerOnboardingLearnMoreUrl
