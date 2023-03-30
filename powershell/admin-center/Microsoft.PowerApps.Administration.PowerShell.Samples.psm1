@@ -1785,6 +1785,7 @@ function SetManagedEnvironmentMakerOnboardingLearnMoreUrl
     Write-Host "Set Learn more URL for maker onboarding for the specified environment."    
 }
 
+
 #internal, helper function
 function CheckHttpResponse
 {
@@ -1835,6 +1836,118 @@ function CleanTestPolicies
             }
         }
     }
+}
+
+function IncludeInsightsForManagedEnvironmentsInPPACHomePageCards
+{
+    <#
+     .SYNOPSIS
+     Include insights for the specified Managed environment from PPAC homepage insights cards.
+     .DESCRIPTION
+     The IncludeInsightsForManagedEnvironmentsInPPACHomePageCards cmdlet includes insights for the specified Managed environment from PPAC homepage insights cards.
+     Use Get-Help IncludeInsightsForManagedEnvironmentsInPPACHomePageCards -Examples for more details.
+     .PARAMETER EnvironmentId
+     The id (usually a GUID) of the environment.
+     .EXAMPLE
+     IncludeInsightsForManagedEnvironmentsInPPACHomePageCards -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4
+     Includes insights for Managed environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4 in PPAC homepage insights cards.
+    #>
+    param
+    (
+        [Parameter(Mandatory = $true)]
+        [string]$EnvironmentId
+    )
+
+    Write-Host "Retrieving environment."
+
+    $environment = Get-AdminPowerAppEnvironment -EnvironmentName $EnvironmentId
+    if ($environment -eq $null)
+    {
+        Write-Host "No environment was found with the given id."
+        return
+    }
+
+    $governanceConfiguration = $environment.Internal.properties.governanceConfiguration
+    $governanceConfiguration = CoalesceGovernanceConfiguration -GovernanceConfiguration $governanceConfiguration
+    if ($governanceConfiguration.protectionLevel -ne "Standard")
+    {
+        Write-Host "The specified environment is not managed."
+        return
+    }
+
+    if ($governanceConfiguration.settings.extendedSettings.includeOnHomepageInsights -eq "True")
+    {
+        Write-Host "The specified environment is already included in PPAC homepage insights cards."
+        return
+    }
+    
+    $governanceConfiguration.settings.extendedSettings.includeOnHomepageInsights = "true"
+
+    $response = Set-AdminPowerAppEnvironmentGovernanceConfiguration -EnvironmentName $EnvironmentId -UpdatedGovernanceConfiguration $GovernanceConfiguration
+    if ($response.Code -ne 202)
+    {
+        Write-Host "Failed to include insights for the specified environment in PPAC homepage insights cards."
+        Write-Host $response.Internal.Message
+        return
+    }
+    
+    Write-Host "Included insights for the specified environment in PPAC homepage insights cards."    
+}
+
+function ExcludeInsightsForManagedEnvironmentsInPPACHomePageCards
+{
+    <#
+     .SYNOPSIS
+     Excludes insights for the specified Managed environment from PPAC homepage insights cards.
+     .DESCRIPTION
+     The ExcludeInsightsForManagedEnvironmentsInPPACHomePageCards cmdlet excludes insights for the specified Managed environment from PPAC homepage insights cards.
+     Use Get-Help ExcludeInsightsForManagedEnvironmentsInPPACHomePageCards -Examples for more details.
+     .PARAMETER EnvironmentId
+     The id (usually a GUID) of the environment.
+     .EXAMPLE
+     ExcludeInsightsForManagedEnvironmentsInPPACHomePageCards -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4
+     Excludes insights for Managed environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4 in PPAC homepage insights cards.
+    #>
+    param
+    (
+        [Parameter(Mandatory = $true)]
+        [string]$EnvironmentId
+    )
+
+    Write-Host "Retrieving environment."
+
+    $environment = Get-AdminPowerAppEnvironment -EnvironmentName $EnvironmentId
+    if ($environment -eq $null)
+    {
+        Write-Host "No environment was found with the given id."
+        return
+    }
+
+    $governanceConfiguration = $environment.Internal.properties.governanceConfiguration
+    $governanceConfiguration = CoalesceGovernanceConfiguration -GovernanceConfiguration $governanceConfiguration
+    if ($governanceConfiguration.protectionLevel -ne "Standard")
+    {
+        Write-Host "The specified environment is not managed."
+        return
+    }
+
+    if ($governanceConfiguration.settings.extendedSettings.includeOnHomepageInsights -eq "False")
+    {
+        Write-Host "The specified environment is already excluded from PPAC homepage insights cards."
+        return
+    }
+    
+    $governanceConfiguration.settings.extendedSettings.includeOnHomepageInsights = "false"
+
+    $response = Set-AdminPowerAppEnvironmentGovernanceConfiguration -EnvironmentName $EnvironmentId -UpdatedGovernanceConfiguration $GovernanceConfiguration
+    if ($response.Code -ne 202)
+    {
+        Write-Host "Failed to exclude insights for the specified environment in PPAC homepage cards."
+        Write-Host $response.Internal.Message
+        return
+    }
+    
+    Write-Host "Excluded insights for the specified environment in PPAC homepage cards."    
 }
 
 function CleanV1TestPolicies
