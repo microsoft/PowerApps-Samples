@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
   <control namespace="SampleNamespace" constructor="FormattingAPIControl" version="1.1.0" display-name-key="FormattingAPIControl_Display_Key" description-key="FormattingAPIControl_Desc_Key" control-type="standard">
-    <property name="controlValue" display-name-key="controlValue_Display_Key" description-key="controlValue_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
+    <property name="currencyInput" display-name-key="controlValue_Display_Key" description-key="controlValue_Desc_Key" of-type="Currency" usage="bound" required="true" />
+    <property name="dateInput" display-name-key="controlValue_Display_Key" description-key="controlValue_Desc_Key" of-type="DateAndTime.DateAndTime" usage="bound" required="true" />
+    <property name="decimalInput" display-name-key="controlValue_Display_Key" description-key="controlValue_Desc_Key" of-type="Decimal" usage="bound" required="true" />
+    <property name="integerInput" display-name-key="controlValue_Display_Key" description-key="controlValue_Desc_Key" of-type="Whole.None" usage="bound" required="true" />
     <resources>
       <code path="index.ts" order="1" />
       <css path="css/FormattingAPIControl.css" order="2" />

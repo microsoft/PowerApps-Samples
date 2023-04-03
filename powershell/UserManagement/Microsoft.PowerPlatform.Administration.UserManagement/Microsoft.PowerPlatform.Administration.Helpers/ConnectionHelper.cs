@@ -55,6 +55,7 @@ namespace Microsoft.PowerPlatform.Administration.Helpers
             if (!string.IsNullOrEmpty(service.LastCrmError))
             {
                 _logger.LogException($"Error connecting to instance {instanceUrl}. Error : {service.LastCrmError}");
+                throw new System.Exception($"Error connecting to instance {instanceUrl}. Error : {service.LastCrmError}");
             }
             else
             {

@@ -1610,6 +1610,182 @@ function ExcludeInsightsForManagedEnvironmentsInWeeklyEmailDigest
     Write-Host "Excluded insights for the specified environment in weekly email digest."    
 }
 
+function SetManagedEnvironmentSolutionCheckerEnforcementLevel
+{
+    <#
+     .SYNOPSIS
+     Sets solution checker enforcement for the specified Managed environment.
+     .DESCRIPTION
+     The SetManagedEnvironmentSolutionCheckerEnforcementLevel cmdlet sets solution checker enforcement for the specified Managed environment.
+     Use Get-Help SetManagedEnvironmentSolutionCheckerEnforcementLevel -Examples for more details.
+     .PARAMETER EnvironmentId
+     The id (usually a GUID) of the environment.
+     .PARAMETER Level
+     The enforcement level (none, warn, block).
+     .EXAMPLE
+     SetManagedEnvironmentSolutionCheckerEnforcementLevel -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4 -Level block
+     Sets solution checker enforcement for Managed environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4 to the "block" level.
+    #>
+    param
+    (
+        [Parameter(Mandatory = $true)]
+        [string]$EnvironmentId,
+
+        [Parameter(Mandatory = $true)]
+        [string][ValidateSet("none", "warn", "block")]$Level
+    )
+
+    Write-Host "Retrieving environment."
+
+    $environment = Get-AdminPowerAppEnvironment -EnvironmentName $EnvironmentId
+    if ($environment -eq $null)
+    {
+        Write-Host "No environment was found with the given id."
+        return
+    }
+
+    $governanceConfiguration = $environment.Internal.properties.governanceConfiguration
+    $governanceConfiguration = CoalesceGovernanceConfiguration -GovernanceConfiguration $governanceConfiguration
+    if ($governanceConfiguration.protectionLevel -ne "Standard")
+    {
+        Write-Host "The specified environment is not managed."
+        return
+    }
+    
+    $governanceConfiguration.settings.extendedSettings.solutionCheckerMode = $Level
+
+    $response = Set-AdminPowerAppEnvironmentGovernanceConfiguration -EnvironmentName $EnvironmentId -UpdatedGovernanceConfiguration $GovernanceConfiguration
+    if ($response.Code -ne 202)
+    {
+        Write-Host "Failed to set solution checker enforcement for the specified environment."
+        Write-Host $response.Internal.Message
+        return
+    }
+    
+    Write-Host "Set solution checker enforcement for the specified environment."    
+}
+
+function SetManagedEnvironmentMakerOnboardingMarkdownContent
+{
+    <#
+     .SYNOPSIS
+     Sets markdown content for maker onboarding for the specified Managed environment.
+     .DESCRIPTION
+     The SetManagedEnvironmentMakerOnboardingMarkdownContent cmdlet sets markdown content for maker onboarding for the specified Managed environment.
+     Use Get-Help SetManagedEnvironmentMakerOnboardingMarkdownContent -Examples for more details.
+     .PARAMETER EnvironmentId
+     The id (usually a GUID) of the environment.
+     .PARAMETER Markdown
+     The maker content Markdown.
+     .EXAMPLE
+     SetManagedEnvironmentMakerOnboardingMarkdownContent -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4 -Markdown "## Welcome to Power Apps
+### Let's get started"
+
+     Sets Maker onboarding markdown content for Managed environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4 to
+        ## Welcome to NR Power Apps
+        ### Let's get started
+    #>
+    param
+    (
+        [Parameter(Mandatory = $true)]
+        [string]$EnvironmentId,
+
+        [Parameter(Mandatory = $true)]
+        [string]$Markdown
+    )
+
+    Write-Host "Retrieving environment."
+
+    $environment = Get-AdminPowerAppEnvironment -EnvironmentName $EnvironmentId
+    if ($environment -eq $null)
+    {
+        Write-Host "No environment was found with the given id."
+        return
+    }
+
+    $governanceConfiguration = $environment.Internal.properties.governanceConfiguration
+    $governanceConfiguration = CoalesceGovernanceConfiguration -GovernanceConfiguration $governanceConfiguration
+    if ($governanceConfiguration.protectionLevel -ne "Standard")
+    {
+        Write-Host "The specified environment is not managed."
+        return
+    }
+    
+    $makerOnboardingChangeTimestamp = (Get-Date).ToUniversalTime().ToString("ddd, dd MMM yyyy HH:mm:ss 'GMT'")
+
+    $governanceConfiguration.settings.extendedSettings.makerOnboardingMarkdown = $Markdown
+    $governanceConfiguration.settings.extendedSettings.makerOnboardingTimestamp = $makerOnboardingChangeTimestamp
+
+    $response = Set-AdminPowerAppEnvironmentGovernanceConfiguration -EnvironmentName $EnvironmentId -UpdatedGovernanceConfiguration $GovernanceConfiguration
+    if ($response.Code -ne 202)
+    {
+        Write-Host "Failed to set markdown content for maker onboarding for the specified environment."
+        Write-Host $response.Internal.Message
+        return
+    }
+    
+    Write-Host "Set markdown content for maker onboarding for the specified environment."    
+}
+
+function SetManagedEnvironmentMakerOnboardingLearnMoreUrl
+{
+    <#
+     .SYNOPSIS
+     Sets Learn more URL for maker onboarding for the specified Managed environment.
+     .DESCRIPTION
+     The SetManagedEnvironmentMakerOnboardingLearnMoreUrl cmdlet Sets Learn more URL for maker onboarding for the specified Managed environment.
+     Use Get-Help SetManagedEnvironmentMakerOnboardingLearnMoreUrl -Examples for more details.
+     .PARAMETER EnvironmentId
+     The id (usually a GUID) of the environment.
+     .PARAMETER LearnMoreUrl
+     The maker onboarding learn more URL.
+     .EXAMPLE
+     SetManagedEnvironmentMakerOnboardingLearnMoreUrl -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4 -LearnMoreUrl "www.microsoft.com"
+     Sets Learn more URL for maker onboarding for Managed environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4 to "www.microsoft.com"
+    #>
+    param
+    (
+        [Parameter(Mandatory = $true)]
+        [string]$EnvironmentId,
+
+        [Parameter(Mandatory = $true)]
+        [string]$LearnMoreUrl
+    )
+
+    Write-Host "Retrieving environment."
+
+    $environment = Get-AdminPowerAppEnvironment -EnvironmentName $EnvironmentId
+    if ($environment -eq $null)
+    {
+        Write-Host "No environment was found with the given id."
+        return
+    }
+
+    $governanceConfiguration = $environment.Internal.properties.governanceConfiguration
+    $governanceConfiguration = CoalesceGovernanceConfiguration -GovernanceConfiguration $governanceConfiguration
+    if ($governanceConfiguration.protectionLevel -ne "Standard")
+    {
+        Write-Host "The specified environment is not managed."
+        return
+    }
+    
+    $makerOnboardingChangeTimestamp = (Get-Date).ToUniversalTime().ToString("ddd, dd MMM yyyy HH:mm:ss 'GMT'")
+
+    $governanceConfiguration.settings.extendedSettings.makerOnboardingUrl = $LearnMoreUrl
+    $governanceConfiguration.settings.extendedSettings.makerOnboardingTimestamp = $makerOnboardingChangeTimestamp
+
+    $response = Set-AdminPowerAppEnvironmentGovernanceConfiguration -EnvironmentName $EnvironmentId -UpdatedGovernanceConfiguration $GovernanceConfiguration
+    if ($response.Code -ne 202)
+    {
+        Write-Host "Failed to set Learn more URL for maker onboarding for the specified environment."
+        Write-Host $response.Internal.Message
+        return
+    }
+    
+    Write-Host "Set Learn more URL for maker onboarding for the specified environment."    
+}
+
+
 #internal, helper function
 function CheckHttpResponse
 {
@@ -1660,6 +1836,118 @@ function CleanTestPolicies
             }
         }
     }
+}
+
+function IncludeInsightsForManagedEnvironmentsInPPACHomePageCards
+{
+    <#
+     .SYNOPSIS
+     Include insights for the specified Managed environment from PPAC homepage insights cards.
+     .DESCRIPTION
+     The IncludeInsightsForManagedEnvironmentsInPPACHomePageCards cmdlet includes insights for the specified Managed environment from PPAC homepage insights cards.
+     Use Get-Help IncludeInsightsForManagedEnvironmentsInPPACHomePageCards -Examples for more details.
+     .PARAMETER EnvironmentId
+     The id (usually a GUID) of the environment.
+     .EXAMPLE
+     IncludeInsightsForManagedEnvironmentsInPPACHomePageCards -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4
+     Includes insights for Managed environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4 in PPAC homepage insights cards.
+    #>
+    param
+    (
+        [Parameter(Mandatory = $true)]
+        [string]$EnvironmentId
+    )
+
+    Write-Host "Retrieving environment."
+
+    $environment = Get-AdminPowerAppEnvironment -EnvironmentName $EnvironmentId
+    if ($environment -eq $null)
+    {
+        Write-Host "No environment was found with the given id."
+        return
+    }
+
+    $governanceConfiguration = $environment.Internal.properties.governanceConfiguration
+    $governanceConfiguration = CoalesceGovernanceConfiguration -GovernanceConfiguration $governanceConfiguration
+    if ($governanceConfiguration.protectionLevel -ne "Standard")
+    {
+        Write-Host "The specified environment is not managed."
+        return
+    }
+
+    if ($governanceConfiguration.settings.extendedSettings.includeOnHomepageInsights -eq "True")
+    {
+        Write-Host "The specified environment is already included in PPAC homepage insights cards."
+        return
+    }
+    
+    $governanceConfiguration.settings.extendedSettings.includeOnHomepageInsights = "true"
+
+    $response = Set-AdminPowerAppEnvironmentGovernanceConfiguration -EnvironmentName $EnvironmentId -UpdatedGovernanceConfiguration $GovernanceConfiguration
+    if ($response.Code -ne 202)
+    {
+        Write-Host "Failed to include insights for the specified environment in PPAC homepage insights cards."
+        Write-Host $response.Internal.Message
+        return
+    }
+    
+    Write-Host "Included insights for the specified environment in PPAC homepage insights cards."    
+}
+
+function ExcludeInsightsForManagedEnvironmentsInPPACHomePageCards
+{
+    <#
+     .SYNOPSIS
+     Excludes insights for the specified Managed environment from PPAC homepage insights cards.
+     .DESCRIPTION
+     The ExcludeInsightsForManagedEnvironmentsInPPACHomePageCards cmdlet excludes insights for the specified Managed environment from PPAC homepage insights cards.
+     Use Get-Help ExcludeInsightsForManagedEnvironmentsInPPACHomePageCards -Examples for more details.
+     .PARAMETER EnvironmentId
+     The id (usually a GUID) of the environment.
+     .EXAMPLE
+     ExcludeInsightsForManagedEnvironmentsInPPACHomePageCards -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4
+     Excludes insights for Managed environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4 in PPAC homepage insights cards.
+    #>
+    param
+    (
+        [Parameter(Mandatory = $true)]
+        [string]$EnvironmentId
+    )
+
+    Write-Host "Retrieving environment."
+
+    $environment = Get-AdminPowerAppEnvironment -EnvironmentName $EnvironmentId
+    if ($environment -eq $null)
+    {
+        Write-Host "No environment was found with the given id."
+        return
+    }
+
+    $governanceConfiguration = $environment.Internal.properties.governanceConfiguration
+    $governanceConfiguration = CoalesceGovernanceConfiguration -GovernanceConfiguration $governanceConfiguration
+    if ($governanceConfiguration.protectionLevel -ne "Standard")
+    {
+        Write-Host "The specified environment is not managed."
+        return
+    }
+
+    if ($governanceConfiguration.settings.extendedSettings.includeOnHomepageInsights -eq "False")
+    {
+        Write-Host "The specified environment is already excluded from PPAC homepage insights cards."
+        return
+    }
+    
+    $governanceConfiguration.settings.extendedSettings.includeOnHomepageInsights = "false"
+
+    $response = Set-AdminPowerAppEnvironmentGovernanceConfiguration -EnvironmentName $EnvironmentId -UpdatedGovernanceConfiguration $GovernanceConfiguration
+    if ($response.Code -ne 202)
+    {
+        Write-Host "Failed to exclude insights for the specified environment in PPAC homepage cards."
+        Write-Host $response.Internal.Message
+        return
+    }
+    
+    Write-Host "Excluded insights for the specified environment in PPAC homepage cards."    
 }
 
 function CleanV1TestPolicies
