@@ -1,4 +1,4 @@
-﻿using Microsoft.IdentityModel.Clients.ActiveDirectory;
+﻿using Microsoft.Identity.Client;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Configuration;
@@ -7,7 +7,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Microsoft.Dynamics365.CustomerEngagement.Samples
+namespace PowerApps.Samples
 {
     /// <summary>
     /// Provides the D365 web service and Azure app registration information read
@@ -27,9 +27,9 @@ namespace Microsoft.Dynamics365.CustomerEngagement.Samples
         {
             var appSettings = ConfigurationManager.AppSettings;
 
-            ClientId    = appSettings["Client-ID"];
-            Secret      = appSettings["Client-Secret"];
-            TenantId    = appSettings["Tenant-ID"];
+            ClientId = appSettings["Client-ID"];
+            Secret = appSettings["Client-Secret"];
+            TenantId = appSettings["Tenant-ID"];
             ResourceUri = appSettings["Resource-URL"];
             ServiceRoot = appSettings["Service-Root"];
         }
@@ -53,7 +53,7 @@ namespace Microsoft.Dynamics365.CustomerEngagement.Samples
 
             // Format and then output the JSON response to the console.
             if (response.IsSuccessStatusCode)
-            {  
+            {
                 JObject body = JObject.Parse(response.Content.ReadAsStringAsync().Result);
                 Console.WriteLine(body.ToString());
             }
@@ -62,6 +62,7 @@ namespace Microsoft.Dynamics365.CustomerEngagement.Samples
                 Console.WriteLine("The request failed with a status of '{0}'",
                        response.ReasonPhrase);
             }
+            Console.ReadKey(); // Pause console until a key is pressed
         }
 
         /// <summary>
@@ -102,12 +103,17 @@ namespace Microsoft.Dynamics365.CustomerEngagement.Samples
         /// <returns></returns>
         public static async Task<string> GetAccessToken(WebApiConfiguration webConfig)
         {
-            var credentials = new ClientCredential(webConfig.ClientId, webConfig.Secret);
-            var authContext = new AuthenticationContext(
-                "https://login.microsoftonline.com/" + webConfig.TenantId);
-            var result = await authContext.AcquireTokenAsync(webConfig.ResourceUri, credentials);
+            var authBuilder = ConfidentialClientApplicationBuilder.Create(webConfig.ClientId)
+                .WithTenantId(webConfig.TenantId)
+                .WithClientSecret(webConfig.Secret)
+                .Build();
 
-            return result.AccessToken;
+            string[] scopes = { webConfig.ResourceUri + "/.default" };
+
+            AuthenticationResult tokenResult =
+                 await authBuilder.AcquireTokenForClient(scopes).ExecuteAsync();
+
+            return tokenResult.AccessToken;
         }
     }
 }
