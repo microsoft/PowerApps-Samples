@@ -6,7 +6,7 @@ This sample shows how to authenticate an Application User with the Dataverse web
 It demonstrates web service authentication and message invocation for use in a server-to-server scenario.
 
 An Application User is a virtual user with no associated Dataverse license. More information:
-[Manage application users in the Power Platform admin center](/power-platform/admin/manage-application-users#create-an-application-user)
+[Manage application users in the Power Platform admin center](https://learn.microsoft.com/power-platform/admin/manage-application-users#create-an-application-user)
 
 ## How to run this sample
 
@@ -60,7 +60,7 @@ server-to-server scenario.
 
 Setup includes creating an Azure app registration with client secret, an Application User, and assigning that user a role (that can read accounts) in your environment.
 
-Follow the instructions in the topic [Use single-tenant server-to-server authentication](/power-apps/developer/data-platform/use-single-tenant-server-server-authentication)
+Follow the instructions in the topic [Use single-tenant server-to-server authentication](https://learn.microsoft.com/power-apps/developer/data-platform/use-single-tenant-server-server-authentication)
 
 ### Demonstrate
 
@@ -73,4 +73,4 @@ Follow the instructions in the topic [Use single-tenant server-to-server authent
 
 In Power Apps, de-activate the Application User in your environment. In the Azure portal, delete the app registration.
 
-More information: [Activate or deactivate an application user](/power-platform/admin/manage-application-users#activate-or-deactivate-an-application-user)
+More information: [Activate or deactivate an application user](https://learn.microsoft.com/power-platform/admin/manage-application-users#activate-or-deactivate-an-application-user)
