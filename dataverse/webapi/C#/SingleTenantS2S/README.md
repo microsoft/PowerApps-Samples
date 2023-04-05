@@ -71,4 +71,6 @@ Follow the instructions in the topic [Use single-tenant server-to-server authent
 
 ### Clean up
 
-In Power Apps, delete the Application User from your environment. In the Azure portal, delete the app registration.
+In Power Apps, de-activate the Application User in your environment. In the Azure portal, delete the app registration.
+
+More information: [Activate or deactivate an application user](/power-platform/admin/manage-application-users#activate-or-deactivate-an-application-user)
