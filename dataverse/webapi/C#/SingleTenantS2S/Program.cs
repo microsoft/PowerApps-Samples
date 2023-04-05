@@ -37,7 +37,7 @@ namespace PowerApps.Samples
 
     /// <summary>
     /// Single tenant service-to-service (S2S) sample. This sample makes use of an
-    /// app registration in Azure to access a D365 server using WebAPI calls without 
+    /// app registration in Azure to access a D365 server using Web API calls without 
     /// requiring a user's logon credentials.
     /// </summary>
     class SingleTenantS2S
@@ -47,7 +47,7 @@ namespace PowerApps.Samples
             // Obtain the app registration and service configuration values from the App.config file.
             var webConfig = new WebApiConfiguration();
 
-            // Send a WebAPI message request for the top 3 account names.
+            // Send a Web API message request for the top 3 account names.
             var response = SendMessageAsync(webConfig, HttpMethod.Get,
                 webConfig.ServiceRoot + "accounts?$select=name&$top=3").Result;
 
@@ -68,9 +68,9 @@ namespace PowerApps.Samples
         /// <summary>
         /// Send a message via HTTP.
         /// </summary>
-        /// <param name="webConfig">A WebAPI configuration.</param>
+        /// <param name="webConfig">A Web API configuration.</param>
         /// <param name="httpMethod">The HTTP method to use with the message.</param>
-        /// <param name="messageUri">The URI of the WebAPI endpoint plus ODATA parameters.</param>
+        /// <param name="messageUri">The URI of the Web API endpoint plus ODATA parameters.</param>
         /// <param name="body">The message body; otherwise, null.</param>
         /// <returns></returns>
         public static async Task<HttpResponseMessage> SendMessageAsync(WebApiConfiguration webConfig,
@@ -79,7 +79,7 @@ namespace PowerApps.Samples
             // Get the access token that is required for authentication.
             var accessToken = await GetAccessToken(webConfig);
 
-            // Create an HTTP message with the required WebAPI headers populated.
+            // Create an HTTP message with the required Web API headers populated.
             var client = new HttpClient();
             var message = new HttpRequestMessage(httpMethod, messageUri);
 
@@ -92,15 +92,15 @@ namespace PowerApps.Samples
             if (body != null)
                 message.Content = new StringContent(body, UnicodeEncoding.UTF8, "application/json");
 
-            // Send the message to the WebAPI. 
+            // Send the message to the Web API. 
             return await client.SendAsync(message);
         }
 
         /// <summary>
         /// Get the authentication access token.
         /// </summary>
-        /// <param name="webConfig">The WebAPI configuration.</param>
-        /// <returns></returns>
+        /// <param name="webConfig">The Web API configuration.</param>
+        /// <returns>Authentication access token</returns>
         public static async Task<string> GetAccessToken(WebApiConfiguration webConfig)
         {
             var authBuilder = ConfidentialClientApplicationBuilder.Create(webConfig.ClientId)

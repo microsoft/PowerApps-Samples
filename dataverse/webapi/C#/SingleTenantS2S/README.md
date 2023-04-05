@@ -1,9 +1,9 @@
-# A single tenant service-to-service sample
+# A single tenant server-to-server sample
 
 | **C#** | **.NET Framework 4.8** |
 
 This sample shows how to authenticate an Application User with the Dataverse web service and invoke a Web API.
-It demonstrates web service authentication and message invocation for use in a service-to-service scenario.
+It demonstrates web service authentication and message invocation for use in a server-to-server scenario.
 
 An Application User is a virtual user with no associated Dataverse license. More information:
 [Manage application users in the Power Platform admin center](/power-platform/admin/manage-application-users#create-an-application-user)
@@ -21,7 +21,7 @@ Note: Make sure your test environment has at least one active account in the Acc
 ## What this sample does
 
 This code sample retrieves account data from the Dataverse environment and outputs it to the console.
-Below is listed some example output showing the top three accounts.
+Below is listed some example output displaying the top three account nanes.
 
 ```json
   {
@@ -54,22 +54,21 @@ Below is listed some example output showing the top three accounts.
 This program uses an app registration in Microsodft Azure, specified in the App.config file, 
 to authenticate the Application User and invoke a Web API request. Use of a client secret associated
 with the app registration allows for a non-interactive authentication flow which can be used in a
-service-to-service scenario.
+server-to-server scenario.
 
 ### Setup
 
-Setup includes creating an Azure app registration, an Application User, and assigning
-that user a role in your environment.
+Setup includes creating an Azure app registration with client secret, an Application User, and assigning that user a role (that can read accounts) in your environment.
 
-
+Follow the instructions in the topic [Use single-tenant server-to-server authentication](/power-apps/developer/data-platform/use-single-tenant-server-server-authentication)
 
 ### Demonstrate
 
 - Use of the Microsoft Authentication Library (MSAL) for web service authentication
-- Use of an Application User, and app registration with client secret for authentication
+- Use of an Application User and app registration with client secret for authentication
 - Web client configuration
 - Web API bound function invocation and web service response parsing
 
 ### Clean up
 
-Manually delete the Application User and Azure app registration.
+In Power Apps, delete the Application User from your environment. In the Azure portal, delete the app registration.
