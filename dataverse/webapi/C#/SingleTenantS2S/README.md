@@ -21,7 +21,7 @@ Note: Make sure your test environment has at least one active account in the Acc
 ## What this sample does
 
 This code sample retrieves account data from the Dataverse environment and outputs it to the console.
-Below is shown some example output.
+Below is listed some example output showing the top three accounts.
 
 ```json
   {
