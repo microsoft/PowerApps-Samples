@@ -25,7 +25,7 @@ Below is listed some example output displaying the top three account nanes.
 
 ```json
   {
-  "@odata.context": "https://crmue.api.crm.dynamics.com/api/data/v9.2/$metadata#accounts(name)",
+  "@odata.context": "https://myorg.api.crm.dynamics.com/api/data/v9.2/$metadata#accounts(name)",
   "@Microsoft.Dynamics.CRM.totalrecordcount": -1,
   "@Microsoft.Dynamics.CRM.totalrecordcountlimitexceeded": false,
   "@Microsoft.Dynamics.CRM.globalmetadataversion": "81011296",
