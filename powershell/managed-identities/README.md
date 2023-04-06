@@ -13,5 +13,17 @@ Follow the instructions in the article [Use managed identities for Azure with yo
 ### SetupSubscriptionForPowerPlatform.ps1
 This script registers the Azure subscription for Microsoft.PowerPlatform resource provider and also allow lists the subscription for enterprisePoliciesPreview feature.
 
-### EnterprisePolicyOperations.ps1
-<!-- Enter script description that begins with "This script" -->
+### CreateIdentityEnterprisePolicy.ps1
+This script generates Microsoft.PowerPlatform enterprise policy under certain Azure subscription and resource group.
+
+### NewIdentity.ps1
+This script links or swap the generated Microsoft.PowerPlatform enterprise policy to a certain Dataverse environment.
+
+### GetIdentityEnterprisePolicyforEnvironment.ps1
+This script outputs linked Microsoft.PowerPlatform enterprise policy ID for a given Dataverse environment.
+
+### RevertIdentity.ps1
+This script unlinks a certain Microsoft.PowerPlatform enterprise policy for a given Dataverse environment.
+
+### RemoveIdentityEnterprisePolicy.ps1
+This script removes an unlinked Microsoft.PowerPlatform enterprise policy under certain Azure subscription and resource group.
