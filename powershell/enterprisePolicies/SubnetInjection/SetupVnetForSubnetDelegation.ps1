@@ -30,6 +30,7 @@ function SetupVnetForSubnetDelegation
     if ($null -eq  $virtualNetwork.Name)
     {
          Write-Host "Virtual network not reterieved" -ForegroundColor Red
+         return
     }
     Write-Host "Virtual network reterieved" -ForegroundColor Green
 
@@ -38,6 +39,7 @@ function SetupVnetForSubnetDelegation
     if ($null -eq  $subnet.Name)
     {
          Write-Host "Virtual network subnet not reterieved" -ForegroundColor Red
+         return
     }
     Write-Host "Virtual network subnet reterieved" -ForegroundColor Green
 

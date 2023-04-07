@@ -22,6 +22,7 @@ function SetupSubscriptionForPowerPlatform
     {
         $registerString = $register | ConvertTo-Json
         Write-Host "Registration failed for subscription $subscription $registerString" -ForegroundColor Red
+        return
     }
 
     if ($register.RegistrationState -eq "Registered")
@@ -50,6 +51,7 @@ function SetupSubscriptionForPowerPlatform
     {
         $registerString = $register | ConvertTo-Json
         Write-Host "Registration failed for feature enterprisePoliciesPreview for subscription $subscription $registerString" -ForegroundColor Red
+        return
     }
     Write-Host "Subscription registered for feature enterprisePoliciesPreview for Microsoft.PowerPlatform"        
 }
