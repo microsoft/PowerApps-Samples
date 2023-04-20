@@ -39,7 +39,7 @@ class Program
         }
 
         // Pause the console so it does not close.
-        Console.WriteLine("Press any key to exit.");
+        Console.WriteLine("Press the <Enter> key to exit.");
         Console.ReadLine();
     }
 }
