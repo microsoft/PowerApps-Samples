@@ -1654,7 +1654,7 @@ function SetManagedEnvironmentSolutionCheckerEnforcementLevel
     
     if($governanceConfiguration.settings.extendedSettings.solutionCheckerMode -eq $null)
     {
-        $governanceConfiguration.settings.extendedSettings.Add('solutionCheckerMode', $Level)
+        $governanceConfiguration.settings.extendedSettings | Add-Member -MemberType NoteProperty -Name 'solutionCheckerMode' -Value $Level
     }
     else
     {
@@ -1722,7 +1722,7 @@ function SetManagedEnvironmentMakerOnboardingMarkdownContent
 
     if($governanceConfiguration.settings.extendedSettings.makerOnboardingMarkdown -eq $null)
     {
-        $governanceConfiguration.settings.extendedSettings.Add('makerOnboardingMarkdown', $Markdown)
+        $governanceConfiguration.settings.extendedSettings | Add-Member -MemberType NoteProperty -Name 'makerOnboardingMarkdown' -Value $Markdown
     }
     else
     {
@@ -1731,7 +1731,7 @@ function SetManagedEnvironmentMakerOnboardingMarkdownContent
 
     if($governanceConfiguration.settings.extendedSettings.makerOnboardingTimestamp -eq $null)
     {
-        $governanceConfiguration.settings.extendedSettings.Add('makerOnboardingTimestamp', $makerOnboardingChangeTimestamp)
+        $governanceConfiguration.settings.extendedSettings | Add-Member -MemberType NoteProperty -Name 'makerOnboardingTimestamp' -Value $makerOnboardingChangeTimestamp
     }
     else
     {
@@ -1795,7 +1795,7 @@ function SetManagedEnvironmentMakerOnboardingLearnMoreUrl
 
     if($governanceConfiguration.settings.extendedSettings.makerOnboardingUrl -eq $null)
     {
-        $governanceConfiguration.settings.extendedSettings.Add('makerOnboardingUrl', $LearnMoreUrl)
+        $governanceConfiguration.settings.extendedSettings | Add-Member -MemberType NoteProperty -Name 'makerOnboardingUrl' -Value $LearnMoreUrl
     }
     else
     {
@@ -1804,7 +1804,7 @@ function SetManagedEnvironmentMakerOnboardingLearnMoreUrl
 
     if($governanceConfiguration.settings.extendedSettings.makerOnboardingTimestamp -eq $null)
     {
-        $governanceConfiguration.settings.extendedSettings.Add('makerOnboardingTimestamp', $makerOnboardingChangeTimestamp)
+        $governanceConfiguration.settings.extendedSettings | Add-Member -MemberType NoteProperty -Name 'makerOnboardingTimestamp' -Value $makerOnboardingChangeTimestamp
     }
     else
     {
@@ -1920,7 +1920,7 @@ function IncludeInsightsForManagedEnvironmentsInPPACHomePageCards
     
     if ($governanceConfiguration.settings.extendedSettings.includeOnHomepageInsights -eq $null)
     {
-        $governanceConfiguration.settings.extendedSettings.Add('includeOnHomepageInsights',"true")
+        $governanceConfiguration.settings.extendedSettings | Add-Member -MemberType NoteProperty -Name 'includeOnHomepageInsights' -Value "true"
     }
     else
     {
@@ -1983,7 +1983,7 @@ function ExcludeInsightsForManagedEnvironmentsInPPACHomePageCards
     
     if ($governanceConfiguration.settings.extendedSettings.includeOnHomepageInsights -eq $null)
     {
-        $governanceConfiguration.settings.extendedSettings.Add('includeOnHomepageInsights',"false")
+        $governanceConfiguration.settings.extendedSettings | Add-Member -MemberType NoteProperty -Name 'includeOnHomepageInsights' -Value "false"
     }
     else
     {
