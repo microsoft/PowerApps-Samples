@@ -1652,8 +1652,15 @@ function SetManagedEnvironmentSolutionCheckerEnforcementLevel
         return
     }
     
-    $governanceConfiguration.settings.extendedSettings.solutionCheckerMode = $Level
-
+    if($governanceConfiguration.settings.extendedSettings.solutionCheckerMode -eq $null)
+    {
+        $governanceConfiguration.settings.extendedSettings.Add('solutionCheckerMode', $Level)
+    }
+    else
+    {
+        $governanceConfiguration.settings.extendedSettings.solutionCheckerMode = $Level
+    }
+    
     $response = Set-AdminPowerAppEnvironmentGovernanceConfiguration -EnvironmentName $EnvironmentId -UpdatedGovernanceConfiguration $GovernanceConfiguration
     if ($response.Code -ne 202)
     {
@@ -1710,11 +1717,26 @@ function SetManagedEnvironmentMakerOnboardingMarkdownContent
         Write-Host "The specified environment is not managed."
         return
     }
-    
+
     $makerOnboardingChangeTimestamp = (Get-Date).ToUniversalTime().ToString("ddd, dd MMM yyyy HH:mm:ss 'GMT'")
 
-    $governanceConfiguration.settings.extendedSettings.makerOnboardingMarkdown = $Markdown
-    $governanceConfiguration.settings.extendedSettings.makerOnboardingTimestamp = $makerOnboardingChangeTimestamp
+    if($governanceConfiguration.settings.extendedSettings.makerOnboardingMarkdown -eq $null)
+    {
+        $governanceConfiguration.settings.extendedSettings.Add('makerOnboardingMarkdown', $Markdown)
+    }
+    else
+    {
+        $governanceConfiguration.settings.extendedSettings.makerOnboardingMarkdown = $Markdown
+    }
+
+    if($governanceConfiguration.settings.extendedSettings.makerOnboardingTimestamp -eq $null)
+    {
+        $governanceConfiguration.settings.extendedSettings.Add('makerOnboardingTimestamp', $makerOnboardingChangeTimestamp)
+    }
+    else
+    {
+        $governanceConfiguration.settings.extendedSettings.makerOnboardingTimestamp = $makerOnboardingChangeTimestamp
+    }
 
     $response = Set-AdminPowerAppEnvironmentGovernanceConfiguration -EnvironmentName $EnvironmentId -UpdatedGovernanceConfiguration $GovernanceConfiguration
     if ($response.Code -ne 202)
@@ -1771,8 +1793,23 @@ function SetManagedEnvironmentMakerOnboardingLearnMoreUrl
     
     $makerOnboardingChangeTimestamp = (Get-Date).ToUniversalTime().ToString("ddd, dd MMM yyyy HH:mm:ss 'GMT'")
 
-    $governanceConfiguration.settings.extendedSettings.makerOnboardingUrl = $LearnMoreUrl
-    $governanceConfiguration.settings.extendedSettings.makerOnboardingTimestamp = $makerOnboardingChangeTimestamp
+    if($governanceConfiguration.settings.extendedSettings.makerOnboardingUrl -eq $null)
+    {
+        $governanceConfiguration.settings.extendedSettings.Add('makerOnboardingUrl', $LearnMoreUrl)
+    }
+    else
+    {
+        $governanceConfiguration.settings.extendedSettings.makerOnboardingUrl = $LearnMoreUrl
+    }
+
+    if($governanceConfiguration.settings.extendedSettings.makerOnboardingTimestamp -eq $null)
+    {
+        $governanceConfiguration.settings.extendedSettings.Add('makerOnboardingTimestamp', $makerOnboardingChangeTimestamp)
+    }
+    else
+    {
+        $governanceConfiguration.settings.extendedSettings.makerOnboardingTimestamp = $makerOnboardingChangeTimestamp
+    }
 
     $response = Set-AdminPowerAppEnvironmentGovernanceConfiguration -EnvironmentName $EnvironmentId -UpdatedGovernanceConfiguration $GovernanceConfiguration
     if ($response.Code -ne 202)
@@ -1881,7 +1918,14 @@ function IncludeInsightsForManagedEnvironmentsInPPACHomePageCards
         return
     }
     
-    $governanceConfiguration.settings.extendedSettings.includeOnHomepageInsights = "true"
+    if ($governanceConfiguration.settings.extendedSettings.includeOnHomepageInsights -eq $null)
+    {
+        $governanceConfiguration.settings.extendedSettings.Add('includeOnHomepageInsights',"true")
+    }
+    else
+    {
+        $governanceConfiguration.settings.extendedSettings.includeOnHomepageInsights = "true"
+    }
 
     $response = Set-AdminPowerAppEnvironmentGovernanceConfiguration -EnvironmentName $EnvironmentId -UpdatedGovernanceConfiguration $GovernanceConfiguration
     if ($response.Code -ne 202)
@@ -1937,7 +1981,14 @@ function ExcludeInsightsForManagedEnvironmentsInPPACHomePageCards
         return
     }
     
-    $governanceConfiguration.settings.extendedSettings.includeOnHomepageInsights = "false"
+    if ($governanceConfiguration.settings.extendedSettings.includeOnHomepageInsights -eq $null)
+    {
+        $governanceConfiguration.settings.extendedSettings.Add('includeOnHomepageInsights',"false")
+    }
+    else
+    {
+        $governanceConfiguration.settings.extendedSettings.includeOnHomepageInsights = "false"
+    }
 
     $response = Set-AdminPowerAppEnvironmentGovernanceConfiguration -EnvironmentName $EnvironmentId -UpdatedGovernanceConfiguration $GovernanceConfiguration
     if ($response.Code -ne 202)
