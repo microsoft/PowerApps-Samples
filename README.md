@@ -1,8 +1,14 @@
 # Power Apps Samples
 
-Welcome to the samples repo for Power Apps.
+Welcome to the samples repo for Power Apps. The repo contains sample code for Power Apps, including Dataverse, model-driven apps, canvas apps, Power Apps component framework, portals, and AI Builder. 
 
-For Power Apps developer documentation, see [Power Apps for developers](https://docs.microsoft.com/powerapps/#pivot=home&panel=developer).
+## Resources
+- [Dataverse developer docs](https://learn.microsoft.com/power-apps/developer/data-platform/)
+- [Model-driven apps developer docs](https://learn.microsoft.com/power-apps/developer/model-driven-apps/)
+- [Canvas apps developer docs](https://learn.microsoft.com/power-apps/maker/canvas-apps/dev-enterprise-intro)
+- [Power Apps component framework docs](https://learn.microsoft.com/power-apps/developer/component-framework/overview)
+- [Power Platform developer docs](https://learn.microsoft.com/power-platform/developer)
+
 
 ## Contributing
 
