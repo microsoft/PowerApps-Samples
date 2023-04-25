@@ -2,12 +2,10 @@
 
 This sample shows how to write a plug-in that supports a Custom API named `sample_ExportDataUsingFetchXmlToAnnotation`. You can download the sample from [here](https://github.com/Microsoft/PowerApps-Samples/tree/master/cds/orgsvc/C%23/ExportDataUsingFetchXmlToAnnotation).
 
-This sample creates a plug-in for the main operation of the `sample_ExportDataUsingFetchXmlToAnnotation` Custom API. This Custom API will fetch all the data using the provided fetch xml and create a CSV file and attach it to a annotation entity record and return the created record id.
-
-We recursively fetch the data from fetch xml, till all the records are fetched and create a in memory CSV file and attach it to a annotation entity record.
+The plug-in is designed for the main operation of the `sample_ExportDataUsingFetchXmlToAnnotation` Custom API, which fetches all data using the provided FetchXML and creates a CSV file. The CSV file is then attached to an annotation entity record, and the Custom API returns the created record ID.
 
 **NOTE :**
-The size of data in CSV file should be under the attachment size limit specified in the system settings, otherwise the creation of attachment will fail.
+The size of data in CSV file should be under the attachment size limit specified in the system settings; otherwise the creation of attachment will fail.
 
 ## How to run this sample
 
@@ -15,7 +13,7 @@ To run the code found in this sample, you must first create a Custom API in your
 
 ### Import the managed solution file
 
-The `ExportDataUsingFetchXmlToAnnotationFunction_1_0_0_0_managed.zip` in this folder contains the `sample_ExportDataUsingFetchXmlToAnnotation` Custom API that uses this code, and a cleanup API `sample_CleanupExportedDataAnnotations`. You can simply import this solution file to create the Custom API in your organization.  See [Import solutions](https://docs.microsoft.com/powerapps/maker/data-platform/import-update-export-solutions) for instructions.
+The `ExportDataUsingFetchXmlToAnnotation_1_0_0_0_managed.zip` in this folder contains the `sample_ExportDataUsingFetchXmlToAnnotation` Custom API that uses this code, and a cleanup API `sample_CleanupExportedDataAnnotations`. You can simply import this solution file to create the Custom API in your organization.  See [Import solutions](https://docs.microsoft.com/powerapps/maker/data-platform/import-update-export-solutions) for instructions.
 
 After you are finished testing, invoke the clean up Custom API `sample_CleanupExportedDataAnnotations` and delete the managed solution to remove the Custom API.
 
@@ -25,10 +23,21 @@ The `sample_CleanupExportedDataAnnotations` API has no input/output parameters.
 
 ## How this sample works
 
-To use the Custom API, you can use either the Web API or the Organization Service using the Dataverse .NET Framework SDK assemblies.
+You can use either the Web API or the Organization Service using the Dataverse .NET Framework SDK assemblies to invoke the Custom API.
+
+If you need to update the logic of the plug-in, follow these steps: 
+
+1. Open the `ExportDataUsingFetchXmlToAnnotation.sln` in Visual Studio 2022.
+1. Update the plug-in logic in the appropriate project.
+1. Build the solution.
+1. Locate the generated DLL file for the updated plug-in.
+1. Replace the existing DLL file in the `ExportDataUsingFetchXmlToAnnotation_1_0_0_0_managed.zip` with the updated DLL file.
+1. Reinstall the solution using the updated `ExportDataUsingFetchXmlToAnnotation_1_0_0_0_managed.zip`.
+
+By following these steps, you can update the logic of your plug-in and ensure that the updated version is deployed to your environment.
 
 ### Using Web API
-You need to use a POST request to invoke these custom APIs.
+To use the Custom API with the Web API, send a POST request to the API endpoint.
 
  **Request**
 
@@ -69,7 +78,7 @@ The `AnnotationId` value indicates the record in annotation table.
 ### Using Organization Service
 
 1. You can use the Organization Service Quick Start sample instructions to create a .NET Framework Console application with C#. See [Quickstart: Organization service sample (C#)](https://docs.microsoft.com/en-us/powerapps/developer/data-platform/org-service/quick-start-org-service-console-app)
-1. Add the following static method to the program class. This creates a re-usable method.
+1. Add the following static method to the program class to create a re-usable method for exporting data using FetchXML to Annotation.
 
    ```csharp
    static Guid ExportDataUsingFetchXmlToAnnotation(IOrganizationService svc)
@@ -103,12 +112,12 @@ The `AnnotationId` value indicates the record in annotation table.
 1. How to recursively fetch data from fetch xml.
 1. How to create a csv attachment to annotation entity.
 1. How to write a plug-in to support a Custom API
-1. How to invoke a Custom API function using the Web API
+1. How to invoke a Custom API using the Web API
 1. How to invoke a Custom API using the Organization service
 
 ## Clean Up
 
-Invoke `sample_CleanupExportedDataAnnotations` custom API to delete the created annotations records and then uninstall the managed solution.
+To clean up all the created data, invoke the `sample_CleanupExportedDataAnnotations` Custom API to delete the created Annotation records, and then uninstall the managed solution.
 
 ## See also
 
