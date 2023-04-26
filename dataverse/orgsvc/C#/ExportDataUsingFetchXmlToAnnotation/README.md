@@ -25,17 +25,6 @@ The `sample_CleanupExportedDataAnnotations` API has no input/output parameters.
 
 You can use either the Web API or the Organization Service using the Dataverse .NET Framework SDK assemblies to invoke the Custom API.
 
-If you need to update the logic of the plug-in, follow these steps: 
-
-1. Open the `ExportDataUsingFetchXmlToAnnotation.sln` in Visual Studio 2022.
-1. Update the plug-in logic in the appropriate project.
-1. Build the solution.
-1. Locate the generated DLL file for the updated plug-in.
-1. Replace the existing DLL file in the `ExportDataUsingFetchXmlToAnnotation_1_0_0_0_managed.zip` with the updated DLL file.
-1. Reinstall the solution using the updated `ExportDataUsingFetchXmlToAnnotation_1_0_0_0_managed.zip`.
-
-By following these steps, you can update the logic of your plug-in and ensure that the updated version is deployed to your environment.
-
 ### Using Web API
 To use the Custom API with the Web API, send a POST request to the API endpoint.
 
