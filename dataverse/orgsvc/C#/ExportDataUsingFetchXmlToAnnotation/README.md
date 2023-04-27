@@ -1,11 +1,18 @@
 # Sample: ExportDataUsingFetchXmlToAnnotation Custom API
 
-This sample shows how to write a plug-in that supports a Custom API named `sample_ExportDataUsingFetchXmlToAnnotation`. You can download the sample from [here](https://github.com/Microsoft/PowerApps-Samples/tree/master/cds/orgsvc/C%23/ExportDataUsingFetchXmlToAnnotation).
+This sample shows how to write a plug-in that supports a Custom API 
+named `sample_ExportDataUsingFetchXmlToAnnotation`. 
+You can download the sample from 
+[here](https://github.com/Microsoft/PowerApps-Samples/tree/master/cds/orgsvc/C%23/ExportDataUsingFetchXmlToAnnotation).
 
-The plug-in is designed for the main operation of the `sample_ExportDataUsingFetchXmlToAnnotation` Custom API, which fetches all data using the provided FetchXML and creates a CSV file. The CSV file is then attached to an annotation entity record, and the Custom API returns the created record ID.
+The plug-in provides logic for the main operation of the Custom API. 
+The `sample_ExportDataUsingFetchXmlToAnnotation` custom api retrieves data using 
+the provided `FetchXML` input parameter and creates a CSV file. It then creates
+an annotation record and returns the annotationid as the `AnnotationId` response property..
 
 **NOTE :**
-The size of data in CSV file should be under the attachment size limit specified in the system settings; otherwise the creation of attachment will fail.
+The size of data in CSV file should be under the attachment size limit 
+specified in the system settings; otherwise the creation of attachment will fail.
 
 ## How to run this sample
 
@@ -70,22 +77,22 @@ The `AnnotationId` value indicates the record in annotation table.
 1. Add the following static method to the program class to create a re-usable method for exporting data using FetchXML to Annotation.
 
    ```csharp
-   static Guid ExportDataUsingFetchXmlToAnnotation(IOrganizationService svc)
+   static Guid ExportDataUsingFetchXmlToAnnotation(IOrganizationService service)
    {
        var req = new OrganizationRequest("sample_ExportDataUsingFetchXmlToAnnotation")
        {
            ["FetchXml"] = @"<fetch version='1.0' output-format='xml-platform' mapping='logical'>
-                                <entity name='account'>
-                                    <attribute name='accountid'/>
-                                    <attribute name='name'/>  
-                                </entity>
-                            </fetch>";
+                           <entity name='account'>
+                               <attribute name='accountid'/>
+                               <attribute name='name'/>  
+                           </entity>
+                       </fetch>"
        };
-
-       var resp = svc.Execute(req);
-
+   
+       var resp = service.Execute(req);
+   
        var annotationId = (Guid)resp["AnnotationId"];
-
+   
        return annotationId;
    }
    ```

@@ -1,14 +1,11 @@
-﻿using System;
-using System.ServiceModel;
-using Microsoft.Xrm.Sdk;
-using System.Data;
+﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.ServiceModel;
 using System.Text;
 using System.Xml;
-using Microsoft.Xrm.Sdk.PluginTelemetry;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace PowerApps.Samples
 {
@@ -37,13 +34,25 @@ namespace PowerApps.Samples
                     context.OutputParameters["AnnotationId"] = CreateAnnotationEntity(organizationService, csvString);
                 }
             }
-            catch(Exception error)
+            catch (FaultException<OrganizationServiceFault> ex)
+            {
+                throw new InvalidPluginExecutionException("An error occurred in ExportDataUsingFetchXmlToAnnotationPlugin.", ex);
+            }
+            catch (Exception error)
             {
                 tracingService.Trace(error.Message);
                 throw;
             }
         }
 
+
+        /// <summary>
+        /// Retrieves a list or records defined by a FetchXml query
+        /// </summary>
+        /// <param name="fetchXml">The fetchXml query definition.</param>
+        /// <param name="organizationService">The service implementing IOrganizationService interface.</param>
+        /// <param name="tracingService">The tracing service to log errors.</param>
+        /// <returns></returns>
         private List<Entity> FetchAllDataFromFetchXml(string fetchXml, IOrganizationService organizationService, ITracingService tracingService)
         {
             int numberOfSuccessfulFetches = 0;
@@ -101,6 +110,12 @@ namespace PowerApps.Samples
             }
         }
 
+        /// <summary>
+        /// Creates an annotation record
+        /// </summary>
+        /// <param name="organizationService">The service implementing IOrganizationService interface.</param>
+        /// <param name="csvString">A string containing the data of a CSV file</param>
+        /// <returns>The id of the annotation record.</returns>
         private Guid CreateAnnotationEntity(IOrganizationService organizationService, string csvString)
         {
             Entity attachment = new Entity("annotation");
