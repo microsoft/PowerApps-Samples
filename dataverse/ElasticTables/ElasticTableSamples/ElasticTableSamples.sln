@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElasticTableSamples", "ElasticTableSamples\ElasticTableSamples.csproj", "{802F8519-B56C-4B08-8474-4DD43FC7A70E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{802F8519-B56C-4B08-8474-4DD43FC7A70E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{802F8519-B56C-4B08-8474-4DD43FC7A70E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{802F8519-B56C-4B08-8474-4DD43FC7A70E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{802F8519-B56C-4B08-8474-4DD43FC7A70E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1232EAED-853B-4E97-8EB3-BDAF17FA2F80}
+	EndGlobalSection
+EndGlobal
