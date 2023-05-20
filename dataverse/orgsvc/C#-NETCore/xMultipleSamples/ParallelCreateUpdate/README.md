@@ -1,6 +1,11 @@
 ﻿# ParallelCreateUpdate README
 
-This project uses the [System.Threading.Tasks.Parallel Class](https://learn.microsoft.com/dotnet/api/system.threading.tasks.parallel?view=net-6.0) together with the [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient.Clone Method](https://learn.microsoft.com/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient.clone?view=dataverse-sdk-latest) to perform individual create and update operations using multiple threads.
+This project uses the 
+[System.Threading.Tasks.Parallel.ForEachAsync Method](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.parallel.foreachasync?view=net-6.0) 
+together with the 
+[Microsoft.PowerPlatform.Dataverse.Client.ServiceClient.ServiceClient.CreateAsync Method](https://learn.microsoft.com/en-us/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient.createasync?view=dataverse-sdk-latest) 
+and [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient.ServiceClient.UpdateAsync Method](https://learn.microsoft.com/en-us/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient.updateasync?view=dataverse-sdk-latest) 
+to perform individual create and update operations using multiple threads.
 
 It depends on the common structure for other projects in this solution that is described in [CreateUpdateMultiple/README.md](../README.md).
 
@@ -15,14 +20,17 @@ Adding 'sample_Description' column to sample_Example table...
         'sample_Description' column created.
 Preparing 100 records to create..
 
+RecommendedDegreesOfParallelism:24
+
 Sending create requests in parallel...
-        Created 100 records in 3 seconds.
+        Created 100 records in 1 seconds.
+
 Preparing 100 records to update..
 Sending update requests in parallel...
-        Updated 100 records in 3 seconds.
+        Updated 100 records in 1 seconds.
 
 Starting asynchronous bulk delete of 100 created records...
-        Asynchronous job to delete 100 records completed in 40 seconds.
+        Asynchronous job to delete 100 records completed in 21 seconds.
         Bulk Delete status: Succeeded
 Deleting sample_Example table...
         sample_Example table deleted.

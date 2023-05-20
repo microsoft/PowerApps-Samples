@@ -2,9 +2,9 @@
 
 This sample shows how to perform bulk create and update operations using several different approaches including the use of [CreateMultipleRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createmultiplerequest) and [UpdateMultipleRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.updatemultiplerequest) classes.These messages are optimized to provide the most performant way to create or update records with Dataverse.
 
-This sample is a Visual Studio .NET 6.0 solution that contains 4 different projects that perform the same operations in different ways so that you can compare the performance of each method.
+This sample is a Visual Studio .NET 6.0 solution that contains 5 different projects that perform the same operations in different ways so that you can compare the performance of each method.
 
-You can download the sample from [here](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/C%23-NETCore/CreateUpdateMultiple).
+You can download the sample from [here](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/C%23-NETCore/xMultipleSamples).
 
 ## Prerequisites
 
@@ -15,7 +15,7 @@ You can download the sample from [here](https://github.com/microsoft/PowerApps-S
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
 1. Open the [PowerApps-Samples/dataverse/orgsvc/C#-NETCore/CreateUpdateMultiple/CreateUpdateMultiple.sln](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/C%23-NETCore/CreateUpdateMultiple/CreateUpdateMultiple.sln) file using Visual Studio 2022.
-1. Edit the appsettings.json file. Set the connection string `Url` and `Username` parameters as appropriate for your test environment.
+1. Edit the `appsettings.json` file. Set the connection string `Url` and `Username` parameters as appropriate for your test environment.
 1. The environment Url can be found in the Power Platform admin center. It has the form `https://<environment-name>.crm.dynamics.com`.
 1. Build the solution, select the desired project as the startup project and press F5 to run the console application in debug mode.
 
@@ -33,7 +33,7 @@ When the sample runs, you will be prompted in the default browser to select an e
 
 ## What this sample does
 
-This sample is a .NET 6.0 Visual Studio 2022 solution that contains 4 projects that perform the same operations:
+This sample is a .NET 6.0 Visual Studio 2022 solution that contains 5 projects that perform the same operations:
 
 1. Create a new custom table named `sample_example` if it doesn't already exist.
 1. Prepare a configurable number of entity instances for the custom table representing records to create.
@@ -45,9 +45,9 @@ This sample is a .NET 6.0 Visual Studio 2022 solution that contains 4 projects t
 
 Each project uses a shared set of settings in the `Settings.cs` file that allow you to control:
 
-- `NumberOfRecords`: The number of records to create. The default value is 100 but you can raise it to 1000 or higher.
-- `BypassCustomPluginExecution`: Whether custom plug-in logic should be bypassed. This is useful to observe the performance impact of plug-ins registered on events for the table.
-- `DeleteTable`: Whether to delete the custom `sample_example` table at the end of the sample. If you want to test plug-ins that use events on this table, this will preserve the table so you can run the samples multiple times while testing plug-ins.
+- `NumberOfRecords` : The number of records to create. The default value is 100 but you can raise it to 1000 or higher.
+- `BypassCustomPluginExecution` : Whether custom plug-in logic should be bypassed. This is useful to observe the performance impact of plug-ins registered on events for the table.
+- `DeleteTable` : Whether to delete the custom `sample_example` table at the end of the sample. If you want to test plug-ins that use events on this table, this will preserve the table so you can run the samples multiple times while testing plug-ins.
 
 The `Settings.cs` file is included in each project. Apply the change in one project and they will be set for all of them.
 
@@ -82,5 +82,6 @@ Details about each project and the default output are described in their respect
 - [CreateUpdateMultiple/README.md](CreateUpdateMultiple/README.md)
 - [ExecuteMultiple/README.md](ExecuteMultiple/README.md)
 - [ParallelCreateUpdate/README.md](ParallelCreateUpdate/README.md)
+- [ParallelCreateUpdateMultiple.md](ParallelCreateUpdateMultiple/README.md)
 - [SimpleLoop/README.md](SimpleLoop/README.md)
 

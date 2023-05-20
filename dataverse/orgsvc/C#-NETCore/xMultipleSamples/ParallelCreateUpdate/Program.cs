@@ -2,8 +2,8 @@
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
-using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Net;
 
 namespace PowerPlatform.Dataverse.CodeSamples
 {
@@ -31,7 +31,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 .AddJsonFile(path, optional: false, reloadOnChange: true)
                 .Build();
         }
-        static void Main()
+        static async Task Main()
         {
             Program app = new();
 
@@ -42,13 +42,14 @@ namespace PowerPlatform.Dataverse.CodeSamples
             #region Optimize Connection settings
 
             //Change max connections from .NET to a remote service default: 2
-            System.Net.ServicePointManager.DefaultConnectionLimit = 65000;
+            ServicePointManager.DefaultConnectionLimit = 65000;
             //Bump up the min threads reserved for this app to ramp connections faster - minWorkerThreads defaults to 4, minIOCP defaults to 4
             ThreadPool.SetMinThreads(100, 100);
             //Turn off the Expect 100 to continue message - 'true' will cause the caller to wait until it round-trip confirms a connection to the server
-            System.Net.ServicePointManager.Expect100Continue = false;
+            ServicePointManager.Expect100Continue = false;
             //Can decreas overall transmission overhead but can cause delay in data packet arrival
-            System.Net.ServicePointManager.UseNagleAlgorithm = false;
+            ServicePointManager.UseNagleAlgorithm = false;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             #endregion Optimize Connection settings
 
@@ -85,25 +86,23 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
             Console.WriteLine($"RecommendedDegreesOfParallelism:{serviceClient.RecommendedDegreesOfParallelism}");
 
+            ParallelOptions parallelOptions = new()
+            {
+                MaxDegreeOfParallelism = serviceClient.RecommendedDegreesOfParallelism
+            };
+
             Console.WriteLine($"\nSending create requests in parallel...");
             Stopwatch createStopwatch = Stopwatch.StartNew();
 
-            Parallel.ForEach(entityList,
-                new ParallelOptions()
-                {
-                    MaxDegreeOfParallelism = serviceClient.RecommendedDegreesOfParallelism
-                },
-                () =>
-                {
-                    //Clone the ServiceClient for each thread
-              
-                    return serviceClient.Clone();
-                },
-                (entity, loopState, index, threadLocalSvc) =>
-                {
+            await Parallel.ForEachAsync(
+                source: entityList,
+                parallelOptions: parallelOptions,
+                async (entity, token) => {
+
                     // In each thread, create entities and update the Id.
-                    CreateRequest createRequest = new() { 
-                         Target= entity
+                    CreateRequest createRequest = new()
+                    {
+                        Target = entity
                     };
                     // Add Shared Variable with request to detect in a plug-in.
                     createRequest["tag"] = "ParallelCreateUpdate";
@@ -113,16 +112,10 @@ namespace PowerPlatform.Dataverse.CodeSamples
                         createRequest["BypassCustomPluginExecution"] = true;
 #pragma warning restore CS0162 // Unreachable code detected: Configurable by setting
                     }
-                    var createResponse = (CreateResponse)threadLocalSvc.Execute(createRequest);
+                    var createResponse = (CreateResponse)await serviceClient.ExecuteAsync(createRequest,token);
 
                     entity.Id = createResponse.id;
 
-                    return threadLocalSvc;
-                },
-                (threadLocalSvc) =>
-                {
-                    //Dispose the cloned ServiceClient instance
-                    threadLocalSvc?.Dispose();
                 });
             createStopwatch.Stop();
 
@@ -139,23 +132,12 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
             Console.WriteLine($"Sending update requests in parallel...");
             Stopwatch updateStopwatch = Stopwatch.StartNew();
-           
-            Parallel.ForEach(entityList,
-                new ParallelOptions()
-                {
-                    MaxDegreeOfParallelism = serviceClient.RecommendedDegreesOfParallelism
-                },
-                () =>
-                {
-                    
-                    //Clone the ServiceClient for each thread
-                    return serviceClient.Clone();
-                },
-                (entity, loopState, index, threadLocalSvc) =>
-                {
-                    // In each thread, update the entities
+            await Parallel.ForEachAsync(
+                source: entityList,
+                parallelOptions: parallelOptions,
+                async (entity, token) => {
 
-                    UpdateRequest updateRequest = new() { Target= entity };
+                    UpdateRequest updateRequest = new() { Target = entity };
                     // Add Shared Variable with request to detect in a plug-in.
                     updateRequest["tag"] = "ParallelCreateUpdate";
 
@@ -166,21 +148,15 @@ namespace PowerPlatform.Dataverse.CodeSamples
 #pragma warning restore CS0162 // Unreachable code detected: Configurable by setting
                     }
 
-                    threadLocalSvc.Execute(updateRequest);
+                   await serviceClient.ExecuteAsync(updateRequest, token);
 
-                    return threadLocalSvc;
-                },
-                (threadLocalSvc) =>
-                {
-                    //Dispose the cloned CrmServiceClient instance
-                    threadLocalSvc?.Dispose();
                 });
+
             updateStopwatch.Stop();
             Console.WriteLine($"\tUpdated {numberOfRecords} records " +
                 $"in {Math.Round(updateStopwatch.Elapsed.TotalSeconds)} seconds.");
 
            
-
             // Delete created rows asynchronously
             Console.WriteLine($"\nStarting asynchronous bulk delete of {numberOfRecords} created records...");
 

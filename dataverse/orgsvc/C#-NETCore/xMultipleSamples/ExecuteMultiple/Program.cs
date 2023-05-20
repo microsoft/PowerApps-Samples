@@ -3,6 +3,7 @@ using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
 using System.Diagnostics;
+using System.Net;
 
 namespace PowerPlatform.Dataverse.CodeSamples
 {
@@ -38,6 +39,8 @@ namespace PowerPlatform.Dataverse.CodeSamples
             string tableSchemaName = "sample_Example";
             string tableLogicalName = tableSchemaName.ToLower(); //sample_example
             int chunkSize = Settings.BatchSize; // The maximum number of requests for ExecuteMultiple is 1000.
+
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             // Create a Dataverse service client using the default connection string.
             ServiceClient serviceClient =

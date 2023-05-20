@@ -3,6 +3,7 @@ using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
 using System.Diagnostics;
+using System.Net;
 using System.ServiceModel;
 
 namespace PowerPlatform.Dataverse.CodeSamples
@@ -39,6 +40,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
             string tableSchemaName = "sample_Example";
             string tableLogicalName = tableSchemaName.ToLower(); //sample_example     
 
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             // Create a Dataverse service client using the default connection string.
             ServiceClient serviceClient =

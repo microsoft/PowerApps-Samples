@@ -2,8 +2,8 @@
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
-using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Net;
 
 namespace PowerPlatform.Dataverse.CodeSamples
 {
@@ -31,7 +31,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 .AddJsonFile(path, optional: false, reloadOnChange: true)
                 .Build();
         }
-        static void Main()
+        static async Task Main()
         {
             Program app = new();
 
@@ -43,13 +43,14 @@ namespace PowerPlatform.Dataverse.CodeSamples
             #region Optimize Connection settings
 
             //Change max connections from .NET to a remote service default: 2
-            System.Net.ServicePointManager.DefaultConnectionLimit = 65000;
+            ServicePointManager.DefaultConnectionLimit = 65000;
             //Bump up the min threads reserved for this app to ramp connections faster - minWorkerThreads defaults to 4, minIOCP defaults to 4
             ThreadPool.SetMinThreads(100, 100);
             //Turn off the Expect 100 to continue message - 'true' will cause the caller to wait until it round-trip confirms a connection to the server
-            System.Net.ServicePointManager.Expect100Continue = false;
-            //Can decreas overall transmission overhead but can cause delay in data packet arrival
-            System.Net.ServicePointManager.UseNagleAlgorithm = false;
+            ServicePointManager.Expect100Continue = false;
+            //Can decrease overall transmission overhead but can cause delay in data packet arrival
+            ServicePointManager.UseNagleAlgorithm = false;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             #endregion Optimize Connection settings
 
@@ -86,54 +87,49 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
             Console.WriteLine($"RecommendedDegreesOfParallelism:{serviceClient.RecommendedDegreesOfParallelism}");
 
+            ParallelOptions parallelOptions = new()
+            {
+                MaxDegreeOfParallelism = serviceClient.RecommendedDegreesOfParallelism
+            };
+
             Console.WriteLine($"\nSending create requests in parallel...");
             Stopwatch createStopwatch = Stopwatch.StartNew();
-    
-            Parallel.ForEach(entityList.Chunk(chunkSize),
-                new ParallelOptions()
-                {
-                    MaxDegreeOfParallelism = serviceClient.RecommendedDegreesOfParallelism
-                },
-                () =>
-                {
-                    //Clone the ServiceClient for each thread
-                    return serviceClient.Clone();
-                },
-                (entities, loopState, index, threadLocalSvc) =>
+
+            await Parallel.ForEachAsync(
+                source: entityList.Chunk(chunkSize),
+                parallelOptions: parallelOptions,
+                async (entities, token) =>
                 {
 
-
-                    // In each thread, create entities and update the Id.
                     CreateMultipleRequest createMultipleRequest = new()
                     {
-                        Targets = new(entities)
+                        Targets = new EntityCollection(entities)
                         {
                             EntityName = tableLogicalName
                         }
                     };
+
                     // Add Shared Variable with request to detect in a plug-in.
                     createMultipleRequest["tag"] = "ParallelCreateUpdateMultiple";
+
                     if (Settings.BypassCustomPluginExecution)
                     {
 #pragma warning disable CS0162 // Unreachable code detected: Configurable by setting
                         createMultipleRequest["BypassCustomPluginExecution"] = true;
 #pragma warning restore CS0162 // Unreachable code detected: Configurable by setting
                     }
-                    var createMultipleResponse = (CreateMultipleResponse)threadLocalSvc.Execute(createMultipleRequest);
+
+                    var response = (CreateMultipleResponse)await serviceClient.ExecuteAsync(
+                         request: createMultipleRequest,
+                         cancellationToken: token);
 
                     // Set the id values for the entities
-                    for(int i = 0; i < entities.Length; i++)
+                    for (int i = 0; i < entities.Length; i++)
                     {
-                        entities[i].Id = createMultipleResponse.Ids[i];
+                        entities[i].Id = response.Ids[i];
                     }
 
-                    return threadLocalSvc;
-                },
-                (threadLocalSvc) =>
-                {
-                    //Dispose the cloned ServiceClient instance
-                    threadLocalSvc?.Dispose();
-                });
+                });           
             createStopwatch.Stop();
 
             Console.WriteLine($"\tCreated {entityList.Count} records " +
@@ -150,47 +146,36 @@ namespace PowerPlatform.Dataverse.CodeSamples
             Console.WriteLine($"Sending update requests in parallel...");
             Stopwatch updateStopwatch = Stopwatch.StartNew();
 
-            Parallel.ForEach(entityList.Chunk(chunkSize),
-                new ParallelOptions()
-                {
-                    MaxDegreeOfParallelism = serviceClient.RecommendedDegreesOfParallelism
-                },
-                () =>
-                {
-                    //Clone the ServiceClient for each thread
-                    return serviceClient.Clone();
-                },
-                (entities, loopState, index, threadLocalSvc) =>
-                {
-                    // In each thread, update the entities
-                    
+            await Parallel.ForEachAsync(
+                  source: entityList.Chunk(chunkSize),
+                  parallelOptions: parallelOptions,
+                  async (entities, token) =>
+                  {
 
-                    UpdateMultipleRequest updateMultipleRequest = new()
-                    {
-                        Targets = new EntityCollection(entities) {
-                            EntityName = tableLogicalName
-                        }
-                    };
+                      UpdateMultipleRequest updateMultipleRequest = new()
+                      {
+                          Targets = new EntityCollection(entities)
+                          {
+                              EntityName = tableLogicalName
+                          }
+                      };
 
-                    // Add Shared Variable with request to detect in a plug-in.
-                    updateMultipleRequest["tag"] = "ParallelCreateUpdateMultiple";
+                      // Add Shared Variable with request to detect in a plug-in.
+                      updateMultipleRequest["tag"] = "ParallelCreateUpdateMultiple";
 
-                    if (Settings.BypassCustomPluginExecution)
-                    {
+                      if (Settings.BypassCustomPluginExecution)
+                      {
 #pragma warning disable CS0162 // Unreachable code detected: Configurable by setting
-                        updateMultipleRequest["BypassCustomPluginExecution"] = true;
+                          updateMultipleRequest["BypassCustomPluginExecution"] = true;
 #pragma warning restore CS0162 // Unreachable code detected: Configurable by setting
-                    }
+                      }
 
-                    threadLocalSvc.Execute(updateMultipleRequest);
+                      await serviceClient.ExecuteAsync(
+                         request: updateMultipleRequest,
+                         cancellationToken: token);
 
-                    return threadLocalSvc;
-                },
-                (threadLocalSvc) =>
-                {
-                    //Dispose the cloned CrmServiceClient instance
-                    threadLocalSvc?.Dispose();
-                });
+                  });
+            
             updateStopwatch.Stop();
             Console.WriteLine($"\tUpdated {numberOfRecords} records " +
                 $"in {Math.Round(updateStopwatch.Elapsed.TotalSeconds)} seconds.");
