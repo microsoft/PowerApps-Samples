@@ -1,12 +1,12 @@
 ﻿# ParallelCreateUpdateMultiple README
 
 This project uses the 
-[System.Threading.Tasks.Parallel.ForEachAsync Method](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.parallel.foreachasync?view=net-6.0)
+[System.Threading.Tasks.Parallel.ForEachAsync Method](https://learn.microsoft.com/dotnet/api/system.threading.tasks.parallel.foreachasync?view=net-6.0)
 together with the 
-[Microsoft.PowerPlatform.Dataverse.Client.ServiceClient.ExecuteAsync Method](https://learn.microsoft.com/en-us/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient.executeasync?view=dataverse-sdk-latest) 
+[Microsoft.PowerPlatform.Dataverse.Client.ServiceClient.ExecuteAsync Method](https://learn.microsoft.com/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient.executeasync?view=dataverse-sdk-latest) 
 and the 
-[CreateMultipleRequest ](https://learn.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.messages.createmultiplerequest?view=dataverse-sdk-latest)
-and [UpdateMultipleRequest](https://learn.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.messages.updatemultiplerequest?view=dataverse-sdk-latest)
+[CreateMultipleRequest ](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createmultiplerequest?view=dataverse-sdk-latest)
+and [UpdateMultipleRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.updatemultiplerequest?view=dataverse-sdk-latest)
 classes to perform multiple create and update operations using multiple threads.
 
 It depends on the common structure for other projects in this solution that is described in [CreateUpdateMultiple/README.md](../README.md).

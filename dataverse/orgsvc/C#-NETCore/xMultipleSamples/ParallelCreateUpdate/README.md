@@ -1,10 +1,10 @@
 ﻿# ParallelCreateUpdate README
 
 This project uses the 
-[System.Threading.Tasks.Parallel.ForEachAsync Method](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.parallel.foreachasync?view=net-6.0) 
+[System.Threading.Tasks.Parallel.ForEachAsync Method](https://learn.microsoft.com/dotnet/api/system.threading.tasks.parallel.foreachasync?view=net-6.0) 
 together with the 
-[Microsoft.PowerPlatform.Dataverse.Client.ServiceClient.ServiceClient.CreateAsync Method](https://learn.microsoft.com/en-us/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient.createasync?view=dataverse-sdk-latest) 
-and [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient.ServiceClient.UpdateAsync Method](https://learn.microsoft.com/en-us/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient.updateasync?view=dataverse-sdk-latest) 
+[Microsoft.PowerPlatform.Dataverse.Client.ServiceClient.ServiceClient.CreateAsync Method](https://learn.microsoft.com/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient.createasync?view=dataverse-sdk-latest) 
+and [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient.ServiceClient.UpdateAsync Method](https://learn.microsoft.com/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient.updateasync?view=dataverse-sdk-latest) 
 to perform individual create and update operations using multiple threads.
 
 It depends on the common structure for other projects in this solution that is described in [CreateUpdateMultiple/README.md](../README.md).

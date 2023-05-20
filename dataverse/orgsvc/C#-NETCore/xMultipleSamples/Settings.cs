@@ -23,7 +23,7 @@
         /// Whether to delete the table at the end of each sample.
         /// You may want to test plug-ins registered for the table.
         /// </summary>
-        public const bool DeleteTable = false;
+        public const bool DeleteTable = true;
 
 
     }
