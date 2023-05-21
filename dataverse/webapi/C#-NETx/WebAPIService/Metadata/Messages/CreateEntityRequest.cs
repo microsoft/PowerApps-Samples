@@ -14,7 +14,7 @@ namespace PowerApps.Samples.Metadata.Messages
         /// </summary>
         /// <param name="entityMetadata">The data that defines the table</param>
         /// <param name="solutionUniqueName">The name of the solution to add the table to.</param>
-        public CreateEntityRequest(EntityMetadata entityMetadata, string? solutionUniqueName)
+        public CreateEntityRequest(EntityMetadata entityMetadata, string? solutionUniqueName = null)
         {
             Method = HttpMethod.Post;
             RequestUri = new Uri(uriString: "EntityDefinitions", uriKind: UriKind.Relative);

@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Converters;
 using System.Runtime.Serialization;
 
-namespace PowerApps.Samples.Metadata.Types
+namespace PowerApps.Samples.Types
 {
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ObjectType

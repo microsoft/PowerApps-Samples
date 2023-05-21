@@ -17,7 +17,7 @@
             string path;
             if (partitionId != null)
             {
-                path = $"{entityReference.Path}?partitionId='{partitionId}'";
+                path = $"{entityReference.Path}?partitionId={partitionId}";
             }
             else
             {

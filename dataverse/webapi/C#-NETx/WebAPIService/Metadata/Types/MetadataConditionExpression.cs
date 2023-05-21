@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PowerApps.Samples.Types;
 
 namespace PowerApps.Samples.Metadata.Types
 {
@@ -7,7 +8,7 @@ namespace PowerApps.Samples.Metadata.Types
     {
         public MetadataConditionExpression() { }
 
-        public MetadataConditionExpression(MetadataConditionOperator conditionOperator, string propertyName, Object value)
+        public MetadataConditionExpression(MetadataConditionOperator conditionOperator, string propertyName, Samples.Types.Object value)
         {
             ConditionOperator = conditionOperator;
             PropertyName = propertyName;
@@ -16,6 +17,6 @@ namespace PowerApps.Samples.Metadata.Types
 
         public MetadataConditionOperator ConditionOperator { get; set; }
         public string PropertyName { get; set; }
-        public Object Value { get; set; }
+        public Samples.Types.Object Value { get; set; }
     }
 }

@@ -26,7 +26,7 @@ namespace PowerApps.Samples.Messages
             string path;
             if (partitionId != null)
             {
-                path = $"{entityReference.Path}?partitionid='{partitionId}'";
+                path = $"{entityReference.Path}?partitionId={partitionId}";
             }
             else
             {

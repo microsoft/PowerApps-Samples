@@ -12,6 +12,6 @@
         /// <summary>
         /// A reference to the table created
         /// </summary>
-        public EntityReference TableReference => new EntityReference(uri: Headers.GetValues("OData-EntityId").FirstOrDefault());
+        public EntityReference TableReference => new(uri: Headers.GetValues("OData-EntityId").FirstOrDefault());
     }
 }
