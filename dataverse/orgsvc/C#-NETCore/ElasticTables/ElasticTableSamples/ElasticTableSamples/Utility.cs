@@ -19,28 +19,6 @@ namespace PowerPlatform.Dataverse.CodeSamples
         internal static void CreateSensorDataEntity(ServiceClient client)
         {
             Console.WriteLine($"Creating {SensorDataSchemaName} entity.. \n");
-            EntityMetadata entityMetadata = new EntityMetadata
-            {
-                SchemaName = SensorDataSchemaName,
-                DisplayName = new Label("SensorData", 1033),
-                DisplayCollectionName = new Label("SensorData", 1033),
-                Description = new Label("Stores IoT data emitted from devices", 1033),
-                OwnershipType = OwnershipTypes.UserOwned,
-                // TableType = "Elastic",
-                IsActivity = false,
-                CanCreateCharts = new BooleanManagedProperty(false),
-            };
-
-            AttributeMetadata primaryAttributeMetadata = new AttributeMetadata
-            {
-                SchemaName = SensorTypeSchemaName,
-                DisplayName = new Label("Sensor Type", 1033),
-                Description = new Label("Type of sensor emitting data", 1033),
-            };
-            JObject primaryAttributeMetadataObject = JObject.FromObject(primaryAttributeMetadata);
-            primaryAttributeMetadataObject["AttributeType"] = "String";
-            primaryAttributeMetadataObject["IsPrimaryName"] = true;
-
             JObject entityMetadataObject = new JObject()
             {
                 { "SchemaName", SensorDataSchemaName },
@@ -164,7 +142,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
             Dictionary<string, List<string>> customHeaders = new Dictionary<string, List<string>>();
             customHeaders["Content-Type"] = new List<string>() { "application/json" };
-            client.ExecuteWebRequest(HttpMethod.Post, $"EntityDefinitions", entityMetadataObject.ToString(), customHeaders);
+            client.ExecuteWebRequest(HttpMethod.Post, "EntityDefinitions", entityMetadataObject.ToString(), customHeaders);
 
             Console.WriteLine($"Created {SensorDataSchemaName} entity.\n");
 
@@ -227,7 +205,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
             Console.WriteLine($"Created {EnergyConsumptionSchemaName} attribute.\n");
         }
 
-        internal static void DeleteSensorDataEntity(ServiceClient client)
+        internal static void DeleteSensorDataEntity(IOrganizationService service)
         {
             Console.WriteLine($"Deleting {SensorDataLogicalName} entity..\n");
             try
@@ -236,7 +214,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 {
                     LogicalName = SensorDataLogicalName,
                 };
-                client.Execute(deleteEntityRequest);
+                service.Execute(deleteEntityRequest);
                 Console.WriteLine($"Deleted {SensorDataLogicalName} entity.\n");
             }
             catch (Exception ex)
