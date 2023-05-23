@@ -87,11 +87,10 @@ namespace PowerPlatform.Dataverse.CodeSamples
         {
             Console.WriteLine($"Updating {"contoso_sensordata"} record.. \n");
 
-            Entity entity = new Entity("contoso_sensordata")
+            Entity entity = new Entity("contoso_sensordata", contosoSensorDataId)
             {
                 Attributes =
                 {
-                    { "contoso_sensordataid", contosoSensorDataId },
                     { "partitionid", deviceId },
                     { "contoso_value", 60 },
                     { "contoso_timestamp", DateTime.UtcNow },
