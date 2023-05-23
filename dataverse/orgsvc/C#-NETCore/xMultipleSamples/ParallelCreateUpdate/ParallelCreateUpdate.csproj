@@ -15,6 +15,9 @@
     <Compile Include="..\Utility.cs" Link="Utility.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="..\ElasticUtility.cs" Link="ElasticUtility.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

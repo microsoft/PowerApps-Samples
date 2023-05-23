@@ -1,4 +1,5 @@
 ﻿using Microsoft.Crm.Sdk.Messages;
+using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Metadata;
@@ -10,9 +11,6 @@ namespace PowerPlatform.Dataverse.CodeSamples
 {
     public static class Utility
     {
-
-
-
         /// <summary>
         /// Detects whether a table with the specified schema name exists.
         /// </summary>
@@ -265,9 +263,10 @@ namespace PowerPlatform.Dataverse.CodeSamples
         /// <summary>
         /// Creates the table used by projects in this solution.
         /// </summary>
-        /// <param name="service">The IOrganizationService instance.</param>
+        /// <param name="service">The ServiceClient instance.</param>
         /// <param name="tableSchemaName">The SchemaName of the table to create.</param>
-        public static void CreateExampleTable(IOrganizationService service, string tableSchemaName)
+        /// <param name="isElastic">is elastic table.</param>
+        public static void CreateExampleTable(ServiceClient service, string tableSchemaName, bool isElastic = false)
         {
             // Don't create the table if it already exists
             if (TableExists(service, tableSchemaName.ToLower()))
@@ -276,34 +275,44 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 return;
             }
 
-            Console.WriteLine($"Creating {tableSchemaName} table...");
+            string tableType = isElastic ? "Elastic" : "Standard";
+            Console.WriteLine($"Creating {tableSchemaName} table of TableType {tableType}..");
 
-            CreateEntityRequest createEntityRequest = new()
+            if (isElastic)
             {
-                Entity = new EntityMetadata
+                ElasticUtility.CreateExampleTable(service, tableSchemaName);
+            }
+            else
+            {
+                CreateEntityRequest createEntityRequest = new()
                 {
-                    SchemaName = tableSchemaName,
-                    DisplayName = new Label("Example", 1033),
-                    DisplayCollectionName = new Label("Examples", 1033),
-                    Description = new Label("A table for code samples.", 1033),
-                    OwnershipType = OwnershipTypes.UserOwned,
-                    IsActivity = false
+                    Entity = new EntityMetadata
+                    {
+                        SchemaName = tableSchemaName,
+                        DisplayName = new Label("Example", 1033),
+                        DisplayCollectionName = new Label("Examples", 1033),
+                        Description = new Label("A table for code samples.", 1033),
+                        OwnershipType = OwnershipTypes.UserOwned,
+                        IsActivity = false,
+                        DataProviderId = tableType == "Elastic" ? new Guid("1d9bde74-9ebd-4da9-8ff5-aa74945b9f74") : null,
+                        CanCreateCharts = tableType == "Elastic" ? new BooleanManagedProperty(false) : new BooleanManagedProperty(true)
+                    },
+                    PrimaryAttribute = new StringAttributeMetadata
+                    {
+                        SchemaName = "sample_Name",
+                        RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None),
+                        MaxLength = 100,
+                        FormatName = StringFormatName.Text,
+                        DisplayName = new Label("Example Name", 1033),
+                        Description = new Label("The name of the example record.", 1033)
+                    },
+                    HasActivities = true
 
-                },
-                PrimaryAttribute = new StringAttributeMetadata
-                {
-                    SchemaName = "sample_Name",
-                    RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None),
-                    MaxLength = 100,
-                    FormatName = StringFormatName.Text,
-                    DisplayName = new Label("Example Name", 1033),
-                    Description = new Label("The name of the example record.", 1033)
-                },
-                HasActivities = true
+                };
 
-            };
+                service.Execute(createEntityRequest);
+            }
 
-            service.Execute(createEntityRequest);
             Console.WriteLine($"\t{tableSchemaName} table created.");
 
             Console.WriteLine($"Adding 'sample_Description' column to {tableSchemaName} table...");

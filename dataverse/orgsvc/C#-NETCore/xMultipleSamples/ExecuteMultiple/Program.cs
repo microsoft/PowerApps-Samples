@@ -38,7 +38,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
             int numberOfRecords = Settings.NumberOfRecords; //100 by default
             string tableSchemaName = "sample_Example";
             string tableLogicalName = tableSchemaName.ToLower(); //sample_example
-            int chunkSize = Settings.BatchSize; // The maximum number of requests for ExecuteMultiple is 1000.
+            int chunkSize = Settings.StandardBatchSize; // The maximum number of requests for ExecuteMultiple is 1000.
 
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 

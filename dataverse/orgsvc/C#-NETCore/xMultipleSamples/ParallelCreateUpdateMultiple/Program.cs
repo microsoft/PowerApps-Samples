@@ -38,7 +38,9 @@ namespace PowerPlatform.Dataverse.CodeSamples
             int numberOfRecords = Settings.NumberOfRecords; //100 by default
             string tableSchemaName = "sample_Example";
             string tableLogicalName = tableSchemaName.ToLower(); //sample_example
-            int chunkSize = Settings.BatchSize; // Configurable batch size, 1000 by default
+            bool useElastic = app.Configuration.GetValue<bool>("UseElastic");
+
+            int chunkSize = useElastic ? Settings.ElasticBatchSize : Settings.StandardBatchSize; // Configurable batch size
 
             #region Optimize Connection settings
 
@@ -68,7 +70,8 @@ namespace PowerPlatform.Dataverse.CodeSamples
             // Create sample_Example table for this sample.
             Utility.CreateExampleTable(
                 service: serviceClient,
-                tableSchemaName: tableSchemaName);
+                tableSchemaName: tableSchemaName,
+                isElastic: useElastic);
 
             // Create a List of entity instances.
             Console.WriteLine($"Preparing {numberOfRecords} records to create..\n");
@@ -180,25 +183,94 @@ namespace PowerPlatform.Dataverse.CodeSamples
             Console.WriteLine($"\tUpdated {numberOfRecords} records " +
                 $"in {Math.Round(updateStopwatch.Elapsed.TotalSeconds)} seconds.");
 
-            // Delete created rows asynchronously
-            Console.WriteLine($"\nStarting asynchronous bulk delete of {numberOfRecords} created records...");
-
-            Guid[] iDs = new Guid[entityList.Count];
-
-            for (int i = 0; i < entityList.Count; i++)
+            if (useElastic)
             {
-                iDs[i] = entityList.ToList()[i].Id;
+                // DeleteMultiple
+                Console.WriteLine($"\nPreparing {numberOfRecords} records to delete..");
+                EntityReferenceCollection entityReferences = new EntityReferenceCollection();
+
+                // Update the sample_name value:
+                foreach (Entity entity in entityList)
+                {
+                    KeyAttributeCollection keys = new KeyAttributeCollection();
+                    if (entity.TryGetAttributeValue<string>("partitionid", out string partitionId))
+                    {
+                        keys = new KeyAttributeCollection()
+                        {
+                            [$"{entity.LogicalName}id"] = entity.Id,
+                            ["partitionid"] = partitionId
+                        };
+                    }
+
+                    entityReferences.Add(new EntityReference(entity.LogicalName, entity.Id)
+                    {
+                        KeyAttributes = keys
+                    });
+                }
+
+                Console.WriteLine($"Sending delete requests in parallel...");
+                Stopwatch deleteStopwatch = Stopwatch.StartNew();
+
+                Parallel.ForEach(entityReferences.Chunk(chunkSize),
+                    new ParallelOptions()
+                    {
+                        MaxDegreeOfParallelism = serviceClient.RecommendedDegreesOfParallelism
+                    },
+                    () =>
+                    {
+                        //Clone the ServiceClient for each thread
+                        return serviceClient.Clone();
+                    },
+                    (entityReferences, loopState, index, threadLocalSvc) =>
+                    {
+                        // In each thread, delete the entities
+                        OrganizationRequest deleteMultipleRequest = new()
+                        {
+                            RequestName = "DeleteMultiple",
+                            ["Targets"] = new EntityReferenceCollection(entityReferences)
+                        };
+
+                        if (Settings.BypassCustomPluginExecution)
+                        {
+#pragma warning disable CS0162 // Unreachable code detected: Configurable by setting
+                            deleteMultipleRequest["BypassCustomPluginExecution"] = true;
+#pragma warning restore CS0162 // Unreachable code detected: Configurable by setting
+                        }
+
+                        threadLocalSvc.Execute(deleteMultipleRequest);
+
+                        return threadLocalSvc;
+                    },
+                    (threadLocalSvc) =>
+                    {
+                        //Dispose the cloned CrmServiceClient instance
+                        threadLocalSvc?.Dispose();
+                    });
+                updateStopwatch.Stop();
+                Console.WriteLine($"\nDeleted {numberOfRecords} records " +
+                    $"in {Math.Round(deleteStopwatch.Elapsed.TotalSeconds)} seconds.");
             }
+            else
+            {
+                // Delete created rows asynchronously
+                Console.WriteLine($"\nStarting asynchronous bulk delete of {numberOfRecords} created records...");
+
+                Guid[] iDs = new Guid[entityList.Count];
+
+                for (int i = 0; i < entityList.Count; i++)
+                {
+                    iDs[i] = entityList.ToList()[i].Id;
+                }
 
 
-            string deleteJobStatus = Utility.BulkDeleteRecordsByIds(
-                service: serviceClient,
-                tableLogicalName: tableLogicalName,
-                iDs: iDs,
-                jobName: "Deleting records created by ParallelCreateUpdate Sample.");
+                string deleteJobStatus = Utility.BulkDeleteRecordsByIds(
+                    service: serviceClient,
+                    tableLogicalName: tableLogicalName,
+                    iDs: iDs,
+                    jobName: "Deleting records created by ParallelCreateUpdate Sample.");
 
-            Console.WriteLine($"\tBulk Delete status: {deleteJobStatus}");
-
+                Console.WriteLine($"\tBulk Delete status: {deleteJobStatus}");
+            }
 
             // Delete sample_example table
             Utility.DeleteExampleTable(
