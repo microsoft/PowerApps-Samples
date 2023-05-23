@@ -38,9 +38,8 @@ namespace PowerPlatform.Dataverse.CodeSamples
             int numberOfRecords = Settings.NumberOfRecords; //100 by default
             string tableSchemaName = "sample_Example";
             string tableLogicalName = tableSchemaName.ToLower(); //sample_example
-            bool useElastic = app.Configuration.GetValue<bool>("UseElastic");
 
-            int chunkSize = useElastic ? Settings.ElasticBatchSize : Settings.StandardBatchSize; // Configurable batch size
+            int chunkSize = Settings.UseElastic ? Settings.ElasticBatchSize : Settings.StandardBatchSize; // Configurable batch size
 
             #region Optimize Connection settings
 
@@ -71,7 +70,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
             Utility.CreateExampleTable(
                 service: serviceClient,
                 tableSchemaName: tableSchemaName,
-                isElastic: useElastic);
+                isElastic: Settings.UseElastic);
 
             // Create a List of entity instances.
             Console.WriteLine($"Preparing {numberOfRecords} records to create..\n");
@@ -183,7 +182,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
             Console.WriteLine($"\tUpdated {numberOfRecords} records " +
                 $"in {Math.Round(updateStopwatch.Elapsed.TotalSeconds)} seconds.");
 
-            if (useElastic)
+            if (Settings.UseElastic)
             {
                 // DeleteMultiple
                 Console.WriteLine($"\nPreparing {numberOfRecords} records to delete..");

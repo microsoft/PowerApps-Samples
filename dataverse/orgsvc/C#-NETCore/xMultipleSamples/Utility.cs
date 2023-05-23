@@ -293,9 +293,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                         DisplayCollectionName = new Label("Examples", 1033),
                         Description = new Label("A table for code samples.", 1033),
                         OwnershipType = OwnershipTypes.UserOwned,
-                        IsActivity = false,
-                        DataProviderId = tableType == "Elastic" ? new Guid("1d9bde74-9ebd-4da9-8ff5-aa74945b9f74") : null,
-                        CanCreateCharts = tableType == "Elastic" ? new BooleanManagedProperty(false) : new BooleanManagedProperty(true)
+                        IsActivity = false
                     },
                     PrimaryAttribute = new StringAttributeMetadata
                     {

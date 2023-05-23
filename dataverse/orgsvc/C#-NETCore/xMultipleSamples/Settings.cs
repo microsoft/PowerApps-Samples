@@ -2,11 +2,10 @@
 {
     public static class Settings
     {
-
         /// <summary>
         /// The number of records to create for all samples in this solution.
         /// </summary>
-        public const int NumberOfRecords = 100000;
+        public const int NumberOfRecords = 100;
 
         /// <summary>
         /// The maximum number of records operations to send with 
@@ -33,7 +32,10 @@
         /// </summary>
         public const bool DeleteTable = true;
 
-
+        /// <summary>
+        /// Whether elastic table will be created as part of the sample run.
+        /// </summary>
+        public const bool UseElastic = false;
     }
 }
 
