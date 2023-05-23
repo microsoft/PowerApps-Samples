@@ -587,7 +587,7 @@ Content-Transfer-Encoding: binary
 Content-Length: 388
 
 POST /api/data/v9.2/contoso_sensordatas HTTP/1.1
-Host: crmue.api.crm.dynamics.com
+Host: orgname.api.crm.dynamics.com
 Content-Type: application/json; type=entry
 
 {
