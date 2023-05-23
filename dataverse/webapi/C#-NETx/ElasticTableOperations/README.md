@@ -611,7 +611,11 @@ The query parameters in this example have been URL decoded for readability. They
 **Request**
 
 ```http
-GET [Organization Uri]/api/data/v9.2/ExecuteCosmosSqlQuery(QueryText=@p1,EntityLogicalName=@p2,QueryParameters=@p3,PageSize=@p4,PartitionId=@p5)?@p1='select c.props.contoso_deviceid as deviceId, c.props.contoso_timestamp as timestamp, c.props.contoso_energyconsumption.power as power from c where c.props.contoso_sensortype=@sensortype and c.props.contoso_energyconsumption.power > @power'&@p2='contoso_sensordata'&@p3={"Count":0,"IsReadOnly":false,"Keys":["@sensortype","@power"],"Values":[{"Type":"System.String","Value":"Humidity"},{"Type":"System.Int32","Value":"5"}]}&@p4=50&@p5='Device-ABC-1234'
+GET [Organization Uri]/api/data/v9.2/ExecuteCosmosSqlQuery(QueryText=@p1,EntityLogicalName=@p2,QueryParameters=@p3,PageSize=@p4,PartitionId=@p5)?@p1='select c.props.contoso_deviceid as deviceId, c.props.contoso_timestamp as timestamp, c.props.contoso_energyconsumption.power as power from c where c.props.contoso_sensortype=@sensortype and c.props.contoso_energyconsumption.power > @power'
+&@p2='contoso_sensordata'
+&@p3={"Count":0,"IsReadOnly":false,"Keys":["@sensortype","@power"],"Values":[{"Type":"System.String","Value":"Humidity"},{"Type":"System.Int32","Value":"5"}]}
+&@p4=50
+&@p5='Device-ABC-1234'
 MSCRM.SessionToken: 207:8#142792107#7=-1
 OData-MaxVersion: 4.0
 OData-Version: 4.0
@@ -650,7 +654,12 @@ This time the `PagingCookie` parameter has the value returned from the previous 
 **Request**
 
 ```http
-GET [Organization Uri]/api/data/v9.2/ExecuteCosmosSqlQuery(QueryText=@p1,EntityLogicalName=@p2,QueryParameters=@p3,PageSize=@p4,PagingCookie=@p5,PartitionId=@p6)?@p1='select c.props.contoso_deviceid as deviceId, c.props.contoso_timestamp as timestamp, c.props.contoso_energyconsumption.power as power from c where c.props.contoso_sensortype=@sensortype and c.props.contoso_energyconsumption.power > @power'&@p2='contoso_sensordata'&@p3={"Count":0,"IsReadOnly":false,"Keys":["@sensortype","@power"],"Values":[{"Type":"System.String","Value":"Humidity"},{"Type":"System.Int32","Value":"5"}]}&@p4=50&@p5='W3sidG9rZW4iOiIrUklEOn5DVm9OQUpJaWRuTjBJajRBQUFBd0R3PT0jUlQ6MSNUUkM6NTAjSVNWOjIjSUVPOjY1NTUxI1FDRjo4I0ZQQzpBWFFpUGdBQUFEQVBveUkrQUFBQU1BOD0iLCJyYW5nZSI6eyJtaW4iOiIxNDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMCIsIm1heCI6IjE0ODAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwIn19XQ=='&@p6='Device-ABC-1234'
+GET [Organization Uri]/api/data/v9.2/ExecuteCosmosSqlQuery(QueryText=@p1,EntityLogicalName=@p2,QueryParameters=@p3,PageSize=@p4,PagingCookie=@p5,PartitionId=@p6)?@p1='select c.props.contoso_deviceid as deviceId, c.props.contoso_timestamp as timestamp, c.props.contoso_energyconsumption.power as power from c where c.props.contoso_sensortype=@sensortype and c.props.contoso_energyconsumption.power > @power'
+&@p2='contoso_sensordata'
+&@p3={"Count":0,"IsReadOnly":false,"Keys":["@sensortype","@power"],"Values":[{"Type":"System.String","Value":"Humidity"},{"Type":"System.Int32","Value":"5"}]}
+&@p4=50
+@p5='W3sidG9rZW4iOiIrUklEOn5DVm9OQUpJaWRuTjBJajRBQUFBd0R3PT0jUlQ6MSNUUkM6NTAjSVNWOjIjSUVPOjY1NTUxI1FDRjo4I0ZQQzpBWFFpUGdBQUFEQVBveUkrQUFBQU1BOD0iLCJyYW5nZSI6eyJtaW4iOiIxNDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMCIsIm1heCI6IjE0ODAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwIn19XQ=='
+&@p6='Device-ABC-1234'
 MSCRM.SessionToken: 207:8#142792107#7=-1
 OData-MaxVersion: 4.0
 OData-Version: 4.0
