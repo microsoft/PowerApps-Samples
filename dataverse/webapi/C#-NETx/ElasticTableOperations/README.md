@@ -37,6 +37,15 @@ This sample uses the common helper code in the [WebAPIService](../WebAPIService)
 
 This sample has 8 regions:
 
+- [Create Elastic table](#create-elastic-table)
+- [Create Record](#create-record)
+- [Update Record](#update-record)
+- [Upsert Record](#upsert-record)
+- [Delete Record](#delete-record)
+- [Demonstrate ExecuteCosmosSqlQuery](#demonstrate-executecosmossqlquery)
+- [Delete Table](#delete-table)
+
+
 ### Create Elastic table
 
 The code in this region sends this request to create a user-owned elastic table named `contoso_SensorData` with the following columns:
