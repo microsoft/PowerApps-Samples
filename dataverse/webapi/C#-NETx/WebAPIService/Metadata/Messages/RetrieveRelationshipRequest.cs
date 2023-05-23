@@ -99,7 +99,7 @@ namespace PowerApps.Samples.Metadata.Messages
         private void GenerateUri()
         {
             
-            if (string.IsNullOrEmpty(_schemaName) && _metadataId == null)
+            if (string.IsNullOrWhiteSpace(_schemaName) && _metadataId == null)
             {
                 throw new Exception("MetadataId or SchemaName must contain a value");
             }

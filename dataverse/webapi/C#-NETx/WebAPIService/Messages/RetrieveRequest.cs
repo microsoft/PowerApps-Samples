@@ -21,7 +21,7 @@ namespace PowerApps.Samples.Messages
 
             string parameters;
 
-            if (!string.IsNullOrEmpty(partitionid))
+            if (!string.IsNullOrWhiteSpace(partitionid))
             {
                 parameters = $"?partitionId={partitionid}";
                 if (query.StartsWith("?"))

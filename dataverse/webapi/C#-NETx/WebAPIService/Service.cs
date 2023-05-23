@@ -148,7 +148,7 @@ namespace PowerApps.Samples
         public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
             // Session token used by elastic tables to enable strong consistency
-            if (!string.IsNullOrEmpty(_sessionToken) && request.Method == HttpMethod.Get) {
+            if (!string.IsNullOrWhiteSpace(_sessionToken) && request.Method == HttpMethod.Get) {
                 request.Headers.Add("MSCRM.SessionToken", _sessionToken);
             }
 

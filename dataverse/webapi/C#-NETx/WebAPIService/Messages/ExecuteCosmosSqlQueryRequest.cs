@@ -143,7 +143,7 @@ namespace PowerApps.Samples.Messages
             }
 
             //PagingCookie
-            if (!string.IsNullOrEmpty(_pagingCookie))
+            if (!string.IsNullOrWhiteSpace(_pagingCookie))
             {
                 parameters.Add($"PagingCookie=@p{count}");
 
@@ -152,7 +152,7 @@ namespace PowerApps.Samples.Messages
             }
 
             //PartitionId
-            if (!string.IsNullOrEmpty(_partitionId))
+            if (!string.IsNullOrWhiteSpace(_partitionId))
             {
                 parameters.Add($"PartitionId=@p{count}");
                 parameterValues.Add($"@p{count}='{_partitionId}'");

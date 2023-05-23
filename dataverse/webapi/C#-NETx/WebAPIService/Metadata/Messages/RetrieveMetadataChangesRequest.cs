@@ -137,7 +137,7 @@ namespace PowerApps.Samples.Metadata.Messages
                           
             }
 
-            if (!string.IsNullOrEmpty(_clientVersionStamp))
+            if (!string.IsNullOrWhiteSpace(_clientVersionStamp))
             {
                 parameters.Add($"ClientVersionStamp=@p3");
 
