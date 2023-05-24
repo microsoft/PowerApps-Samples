@@ -468,9 +468,11 @@ OData-Version: 4.0
 
 ### Upsert Record
 
+**Note** : When Upserting a record you must update the entire record. The contents will be overwritten and any data not included in the upsert payload will be lost.
+
 The code in this section performs an upsert operation on the record that already exists, using two different ways to identify the record:
 
-Using only the id in the URL. No PartitionId parameter.
+Using only the id in the URL. No PartitionId parameter. You don't need to include it because the `partitionid` value must be part of the payload.
 
 **Request**
 
