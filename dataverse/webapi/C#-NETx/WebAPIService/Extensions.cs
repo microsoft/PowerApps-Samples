@@ -15,7 +15,7 @@
             //Copy the properties
             typedResponse.StatusCode = response.StatusCode;
             response.Headers.ToList().ForEach(h => {
-                typedResponse.Headers.Add(h.Key, h.Value);
+                typedResponse.Headers.TryAddWithoutValidation(h.Key, h.Value);
             });
             typedResponse.Content = response.Content;
             return typedResponse;
