@@ -18,6 +18,7 @@ namespace PowerApps.Samples
         private static IServiceProvider _serviceProvider { get; set; }
         private readonly string WebAPIClientName = "WebAPI";
         private bool _disposedValue;
+        private string? _sessionToken = null;
 
 
         /// <summary>
@@ -146,6 +147,11 @@ namespace PowerApps.Samples
         /// <exception cref="Exception"></exception>
         public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
+            // Session token used by elastic tables to enable strong consistency
+            if (!string.IsNullOrWhiteSpace(_sessionToken) && request.Method == HttpMethod.Get) {
+                request.Headers.Add("MSCRM.SessionToken", _sessionToken);
+            }
+
             // Set the access token using the function from the Config passed to the constructor
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", await config.GetAccessToken());
 
@@ -155,7 +161,13 @@ namespace PowerApps.Samples
 
             HttpResponseMessage response = await client.SendAsync(request);
 
-            //SampleGenerator.WriteHttpSample(request, response, BaseAddress, "LOCAL PATH");
+            // Capture the current session token value
+            if (response.Headers.Contains("x-ms-session-token"))
+            {
+                _sessionToken = response.Headers.GetValues("x-ms-session-token")?.FirstOrDefault()?.ToString();
+            }
+
+            // SampleGenerator.WriteHttpSample(request, response, BaseAddress, "H:\\temp\\GeneratedSamples");
 
             // Throw an exception if the request is not successful
             if (!response.IsSuccessStatusCode)

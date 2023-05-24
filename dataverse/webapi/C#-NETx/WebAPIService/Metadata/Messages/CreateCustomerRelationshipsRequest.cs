@@ -32,7 +32,7 @@ namespace PowerApps.Samples.Metadata.Messages
                 ["OneToManyRelationships"] = JArray.FromObject(oneToManyRelationships)
             };
 
-            if (!string.IsNullOrEmpty(solutionUniqueName))
+            if (!string.IsNullOrWhiteSpace(solutionUniqueName))
             {
                 _body["SolutionUniqueName"] = solutionUniqueName;
             }

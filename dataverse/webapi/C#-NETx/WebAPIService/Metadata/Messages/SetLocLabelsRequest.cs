@@ -20,7 +20,7 @@ namespace PowerApps.Samples.Metadata.Messages
         {
             Method = HttpMethod.Post;
             RequestUri = new Uri(uriString: "SetLocLabels", uriKind: UriKind.Relative);
-            if (!string.IsNullOrEmpty(solutionUniqueName))
+            if (!string.IsNullOrWhiteSpace(solutionUniqueName))
             {
                 Headers.Add("MSCRM.SolutionUniqueName", solutionUniqueName);
             }

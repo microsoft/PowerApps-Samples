@@ -14,14 +14,14 @@ namespace PowerApps.Samples.Metadata.Types
         public AttributeTypeDisplayName AttributeTypeName { get; } = new AttributeTypeDisplayName(AttributeTypeDisplayNameValues.IntegerType);
 
         /// <summary>
-        /// The minimum supported value for this attribute.
-        /// </summary>
-        public int MaxValue { get; set; }
-
-        /// <summary>
         /// The maximum supported value for this attribute.
         /// </summary>
-        public int MinValue { get; set; }
+        public int? MaxValue { get; set; }
+
+        /// <summary>
+        /// The minimum supported value for this attribute.
+        /// </summary>
+        public int? MinValue { get; set; }
 
         /// <summary>
         /// The format options for the integer attribute.

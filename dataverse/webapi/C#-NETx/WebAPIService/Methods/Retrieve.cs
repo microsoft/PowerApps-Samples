@@ -19,13 +19,15 @@ namespace PowerApps.Samples.Methods
             EntityReference entityReference, 
             string? query, 
             bool includeAnnotations = false,
-            string? eTag = null)
+            string? eTag = null,
+            string? partitionId = null)
         {
             RetrieveRequest request = new(
                 entityReference: entityReference,
                 query: query,
                 includeAnnotations: includeAnnotations,
-                eTag: eTag);
+                eTag: eTag, 
+                partitionid:partitionId);
 
             try
             {

@@ -9,7 +9,7 @@ namespace PowerApps.Samples.Methods
         /// Performs an Upsert operation on a record
         /// </summary>
         /// <param name="service">The Service</param>
-        /// <param name="entityReference">A reference to the record to updsert.</param>
+        /// <param name="entityReference">A reference to the record to upsert.</param>
         /// <param name="record">The data for the record.</param>
         /// <param name="upsertBehavior">Controls whether to block Create or Update operations.</param>
         /// <returns></returns>

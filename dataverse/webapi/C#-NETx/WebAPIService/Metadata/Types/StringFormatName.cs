@@ -23,6 +23,7 @@ namespace PowerApps.Samples.Metadata.Types
         TextArea,
         TickerSymbol,
         Url,
-        VersionNumber
+        VersionNumber,
+        Json
     }
 }

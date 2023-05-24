@@ -464,9 +464,8 @@ namespace PowerApps.Samples.Metadata.Types
         public List<EntitySetting>? Settings { get; set; }
 
         public bool? SyncToExternalSearchIndex { get; set; }
-        /// <summary>
-        ///
-        /// </summary>
+
+        public string? TableType { get; set; }
 
         public bool? UsesBusinessDataLabelTable { get; set; }
 

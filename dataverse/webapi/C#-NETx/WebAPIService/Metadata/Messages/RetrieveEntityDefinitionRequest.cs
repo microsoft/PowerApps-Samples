@@ -31,7 +31,7 @@ namespace PowerApps.Samples.Metadata.Messages
             _logicalName = logicalName;
             _query = query;
 
-            if (_metadataId == null && string.IsNullOrEmpty(_logicalName))
+            if (_metadataId == null && string.IsNullOrWhiteSpace(_logicalName))
             {
                 throw new Exception("RetrieveEntityDefinitionRequest requires either LogicalName or MetadataId parameters.");
             }

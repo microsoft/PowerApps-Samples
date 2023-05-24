@@ -16,7 +16,7 @@ namespace PowerApps.Samples.Metadata.Messages
             RequestUri = new Uri(
                 uriString: "GlobalOptionSetDefinitions", 
                 uriKind: UriKind.Relative);
-            if (!string.IsNullOrEmpty(solutionUniqueName))
+            if (!string.IsNullOrWhiteSpace(solutionUniqueName))
             {
                 Headers.Add("MSCRM.SolutionUniqueName", solutionUniqueName);
             }
