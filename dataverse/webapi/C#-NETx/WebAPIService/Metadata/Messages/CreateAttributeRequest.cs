@@ -25,7 +25,7 @@ namespace PowerApps.Samples.Metadata.Messages
                 uriString: $"EntityDefinitions(LogicalName='{entityLogicalName}')/Attributes", 
                 uriKind: UriKind.Relative);
 
-            if (!string.IsNullOrEmpty(solutionUniqueName))
+            if (!string.IsNullOrWhiteSpace(solutionUniqueName))
             {
                 Headers.Add("MSCRM.SolutionUniqueName", solutionUniqueName);
             }

@@ -120,7 +120,7 @@ namespace PowerApps.Samples
                 if (response.Content.IsMimeMultipartContent())
                 {
                     string unformattedContent = await response.Content.ReadAsStringAsync();
-                    if (!string.IsNullOrEmpty(unformattedContent))
+                    if (!string.IsNullOrWhiteSpace(unformattedContent))
                     {
                         sb.AppendLine();
                         unformattedContent = unformattedContent.Replace(baseAddress.ToString(), "[Organization Uri]/api/data/v9.2/");
@@ -130,7 +130,7 @@ namespace PowerApps.Samples
                 else
                 {
                     string unformattedContent = await response.Content.ReadAsStringAsync();
-                    if (!string.IsNullOrEmpty(unformattedContent))
+                    if (!string.IsNullOrWhiteSpace(unformattedContent))
                     {
                         sb.AppendLine();
                         unformattedContent = unformattedContent.Replace(baseAddress.ToString(), "[Organization Uri]/api/data/v9.2/");

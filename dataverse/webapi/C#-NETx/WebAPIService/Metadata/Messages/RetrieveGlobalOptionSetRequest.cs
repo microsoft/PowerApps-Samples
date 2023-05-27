@@ -20,7 +20,7 @@ namespace PowerApps.Samples.Metadata.Messages
             OptionSetType type = OptionSetType.Picklist)
         {
 
-            if (metadataid == null && string.IsNullOrEmpty(name))
+            if (metadataid == null && string.IsNullOrWhiteSpace(name))
             {
                 throw new Exception("RetrieveGlobalOptionSetRequest constructor requires either name or metadataid parameters.");
             }
