@@ -5,12 +5,12 @@ products:
 - power-platform
 - power-apps
 page_type: sample
-description: "This sample demonstrates how to perform common data operations on elastic tables using the Dataverse SDK for .NET."
+description: "This sample demonstrates how to perform common data operations on elastic tables and query JSON columns using the Dataverse SDK for .NET."
 ---
 
 # SDK for .NET Elastic Table Operations Sample
 
-This .NET 6.0 sample demonstrates how to perform operations with file columns using the Dataverse SDK for .NET.
+This .NET 6.0 sample demonstrates how to perform operations with elastic tables and query JSON columns using the Dataverse SDK for .NET.
 
 This sample uses the [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient Class](https://learn.microsoft.com/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient).
 
