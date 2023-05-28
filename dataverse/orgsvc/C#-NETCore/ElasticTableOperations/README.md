@@ -1,4 +1,14 @@
-﻿# SDK for .NET Elastic Table Operations Sample
+﻿---
+languages:
+- csharp
+products:
+- power-platform
+- power-apps
+page_type: sample
+description: "This sample demonstrates how to perform common data operations on elastic tables using the Dataverse SDK for .NET."
+---
+
+# SDK for .NET Elastic Table Operations Sample
 
 This .NET 6.0 sample demonstrates how to perform operations with file columns using the Dataverse SDK for .NET.
 
@@ -12,8 +22,8 @@ This sample uses the [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient Cla
 ## How to run the sample
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
-1. Open the `PowerApps-Samples/dataverse/orgsvc/C#-NETCore/ElasticTableOperations/ElasticTableOperations.sln` file using Visual Studio 2022.
-1. Edit the *appsettings.json* file. Set the connection string `Url` and `Username` parameters as appropriate for your test environment.
+1. Open the `PowerApps-Samples\dataverse\orgsvc\C#-NETCore\ElasticTableOperations\ElasticTableOperations.sln` file using Visual Studio 2022.
+1. Edit the `appsettings.json` file. Set the connection string `Url` and `Username` parameters as appropriate for your test environment.
 
    The environment Url can be found in the Power Platform admin center. It has the form https://\<environment-name>.crm.dynamics.com.
 
@@ -29,13 +39,15 @@ When the sample runs, you will be prompted in the default browser to select an e
 }
 ```
 
->**Tip**: You can set a user environment variable named DATAVERSE_APPSETTINGS to the file path of the appsettings.json file stored anywhere on your computer. The samples will use that appsettings file if the environment variable exists and is not null. Be sure to log out and back in again after you define the variable for it to take affect. To set an environment variable, go to **Settings > System > About**, select **Advanced system settings**, and then choose **Environment variables**.
+>**Tip**: You can set a user environment variable named `DATAVERSE_APPSETTINGS` to the file path of the appsettings.json file stored anywhere on your computer. The samples will use that appsettings file if the environment variable exists and is not null. Be sure to log out and back in again after you define the variable for it to take affect. To set an environment variable, go to **Settings > System > About**, select **Advanced system settings**, and then choose **Environment variables**.
 
 ## Sample Output
 
 The output of the sample should look something like this:
 
 ```
+Starting Elastic table operations sample.
+
 === Start Region 0: Creating contoso_SensorData table ===
 
 Creating contoso_SensorData table...
@@ -51,21 +63,21 @@ Creating contoso_EnergyConsumption column...
 
 === Start Region 1: Examples without partitionid ===
 
-Created record with id: 79109561-d8fc-ed11-8f6e-000d3a993550
-Updated the record with id: 79109561-d8fc-ed11-8f6e-000d3a993550
-Upserted the record with id: 79109561-d8fc-ed11-8f6e-000d3a993550
+Created record with id: 13d827fe-a8fd-ed11-8f6e-000d3a993550
+Updated the record with id: 13d827fe-a8fd-ed11-8f6e-000d3a993550
+Upserted the record with id: 13d827fe-a8fd-ed11-8f6e-000d3a993550
 Record created with upsert?:False
-Retrieved the record with id: 79109561-d8fc-ed11-8f6e-000d3a993550
+Retrieved the record with id: 13d827fe-a8fd-ed11-8f6e-000d3a993550
 Data:
-        contoso_sensordataid: 79109561-d8fc-ed11-8f6e-000d3a993550
+        contoso_sensordataid: 13d827fe-a8fd-ed11-8f6e-000d3a993550
         contoso_deviceid: Device-ABC-1234
         contoso_sensortype: Humidity
         contoso_value: 30
-        contoso_timestamp: 5/27/2023 9:49:45 PM
+        contoso_timestamp: 5/28/2023 10:43:03 PM
         ttlinseconds: 86400
         contoso_energyconsumption {"power":4,"powerUnit":"Watts","voltage":3,"voltageUnit":"Volts"}
 
-Deleted the record with id: 79109561-d8fc-ed11-8f6e-000d3a993550
+Deleted the record with id: 13d827fe-a8fd-ed11-8f6e-000d3a993550
 
 === Start Region 2: Examples with partitionid ===
 
@@ -77,10 +89,10 @@ Updating record with alternate key...
         Record updated with alternate key.
 Retrieving record...
         Record retrieved.
-        contoso_value: 60
+        contoso_value: 80
 Retrieving record with alternate key...
         Retrieved record with alternate key.
-        contoso_value: 60
+        contoso_value: 80
 Upserting  record...
         Upserted record.
 Deleting record...
@@ -102,32 +114,37 @@ In batches of 100
 
 Requesting ExecuteCosmosSqlQuery..
 
-ExecuteCosmosSqlQueryResponse.PagingCookie: W3sidG9rZW4iOiIrUklEOn5DVm9OQUpJaWRuTmxQRDRBQUFBd0R3PT0jUlQ6MSNUUkM6MTAwI0lTVjoyI0lFTzo2NTU1MSNRQ0Y6OCNGUEM6QVdVOFBnQUFBREFQdUQ4K0FBQUFNQTg9IiwicmFuZ2UiOnsibWluIjoiMTQwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAiLCJtYXgiOiIxNDgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMCJ9fV0=
+ExecuteCosmosSqlQueryResponse.PagingCookie: [Truncated for brevity]
 
 ExecuteCosmosSqlQueryResponse.HasMore: True
 
-Returned initial 100 results from ExecuteCosmosSqlQuery.
-        Returned 100 more results from ExecuteCosmosSqlQuery.
-        Returned 100 more results from ExecuteCosmosSqlQuery.
-        Returned 100 more results from ExecuteCosmosSqlQuery.
-        Returned 100 more results from ExecuteCosmosSqlQuery.
-        Returned 100 more results from ExecuteCosmosSqlQuery.
-        Returned 100 more results from ExecuteCosmosSqlQuery.
-        Returned 100 more results from ExecuteCosmosSqlQuery.
-        Returned 100 more results from ExecuteCosmosSqlQuery.
-        Returned 51 more results from ExecuteCosmosSqlQuery.
+Output first page of 100 results:
+
+Returned initial 100 results from ExecuteCosmosSqlQuery:
+        Device-ABC-1234 51
+     ...
+        [Truncated for brevity]
+
+Returned 100 more results from ExecuteCosmosSqlQuery.
+        Device-ABC-1234 151
+        Device-ABC-1234 152
+...
+[Truncated for brevity]
+
 Returned total of 951 results using ExecuteCosmosSqlQuery
 
 === Start Region 5: DeleteMultiple Example ===
 
 Deleteing 1000 records using DeleteMultiple
+In batches of 100
 Deleted 1000 records.
 
 === Start Region 6: Delete contoso_SensorData table ===
 
 Deleting contoso_sensordata table...
         contoso_sensordata table deleted.
-=== Sample Completed ===
+
+=== SDK ElasticTableOperations Sample Completed ===
 
 ```
 
@@ -141,6 +158,8 @@ This project depends on data in the following classes:
 |---|---|
 |`Utility.cs`|Contains the `CreateSensorDataEntity` and `DeleteSensorDataEntity` static methods to create the elastic table used by this sample. |
 |`Settings.cs`|Contains `NumberOfRecords` and `BatchSize` values you can change. Default values are: `NumberOfRecords` = 1000, `BatchSize` = 100.|
+|`EnergyConsumption.cs`|Describes the data stored as JSON in the `contoso_EnergyConsumption` column.|
+|`ExecuteCosmosSqlQueryResponse.cs`|A class that inherits from [Entity](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.entity) that provides access to the properties of the return value of the `ExecuteCosmosSqlQuery` message. More information: [Custom closed types](https://learn.microsoft.com/power-apps/developer/data-platform/use-open-types?tabs=sdk#custom-closed-types)|
 
 The sample has the following sections:
 
@@ -191,7 +210,7 @@ To include this `partitionid`, you have three options:
 
 1. **Use the alternate key style** with the values for the `KeyForNoSqlEntityWithPKPartitionId` alternate key created for all elastic tables. More information: [Using Alternate Key](https://learn.microsoft.com/power-apps/developer/data-platform/use-elastic-tables?tabs=sdk#using-alternate-key)
 1. **Use the `partitionId` parameter**. This [optional parameter](https://learn.microsoft.com/power-apps/developer/data-platform/optional-parameters?tabs=sdk) can be used with classes that are derived from [OrganizationRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.organizationrequest?view=dataverse-sdk-latest).  More information: [Using partitionId parameter](https://learn.microsoft.com/power-apps/developer/data-platform/use-elastic-tables?tabs=sdk#using-partitionid-parameter)
-1. **Using `partitionid` column directly**. When you create a record, you must explicitly set the value of the `partitionid` column. For Update and Upsert operations you can't currently use the `partitionId` parameter, so you must either use the alternate key style, or you can set the value of the `partitionid` column.
+1. **Using `partitionid` column directly**. When you create a record, you must explicitly set the value of the `partitionid` column. For Update and Upsert operations you can't currently use the `partitionId` parameter, so you must either use the alternate key style, or you can set the value of the `partitionid` column. More information [Using partitionid column directly](https://learn.microsoft.com/power-apps/developer/data-platform/use-elastic-tables?tabs=sdk#using-partitionid-column-directly)
 
 **Note**: The examples in this section use static methods such as `CreateRecord`, `UpdateRecord`, and `UpdateRecordWithAlternateKey` to make the different patterns of working with `partitionid` clear for each operation.
 
@@ -218,7 +237,7 @@ The `ExecuteCosmosSqlQuery` message has the following parameters:
 |`PagingCookie`|string|(Optional) Paging cookie to be used.|
 |`PartitionId`|string|(Optional) Partitionid to set the scope of the query.|
 
-The `ExecuteCosmosSqlQuery` message returns an [Entity](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.entity?view=dataverse-sdk-latest) that is an open type. To access the values returned, this sample uses a `ExecuteCosmosSqlQueryResponse` class that inherits from `Entity`.
+The `ExecuteCosmosSqlQuery` message returns an [Entity](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.entity?view=dataverse-sdk-latest) that is an open type. To access the values returned, this sample uses a `ExecuteCosmosSqlQueryResponse` class that inherits from `Entity`. More information: [Custom closed types](https://learn.microsoft.com/power-apps/developer/data-platform/use-open-types?tabs=sdk#custom-closed-types)
 
 The `ExecuteCosmosSqlQueryResponse` class includes the values that are returned:
 
@@ -234,7 +253,7 @@ This example specifies the query and demonstrates how to manage retrieving paged
 
 This section demonstrates using the `DeleteMultiple` message with the [OrganizationRequest Class](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.organizationrequest?view=dataverse-sdk-latest). The SDK doesn't currently have `DeleteMultipleRequest` class.
 
-As was done with `CreateMultiple` and `UpdateMultiple`, the records are deleted in batches.
+As was done with `CreateMultiple` and `UpdateMultiple`, the records are deleted in batches of 100.
 
 ### Region 6: Delete contoso_SensorData table
 

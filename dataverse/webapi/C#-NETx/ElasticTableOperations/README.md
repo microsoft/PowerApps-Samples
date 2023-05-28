@@ -21,8 +21,8 @@ This sample uses the common helper code in the [WebAPIService](../WebAPIService)
 ## How to run the sample
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
-1. Open the [ElasticTableOperations.sln](ElasticTableOperations.sln) file using Visual Studio 2022
-1. Edit the [appsettings.json](../appsettings.json) file to set the following property values:
+1. Open the `PowerApps-Samples\dataverse\webapi\C#-NETx\ElasticTableOperations\ElasticTableOperations.sln` file using Visual Studio 2022
+1. Edit the `appsettings.json` file to set the following property values:
 
    |Property|Instructions  |
    |---------|---------|
@@ -30,12 +30,121 @@ This sample uses the common helper code in the [WebAPIService](../WebAPIService)
    |`UserPrincipalName`|Replace the placeholder `you@yourorg.onmicrosoft.com` value with the UPN value you use to access the environment.|
    |`Password`|Replace the placeholder `yourPassword` value with the password you use.|
 
-1. Save the `appsettings.json` file
+1. Save the `appsettings.json` file.
+1. Build the solution.
 1. Press F5 to run the sample.
+
+## Sample Output
+
+The output of the sample should look something like this:
+
+```text
+Starting Elastic table operations sample.
+
+=== Start Region 0: Creating contoso_SensorData table ===
+
+Creating the contoso_SensorData table...
+contoso_SensorData table created.
+
+=== Start Region 1: Create Record ===
+
+Created sensor data record with id:b451d168-a0fd-ed11-8f6e-000d3a993550
+
+=== Start Region 2: Update Record ===
+
+Updated sensor data record using partitionId parameter.
+Updated sensor data record using alternate key style.
+
+=== Start Region 3: Retrieve Record ===
+
+Retrieved sensor data record using partitionId:
+
+{
+  "@odata.context": "https://crmue.api.crm.dynamics.com/api/data/v9.2/$metadata#contoso_sensordatas(contoso_value)/$entity",
+  "@odata.etag": "W/\"87011581-0000-0200-0000-6473ca8f0000\"",
+  "contoso_value": 80,
+  "contoso_sensordataid": "b451d168-a0fd-ed11-8f6e-000d3a993550",
+  "versionnumber": 638209068959900819,
+  "_ownerid_value": "4026be43-6b69-e111-8f65-78e7d1620f5e",
+  "_owningbusinessunit_value": "38e0dbe4-131b-e111-ba7e-78e7d1620f5e"
+}
+
+Retrieved sensor data record using alternate key style:
+
+{
+  "@odata.context": "https://crmue.api.crm.dynamics.com/api/data/v9.2/$metadata#contoso_sensordatas(contoso_value)/$entity",
+  "@odata.etag": "W/\"87011581-0000-0200-0000-6473ca8f0000\"",
+  "contoso_value": 80,
+  "contoso_sensordataid": "b451d168-a0fd-ed11-8f6e-000d3a993550",
+  "versionnumber": 638209068959900819,
+  "_ownerid_value": "4026be43-6b69-e111-8f65-78e7d1620f5e",
+  "_owningbusinessunit_value": "38e0dbe4-131b-e111-ba7e-78e7d1620f5e"
+}
+
+=== Start Region 4: Upsert Record ===
+
+Upsert sensor data record:
+
+Same ID values?:True
+Upsert sensor data record with alternate key:
+
+Same ID values?:False
+
+=== Start Region 5: Delete Record ===
+
+Deleted sensor data record with partitionId.
+
+Deleted second sensor data record with alternate key.
+
+=== Start Region 6: Demonstrate ExecuteCosmosSqlQuery ===
+
+Creating 1000 records to use for query example...
+100 records created in $batch
+100 records created in $batch
+100 records created in $batch
+100 records created in $batch
+100 records created in $batch
+100 records created in $batch
+100 records created in $batch
+100 records created in $batch
+100 records created in $batch
+100 records created in $batch
+1000 records to use for query example created.
+ExecuteCosmosSqlQueryResponse.PagingCookie: [removed for brevity]
+
+ExecuteCosmosSqlQueryResponse.HasMore: True
+
+Output first page of 50 results:
+
+        Device-ABC-1234 200
+        [removed for brevity]
+Output additional page of 50 results:
+
+[removed for brevity]
+
+=== Start Region 7: Delete Table ===
+
+Deleting the contoso_SensorData table...
+contoso_SensorData table deleted.
+
+=== Web API ElasticTableOperations Sample Completed ===
+```
 
 ## Demonstrates
 
-This sample has 8 regions:
+The code for this sample is in the `Program.cs` file.
+
+In addition to the WebAPIService project classes, this project depends on data in the following classes:
+
+|Class|Description|
+|---|---|
+|`Settings.cs`|Contains `NumberOfRecords` and `BatchSize` values you can change. Default values are: `NumberOfRecords` = 1000, `BatchSize` = 100.|
+|`EnergyConsumption.cs`|Describes the data stored as JSON in the `contoso_EnergyConsumption` column.|
+|`WebAPIService\Messages\ExecuteCosmosSqlQueryRequest.cs`|Contains the data to send the `ExecuteCosmosSqlQuery` message|
+|`WebAPIService\Messages\ExecuteCosmosSqlQueryResponse.cs`|Contains the data from the ExecuteCosmosSqlQueryRequest|
+
+
+This sample has 7 regions:
 
 - [Create Elastic table](#create-elastic-table)
 - [Create Record](#create-record)
@@ -304,11 +413,9 @@ OData-Version: 4.0
 OData-EntityId: [Organization Uri]/api/data/v9.2/EntityDefinitions(47db17bf-2df8-ed11-8849-000d3a993550)
 ```
 
-
-
 ### Create Record
 
-The code in this section creates an record.
+The code in this section creates an record setting the `partitionid`.
 
 **Request**
 
@@ -325,7 +432,7 @@ Content-Length: 225
   "contoso_deviceid": "Device-ABC-1234",
   "contoso_sensortype": "Humidity",
   "contoso_value": 40,
-  "contoso_timestamp": "2023-05-21T23:18:37.7184981Z",
+  "contoso_timestamp": "2023-05-28T21:41:33.4522689Z",
   "partitionid": "Device-ABC-1234",
   "ttlinseconds": 86400
 }
@@ -336,20 +443,20 @@ Content-Length: 225
 ```http
 HTTP/1.1 204 NoContent
 OData-Version: 4.0
-OData-EntityId: [Organization Uri]/api/data/v9.2/contoso_sensordatas(da9c32cc-2df8-ed11-8849-000d3a993550)
-x-ms-session-token: 207:8#142792103#7=-1
+OData-EntityId: [Organization Uri]/api/data/v9.2/contoso_sensordatas(b451d168-a0fd-ed11-8f6e-000d3a993550)
+x-ms-session-token: 207:8#142973457#7=-1
 ```
 
 ### Update Record
 
-The code in this section updates the record create.
+The code in this section updates the record created.
 
 First, using the `partitionId` query parameter
 
 **Request**
 
 ```http
-PATCH [Organization Uri]/api/data/v9.2/contoso_sensordatas(da9c32cc-2df8-ed11-8849-000d3a993550)?partitionId=Device-ABC-1234
+PATCH [Organization Uri]/api/data/v9.2/contoso_sensordatas(b451d168-a0fd-ed11-8f6e-000d3a993550)?partitionId=Device-ABC-1234
 If-Match: *
 OData-MaxVersion: 4.0
 OData-Version: 4.0
@@ -368,8 +475,8 @@ Content-Length: 27
 ```http
 HTTP/1.1 204 NoContent
 OData-Version: 4.0
-OData-EntityId: [Organization Uri]/api/data/v9.2/contoso_sensordatas(da9c32cc-2df8-ed11-8849-000d3a993550)
-x-ms-session-token: 207:8#142792104#7=-1
+OData-EntityId: [Organization Uri]/api/data/v9.2/contoso_sensordatas(b451d168-a0fd-ed11-8f6e-000d3a993550)
+x-ms-session-token: 207:8#142973458#7=-1
 ```
 
 Then, by using the alternate key to identify the record with the `partitionid` value.
@@ -377,7 +484,7 @@ Then, by using the alternate key to identify the record with the `partitionid` v
 **Request**
 
 ```http
-PATCH [Organization Uri]/api/data/v9.2/contoso_sensordatas(contoso_sensordataid=da9c32cc-2df8-ed11-8849-000d3a993550,partitionid='Device-ABC-1234')
+PATCH [Organization Uri]/api/data/v9.2/contoso_sensordatas(contoso_sensordataid=b451d168-a0fd-ed11-8f6e-000d3a993550,partitionid='Device-ABC-1234')
 If-Match: *
 OData-MaxVersion: 4.0
 OData-Version: 4.0
@@ -396,8 +503,8 @@ Content-Length: 27
 ```http
 HTTP/1.1 204 NoContent
 OData-Version: 4.0
-OData-EntityId: [Organization Uri]/api/data/v9.2/contoso_sensordatas(contoso_sensordataid=da9c32cc-2df8-ed11-8849-000d3a993550,partitionid='Device-ABC-1234')
-x-ms-session-token: 207:8#142792105#7=-1
+OData-EntityId: [Organization Uri]/api/data/v9.2/contoso_sensordatas(contoso_sensordataid=b451d168-a0fd-ed11-8f6e-000d3a993550,partitionid='Device-ABC-1234')
+x-ms-session-token: 207:8#142973459#7=-1
 ```
 
 ### Retrieve Record
@@ -409,8 +516,8 @@ First, using the `partitionId` parameter:
 **Request**
 
 ```http
-GET [Organization Uri]/api/data/v9.2/contoso_sensordatas(da9c32cc-2df8-ed11-8849-000d3a993550)?partitionId=Device-ABC-1234&$select=contoso_value
-MSCRM.SessionToken: 207:8#142792105#7=-1
+GET [Organization Uri]/api/data/v9.2/contoso_sensordatas(b451d168-a0fd-ed11-8f6e-000d3a993550)?partitionId=Device-ABC-1234&$select=contoso_value
+MSCRM.SessionToken: 207:8#142973459#7=-1
 OData-MaxVersion: 4.0
 OData-Version: 4.0
 If-None-Match: null
@@ -421,27 +528,28 @@ Accept: application/json
 
 ```http
 HTTP/1.1 200 OK
-ETag: W/"0401b4fd-0000-0200-0000-646aa6d10000"
+ETag: W/"87011581-0000-0200-0000-6473ca8f0000"
 OData-Version: 4.0
 
 {
   "@odata.context": "[Organization Uri]/api/data/v9.2/$metadata#contoso_sensordatas(contoso_value)/$entity",
-  "@odata.etag": "W/\"0401b4fd-0000-0200-0000-646aa6d10000\"",
+  "@odata.etag": "W/\"87011581-0000-0200-0000-6473ca8f0000\"",
   "contoso_value": 80,
-  "contoso_sensordataid": "da9c32cc-2df8-ed11-8849-000d3a993550",
-  "versionnumber": 638203079218106789,
+  "contoso_sensordataid": "b451d168-a0fd-ed11-8f6e-000d3a993550",
+  "versionnumber": 638209068959900819,
   "_ownerid_value": "4026be43-6b69-e111-8f65-78e7d1620f5e",
   "_owningbusinessunit_value": "38e0dbe4-131b-e111-ba7e-78e7d1620f5e"
 }
 ```
+
 
 Then using alternate key:
 
 **Request**
 
 ```http
-GET [Organization Uri]/api/data/v9.2/contoso_sensordatas(contoso_sensordataid=da9c32cc-2df8-ed11-8849-000d3a993550,partitionid='Device-ABC-1234')?$select=contoso_value
-MSCRM.SessionToken: 207:8#142792105#7=-1
+GET [Organization Uri]/api/data/v9.2/contoso_sensordatas(contoso_sensordataid=b451d168-a0fd-ed11-8f6e-000d3a993550,partitionid='Device-ABC-1234')?$select=contoso_value
+MSCRM.SessionToken: 207:8#142973459#7=-1
 OData-MaxVersion: 4.0
 OData-Version: 4.0
 If-None-Match: null
@@ -452,15 +560,15 @@ Accept: application/json
 
 ```http
 HTTP/1.1 200 OK
-ETag: W/"0401b4fd-0000-0200-0000-646aa6d10000"
+ETag: W/"87011581-0000-0200-0000-6473ca8f0000"
 OData-Version: 4.0
 
 {
   "@odata.context": "[Organization Uri]/api/data/v9.2/$metadata#contoso_sensordatas(contoso_value)/$entity",
-  "@odata.etag": "W/\"0401b4fd-0000-0200-0000-646aa6d10000\"",
+  "@odata.etag": "W/\"87011581-0000-0200-0000-6473ca8f0000\"",
   "contoso_value": 80,
-  "contoso_sensordataid": "da9c32cc-2df8-ed11-8849-000d3a993550",
-  "versionnumber": 638203079218106789,
+  "contoso_sensordataid": "b451d168-a0fd-ed11-8f6e-000d3a993550",
+  "versionnumber": 638209068959900819,
   "_ownerid_value": "4026be43-6b69-e111-8f65-78e7d1620f5e",
   "_owningbusinessunit_value": "38e0dbe4-131b-e111-ba7e-78e7d1620f5e"
 }
@@ -472,24 +580,24 @@ OData-Version: 4.0
 
 The code in this section performs an upsert operation on the record that already exists, using two different ways to identify the record:
 
-Using only the id in the URL. No PartitionId parameter. You don't need to include it because the `partitionid` value must be part of the payload.
+Using only the id in the URL. No `PartitionId` parameter. You don't need to include it because the `partitionid` value must be part of the payload.
 
 **Request**
 
 ```http
-PATCH [Organization Uri]/api/data/v9.2/contoso_sensordatas(da9c32cc-2df8-ed11-8849-000d3a993550)
+PATCH [Organization Uri]/api/data/v9.2/contoso_sensordatas(b451d168-a0fd-ed11-8f6e-000d3a993550)
 OData-MaxVersion: 4.0
 OData-Version: 4.0
 If-None-Match: null
 Accept: application/json
 Content-Type: application/json; charset=utf-8
-Content-Length: 224
+Content-Length: 225
 
 {
   "contoso_deviceid": "Device-ABC-1234",
   "contoso_sensortype": "Humidity",
-  "contoso_value": 40,
-  "contoso_timestamp": "2023-05-21T23:18:39.850711Z",
+  "contoso_value": 60,
+  "contoso_timestamp": "2023-05-28T21:41:35.3029515Z",
   "partitionid": "Device-ABC-1234",
   "ttlinseconds": 86400
 }
@@ -500,8 +608,8 @@ Content-Length: 224
 ```http
 HTTP/1.1 204 NoContent
 OData-Version: 4.0
-OData-EntityId: [Organization Uri]/api/data/v9.2/contoso_sensordatas(da9c32cc-2df8-ed11-8849-000d3a993550)
-x-ms-session-token: 207:8#142792106#7=-1
+OData-EntityId: [Organization Uri]/api/data/v9.2/contoso_sensordatas(b451d168-a0fd-ed11-8f6e-000d3a993550)
+x-ms-session-token: 207:8#142973460#7=-1
 ```
 
 Using the alternate key:
@@ -509,19 +617,19 @@ Using the alternate key:
 **Request**
 
 ```http
-PATCH [Organization Uri]/api/data/v9.2/contoso_sensordatas(contoso_sensordataid=da9c32cc-2df8-ed11-8849-000d3a993550,partitionid='Device-ABC-1234')
+PATCH [Organization Uri]/api/data/v9.2/contoso_sensordatas(contoso_sensordataid=b451d168-a0fd-ed11-8f6e-000d3a993550,partitionid='Device-ABC-1234')
 OData-MaxVersion: 4.0
 OData-Version: 4.0
 If-None-Match: null
 Accept: application/json
 Content-Type: application/json; charset=utf-8
-Content-Length: 224
+Content-Length: 225
 
 {
   "contoso_deviceid": "Device-ABC-1234",
   "contoso_sensortype": "Humidity",
-  "contoso_value": 40,
-  "contoso_timestamp": "2023-05-21T23:18:39.850711Z",
+  "contoso_value": 60,
+  "contoso_timestamp": "2023-05-28T21:41:35.3029515Z",
   "partitionid": "Device-ABC-1234",
   "ttlinseconds": 86400
 }
@@ -532,10 +640,9 @@ Content-Length: 224
 ```http
 HTTP/1.1 204 NoContent
 OData-Version: 4.0
-OData-EntityId: [Organization Uri]/api/data/v9.2/contoso_sensordatas(contoso_sensordataid=da9c32cc-2df8-ed11-8849-000d3a993550,partitionid='Device-ABC-1234')
-x-ms-session-token: 207:8#142792107#7=-1
+OData-EntityId: [Organization Uri]/api/data/v9.2/contoso_sensordatas(contoso_sensordataid=b451d168-a0fd-ed11-8f6e-000d3a993550,partitionid='Device-ABC-1234')
+x-ms-session-token: 207:8#142973461#7=-1
 ```
-
 
 ### Delete Record
 
@@ -544,7 +651,7 @@ The code in this section deletes the record using the `partitionId` parameter.
 **Request**
 
 ```http
-DELETE [Organization Uri]/api/data/v9.2/contoso_sensordatas(da9c32cc-2df8-ed11-8849-000d3a993550)?partitionId=Device-ABC-1234
+DELETE [Organization Uri]/api/data/v9.2/contoso_sensordatas(b451d168-a0fd-ed11-8f6e-000d3a993550)?partitionId=Device-ABC-1234
 OData-MaxVersion: 4.0
 OData-Version: 4.0
 If-None-Match: null
@@ -558,7 +665,25 @@ HTTP/1.1 204 NoContent
 OData-Version: 4.0
 ```
 
-Since this can only be done once, the code to delete using alternate key can be uncommented and used instead.
+The sample creates another record to demonstrate using the alternate key to delete:
+
+**Request**
+
+```http
+DELETE [Organization Uri]/api/data/v9.2/contoso_sensordatas(contoso_sensordataid=c151d168-a0fd-ed11-8f6e-000d3a993550,partitionid='Device-ABC-1234')
+OData-MaxVersion: 4.0
+OData-Version: 4.0
+If-None-Match: null
+Accept: application/json
+```
+
+**Response**
+
+```http
+HTTP/1.1 204 NoContent
+OData-Version: 4.0
+```
+
 
 ### Demonstrate ExecuteCosmosSqlQuery
 
@@ -566,11 +691,17 @@ This section has three parts:
 
 - [Create records to query](#create-records-to-query)
 - [Execute the query to retrieve the first 50 records](#execute-the-query-to-retrieve-the-first-50-records)
-- [Execute the query again to retrieve the next 50 records](#execute-the-query-again-to-retrieve-the-next-50-records)
+- [Retrieve the paged results as long as the response.HasMore value is true](#retrieve-the-paged-results-as-long-as-the-responsehasmore-value-is-true)
 
 #### Create records to query
 
-This code performs a $batch operation to create 100 records that have `contoso_energyconsumption` set to a JSON value.
+This code performs 10 asynchronous parallel `$batch` operations of 100 records each to create 1000 records that have `contoso_energyconsumption` set to a JSON value.
+
+**Note**: 
+
+- You can adjust the number of records to create and the batch size using the values in the static `Settings.cs` class. The `Settings.BatchSize` cannot exceed 1000.
+- With each record created, the `contoso_energyconsumption.power` value is increased by 2, and the `contoso_energyconsumption.voltage` value is increased by 1.
+
 
 **Request**
 
@@ -600,9 +731,31 @@ Content-Type: application/json; type=entry
   "ttlinseconds": 86400
 }
 
-[99 records Truncated for brevity]
+[99 requests Truncated for brevity]
 
---batchresponse_6ae53466-55c3-4a06-b407-96b3e95d907a--
+--batch_f984ee1c-ea4c-46a9-9671-475e263de2dd--
+
+```
+
+**Response**
+
+```http
+HTTP/1.1 200 OK
+OData-Version: 4.0
+
+--batchresponse_737d4bb1-21b4-4072-a75d-8a06bfa6363d
+Content-Type: application/http
+Content-Transfer-Encoding: binary
+
+HTTP/1.1 204 No Content
+OData-Version: 4.0
+Location: [Organization Uri]/api/data/v9.2/contoso_sensordatas(749fc96e-a0fd-ed11-8f6e-000d3a993550)
+OData-EntityId: [Organization Uri]/api/data/v9.2/contoso_sensordatas(749fc96e-a0fd-ed11-8f6e-000d3a993550)
+x-ms-session-token: 207:8#142974260#7=-1
+
+[99 responses Truncated for brevity]
+
+--batchresponse_737d4bb1-21b4-4072-a75d-8a06bfa6363d--
 
 ```
 
@@ -648,7 +801,7 @@ OData-Version: 4.0
 }
 ```
 
-#### Execute the query again to retrieve the next 50 records
+#### Retrieve the paged results as long as the response.HasMore value is true
 
 This time the `PagingCookie` parameter has the value returned from the previous response.
 
@@ -694,12 +847,12 @@ OData-Version: 4.0
 
 ### Delete Table
 
-The code in this section sends this request to delete the `contoso_SensorData` table using the `MetadataId` value that was returned when the table was created.
+The code in this section sends this request to delete the `contoso_SensorData` table using the `LogicalName` alternate key.
 
 **Request**
 
 ```http
-DELETE [Organization Uri]/api/data/v9.2/EntityDefinitions(47db17bf-2df8-ed11-8849-000d3a993550)
+DELETE [Organization Uri]/api/data/v9.2/EntityDefinitions(LogicalName='contoso_sensordata')
 OData-MaxVersion: 4.0
 OData-Version: 4.0
 If-None-Match: null

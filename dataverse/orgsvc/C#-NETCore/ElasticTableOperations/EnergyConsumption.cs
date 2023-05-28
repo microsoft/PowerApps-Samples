@@ -2,6 +2,9 @@
 
 namespace PowerPlatform.Dataverse.CodeSamples
 {
+    /// <summary>
+    /// This class is used to populate the string attribute with json format (contoso_energyconsumption)
+    /// </summary>
     public class EnergyConsumption
     {
         [JsonProperty("power")]

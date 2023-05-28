@@ -77,11 +77,27 @@ This method will parse the content of an `HttpResponseMessage` to return an `Ser
 
 #### Service Properties
 
-Service has a single property: `BaseAddress`.
+Service has five properties:
 
 ##### BaseAddress Property
 
 This property returns the base URL set in the `Config.Url`. This is needed when instantiating the `BatchRequest` class and to append to a relative URL anytime an absolute URL is required.
+
+##### RecommendedDegreeOfParallelism Property
+
+This property returns the value of the `x-ms-dop-hint` response header from a `WhoAmI` function request sent when the service is initialized. This value provides a recommended degree of parallelism for the environment when sending requests in parallel. More information: [Optimum degree of parallelism (DOP)](https://learn.microsoft.com/power-apps/developer/data-platform/send-parallel-requests?tabs=sdk#optimum-degree-of-parallelism-dop)
+
+##### UserId Property
+
+This property returns the value of the `WhoAmIResponse.UserId` from a `WhoAmI` function request sent when the service is initialized.
+
+##### OrganizationId Property
+
+This property returns the value of the `WhoAmIResponse.OrganizationId` from a `WhoAmI` function request sent when the service is initialized.
+
+##### BusinessUnitId Property
+
+This property returns the value of the `WhoAmIResponse.BusinessUnitId` from a `WhoAmI` function request sent when the service is initialized.
 
 ### Config
 
