@@ -9,12 +9,11 @@ using PowerApps.Samples.Methods;
 using PowerApps.Samples.Types;
 using System.Text;
 
-namespace ElasticTableOperations
+namespace PowerPlatform.Dataverse.CodeSamples
 {
     internal class Program
     {
         const string TABLE_SCHEMA_NAME = "contoso_SensorData";
-        const int RECORDS_TO_CREATE_FOR_QUERY = 100;
 
         static async Task Main()
         {
@@ -22,24 +21,39 @@ namespace ElasticTableOperations
 
             var service = new Service(config);
 
-            Console.WriteLine($"Starting Elastic table operations sample.");
+            #region Optimize Connection
 
-            #region Create Elastic table
+            // Change max connections from .NET to a remote service default: 2
+            System.Net.ServicePointManager.DefaultConnectionLimit = 65000;
+            // Bump up the min threads reserved for this app to ramp connections faster - minWorkerThreads defaults to 4, minIOCP defaults to 4 
+            ThreadPool.SetMinThreads(100, 100);
+            // Turn off the Expect 100 to continue message - 'true' will cause the caller to wait until it round-trip confirms a connection to the server 
+            System.Net.ServicePointManager.Expect100Continue = false;
+            // Can decrease overall transmission overhead but can cause delay in data packet arrival
+            System.Net.ServicePointManager.UseNagleAlgorithm = false;
 
-            // Define the table and columns
-            var sensorDataTable = new EntityMetadata
+            #endregion Optimize Connection
+
+            Console.WriteLine($"Starting Elastic table operations sample.\n");
+
+            try
             {
-                SchemaName = TABLE_SCHEMA_NAME,
-                DisplayName = new Label("Sensor Data", 1033),
-                DisplayCollectionName = new Label("Sensor Data", 1033),
-                Description = new Label("Stores IoT data emitted from devices", 1033),
-                OwnershipType = OwnershipTypes.UserOwned,
-                TableType = "Elastic",
-                IsActivity = false,
-                CanCreateCharts = new BooleanManagedProperty(false),
-                HasActivities = false,
-                HasNotes = false,
-                Attributes = new List<AttributeMetadata> {
+                #region Create Elastic table
+                Console.WriteLine("=== Start Region 0: Creating contoso_SensorData table === \n");
+                // Define the table and columns
+                var sensorDataTable = new EntityMetadata
+                {
+                    SchemaName = TABLE_SCHEMA_NAME,
+                    DisplayName = new Label("Sensor Data", 1033),
+                    DisplayCollectionName = new Label("Sensor Data", 1033),
+                    Description = new Label("Stores IoT data emitted from devices", 1033),
+                    OwnershipType = OwnershipTypes.UserOwned,
+                    TableType = "Elastic", //This makes it an elastic table.
+                    IsActivity = false,
+                    CanCreateCharts = new BooleanManagedProperty(false),
+                    HasActivities = false,
+                    HasNotes = false,
+                    Attributes = new List<AttributeMetadata> {
                     {
                         new StringAttributeMetadata{
                             SchemaName = "contoso_SensorType",
@@ -80,227 +94,280 @@ namespace ElasticTableOperations
                         }
                     },
                 }
-            };
-
-            Console.WriteLine($"Creating the {TABLE_SCHEMA_NAME} table...");
-
-            var createEntityRequest = new CreateEntityRequest(sensorDataTable);
-            var createEntityResponse = await service.SendAsync<CreateEntityResponse>(createEntityRequest);
-
-            Console.WriteLine($"{TABLE_SCHEMA_NAME} table created.");
-
-            #endregion Create Elastic table
-
-            #region Create Record
-
-            // Using deviceId as the partitionid in this sample.
-            string deviceId = "Device-ABC-1234";
-
-            JObject sensorDataObjCreate = new()
-            {
-                {"contoso_deviceid", deviceId },
-                {"contoso_sensortype", "Humidity" },
-                {"contoso_value", 40 },
-                {"contoso_timestamp", DateTime.UtcNow },
-                {"partitionid",deviceId },
-                {"ttlinseconds", 86400 } // 86400  seconds in a day
-            };
-
-            // This entity reference referrs to the created record using regular style:
-            // /contoso_sensordatas(7fae9aa4-12f8-ed11-8849-000d3a993550)
-            EntityReference sensorDataRef = await service.Create(
-                entitySetName: "contoso_sensordatas",
-                record: sensorDataObjCreate);
-
-            var keyAttributes = new Dictionary<string, string>()
-            {
-                { "contoso_sensordataid",sensorDataRef.Id.ToString() },
-                { "partitionid",$"'{deviceId}'" }
-            };
-
-            // This entity reference referrs to the created record using alternate key style:
-            // /contoso_sensordatas(contoso_sensordataid=7fae9aa4-12f8-ed11-8849-000d3a993550,partitionid='Device-ABC-1234')
-
-            EntityReference sensorDataAltKeyRef = new(setName: "contoso_sensordatas", keyAttributes: keyAttributes);
-
-            Console.WriteLine($"Created sensor data record with id:{sensorDataRef.Id}");
-
-
-            #endregion Create Record
-
-            #region Update Record
-
-            JObject sensorDataObjUpdate1 = new()
-            {
-                {"contoso_value", 60 }
-            };
-
-            // Using partitionId parameter
-            await service.Update(
-                entityReference: sensorDataRef,
-                record: sensorDataObjUpdate1,
-                partitionId: deviceId);
-
-            Console.WriteLine($"Updated sensor data record using partitionId parameter.");
-
-            JObject sensorDataObjUpdate2 = new()
-            {
-                {"contoso_value", 80 }
-            };
-
-            // Using alternatekey parameter
-            await service.Update(
-                entityReference: sensorDataAltKeyRef,
-                record: sensorDataObjUpdate2);
-
-            Console.WriteLine($"Updated sensor data record using alternate key style.");
-
-            #endregion Update Record
-
-            #region Retrieve Record
-
-            JObject retrievedSensorDataRecord = await service.Retrieve(
-                entityReference: sensorDataRef,
-                query: "?$select=contoso_value",
-                partitionId: deviceId);
-
-            Console.WriteLine($"Retrieved sensor data record using partitionId:\n");
-
-            Console.WriteLine($"{retrievedSensorDataRecord}\n");
-
-            retrievedSensorDataRecord = await service.Retrieve(
-                entityReference: sensorDataAltKeyRef,
-                query: "?$select=contoso_value");
-
-            Console.WriteLine($"Retrieved sensor data record using alternate key style:\n");
-
-            Console.WriteLine($"{retrievedSensorDataRecord}\n");
-
-            #endregion Retrieve Record
-
-            #region Upsert Record
-
-            JObject sensorDataObjForUpsert = new()
-            {
-                {"contoso_deviceid", deviceId },
-                {"contoso_sensortype", "Humidity" },
-                {"contoso_value", 40 },
-                {"contoso_timestamp", DateTime.UtcNow },
-                {"partitionid",deviceId },
-                {"ttlinseconds", 86400 } // 86400  seconds in a day
-            };
-
-            EntityReference testReference1 = await service.Upsert(
-                entityReference: sensorDataRef,
-                sensorDataObjForUpsert,
-                upsertBehavior: UpsertBehavior.CreateOrUpdate);
-
-            Console.WriteLine($"Upsert sensor data record:\n");
-            Console.WriteLine($"Same ID values?:{testReference1.Id == sensorDataRef.Id}");
-
-            // Using alternate key
-
-            EntityReference testReference2 = await service.Upsert(
-                entityReference: sensorDataAltKeyRef,
-                sensorDataObjForUpsert,
-                upsertBehavior: UpsertBehavior.CreateOrUpdate);
-
-            Console.WriteLine($"Upsert sensor data record with alternate key:\n");
-            Console.WriteLine($"Same ID values?:{testReference2.Id == sensorDataRef.Id}");
-
-            #endregion Upsert Record
-
-            #region Delete Record
-
-            await service.Delete(entityReference: sensorDataRef, partitionId: deviceId);
-            Console.WriteLine($"Deleted sensor data record with partitionId.\n");
-
-            //You can also use the alternate key:
-
-            //await service.Delete(entityReference: sensorDataAltKeyRef);
-            //Console.WriteLine($"Deleted sensor data record with alternate key\n");
-
-            #endregion Delete Record
-
-            #region Demonstrate ExecuteCosmosSqlQuery
-
-            // Create Multiple records to query
-
-            Console.WriteLine($"Creating {RECORDS_TO_CREATE_FOR_QUERY} records to use for query example...");
-
-            // Create requests to send in $batch
-            List<HttpRequestMessage> requestList = new();
-
-            for (int i = 0; i < RECORDS_TO_CREATE_FOR_QUERY; i++)
-            {
-                EnergyConsumption energyConsumption = new()
-                {
-                    Voltage = i,
-                    VoltageUnit = "Volts",
-                    Power = i + i,
-                    PowerUnit = "Watts"
                 };
 
-                JObject sensordata = new()
-                {
-                    {"contoso_deviceid", deviceId },
-                    {"contoso_sensortype", "Humidity" },
-                    {"partitionid",deviceId },
-                    {"contoso_energyconsumption",JsonConvert.SerializeObject(energyConsumption) },
-                    {"ttlinseconds", 86400 } // 86400  seconds in a day
-                };
+                Console.WriteLine($"Creating the {TABLE_SCHEMA_NAME} table...");
 
-                CreateRequest request = new(entitySetName: "contoso_sensordatas", record: sensordata);
-                requestList.Add(request);
+                var createEntityRequest = new CreateEntityRequest(sensorDataTable);
+                var createEntityResponse = await service.SendAsync<CreateEntityResponse>(createEntityRequest);
 
-            }
-            BatchRequest batchRequest = new(serviceBaseAddress: service.BaseAddress)
-            {
-                Requests = requestList
-            };
+                Console.WriteLine($"{TABLE_SCHEMA_NAME} table created.");
 
-            BatchResponse batchResponse = await service.SendAsync<BatchResponse>(batchRequest);
+                #endregion Create Elastic table
 
-            Console.WriteLine($"{RECORDS_TO_CREATE_FOR_QUERY} records to use for query example created.");
+                /*
+                
+                Unlike the ElasticTableOperations sample for the SDK for .NET, this sample only includes examples that set
+                the partitionid. If you are not using an partioning strategy, code using WebAPIServiceClient
+                is the same as with standard tables. This is because WebAPIServiceClient manages the sessionToken for you,
+                demonstrating how this can be managed in your .NET code.
 
-            StringBuilder sb = new();
-            sb.Append("select c.props.contoso_deviceid as deviceId, ");
-            sb.Append("c.props.contoso_timestamp as timestamp, ");
-            sb.Append("c.props.contoso_energyconsumption.power as power ");
-            sb.Append("from c where c.props.contoso_sensortype=@sensortype and ");
-            sb.Append("c.props.contoso_energyconsumption.power > @power");
+                In PowerApps-Samples\dataverse\webapi\C#-NETx\WebAPIService\Service.cs
 
+                Within the WebAPIServiceClient.SendAsync method:
 
-            ExecuteCosmosSqlQueryRequest queryRequest = new(
-                queryText: sb.ToString(),
-                entityLogicalName: "contoso_sensordata")
-            {
-                QueryParameters = new ParameterCollection()
-                {
-                    Keys = new List<string> { "@sensortype", "@power" },
-                    Values = new List<PowerApps.Samples.Types.Object> {
-                        { new PowerApps.Samples.Types.Object(ObjectType.String,"Humidity") },
-                        { new PowerApps.Samples.Types.Object(ObjectType.Int,"5") }
+                This code includes the MSCRM.SessionToken header with all GET operations before the request is sent
+
+                    // Session token used by elastic tables to enable strong consistency
+                    // See https://learn.microsoft.com/power-apps/developer/data-platform/use-elastic-tables?tabs=webapi#sending-the-session-token
+                    if (!string.IsNullOrWhiteSpace(_sessionToken) && request.Method == HttpMethod.Get) {
+                        request.Headers.Add("MSCRM.SessionToken", _sessionToken);
                     }
-                },
-                PageSize = 50,
-                PartitionId = deviceId
-            };
+                
+                This code captures the current session token, if it is included, after every response is recieved.
 
-            var queryResponse = await service.SendAsync<ExecuteCosmosSqlQueryResponse>(queryRequest);
+                    // Capture the current session token value
+                    // See https://learn.microsoft.com/power-apps/developer/data-platform/use-elastic-tables?tabs=webapi#getting-the-session-token
+                    if (response.Headers.Contains("x-ms-session-token"))
+                    {
+                        _sessionToken = response.Headers.GetValues("x-ms-session-token")?.FirstOrDefault()?.ToString();
+                    }
 
-            Console.WriteLine($"Output first page of 50 results:\n");
+                */
 
-            queryResponse.Result.ForEach(result =>
-            {
-                Console.WriteLine($"\t{result["deviceId"]} {result["power"]}");
-            });
 
-            Console.WriteLine($"Output additional page of 50 results:\n");
+                #region Create Record
+                Console.WriteLine("\n=== Start Region 1: Create Record === \n");
 
-            while (queryResponse.HasMore)
-            {
-                ExecuteCosmosSqlQueryRequest pagedQueryRequest = new(
+                // Using deviceId as the partitionid in this sample.
+                string deviceId = "Device-ABC-1234";
+
+                JObject sensorDataObjCreate = new()
+                        {
+                            {"contoso_deviceid", deviceId },
+                            {"contoso_sensortype", "Humidity" },
+                            {"contoso_value", 40 },
+                            {"contoso_timestamp", DateTime.UtcNow },
+                            {"partitionid",deviceId }, //Setting the partitionid with deviceid value
+                            {"ttlinseconds", 86400 } // 86400  seconds in a day
+                        };
+
+                // This sensorDataRef entity reference refers to the created record using regular style:
+                // /contoso_sensordatas(7fae9aa4-12f8-ed11-8849-000d3a993550)
+                EntityReference sensorDataRef = await service.Create(
+                    entitySetName: "contoso_sensordatas",
+                    record: sensorDataObjCreate);
+
+                // Define the alternate key to use
+                var keyAttributes = new Dictionary<string, string>()
+                    {
+                        { "contoso_sensordataid",sensorDataRef.Id.ToString() },
+                        { "partitionid",$"'{deviceId}'" }
+                    };
+
+                // This sensorDataAltKeyRef entity reference refers to the created record using alternate key style:
+                // /contoso_sensordatas(contoso_sensordataid=7fae9aa4-12f8-ed11-8849-000d3a993550,partitionid='Device-ABC-1234')
+
+                EntityReference sensorDataAltKeyRef = new(
+                    setName: "contoso_sensordatas",
+                    keyAttributes: keyAttributes);
+
+                Console.WriteLine($"Created sensor data record with id:{sensorDataRef.Id}");
+
+
+                #endregion Create Record
+
+                #region Update Record
+                Console.WriteLine("\n=== Start Region 2: Update Record === \n");
+
+                JObject sensorDataObjUpdate1 = new()
+                        {
+                            {"contoso_value", 60 }
+                        };
+
+                // Using partitionId parameter
+                await service.Update(
+                    entityReference: sensorDataRef,
+                    record: sensorDataObjUpdate1,
+                    partitionId: deviceId); //Including the partiionid for update
+
+                Console.WriteLine($"Updated sensor data record using partitionId parameter.");
+
+                JObject sensorDataObjUpdate2 = new()
+                        {
+                            {"contoso_value", 80 }
+                        };
+
+                // Using alternatekey parameter
+                await service.Update(
+                    entityReference: sensorDataAltKeyRef, //Alternate key, not partitionid
+                    record: sensorDataObjUpdate2);
+
+                Console.WriteLine($"Updated sensor data record using alternate key style.");
+
+                #endregion Update Record
+
+                #region Retrieve Record
+                Console.WriteLine("\n=== Start Region 3: Retrieve Record === \n");
+
+
+                JObject retrievedSensorDataRecord = await service.Retrieve(
+                    entityReference: sensorDataRef,
+                    query: "?$select=contoso_value",
+                    partitionId: deviceId); //With partitionid
+
+                Console.WriteLine($"Retrieved sensor data record using partitionId:\n");
+
+                Console.WriteLine($"{retrievedSensorDataRecord}\n");
+
+                retrievedSensorDataRecord = await service.Retrieve(
+                    entityReference: sensorDataAltKeyRef, //With alternate key
+                    query: "?$select=contoso_value");
+
+                Console.WriteLine($"Retrieved sensor data record using alternate key style:\n");
+
+                Console.WriteLine($"{retrievedSensorDataRecord}");
+
+                #endregion Retrieve Record
+
+                #region Upsert Record
+                Console.WriteLine("\n=== Start Region 4: Upsert Record === \n");
+
+                JObject sensorDataObjForUpsert = new()
+                        {
+
+                // For Upsert it is required to set all the attribute values
+                // If matching record is found, all data is replaced.
+
+                            {"contoso_deviceid", deviceId },
+                            {"contoso_sensortype", "Humidity" },
+                            {"contoso_value", 60 },
+                            {"contoso_timestamp", DateTime.UtcNow },
+                            {"partitionid",deviceId },
+                            {"ttlinseconds", 86400 } // 86400  seconds in a day
+                        };
+
+                // It isn't possible to set the partitionId parameter for upsert.
+                // The value must be included in the body.
+                EntityReference testReference1 = await service.Upsert(
+                    entityReference: sensorDataRef,
+                    record: sensorDataObjForUpsert,
+                    upsertBehavior: UpsertBehavior.CreateOrUpdate);
+
+                Console.WriteLine($"Upsert sensor data record:\n");
+                // Verify that the ID values are the same
+                Console.WriteLine($"Same ID values?:{testReference1.Id == sensorDataRef.Id}");
+
+                // Using alternate key
+                EntityReference testReference2 = await service.Upsert(
+                    entityReference: sensorDataAltKeyRef,
+                    record: sensorDataObjForUpsert,
+                    upsertBehavior: UpsertBehavior.CreateOrUpdate);
+
+                Console.WriteLine($"Upsert sensor data record with alternate key:\n");
+                // Verify that the ID values are the same
+                Console.WriteLine($"Same ID values?:{testReference2.Id == sensorDataRef.Id}");
+
+                #endregion Upsert Record
+
+                #region Delete Record
+                Console.WriteLine("\n=== Start Region 5: Delete Record === \n");
+
+                await service.Delete(entityReference: sensorDataRef, partitionId: deviceId);
+                Console.WriteLine($"Deleted sensor data record with partitionId.\n");
+
+                //You can also use the alternate key:
+
+                // Create another record to demonstrate delete with alternate key
+
+                EntityReference secondRecordToDeleteRef = await service.Create(
+                    entitySetName: "contoso_sensordatas",
+                    record: sensorDataObjCreate);
+
+                // Define the alternate key to use for the new record
+                var keys = new Dictionary<string, string>()
+                    {
+                        { "contoso_sensordataid",secondRecordToDeleteRef.Id.ToString() },
+                        { "partitionid",$"'{deviceId}'" }
+                    };
+
+                var secondRecordToDeleteAltKeyRef = new EntityReference(
+                    setName: "contoso_sensordatas",
+                    keyAttributes: keys);
+
+                await service.Delete(entityReference: secondRecordToDeleteAltKeyRef);
+                Console.WriteLine($"Deleted second sensor data record with alternate key.");
+
+                #endregion Delete Record
+
+                #region Demonstrate ExecuteCosmosSqlQuery
+                Console.WriteLine("\n=== Start Region 6: Demonstrate ExecuteCosmosSqlQuery === \n");
+
+                // Create Multiple records to query
+
+                Console.WriteLine($"Creating {Settings.NumberOfRecords} records to use for query example...");
+
+                // Unlike the sample for SDK, this sample uses Web API $batch
+                // because CreateMultiple is not available for Web API at 
+                // the time this sample was written.
+
+                // Create requests to send in $batch
+                List<HttpRequestMessage> requestList = new();
+
+                for (int i = 0; i < Settings.NumberOfRecords; i++)
+                {
+                    EnergyConsumption energyConsumption = new()
+                    {
+                        Voltage = i,
+                        VoltageUnit = "Volts",
+                        Power = i + i,
+                        PowerUnit = "Watts"
+                    };
+
+                    JObject sensordata = new()
+                    {
+                        {"contoso_deviceid", deviceId },
+                        {"contoso_sensortype", "Humidity" },
+                        {"partitionid", deviceId },
+                        {"contoso_energyconsumption",JsonConvert.SerializeObject(energyConsumption) },
+                        {"ttlinseconds", 86400 } // 86400  seconds in a day
+                    };
+
+                    CreateRequest request = new(entitySetName: "contoso_sensordatas", record: sensordata);
+                    requestList.Add(request);
+
+                }
+
+                var parallelOptions = new ParallelOptions() { 
+                    MaxDegreeOfParallelism = service.RecommendedDegreeOfParallelism };
+
+                // Sending batch requests in parallel:
+                await Parallel.ForEachAsync(
+                        source: requestList.Chunk(Settings.BatchSize),
+                        parallelOptions: parallelOptions,
+                        async (requests,token) => {
+
+                        BatchRequest batchRequest = new(serviceBaseAddress: service.BaseAddress)
+                        {
+                            Requests = requests.ToList()
+                        };
+
+                        BatchResponse batchResponse = await service.SendAsync<BatchResponse>(batchRequest);
+
+                        Console.WriteLine($"{batchResponse.HttpResponseMessages.Count} records created in $batch");
+                    });
+
+                Console.WriteLine($"{Settings.NumberOfRecords} records to use for query example created.");
+
+                StringBuilder sb = new();
+                sb.Append("select c.props.contoso_deviceid as deviceId, ");
+                sb.Append("c.props.contoso_timestamp as timestamp, ");
+                sb.Append("c.props.contoso_energyconsumption.power as power ");
+                sb.Append("from c where c.props.contoso_sensortype=@sensortype and ");
+                sb.Append("c.props.contoso_energyconsumption.power > @power");
+
+
+                ExecuteCosmosSqlQueryRequest queryRequest = new(
                     queryText: sb.ToString(),
                     entityLogicalName: "contoso_sensordata")
                 {
@@ -308,39 +375,85 @@ namespace ElasticTableOperations
                     {
                         Keys = new List<string> { "@sensortype", "@power" },
                         Values = new List<PowerApps.Samples.Types.Object> {
-                        { new PowerApps.Samples.Types.Object(ObjectType.String,"Humidity") },
-                        { new PowerApps.Samples.Types.Object(ObjectType.Int,"5") }
-                    }
+                            { new PowerApps.Samples.Types.Object(ObjectType.String,"Humidity") },
+                            { new PowerApps.Samples.Types.Object(ObjectType.Int,"5") }
+                        }
                     },
                     PageSize = 50,
-                    PartitionId = deviceId,
-                    PagingCookie = queryResponse.PagingCookie
+                    PartitionId = deviceId
                 };
 
-                queryResponse = await service.SendAsync<ExecuteCosmosSqlQueryResponse>(pagedQueryRequest);
+                var queryResponse = await service.SendAsync<ExecuteCosmosSqlQueryResponse>(queryRequest);
+
+                Console.WriteLine($"ExecuteCosmosSqlQueryResponse.PagingCookie: {queryResponse.PagingCookie}\n");
+                Console.WriteLine($"ExecuteCosmosSqlQueryResponse.HasMore: {queryResponse.HasMore}\n");
+
+                Console.WriteLine($"Output first page of 50 results:\n");
 
                 queryResponse.Result.ForEach(result =>
                 {
                     Console.WriteLine($"\t{result["deviceId"]} {result["power"]}");
                 });
 
+                while (queryResponse.HasMore)
+                {
+                    ExecuteCosmosSqlQueryRequest pagedQueryRequest = new(
+                        queryText: sb.ToString(),
+                        entityLogicalName: "contoso_sensordata")
+                        {
+                            QueryParameters = new ParameterCollection()
+                            {
+                                Keys = new List<string> { "@sensortype", "@power" },
+                                Values = new List<PowerApps.Samples.Types.Object> {
+                                    { new PowerApps.Samples.Types.Object(ObjectType.String,"Humidity") },
+                                    { new PowerApps.Samples.Types.Object(ObjectType.Int,"5") }
+                                }
+                            },
+                        PageSize = 50,
+                        PartitionId = deviceId,
+                        PagingCookie = queryResponse.PagingCookie
+                    };
+
+                    queryResponse = await service.SendAsync<ExecuteCosmosSqlQueryResponse>(pagedQueryRequest);
+
+                    Console.WriteLine($"Output additional page of 50 results:\n");
+
+                    queryResponse.Result.ForEach(result =>
+                    {
+                        Console.WriteLine($"\t{result["deviceId"]} {result["power"]}");
+                    });
+                }
+
+
+                #endregion Demonstrate ExecuteCosmosSqlQuery
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine("The application terminated with an error.");
+                Console.WriteLine(ex.Message);
+                throw ex;
+            }
+            finally
+            {
 
+                #region Delete Table
+                Console.WriteLine("\n=== Start Region 7: Delete Table === \n");
+                Console.WriteLine($"\nDeleting the {TABLE_SCHEMA_NAME} table...");
 
-            #endregion Demonstrate ExecuteCosmosSqlQuery
+                Dictionary<string, string> keys = new() {
+                    {"LogicalName",$"'{TABLE_SCHEMA_NAME.ToLower()}'"}
+                };
 
+                var tableReference = new EntityReference(setName: "EntityDefinitions", keyAttributes: keys);
 
-            #region Delete Table
+                await service.Delete(tableReference);
 
-            Console.WriteLine($"\nDeleting the {TABLE_SCHEMA_NAME} table...");
+                Console.WriteLine($"{TABLE_SCHEMA_NAME} table deleted.");
 
-            await service.Delete(createEntityResponse.TableReference);
+                #endregion Delete Table
 
-            Console.WriteLine($"{TABLE_SCHEMA_NAME} table deleted.");
-
-            #endregion Delete Table
-
-            Console.WriteLine($"Elastic table operations sample completed.");
+                Console.WriteLine("\n=== Web API ElasticTableOperations Sample Completed === \n");
+            }
 
         }
     }

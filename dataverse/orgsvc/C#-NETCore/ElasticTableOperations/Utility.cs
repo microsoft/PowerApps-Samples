@@ -15,13 +15,17 @@ namespace PowerPlatform.Dataverse.CodeSamples
         private static readonly string ValueSchemaName = "contoso_Value";
         private static readonly string TimeStampSchemaName = "contoso_TimeStamp";
         private static readonly string EnergyConsumptionSchemaName = "contoso_EnergyConsumption";
-        
 
+
+        /// <summary>
+        /// Creates the contoso_SensorData table used in this sample.
+        /// </summary>
+        /// <param name="client">Authenticated ServiceClient instance.</param>
         internal static void CreateSensorDataEntity(ServiceClient client)
         {
             Console.WriteLine($"Creating {SensorDataSchemaName} table...");
 
-            // Using Web API via client.ExecuteWebRequest because SDK doesn't yet have
+            // Using Web API via ServiceClient.ExecuteWebRequest because SDK doesn't yet have
             // EntityMetadata.TableType property
             JObject entityMetadataObject = new()
             {
@@ -72,7 +76,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     }
                 },
                 { "OwnershipType", "UserOwned" },
-                { "TableType", "Elastic" },
+                { "TableType", "Elastic" }, // This makes it an elastic table
                 { "IsActivity", false },
                 { "CanCreateCharts", new JObject()
                     {
@@ -212,6 +216,10 @@ namespace PowerPlatform.Dataverse.CodeSamples
             Console.WriteLine($"\t{EnergyConsumptionSchemaName} column created.\n");
         }
 
+        /// <summary>
+        /// Deletes the contoso_SensorData table created for the sample
+        /// </summary>
+        /// <param name="service">An authenticated client that implemnents the IOrganizationService interface.</param>
         internal static void DeleteSensorDataEntity(IOrganizationService service)
         {
             Console.WriteLine($"Deleting {SensorDataLogicalName} table...");

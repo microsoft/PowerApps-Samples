@@ -34,6 +34,8 @@ namespace PowerPlatform.Dataverse.CodeSamples
             Configuration = new ConfigurationBuilder()
                 .AddJsonFile(path, optional: false, reloadOnChange: true)
                 .Build();
+
+
         }
 
         static void Main()
@@ -46,6 +48,8 @@ namespace PowerPlatform.Dataverse.CodeSamples
             ServiceClient serviceClient =
                 new(app.Configuration.GetConnectionString("default"));
 
+            Console.WriteLine($"Starting Elastic table operations sample.\n");
+
             try
             {
                 Console.WriteLine("=== Start Region 0: Creating contoso_SensorData table === \n");
@@ -55,9 +59,11 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 Console.WriteLine("=== Start Region 1: Examples without partitionid === \n");
 
                 // Elastic table records work like other records
-                // when no strategy is used for setting partitionids.
+                // when no strategy is used for setting partitionids
+                // But you must still manage the sessionToken
 
-                string sessionToken;
+                string sessionToken;  // Place to keep the current session token
+
                 Guid sensordataId;
 
                 CreateRequest createRequest = new()
@@ -269,10 +275,17 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 Console.WriteLine($"ExecuteCosmosSqlQueryResponse.PagingCookie: {response.PagingCookie}\n");
                 Console.WriteLine($"ExecuteCosmosSqlQueryResponse.HasMore: {response.HasMore}\n");
 
+                Console.WriteLine($"Output first page of {pageSize} results:\n");
+
                 // All the results will be added to this
                 JArray results = JArray.Parse(json: response.Result);
 
-                Console.WriteLine($"Returned initial {results.Count} results from ExecuteCosmosSqlQuery.");
+                Console.WriteLine($"Returned initial {results.Count} results from ExecuteCosmosSqlQuery:");
+
+                results.ToList().ForEach(result =>
+                {
+                    Console.WriteLine($"\t{result["deviceId"]} {result["power"]}");
+                });
 
                 while (response.HasMore)
                 {
@@ -285,12 +298,17 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
                     JArray moreResults = JArray.Parse(json: response.Result);
 
-                    results.Merge(moreResults);
+                    Console.WriteLine($"\nReturned {moreResults.Count} more results from ExecuteCosmosSqlQuery.");
 
-                    Console.WriteLine($"\tReturned {moreResults.Count} more results from ExecuteCosmosSqlQuery.");
+                    moreResults.ToList().ForEach(result =>
+                    {
+                        Console.WriteLine($"\t{result["deviceId"]} {result["power"]}");
+                    });
+
+                    results.Merge(moreResults);                    
                 }
 
-                Console.WriteLine($"Returned total of {results.Count} results using ExecuteCosmosSqlQuery\n");
+                Console.WriteLine($"\nReturned total of {results.Count} results using ExecuteCosmosSqlQuery\n");
 
 
                 #endregion ExecuteCosmosSqlQuery
@@ -299,6 +317,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 Console.WriteLine("=== Start Region 5: DeleteMultiple Example === \n");
 
                 Console.WriteLine($"Deleteing {Settings.NumberOfRecords} records using DeleteMultiple");
+                Console.WriteLine($"In batches of {Settings.BatchSize}");
                 DeleteMultipleRecords(serviceClient, deviceId, createdRecordIds, Settings.BatchSize);
                 Console.WriteLine($"Deleted {Settings.NumberOfRecords} records.\n");
 
@@ -352,7 +371,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 Console.WriteLine("=== Start Region 6: Delete contoso_SensorData table === \n");
                 Utility.DeleteSensorDataEntity(serviceClient);
 
-                Console.WriteLine("=== Sample Completed === \n");
+                Console.WriteLine("\n=== SDK ElasticTableOperations Sample Completed === \n");
             }
 
 
@@ -458,7 +477,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
             {
                 Attributes =
                 {
-                    { "contoso_value", 60 },
+                    { "contoso_value", 80 },
                     { "contoso_timestamp", DateTime.UtcNow }
                 }
             };
@@ -662,15 +681,6 @@ namespace PowerPlatform.Dataverse.CodeSamples
             // Populate the list with the number of records to test.
             for (int i = 0; i < numberOfRecords; i++)
             {
-                Entity entity = new("contoso_sensordata")
-                {
-                    Attributes =
-                    {
-                        { "contoso_sensortype", $"Humidity" },
-                        { "partitionid", deviceId }
-                    }
-                };
-
                 // contoso_energyconsumption stores this JSON data
                 EnergyConsumption energyConsumption = new()
                 {
@@ -680,8 +690,17 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     PowerUnit = "Watts"
                 };
 
-                // contoso_energyconsumption is a string attribute with json format.
-                entity["contoso_energyconsumption"] = JsonConvert.SerializeObject(energyConsumption);
+                Entity entity = new("contoso_sensordata")
+                {
+                    Attributes =
+                    {
+                        {"contoso_deviceid", deviceId },
+                        {"contoso_sensortype", "Humidity" },
+                        {"partitionid", deviceId },
+                        {"contoso_energyconsumption",JsonConvert.SerializeObject(energyConsumption) },
+                        {"ttlinseconds", 86400 } // 86400  seconds in a day
+                    }
+                };
 
                 entityList.Add(entity);
             }
@@ -931,50 +950,6 @@ namespace PowerPlatform.Dataverse.CodeSamples
             };
             service.Execute(deleteMultipleRequest);
         }
-
-        /// <summary>
-        /// This class is used to populate the string attribute with json format (contoso_energyconsumption)
-        /// </summary>
-        public class EnergyConsumption
-        {
-            [JsonProperty("power")]
-            public int Power { get; set; }
-
-            [JsonProperty("powerUnit")]
-            public string PowerUnit { get; set; }
-
-            [JsonProperty("voltage")]
-            public int Voltage { get; set; }
-
-            [JsonProperty("voltageUnit")]
-            public string VoltageUnit { get; set; }
-        }
-
-        /// <summary>
-        /// Provides access to the attributes of the entity returned by ExecuteCosmosSqlQueryRequest
-        /// </summary>
-        public class ExecuteCosmosSqlQueryResponse : Entity
-        {
-            [AttributeLogicalName("PagingCookie")]
-            public string? PagingCookie
-            {
-                get => GetAttributeValue<string?>("PagingCookie");
-                set => SetAttributeValue("PagingCookie", value);
-            }
-
-            [AttributeLogicalName("HasMore")]
-            public bool HasMore
-            {
-                get => GetAttributeValue<bool>("HasMore");
-                set => SetAttributeValue("HasMore", value);
-            }
-
-            [AttributeLogicalName("Result")]
-            public string? Result
-            {
-                get => GetAttributeValue<string?>("Result");
-                set => SetAttributeValue("Result", value);
-            }
-        }
+        
     }
 }
