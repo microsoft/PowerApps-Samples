@@ -5,7 +5,7 @@
         /// <summary>
         /// The number of records to create for all samples in this solution.
         /// </summary>
-        public const int NumberOfRecords = 100;
+        public const int NumberOfRecords = 1000;
 
         /// <summary>
         /// The maximum number of records operations to send with 
