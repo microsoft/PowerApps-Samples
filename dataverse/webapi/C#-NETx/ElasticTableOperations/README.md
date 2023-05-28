@@ -5,11 +5,11 @@ products:
 - power-platform
 - power-apps
 page_type: sample
-description: "This sample demonstrates how to perform common data operations on elastic tables using the Dataverse Web API."
+description: "This sample demonstrates how to perform common data operations on elastic tables and query JSON columns using the Dataverse Web API."
 ---
 # Web API Elastic Table Operations sample
 
-This .NET 6.0 sample demonstrates how to perform common data operations on elastic tables using the Dataverse Web API.
+This .NET 6.0 sample demonstrates how to perform common data operations on elastic tables query JSON columns using the Dataverse Web API.
 
 This sample uses the common helper code in the [WebAPIService](../WebAPIService) class library project.
 
