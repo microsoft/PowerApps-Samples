@@ -60,7 +60,7 @@ Updated sensor data record using alternate key style.
 Retrieved sensor data record using partitionId:
 
 {
-  "@odata.context": "https://crmue.api.crm.dynamics.com/api/data/v9.2/$metadata#contoso_sensordatas(contoso_value)/$entity",
+  "@odata.context": "https://yourorg.api.crm.dynamics.com/api/data/v9.2/$metadata#contoso_sensordatas(contoso_value)/$entity",
   "@odata.etag": "W/\"87011581-0000-0200-0000-6473ca8f0000\"",
   "contoso_value": 80,
   "contoso_sensordataid": "b451d168-a0fd-ed11-8f6e-000d3a993550",
@@ -72,7 +72,7 @@ Retrieved sensor data record using partitionId:
 Retrieved sensor data record using alternate key style:
 
 {
-  "@odata.context": "https://crmue.api.crm.dynamics.com/api/data/v9.2/$metadata#contoso_sensordatas(contoso_value)/$entity",
+  "@odata.context": "https://yourorg.api.crm.dynamics.com/api/data/v9.2/$metadata#contoso_sensordatas(contoso_value)/$entity",
   "@odata.etag": "W/\"87011581-0000-0200-0000-6473ca8f0000\"",
   "contoso_value": 80,
   "contoso_sensordataid": "b451d168-a0fd-ed11-8f6e-000d3a993550",
