@@ -5,7 +5,7 @@
         /// <summary>
         /// Whether you want to use elastic tables. Otherwise, standard table will be used.
         /// </summary>
-        public const bool UseElastic = true;
+        public const bool UseElastic = false;
 
         /// <summary>
         /// The number of records to create for all samples in this solution.
@@ -15,7 +15,7 @@
         /// <summary>
         /// The maximum number of records operations to send with 
         /// ExecuteMultiple, CreateMultiple, and UpdateMultiple.
-        /// ExecuteMultiple cannot exceed 1000 with standard tables.
+        /// ExecuteMultiple cannot exceed 1000.
         /// </summary>
         public const short StandardBatchSize = 1000;
 

@@ -45,7 +45,10 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
             // Create a Dataverse service client using the default connection string.
             ServiceClient serviceClient =
-                new(app.Configuration.GetConnectionString("default"));
+                new(app.Configuration.GetConnectionString("default"))
+                {
+                    UseWebApi = false
+                };
 
             // Create sample_Example table for this sample
             Utility.CreateExampleTable(
@@ -236,7 +239,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 deleteStopwatch.Stop();
 
                 Console.WriteLine($"\tDeleted {entityList.Count} records " +
-                    $"in {Math.Round(updateStopwatch.Elapsed.TotalSeconds)} seconds.");
+                    $"in {Math.Round(deleteStopwatch.Elapsed.TotalSeconds)} seconds.");
 
             }
             else

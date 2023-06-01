@@ -271,6 +271,10 @@ namespace PowerPlatform.Dataverse.CodeSamples
         /// <param name="tableSchemaName">The SchemaName of the table to create.</param>
         public static async void CreateExampleTable(ServiceClient serviceClient, string tableSchemaName, bool isElastic = false)
         {
+            // Forces metadata cache to be updated to prevent error
+            // Creating attributes immediately after
+            serviceClient.ForceServerMetadataCacheConsistency = true;
+
             // Don't create the table if it already exists
             if (TableExists(serviceClient, tableSchemaName.ToLower()))
             {
@@ -279,10 +283,6 @@ namespace PowerPlatform.Dataverse.CodeSamples
             }
 
             Console.WriteLine($"Creating {tableSchemaName} {(isElastic ? "Elastic" : "Standard")} table...");
-
-            // Forces metadata cache to be updated to prevent error
-            // Creating attributes immediately after
-            serviceClient.ForceServerMetadataCacheConsistency = true;
 
             if (isElastic)
             {
@@ -418,6 +418,8 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     queryString: "EntityDefinitions",
                     body: entityMetadataObject.ToString(),
                     customHeaders: customHeaders);
+
+              
             }
             else
             {

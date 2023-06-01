@@ -159,16 +159,6 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 $"in {Math.Round(updateStopwatch.Elapsed.TotalSeconds)} seconds.");
 
            
-            // Delete created rows asynchronously
-            Console.WriteLine($"\nStarting asynchronous bulk delete of {numberOfRecords} created records...");
-
-            Guid[] iDs = new Guid[entityList.Count];
-
-            for (int i = 0; i < entityList.Count; i++)
-            {
-                iDs[i] = entityList.ToList()[i].Id;
-            }
-
             if (Settings.UseElastic)
             {
 
@@ -193,11 +183,21 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 deleteStopwatch.Stop();
 
                 Console.WriteLine($"\tDeleted {entityList.Count} records " +
-                    $"in {Math.Round(updateStopwatch.Elapsed.TotalSeconds)} seconds.");
+                    $"in {Math.Round(deleteStopwatch.Elapsed.TotalSeconds)} seconds.");
 
             }
             else
             {
+                // Delete created rows asynchronously
+                Console.WriteLine($"\nStarting asynchronous bulk delete of {numberOfRecords} created records...");
+
+                Guid[] iDs = new Guid[entityList.Count];
+
+                for (int i = 0; i < entityList.Count; i++)
+                {
+                    iDs[i] = entityList.ToList()[i].Id;
+                }
+
                 string deleteJobStatus = Utility.BulkDeleteRecordsByIds(
                 service: serviceClient,
                 tableLogicalName: tableLogicalName,
