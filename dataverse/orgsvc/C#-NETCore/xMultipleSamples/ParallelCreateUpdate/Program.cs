@@ -63,14 +63,16 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     UseWebApi = false
                 };
 
+            Console.WriteLine($"RecommendedDegreesOfParallelism:{serviceClient.RecommendedDegreesOfParallelism}\n");
 
             // Create sample_Example table for this sample.
             Utility.CreateExampleTable(
-                service: serviceClient,
-                tableSchemaName: tableSchemaName);
+                serviceClient: serviceClient,
+                tableSchemaName: tableSchemaName, 
+                isElastic: Settings.UseElastic);
 
             // Create a List of entity instances.
-            Console.WriteLine($"Preparing {numberOfRecords} records to create..\n");
+            Console.WriteLine($"\nPreparing {numberOfRecords} records to create..");
             List<Entity> entityList = new();
             // Populate the list with the number of records to test.
             for (int i = 0; i < numberOfRecords; i++)
@@ -84,14 +86,14 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 });
             }
 
-            Console.WriteLine($"RecommendedDegreesOfParallelism:{serviceClient.RecommendedDegreesOfParallelism}");
+            
 
             ParallelOptions parallelOptions = new()
             {
                 MaxDegreeOfParallelism = serviceClient.RecommendedDegreesOfParallelism
             };
 
-            Console.WriteLine($"\nSending create requests in parallel...");
+            Console.WriteLine($"Sending create requests in parallel...");
             Stopwatch createStopwatch = Stopwatch.StartNew();
 
             await Parallel.ForEachAsync(
@@ -157,24 +159,54 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 $"in {Math.Round(updateStopwatch.Elapsed.TotalSeconds)} seconds.");
 
            
-            // Delete created rows asynchronously
-            Console.WriteLine($"\nStarting asynchronous bulk delete of {numberOfRecords} created records...");
-
-            Guid[] iDs = new Guid[entityList.Count];
-
-            for (int i = 0; i < entityList.Count; i++)
+            if (Settings.UseElastic)
             {
-                iDs[i] = entityList.ToList()[i].Id;
+
+                Console.WriteLine($"\nPreparing {numberOfRecords} records to delete..");
+                // Delete created rows with DeleteMultiple
+                EntityReferenceCollection targets = new();
+                foreach (Entity entity in entityList)
+                {
+                    targets.Add(entity.ToEntityReference());
+                }
+
+                OrganizationRequest deleteMultipleRequest = new("DeleteMultiple")
+                {
+                    Parameters = {
+                                {"Targets", targets }
+                            }
+                };
+
+                Console.WriteLine($"Sending DeleteMultipleRequest...");
+                Stopwatch deleteStopwatch = Stopwatch.StartNew();
+                serviceClient.Execute(deleteMultipleRequest);
+                deleteStopwatch.Stop();
+
+                Console.WriteLine($"\tDeleted {entityList.Count} records " +
+                    $"in {Math.Round(deleteStopwatch.Elapsed.TotalSeconds)} seconds.");
+
             }
+            else
+            {
+                // Delete created rows asynchronously
+                Console.WriteLine($"\nStarting asynchronous bulk delete of {numberOfRecords} created records...");
 
+                Guid[] iDs = new Guid[entityList.Count];
 
-            string deleteJobStatus = Utility.BulkDeleteRecordsByIds(
+                for (int i = 0; i < entityList.Count; i++)
+                {
+                    iDs[i] = entityList.ToList()[i].Id;
+                }
+
+                string deleteJobStatus = Utility.BulkDeleteRecordsByIds(
                 service: serviceClient,
                 tableLogicalName: tableLogicalName,
                 iDs: iDs,
                 jobName: "Deleting records created by ParallelCreateUpdate Sample.");
 
-            Console.WriteLine($"\tBulk Delete status: {deleteJobStatus}");
+                Console.WriteLine($"\tBulk Delete status: {deleteJobStatus}");
+            }
+
 
 
             // Delete sample_example table

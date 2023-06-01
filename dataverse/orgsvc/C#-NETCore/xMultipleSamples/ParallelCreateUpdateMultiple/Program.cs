@@ -38,7 +38,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
             int numberOfRecords = Settings.NumberOfRecords; //100 by default
             string tableSchemaName = "sample_Example";
             string tableLogicalName = tableSchemaName.ToLower(); //sample_example
-            int chunkSize = Settings.BatchSize; // Configurable batch size, 1000 by default
+            int chunkSize = Settings.UseElastic ? Settings.ElasticBatchSize : Settings.StandardBatchSize; // Configurable batch size
 
             #region Optimize Connection settings
 
@@ -64,14 +64,16 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     UseWebApi = false
                 };
 
+            Console.WriteLine($"RecommendedDegreesOfParallelism:{serviceClient.RecommendedDegreesOfParallelism}\n");
 
             // Create sample_Example table for this sample.
             Utility.CreateExampleTable(
-                service: serviceClient,
-                tableSchemaName: tableSchemaName);
+                serviceClient: serviceClient,
+                tableSchemaName: tableSchemaName,
+                isElastic: Settings.UseElastic);
 
             // Create a List of entity instances.
-            Console.WriteLine($"Preparing {numberOfRecords} records to create..\n");
+            Console.WriteLine($"\nPreparing {numberOfRecords} records to create..");
             List<Entity> entityList = new();
             // Populate the list with the number of records to test.
             for (int i = 0; i < numberOfRecords; i++)
@@ -85,14 +87,14 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 });
             }
 
-            Console.WriteLine($"RecommendedDegreesOfParallelism:{serviceClient.RecommendedDegreesOfParallelism}");
+
 
             ParallelOptions parallelOptions = new()
             {
                 MaxDegreeOfParallelism = serviceClient.RecommendedDegreesOfParallelism
             };
 
-            Console.WriteLine($"\nSending create requests in parallel...");
+            Console.WriteLine($"Sending create requests in parallel...");
             Stopwatch createStopwatch = Stopwatch.StartNew();
 
             await Parallel.ForEachAsync(
@@ -129,7 +131,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                         entities[i].Id = response.Ids[i];
                     }
 
-                });           
+                });
             createStopwatch.Stop();
 
             Console.WriteLine($"\tCreated {entityList.Count} records " +
@@ -143,7 +145,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 entity["sample_name"] += " Updated";
             }
 
-            Console.WriteLine($"Sending update requests in parallel...");
+            Console.WriteLine($"Sending UpdateMultiple requests in parallel...");
             Stopwatch updateStopwatch = Stopwatch.StartNew();
 
             await Parallel.ForEachAsync(
@@ -175,13 +177,12 @@ namespace PowerPlatform.Dataverse.CodeSamples
                          cancellationToken: token);
 
                   });
-            
+
             updateStopwatch.Stop();
             Console.WriteLine($"\tUpdated {numberOfRecords} records " +
                 $"in {Math.Round(updateStopwatch.Elapsed.TotalSeconds)} seconds.");
 
-            // Delete created rows asynchronously
-            Console.WriteLine($"\nStarting asynchronous bulk delete of {numberOfRecords} created records...");
+            
 
             Guid[] iDs = new Guid[entityList.Count];
 
@@ -190,15 +191,53 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 iDs[i] = entityList.ToList()[i].Id;
             }
 
+            if (Settings.UseElastic)
+            {
+                Console.WriteLine($"\nPreparing {numberOfRecords} records to delete..");
+                // Delete created rows with DeleteMultiple
+                List<EntityReference> entityReferences = new();
+                foreach (Entity entity in entityList)
+                {
+                    entityReferences.Add(entity.ToEntityReference());
+                }
 
-            string deleteJobStatus = Utility.BulkDeleteRecordsByIds(
-                service: serviceClient,
-                tableLogicalName: tableLogicalName,
-                iDs: iDs,
-                jobName: "Deleting records created by ParallelCreateUpdate Sample.");
+                Console.WriteLine($"Sending DeleteMultiple requests in parallel...");
+                Stopwatch deleteStopwatch = Stopwatch.StartNew();
+                await Parallel.ForEachAsync(
+                  source: entityReferences.Chunk(chunkSize),
+                  parallelOptions: parallelOptions,
+                  async (er, token) =>
+                  {
+                      OrganizationRequest deleteMultipleRequest = new("DeleteMultiple")
+                      {
+                          Parameters = {
+                                {"Targets", new EntityReferenceCollection(er)}
+                            }
+                      };
 
-            Console.WriteLine($"\tBulk Delete status: {deleteJobStatus}");
+                      await serviceClient.ExecuteAsync(
+                         request: deleteMultipleRequest,
+                         cancellationToken: token);
+                  });
+                deleteStopwatch.Stop();
+                Console.WriteLine($"\tDeleted {entityList.Count} records " +
+                    $"in {Math.Round(deleteStopwatch.Elapsed.TotalSeconds)} seconds.");
 
+            }
+            else
+            {
+                // Delete created rows asynchronously
+                Console.WriteLine($"\nStarting asynchronous bulk delete of {numberOfRecords} created records...");
+
+                string deleteJobStatus = Utility.BulkDeleteRecordsByIds(
+                    service: serviceClient,
+                    tableLogicalName: tableLogicalName,
+                    iDs: iDs,
+                    jobName: "Deleting records created by ParallelCreateUpdateMultiple Sample.");
+
+                Console.WriteLine($"\tBulk Delete status: {deleteJobStatus}");
+
+            }
 
             // Delete sample_example table
             Utility.DeleteExampleTable(

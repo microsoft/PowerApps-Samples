@@ -43,16 +43,20 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
             // Create a Dataverse service client using the default connection string.
             ServiceClient serviceClient =
-                new(app.Configuration.GetConnectionString("default"));
+                new(app.Configuration.GetConnectionString("default"))
+                {
+                    UseWebApi = false
+                };
 
             // Create sample_Example table for this sample
             Utility.CreateExampleTable(
-                service: serviceClient,
-                tableSchemaName: tableSchemaName);
+                serviceClient: serviceClient,
+                tableSchemaName: tableSchemaName, 
+                isElastic: Settings.UseElastic);
 
 
             // Create a List of entity instances
-            Console.WriteLine($"Preparing {numberOfRecords} records to create..\n");
+            Console.WriteLine($"\nPreparing {numberOfRecords} records to create..");
             List<Entity> entityList = new();
             // Populate the list with the number of records to test
             for (int i = 0; i < numberOfRecords; i++)
@@ -92,7 +96,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
             Console.WriteLine($"\tCreated {entityList.Count} records " +
                 $"in {Math.Round(createStopwatch.Elapsed.TotalSeconds)} seconds.");
 
-            Console.WriteLine($"Preparing {numberOfRecords} records to update..");
+            Console.WriteLine($"\nPreparing {numberOfRecords} records to update..");
 
 
             // Update the sample_name value:
@@ -125,24 +129,53 @@ namespace PowerPlatform.Dataverse.CodeSamples
             Console.WriteLine($"\tUpdated {entityList.Count} records " +
                 $"in {Math.Round(updateStopwatch.Elapsed.TotalSeconds)} seconds.");
 
-            // Delete created rows asynchronously
-            Console.WriteLine($"\nStarting asynchronous bulk delete " +
-                $"of {entityList.Count} created records...");
-
-            Guid[] iDs = new Guid[entityList.Count];
-
-            for (int i = 0; i < entityList.Count; i++)
+            if (Settings.UseElastic)
             {
-                iDs[i] = entityList[i].Id;
+                Console.WriteLine($"\nPreparing {numberOfRecords} records to delete..");
+                // Delete created rows with DeleteMultiple
+                EntityReferenceCollection targets = new();
+                foreach (Entity entity in entityList)
+                {
+                    targets.Add(entity.ToEntityReference());
+                }
+
+                OrganizationRequest deleteMultipleRequest = new("DeleteMultiple")
+                {
+                    Parameters = {
+                                {"Targets", targets }
+                            }
+                };
+
+                Console.WriteLine($"Sending DeleteMultipleRequest...");
+                Stopwatch deleteStopwatch = Stopwatch.StartNew();
+                serviceClient.Execute(deleteMultipleRequest);
+                deleteStopwatch.Stop();
+
+                Console.WriteLine($"\tDeleted {entityList.Count} records " +
+                    $"in {Math.Round(deleteStopwatch.Elapsed.TotalSeconds)} seconds.");
             }
+            else {
+                // Delete created rows asynchronously
+                Console.WriteLine($"\nStarting asynchronous bulk delete " +
+                    $"of {entityList.Count} created records...");
 
-            string deleteJobStatus = Utility.BulkDeleteRecordsByIds(
-                service: serviceClient,
-                tableLogicalName: tableLogicalName,
-                iDs: iDs,
-                jobName: "Deleting records created by SimpleLoop Sample.");
+                Guid[] iDs = new Guid[entityList.Count];
 
-            Console.WriteLine($"\tBulk Delete status: {deleteJobStatus}");
+                for (int i = 0; i < entityList.Count; i++)
+                {
+                    iDs[i] = entityList[i].Id;
+                }
+
+                string deleteJobStatus = Utility.BulkDeleteRecordsByIds(
+                    service: serviceClient,
+                    tableLogicalName: tableLogicalName,
+                    iDs: iDs,
+                    jobName: "Deleting records created by SimpleLoop Sample.");
+
+                Console.WriteLine($"\tBulk Delete status: {deleteJobStatus}");
+            }
+            
+        
 
             // Delete sample_example table
             Utility.DeleteExampleTable(

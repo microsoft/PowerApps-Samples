@@ -20,13 +20,14 @@ that should provide good results for a given environment.
 The output of this project will look like this:
 
 ```
-Creating sample_Example table...
+RecommendedDegreesOfParallelism:4
+
+Creating sample_Example Standard table...
         sample_Example table created.
 Adding 'sample_Description' column to sample_Example table...
         'sample_Description' column created.
 
-RecommendedDegreesOfParallelism:24
-
+Preparing 100 records to create..
 Sending create requests in parallel...
         Created 100 records in 1 seconds.
 
@@ -37,6 +38,7 @@ Sending update requests in parallel...
 Starting asynchronous bulk delete of 100 created records...
         Asynchronous job to delete 100 records completed in 19 seconds.
         Bulk Delete status: Succeeded
+
 Deleting sample_Example table...
         sample_Example table deleted.
 ```

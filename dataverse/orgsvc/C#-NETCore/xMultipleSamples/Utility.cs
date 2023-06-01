@@ -1,9 +1,11 @@
 ﻿using Microsoft.Crm.Sdk.Messages;
+using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Metadata;
 using Microsoft.Xrm.Sdk.Metadata.Query;
 using Microsoft.Xrm.Sdk.Query;
+using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 
 namespace PowerPlatform.Dataverse.CodeSamples
@@ -163,7 +165,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
             BulkDeleteRequest bulkDeleteRequest = new()
             {
                 QuerySet = new QueryExpression[] { query },
-                JobName = "Records Deleted with BulkDeleteAllSampleExampleRecords sample method.", 
+                JobName = "Records Deleted with BulkDeleteAllSampleExampleRecords sample method.",
                 ToRecipients = new List<Guid>().ToArray(),  // Required
                 CCRecipients = new List<Guid>().ToArray(),  // Required
                 SendEmailNotification = false,              // Required
@@ -265,45 +267,191 @@ namespace PowerPlatform.Dataverse.CodeSamples
         /// <summary>
         /// Creates the table used by projects in this solution.
         /// </summary>
-        /// <param name="service">The IOrganizationService instance.</param>
+        /// <param name="serviceClient">The ServiceClient instance.</param>
         /// <param name="tableSchemaName">The SchemaName of the table to create.</param>
-        public static void CreateExampleTable(IOrganizationService service, string tableSchemaName)
+        public static async void CreateExampleTable(ServiceClient serviceClient, string tableSchemaName, bool isElastic = false)
         {
+            // Forces metadata cache to be updated to prevent error
+            // Creating attributes immediately after
+            serviceClient.ForceServerMetadataCacheConsistency = true;
+
             // Don't create the table if it already exists
-            if (TableExists(service, tableSchemaName.ToLower()))
+            if (TableExists(serviceClient, tableSchemaName.ToLower()))
             {
                 Console.WriteLine($"{tableSchemaName} table already exists.");
                 return;
             }
 
-            Console.WriteLine($"Creating {tableSchemaName} table...");
+            Console.WriteLine($"Creating {tableSchemaName} {(isElastic ? "Elastic" : "Standard")} table...");
 
-            CreateEntityRequest createEntityRequest = new()
+            if (isElastic)
             {
-                Entity = new EntityMetadata
-                {
-                    SchemaName = tableSchemaName,
-                    DisplayName = new Label("Example", 1033),
-                    DisplayCollectionName = new Label("Examples", 1033),
-                    Description = new Label("A table for code samples.", 1033),
-                    OwnershipType = OwnershipTypes.UserOwned,
-                    IsActivity = false
-
+                JObject entityMetadataObject = new()
+            {
+                { "@odata.type", "Microsoft.Dynamics.CRM.EntityMetadata"},
+                { "SchemaName", tableSchemaName },
+                { "DisplayName", new JObject()
+                    {
+                        { "@odata.type", "Microsoft.Dynamics.CRM.Label" },
+                        { "LocalizedLabels", new JArray()
+                            {
+                                new JObject()
+                                {
+                                    { "@odata.type", "Microsoft.Dynamics.CRM.LocalizedLabel" },
+                                    { "Label", $"Example {(isElastic? "(Elastic)": "(Standard)")}" },
+                                    { "LanguageCode", 1033}
+                                }
+                            }
+                        }
+                    }
                 },
-                PrimaryAttribute = new StringAttributeMetadata
-                {
-                    SchemaName = "sample_Name",
-                    RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None),
-                    MaxLength = 100,
-                    FormatName = StringFormatName.Text,
-                    DisplayName = new Label("Example Name", 1033),
-                    Description = new Label("The name of the example record.", 1033)
+                { "DisplayCollectionName", new JObject()
+                    {
+                        { "@odata.type", "Microsoft.Dynamics.CRM.Label" },
+                        { "LocalizedLabels", new JArray()
+                            {
+                                new JObject()
+                                {
+                                    {"@odata.type", "Microsoft.Dynamics.CRM.LocalizedLabel" },
+                                    { "Label", "Examples" },
+                                    { "LanguageCode", 1033 }
+                                }
+                            }
+                        }
+                    }
                 },
-                HasActivities = true
-
+                { "Description", new JObject()
+                    {
+                        { "@odata.type",  "Microsoft.Dynamics.CRM.Label" },
+                        { "LocalizedLabels", new JArray()
+                            {
+                                new JObject()
+                                {
+                                    {"@odata.type", "Microsoft.Dynamics.CRM.LocalizedLabel" },
+                                    { "Label", "A table for code samples."},
+                                    { "LanguageCode", 1033 }
+                                }
+                            }
+                        }
+                    }
+                },
+                { "OwnershipType", "UserOwned" },
+                { "TableType", "Elastic" },
+                { "IsActivity", false },
+                { "CanCreateCharts", new JObject()
+                    {
+                        { "Value", false },
+                        { "CanBeChanged", true },
+                        { "ManagedPropertyLogicalName", "cancreatecharts" }
+                    }
+                },
+                { "HasActivities", false },
+                { "HasNotes", false },
+                { "Attributes", new JArray()
+                    {
+                        new JObject()
+                        {
+                            { "@odata.type", "Microsoft.Dynamics.CRM.StringAttributeMetadata"},
+                            { "SchemaName", "sample_Name"},
+                            { "AttributeType", "String" },
+                            { "AttributeTypeName", new JObject()
+                                {
+                                    { "Value", "StringType" }
+                                }
+                            },
+                            { "RequiredLevel", new JObject()
+                                {
+                                    { "Value", "None" },
+                                    { "CanBeChanged", true},
+                                    { "ManagedPropertyLogicalName", "canmodifyrequirementlevelsettings"}
+                                }
+                            },
+                            { "MaxLength", 100 },
+                            { "FormatName", new JObject()
+                                {
+                                    { "Value", "Text"}
+                                }
+                            },
+                            { "DisplayName", new JObject()
+                                {
+                                    { "@odata.type", "Microsoft.Dynamics.CRM.Label" },
+                                    { "LocalizedLabels", new JArray()
+                                        {
+                                            new JObject()
+                                            {
+                                                { "@odata.type", "Microsoft.Dynamics.CRM.LocalizedLabel"},
+                                                { "Label", "Sensor Type" },
+                                                { "LanguageCode", 1033}
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            { "Description", new JObject()
+                                {
+                                    { "@odata.type", "Microsoft.Dynamics.CRM.Label" },
+                                    { "LocalizedLabels", new JArray()
+                                        {
+                                            new JObject()
+                                            {
+                                                { "@odata.type", "Microsoft.Dynamics.CRM.LocalizedLabel"},
+                                                { "Label", "Type of sensor emitting data" },
+                                                { "LanguageCode", 1033 }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            { "IsPrimaryName", true }
+                        }
+                    }
+                }
             };
 
-            service.Execute(createEntityRequest);
+                Dictionary<string, List<string>> customHeaders = new()
+                {
+                    ["Content-Type"] = new List<string>() { "application/json" },
+                    ["Consistency"] = new List<string>() { "Strong" }
+                };
+                serviceClient.ExecuteWebRequest(
+                    method: HttpMethod.Post,
+                    queryString: "EntityDefinitions",
+                    body: entityMetadataObject.ToString(),
+                    customHeaders: customHeaders);
+
+              
+            }
+            else
+            {
+                // Create standard table
+                CreateEntityRequest createEntityRequest = new()
+                {
+                    Entity = new EntityMetadata
+                    {
+                        SchemaName = tableSchemaName,
+                        DisplayName = new Label($"Example {(isElastic ? "(Elastic)" : "(Standard)")}", 1033),
+                        DisplayCollectionName = new Label("Examples", 1033),
+                        Description = new Label("A table for code samples.", 1033),
+                        OwnershipType = OwnershipTypes.UserOwned,
+                        IsActivity = false
+
+                    },
+                    PrimaryAttribute = new StringAttributeMetadata
+                    {
+                        SchemaName = "sample_Name",
+                        RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None),
+                        MaxLength = 100,
+                        FormatName = StringFormatName.Text,
+                        DisplayName = new Label("Example Name", 1033),
+                        Description = new Label("The name of the example record.", 1033)
+                    },
+                    HasActivities = false,
+                    HasNotes = false
+
+                };
+                serviceClient.Execute(createEntityRequest);
+            }
+
             Console.WriteLine($"\t{tableSchemaName} table created.");
 
             Console.WriteLine($"Adding 'sample_Description' column to {tableSchemaName} table...");
@@ -318,11 +466,14 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     DisplayName = new Label("Description", 1033),
                     Description = new Label("The description of the example record.", 1033)
                 },
-                EntityName = tableSchemaName.ToLower(),
+                EntityName = tableSchemaName.ToLower()
             };
 
-            service.Execute(createAttributeRequest);
+            serviceClient.Execute(createAttributeRequest);
             Console.WriteLine($"\t'sample_Description' column created.");
+
+            // Turning off for best performance
+            serviceClient.ForceServerMetadataCacheConsistency = false;
 
 
         }
@@ -339,7 +490,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
 #pragma warning disable CS0162 // Unreachable code detected: Based on configuration.
                 if (TableExists(service, tableSchemaName.ToLower()))
                 {
-                    Console.WriteLine($"Deleting {tableSchemaName} table...");
+                    Console.WriteLine($"\nDeleting {tableSchemaName} table...");
 
                     DeleteEntityRequest request = new()
                     {
