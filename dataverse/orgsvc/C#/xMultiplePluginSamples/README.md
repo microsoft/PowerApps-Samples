@@ -66,7 +66,7 @@ This sample contains the following plug-in types designed to interact with the o
 
 ## How this sample works
 
-This sample includes plug-ins written for the `CreateMultiple` and `UpdateMultiple` messages using the guidance provided in [Write plug-ins for CreateMultiple and UpdateMultiple (Preview)](https://review.learn.microsoft.com/en-us/power-apps/developer/data-platform/write-plugin-multiple-operation?branch=pr-en-us-7371).
+This sample includes plug-ins written for the `CreateMultiple` and `UpdateMultiple` messages using the guidance provided in [Write plug-ins for CreateMultiple and UpdateMultiple (Preview)](https://learn.microsoft.com/power-apps/developer/data-platform/write-plugin-multiple-operation).
 
 Two of the plug-ins, `FollowupPluginSingle.cs` and `UpdateSingle.cs`, represent the 'before' plug-in written for the `Create` and `Update` messages. The `FollowupPluginMultiple.cs` and `UpdateMultiple.cs` plug-ins represent the 'after' plug-ins written for `CreateMultiple` and `UpdateMultiple` messages.
 
