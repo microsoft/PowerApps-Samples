@@ -47,7 +47,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
             // Create sample_Example table for this sample
             Utility.CreateExampleTable(
-                service: serviceClient,
+                serviceClient: serviceClient,
                 tableSchemaName: tableSchemaName);
 
 

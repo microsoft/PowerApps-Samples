@@ -38,8 +38,8 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
             int numberOfRecords = Settings.NumberOfRecords; //100 by default
             string tableSchemaName = "sample_Example";
-            string tableLogicalName = tableSchemaName.ToLower(); //sample_example     
-
+            string tableLogicalName = tableSchemaName.ToLower(); //sample_example
+                                                                    
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             // Create a Dataverse service client using the default connection string.
@@ -50,8 +50,9 @@ namespace PowerPlatform.Dataverse.CodeSamples
             {
                 // Create sample_Example table for this sample
                 Utility.CreateExampleTable(
-                    service: serviceClient,
-                    tableSchemaName: tableSchemaName);
+                    serviceClient: serviceClient,
+                    tableSchemaName: tableSchemaName, 
+                    isElastic: Settings.UseElastic);
 
                 // Confirm the table supports CreateMultiple
                 if (!Utility.IsMessageAvailable(
@@ -65,7 +66,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 else
                 {
                     // Create a List of entity instances.
-                    Console.WriteLine($"Preparing {numberOfRecords} records to create..\n");
+                    Console.WriteLine($"\nPreparing {numberOfRecords} records to create..");
                     List<Entity> entityList = new();
                     // Populate the list with the number of records to test.
                     for (int i = 0; i < numberOfRecords; i++)
@@ -109,7 +110,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     Console.WriteLine($"\tCreated {entities.Entities.Count} records " +
                         $"in {Math.Round(createStopwatch.Elapsed.TotalSeconds)} seconds.");
 
-                    Console.WriteLine($"Preparing {numberOfRecords} records to update..");
+                    Console.WriteLine($"\nPreparing {numberOfRecords} records to update..");
 
                     // Assign Id values to created items to prepare to update them
                     for (int i = 0; i < createMultipleResponse.Ids.Length; i++)
@@ -146,18 +147,48 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     Console.WriteLine($"\tUpdated {entities.Entities.Count} records " +
                         $"in {Math.Round(updateStopwatch.Elapsed.TotalSeconds)} seconds.");
 
-                    // Delete created rows asynchronously
-                    // When testing plug-ins, set break point here to observe data
-                    Console.WriteLine($"\nStarting asynchronous bulk delete " +
-                        $"of {createMultipleResponse.Ids.Length} created records...");
+                    if (Settings.UseElastic) {
 
-                    string deleteJobStatus = Utility.BulkDeleteRecordsByIds(
-                        service: serviceClient,
-                        tableLogicalName: tableLogicalName,
-                        iDs: createMultipleResponse.Ids,
-                        jobName: "Deleting records created by CreateUpdateMultiple Sample.");
+                        Console.WriteLine($"\nPreparing {numberOfRecords} records to delete..");
+                        // Delete created rows with DeleteMultiple
+                        EntityReferenceCollection targets = new();
+                        foreach (Entity entity in entities.Entities)
+                        {
+                            targets.Add(entity.ToEntityReference());
+                        }
 
-                    Console.WriteLine($"\tBulk Delete status: {deleteJobStatus}");
+                        OrganizationRequest deleteMultipleRequest = new("DeleteMultiple") { 
+                            Parameters = {
+                                {"Targets", targets }
+                            }                            
+                        };
+
+                        Console.WriteLine($"Sending DeleteMultipleRequest...");
+                        Stopwatch deleteStopwatch = Stopwatch.StartNew();
+                        serviceClient.Execute(deleteMultipleRequest);
+                        deleteStopwatch.Stop();
+
+                        Console.WriteLine($"\tDeleted {entities.Entities.Count} records " +
+                            $"in {Math.Round(updateStopwatch.Elapsed.TotalSeconds)} seconds.");
+
+                    }
+                    else
+                    {
+                        // Delete created rows asynchronously
+                        // When testing plug-ins, set break point here to observe data
+                        Console.WriteLine($"\nStarting asynchronous bulk delete " +
+                            $"of {createMultipleResponse.Ids.Length} created records...");
+
+                        string deleteJobStatus = Utility.BulkDeleteRecordsByIds(
+                            service: serviceClient,
+                            tableLogicalName: tableLogicalName,
+                            iDs: createMultipleResponse.Ids,
+                            jobName: "Deleting records created by CreateUpdateMultiple Sample.");
+
+                        Console.WriteLine($"\tBulk Delete status: {deleteJobStatus}");
+                    }
+
+
                 }
 
                 // Delete sample_example table
