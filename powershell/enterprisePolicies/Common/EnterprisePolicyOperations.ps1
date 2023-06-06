@@ -37,7 +37,7 @@ function PutEnterprisePolicy($resourceGroup, $body)
         return $true
     }
     $policyString = $policy | ConvertTo-Json
-    Write-Host "Error creating Enterprise policy $policyString `n" -ForegroundColor Red
+    Write-Host "Error creating/updating Enterprise policy $policyString `n" -ForegroundColor Red
     return $false
 
 
