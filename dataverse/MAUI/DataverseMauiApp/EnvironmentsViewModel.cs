@@ -9,60 +9,62 @@ namespace DataverseMauiApp;
 
 public class EnvironmentsViewModel : ObservableCollection<Environment>
 {
-  IPublicClientApplication _publicClient;
-  HttpClient _httpClient;
+	IPublicClientApplication _publicClient;
+	HttpClient _httpClient;
 
-  public EnvironmentsViewModel(IPublicClientApplication publicClient, HttpClient httpClient)
-  {
-    _publicClient = publicClient ?? throw new ArgumentNullException(nameof(publicClient));
-    _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-  }
+	public EnvironmentsViewModel(IPublicClientApplication publicClient, HttpClient httpClient)
+	{
+		_publicClient = publicClient ?? throw new ArgumentNullException(nameof(publicClient));
+		_httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+	}
 
-  internal async Task RefreshAsync()
-  {
-    // https://learn.microsoft.com/en-us/power-apps/developer/data-platform/discovery-service
+	internal async Task RefreshAsync()
+	{
+		// https://learn.microsoft.com/en-us/power-apps/developer/data-platform/discovery-service
 
-    // Get auth token
-    var scopes = new string[] {
-      "https://globaldisco.crm.dynamics.com//.default",
-    };
-    Debug.WriteLine("Getting auth token");
-    var authResponse = await _publicClient.AcquireTokenSilent(scopes, PublicClientApplication.OperatingSystemAccount)
-      .ExecuteAsync().ConfigureAwait(false);
+		// Get auth token
+		var scopes = new string[] {
+			"https://globaldisco.crm.dynamics.com//.default",
+		};
+		Debug.WriteLine("Getting auth token");
 
-    // Get environments
-    Debug.WriteLine("Getting environments");
-    var requestMessage = new HttpRequestMessage(HttpMethod.Get, BuildUrl());
-    requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", authResponse.AccessToken);
+		var authResponse = MauiProgram.UseSingleSignOn ?
+			await _publicClient.AcquireTokenSilent(scopes, PublicClientApplication.OperatingSystemAccount).ExecuteAsync().ConfigureAwait(false) :
+			await _publicClient.AcquireTokenInteractive(scopes).ExecuteAsync().ConfigureAwait(false);
 
-    var httpResponse = await _httpClient.SendAsync(requestMessage);
-    var responseContent = await httpResponse.Content.ReadAsStringAsync();
+		// Get environments
+		Debug.WriteLine("Getting environments");
+		var requestMessage = new HttpRequestMessage(HttpMethod.Get, BuildUrl());
+		requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", authResponse.AccessToken);
 
-    Debug.WriteLine("Deserializing environments");
-    var responseJson = JsonSerializer.Deserialize<JsonElement>(responseContent);
+		var httpResponse = await _httpClient.SendAsync(requestMessage);
+		var responseContent = await httpResponse.Content.ReadAsStringAsync();
 
-    UpdateEnvironments(responseJson);
+		Debug.WriteLine("Deserializing environments");
+		var responseJson = JsonSerializer.Deserialize<JsonElement>(responseContent);
 
-    Debug.WriteLine("Refresh complete");
-  }
+		UpdateEnvironments(responseJson);
 
-  private void UpdateEnvironments(JsonElement jsonElement)
-  {
-    Clear();
-    foreach (var environmentJson in jsonElement.GetProperty("value").EnumerateArray())
-    {
-      var environment = environmentJson.Deserialize<Environment>();
-      /* Filter
-      if (environment.OrganizationType != OrganizationType.CustomerTest)
-        continue;
-      */
-      Items.Add(environment);
-    }
-    OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-  }
+		Debug.WriteLine("Refresh complete");
+	}
 
-  private Uri BuildUrl()
-  {
-    return new Uri($"https://globaldisco.crm.dynamics.com/api/discovery/v2.0/Instances");
-  }
+	private void UpdateEnvironments(JsonElement jsonElement)
+	{
+		Clear();
+		foreach (var environmentJson in jsonElement.GetProperty("value").EnumerateArray())
+		{
+			var environment = environmentJson.Deserialize<Environment>();
+			/* Filter
+			if (environment.OrganizationType != OrganizationType.CustomerTest)
+			  continue;
+			*/
+			Items.Add(environment);
+		}
+		OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+	}
+
+	private Uri BuildUrl()
+	{
+		return new Uri($"https://globaldisco.crm.dynamics.com/api/discovery/v2.0/Instances");
+	}
 }
