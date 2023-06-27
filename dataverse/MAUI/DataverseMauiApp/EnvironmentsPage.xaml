@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:DataverseMauiApp"
+             x:Class="DataverseMauiApp.EnvironmentsPage"
+             Title="Environments">
+    <CollectionView x:Name="_environments">
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="local:Environment">
+                <Grid Padding="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Text="{Binding FriendlyName}" FontSize="Title" />
+                    <Label Grid.Row="1" Text="{Binding OrganizationType}" FontSize="Subtitle" />
+                    <Label Grid.Row="2" Text="{Binding Url}" Padding="10,0,0,0" />
+                    <Label Grid.Row="3" Text="{Binding UniqueName}" Padding="10,0,0,0" />
+                    <Label Grid.Row="4" Text="{Binding Version}" Padding="10,0,0,0" />
+                </Grid>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentPage>
