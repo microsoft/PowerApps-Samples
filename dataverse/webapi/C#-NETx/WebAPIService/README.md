@@ -112,7 +112,7 @@ The [Config class](Config.cs) contains properties that control the behavior of t
 |`TimeoutInSeconds`|`ushort`|How long to wait for a timeout. Default is 120 seconds.|
 |`MaxRetries`|`byte`|Maximum number of times to re-try when service protection limits occur. Default is 3.|
 |`Version`     |`string`|The version of the service to use. Default is `v9.2`|
-|`DisableCookies`|`bool`|Whether to disable cookies to gain performance in bulk data load scenarios. More information: [Remove the affinity cookie](https://docs.microsoft.com/en-us/power-apps/developer/data-platform/api-limits#remove-the-affinity-cookie)|
+|`DisableCookies`|`bool`|Whether to disable cookies to gain performance in bulk data load scenarios. More information: [Server affinity](https://learn.microsoft.com/power-apps/developer/data-platform/send-parallel-requests?tabs=sdk#server-affinity)|
 
 In the samples that use WebAPIService, the data for these properties is set in the [appsettings.json file](../appsettings.json). The `App` will read the data from appsettings.json file and use it to set the properties of a `Config` instance. This data is passed to the `Service` class constructor in the `Program.Main` method.
 
