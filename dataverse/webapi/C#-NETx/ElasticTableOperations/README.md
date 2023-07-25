@@ -48,7 +48,7 @@ contoso_SensorData table created.
 
 === Start Region 1: Create Record ===
 
-Created sensor data record with id:b451d168-a0fd-ed11-8f6e-000d3a993550
+Created sensor data record with id:5d754b47-1328-ee11-9965-6045bd5cd155
 
 === Start Region 2: Update Record ===
 
@@ -61,24 +61,24 @@ Retrieved sensor data record using partitionId:
 
 {
   "@odata.context": "https://yourorg.api.crm.dynamics.com/api/data/v9.2/$metadata#contoso_sensordatas(contoso_value)/$entity",
-  "@odata.etag": "W/\"87011581-0000-0200-0000-6473ca8f0000\"",
+  "@odata.etag": "W/\"07000ebf-0000-0a00-0000-64bb02250000\"",
   "contoso_value": 80,
-  "contoso_sensordataid": "b451d168-a0fd-ed11-8f6e-000d3a993550",
-  "versionnumber": 638209068959900819,
-  "_ownerid_value": "4026be43-6b69-e111-8f65-78e7d1620f5e",
-  "_owningbusinessunit_value": "38e0dbe4-131b-e111-ba7e-78e7d1620f5e"
+  "contoso_sensordataid": "5d754b47-1328-ee11-9965-6045bd5cd155",
+  "versionnumber": 638255741810315438,
+  "_ownerid_value": "c35d44fb-471d-ee11-9967-0022483cac0d",
+  "_owningbusinessunit_value": "d15644fb-471d-ee11-9967-0022483cac0d"
 }
 
 Retrieved sensor data record using alternate key style:
 
 {
   "@odata.context": "https://yourorg.api.crm.dynamics.com/api/data/v9.2/$metadata#contoso_sensordatas(contoso_value)/$entity",
-  "@odata.etag": "W/\"87011581-0000-0200-0000-6473ca8f0000\"",
+  "@odata.etag": "W/\"07000ebf-0000-0a00-0000-64bb02250000\"",
   "contoso_value": 80,
-  "contoso_sensordataid": "b451d168-a0fd-ed11-8f6e-000d3a993550",
-  "versionnumber": 638209068959900819,
-  "_ownerid_value": "4026be43-6b69-e111-8f65-78e7d1620f5e",
-  "_owningbusinessunit_value": "38e0dbe4-131b-e111-ba7e-78e7d1620f5e"
+  "contoso_sensordataid": "5d754b47-1328-ee11-9965-6045bd5cd155",
+  "versionnumber": 638255741810315438,
+  "_ownerid_value": "c35d44fb-471d-ee11-9967-0022483cac0d",
+  "_owningbusinessunit_value": "d15644fb-471d-ee11-9967-0022483cac0d"
 }
 
 === Start Region 4: Upsert Record ===
@@ -96,33 +96,66 @@ Deleted sensor data record with partitionId.
 
 Deleted second sensor data record with alternate key.
 
-=== Start Region 6: Demonstrate ExecuteCosmosSqlQuery ===
+=== Start Region 6: Demonstrate CreateMultiple ===
 
 Creating 1000 records to use for query example...
-100 records created in $batch
-100 records created in $batch
-100 records created in $batch
-100 records created in $batch
-100 records created in $batch
-100 records created in $batch
-100 records created in $batch
-100 records created in $batch
-100 records created in $batch
-100 records created in $batch
+        100 records created using CreateMultiple
+        100 records created using CreateMultiple
+        100 records created using CreateMultiple
+        100 records created using CreateMultiple
+        100 records created using CreateMultiple
+        100 records created using CreateMultiple
+        100 records created using CreateMultiple
+        100 records created using CreateMultiple
+        100 records created using CreateMultiple
+        100 records created using CreateMultiple
 1000 records to use for query example created.
+
+=== Start Region 7: Demonstrate UpdateMultiple ===
+
+        100 records updated using UpdateMultiple
+        100 records updated using UpdateMultiple
+        100 records updated using UpdateMultiple
+        100 records updated using UpdateMultiple
+        100 records updated using UpdateMultiple
+        100 records updated using UpdateMultiple
+        100 records updated using UpdateMultiple
+        100 records updated using UpdateMultiple
+        100 records updated using UpdateMultiple
+        100 records updated using UpdateMultiple
+1000 records updated using UpdateMultiple.
+
+=== Start Region 8: Demonstrate ExecuteCosmosSqlQuery ===
+
 ExecuteCosmosSqlQueryResponse.PagingCookie: [removed for brevity]
 
 ExecuteCosmosSqlQueryResponse.HasMore: True
 
 Output first page of 50 results:
 
-        Device-ABC-1234 200
+        Device-ABC-1234 6
         [removed for brevity]
+
 Output additional page of 50 results:
 
 [removed for brevity]
 
-=== Start Region 7: Delete Table ===
+=== Start Region 9: Demonstrate DeleteMultiple ===
+
+        100 records deleted using DeleteMultiple
+        100 records deleted using DeleteMultiple
+        100 records deleted using DeleteMultiple
+        100 records deleted using DeleteMultiple
+        100 records deleted using DeleteMultiple
+        100 records deleted using DeleteMultiple
+        100 records deleted using DeleteMultiple
+        100 records deleted using DeleteMultiple
+        100 records deleted using DeleteMultiple
+        100 records deleted using DeleteMultiple
+1000 records deleted using DeleteMultiple.
+
+=== Start Region 10: Delete Table ===
+
 
 Deleting the contoso_SensorData table...
 contoso_SensorData table deleted.
@@ -144,14 +177,17 @@ In addition to the WebAPIService project classes, this project depends on data i
 |`WebAPIService\Messages\ExecuteCosmosSqlQueryResponse.cs`|Contains the data from the ExecuteCosmosSqlQueryRequest|
 
 
-This sample has 7 regions:
+This sample has 10 regions:
 
 - [Create Elastic table](#create-elastic-table)
 - [Create Record](#create-record)
 - [Update Record](#update-record)
 - [Upsert Record](#upsert-record)
 - [Delete Record](#delete-record)
+- [Demonstrate CreateMultiple](#demonstrate-createmultiple)
+- [Demonstrate UpdateMultiple](#demonstrate-updatemultiple)
 - [Demonstrate ExecuteCosmosSqlQuery](#demonstrate-executecosmossqlquery)
+- [Demonstrate DeleteMultiple](#demonstrate-deletemultiple)
 - [Delete Table](#delete-table)
 
 
@@ -684,57 +720,47 @@ HTTP/1.1 204 NoContent
 OData-Version: 4.0
 ```
 
+### Demonstrate CreateMultiple
 
-### Demonstrate ExecuteCosmosSqlQuery
-
-This section has three parts:
-
-- [Create records to query](#create-records-to-query)
-- [Execute the query to retrieve the first 50 records](#execute-the-query-to-retrieve-the-first-50-records)
-- [Retrieve the paged results as long as the response.HasMore value is true](#retrieve-the-paged-results-as-long-as-the-responsehasmore-value-is-true)
-
-#### Create records to query
-
-This code performs 10 asynchronous parallel `$batch` operations of 100 records each to create 1000 records that have `contoso_energyconsumption` set to a JSON value.
-
-**Note**: 
-
-- You can adjust the number of records to create and the batch size using the values in the static `Settings.cs` class. The `Settings.BatchSize` cannot exceed 1000.
-- With each record created, the `contoso_energyconsumption.power` value is increased by 2, and the `contoso_energyconsumption.voltage` value is increased by 1.
-
+This code performs 10 asynchronous parallel `CreateMultiple` operations of 100 records each to create 1000 records.
 
 **Request**
 
 ```http
-POST [Organization Uri]/api/data/v9.2/$batch
+POST [Organization Uri]/api/data/v9.2/contoso_sensordatas/Microsoft.Dynamics.CRM.CreateMultiple
 OData-MaxVersion: 4.0
 OData-Version: 4.0
 If-None-Match: null
 Accept: application/json
-Content-Type: multipart/mixed; boundary="batch_f984ee1c-ea4c-46a9-9671-475e263de2dd"
-Content-Length: 50783
-
---batch_f984ee1c-ea4c-46a9-9671-475e263de2dd
-Content-Type: application/http
-Content-Transfer-Encoding: binary
-Content-Length: 388
-
-POST /api/data/v9.2/contoso_sensordatas HTTP/1.1
-Host: orgname.api.crm.dynamics.com
-Content-Type: application/json; type=entry
+Content-Type: application/json; charset=utf-8
+Content-Length: 741
 
 {
-  "contoso_deviceid": "Device-ABC-1234",
-  "contoso_sensortype": "Humidity",
-  "partitionid": "Device-ABC-1234",
-  "contoso_energyconsumption": "{\"power\":0,\"powerUnit\":\"Watts\",\"voltage\":0,\"voltageUnit\":\"Volts\"}",
-  "ttlinseconds": 86400
+  "Targets": [
+    {
+      "@odata.type": "Microsoft.Dynamics.CRM.contoso_sensordata",
+      "contoso_deviceid": "Device-ABC-1234",
+      "contoso_sensortype": "Humidity",
+      "partitionid": "Device-ABC-1234",
+      "ttlinseconds": 86400
+    },
+    {
+      "@odata.type": "Microsoft.Dynamics.CRM.contoso_sensordata",
+      "contoso_deviceid": "Device-ABC-1234",
+      "contoso_sensortype": "Humidity",
+      "partitionid": "Device-ABC-1234",
+      "ttlinseconds": 86400
+    },
+    {
+      "@odata.type": "Microsoft.Dynamics.CRM.contoso_sensordata",
+      "contoso_deviceid": "Device-ABC-1234",
+      "contoso_sensortype": "Humidity",
+      "partitionid": "Device-ABC-1234",
+      "ttlinseconds": 86400
+    },
+    [97 records truncated for brevity]
+  ]
 }
-
-[99 requests Truncated for brevity]
-
---batch_f984ee1c-ea4c-46a9-9671-475e263de2dd--
-
 ```
 
 **Response**
@@ -743,25 +769,77 @@ Content-Type: application/json; type=entry
 HTTP/1.1 200 OK
 OData-Version: 4.0
 
---batchresponse_737d4bb1-21b4-4072-a75d-8a06bfa6363d
-Content-Type: application/http
-Content-Transfer-Encoding: binary
-
-HTTP/1.1 204 No Content
-OData-Version: 4.0
-Location: [Organization Uri]/api/data/v9.2/contoso_sensordatas(749fc96e-a0fd-ed11-8f6e-000d3a993550)
-OData-EntityId: [Organization Uri]/api/data/v9.2/contoso_sensordatas(749fc96e-a0fd-ed11-8f6e-000d3a993550)
-x-ms-session-token: 207:8#142974260#7=-1
-
-[99 responses Truncated for brevity]
-
---batchresponse_737d4bb1-21b4-4072-a75d-8a06bfa6363d--
-
+{
+  "@odata.context": "[Organization Uri]/api/data/v9.2/$metadata#Microsoft.Dynamics.CRM.CreateMultipleResponse",
+  "Ids": [
+    "6114ca58-0928-ee11-9965-6045bd5cd155",
+    "6214ca58-0928-ee11-9965-6045bd5cd155",
+    "6314ca58-0928-ee11-9965-6045bd5cd155",
+    [97 Ids truncated for brevity]
+  ]
+}
 ```
+
+### Demonstrate UpdateMultiple
+
+This code performs 10 asynchronous parallel `UpdateMultiple` operations of 100 records each to create 1000 records, setting the `contoso_energyconsumption` column to the serialized JSON value of the `EnergyConsumption` class.
+
+**Request**
+
+```http
+POST [Organization Uri]/api/data/v9.2/contoso_sensordatas/Microsoft.Dynamics.CRM.UpdateMultiple
+OData-MaxVersion: 4.0
+OData-Version: 4.0
+If-None-Match: null
+Accept: application/json
+Content-Type: application/json; charset=utf-8
+Content-Length: 954
+
+{
+  "Targets": [
+    {
+      "@odata.type": "Microsoft.Dynamics.CRM.contoso_sensordata",
+      "contoso_sensordataid": "6114ca58-0928-ee11-9965-6045bd5cd155",
+      "partitionid": "Device-ABC-1234",
+      "contoso_energyconsumption": "{\"power\":2,\"powerUnit\":\"Watts\",\"voltage\":1,\"voltageUnit\":\"Volts\"}"
+    },
+    {
+      "@odata.type": "Microsoft.Dynamics.CRM.contoso_sensordata",
+      "contoso_sensordataid": "6214ca58-0928-ee11-9965-6045bd5cd155",
+      "partitionid": "Device-ABC-1234",
+      "contoso_energyconsumption": "{\"power\":4,\"powerUnit\":\"Watts\",\"voltage\":2,\"voltageUnit\":\"Volts\"}"
+    },
+    {
+      "@odata.type": "Microsoft.Dynamics.CRM.contoso_sensordata",
+      "contoso_sensordataid": "6314ca58-0928-ee11-9965-6045bd5cd155",
+      "partitionid": "Device-ABC-1234",
+      "contoso_energyconsumption": "{\"power\":6,\"powerUnit\":\"Watts\",\"voltage\":3,\"voltageUnit\":\"Volts\"}"
+    },
+    [97 records truncated for brevity]
+  ]
+}
+```
+
+**Response**
+
+```http
+HTTP/1.1 204 NoContent
+OData-Version: 4.0
+```
+
+
+
+### Demonstrate ExecuteCosmosSqlQuery
+
+This section has two parts:
+
+- [Execute the query to retrieve the first 50 records](#execute-the-query-to-retrieve-the-first-50-records)
+- [Retrieve the paged results as long as the response.HasMore value is true](#retrieve-the-paged-results-as-long-as-the-responsehasmore-value-is-true)
+
 
 #### Execute the query to retrieve the first 50 records
 
-The query parameters in this example have been URL decoded for readability. They should be URL encoded when sent.
+**Note**: The query parameters in this example have been URL decoded for readability. They should be URL encoded when sent.
 
 **Request**
 
@@ -844,6 +922,52 @@ OData-Version: 4.0
   ]
 }
 ```
+
+### Demonstrate DeleteMultiple
+
+This code performs 10 asynchronous parallel `DeleteMultiple` operations of 100 records each to delete 1000 records.
+
+**Request**
+
+```http
+POST [Organization Uri]/api/data/v9.2/contoso_sensordatas/Microsoft.Dynamics.CRM.DeleteMultiple
+OData-MaxVersion: 4.0
+OData-Version: 4.0
+If-None-Match: null
+Accept: application/json
+Content-Type: application/json; charset=utf-8
+Content-Length: 603
+
+{
+  "Targets": [
+    {
+      "@odata.type": "Microsoft.Dynamics.CRM.contoso_sensordata",
+      "contoso_sensordataid": "6114ca58-0928-ee11-9965-6045bd5cd155",
+      "partitionid": "Device-ABC-1234"
+    },
+    {
+      "@odata.type": "Microsoft.Dynamics.CRM.contoso_sensordata",
+      "contoso_sensordataid": "6214ca58-0928-ee11-9965-6045bd5cd155",
+      "partitionid": "Device-ABC-1234"
+    },
+    {
+      "@odata.type": "Microsoft.Dynamics.CRM.contoso_sensordata",
+      "contoso_sensordataid": "6314ca58-0928-ee11-9965-6045bd5cd155",
+      "partitionid": "Device-ABC-1234"
+    },
+    [97 records truncated for brevity]
+  ]
+}
+```
+
+**Response**
+
+```http
+HTTP/1.1 204 NoContent
+OData-Version: 4.0
+```
+
+
 
 ### Delete Table
 
