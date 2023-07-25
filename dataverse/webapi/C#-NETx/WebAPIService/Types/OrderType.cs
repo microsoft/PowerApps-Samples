@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace PowerApps.Samples.Metadata.Types
+namespace PowerApps.Samples.Types
 {
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum LogicalOperator
+    public enum OrderType
     {
-        And,
-        Or
+        Ascending,
+        Descending
     }
 }
