@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PowerApps.Samples;
-using PowerApps.Samples.Batch;
 using PowerApps.Samples.Messages;
 using PowerApps.Samples.Metadata.Messages;
 using PowerApps.Samples.Metadata.Types;
@@ -300,64 +299,112 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
                 #endregion Delete Record
 
-                #region Demonstrate ExecuteCosmosSqlQuery
-                Console.WriteLine("\n=== Start Region 6: Demonstrate ExecuteCosmosSqlQuery === \n");
+                #region CreateMultiple
+                Console.WriteLine("\n=== Start Region 6: Demonstrate CreateMultiple === \n");
 
-                // Create Multiple records to query
 
                 Console.WriteLine($"Creating {Settings.NumberOfRecords} records to use for query example...");
 
-                // Unlike the sample for SDK, this sample uses Web API $batch
-                // because CreateMultiple is not available for Web API at 
-                // the time this sample was written.
-
-                // Create requests to send in $batch
-                List<HttpRequestMessage> requestList = new();
+                List<JObject> recordsToCreate = new();
 
                 for (int i = 0; i < Settings.NumberOfRecords; i++)
                 {
+                    JObject sensordata = new()
+                    {
+                        // CreateMultiple payload must specify the @odata.type
+                        {"@odata.type", $"Microsoft.Dynamics.CRM.{TABLE_SCHEMA_NAME.ToLower()}" },
+                        {"contoso_deviceid", deviceId },
+                        {"contoso_sensortype", "Humidity" },
+                        {"partitionid", deviceId },
+                        {"ttlinseconds", 86400 } // 86400  seconds in a day
+                    };
+
+                    recordsToCreate.Add(sensordata);
+
+                }
+
+                var parallelOptions = new ParallelOptions()
+                {
+                    MaxDegreeOfParallelism = service.RecommendedDegreeOfParallelism
+                };
+
+                // ID values to update and delete records later
+                List<Guid> createdRecordIds = new();
+
+                // Sending CreateMultiple requests in parallel:
+                await Parallel.ForEachAsync(
+                        source: recordsToCreate.Chunk(Settings.BatchSize),
+                        parallelOptions: parallelOptions,
+                        async (targets, cancellationToken) =>
+                        {
+
+                            CreateMultipleRequest request = new(entitySetName: "contoso_sensordatas", targets: targets.ToList());
+
+                            var response = await service.SendAsync<CreateMultipleResponse>(request);
+
+                            // So these records can be updated and deleted later
+                            createdRecordIds.AddRange(response.Ids.ToList());
+
+                            Console.WriteLine($"\t{response.Ids.Length} records created using CreateMultiple");
+
+                        });
+
+                Console.WriteLine($"{Settings.NumberOfRecords} records to use for query example created.");
+
+                #endregion CreateMultiple
+
+                #region UpdateMultiple
+
+                Console.WriteLine("\n=== Start Region 7: Demonstrate UpdateMultiple === \n");
+
+                List<JObject> recordsToUpdate = new();
+
+                int count = 1;
+                createdRecordIds.ForEach(id =>
+                {
+
                     EnergyConsumption energyConsumption = new()
                     {
-                        Voltage = i,
+                        Voltage = count,
                         VoltageUnit = "Volts",
-                        Power = i + i,
+                        Power = count + count,
                         PowerUnit = "Watts"
                     };
 
                     JObject sensordata = new()
                     {
-                        {"contoso_deviceid", deviceId },
-                        {"contoso_sensortype", "Humidity" },
+                        // UpdateMultiple payload must specify the @odata.type
+                        {"@odata.type", $"Microsoft.Dynamics.CRM.{TABLE_SCHEMA_NAME.ToLower()}" },
+                        {$"{TABLE_SCHEMA_NAME.ToLower()}id", id },
                         {"partitionid", deviceId },
                         {"contoso_energyconsumption",JsonConvert.SerializeObject(energyConsumption) },
-                        {"ttlinseconds", 86400 } // 86400  seconds in a day
                     };
 
-                    CreateRequest request = new(entitySetName: "contoso_sensordatas", record: sensordata);
-                    requestList.Add(request);
+                    recordsToUpdate.Add(sensordata);
+                    count++;
 
-                }
+                });
 
-                var parallelOptions = new ParallelOptions() { 
-                    MaxDegreeOfParallelism = service.RecommendedDegreeOfParallelism };
-
-                // Sending batch requests in parallel:
+                // Sending UpdateMultiple requests in parallel:
                 await Parallel.ForEachAsync(
-                        source: requestList.Chunk(Settings.BatchSize),
+                        source: recordsToUpdate.Chunk(Settings.BatchSize),
                         parallelOptions: parallelOptions,
-                        async (requests,token) => {
-
-                        BatchRequest batchRequest = new(serviceBaseAddress: service.BaseAddress)
+                        async (targets, cancellationToken) =>
                         {
-                            Requests = requests.ToList()
-                        };
 
-                        BatchResponse batchResponse = await service.SendAsync<BatchResponse>(batchRequest);
+                            UpdateMultipleRequest request = new(entitySetName: "contoso_sensordatas", targets: targets.ToList());
 
-                        Console.WriteLine($"{batchResponse.HttpResponseMessages.Count} records created in $batch");
-                    });
+                            await service.SendAsync(request);
 
-                Console.WriteLine($"{Settings.NumberOfRecords} records to use for query example created.");
+                            Console.WriteLine($"\t{targets.Length} records updated using UpdateMultiple");
+
+                        });
+
+                Console.WriteLine($"{recordsToUpdate.Count} records updated using UpdateMultiple.");
+                #endregion UpdateMultiple
+
+                #region Demonstrate ExecuteCosmosSqlQuery
+                Console.WriteLine("\n=== Start Region 8: Demonstrate ExecuteCosmosSqlQuery === \n");
 
                 StringBuilder sb = new();
                 sb.Append("select c.props.contoso_deviceid as deviceId, ");
@@ -400,15 +447,15 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     ExecuteCosmosSqlQueryRequest pagedQueryRequest = new(
                         queryText: sb.ToString(),
                         entityLogicalName: "contoso_sensordata")
+                    {
+                        QueryParameters = new ParameterCollection()
                         {
-                            QueryParameters = new ParameterCollection()
-                            {
-                                Keys = new List<string> { "@sensortype", "@power" },
-                                Values = new List<PowerApps.Samples.Types.Object> {
+                            Keys = new List<string> { "@sensortype", "@power" },
+                            Values = new List<PowerApps.Samples.Types.Object> {
                                     { new PowerApps.Samples.Types.Object(ObjectType.String,"Humidity") },
                                     { new PowerApps.Samples.Types.Object(ObjectType.Int,"5") }
                                 }
-                            },
+                        },
                         PageSize = 50,
                         PartitionId = deviceId,
                         PagingCookie = queryResponse.PagingCookie
@@ -416,7 +463,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
                     queryResponse = await service.SendAsync<ExecuteCosmosSqlQueryResponse>(pagedQueryRequest);
 
-                    Console.WriteLine($"Output additional page of 50 results:\n");
+                    Console.WriteLine($"\nOutput additional page of 50 results:\n");
 
                     queryResponse.Result.ForEach(result =>
                     {
@@ -426,6 +473,47 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
 
                 #endregion Demonstrate ExecuteCosmosSqlQuery
+
+                #region Demonstrate DeleteMultiple
+
+                Console.WriteLine("\n=== Start Region 9: Demonstrate DeleteMultiple === \n");
+
+                List<JObject> recordsToDelete = new();
+
+                createdRecordIds.ForEach(id =>
+                {
+
+                    JObject sensordata = new()
+                    {
+                        // DeleteMultiple payload must specify the @odata.type
+                        {"@odata.type", $"Microsoft.Dynamics.CRM.{TABLE_SCHEMA_NAME.ToLower()}" },
+                        {$"{TABLE_SCHEMA_NAME.ToLower()}id", id },
+                        {"partitionid", deviceId }
+                    };
+
+                    recordsToDelete.Add(sensordata);
+
+                });
+
+                // Sending DeleteMultiple requests in parallel:
+                await Parallel.ForEachAsync(
+                        source: recordsToDelete.Chunk(Settings.BatchSize),
+                        parallelOptions: parallelOptions,
+                        async (targets, cancellationToken) =>
+                        {
+
+                            DeleteMultipleRequest request = new(entitySetName: "contoso_sensordatas", targets: targets.ToList());
+
+                            await service.SendAsync(request);
+
+                            Console.WriteLine($"\t{targets.Length} records deleted using DeleteMultiple");
+
+                        });
+
+                Console.WriteLine($"{recordsToDelete.Count} records deleted using DeleteMultiple.");
+
+                #endregion Demonstrate DeleteMultiple
+
             }
             catch (Exception ex)
             {
@@ -437,7 +525,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
             {
 
                 #region Delete Table
-                Console.WriteLine("\n=== Start Region 7: Delete Table === \n");
+                Console.WriteLine("\n=== Start Region 10: Delete Table === \n");
                 Console.WriteLine($"\nDeleting the {TABLE_SCHEMA_NAME} table...");
 
                 Dictionary<string, string> keys = new() {
