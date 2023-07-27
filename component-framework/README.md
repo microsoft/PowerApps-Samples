@@ -6,9 +6,9 @@ Follow the steps below to import and try the sample components in your model-dri
 
    If you download the repository:
       
-      1. Right click the `PowerApps-Samples-master.zip`` file and select **Properties**.
+      1. Right click the `PowerApps-Samples-master.zip` file and select **Properties**.
       1. On the **General** tab, in the **Security** area, check the **Unblock** checkbox.
-      1. Extract the contents of the `PowerApps-Samples-master.zip`` file.
+      1. Extract the contents of the `PowerApps-Samples-master.zip` file.
 
 1. Open a [Developer Command Prompt for Visual Studio](https://learn.microsoft.com/visualstudio/ide/reference/command-prompt-powershell) and navigate to the `component-framework` folder.
 
