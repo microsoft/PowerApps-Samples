@@ -11,7 +11,13 @@
      "start": "pcf-scripts start",
      "refreshTypes": "pcf-scripts refreshTypes"
    },
-   "dependencies": {},
+   "dependencies": {
+      "@fluentui/react": "^8.20.0",
+      "@types/node": "^10.12.18",
+      "@types/powerapps-component-framework": "^1.3.0",
+      "react": "^17.0.2",
+      "react-dom": "^17.0.2"
+   },
    "devDependencies": {
      "@microsoft/eslint-plugin-power-apps": "^0.2.6",
      "@types/node": "^18.8.2",
