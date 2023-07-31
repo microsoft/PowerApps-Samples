@@ -14,12 +14,17 @@ namespace PowerApps.Samples.Metadata.Messages
         /// </summary>
         /// <param name="entityMetadata">The data that defines the table</param>
         /// <param name="solutionUniqueName">The name of the solution to add the table to.</param>
-        public CreateEntityRequest(EntityMetadata entityMetadata, string? solutionUniqueName = null)
+        public CreateEntityRequest(EntityMetadata entityMetadata, string? solutionUniqueName = null, bool useStrongConsistency = false)
         {
             Method = HttpMethod.Post;
             RequestUri = new Uri(uriString: "EntityDefinitions", uriKind: UriKind.Relative);
-            if (!string.IsNullOrWhiteSpace(solutionUniqueName)) {
+            if (!string.IsNullOrWhiteSpace(solutionUniqueName))
+            {
                 Headers.Add("MSCRM.SolutionUniqueName", solutionUniqueName);
+            }
+            if (useStrongConsistency)
+            {
+                Headers.Add("Consistency", "Strong");
             }
             Content = new StringContent(
                 content: JObject.FromObject(entityMetadata).ToString(),
