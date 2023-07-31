@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="SampleNamespace" constructor="OnFullLoadDemoControl" version="0.0.4" display-name-key="OnFullLoadDemoControl" description-key="OnFullLoadDemoControl description" control-type="standard" >
+    <external-service-usage enabled="false">
+    </external-service-usage>
+    <property name="sampleProperty" display-name-key="Property_Display_Key" description-key="Property_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
+    <resources>
+      <code path="index.ts" order="1"/>
+    </resources>
+    <feature-usage>
+      <uses-feature name="Utility" required="true" />
+    </feature-usage>
+    <platform-action name="afterFormLoad" />
+    <platform-action name="afterFormSave" />
+  </control>
+</manifest>
