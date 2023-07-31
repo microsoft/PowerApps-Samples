@@ -45,14 +45,15 @@ export class OnFullLoadDemoControl implements ComponentFramework.StandardControl
     public getActions():any
     {
         return {
-            afterFormLoad: async () => this.afterFormLoadAction(),
+            afterPageLoad: async () => this.afterPageLoadAction(),
         };
     }
 
-    private afterFormLoadAction(): Promise<void> 
+    private afterPageLoadAction(): Promise<void> 
     {
         return new Promise<void>((resolve, reject) => {
             resolve();
+            alert("on full load called");
         });
     }
 
