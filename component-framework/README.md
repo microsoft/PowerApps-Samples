@@ -13,27 +13,33 @@ Follow the steps below to import and try the sample components in your model-dri
 1. Navigate to the component that you want to try, for example `IncrementControl` and run the `npm install` command to get all the required dependencies.
 
    > For example:
+   >
    > `[Download or Clone location]\component-framework\IncrementControl>npm install`
 
 1. After the command has completed, run `msbuild /t:restore`.
 
    > For example:
+   >
    > `[Download or Clone location]\component-framework\IncrementControl>msbuild /t:restore`.
 
 1. After the command has completed, create a new folder inside the sample component folder  using the `mkdir` command.
 
    > For example:
+   >
    > `[Download or Clone location]\component-framework\IncrementControl>mkdir IncrementControlSolution`
 
 1. Navigate to the folder using the command `cd <folder name>`.
 
-   > For example: 
+   > For example:
+   >
    > `[Download or Clone location]\component-framework\IncrementControl>cd IncrementControlSolution`
 
 1. Inside the folder you created, run the [pac solution init](https://learn.microsoft.com/power-platform/developer/cli/reference/solution#pac-solution-init) command, providing the name and customization prefix of the publisher.
 
-   > For example: 
+   > For example:
+   >
    > `\IncrementControlSolution>pac solution init --publisher-name powerapps_samples --publisher-prefix sample`
+   >
    > **Note**: This will create a new file named `IncrementControlSolution.cdsproj` in the folder.
 
 1. Run the [pac solution add-reference](https://learn.microsoft.com/power-platform/developer/cli/reference/solution#pac-solution-add-reference) command with the `path` set to the location of the `IncrementControl.pcfproj` file.
@@ -54,13 +60,13 @@ Follow the steps below to import and try the sample components in your model-dri
    > </ItemGroup>
    > ```
 
-1. To generate a zip file from your solution project, run the following three commands in the location of the solution folder you created:
+1. To generate a zip file from your solution project, run the following three commands in the location of the solution folder (for example `IncrementControlSolution`) you created:
 
-   `\IncrementControlSolution>msbuild /t:restore`
+   `msbuild /t:restore`
 
-   `\IncrementControlSolution>msbuild /t:rebuild /restore /p:Configuration=Release`
+   `msbuild /t:rebuild /restore /p:Configuration=Release`
 
-   `\IncrementControlSolution>msbuild`
+   `msbuild`
 
 
    The generated solution zip file will be available at `IncrementControlSolution\bin\debug` folder.
@@ -75,7 +81,7 @@ Follow the steps below to import and try the sample components in your model-dri
 
 ## Example output
 
-The following is the console output of the instructions above using a copy of the downloaded repository zip file extracted to the `e:temp`` folder:
+The following is the console output of the instructions above using a copy of the downloaded repository zip file extracted to the `e:temp` folder:
 
 ```
 **********************************************************************
