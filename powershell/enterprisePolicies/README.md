@@ -51,7 +51,7 @@ Sample Input :</br>
 Sample Output :</br>
 ![alt text](./ReadMeImages/GetCMKByResourceId2.png)</br>
 
-### Get CMK Enterprise Policies in Subscription**
+### Get CMK Enterprise Policies in Subscription
 3. **Get CMK Enterprise Policies in Subscription** : The script gets all CMK enterprise policies in an Azure subscription</br>
 Script name : GetCMKEnterprisePoliciesInSubscription.ps1</br>
 Input parameter :
