@@ -19,6 +19,7 @@ Run the script to setup Azure subscription for Microsoft.PowerPlatform
 
 The CMK scripts are present in folder Cmk at current location
 
+### Create CMK Enterprise policy
 1. **Create CMK Enterprise Policy** : This script creates a CMK enterprise policy</br>
 Script name : CreateCMKEnterprisePolicy.ps1</br>
 Input parameters :
@@ -38,6 +39,7 @@ Sample Input :</br>
 Sample Output : </br>
 ![alt text](./ReadMeImages/CreateCMKEP2.png)</br>
 
+### Get CMK Enterprise Policy By ResourceId
 2. **Get CMK Enterprise Policy By ResourceId** : The script gets a CMK enterprise policy by ARM resourceId</br>
 Script name : GetCMKEnterprisePolicyByResourceId.ps1</br>
 Input parameter :
@@ -49,6 +51,7 @@ Sample Input :</br>
 Sample Output :</br>
 ![alt text](./ReadMeImages/GetCMKByResourceId2.png)</br>
 
+### Get CMK Enterprise Policies in Subscription
 3. **Get CMK Enterprise Policies in Subscription** : The script gets all CMK enterprise policies in an Azure subscription</br>
 Script name : GetCMKEnterprisePoliciesInSubscription.ps1</br>
 Input parameter :
@@ -60,6 +63,7 @@ Sample Input :</br>
 Sample Output :</br>
 ![alt text](./ReadMeImages/GetCMKInSub2.png)</br>
 
+### Get CMK Enterprise Policies in Resource Group
 4. **Get CMK Enterprise Policies in Resource Group** : The script gets all CMK enterprise policies in an Azure resource group</br>
 Script name : GetCMKEnterprisePoliciesInResourceGroup.ps1</br>
 Input parameters :
@@ -72,6 +76,7 @@ Sample Input : </br>
 Sample Output :</br>
 ![alt text](./ReadMeImages/GetCMKInResourceGroup2.png)</br>
 
+### Validate Azure Key Vault
 5. **Validate Azure Key Vault** : This script checks if the Key Vault is setup correctly according to the pre-requisites required by the Power Platform CMK Enterprise Policy</br>
     - Soft-delete : if not enabled, then a warning message is displayed (soft-delete is a read only property and can’t be fixed). Follow the instructions at
       https://docs.microsoft.com/en-us/azure/key-vault/general/soft-delete-change to update the soft delete property.
@@ -90,6 +95,7 @@ Sample Input : </br>
 Sample Output :</br>
 ![alt text](./ReadMeImages/ValidateKeyVault2.png)</br>
 
+### Update CMK Enterprise Policy
 6. **Update CMK Enterprise Policy** : This script updates a CMK Enterprise Policy. The updates allowed are for keyVaultId, keyName, keyVersion.</br>
 If you are changing only some of the allowed parameter values, provide “N/A” when prompted for the parameters that you don’t want to change.</br>
  **If the enterprise policy is associated with one or more environments, the update operation will fail, and the script will return an error.**</br>
@@ -108,6 +114,7 @@ Sample Input : </br>
 Sample Output :</br>
 ![alt text](./ReadMeImages/UpdateCMKEP2.png)</br>
 
+### Delete CMK Enterprise Policy
 7. **Delete CMK Enterprise Policy** : This script deletes the CMK Enterprise Policy for a given policy Id. </br>
 **If the CMK enterprise policy is associated with one or more environments, the delete operation will fail, and the script will return an error.**</br>
 Script name : RemoveCMKEnterprisePolicy.ps1</br>
@@ -120,6 +127,7 @@ Sample Input : </br>
 Sample Output :</br>
 ![alt text](./ReadMeImages/RemoveCMKEP2.png)</br>
 
+### Set CMK for an environment
 8. **Set CMK for an environment** : This script applies a CMK enterprise policy to a given Power Platform environment.</br>
 The script adds the environment to the enterprise policy and optionally polls for the operation outcome.</br>
 Script name : AddCustomerManagedKeyToEnvironment.ps1</br>
@@ -133,6 +141,7 @@ Sample Input :</br>
 Sample Output :</br>
 ![alt text](./ReadMeImages/AddCMKToEnv2.png)</br>
 
+### Get CMK for an environment
 9. **Get CMK for an environment** : This script returns the CMK enterprise policy if applied to a given Power Platform environment.</br>
 Script name : GetCMKEnterprisePolicyForEnvironment.ps1</br>
 Input parameter :
@@ -144,6 +153,7 @@ Sample Input :</br>
 Sample Output :</br>
 ![alt text](./ReadMeImages/GetCMKForEnv2.png)</br>
 
+### Remove CMK from an environment
 10. **Remove CMK from an environment** : The script removes the CMK enterprise policy from an environment, </br>
 which results on data to be encrypted with a Microsoft managed encryption key.</br>
 Script name : RemoveCustomerManagedKeyFromEnvironment.ps1</br>
