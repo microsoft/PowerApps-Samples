@@ -3,6 +3,7 @@ using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Metadata;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 
 namespace PowerPlatform.Dataverse.CodeSamples
 {
@@ -20,140 +21,41 @@ namespace PowerPlatform.Dataverse.CodeSamples
         /// <summary>
         /// Creates the contoso_SensorData table used in this sample.
         /// </summary>
-        /// <param name="client">Authenticated ServiceClient instance.</param>
-        internal static void CreateSensorDataEntity(ServiceClient client)
+        /// <param name="service">Authenticated IOrganizationService instance.</param>
+        internal static void CreateSensorDataEntity(IOrganizationService service)
         {
             Console.WriteLine($"Creating {SensorDataSchemaName} table...");
 
-            // Using Web API via ServiceClient.ExecuteWebRequest because SDK doesn't yet have
-            // EntityMetadata.TableType property
-            JObject entityMetadataObject = new()
+            EntityMetadata entityMetadata = new()
             {
-                { "SchemaName", SensorDataSchemaName },
-                { "Description", new JObject()
-                    {
-                        { "@odata.type",  "Microsoft.Dynamics.CRM.Label" },
-                        { "LocalizedLabels", new JArray()
-                            {
-                                new JObject()
-                                {
-                                    {"@odata.type", "Microsoft.Dynamics.CRM.LocalizedLabel" },
-                                    { "Label", "Stores IoT data emitted from devices" },
-                                    { "LanguageCode", 1033 }
-                                }
-                            }
-                        }
-                    }
-                },
-                { "DisplayCollectionName", new JObject()
-                    {
-                        { "@odata.type", "Microsoft.Dynamics.CRM.Label" },
-                        { "LocalizedLabels", new JArray()
-                            {
-                                new JObject()
-                                {
-                                    {"@odata.type", "Microsoft.Dynamics.CRM.LocalizedLabel" },
-                                    { "Label", "Sensor Data" },
-                                    { "LanguageCode", 1033 }
-                                }
-                            }
-                        }
-                    }
-                },
-                { "DisplayName", new JObject()
-                    {
-                        { "@odata.type", "Microsoft.Dynamics.CRM.Label" },
-                        { "LocalizedLabels", new JArray()
-                            {
-                                new JObject()
-                                {
-                                    { "@odata.type", "Microsoft.Dynamics.CRM.LocalizedLabel" },
-                                    { "Label", "Sensor Data" },
-                                    { "LanguageCode", 1033}
-                                }
-                            }
-                        }
-                    }
-                },
-                { "OwnershipType", "UserOwned" },
-                { "TableType", "Elastic" }, // This makes it an elastic table
-                { "IsActivity", false },
-                { "CanCreateCharts", new JObject()
-                    {
-                        { "Value", false },
-                        { "CanBeChanged", true },
-                        { "ManagedPropertyLogicalName", "cancreatecharts" }
-                    }
-                },
-                { "HasActivities", false },
-                { "HasNotes", false },
-                { "Attributes", new JArray()
-                    {
-                        new JObject()
-                        {
-                            { "AttributeType", "String" },
-                            { "AttributeTypeName", new JObject()
-                                {
-                                    { "Value", "StringType" }
-                                }
-                            },
-                            { "Description", new JObject()
-                                {
-                                    { "@odata.type", "Microsoft.Dynamics.CRM.Label" },
-                                    { "LocalizedLabels", new JArray()
-                                        {
-                                            new JObject()
-                                            {
-                                                { "@odata.type", "Microsoft.Dynamics.CRM.LocalizedLabel"},
-                                                { "Label", "Type of sensor emitting data" },
-                                                { "LanguageCode", 1033 }
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            { "DisplayName", new JObject()
-                                {
-                                    { "@odata.type", "Microsoft.Dynamics.CRM.Label" },
-                                    { "LocalizedLabels", new JArray()
-                                        {
-                                            new JObject()
-                                            {
-                                                { "@odata.type", "Microsoft.Dynamics.CRM.LocalizedLabel"},
-                                                { "Label", "Sensor Type" },
-                                                { "LanguageCode", 1033}
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            { "IsPrimaryName", true },
-                            { "RequiredLevel", new JObject()
-                                {
-                                    { "Value", "None" },
-                                    { "CanBeChanged", true},
-                                    { "ManagedPropertyLogicalName", "canmodifyrequirementlevelsettings"}
-                                }
-                            },
-                            { "SchemaName", SensorTypeSchemaName},
-                            { "@odata.type", "Microsoft.Dynamics.CRM.StringAttributeMetadata"},
-                            { "FormatName", new JObject()
-                                {
-                                    { "Value", "Text"}
-                                }
-                            },
-                            { "MaxLength", 100 }
-                        }
-                    }
-                }
+                SchemaName = SensorDataSchemaName,
+                Description = new Label("Stores IoT data emitted from devices", 1033),
+                DisplayCollectionName = new Label("Sensor Data", 1033),
+                DisplayName = new Label("Sensor Data", 1033),
+                OwnershipType = OwnershipTypes.UserOwned,
+                TableType = "Elastic",
+                CanCreateCharts = new BooleanManagedProperty(false)
             };
 
-            Dictionary<string, List<string>> customHeaders = new()
+            StringAttributeMetadata primaryColumn = new()
             {
-                ["Content-Type"] = new List<string>() { "application/json" }
+                Description = new Label("Type of sensor emitting data", 1033),
+                DisplayName = new Label("Sensor Type", 1033),
+                SchemaName = SensorTypeSchemaName,
+                FormatName = StringFormatName.Text,
+                MaxLength = 100
             };
 
-            client.ExecuteWebRequest(HttpMethod.Post, "EntityDefinitions", entityMetadataObject.ToString(), customHeaders);
+            CreateEntityRequest createEntityRequest = new()
+            {
+                Entity = entityMetadata,
+                PrimaryAttribute = primaryColumn,
+                HasActivities = false,
+                HasNotes = false,
+                HasFeedback = false
+            };
+
+            service.Execute(createEntityRequest);
 
             Console.WriteLine($"\t{SensorDataSchemaName} table created.");
 
@@ -168,7 +70,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     MaxLength = 1000,
                 }
             };
-            client.Execute(createDeviceIdAttributeRequest);
+            service.Execute(createDeviceIdAttributeRequest);
             Console.WriteLine($"\t{DeviceIdSchemaName} column created.");
 
             Console.WriteLine($"Creating {ValueSchemaName} column...");
@@ -181,7 +83,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     DisplayName = new Label("Value", 1033),
                 }
             };
-            client.Execute(createValueAttributeRequest);
+            service.Execute(createValueAttributeRequest);
             Console.WriteLine($"\t{ValueSchemaName} column created.");
 
             Console.WriteLine($"Creating {TimeStampSchemaName} column...");
@@ -194,7 +96,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     DisplayName = new Label("Time Stamp", 1033),
                 }
             };
-            client.Execute(createTimeStampAttributeRequest);
+            service.Execute(createTimeStampAttributeRequest);
             Console.WriteLine($"\t{TimeStampSchemaName} column created.");
 
             Console.WriteLine($"Creating {EnergyConsumptionSchemaName} column...");
@@ -212,7 +114,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 }
             };
 
-            client.Execute(createSensorDataAttributeRequest);
+            service.Execute(createSensorDataAttributeRequest);
             Console.WriteLine($"\t{EnergyConsumptionSchemaName} column created.\n");
         }
 

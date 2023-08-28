@@ -183,10 +183,6 @@ Uses `Utility.CreateSensorDataEntity` function to create an elastic table named 
 |`contoso_TimeStamp`|DateTime|Stores a timestamp value for the sensor reading.|
 |`contoso_EnergyConsumption`|String|This column uses JSON format. It stores JSON data related to energy consumption.|
 
-**Note** : The `Utility.CreateSensorDataEntity` function currently uses [ServiceClient.ExecuteWebRequest](https://learn.microsoft.com/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient.executewebrequest?view=dataverse-sdk-latest) to create the elastic table. More information [Use ExecuteWebRequest to send requests to the Dataverse Web API](https://learn.microsoft.com/power-apps/developer/data-platform/xrm-tooling/use-xrm-tooling-to-execute-web-request)
-
-This is because the current [EntityMetadata Class](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.metadata.entitymetadata?view=dataverse-sdk-latest) definition in the SDK doesn't include the `TableType` property that must be set to `"Elastic"` to create an elastic table.
-
 ### Region 1: Create, Retrieve, Update, Upsert, and Delete examples without partitionid
 
 If you do not choose to apply a partitioning strategy for your elastic table, you can perform operations much like you do for standard tables. There are two significant differences: [Managing the session token](#managing-the-session-token) and [Upsert replace behavior](#upsert-replace-behavior).
