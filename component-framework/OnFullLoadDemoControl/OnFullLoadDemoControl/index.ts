@@ -49,7 +49,7 @@ export class OnFullLoadDemoControl implements ComponentFramework.StandardControl
         };
     }
 
-    private afterPageLoadAction(): Promise<void> 
+    private afterPageLoadAction(): Promise<void>
     {
         return new Promise<void>((resolve, reject) => {
             resolve();

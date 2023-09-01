@@ -10,7 +10,6 @@
     <feature-usage>
       <uses-feature name="Utility" required="true" />
     </feature-usage>
-    <platform-action name="afterFormLoad" />
-    <platform-action name="afterFormSave" />
+    <platform-action action-type="afterFormLoad" />
   </control>
 </manifest>
