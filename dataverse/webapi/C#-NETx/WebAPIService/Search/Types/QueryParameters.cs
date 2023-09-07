@@ -8,7 +8,7 @@ namespace PowerApps.Samples.Search.Types;
 public sealed class QueryParameters
 {
     /// <summary>
-    /// Gets or sets the search terms.
+    /// Gets or sets the search terms. These special characters must be escaped using '\' : + - & | ! ( ) { } [ ] ^ " ~ * ? : \ /
     /// </summary>
     [DataMember(Name = "search", IsRequired = true)]
     public string Search { get; set; }
