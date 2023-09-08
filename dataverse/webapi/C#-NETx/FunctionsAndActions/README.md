@@ -20,9 +20,9 @@ This sample uses the common helper code in the [WebAPIService](../WebAPIService)
 
 ## How to run the sample
 
-1. Clone or download the [PowerApps-Samples](../../../../../PowerApps-Samples) repository.
-1. Open the [FunctionsAndActions.sln](FunctionsAndActions.sln) file using Visual Studio 2022.
-1. Edit the [appsettings.json](../appsettings.json) file to set the following property values:
+1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
+1. Open the [FunctionsAndActions.sln](/FunctionsAndActions.sln) file using Visual Studio 2022.
+1. Edit the [appsettings.json](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/appsettings.json) file to set the following property values:
 
    |Property|Instructions  |
    |---------|---------|
