@@ -51,11 +51,11 @@ Operations: Use the [InitializeFrom Function](https://docs.microsoft.com/power-a
 
 ### Section 4: Unbound Functions: RetrieveCurrentOrganization
 
-Operations: Use the [RetrieveCurrentOrganization Function](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/retrievecurrentorganization) with the WebAPIService [RetrieveCurrentOrganizationRequest](../WebAPIService/Messages/RetrieveCurrentOrganizationRequest.cs) and [RetrieveCurrentOrganizationResponse](../WebAPIService/Messages/RetrieveCurrentOrganizationResponse.cs) classes.
+Operations: Use the [RetrieveCurrentOrganization Function](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/retrievecurrentorganization) with the WebAPIService [RetrieveCurrentOrganizationRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/RetrieveCurrentOrganizationRequest.cs) and [RetrieveCurrentOrganizationResponse](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/RetrieveCurrentOrganizationResponse.cs) classes.
 
 ### Section 5: Unbound Functions: RetrieveTotalRecordCount
 
-Operations: Use the [RetrieveTotalRecordCount Function](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/retrievetotalrecordcount) with the WebAPIService [RetrieveTotalRecordCountRequest](../WebAPIService/Messages/RetrieveTotalRecordCountRequest.cs) and [RetrieveTotalRecordCountResponse](../WebAPIService/Messages/RetrieveTotalRecordCountResponse.cs) classes.
+Operations: Use the [RetrieveTotalRecordCount Function](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/retrievetotalrecordcount) with the WebAPIService [RetrieveTotalRecordCountRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/RetrieveTotalRecordCountRequest.cs) and [RetrieveTotalRecordCountResponse](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/RetrieveTotalRecordCountResponse.cs) classes.
 
 ### Section 6: Bound Functions: IsSystemAdmin
 
