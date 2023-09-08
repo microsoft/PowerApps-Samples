@@ -61,7 +61,7 @@ Operations: Use the [RetrieveTotalRecordCount Function](https://docs.microsoft.c
 
 Operations: Use a custom `sample_IsSystemAdmin` operation created using Custom API as a function bound to the `systemuser` table.
 
-This code will install a managed solution containing the Custom API. Then it will use the [IsSystemAdminRequest](Messages/IsSystemAdminRequest.cs) and [IsSystemAdminResponse](Messages/IsSystemAdminResponse.cs) classes defined within this sample application.
+This code will install a managed solution containing the Custom API. Then it will use the [IsSystemAdminRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/FunctionsAndActions/Messages/IsSystemAdminRequest.cs) and [IsSystemAdminResponse](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/FunctionsAndActions/Messages/IsSystemAdminResponse.cs) classes defined within this sample application.
 
 This sample will retrieve a set of users and test each one to determine whether the System Administrator security role is associated with their `systemuser` record or a team they belong to.
 
@@ -69,11 +69,11 @@ This sample will retrieve a set of users and test each one to determine whether 
 
 ### Section 7: Unbound Actions: GrantAccess
 
-Operations: Use the [GrantAccess Action](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/grantaccess) with the WebAPIService [GrantAccessRequest](../WebAPIService/Messages/GrantAccessRequest.cs) class.
+Operations: Use the [GrantAccess Action](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/grantaccess) with the WebAPIService [GrantAccessRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/GrantAccessRequest.cs) class.
 
 ### Section 8: Bound Actions: AddPrivilegesRole
 
-Operations: Use the [AddPrivilegesRole Action](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/addprivilegesrole) with the WebAPIService [AddPrivilegesRoleRequest](../WebAPIService/Messages/AddPrivilegesRoleRequest.cs) class.
+Operations: Use the [AddPrivilegesRole Action](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/addprivilegesrole) with the WebAPIService [AddPrivilegesRoleRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/AddPrivilegesRoleRequest.cs) class.
 
 ### Section 9: Delete sample records
 
