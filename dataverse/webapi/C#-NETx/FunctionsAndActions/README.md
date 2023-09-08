@@ -43,7 +43,7 @@ Operations: Use the [WhoAmI Function](https://docs.microsoft.com/power-apps/deve
 
 ### Section 2: Unbound Functions: FormatAddress
 
-Operations: Use the [FormatAddress Function](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/formataddress) with the WebAPIService [FormatAddressRequest](https://github.com/microsoft/PowerApps-Samples/dataverse/webapi/C%23-NETx/WebAPIService/Messages/FormatAddressRequest.cs) and [FormatAddressResponse](https://github.com/microsoft/PowerApps-Samples/dataverse/webapi/C%23-NETx/WebAPIService/Messages/FormatAddressResponse.cs) classes.
+Operations: Use the [FormatAddress Function](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/formataddress) with the WebAPIService [FormatAddressRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/FormatAddressRequest.cs) and [FormatAddressResponse](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/FormatAddressResponse.cs) classes.
 
 ### Section 3: Unbound Functions: InitializeFrom
 
