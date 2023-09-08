@@ -39,7 +39,7 @@ This sample has 9 regions:
 
 ### Section 1: Unbound Functions: WhoAmI
 
-Operations: Use the [WhoAmI Function](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/whoami) with the WebAPIService [WhoAmIRequest](https://github.com/microsoft/PowerApps-Samples/dataverse/webapi/C%23-NETx/WebAPIService/Messages/WhoAmIRequest.cs) and [WhoAmIResponse](https://github.com/microsoft/PowerApps-Samples/dataverse/webapi/C%23-NETx/WebAPIService/Messages/WhoAmIResponse.cs) classes.
+Operations: Use the [WhoAmI Function](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/whoami) with the WebAPIService [WhoAmIRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/WhoAmIRequest.cs) and [WhoAmIResponse](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/WhoAmIResponse.cs) classes.
 
 ### Section 2: Unbound Functions: FormatAddress
 
