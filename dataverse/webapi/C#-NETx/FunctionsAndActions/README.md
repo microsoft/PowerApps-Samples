@@ -39,11 +39,11 @@ This sample has 9 regions:
 
 ### Section 1: Unbound Functions: WhoAmI
 
-Operations: Use the [WhoAmI Function](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/whoami) with the WebAPIService [WhoAmIRequest](../WebAPIService/Messages/WhoAmIRequest.cs) and [WhoAmIResponse](../WebAPIService/Messages/WhoAmIResponse.cs) classes.
+Operations: Use the [WhoAmI Function](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/whoami) with the WebAPIService [WhoAmIRequest](https://github.com/microsoft/PowerApps-Samples/dataverse/webapi/C%23-NETx/WebAPIService/Messages/WhoAmIRequest.cs) and [WhoAmIResponse](https://github.com/microsoft/PowerApps-Samples/dataverse/webapi/C%23-NETx/WebAPIService/Messages/WhoAmIResponse.cs) classes.
 
 ### Section 2: Unbound Functions: FormatAddress
 
-Operations: Use the [FormatAddress Function](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/formataddress) with the WebAPIService [FormatAddressRequest](../WebAPIService/Messages/FormatAddressRequest.cs) and [FormatAddressResponse](../WebAPIService/Messages/FormatAddressResponse.cs) classes.
+Operations: Use the [FormatAddress Function](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/formataddress) with the WebAPIService [FormatAddressRequest](https://github.com/microsoft/PowerApps-Samples/dataverse/webapi/C%23-NETx/WebAPIService/Messages/FormatAddressRequest.cs) and [FormatAddressResponse](https://github.com/microsoft/PowerApps-Samples/dataverse/webapi/C%23-NETx/WebAPIService/Messages/FormatAddressResponse.cs) classes.
 
 ### Section 3: Unbound Functions: InitializeFrom
 
