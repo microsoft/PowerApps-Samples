@@ -47,7 +47,7 @@ Operations: Use the [FormatAddress Function](https://docs.microsoft.com/power-ap
 
 ### Section 3: Unbound Functions: InitializeFrom
 
-Operations: Use the [InitializeFrom Function](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/initializefrom) with the WebAPIService [InitializeFromRequest](../WebAPIService/Messages/InitializeFromRequest.cs) and [InitializeFromResponse](../WebAPIService/Messages/InitializeFromResponse.cs) classes.
+Operations: Use the [InitializeFrom Function](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/initializefrom) with the WebAPIService [InitializeFromRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/InitializeFromRequest.cs) and [InitializeFromResponse](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/InitializeFromResponse.cs) classes.
 
 ### Section 4: Unbound Functions: RetrieveCurrentOrganization
 
