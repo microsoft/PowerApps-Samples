@@ -1,6 +1,6 @@
-# Associate and disassociate tables
+# Associate and disassociate table rows
 
-This sample shows how to associate and disassociate tables using the [IOrganizationService.Associate](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.associate?view=dynamics-general-ce-9) and [IOrganization.Disassociate](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.disassociate?view=dynamics-general-ce-9) messages. 
+This sample shows how to associate and disassociate tables rows using the [IOrganizationService.Associate](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.associate?view=dynamics-general-ce-9) and [IOrganization.Disassociate](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.disassociate?view=dynamics-general-ce-9) messages. 
 
 ## How to run this sample
 
@@ -12,7 +12,7 @@ Table records are associated to each other using lookup columns on the related t
 
 The simplest way to disassociate two table records in a one-to-many relationship is to set the value of the lookup columns to null.
 
-Relationships using an many-to-many relationship also depend on lookup columns on the intersect table that supports the many-to-many relationship. These relationship are defined by the existence of table records in that intersect table. While you can interact with the intersect table directly, it is much easier to use the API to do this for you.
+Relationships using an many-to-many relationship depend on an intersect table that supports the many-to-many relationship. These relationship are defined by the existence of table records in that intersect table. While you can interact with the intersect table directly, it is much easier to use the API to do this for you.
 
 ## How this sample works
 
