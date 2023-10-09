@@ -6,7 +6,19 @@ declare module CustomConnector {
         getRecordsData: (request: IRecordsDataRequest, filter?: IFilterRequest) => Promise<IRecordsDataResponse>;
         getFilterDetails?: (filter?: IFilterRequest) => Promise<IFilterGroup[]>;
         getRecordUX: (recordData: IRecordData, request: IRecordUXRequest) => IRecordUX;
+        getRecordCreate?: () => IRecordCreate[];
     }
+    interface IRecordCreate {
+		id: string;
+		iconType: number;
+		label: string;
+		onClick?: (event: Event) => Promise<void | IRecordCreateResponse>;
+	}
+    interface IRecordCreateResponse {
+		success?: boolean;
+		needRefresh?: boolean;
+		errorMessage?: string;
+	}
     interface IRecordSourceParams {
         controlId: string;
         tableContext?: {
