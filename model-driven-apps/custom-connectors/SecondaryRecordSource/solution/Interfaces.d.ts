@@ -9,16 +9,16 @@ declare module CustomConnector {
         getRecordCreate?: () => IRecordCreate[];
     }
     interface IRecordCreate {
-		id: string;
-		iconType: number;
-		label: string;
-		onClick?: (event: Event) => Promise<void | IRecordCreateResponse>;
-	}
+	id: string;
+	iconType: number;
+	label: string;
+	onClick?: (event: Event) => Promise<void | IRecordCreateResponse>;
+    }
     interface IRecordCreateResponse {
-		success?: boolean;
-		needRefresh?: boolean;
-		errorMessage?: string;
-	}
+	success?: boolean;
+	needRefresh?: boolean;
+	errorMessage?: string;
+    }
     interface IRecordSourceParams {
         controlId: string;
         tableContext?: {
