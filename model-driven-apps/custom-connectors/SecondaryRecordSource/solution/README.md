@@ -45,4 +45,4 @@ TimelineWallControl will now display the three records implemented within the Se
 
 ### Cleanup
 
-1. Uninstall the managed solution "SecondaryRecordSource_SampleSolution_1_22033_1_managed.zip"
+1. Uninstall the managed solution "SecondaryRecordSource_SampleSolution_1_23091_1_managed.zip"
