@@ -32,7 +32,7 @@ This sample includes a managed solution. This solution contains:
 - Configured table forms are "Account for Interactive Experiences" form (default for Customer Service Hub single-session) and the "Account for Multisession Experiences" form (default for Customer Service Workspace multi-session)
 - TimelineWallControl control is within first tab of these forms by default
 
-2. Download the managed solution "SecondaryRecordSource_SampleSolution_1_23091_1_managed.zip" (23091 includes the support to create custom connector from timeline, SecondaryRecordSource_SampleSolution_1_22033_1_managed.zip is the older version but will be deprecated soon)
+2. Download the managed solution "SecondaryRecordSource_SampleSolution_1_23091_1_managed.zip"
 
 3. Install managed solution within D365 test environment
 
