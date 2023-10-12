@@ -4,3 +4,5 @@ This is a helper script that is used to configure grant to the Microsoft applica
 # Prerequisites
 1. Powershell 7 (Run as Administrator)
 
+# Links
+- [Official documentation](https://go.microsoft.com/fwlink/?linkid=2249190)
