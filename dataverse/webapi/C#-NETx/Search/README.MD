@@ -9,7 +9,7 @@ description: "This sample demonstrates how to perform search operations using th
 ---
 # Web API search operations sample
 
-This .NET 6.0 sample demonstrates how to perform common data operations using the Dataverse Web API.
+This .NET 6.0 sample demonstrates how to perform search operations using the Dataverse Web API.
 
 This sample uses the common helper code in the [WebAPIService](../WebAPIService) class library project.
 

@@ -27,6 +27,8 @@ namespace Search
                     if (!string.IsNullOrWhiteSpace(answer) && answer.StartsWith("y", StringComparison.OrdinalIgnoreCase))
                     {
                         await EnableSearch(service: service);
+
+                        Console.WriteLine("Search provisioned. Run this sample again to use the Search APIs.");
                     }
 
                     break;
