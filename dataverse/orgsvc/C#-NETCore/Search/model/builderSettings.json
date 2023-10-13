@@ -31,6 +31,8 @@
   "namespace": "PowerPlatform.Dataverse.CodeSamples",
   "optionsetstypesfolder-comment": "Folder name that contains option sets.",
   "optionSetsTypesFolder": "OptionSets",
+  "serviceContextName-comment": "The name for the generated service context. If a value is passed in, it's used for the Service Context. If not, no Service Context is generated.",
+  "serviceContextName": "OrgContext",
   "suppressGeneratedCodeAttribute-comment": "When set, this suppress all generated objects being tagged with the code generation engine and version",
   "suppressGeneratedCodeAttribute": true,
   "suppressINotifyPattern-comment": "When enabled, doesn't write the INotify wrappers for properties and classes.",
