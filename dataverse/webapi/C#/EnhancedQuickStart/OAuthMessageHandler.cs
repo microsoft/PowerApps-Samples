@@ -25,7 +25,7 @@ namespace EnhancedQuickStart
                             .WithAuthority(AadAuthorityAudience.AzureAdMultipleOrgs)
                             .WithRedirectUri(redirectUrl)
                             .Build();
-            var scope = serviceUrl + "//.default";
+            var scope = serviceUrl + "/user_impersonation";
             string[] scopes = { scope };
 
             // First try to get an authentication token from the cache using a hint.
