@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PowerApps.Samples.Search.Types;
 using PowerPlatform.Dataverse.CodeSamples.types;
+using System.ServiceModel;
 
 namespace PowerPlatform.Dataverse.CodeSamples
 {
@@ -50,7 +51,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
             // Create a Dataverse service client using the default connection string.
             ServiceClient serviceClient =
-                new(app.Configuration.GetConnectionString("default"));
+                new(app.Configuration.GetConnectionString("default"));            
 
             // Determine the search status
             SearchStatus searchStatus = CheckSearchStatus(service: serviceClient);
@@ -96,7 +97,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
         /// <param name="service">The authenticated IOrganizationService instance to use.</param>
         /// <param name="searchTerm">The term to search for</param>
         /// <returns></returns>
-        static void OutputSearchQuery(ServiceClient service, string searchTerm)
+        static void OutputSearchQuery(IOrganizationService service, string searchTerm)
         {
             Console.WriteLine("OutputSearchQuery START\n");
 
@@ -125,9 +126,10 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 filter = "createdon gt 2022-08-15"
 
             };
-            
-            var searchqueryResponse = (searchqueryResponse)service.Execute(request);
 
+
+            var searchqueryResponse = (searchqueryResponse)service.Execute(request);
+ 
             var queryResults = JsonConvert.DeserializeObject<SearchQueryResults>(searchqueryResponse.response);
   
 
@@ -166,7 +168,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
         /// <param name="service">The authenticated IOrganizationService instance to use.</param>
         /// <param name="searchTerm">The term to use</param>
         /// <returns></returns>
-        static void OutputSearchSuggest(ServiceClient service, string searchTerm)
+        static void OutputSearchSuggest(IOrganizationService service, string searchTerm)
         {
             Console.WriteLine("OutputSearchSuggest START\n");
 
@@ -202,7 +204,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
         /// <param name="service">The authenticated IOrganizationService instance to use.</param>
         /// <param name="searchTerm">The term to use</param>
         /// <returns></returns>
-        static void OutputAutoComplete(ServiceClient service, string searchTerm)
+        static void OutputAutoComplete(IOrganizationService service, string searchTerm)
         {
             Console.WriteLine("OutputAutoComplete START\n");
 
@@ -238,7 +240,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
         /// </summary>
         /// <param name="service">The authenticated IOrganizationService instance to use.</param>
         /// <returns></returns>
-        static void OutputSearchStatus(ServiceClient service)
+        static void OutputSearchStatus(IOrganizationService service)
         {
             Console.WriteLine("OutputSearchStatus START\n");
 

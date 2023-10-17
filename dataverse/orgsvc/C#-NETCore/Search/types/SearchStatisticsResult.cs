@@ -2,6 +2,10 @@
 
 namespace PowerPlatform.Dataverse.CodeSamples.types
 {
+
+    /// <summary>
+    /// Used to deserialize the searchstatisticsResponse.response property
+    /// </summary>
     class SearchStatisticsResult
     {
 

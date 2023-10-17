@@ -3,7 +3,7 @@
 namespace PowerApps.Samples.Search.Types;
 
 /// <summary>
-/// The query context returned as part of response.
+/// The query context returned as part of response. This request is used for backend search, this is included for future feature releases, it is not currently used.
 /// </summary>
 public sealed class QueryContext
 {
