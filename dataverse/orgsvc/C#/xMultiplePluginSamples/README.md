@@ -10,7 +10,7 @@ This sample provides several Plug-in types that demonstrate how to write plug-in
 ## How to run this sample
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
-1. Run the [Create and Update Multiple Sample](/BulkOperations/README.md) with the setting `DeleteTable` set to `false`.
+1. Run the [Create and Update Multiple Sample](../../C#-NETCore/BulkOperations/CreateUpdateMultiple/README.md) with the setting `DeleteTable` set to `false`.
 
    **Note**: This will create the tables needed for the plug-ins in this sample.
 
@@ -23,18 +23,18 @@ This sample provides several Plug-in types that demonstrate how to write plug-in
     - `FollowupPluginSingle` and `FollowupPluginMultiple`.
     - `UpdateSingle` and `UpdateMultiple`.
 
-1. Run any of the projects in the [Create and Update Multiple Sample](/BulkOperations/README.md), but set a break point before the records are deleted.
+1. Run any of the projects in the [Create and Update Multiple Sample](../../C#-NETCore/BulkOperations/CreateUpdateMultiple/README.md), but set a break point before the records are deleted.
 1. In [Power Apps](https://make.powerapps.com/), navigate to **Dataverse** > **Tables** and locate the **Example** table.
 1. Click the **Edit** button to view the records created.
 1. Add the **Description** column to the view.
-1. Repeat and observe the differences when different projects in the [Create and Update Multiple Sample](/BulkOperations/README.md) are run. The `Description` field should include the name of the project.
+1. Repeat and observe the differences when different projects in the [Create and Update Multiple Sample](../../C#-NETCore/BulkOperations/CreateUpdateMultiple/README.md) are run. The `Description` field should include the name of the project.
 1. Turn on tracing and view the traces written to the `PluginTraceLog` Table. The [XrmToolBox Plugin Trace Viewer](https://jonasr.app/ptv/) is recommended for this. More information: [Tracing and logging](https://learn.microsoft.com/power-apps/developer/data-platform/logging-tracing).
 
 ## What this sample does
 
 This sample provides an experience where you can observe and interact with plug-ins that are written for the `CreateMultiple` and `UpdateMultiple` messages.
 
-This sample depends on the [Create and Update Multiple Sample](/BulkOperations/README.md) so that the merged message processing pipeline behaviors can be verified.
+This sample depends on the [Create and Update Multiple Sample](../../C#-NETCore/BulkOperations/CreateUpdateMultiple/README.md) so that the merged message processing pipeline behaviors can be verified.
 
 The **Create and Update Multiple Sample** contains 4 separate projects that do the same thing in different ways.
 
@@ -79,4 +79,3 @@ The `ContextWriter.cs` plug-in captures data from the [IPluginExecutionContext4 
 - How to write plug-ins for the `CreateMultiple` and `UpdateMultiple` messages
 - How to modify existing plug-ins using `Create` and `Update` to use `CreateMultiple` and `UpdateMultiple` messages.
 - How to write information about the plug-in execution context to the plug-in trace log.
-
