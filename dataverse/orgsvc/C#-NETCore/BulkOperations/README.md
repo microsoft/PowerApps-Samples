@@ -18,7 +18,7 @@ This sample is a prerequisite for the [CreateMultiple and UpdateMultiple plug-in
 
 This sample is a Visual Studio .NET 6.0 solution that contains 5 different projects that perform the same operations in different ways so that you can compare the performance of each method.
 
-You can find the sample [here](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/C%23-NETCore/xMultipleSamples).
+You can find the sample [here](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/C%23-NETCore/BulkOperations).
 
 ## Prerequisites
 

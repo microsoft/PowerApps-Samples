@@ -4,7 +4,7 @@ This project uses the
 [System.Threading.Tasks.Parallel.ForEachAsync Method](https://learn.microsoft.com/dotnet/api/system.threading.tasks.parallel.foreachasync?view=net-6.0)
 and the `CreateMultiple` and `UpdateMultiple` actions to perform multiple create and update operations using multiple threads.
 
-It depends on the common structure for other projects in this solution that is described in [xMultipleSamples/README.md](../README.md).
+It depends on the common structure for other projects in this solution that is described in [BulkOperations/README.md](../README.md).
 
 The number of threads used will depend on the value of the `x-ms-dop-hint` response header. 
 The `x-ms-dop-hint` response header provides a hint for the Degree Of Parallelism (DOP) that represents a number of threads 
