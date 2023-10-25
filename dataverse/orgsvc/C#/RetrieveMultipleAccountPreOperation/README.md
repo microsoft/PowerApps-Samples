@@ -9,7 +9,7 @@ The approach described by this sample is different. Rather than filter entities 
 A key point demonstrated by this sample is that the [RetrieveMultipleRequest.Query](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.messages.retrievemultiplerequest.query) can be one of three different types that are derived from the [QueryBase Class](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.query.querybase). To accommodate queries of any type, the plug-in code
 must detect the type of query and implement the appropriate type of filter.
 
-You can download the sample from [here](https://github.com/Microsoft/PowerApps-Samples/tree/master/cds/orgsvc/C%23/RetrieveMultipleAccountPreOperation).
+You can download the sample from [here](https://github.com/Microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/C%23/RetrieveMultipleAccountPreOperation).
 
 ## How to run this sample
 

@@ -1,6 +1,6 @@
 # Sample: IsSystemAdmin Custom API
 
-This sample shows how to write a plug-in that supports a Custom API named `sample_IsSystemAdmin`. You can download the sample from [here](https://github.com/Microsoft/PowerApps-Samples/tree/master/cds/orgsvc/C%23/IsSystemAdminCustomAPI).
+This sample shows how to write a plug-in that supports a Custom API named `sample_IsSystemAdmin`. You can download the sample from [here](https://github.com/Microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/C%23/IsSystemAdminCustomAPI).
 
 This sample creates a plug-in for the main operation of the `sample_IsSystemAdmin` Custom API. This Custom API will detect whether a user has the System Administrator security role. 
 

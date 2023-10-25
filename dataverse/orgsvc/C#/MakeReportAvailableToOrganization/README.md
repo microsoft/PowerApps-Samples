@@ -4,7 +4,7 @@ This sample shows how to make a report available or unavailable to an organizati
 
 ## How to run this sample
 
-See [How to run this sample](https://github.com/microsoft/PowerApps-Samples/blob/master/cds/README.md) for information about how to run this sample.
+See [How to run this sample](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/README.md) for information about how to run this sample.
 
 ## How this sample works
 

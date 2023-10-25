@@ -17,7 +17,7 @@ This sample shows how to perform the following actions with solutions:
 
 ## How to run this sample
 
-See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/master/cds/README.md) for information about how to run this sample.
+See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/README.md) for information about how to run this sample.
 
 Be sure to edit the App.config file and set the Username, Password, and Url values for your test environment.
 
