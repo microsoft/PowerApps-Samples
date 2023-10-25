@@ -11,7 +11,7 @@ This sample requires an additional user that isn't available in your system. Cre
 
 ## How to run this sample
 
-See [How to run this sample](https://github.com/microsoft/PowerApps-Samples/blob/master/cds/README.md) for information about how to run this sample.
+See [How to run this sample](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/README.md) for information about how to run this sample.
 
 ## What this sample does
 

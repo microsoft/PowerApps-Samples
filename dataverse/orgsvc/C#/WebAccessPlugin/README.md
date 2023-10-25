@@ -1,6 +1,6 @@
 # Sample: Web access from a plug-in
 
-This sample shows how to write a plug-in that can access web (network) resources like a web service or feed. It also demonstrates how to limit the time duration allowed for this call. You can download the sample from [here](https://github.com/Microsoft/PowerApps-Samples/tree/master/cds/orgsvc/C%23/WebAccessPlugin).
+This sample shows how to write a plug-in that can access web (network) resources like a web service or feed. It also demonstrates how to limit the time duration allowed for this call. You can download the sample from [here](https://github.com/Microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/C%23/WebAccessPlugin).
 
 ## How to run this sample
 

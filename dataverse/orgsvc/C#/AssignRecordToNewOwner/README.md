@@ -6,7 +6,7 @@ This sample uses the `IOrganization.Update` method rather than the [AssignReques
 
 ## How to run this sample
 
-See [How to run this sample](https://github.com/microsoft/PowerApps-Samples/blob/master/cds/README.md) for information about how to run this sample.
+See [How to run this sample](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/README.md) for information about how to run this sample.
 
 ## What this sample does
 

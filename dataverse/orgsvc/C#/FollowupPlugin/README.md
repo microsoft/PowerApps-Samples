@@ -1,6 +1,6 @@
 # Sample: Create a basic plug-in
 
-This sample shows how to write a simple plug-in that creates a follow-up activity. You can download the sample from [here](https://github.com/Microsoft/PowerApps-Samples/tree/master/cds/orgsvc/C%23/FollowupPlugin).
+This sample shows how to write a simple plug-in that creates a follow-up activity. You can download the sample from [here](https://github.com/Microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/C%23/FollowupPlugin).
 
 ## How to run this sample
 

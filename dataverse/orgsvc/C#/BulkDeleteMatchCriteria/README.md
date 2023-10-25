@@ -4,7 +4,7 @@ This sample shows how to delete records, in bulk, that match common criteria.
 
 ## How to run this sample
 
-See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/master/cds/README.md) for information about how to run this sample.
+See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/README.md) for information about how to run this sample.
 
 ## What this sample does
 

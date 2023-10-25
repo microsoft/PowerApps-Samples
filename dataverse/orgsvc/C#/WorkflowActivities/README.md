@@ -5,7 +5,7 @@ These samples show how to write custom workflow activities to perform a number o
 
 ## How to run this sample
 
-See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/master/cds/README.md) for general information about how to run this sample.
+See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/README.md) for general information about how to run this sample.
 
 All of the custom activities are compiled into a single assembly which you may register with your environment. After registering the assembly, the custom activities will be available for use when adding steps in a custom workflow.
 
