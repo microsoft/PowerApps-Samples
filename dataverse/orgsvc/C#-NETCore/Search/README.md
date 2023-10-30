@@ -13,7 +13,7 @@ This .NET 6.0 sample demonstrates how to perform search operations using the Dat
 
 This sample uses:
 
-- Classes generated using the [pcf modelbuilder build command](https://learn.microsoft.com/power-platform/developer/cli/reference/modelbuilder#pac-modelbuilder-build). [Learn more about using this command](https://learn.microsoft.com/power-apps/developer/data-platform/org-service/generate-early-bound-classes).
+- Classes generated using the [pac modelbuilder build command](https://learn.microsoft.com/power-platform/developer/cli/reference/modelbuilder#pac-modelbuilder-build). [Learn more about using this command](https://learn.microsoft.com/power-apps/developer/data-platform/org-service/generate-early-bound-classes).
 
    These classes are in the `model/Messages` folder.
 
