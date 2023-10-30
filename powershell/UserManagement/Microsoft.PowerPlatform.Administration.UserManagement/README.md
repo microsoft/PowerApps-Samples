@@ -17,23 +17,28 @@ This code can be run by Global / Power Platform Administrator users.
 - Powershell 5.1.22 (default for windows 10 & 11) or lower
 - .NET Framework 4.6.2 Developer Pack
 - Visual Studio 2017 or a newer version
+- Nuget version 4.7 or higher
 
 ## How to run this sample
 
-1. Install [Visual Studio 2017](https://visualstudio.microsoft.com/downloads/) or higher.
-2. Install the .NET Framework 4.6.2 [Developer Pack](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net462).
-3. Open the solution file (Microsoft.PowerPlatform.Administration.Powershell.sln) in administrator mode and build the solution.
-4. Open PowerShell in administrator mode.
-5. Set Execution Policy to *Unrestricted*.
-6. Import the Microsoft.PowerPlatform.Administration.Powershell module, as shown below.
+1. Install [Nuget](https://www.nuget.org/downloads) 
+2. Clone [powerapps sample's repo](https://github.com/microsoft/PowerApps-Samples.git)
+3. Install [Visual Studio 2017](https://visualstudio.microsoft.com/downloads/) or higher.
+4. Install the .NET Framework 4.6.2 [Developer Pack](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net462).
+5. Navigate to powershell/UserManagement/Microsoft.PowerPlatform.Administration.UserManagement folder
+6. Open the solution file (Microsoft.PowerPlatform.Administration.Powershell.sln) in administrator mode and [build](https://learn.microsoft.com/en-us/visualstudio/ide/building-and-cleaning-projects-and-solutions-in-visual-studio?view=vs-2022) the solution.
+7. If you notice any errors, check if the path to the directory is too long and try to copy the Microsoft.PowerPlatform.Administration.UserManagement into a shorter path ( Ex: C:\) and try building again.
+8. Open PowerShell in administrator mode.
+9. Set Execution Policy to *Unrestricted*.
+10. Import the Microsoft.PowerPlatform.Administration.UserManagement.psm1 module, as shown below.
 
     ```powershell
     cd Microsoft.PowerPlatform.Administration.Powershell
     Import-Module .\Microsoft.PowerPlatform.Administration.UserManagement.psm1
     ```
 
-7. Run the command of your choice from the following PowerShell commands (see below).
-8. Each command will prompt the user to provide credentials when connecting to Dataverse. Enter a user principal name and password.
+11. Run the command of your choice from the following PowerShell commands (see below).
+12. Each command will prompt the user to provide credentials when connecting to Dataverse. Enter a user principal name and password.
 
 ## Powershell commands
 
