@@ -3,6 +3,7 @@ using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Rest;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
+using Microsoft.Xrm.Sdk.Query;
 using System.Diagnostics;
 using System.Net;
 using System.ServiceModel;
@@ -56,10 +57,11 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 Utility.CreateExampleTable(
                     serviceClient: serviceClient,
                     tableSchemaName: tableSchemaName,
-                    isElastic: Settings.UseElastic);
+                    isElastic: Settings.UseElastic,
+                    createAlternateKey: Settings.CreateAlternateKey);
 
                 // Confirm the table supports UpsertMultiple
-                if (!Utility.IsMessageAvailable(
+                if (Settings.UseElastic && !Utility.IsMessageAvailable(
                     service: serviceClient,
                     entityLogicalName: tableLogicalName,
                     messageName: "UpsertMultiple"))
@@ -76,31 +78,100 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
                     var createdRecordIds = CreateRecordsUtility(nCreate, tableLogicalName, serviceClient, out entities);
 
-                    Console.WriteLine($"\nPreparing {nCreate} records to update..");
-
-                    // Assign Id values to created items to prepare to update them
-                    for (int i = 0; i < createdRecordIds.Length; i++)
+                    // Retrieve the records which were created in the CreateRecordsUtility.
+                    var retrieveMultipleRequest = new RetrieveMultipleRequest();
+                    var query = new QueryExpression
                     {
-                        entities.Entities[i].Id = createdRecordIds[i];
+                        EntityName = tableLogicalName,
+                        ColumnSet = new ColumnSet("sample_name"),
+                    };
+
+                    if (Settings.CreateAlternateKey)
+                    {
+#pragma warning disable CS0162 // Unreachable code detected
+                        query.ColumnSet.AddColumn("sample_keyattribute");
+#pragma warning restore CS0162 // Unreachable code detected
                     }
 
-                    // Update the sample_name value:
-                    foreach (Entity entity in entities.Entities)
-                    {
-                        entity["sample_name"] += " Updated";
-                    }
+                    retrieveMultipleRequest.Query = query;
 
-                    Console.WriteLine($"\nPreparing {nCreate} records to create..");
-                    for (int i = 0; i < nCreate; i++)
+                    var retrieveMultipleResponseRaw = (RetrieveMultipleResponse)serviceClient.Execute(retrieveMultipleRequest);
+                    var recordsCreated = retrieveMultipleResponseRaw.EntityCollection.Entities.ToList();
+
+                    // UpsertMultiple scenarios covered in this sample for x records
+                    // 1. Create x/4 records by providing PK which is entity.Id
+                    // 2. Create x/4 records by providing AK which is entity.KeyAttribute
+                    // 3. Upsert x/4 records by providing PK which is entity.Id
+                    // 4. Upsert x/4 records by providing AK which is entity.KeyAttribute
+
+                    // 1. Create x/4 records by providing PK which is entity.Id
+                    Console.WriteLine($"\nPreparing {numberOfRecords / 4} records to create using PK..");
+                    for (int i = 0; i < nCreate / 2; i++)
                     {
                         entities.Entities.Add(new Entity(tableLogicalName)
                         {
                             Attributes = {
                             // Example: 'sample record 0000001'
-                            { "sample_name", $"sample record {i+1:0000000}" }
+                            { "sample_name", $"sample Upsert(Create by PK) record {i+1:0000000}" }
                         }
                         });
                     }
+
+                    if (Settings.CreateAlternateKey)
+                    {
+                        // 2. Create x/4 records by providing AK which is entity.KeyAttribute
+                        Console.WriteLine($"\nPreparing {numberOfRecords / 4} records to create using AK..");
+                        for (int i = 0; i < nCreate / 2; i++)
+                        {
+                            Entity entity = new Entity(tableLogicalName);
+                            entity.Attributes.Add("sample_name", $"sample Upsert(Create by AK) record {i + 1:0000000}");
+                            entity.KeyAttributes.Add("sample_keyattribute", $"sample upsert record key {i + 1:0000000}");
+                            entities.Entities.Add(entity);
+                        }
+                    }
+
+                    // 3. Upsert x/4 records by providing PK which is entity.Id
+                    Console.WriteLine($"\nPreparing {numberOfRecords / 4} records to update using PK..");
+
+                    // Assign Id values to created items to prepare to update them
+                    for (int i = 0; i < recordsCreated.Count / 2; i++)
+                    {
+                        entities.Entities[i].Id = recordsCreated[i].Id;
+                        entities.Entities[i]["sample_name"] += " Updated using PK";
+                    }
+
+                    if (Settings.CreateAlternateKey)
+                    {
+                        // 4. Upsert x/4 records by providing AK which is entity.KeyAttribute
+                        Console.WriteLine($"\nPreparing {numberOfRecords / 4} records to update using AK..");
+                        for (int i = recordsCreated.Count / 2; i < recordsCreated.Count; i++)
+                        {
+                            entities.Entities[i].KeyAttributes.Add("sample_keyattribute", recordsCreated[i]["sample_keyattribute"]);
+                            entities.Entities[i]["sample_name"] += " Updated using AK";
+                        }
+                    }
+
+
+                    #region Verify Alternate Key is active
+
+                    if (Settings.CreateAlternateKey)
+                    {
+
+#pragma warning disable CS0162 // Unreachable code detected
+                        Console.WriteLine("Check if AlternateKey is available in the metadata for the entity.");
+#pragma warning restore CS0162 // Unreachable code detected
+                        bool isAlternateKeyCreated = Utility.VerifyAlternateKeyIsActive(serviceClient, tableLogicalName);
+
+                        if (!isAlternateKeyCreated)
+                        {
+                            Console.WriteLine("There is a problem creating the index for the product code alternate key for the entity.");
+                            Console.WriteLine("The sample cannot continue. Please try again.");
+                        }
+
+                        Console.WriteLine($"Is Alternate key available: {isAlternateKeyCreated}");
+                    }
+
+                    #endregion
 
                     #region Send UpsertMultipleRequest
                     // Use UpsertMultipleRequest
@@ -125,6 +196,31 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     updateStopwatch.Stop();
                     Console.WriteLine($"\tUpserted {entities.Entities.Count} records " +
                         $"in {Math.Round(updateStopwatch.Elapsed.TotalSeconds)} seconds.");
+
+                    #endregion
+
+                    #region Validate UpsertMultiple Response
+
+                    List<Guid> createdRecords = new List<Guid>();
+                    List<Guid> updatedRecords = new List<Guid>();
+
+                    if (upsertMultipleResponse != null)
+                    {
+                        foreach (var response in upsertMultipleResponse.Results)
+                        {
+                            if(response == null) continue;
+                            if(response.RecordCreated)
+                            {
+                                createdRecords.Add(response.Target.Id);
+                            }
+                            else
+                            {
+                                updatedRecords.Add(response.Target.Id);
+                            }
+                        }
+                    }
+
+                    Console.WriteLine($"Records Created through UpsertMultiple: {createdRecords.Count}, Records Updated through UpsertMultiple: {updatedRecords.Count}");
 
                     #endregion
 
@@ -162,24 +258,17 @@ namespace PowerPlatform.Dataverse.CodeSamples
                         Console.WriteLine($"\nStarting asynchronous bulk delete " +
                             $"of {entities.Entities.Count} created records...");
 
-                        // TODO : Need to come up with a way to get all the IDs to delete
+                       createdRecords.AddRange(updatedRecords);
                         string deleteJobStatus = Utility.BulkDeleteRecordsByIds(
                             service: serviceClient,
                             tableLogicalName: tableLogicalName,
-                            iDs: createdRecordIds,
-                            jobName: "Deleting records created by UpsertMultiple Sample.");
+                            iDs: createdRecords.ToArray());
 
                         Console.WriteLine($"\tBulk Delete status: {deleteJobStatus}");
                     }
 
 
                 }
-
-                // Delete sample_example table
-                Utility.DeleteExampleTable(
-                    service: serviceClient,
-                    tableSchemaName: tableSchemaName);
-
             }
             catch (FaultException<OrganizationServiceFault> ex)
             {
@@ -219,9 +308,16 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     }
                 }
             }
+            finally
+            {
+                // Delete sample_example table
+                Utility.DeleteExampleTable(
+                    service: serviceClient,
+                    tableSchemaName: tableSchemaName);
+            }
         }
 
-        public static Guid[] CreateRecordsUtility(int numberOfRecords, string tableLogicalName, ServiceClient serviceClient, out EntityCollection entities)
+        public static Guid[] CreateRecordsUtility(int numberOfRecords, string tableLogicalName, IOrganizationService orgService, out EntityCollection entities)
         {
             // Create a List of entity instances.
             Console.WriteLine($"\nPreparing {numberOfRecords} records to create..");
@@ -229,13 +325,20 @@ namespace PowerPlatform.Dataverse.CodeSamples
             // Populate the list with the number of records to test.
             for (int i = 0; i < numberOfRecords; i++)
             {
-                entityList.Add(new Entity(tableLogicalName)
+                Entity entity = new Entity(tableLogicalName);
+
+                // Example: 'sample record 0000001'
+                // Example key: 'sample record key 0000001'
+                entity["sample_name"] = $"sample record {i + 1:0000000}";
+
+                if (Settings.CreateAlternateKey)
                 {
-                    Attributes = {
-                            // Example: 'sample record 0000001'
-                            { "sample_name", $"sample record {i+1:0000000}" }
-                        }
-                });
+#pragma warning disable CS0162 // Unreachable code detected
+                    entity["sample_keyattribute"] = $"sample pre-upsert record key {i + 1:0000000}";
+#pragma warning restore CS0162 // Unreachable code detected
+                }
+
+                entityList.Add(entity);
             }
             // Create an EntityCollection populated with the list of entities.
             entities = new(entityList)
@@ -261,7 +364,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
             // Send the request
             CreateMultipleResponse createMultipleResponse =
-                (CreateMultipleResponse)serviceClient.Execute(createMultipleRequest);
+                (CreateMultipleResponse)orgService.Execute(createMultipleRequest);
 
             return createMultipleResponse.Ids;
         }
