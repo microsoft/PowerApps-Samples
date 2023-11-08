@@ -5,7 +5,7 @@ products:
 - power-platform
 - power-apps
 page_type: sample
-description: "This sample demonstrates how to use the CreateMultiple and UpdateMultiple messages for standard and elastic tables using the Dataverse SDK for .NET."
+description: "This sample demonstrates how to use the CreateMultiple, UpdateMultiple, UpsertMultiple, and DeleteMultiple messages for standard and elastic tables using the Dataverse SDK for .NET."
 ---
 
 # Bulk Operations Sample
