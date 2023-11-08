@@ -12,9 +12,6 @@ namespace PowerPlatform.Dataverse.CodeSamples
 {
     public static class Utility
     {
-
-
-
         /// <summary>
         /// Detects whether a table with the specified schema name exists.
         /// </summary>
@@ -216,6 +213,76 @@ namespace PowerPlatform.Dataverse.CodeSamples
         }
 
         /// <summary>
+        /// Deletes all the records for the specified table.
+        /// </summary>
+        /// <param name="service">The IOrganizationService</param>
+        /// <returns>Status message</returns>
+        public static string BulkDeleteRecordsByEntityName(
+            IOrganizationService service, string tableLogicalName)
+        {
+            var primaryKeyName = $"{tableLogicalName}id";
+
+            QueryExpression query = new(tableLogicalName)
+            {
+                ColumnSet = new ColumnSet(primaryKeyName),
+                Criteria = new FilterExpression(LogicalOperator.And) // No conditions
+            };
+
+
+            BulkDeleteRequest bulkDeleteRequest = new()
+            {
+                QuerySet = new QueryExpression[] { query },
+                JobName = "Records Deleted with BulkDeleteRecordsByEntityName sample method.",
+                ToRecipients = new List<Guid>().ToArray(),  // Required
+                CCRecipients = new List<Guid>().ToArray(),  // Required
+                SendEmailNotification = false,              // Required
+                RecurrencePattern = string.Empty            // Required
+            };
+
+            Stopwatch deleteAsync = Stopwatch.StartNew();
+            BulkDeleteResponse bulkDeleteResponse = (BulkDeleteResponse)service.Execute(bulkDeleteRequest);
+
+            int testLimit = 1000; // ~ 16 minutes
+            int count = 0;
+            string message = "\tAsynchronous job to delete all records completed in {0} seconds.";
+
+            // Poll the system job every second to determine if it has finished.
+            while (count < testLimit)
+            {
+                Task.Delay(1000).Wait(); // Wait a second
+
+                Entity job = service.Retrieve(
+                    entityName: "asyncoperation",
+                    id: bulkDeleteResponse.JobId,
+                    columnSet: new ColumnSet("statecode", "statuscode"));
+
+                // When it is completed
+                if (job.GetAttributeValue<OptionSetValue>("statecode").Value == 3)
+                {
+
+                    deleteAsync.Stop();
+                    Console.WriteLine(string.Format(message, Math.Round(deleteAsync.Elapsed.TotalSeconds)));
+
+                    // Determine the status
+                    return job.GetAttributeValue<OptionSetValue>("statuscode").Value switch
+                    {
+                        30 => "Succeeded",
+                        31 => "Failed",
+                        32 => "Canceled",
+                        _ => "Error",
+                    };
+                }
+
+                count++;
+            }
+
+            // If the test limit is exceeded
+            deleteAsync.Stop();
+            Console.WriteLine(string.Format(message, Math.Round(deleteAsync.Elapsed.TotalSeconds)));
+            return "TestLimitExceeded";
+        }
+
+        /// <summary>
         /// Detect whether a specified message is supported for the specified table.
         /// </summary>
         /// <param name="service">The IOrganizationService instance.</param>
@@ -269,7 +336,10 @@ namespace PowerPlatform.Dataverse.CodeSamples
         /// </summary>
         /// <param name="serviceClient">The ServiceClient instance.</param>
         /// <param name="tableSchemaName">The SchemaName of the table to create.</param>
-        public static async void CreateExampleTable(ServiceClient serviceClient, string tableSchemaName, bool isElastic = false)
+        public static async void CreateExampleTable(ServiceClient serviceClient, 
+            string tableSchemaName, 
+            bool isElastic = false,
+            bool createAlternateKey = false)
         {
             // Forces metadata cache to be updated to prevent error
             // Creating attributes immediately after
@@ -450,6 +520,40 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
                 };
                 serviceClient.Execute(createEntityRequest);
+
+                if (createAlternateKey)
+                {
+                    // Create attributes that will form the alternate key
+                    string keySchemaName = "sample_key";
+                    string keyAttribute1 = "sample_keyattribute";
+
+
+                    CreateAttributeRequest createKeyAttributeRequest = new()
+                    {
+                        EntityName = tableSchemaName.ToLower(),
+                        Attribute = new StringAttributeMetadata
+                        {
+                            SchemaName = keyAttribute1,
+                            MaxLength = 100,
+                            FormatName = StringFormatName.Text,
+                            DisplayName = new Label(keyAttribute1, 1033),
+                        },
+                    };
+                    serviceClient.Execute(createKeyAttributeRequest);
+
+                    // Create an alternate key on the entity using the attributes created
+                    CreateEntityKeyRequest createEntityKeyRequest = new()
+                    {
+                        EntityName = tableSchemaName.ToLower(),
+                        EntityKey = new EntityKeyMetadata
+                        {
+                            SchemaName = keySchemaName,
+                            KeyAttributes = new string[1] { keyAttribute1 },
+                            DisplayName = new Label(keySchemaName, 1033)
+                        },
+                    };
+                    serviceClient.Execute(createEntityKeyRequest);
+                }
             }
 
             Console.WriteLine($"\t{tableSchemaName} table created.");
@@ -516,6 +620,127 @@ namespace PowerPlatform.Dataverse.CodeSamples
         }
 
 
+        /// <summary>
+        /// Alternate keys may not be active immediately after a solution defining them is installed.
+        /// This method polls the metadata for a specific entity
+        /// to delay execution of the rest of the sample until the alternate keys are ready.
+        /// </summary>
+        /// <param name="service">Specifies the service to connect to.</param>
+        /// <param name="asyncJob">The system job that creates the index to support the alternate key</param>
+        /// <param name="iteration">The number of times this method has been called.</param>
+        /// 
+        internal static bool VerifyAlternateKeyIsActive(IOrganizationService service, string tableLogicalName)
+        {
+            var waitTime = TimeSpan.FromMinutes(10);
+            var startTime = DateTime.UtcNow;
+            bool isKeyInMetadata = false;
+
+            while (!isKeyInMetadata)
+            {
+                //Get whether the Entity Key index is active from the metadata
+                var entityQuery = new EntityQueryExpression
+                {
+                    Criteria = new MetadataFilterExpression(LogicalOperator.And)
+                    {
+                        Conditions = { 
+                            { 
+                                new MetadataConditionExpression("LogicalName", MetadataConditionOperator.Equals, tableLogicalName) 
+                            } 
+                        }
+                    },
+
+                    Properties = new MetadataPropertiesExpression("Keys")
+                };
+
+                var request = new RetrieveMetadataChangesRequest() { Query = entityQuery };
+                var response = (RetrieveMetadataChangesResponse)service.Execute(request);
+                var alternateKey = response?.EntityMetadata?.FirstOrDefault()?.Keys.FirstOrDefault();
+
+                if (alternateKey?.EntityKeyIndexStatus == EntityKeyIndexStatus.Active)
+                {
+                    isKeyInMetadata = true;
+                }
+                else
+                {
+                    var elapsed = DateTime.UtcNow - startTime;
+                    if (elapsed > waitTime)
+                    {
+                        return false;
+                    }
+
+                    Thread.Sleep(100);
+                }
+            }
+
+            return isKeyInMetadata;
+
+        }
+
+
+        /// <summary>
+        /// Creates a number of records for the UpsertMultiple example
+        /// </summary>
+        /// <param name="numberOfRecords">The number of records to create</param>
+        /// <param name="tableLogicalName">The logical name of the table</param>
+        /// <param name="service">Specifies the service to connect to.</param>
+        /// <param name="entities">The container of the records created.</param>
+        /// <returns>The IDs of the created records</returns>
+        public static Guid[] CreateRecordsUtility(int numberOfRecords, 
+            string tableLogicalName, 
+            IOrganizationService service, 
+            out EntityCollection entities)
+        {
+            // Create a List of entity instances.
+            Console.WriteLine($"\nPreparing {numberOfRecords} entities to create..");
+            List<Entity> entityList = new();
+            // Populate the list with the number of records to test.
+            for (int i = 0; i < numberOfRecords; i++)
+            {
+                Entity entity = new(tableLogicalName);
+
+                // Example: 'sample record 0000001'
+                // Example key: 'sample record key 0000001'
+                entity["sample_name"] = $"sample record {i + 1:0000000}";
+
+                if (Settings.CreateAlternateKey)
+                {
+#pragma warning disable CS0162 // Unreachable code detected
+                    entity["sample_keyattribute"] = $"sample pre-upsert record key {i + 1:0000000}";
+#pragma warning restore CS0162 // Unreachable code detected
+                }
+
+                entityList.Add(entity);
+            }
+            // Create an EntityCollection populated with the list of entities.
+            entities = new(entityList)
+            {
+                EntityName = tableLogicalName
+            };
+
+
+            // Use CreateMultipleRequest
+            CreateMultipleRequest createMultipleRequest = new()
+            {
+                Targets = entities,
+            };
+            // Add Shared Variable with request to detect in a plug-in.
+            createMultipleRequest["tag"] = "CreateUpdateMultiple";
+
+            if (Settings.BypassCustomPluginExecution)
+            {
+#pragma warning disable CS0162 // Unreachable code detected: Configurable by setting
+                createMultipleRequest["BypassCustomPluginExecution"] = true;
+#pragma warning restore CS0162 // Unreachable code detected: Configurable by setting
+            }
+
+            // Send the request
+            CreateMultipleResponse createMultipleResponse =
+                (CreateMultipleResponse)service.Execute(createMultipleRequest);
+
+            Console.WriteLine($"\tCreated {numberOfRecords} records to upsert..\n");
+
+            return createMultipleResponse.Ids;
+        }
     }
 }
 
