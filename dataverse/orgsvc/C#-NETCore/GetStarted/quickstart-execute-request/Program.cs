@@ -26,8 +26,7 @@ class Program
         //ServiceClient implements IOrganizationService interface
         IOrganizationService service = new ServiceClient(connectionString);
 
-        WhoAmIResponse response =
-                    (WhoAmIResponse)service.Execute(new WhoAmIRequest());
+        var response = (WhoAmIResponse)service.Execute(new WhoAmIRequest());
 
         Console.WriteLine($"User ID is {response.UserId}.");
 
