@@ -15,7 +15,7 @@ This console app demonstrates how to:
 2. Execute a message request
 3. Access some data in the response
 
-Related article: [Quickstart: Execute an Organization service request](https://docs.microsoft.com/power-apps/developer/data-platform/org-service/quick-start-org-service-console-app)
+Related article: [Quickstart: Execute an SDK for .NET request (C#)](https://docs.microsoft.com/power-apps/developer/data-platform/org-service/quick-start-org-service-console-app)
 
 The included code sample is listed below.
 
