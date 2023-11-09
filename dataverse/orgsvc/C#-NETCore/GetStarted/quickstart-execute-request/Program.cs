@@ -1,12 +1,13 @@
 ﻿using Microsoft.Crm.Sdk.Messages;
 using Microsoft.PowerPlatform.Dataverse.Client;
+using Microsoft.Xrm.Sdk;
 
 class Program
 {
     // TODO Enter your Dataverse environment's URL and logon info.
-    static string url = "https://org619826b5.crm.dynamics.com";
-    static string userName = "someone@myenv.onmicrosoft.com";
-    static string password = "password";
+    static string url = "https://yourorg.crm.dynamics.com";
+    static string userName = "you@yourorg.onmicrosoft.com";
+    static string password = "yourPassword";
 
     // This service connection string uses the info provided above.
     // The AppId and RedirectUri are provided for sample code testing.
@@ -20,23 +21,15 @@ class Program
     LoginPrompt=Auto;
     RequireNewInstance = True";
 
-    static void Main(string[] args)
+    static void Main()
     {
-        using (ServiceClient serviceClient = new(connectionString))
-        {
-            if (serviceClient.IsReady)
-            {
-                WhoAmIResponse response = 
-                    (WhoAmIResponse)serviceClient.Execute(new WhoAmIRequest());
+        //ServiceClient implements IOrganizationService interface
+        IOrganizationService service = new ServiceClient(connectionString);
 
-                Console.WriteLine("User ID is {0}.", response.UserId);
-            }
-            else
-            {
-                Console.WriteLine(
-                    "A web service connection was not established.");
-            }
-        }
+        var response = (WhoAmIResponse)service.Execute(new WhoAmIRequest());
+
+        Console.WriteLine($"User ID is {response.UserId}.");
+
 
         // Pause the console so it does not close.
         Console.WriteLine("Press the <Enter> key to exit.");
