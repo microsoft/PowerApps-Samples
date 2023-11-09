@@ -29,7 +29,7 @@ class Program
         WhoAmIResponse response =
                     (WhoAmIResponse)service.Execute(new WhoAmIRequest());
 
-        Console.WriteLine("User ID is {0}.", response.UserId);
+        Console.WriteLine($"User ID is {response.UserId}.");
 
 
         // Pause the console so it does not close.
