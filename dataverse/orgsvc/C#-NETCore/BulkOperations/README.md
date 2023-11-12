@@ -5,18 +5,29 @@ products:
 - power-platform
 - power-apps
 page_type: sample
-description: "This sample demonstrates how to use the CreateMultiple and UpdateMultiple messages for standard and elastic tables using the Dataverse SDK for .NET."
+description: "This sample demonstrates how to use the CreateMultiple, UpdateMultiple, UpsertMultiple, and DeleteMultiple messages for standard and elastic tables using the Dataverse SDK for .NET."
 ---
 
-# Create and Update Multiple Sample
+# Bulk Operations Sample
 
-This sample shows how to perform bulk create and update operations using several different approaches including the use of [CreateMultipleRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createmultiplerequest) and [UpdateMultipleRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.updatemultiplerequest) classes.These messages are optimized to provide the most performant way to create or update records with Dataverse.
+This sample shows how to perform bulk create and update operations using several different approaches including the use of these classes:
+
+- [CreateMultipleRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createmultiplerequest)
+- [UpdateMultipleRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.updatemultiplerequest) 
+- [UpsertMultipleRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.upsertmultiplerequest)
+
+Also, examples using elastic tables use the `DeleteMultiple` message without an SDK class.
+ 
+These messages are optimized to provide the most performant way to create, update, or delete records with Dataverse.
 
 This sample provides the option to use *standard* or *elastic* tables so you can compare the different performance characteristics.
 
 This sample is a prerequisite for the [CreateMultiple and UpdateMultiple plug-ins Sample](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/C%23/xMultiplePluginSamples)
 
-This sample is a Visual Studio .NET 6.0 solution that contains 5 different projects that perform the same operations in different ways so that you can compare the performance of each method.
+This sample is a Visual Studio .NET 6.0 solution that contains 5 different projects that perform the same operations in different ways so that you can compare the performance of each method. 
+
+> **NOTE**:
+> The **UpsertMultiple** project is a little different. See the [UpsertMultiple/README.md](UpsertMultiple/README.md) for details.
 
 You can find the sample [here](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/C%23-NETCore/BulkOperations).
 
@@ -72,6 +83,7 @@ Each project uses a shared set of settings in the `Settings.cs` file that allow 
 - `ElasticBatchSize` : The recommended number of records operations to send with `CreateMultiple`, `UpdateMultiple` and `DeleteMultiple` for Elastic tables is 100. You can use a higher or lower number, but a higher batch size isn't necessarily going to provide higher throughput because there is no transaction with elastic tables.
 - `BypassCustomPluginExecution` : Whether custom plug-in logic should be bypassed. This is useful to observe the performance impact of plug-ins registered on events for the table.
 - `DeleteTable` : Whether to delete the custom `sample_example` table at the end of the sample. If you want to test plug-ins that use events on this table, this will preserve the table so you can run the samples multiple times while testing plug-ins.
+- `CreateAlternateKey` : Used by the **UpsertMultiple** project only, it specifies whether an alternate key should be created with the table.
 
 The `Settings.cs` file is included in each project. Apply the change in one project and they will be set for all of them.
 
@@ -93,7 +105,7 @@ By default the **CreateUpdateMultiple** project should be set as the startup pro
 
 ### Demonstrate
 
-As mentioned in [What this sample does](#what-this-sample-does) above, this sample demonstrates how to create and update records in bulk for a custom table created by the sample. To do this, it must create a custom table and clean up when you finish running the sample.
+As mentioned in [What this sample does](#what-this-sample-does) above, 5 projects in this solution demonstrate how to create and update records in bulk for a custom table created by the sample. To do this, it must create a custom table and clean up when you finish running the sample.
 
 Each project in this solution sends requests in the following way:
 
@@ -108,4 +120,5 @@ Details about each project and the default output are described in their respect
 - [ParallelCreateUpdate/README.md](ParallelCreateUpdate/README.md)
 - [ParallelCreateUpdateMultiple.md](ParallelCreateUpdateMultiple/README.md)
 - [SimpleLoop/README.md](SimpleLoop/README.md)
+- [UpsertMultiple/README.md](SimpleLoop/README.md)
 
