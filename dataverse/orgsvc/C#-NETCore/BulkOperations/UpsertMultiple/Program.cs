@@ -66,11 +66,18 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     isElastic: Settings.UseElastic,
                     createAlternateKey: Settings.CreateAlternateKey);
 
-                // Confirm the table supports UpsertMultiple
-                if (Settings.UseElastic && !Utility.IsMessageAvailable(
+                bool isCreateMultipleAvailable = Utility.IsMessageAvailable(
                     service: serviceClient,
                     entityLogicalName: tableLogicalName,
-                    messageName: "UpsertMultiple"))
+                    messageName: "CreateMultiple");
+
+                bool isUpdateMultipleAvailable = Utility.IsMessageAvailable(
+                    service: serviceClient,
+                    entityLogicalName: tableLogicalName,
+                    messageName: "UpdateMultiple");
+
+                // Confirm the table supports UpsertMultiple
+                if (!isCreateMultipleAvailable || !isUpdateMultipleAvailable)
                 {
                     Console.WriteLine($"The UpsertMultiple message is not available " +
                         $"for the {tableSchemaName} table.");
