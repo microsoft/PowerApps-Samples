@@ -163,14 +163,25 @@ Connect-MgGraph -Environment $selectedEnvName –Scopes "User.ReadWrite.All Dire
 # Find Service principal in the local tenant associated to the HttpWithAADApp Microsoft 1st party app
 $HttpWithAADAppAppId = 'd2ebd3a9-1ada-4480-8b2d-eac162716601'
 $HttpWithAADAppServicePrincipal = Get-MgServicePrincipal -Filter "appId eq '$HttpWithAADAppAppId'"
-$HttpWithAADAppServicePrincipalId = $HttpWithAADAppServicePrincipal.Id
-$HttpWithAADAppServicePrincipalDisplayName = $HttpWithAADAppServicePrincipal.DisplayName
 
 If (!$HttpWithAADAppServicePrincipal)
 {
-	Write-Warning "No service principal was found in the current tenant with appId: $HttpWithAADAppAppId"
-	Exit
+	Write-Host "No service principal was found in the current tenant with appId: $HttpWithAADAppAppId. Attempting to create one."
+ 	$AppIDForSpCreation=@{
+   		"AppId" = "$HttpWithAADAppAppId"
+   	}
+
+	$HttpWithAADAppServicePrincipal = New-MgServicePrincipal -BodyParameter $AppIDForSpCreation
+
+ 	If (!$HttpWithAADAppServicePrincipal)
+	{
+		Write-Warning "Not able to create a service principal for appId : $HttpWithAADAppAppId."
+		Exit
+  	}
 }
+
+$HttpWithAADAppServicePrincipalId = $HttpWithAADAppServicePrincipal.Id
+$HttpWithAADAppServicePrincipalDisplayName = $HttpWithAADAppServicePrincipal.DisplayName
 
 Write-Host "HttpWithAADApp Service principal was found:"
 $HttpWithAADAppServicePrincipal | Format-Table -wrap -auto
