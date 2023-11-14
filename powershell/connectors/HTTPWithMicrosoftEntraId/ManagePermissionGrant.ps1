@@ -172,7 +172,7 @@ If (!$HttpWithAADAppServicePrincipal)
 		"AppId" = "$HttpWithAADAppAppId"
 	}
 
-	$HttpWithAADAppServicePrincipal = New-MgServicePrincipal -BodyParameter $ServicePrincipalId
+	$HttpWithAADAppServicePrincipal = New-MgServicePrincipal -BodyParameter $AppIdForSPCreation
 
 	If (!$HttpWithAADAppServicePrincipal)
 	{
