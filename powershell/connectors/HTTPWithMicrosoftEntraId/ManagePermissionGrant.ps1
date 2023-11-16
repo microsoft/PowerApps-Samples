@@ -123,13 +123,13 @@ function Get-FirstPartyAppList{
 		[App]@{IsCommonlyUsedApp=$false;ApplicationName='Yammer Web Embed';AppId='e1ef36fd-b883-4dbf-97f0-9ece4b576fc6'},
 		[App]@{IsCommonlyUsedApp=$true;ApplicationName='Azure Key Vault';AppId='cfa8b339-82a2-471a-a3c9-0fc0be7a4093'},
 		[App]@{IsCommonlyUsedApp=$true;ApplicationName='Azure Storage';AppId='e406a681-f3d4-42a8-90b6-c2b029497af1'}
-		| Sort-Object -Property ApplicationName
-	)
+	) | Sort-Object -Property ApplicationName
 }
 
 Write-Host "########################################################"
 Write-Host "# 'HTTP with Microsoft Entra ID' connector - Permission grant configuration"
-Write-Host "# This script will guide you through the process of granting the required permissions to the HttpWithAADApp Microsoft 1st party app 'ServiceApp_NoPreAuths' to access the selected resources."
+Write-Host "# This script will guide you through the process of granting the required permissions"
+Write-Host "# to the HttpWithAADApp Microsoft 1st party app 'ServiceApp_NoPreAuths' to access the selected resources."
 Write-Host "########################################################"
 
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
@@ -158,7 +158,7 @@ else
 	$selectedEnvName = $selectedEnv.Name
 }
 
-Connect-MgGraph -Environment $selectedEnvName –Scopes "User.ReadWrite.All Directory.AccessAsUser.All" -NoWelcome
+Connect-MgGraph -Environment $selectedEnvName -Scopes "User.ReadWrite.All Directory.AccessAsUser.All" -NoWelcome
 
 # Find Service principal in the local tenant associated to the HttpWithAADApp Microsoft 1st party app
 $HttpWithAADAppAppId = 'd2ebd3a9-1ada-4480-8b2d-eac162716601'
