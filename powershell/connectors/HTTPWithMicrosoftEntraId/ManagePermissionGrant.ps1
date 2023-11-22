@@ -123,7 +123,7 @@ function Get-FirstPartyAppList{
 		[App]@{IsCommonlyUsedApp=$false;ApplicationName='Yammer Web Embed';AppId='e1ef36fd-b883-4dbf-97f0-9ece4b576fc6'},
 		[App]@{IsCommonlyUsedApp=$true;ApplicationName='Azure Key Vault';AppId='cfa8b339-82a2-471a-a3c9-0fc0be7a4093'},
 		[App]@{IsCommonlyUsedApp=$true;ApplicationName='Azure Storage';AppId='e406a681-f3d4-42a8-90b6-c2b029497af1'}
-		| Sort-Object -Property ApplicationName
+		#| Sort-Object -Property ApplicationName
 	)
 }
 
@@ -158,7 +158,7 @@ else
 	$selectedEnvName = $selectedEnv.Name
 }
 
-Connect-MgGraph -Environment $selectedEnvName –Scopes "User.ReadWrite.All Directory.AccessAsUser.All" -NoWelcome
+Connect-MgGraph -Environment $selectedEnvName -Scopes "User.ReadWrite.All Directory.AccessAsUser.All" -NoWelcome
 
 # Find Service principal in the local tenant associated to the HttpWithAADApp Microsoft 1st party app
 $HttpWithAADAppAppId = 'd2ebd3a9-1ada-4480-8b2d-eac162716601'
@@ -187,7 +187,7 @@ Write-Host "HttpWithAADApp Service principal was found:"
 $HttpWithAADAppServicePrincipal | Format-Table -wrap -auto
 
 # Select 1st party app for scope selection
-if($Host.UI.PromptForChoice("Resource and scope selection", "Most customers access to widely used resources (e.g. Graph, Sharepoint, Dataverse, etc.). Do you want to display only the commonly used apps?", ('&Commonly used Apps', '&All apps (advanced)'), 0) -eq 0)
+if($Host.UI.PromptForChoice("Resource and scope selection", "Most customers access to widely used resources ex Graph, Sharepoint, Dataverse, etc. Do you want to display only the commonly used apps?", ('&Commonly used Apps', '&All apps (advanced)'), 0) -eq 0)
 {
 	$filteredFirstPartyAppList = Get-FirstPartyAppList | Where-Object {$_.IsCommonlyUsedApp -eq $true}
 }
@@ -224,7 +224,7 @@ $selectedSPId = $selectedSP.Id
 $scopes = $selectedSP.Oauth2PermissionScopes | Sort-Object Value | Select-Object Type, Value, UserConsentDisplayName, UserConsentDescription
 $selectedScopes = $scopes | Out-GridView -Title "Choose Scopes" -OutputMode Multiple
 
-$joinedScopes = $selectedScopes | Join-String -Property {$_.Value} -Separator ' '
+$joinedScopes = $selectedScopes #| Join -Property {$_.Value} -Separator ' '
 Write-Host "The following user scopes have been selected: $joinedScopes"
 
 If (!$selectedScopes)
@@ -292,7 +292,7 @@ if ($grantParams.consentType -eq "AllPrincipals")
 	
 	if($existingOauth2PermissionGrant)
 	{
-		Write-Warning "An existing oAuth2PermissionGrant object was found with the same key properties. (clientId: $HttpWithAADAppServicePrincipalId, resourceId: $selectedSPId, consentType: AllPrincipals)"
+		Write-Warning "An existing oAuth2PermissionGrant object was found with the same key properties. clientId: $HttpWithAADAppServicePrincipalId, resourceId: $selectedSPId, consentType: AllPrincipals"
 	}
 }
 elseif ($grantParams.consentType -eq "Principal")
@@ -302,7 +302,7 @@ elseif ($grantParams.consentType -eq "Principal")
 	
 	if($existingOauth2PermissionGrant)
 	{
-		Write-Warning "An existing oAuth2PermissionGrant object was found with the same key properties. (clientId: $HttpWithAADAppServicePrincipalId, resourceId: $selectedSPId, consentType: Principal, principalId: $grantParamsPrincipalId)"
+		Write-Warning "An existing oAuth2PermissionGrant object was found with the same key properties. clientId: $HttpWithAADAppServicePrincipalId, resourceId: $selectedSPId, consentType: Principal, principalId: $grantParamsPrincipalId"
 	}
 }
 
