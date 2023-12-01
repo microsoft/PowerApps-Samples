@@ -13,6 +13,7 @@ namespace Microsoft.PowerPlatform.Administration.Helpers
         private string _roleAssignmentsReportsDir;
         private string _roleRemovalLogsDir;
         private string _AddRoleLogsDir;
+        private string _UserRecordsAssignmentsLogsDir;
 
         public string GenericLog
         {
@@ -64,6 +65,14 @@ namespace Microsoft.PowerPlatform.Administration.Helpers
             }
         }
 
+        public string UserRecordsAssignmentsLogsDir
+        {
+            get
+            {
+                return _UserRecordsAssignmentsLogsDir;
+            }
+        }
+
         public Logger(string logLocation)
         {
             _logLocation = logLocation;
@@ -90,6 +99,12 @@ namespace Microsoft.PowerPlatform.Administration.Helpers
             Directory.CreateDirectory(_AddRoleLogsDir);
         }
 
+        public void CreateUserRecordsAssignmentsLogsDirectory()
+        {
+            _UserRecordsAssignmentsLogsDir = Path.Combine(_logLocation, "UserRecordsAssignmentsLogs");
+            Directory.CreateDirectory(_UserRecordsAssignmentsLogsDir);
+        }
+
         public void LogGeneric(string log)
         {
             File.AppendAllLines(_genericLog, new string[] { log });
@@ -105,6 +120,11 @@ namespace Microsoft.PowerPlatform.Administration.Helpers
             return Path.Combine(logLocation, $"{orgName}_{roleName}_Users.csv");
         }
 
+        public string GetUserRecordsAssignmentsFromUserReportPath(string logLocation, string orgName, string userPrincipal)
+        {
+            return Path.Combine(logLocation, $"{orgName}_{userPrincipal}_UserRecords.csv");
+        }
+
         public string GetRoleRemovalLogPath(string logLocation, string orgName, string roleName)
         {
             return Path.Combine(logLocation, $"{orgName}_{roleName}_RemovalLog.txt");
@@ -118,6 +138,11 @@ namespace Microsoft.PowerPlatform.Administration.Helpers
         public void InitializeRoleAssignmentReport(string logFile)
         {
             File.WriteAllLines(logFile, new string[] { $"SystemUserId, UserPrincipalName, AccessMode, IsDisabled, IsLicensed" });
+        }
+
+        public void InitializeUserRolesReport(string logFile)
+        {
+            File.WriteAllLines(logFile, new string[] { $"RoleId, RoleName" });
         }
 
         public void LogToFile(string filePath, string log)

@@ -210,6 +210,75 @@ namespace Microsoft.PowerPlatform.Administration.Helpers
 
             AddRoleToUsersInEnvironment(userName, password, roleName, webServiceEndpoint.Value, userPrincipalNames);
         }
+
+        /// <summary>
+        /// Bulk assign user records from source user to target user in environment.
+        /// </summary>
+        /// <param name="userName">user Name</param>
+        /// <param name="password">password</param>
+        /// <param name="environmentUrl">environment Url</param>
+        /// <param name="upnList">user Principal Names.</param>
+        public void BulkAssignUserRecordsInEnvironment(string userName, string password, string environmentUrl, IList<string> upnList)
+        {
+            try
+            {
+                var connectionHelper = new ConnectionHelper(this._logger);
+                var service = connectionHelper.GetCrmServiceClient(userName, password, environmentUrl);
+                var roleManagementOperationsHelper = new RoleManagementOperationsHelper(_logger);
+
+                var systemUserHelper = new SystemUserHepler(_logger);
+                foreach (var userPrincipals in upnList)
+                {
+                    try
+                    {
+                        var userPrincipalNames = userPrincipals.Split(',').Select(s => s.Trim()).ToArray(); ;
+                        var sourceUserPrincipal = userPrincipalNames[0];
+                        var targetUserPrincipal = userPrincipalNames[1];
+                        var filePath = _logger.GetUserRecordsAssignmentsFromUserReportPath(_logger.UserRecordsAssignmentsLogsDir, service.ConnectedOrgFriendlyName.Replace(' ', '_'), sourceUserPrincipal);
+                        var sourceSystemUserId = systemUserHelper.GetSystemUserId(service, sourceUserPrincipal, filePath);
+                        if (sourceSystemUserId == Guid.Empty)
+                        {
+                            _logger.LogToFile(filePath, $"System user record not found for {sourceUserPrincipal}.");
+                            continue;
+                        }
+                        var targetSystemUserId = systemUserHelper.GetSystemUserId(service, targetUserPrincipal, filePath);
+                        if (targetSystemUserId == Guid.Empty)
+                        {
+                            _logger.LogToFile(filePath, $"System user record not found for {targetUserPrincipal}.");
+                            continue;
+                        }
+
+                        roleManagementOperationsHelper.AssignUserRecordsFromSourceToTargetUser(service, sourceSystemUserId, targetSystemUserId, filePath);
+                    }
+                    catch (Exception ex)
+                    {
+                        // exption is recorded & moved on to next user.
+                        _logger.LogException($"Unbale to assign user records from source user to target user. Exception : {ex}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogException($"Exception while assigning user records from environment {environmentUrl} : \n {ex.ToString()} ");
+                return;
+            }
+        }
+
+        /// <summary>
+        /// Bulk assign user records from source user to target user in environment.
+        /// </summary>
+        /// <param name="userName">user Name</param>
+        /// <param name="password">password</param>
+        /// <param name="environmentUrl">environment Url</param>
+        /// <param name="sourceUserPrincipalNames">source user principal names.</param>
+        /// <param name="targetUserPrincipalNames">target user upns.</param>
+        /// <param name="userPrincipalNames">user Principal Names.</param>
+        public void BulkAssignUserRecordsInEnvironment(string userName, string password, OrganizationDetail organizationDetail, IList<string> userPrincipalNames)
+        {
+            var webServiceEndpoint = organizationDetail.Endpoints.Where(x => x.Key == EndpointType.WebApplication).FirstOrDefault();
+
+            BulkAssignUserRecordsInEnvironment(userName, password, webServiceEndpoint.Value, userPrincipalNames);
+        }
     }
 
     /// <summary>
