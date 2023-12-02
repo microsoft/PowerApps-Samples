@@ -42,7 +42,7 @@ These examples provide the minimum amount of code necessary to demonstrate conne
 1. Edit the project's Program.cs file. Set the `url`, `username`, and `password` variable values as indicated by the `// TODO` code comment as appropriate for your test environment and user account.
 1. Build and run the ConsoleApp (public) project.
 
-To run the ConsoleApp (confidential) project, you must first create an app registration for your tenant in Microsoft Entra ID and then update the project's Program.cs file with the client ID and client secret vales defined in the app registration. 
+To run the ConsoleApp (confidential) project, you must first create an app registration for your tenant in Microsoft Entra ID and then update the project's Program.cs file with the client ID and client secret values defined in the app registration. 
 
 More information: [Tutorial: Register an app with Microsoft Entra ID](https://learn.microsoft.com/power-apps/developer/data-platform/walkthrough-register-app-azure-active-directory).
 
