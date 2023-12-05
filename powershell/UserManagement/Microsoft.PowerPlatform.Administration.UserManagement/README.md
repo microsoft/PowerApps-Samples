@@ -80,6 +80,19 @@ This code can be run by Global / Power Platform Administrator users.
 |geo|Generate reports for environments in a given geography. If not specified, processes all environments across all geographies. Valid Geo codes - [NA, EMEA, APAC, SAM, OCE, JPN, IND, CAN, GBR, FRA, UAE,ZAF, GER, CHE, KOR, NOR, SGP] |
 |outputLogsDirectory|Location folder for the logs & reports to be written to.|
 
+### Assign all user records from the source user to the target user
+
+#### Command: Add-BulkRecordsToUsers
+
+| Parameter | Description |
+|---|---|
+|usersFilePath|Path to file containing list of user principal names (source and target user principals separated by commas)|
+|environmentUrl|Url of the environment for when the administrator wants to get reports from only one environment.|
+|processAllEnvironments|Generate reports for all environments the administrator user has access to.|
+|geo|Generate reports for environments in a given geography. If not specified, processes all environments across all geographies. Valid Geo codes - [NA, EMEA, APAC, SAM, OCE, JPN, IND, CAN, GBR, FRA, UAE,ZAF, GER, CHE, KOR, NOR, SGP] |
+|outputLogsDirectory|Location folder for the logs & reports to be written to.|
+
+
 ## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
