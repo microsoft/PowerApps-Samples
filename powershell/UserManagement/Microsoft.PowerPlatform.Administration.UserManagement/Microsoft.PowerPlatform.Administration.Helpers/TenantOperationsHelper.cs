@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Discovery;
 using Microsoft.Xrm.Tooling.Connector;
 using System;
@@ -11,6 +12,8 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Security;
+using Microsoft.Crm.Sdk.Messages;
+using System.Runtime.CompilerServices;
 
 namespace Microsoft.PowerPlatform.Administration.Helpers
 {
@@ -130,6 +133,44 @@ namespace Microsoft.PowerPlatform.Administration.Helpers
                 foreach (var environment in environments)
                 {
                     environmentOperationsHelper.AddRoleToUsersInEnvironment(userName, password, roleName, environment, userPrincipals);
+                }
+            }
+            else
+            {
+                _logger.LogGeneric($"No environments supplied to process.");
+            }
+        }
+
+        /// <summary>
+        /// Bulk assign records to users in one or more environments
+        /// </summary>  
+        /// <param name="userName"></param>
+        /// <param name="securePassword"></param>
+        /// <param name="userListFilePath"></param>
+        /// <param name="environmentUrl"></param>
+        /// <param name="geo"></param>
+        /// <param name="processAllEnvironments"></param>
+        /// <param name="logFileLocation"></param>
+        public void BulkAssignRecordsToUsers(string userName, string password, string userListFilePath, string environmentUrl, string geo, bool processAllEnvironments, string logFileLocation)
+        {
+            _logger = new Logger(logFileLocation);
+            _logger.CreateUserRecordsAssignmentsLogsDirectory();
+
+            EnvironmentOperationsHelper environmentOperationsHelper = new EnvironmentOperationsHelper(_logger);
+
+            IList<string> userPrincipals = GetUserPrincipalsFromInput(userListFilePath);
+
+            if (!string.IsNullOrWhiteSpace(environmentUrl))
+            {
+                environmentOperationsHelper.BulkAssignUserRecordsInEnvironment(userName, password, environmentUrl, userPrincipals);
+            }
+            else if (processAllEnvironments)
+            {
+                var environments = GetAllEnvironmentsByGeo(userName, password, geo);
+
+                foreach (var environment in environments)
+                {
+                    environmentOperationsHelper.BulkAssignUserRecordsInEnvironment(userName, password, environment, userPrincipals);
                 }
             }
             else

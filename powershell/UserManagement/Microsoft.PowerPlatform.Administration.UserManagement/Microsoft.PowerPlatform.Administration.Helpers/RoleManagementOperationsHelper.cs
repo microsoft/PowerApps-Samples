@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Tooling.Connector;
@@ -97,6 +98,14 @@ namespace Microsoft.PowerPlatform.Administration.Helpers
                     break;
                 }
             }
+        }
+
+        public void AssignUserRecordsFromSourceToTargetUser(CrmServiceClient service, Guid sourceSystemUserId, Guid targetSystemUserId, string filePath)
+        {
+            var reassignObjectsOwnerRequest = new ReassignObjectsOwnerRequest { FromPrincipal = new EntityReference("systemuser", sourceSystemUserId), ToPrincipal = new EntityReference("systemuser", targetSystemUserId) };
+            service.Execute(reassignObjectsOwnerRequest);
+
+            _logger.LogToFile(filePath, $"Roles from user with system user id {sourceSystemUserId} are reassigned to user with system user id {targetSystemUserId} in org {service.CrmConnectOrgUriActual}.");
         }
 
         private void LogRoleAssignment(string filepath, Entity user)
