@@ -19,7 +19,7 @@ namespace PowerApps.Samples
         /// <returns></returns>
         public static async Task WriteHttpSample(HttpRequestMessage request, HttpResponseMessage response, Uri baseAddress, string outputFolder)
         {
-            string[] unwantedRequestHeaders = new string[] { "Authorization", "User-Agent" };
+            string[] unwantedRequestHeaders = new string[] { "Authorization", "User-Agent", "CRM.ServiceId" };
             string[] unwantedResponseHeaders = new string[] {
                 "Cache-Control",
                 "x-ms-service-request-id",
@@ -34,6 +34,7 @@ namespace PowerApps.Samples
                 "X-Source",
                 "Public",
                 "Date",
+                "CRM.ServiceId",
                 "Location" // needed in some cases.
 
             };
@@ -51,6 +52,8 @@ namespace PowerApps.Samples
                     sb.AppendLine($"{item.Key}: {value}");
                 }
             }
+            // Add example Authorization header
+            sb.AppendLine("Authorization: Bearer <access token>");
 
             if (request.Content != null)
             {
