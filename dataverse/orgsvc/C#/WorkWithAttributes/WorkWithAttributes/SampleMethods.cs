@@ -9,8 +9,8 @@ namespace PowerApps.Samples
     public partial class SampleProgram
     {
         public static Version _productVersion = null;
-        // Create storage for new attributes being created
-        public static List<AttributeMetadata> addedAttributes;
+        // Create storage for new columns being created
+        public static List<AttributeMetadata> addedColumns;
 
         // Specify which language code to use in the sample. If you are using a language
         // other than US English, you will need to modify this value accordingly.
@@ -55,7 +55,7 @@ namespace PowerApps.Samples
 
 
         /// <summary>
-        /// Deletes the custom entity record that was created for this sample.
+        /// Deletes the custom columns created for this sample.
         /// <param name="prompt">Indicates whether to prompt the user 
         /// to delete the entity created in this sample.</param>
         /// </summary>
@@ -65,7 +65,7 @@ namespace PowerApps.Samples
 
             if (prompt)
             {
-                Console.WriteLine("\nDo you want these entity records deleted? (y/n)");
+                Console.WriteLine("\nDo you want these columns deleted? (y/n)");
                 string answer = Console.ReadLine();
 
                 deleteRecords = (answer.StartsWith("y") || answer.StartsWith("Y"));
@@ -73,9 +73,9 @@ namespace PowerApps.Samples
 
             if (deleteRecords)
             {
-                #region How to delete attribute
-                // Delete all attributes created for this sample.
-                foreach (AttributeMetadata anAttribute in addedAttributes)
+                #region How to delete a column
+                // Delete all columns created for this sample.
+                foreach (AttributeMetadata anAttribute in addedColumns)
                 {
                     // Create the request object
                     var deleteAttribute = new DeleteAttributeRequest
@@ -87,7 +87,7 @@ namespace PowerApps.Samples
                     // Execute the request
                     service.Execute(deleteAttribute);
                 }
-                #endregion How to delete attribute
+                #endregion How to delete a column
 
                 #region How to remove inserted status value
                 // Delete the newly inserted status value.
@@ -102,7 +102,7 @@ namespace PowerApps.Samples
                 // Execute the request
                 service.Execute(deleteRequest);
 
-                Console.WriteLine("Deleted all attributes created for this sample.");
+                Console.WriteLine("Deleted all columns created for this sample.");
                 #endregion How to remove inserted status value
 
                 #region Revert the changed state value
@@ -123,11 +123,9 @@ namespace PowerApps.Samples
                 //service.Execute(new PublishAllXmlRequest());
 
                 Console.WriteLine(
-                    "Reverted {0} state attribute of {1} entity from 'Open' to '{2}'.",
-                    revertStateValue.AttributeLogicalName,
-                    revertStateValue.EntityLogicalName,
-                    revertStateValue.Label.LocalizedLabels[0].Label
-                    );
+                    $"Reverted {revertStateValue.AttributeLogicalName} state column of " +
+                    $"{revertStateValue.EntityLogicalName} entity from 'Open' to " +
+                    $"'{revertStateValue.Label.LocalizedLabels[0].Label}'.");
                 #endregion Revert the changed state value
             
 
