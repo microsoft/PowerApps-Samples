@@ -16,17 +16,34 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Setup
 
-Checks for the current version of the org.
+Checks for the current version of the environment.
 
-### Demonstrate
+### Demonstrates
 
-1. The `BooleanAttributeMetadata` method creates an attribute of type boolean.
-2. The `DateTimeAttributeMetadata` message creates an attribute of type date time.
-3. The `DecimalAttributeMetadata` message creates an attribute of type decimal.
-4. The `IntegerAttributeMetadata` message creates an attribute of type integer.
-5. The `MemoAttributeMetadata` message creates an attribute of type memo.
-6. The `MoneyAttributeMetadata` message creates an attribute of type money.
-7. The `PicklistAttributeMetadata` message creates an attribute of type picklist.
+1. Create columns
+
+   This sample creates the following types of columns using the CreateAttributeRequest class:
+  
+   - Yes/No (BooleanAttributeMetadata)
+   - Date Time (DateTimeAttributeMetadata)
+   - Decimal (DecimalAttributeMetadata)
+   - Whole Number (IntegerAttributeMetadata)
+   - Memo (MemoAttributeMetadata)
+   - Money (MoneyAttributeMetadata)
+   - Choice (PicklistAttributeMetadata)
+   - String (StringAttributeMetadata)
+   - Multi-Select Choice (MultiSelectPicklistAttributeMetadata)
+   - Big Integer (BigIntAttributeMetadata)
+
+1. Add a status value (InsertStatusValueRequest)
+1. Retrieve a column (RetrieveAttributeRequest)
+1. Update a column (UpdateAttributeRequest)
+1. Update the label for a state column option (UpdateStateValueRequest)
+1. Add a new option to a choice column (InsertOptionValueRequest)
+1. Change the order of options in a choice column (OrderOptionRequest)
+1. Delete columns (DeleteAttributeRequest)
+
+
 
 ### Clean up
 

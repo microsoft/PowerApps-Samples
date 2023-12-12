@@ -2,13 +2,10 @@
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Metadata;
-using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Tooling.Connector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PowerApps.Samples
 {
@@ -23,6 +20,7 @@ namespace PowerApps.Samples
                 service = SampleHelpers.Connect("Connect");
                 if (service.IsReady)
                 {
+
                     // Create any entity records that the demonstration code requires
                     SetUpSample(service);
                     #region Demonstrate
@@ -129,9 +127,9 @@ namespace PowerApps.Samples
                         // Set base properties
                         SchemaName = "new_Money",
                         LogicalName = "new_money",
-                        DisplayName = new Label("Money Picklist", _languageCode),
+                        DisplayName = new Label("Sample Money", _languageCode),
                         RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None),
-                        Description = new Label("Money Attribue", _languageCode),
+                        Description = new Label("Money Attribute", _languageCode),
                         // Set extended properties
                         MaxValue = 1000.00,
                         MinValue = 0.00,
@@ -216,6 +214,21 @@ namespace PowerApps.Samples
                         };
                         // Add to list
                         addedAttributes.Add(multiSelectOptionSetAttribute);
+
+                        // Create a BigInt attribute
+                        var bigIntAttribute = new BigIntAttributeMetadata
+                        {
+                            // Set base properties
+                            SchemaName = "new_BigInt",
+                            LogicalName = "new_bigint",
+                            DisplayName = new Label("Sample Big Int", _languageCode),
+                            RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None),
+                            Description = new Label("Big Int Attribute", _languageCode)
+
+                        };
+                        // Add to list
+                        addedAttributes.Add(bigIntAttribute);
+
                     }
 
                     // NOTE: LookupAttributeMetadata cannot be created outside the context of a relationship.
@@ -397,8 +410,8 @@ namespace PowerApps.Samples
                     #endregion How to change the order of options of a global option set
 
                     // NOTE: All customizations must be published before they can be used.
-                    service.Execute(new PublishAllXmlRequest());
-                    Console.WriteLine("Published all customizations.");
+                    //service.Execute(new PublishAllXmlRequest());
+                    //Console.WriteLine("Published all customizations.");
                     #endregion Demonstrate
 
                     #region Clean up

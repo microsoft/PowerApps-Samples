@@ -1,12 +1,8 @@
-﻿using Microsoft.Crm.Sdk.Messages;
-using Microsoft.Xrm.Sdk.Messages;
+﻿using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Metadata;
 using Microsoft.Xrm.Tooling.Connector;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PowerApps.Samples
 {
@@ -18,7 +14,7 @@ namespace PowerApps.Samples
 
         // Specify which language code to use in the sample. If you are using a language
         // other than US English, you will need to modify this value accordingly.
-        // See http://msdn.microsoft.com/en-us/library/0h88fahh.aspx
+        // See https://learn.microsoft.com/previous-versions/windows/embedded/ms912047(v=winembedded.10)
         public const int _languageCode = 1033;
 
         // Define the IDs/variables needed for this sample.
@@ -70,7 +66,7 @@ namespace PowerApps.Samples
             if (prompt)
             {
                 Console.WriteLine("\nDo you want these entity records deleted? (y/n)");
-                String answer = Console.ReadLine();
+                string answer = Console.ReadLine();
 
                 deleteRecords = (answer.StartsWith("y") || answer.StartsWith("Y"));
             }
@@ -124,7 +120,7 @@ namespace PowerApps.Samples
                 service.Execute(revertStateValue);
 
                 // NOTE: All customizations must be published before they can be used.
-                service.Execute(new PublishAllXmlRequest());
+                //service.Execute(new PublishAllXmlRequest());
 
                 Console.WriteLine(
                     "Reverted {0} state attribute of {1} entity from 'Open' to '{2}'.",
