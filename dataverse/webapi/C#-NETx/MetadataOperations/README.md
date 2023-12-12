@@ -72,6 +72,8 @@ Operations:
 - Create and retrieve a new memo column for the `sample_BankAccount` table.
 - Create and retrieve a new money column for the `sample_BankAccount` table.
 - Create and retrieve a new choice column for the `sample_BankAccount` table.
+- Create and retrieve a new choices column for the `sample_BankAccount` table.
+- Create and retrieve a new big int column for the `sample_BankAccount` table.
 - Add a new option to the choice column using the WebAPIService [InsertOptionValueRequest class](../WebAPIService/Metadata/Messages/InsertOptionValueRequest.cs)
 - Change the order of the options of the choice column using the WebAPIService [OrderOptionRequest class](../WebAPIService/Metadata/Messages/OrderOptionRequest.cs)
 - Delete one of the options of the choice column using the WebAPIService [DeleteOptionValueRequest class](../WebAPIService/Metadata/Messages/DeleteOptionValueRequest.cs)

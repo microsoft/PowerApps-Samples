@@ -2,13 +2,10 @@
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Metadata;
-using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Tooling.Connector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PowerApps.Samples
 {
@@ -23,25 +20,26 @@ namespace PowerApps.Samples
                 service = SampleHelpers.Connect("Connect");
                 if (service.IsReady)
                 {
+
                     // Create any entity records that the demonstration code requires
                     SetUpSample(service);
                     #region Demonstrate
 
                     _productVersion = Version.Parse(((RetrieveVersionResponse)service.Execute(new RetrieveVersionRequest())).Version);
 
-                    #region How to create attributes
-                    // Create storage for new attributes being created
-                    addedAttributes = new List<AttributeMetadata>();
+                    #region How to create columns
+                    // Create storage for new  being created
+                    addedColumns = new List<AttributeMetadata>();
 
-                    // Create a boolean attribute
-                    var boolAttribute = new BooleanAttributeMetadata
+                    // Create a yes/no column
+                    var boolColumn = new BooleanAttributeMetadata
                     {
                         // Set base properties
                         SchemaName = "new_Boolean",
                         LogicalName = "new_boolean",
                         DisplayName = new Label("Sample Boolean", _languageCode),
                         RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None),
-                        Description = new Label("Boolean Attribute", _languageCode),
+                        Description = new Label("Boolean Column", _languageCode),
                         // Set extended properties
                         OptionSet = new BooleanOptionSetMetadata(
                             new OptionMetadata(new Label("True", _languageCode), 1),
@@ -50,34 +48,34 @@ namespace PowerApps.Samples
                     };
 
                     // Add to list
-                    addedAttributes.Add(boolAttribute);
+                    addedColumns.Add(boolColumn);
 
-                    // Create a date time attribute
-                    var dtAttribute = new DateTimeAttributeMetadata
+                    // Create a date time column
+                    var dateTimeColumn = new DateTimeAttributeMetadata
                     {
                         // Set base properties
                         SchemaName = "new_Datetime",
                         LogicalName = "new_datetime",
                         DisplayName = new Label("Sample DateTime", _languageCode),
                         RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None),
-                        Description = new Label("DateTime Attribute", _languageCode),
+                        Description = new Label("DateTime Column", _languageCode),
                         // Set extended properties
                         Format = DateTimeFormat.DateOnly,
                         ImeMode = ImeMode.Disabled
                     };
 
                     // Add to list
-                    addedAttributes.Add(dtAttribute);
+                    addedColumns.Add(dateTimeColumn);
 
-                    // Create a decimal attribute	
-                    var decimalAttribute = new DecimalAttributeMetadata
+                    // Create a decimal column	
+                    var decimalColumn = new DecimalAttributeMetadata
                     {
                         // Set base properties
                         SchemaName = "new_Decimal",
                         LogicalName = "new_decimal",
                         DisplayName = new Label("Sample Decimal", _languageCode),
                         RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None),
-                        Description = new Label("Decimal Attribute", _languageCode),
+                        Description = new Label("Decimal Column", _languageCode),
                         // Set extended properties
                         MaxValue = 100,
                         MinValue = 0,
@@ -85,17 +83,17 @@ namespace PowerApps.Samples
                     };
 
                     // Add to list
-                    addedAttributes.Add(decimalAttribute);
+                    addedColumns.Add(decimalColumn);
 
-                    // Create a integer attribute	
-                    var integerAttribute = new IntegerAttributeMetadata
+                    // Create a integer column	
+                    var integerColumn = new IntegerAttributeMetadata
                     {
                         // Set base properties
                         SchemaName = "new_Integer",
                         LogicalName = "new_integer",
                         DisplayName = new Label("Sample Integer", _languageCode),
                         RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None),
-                        Description = new Label("Integer Attribute", _languageCode),
+                        Description = new Label("Integer Column", _languageCode),
                         // Set extended properties
                         Format = IntegerFormat.None,
                         MaxValue = 100,
@@ -103,17 +101,17 @@ namespace PowerApps.Samples
                     };
 
                     // Add to list
-                    addedAttributes.Add(integerAttribute);
+                    addedColumns.Add(integerColumn);
 
-                    // Create a memo attribute 
-                    var memoAttribute = new MemoAttributeMetadata
+                    // Create a memo column 
+                    var memoColumn = new MemoAttributeMetadata
                     {
                         // Set base properties
                         SchemaName = "new_Memo",
                         LogicalName = "new_memo",
                         DisplayName = new Label("Sample Memo", _languageCode),
                         RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None),
-                        Description = new Label("Memo Attribute", _languageCode),
+                        Description = new Label("Memo Column", _languageCode),
                         // Set extended properties
                         Format = StringFormat.TextArea,
                         ImeMode = ImeMode.Disabled,
@@ -121,17 +119,17 @@ namespace PowerApps.Samples
                     };
 
                     // Add to list
-                    addedAttributes.Add(memoAttribute);
+                    addedColumns.Add(memoColumn);
 
-                    // Create a money attribute	
-                    var moneyAttribute = new MoneyAttributeMetadata
+                    // Create a money column	
+                    var moneyColumn = new MoneyAttributeMetadata
                     {
                         // Set base properties
                         SchemaName = "new_Money",
                         LogicalName = "new_money",
-                        DisplayName = new Label("Money Picklist", _languageCode),
+                        DisplayName = new Label("Sample Money", _languageCode),
                         RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None),
-                        Description = new Label("Money Attribue", _languageCode),
+                        Description = new Label("Money Column", _languageCode),
                         // Set extended properties
                         MaxValue = 1000.00,
                         MinValue = 0.00,
@@ -141,10 +139,10 @@ namespace PowerApps.Samples
                     };
 
                     // Add to list
-                    addedAttributes.Add(moneyAttribute);
+                    addedColumns.Add(moneyColumn);
 
-                    // Create a picklist attribute	
-                    var pickListAttribute =
+                    // Create a choice column	
+                    var picklistColumn =
                         new PicklistAttributeMetadata
                         {
                             // Set base properties
@@ -172,10 +170,10 @@ namespace PowerApps.Samples
                         };
 
                     // Add to list
-                    addedAttributes.Add(pickListAttribute);
+                    addedColumns.Add(picklistColumn);
 
-                    // Create a string attribute
-                    var stringAttribute = new StringAttributeMetadata
+                    // Create a string column
+                    var stringColumn = new StringAttributeMetadata
                     {
                         // Set base properties
                         SchemaName = "new_String",
@@ -183,26 +181,26 @@ namespace PowerApps.Samples
 
                         DisplayName = new Label("Sample String", _languageCode),
                         RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None),
-                        Description = new Label("String Attribute", _languageCode),
+                        Description = new Label("String Column", _languageCode),
                         // Set extended properties
                         MaxLength = 100
                     };
 
                     // Add to list
-                    addedAttributes.Add(stringAttribute);
+                    addedColumns.Add(stringColumn);
 
-                    //Multi-select attribute requires version 9.0 or higher.
+                    //Multi-select column requires version 9.0 or higher.
                     if (_productVersion > new Version("9.0"))
                     {
 
-                        // Create a multi-select optionset
-                        var multiSelectOptionSetAttribute = new MultiSelectPicklistAttributeMetadata()
+                        // Create a multi-select Choices column
+                        var multiSelectChoiceColumn = new MultiSelectPicklistAttributeMetadata()
                         {
                             SchemaName = "new_MultiSelectOptionSet",
                             LogicalName = "new_multiselectoptionset",
-                            DisplayName = new Label("Multi-Select OptionSet", _languageCode),
+                            DisplayName = new Label("Choices column", _languageCode),
                             RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None),
-                            Description = new Label("Multi-Select OptionSet description", _languageCode),
+                            Description = new Label("Choices columndescription", _languageCode),
                             OptionSet = new OptionSetMetadata()
                             {
                                 IsGlobal = false,
@@ -215,33 +213,49 @@ namespace PowerApps.Samples
                             }
                         };
                         // Add to list
-                        addedAttributes.Add(multiSelectOptionSetAttribute);
+                        addedColumns.Add(multiSelectChoiceColumn);
+
+                        // Create a BigInt column
+                        var bigIntColumn = new BigIntAttributeMetadata
+                        {
+                            // Set base properties
+                            SchemaName = "new_BigInt",
+                            LogicalName = "new_bigint",
+                            DisplayName = new Label("Sample Big Int", _languageCode),
+                            RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None),
+                            Description = new Label("Big Int Column", _languageCode)
+                           
+
+                        };
+                        // Add to list
+                        addedColumns.Add(bigIntColumn);
+
                     }
 
                     // NOTE: LookupAttributeMetadata cannot be created outside the context of a relationship.
-                    // Refer to the WorkWithRelationships.cs reference SDK sample for an example of this attribute type.
+                    // Refer to the WorkWithRelationships.cs reference SDK sample for an example of this column type.
 
                     // NOTE: StateAttributeMetadata and StatusAttributeMetadata cannot be created via the SDK.
 
-                    foreach (AttributeMetadata anAttribute in addedAttributes)
+                    foreach (AttributeMetadata aColumn in addedColumns)
                     {
                         // Create the request.
                         var createAttributeRequest = new CreateAttributeRequest
                         {
                             EntityName = Contact.EntityLogicalName,
-                            Attribute = anAttribute
+                            Attribute = aColumn
                         };
 
                         // Execute the request.
                         service.Execute(createAttributeRequest);
 
-                        Console.WriteLine("Created the attribute {0}.", anAttribute.SchemaName);
+                        Console.WriteLine($"Created the {aColumn.SchemaName} column.");
                     }
-                    #endregion How to create attributes
+                    #endregion How to create columns
 
                     #region How to insert status
                     // Use InsertStatusValueRequest message to insert a new status 
-                    // in an existing status attribute. 
+                    // in an existing status column. 
                     // Create the request.
                     var insertStatusValueRequest =
                         new InsertStatusValueRequest
@@ -262,7 +276,7 @@ namespace PowerApps.Samples
                         _insertedStatusValue);
                     #endregion How to insert status
 
-                    #region How to retrieve attribute
+                    #region How to retrieve a column
                     // Create the request
                     var attributeRequest = new RetrieveAttributeRequest
                     {
@@ -275,18 +289,17 @@ namespace PowerApps.Samples
                     RetrieveAttributeResponse attributeResponse =
                         (RetrieveAttributeResponse)service.Execute(attributeRequest);
 
-                    Console.WriteLine("Retrieved the attribute {0}.",
-                        attributeResponse.AttributeMetadata.SchemaName);
-                    #endregion How to retrieve attribute
+                    Console.WriteLine($"Retrieved the {attributeResponse.AttributeMetadata.SchemaName} column.");
+                    #endregion How to retrieve a column
 
-                    #region How to update attribute
-                    // Modify the retrieved attribute
+                    #region How to update a column
+                    // Modify the retrieved column
                     var retrievedAttributeMetadata =
                         attributeResponse.AttributeMetadata;
                     retrievedAttributeMetadata.DisplayName =
                         new Label("Update String Attribute", _languageCode);
 
-                    // Update an attribute retrieved via RetrieveAttributeRequest
+                    // Update an column retrieved via RetrieveAttributeRequest
                     var updateRequest = new UpdateAttributeRequest
                     {
                         Attribute = retrievedAttributeMetadata,
@@ -297,9 +310,8 @@ namespace PowerApps.Samples
                     // Execute the request
                     service.Execute(updateRequest);
 
-                    Console.WriteLine("Updated the attribute {0}.",
-                        retrievedAttributeMetadata.SchemaName);
-                    #endregion How to update attribute
+                    Console.WriteLine($"Updated the {retrievedAttributeMetadata.SchemaName} column.");
+                    #endregion How to update a column
 
                     #region How to update state value
                     // Modify the state value label from Active to Open.
@@ -316,7 +328,7 @@ namespace PowerApps.Samples
                     service.Execute(updateStateValue);
 
                     Console.WriteLine(
-                        "Updated {0} state attribute of {1} entity from 'Active' to '{2}'.",
+                        "Updated {0} state column of {1} entity from 'Active' to '{2}'.",
                         updateStateValue.AttributeLogicalName,
                         updateStateValue.EntityLogicalName,
                         updateStateValue.Label.LocalizedLabels[0].Label
@@ -344,7 +356,7 @@ namespace PowerApps.Samples
 
                     #region How to change the order of options of a local option set
                     // Use the RetrieveAttributeRequest message to retrieve  
-                    // a attribute by it's logical name.
+                    // a column by it's logical name.
                     var retrieveAttributeRequest =
                         new RetrieveAttributeRequest
                         {
@@ -358,12 +370,12 @@ namespace PowerApps.Samples
                         (RetrieveAttributeResponse)service.Execute(
                         retrieveAttributeRequest);
 
-                    // Access the retrieved attribute.
+                    // Access the retrieved column.
                     var retrievedPicklistAttributeMetadata =
                         (PicklistAttributeMetadata)
                         retrieveAttributeResponse.AttributeMetadata;
 
-                    // Get the current options list for the retrieved attribute.
+                    // Get the current options list for the retrieved column.
                     OptionMetadata[] optionList =
                         retrievedPicklistAttributeMetadata.OptionSet.Options.ToArray();
 
@@ -397,8 +409,8 @@ namespace PowerApps.Samples
                     #endregion How to change the order of options of a global option set
 
                     // NOTE: All customizations must be published before they can be used.
-                    service.Execute(new PublishAllXmlRequest());
-                    Console.WriteLine("Published all customizations.");
+                    //service.Execute(new PublishAllXmlRequest());
+                    //Console.WriteLine("Published all customizations.");
                     #endregion Demonstrate
 
                     #region Clean up
