@@ -777,6 +777,49 @@ namespace MetadataOperations
 
                 #endregion MultiSelectPicklist
 
+                #region BigInt
+
+                BigIntAttributeMetadata bigIntColumn = new()
+                {
+                    SchemaName = $"{ExamplePublisherCustomizationPrefix}_BigInt",
+                    DisplayName = new Label("Sample BigInt", 1033),
+                    RequiredLevel = new AttributeRequiredLevelManagedProperty(
+                       AttributeRequiredLevel.None),
+                    Description = new Label("BigInt Attribute", 1033)
+                };
+
+                CreateAttributeRequest createBigIntColumnRequest = new(
+                    entityLogicalName: bankAccountEntityLogicalName,
+                    attributeMetadata: bigIntColumn,
+                    solutionUniqueName: ExampleSolutionUniqueName
+                    );
+
+                // Create BigInt Column
+                var createBigIntColumnResponse =
+                    await service.SendAsync<CreateAttributeResponse>(createBigIntColumnRequest);
+                Console.WriteLine($"Created BigInt column with id:{createBigIntColumnResponse.AttributeId}");
+                Console.WriteLine();
+
+                string BigIntQuery = "?$select=SchemaName,MaxValue,MinValue";
+
+                RetrieveAttributeRequest retrieveBigIntAttributeRequest = new(
+                   entityLogicalName: bankAccountEntityLogicalName,
+                   logicalName: bigIntColumn.SchemaName.ToLower(),
+                   type: AttributeType.BigIntAttributeMetadata,
+                   query: BigIntQuery);
+
+                // Retrieve BigInt column
+                var retrieveBigIntAttributeResponse = await service
+                    .SendAsync<RetrieveAttributeResponse<BigIntAttributeMetadata>>(retrieveBigIntAttributeRequest);
+
+                BigIntAttributeMetadata retrievedBigIntAttribute = retrieveBigIntAttributeResponse.AttributeMetadata;
+                Console.WriteLine("Retrieved BigInt column properties:");
+                Console.WriteLine($"BigInt MaxValue:{retrievedBigIntAttribute.MaxValue}");
+                Console.WriteLine($"BigInt MinValue:{retrievedBigIntAttribute.MinValue}");
+                Console.WriteLine();
+
+                #endregion BigInt
+
                 #region InsertStatusValue
 
                 InsertStatusValueParameters insertStatusValueParameters = new()
@@ -1308,21 +1351,9 @@ namespace MetadataOperations
                     Console.WriteLine("\nDeleting created records...");
                 }
 
-                List<HttpRequestMessage> deleteRequests = new();
-
                 foreach (EntityReference recordToDelete in recordsToDelete)
                 {
-                    deleteRequests.Add(new DeleteRequest(recordToDelete));
-                }
-
-                BatchRequest batchRequest = new(service.BaseAddress)
-                {
-                    Requests = deleteRequests
-                };
-
-                if (deleteRequests.Count > 0)
-                {
-                    await service.SendAsync(batchRequest);
+                    await service.Delete(recordToDelete);
                 }
 
                 #endregion Section 9: Delete sample records                
