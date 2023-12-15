@@ -224,7 +224,7 @@ $selectedSPId = $selectedSP.Id
 $scopes = $selectedSP.Oauth2PermissionScopes | Sort-Object Value | Select-Object Type, Value, UserConsentDisplayName, UserConsentDescription
 $selectedScopes = $scopes | Out-GridView -Title "Choose Scopes" -OutputMode Multiple
 
-$joinedScopes = $selectedScopes | Join-String -Property {$_.Value} -Separator ' '
+$joinedScopes = $($selectedScopes | Select-Object -ExpandProperty Value) -join ' '
 Write-Host "The following user scopes have been selected: $joinedScopes"
 
 If (!$selectedScopes)
