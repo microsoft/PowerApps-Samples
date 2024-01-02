@@ -77,17 +77,22 @@ Sample Output :</br>
 ![alt text](./ReadMeImages/GetCMKInResourceGroup2.png)</br>
 
 ### Validate Azure Key Vault
-5. **Validate Azure Key Vault** : This script checks if the Key Vault is setup correctly according to the pre-requisites required by the Power Platform CMK Enterprise Policy</br>
-    - Soft-delete : if not enabled, then a warning message is displayed (soft-delete is a read only property and can’t be fixed). Follow the instructions at
-      https://docs.microsoft.com/en-us/azure/key-vault/general/soft-delete-change to update the soft delete property.
-    - Purge protection - if not enabled, then enables it for the customer
-    - Adds the access policies to the Key Vault with permission GET, UNWRAPKEY, WRAPKEY for the given enterprise policy</br>
+5. **Validate Azure Key Vault** : This script checks if the Key Vault is setup correctly according to the pre-requisites required by the Power Platform CMK Enterprise Policy. For details please follow the setup instructions at https://learn.microsoft.com/power-platform/admin/customer-managed-key#create-encryption-key-and-grant-access</br>
+	Following major validations are performed:
+    - Soft-delete is enabled for key vault: Please follow the instructions at </br>
+      https://docs.microsoft.com/azure/key-vault/general/soft-delete-change to update the soft delete property.
+    - Purge protection is enabled for key vault: Please follow the istructions at </br>
+	  https://learn.microsoft.com/azure/key-vault/general/key-vault-recovery?tabs=azure-portal to get details about enabling Purge Protection</br>
+	- "Key Vault Crypto Service Encryption User" role assignment is present for the given enterprise policy if key vault permission model is Azure role based access control.</br>
+    - Access policies of GET, UNWRAPKEY, WRAPKEY are added to the key vault for the given enterprise policy if key vault permission model is vault access policy.</br>
+	- Key configured for the given enterprise policy is present, enabled, activated and not expired.</br>
+	 
 
 Script name : ValidateKeyVaultForCMK.ps1</br>
-Input parameters :
-    - subscriptionId : The Azure subscription Id of the Key Vault
-    - keyVaultName : The name of the key Vault
-    - enterprisePolicyArmId : The CMK enterprise policy ARM Id which should have permission GET, UNWRAPKEY, WRAPKEY for the key vault
+Input parameters:
+- subscriptionId : The Azure subscription Id of the Key Vault
+- keyVaultName : The name of the key Vault
+- enterprisePolicyArmId : The CMK enterprise policy ARM Id 
 
 Sample Input : </br>
 ![alt text](./ReadMeImages/ValidateKeyVault1.png)</br>
