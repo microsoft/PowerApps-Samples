@@ -1,5 +1,7 @@
 ﻿# Load the environment script
 . "$PSScriptRoot\..\Common\EnterprisePolicyOperations.ps1"
+. "$PSScriptRoot\ValidateVnetLocationForEnterprisePolicy.ps1"
+
 
 function CreateSubnetInjectionEnterprisePolicy
 {
@@ -52,6 +54,13 @@ function CreateSubnetInjectionEnterprisePolicy
 
     Write-Host "Logged In..." -ForegroundColor Green
     Write-Host "Creating Enterprise policy..." -ForegroundColor Green
+
+    $vnet = ValidateAndGetVnet -vnetId $vnetId -enterprisePolicylocation $enterprisePolicylocation
+    if ($vnet -eq $null)
+    {
+       Write-Host "Subnet Injection Enterprise policy not created" -ForegroundColor Red
+       return
+    }
 
     $body = GenerateEnterprisePolicyBody -policyType "vnet" -policyLocation $enterprisePolicyLocation -policyName $enterprisePolicyName -vnetId $vnetId -subnetName $subnetName
 
