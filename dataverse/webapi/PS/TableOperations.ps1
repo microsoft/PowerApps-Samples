@@ -30,6 +30,7 @@ function New-Record {
       [hashtable]
       $body
    )
+
    $postHeaders = $baseHeaders.Clone()
    $postHeaders.Add('Content-Type', 'application/json')
    
@@ -37,7 +38,7 @@ function New-Record {
       Uri     = $baseURI + $setName
       Method  = 'Post'
       Headers = $postHeaders
-      Body    = ConvertTo-Json $body
+      Body    = ConvertTo-Json $body -Depth 5 # 5 should be enough for most cases, the default is 2.
 
    }
    $rh = Invoke-ResilientRestMethod -request $CreateRequest -returnHeader $true
@@ -149,6 +150,72 @@ function Set-ColumnValue {
       Body    =  ConvertTo-Json $body
    }
    Invoke-ResilientRestMethod $SetColumnValueRequest
+}
+
+function Add-ToCollection{
+   param (
+      [Parameter(Mandatory)] 
+      [String] 
+      $targetSetName,
+      [Parameter(Mandatory)] 
+      [Guid] 
+      $targetId,
+      [Parameter(Mandatory)] 
+      [string]
+      $collectionName,
+      [Parameter(Mandatory)] 
+      [String] 
+      $setName,
+      [Parameter(Mandatory)] 
+      [Guid] 
+      $id
+   )
+   $uri = '{0}{1}({2})/{3}/$ref' `
+      -f $baseURI, $targetSetName, $targetId, $collectionName
+
+   $headers = $baseHeaders.Clone()
+   $headers.Add('Content-Type', 'application/json')
+
+   # Must use absolute URI
+   $recordUri = '{0}{1}({2})' `
+      -f $baseURI, $setName, $id
+
+   $body = @{
+      '@odata.id' = $recordUri
+   }
+   $AssociateRequest = @{
+      Uri     = $uri
+      Method  = 'Post'
+      Headers = $headers
+      Body    =  ConvertTo-Json $body
+   }
+   Invoke-ResilientRestMethod $AssociateRequest
+}
+
+function Remove-FromCollection{
+   param (
+      [Parameter(Mandatory)] 
+      [String] 
+      $targetSetName,
+      [Parameter(Mandatory)] 
+      [Guid] 
+      $targetId,
+      [Parameter(Mandatory)] 
+      [string]
+      $collectionName,
+      [Parameter(Mandatory)] 
+      [Guid] 
+      $id
+   )
+   $uri = '{0}{1}({2})/{3}({4})/$ref' `
+      -f $baseURI, $targetSetName, $targetId, $collectionName, $id
+
+   $DisassociateRequest = @{
+      Uri     = $uri
+      Method  = 'Delete'
+      Headers = $baseHeaders
+   }
+   Invoke-ResilientRestMethod $DisassociateRequest
 }
 
 function Remove-Record {

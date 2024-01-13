@@ -39,7 +39,7 @@ function Invoke-DataverseCommands {
       $commands
    )
    try {
-      Invoke-Command $commands
+      Invoke-Command $commands -NoNewScope
    }
    catch [Microsoft.PowerShell.Commands.HttpResponseException] {
       Write-Host "An error occurred calling Dataverse:" -ForegroundColor Red
