@@ -6,6 +6,21 @@ $debug = $false
 # Set this value to the Fiddler proxy URL configured on your computer
 $proxyUrl = 'http://127.0.0.1:8888'
 
+<#
+.SYNOPSIS
+Connects to Dataverse Web API using Azure authentication.
+
+.DESCRIPTION
+The Connect function uses the Get-AzAccessToken cmdlet to obtain an access token for the specified resource URI. It then sets the global variables baseHeaders and baseURI to be used for subsequent requests to the resource.
+
+.PARAMETER uri
+The resource URI to connect to. This parameter is mandatory.
+
+.EXAMPLE
+Connect -uri 'https://yourorg.crm.dynamics.com'
+This example connects to Dataverse environment and sets the baseHeaders and baseURI variables.
+#>
+
 function Connect {
    param (
       [Parameter(Mandatory)] 
@@ -33,6 +48,40 @@ function Connect {
    $global:baseURI = $uri + 'api/data/v9.2/'
 }
 
+
+<#
+.SYNOPSIS
+Invokes a set of commands against the Dataverse Web API.
+
+.DESCRIPTION
+The Invoke-DataverseCommands function uses the Invoke-Command cmdlet to run a script block of commands against the Dataverse Web API. It handles any errors that may occur from the Dataverse API or the script itself.
+
+.PARAMETER commands
+The script block of commands to run against the Dataverse resource. This parameter is mandatory.
+
+.EXAMPLE
+Invoke-DataverseCommands -commands {
+   # Get first account from Dataverse
+   $accounts = (Get-Records `
+      -setName 'accounts' `
+      -query '?$select=name&$top=1').value
+
+   $oldName = $accounts[0].name
+   $newName = 'New Name'
+
+   # Update the first account name to 'New Name'
+   Set-ColumnValue `
+      -setName 'accounts' `
+      -id $accounts[0].accountid `
+      -property 'name' `
+      -value $newName
+
+   Write-Host "First account name changed from '$oldName' to '$newName'"
+}
+This example invokes a script block that gets the first account from Dataverse and updates the name of the first account.
+#>
+
+
 function Invoke-DataverseCommands {
    param (
       [Parameter(Mandatory)] 
@@ -57,6 +106,24 @@ function Invoke-DataverseCommands {
    }
 }
 
+<#
+.SYNOPSIS
+Invokes a REST method with resilience to handle 429 errors.
+
+.DESCRIPTION
+The Invoke-ResilientRestMethod function uses the Invoke-RestMethod cmdlet to send an HTTP request to a RESTful web service. 
+It handles any 429 errors (Too Many Requests) by retrying the request using the Retry-After header value as the retry interval. 
+It also supports using a proxy if the $debug variable is set to true.
+
+.PARAMETER request
+A hashtable of parameters to pass to the Invoke-RestMethod cmdlet. This parameter is mandatory.
+
+.PARAMETER returnHeader
+A boolean value that indicates whether to return the response headers instead of the response body. The default value is false.
+
+.EXAMPLE
+See the functions in the TableOperations.ps1 file for examples of using this function.
+#>
 
 function Invoke-ResilientRestMethod {
    param (

@@ -1,4 +1,25 @@
 . $PSScriptRoot\Core.ps1
+
+<#
+.SYNOPSIS
+Gets a set of records from a Dataverse table.
+
+.DESCRIPTION
+The Get-Records function uses the Invoke-ResilientRestMethod function to send a GET request to the Dataverse API. 
+It constructs the request URI by appending the entity set name and the query parameters to the base URI. 
+It also adds the necessary headers to include annotations in the response.
+
+.PARAMETER setName
+The name of the entity set to retrieve records from. This parameter is mandatory.
+
+.PARAMETER query
+The query parameters to filter, sort, or select the records. This parameter is mandatory.
+
+.EXAMPLE
+(Get-Records -setName accounts -query '?$select=name&$top=10').value
+This example gets the name of the first 10 accounts from Dataverse.
+#>
+
 function Get-Records {
    param (
       [Parameter(Mandatory)] 
@@ -20,6 +41,34 @@ function Get-Records {
    }
    Invoke-ResilientRestMethod $RetrieveMultipleRequest
 }
+
+<#
+.SYNOPSIS
+Creates a new record in a Dataverse table.
+
+.DESCRIPTION
+The New-Record function uses the Invoke-ResilientRestMethod function to send a POST request to the Dataverse Web API. 
+It constructs the request URI by appending the entity set name to the base URI. 
+It also adds the necessary headers and converts the body hashtable to JSON format. It returns the GUID ID value of the created record.
+
+.PARAMETER setName
+The name of the entity set to create a record in. This parameter is mandatory.
+
+.PARAMETER body
+A hashtable of attributes and values for the new record. This parameter is mandatory.
+
+.EXAMPLE
+$contactRafelShillo = @{
+   'firstname' = 'Rafel'
+   'lastname'  = 'Shillo'
+}
+
+$rafelShilloId = New-Record `
+   -setName 'contacts' `
+   -body $contactRafelShillo
+
+   This example creates a new contact record with the firstname 'Rafel' and the lastname 'Shillo'. It returns the GUID ID of the created record.
+#>
 
 function New-Record {
    param (
@@ -47,6 +96,34 @@ function New-Record {
    return [System.Guid]::New($selectedString.Matches.Value.ToString())
 }
 
+
+<#
+.SYNOPSIS
+Gets a single record from a Dataverse table by its primary key value.
+
+.DESCRIPTION
+The Get-Record function uses the Invoke-ResilientRestMethod function to send a GET request to the Dataverse API. 
+It constructs the request URI by appending the entity set name, the record ID, and the query parameters to the base URI. 
+It also adds the necessary headers to include annotations in the response. It returns the record as an object.
+
+.PARAMETER setName
+The name of the entity set to retrieve the record from. This parameter is mandatory.
+
+.PARAMETER id
+The GUID of the record to retrieve. This parameter is mandatory.
+
+.PARAMETER query
+The query parameters to filter, expand, or select the record properties. This parameter is optional.
+
+.EXAMPLE
+   $retrievedRafelShillo1 = Get-Record `
+      -setName 'contacts' `
+      -id $rafelShilloId `
+      -query '?$select=fullname,annualincome,jobtitle,description'
+
+This example gets the fullname, annualincome, jobtitle, and description of the contact with the specified ID
+#>
+
 function Get-Record {
    param (
       [Parameter(Mandatory)] 
@@ -71,6 +148,33 @@ function Get-Record {
    Invoke-ResilientRestMethod $RetrieveRequest | Select-Object
 }
 
+<#
+.SYNOPSIS
+Gets the value of a single property from a Dataverse record.
+
+.DESCRIPTION
+The Get-ColumnValue function uses the Invoke-ResilientRestMethod function to send a GET request to the Dataverse API. 
+It constructs the request URI by appending the entity set name, the record ID, and the property name to the base URI. 
+It also adds the necessary headers to avoid caching. It returns the value of the property as a string.
+
+.PARAMETER setName
+The name of the entity set to retrieve the record from. This parameter is mandatory.
+
+.PARAMETER id
+The GUID of the record to retrieve. This parameter is mandatory.
+
+.PARAMETER property
+The name of the property to get the value from. This parameter is mandatory.
+
+.EXAMPLE
+$telephone1 = Get-ColumnValue `
+   -setName 'contacts' `
+   -id 9ec0b0ec-d6c3-4b8d-bd75-435723b49f84 `
+   -property 'telephone1'
+
+This example gets the telephone1 value of the contact record with the specified ID.
+#>
+
 function Get-ColumnValue {
    param (
       [Parameter(Mandatory)] 
@@ -94,6 +198,41 @@ function Get-ColumnValue {
    $value = Invoke-ResilientRestMethod $GetColumnValueRequest
    return $value.value
 }
+
+<#
+.SYNOPSIS
+Updates an existing record in a Dataverse table.
+
+.DESCRIPTION
+The Update-Record function uses the Invoke-ResilientRestMethod function to send a PATCH request to the Dataverse API. 
+It constructs the request URI by appending the entity set name and the record ID to the base URI. 
+It also adds the necessary headers and converts the body hashtable to JSON format. 
+It uses the If-Match header to prevent creating a new record if the record ID does not exist.
+
+.PARAMETER setName
+The name of the entity set to update the record in. This parameter is mandatory.
+
+.PARAMETER id
+The GUID of the record to update. This parameter is mandatory.
+
+.PARAMETER body
+A hashtable of attributes and values for the updated record. This parameter is mandatory.
+
+.EXAMPLE
+$body = @{
+   'annualincome' = 80000
+   'jobtitle'     = 'Junior Developer'
+}
+
+# Update the record with the data
+Update-Record `
+   -setName 'contacts' `
+   -id 9ec0b0ec-d6c3-4b8d-bd75-435723b49f84`
+   -body $body
+
+This example updates the annualincome and jobtitle of the contact with the specified ID.
+#>
+
 
 function Update-Record {
    param (
@@ -121,6 +260,39 @@ function Update-Record {
    }
    Invoke-ResilientRestMethod $UpdateRequest
 }
+
+<#
+.SYNOPSIS
+Sets the value of a single property for a Dataverse record.
+
+.DESCRIPTION
+The Set-ColumnValue function uses the Invoke-ResilientRestMethod function to send a PUT request to the Dataverse API. 
+It constructs the request URI by appending the entity set name, the record ID, and the property name to the base URI. 
+It also adds the necessary headers and converts the value to JSON format. 
+It overwrites the existing value of the property with the new value.
+
+.PARAMETER setName
+The name of the entity set to update the record in. This parameter is mandatory.
+
+.PARAMETER id
+The GUID of the record to update. This parameter is mandatory.
+
+.PARAMETER property
+The name of the property to set the value for. This parameter is mandatory.
+
+.PARAMETER value
+The new value for the property. This parameter is mandatory.
+
+.EXAMPLE
+Set-ColumnValue `
+   -setName 'contacts' `
+   -id 9ec0b0ec-d6c3-4b8d-bd75-435723b49f84 `
+   -property 'telephone1' `
+   -value '555-0105'
+
+This example sets the telephone1 of the contact with the specified ID to 555-0105.
+#>
+
 
 function Set-ColumnValue {
    param (
@@ -151,6 +323,43 @@ function Set-ColumnValue {
    }
    Invoke-ResilientRestMethod $SetColumnValueRequest
 }
+
+<#
+.SYNOPSIS
+Adds a record to a collection-valued navigation property of another record.
+
+.DESCRIPTION
+The Add-ToCollection function uses the Invoke-ResilientRestMethod function to send a POST request to the Dataverse API. 
+It constructs the request URI by appending the target entity set name, the target record ID, and the collection name to the base URI. 
+It also adds the necessary headers and converts the record URI to JSON format. 
+It creates a reference between the target record and the record to be added to the collection.
+
+.PARAMETER targetSetName
+The name of the entity set that contains the target record. This parameter is mandatory.
+
+.PARAMETER targetId
+The GUID of the target record. This parameter is mandatory.
+
+.PARAMETER collectionName
+The name of the collection-valued navigation property of the target record. This parameter is mandatory.
+
+.PARAMETER setName
+The name of the entity set that contains the record to be added to the collection. This parameter is mandatory.
+
+.PARAMETER id
+The GUID of the record to be added to the collection. This parameter is mandatory.
+
+.EXAMPLE
+Add-ToCollection `
+   -targetSetName 'accounts' `
+   -targetId 9ec0b0ec-d6c3-4b8d-bd75-435723b49f84 `
+   -collectionName 'contact_customer_accounts' `
+   -setName 'contacts' `
+   -id 5d68b37f-aae9-4cd6-8b94-37d6439b2f34
+
+This example adds the contact with the specified ID to the contact_customer_accounts collection of the account with the specified ID.
+#>
+
 
 function Add-ToCollection{
    param (
@@ -192,6 +401,37 @@ function Add-ToCollection{
    Invoke-ResilientRestMethod $AssociateRequest
 }
 
+<#
+.SYNOPSIS
+Removes a record from a collection-valued navigation property of another record.
+
+.DESCRIPTION
+The Remove-FromCollection function uses the Invoke-ResilientRestMethod function to send a DELETE request to the Dataverse API. 
+It constructs the request URI by appending the target entity set name, the target record ID, the collection name, and the record ID to the base URI. 
+It also adds the necessary headers. It deletes the reference between the target record and the record to be removed from the collection.
+
+.PARAMETER targetSetName
+The name of the entity set that contains the target record. This parameter is mandatory.
+
+.PARAMETER targetId
+The GUID of the target record. This parameter is mandatory.
+
+.PARAMETER collectionName
+The name of the collection-valued navigation property of the target record. This parameter is mandatory.
+
+.PARAMETER id
+The GUID of the record to be removed from the collection. This parameter is mandatory.
+
+.EXAMPLE
+Remove-FromCollection `
+   -targetSetName 'accounts' `
+   -targetId 9ec0b0ec-d6c3-4b8d-bd75-435723b49f84 `
+   -collectionName 'contact_customer_accounts' `
+   -id 5d68b37f-aae9-4cd6-8b94-37d6439b2f34
+This example removes the contact with the specified ID from the contact_customer_accounts collection of the account with the specified ID.
+#>
+
+
 function Remove-FromCollection{
    param (
       [Parameter(Mandatory)] 
@@ -217,6 +457,28 @@ function Remove-FromCollection{
    }
    Invoke-ResilientRestMethod $DisassociateRequest
 }
+
+<#
+.SYNOPSIS
+Deletes a record from a Dataverse table.
+
+.DESCRIPTION
+The Remove-Record function uses the Invoke-ResilientRestMethod function to send a DELETE request to the Dataverse API. 
+It constructs the request URI by appending the entity set name and the record ID to the base URI. 
+It also adds the necessary headers. It deletes the record with the specified ID from the table.
+
+.PARAMETER setName
+The name of the entity set to delete the record from. This parameter is mandatory.
+
+.PARAMETER id
+The GUID of the record to delete. This parameter is mandatory.
+
+.EXAMPLE
+Remove-Record `
+   -setName accounts `
+   -id 9ec0b0ec-d6c3-4b8d-bd75-435723b49f84
+This example deletes the account with the specified ID from the Dataverse table.
+#>
 
 function Remove-Record {
    param (

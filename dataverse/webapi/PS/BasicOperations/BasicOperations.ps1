@@ -12,6 +12,7 @@ Invoke-DataverseCommands {
    Write-Host  '--Starting Basic Operations sample--'
 
    #region Section 1: Basic Create and Update operations
+   Write-Host "`n--Section 1 started--`n"
 
    $contactRafelShillo = @{
       'firstname' = 'Rafel'
@@ -22,28 +23,32 @@ Invoke-DataverseCommands {
       -setName 'contacts' `
       -body $contactRafelShillo
 
-   Write-Host '--Created contact with ID:' $rafelShilloId
+   Write-Host "Contact '$($contactRafelShillo.firstname) $($contactRafelShillo.lastname)' created"
+   Write-Host "`tContact URI: $baseURI($rafelShilloId)"
+   Write-Host "`tContact relative Uri: contacts($rafelShilloId)"
 
    # To delete later
    $recordsToDelete += [PsObject]@{
+      'description' = "Contact '$($contactRafelShillo.firstname) $($contactRafelShillo.lastname)'"
       'setName' = 'contacts'
       'id'      = $rafelShilloId
    }
 
+   # Data to update for Rafel Shillo
    $rafelShilloUpdate1 = @{
       'annualincome' = 80000
-      'jobtitle'     = 'Senior Software Engineer'
+      'jobtitle'     = 'Junior Developer'
    }
 
+   # Update the record with the data
    Update-Record `
       -setName 'contacts' `
       -id $rafelShilloId `
       -body $rafelShilloUpdate1
 
-   Write-Host 'Contact' `
-   ($contactRafelShillo.firstname) `
-   ($contactRafelShillo.lastname) `
-      "updated with jobtitle and annual income.`n"
+   $message = "Contact '$($contactRafelShillo.firstname) $($contactRafelShillo.lastname)' "
+   $message += 'updated with jobtitle and annual income.'
+   Write-Host $message
 
    # Retrieve the created contact
    $retrievedRafelShillo1 = Get-Record `
@@ -51,7 +56,7 @@ Invoke-DataverseCommands {
       -id $rafelShilloId `
       -query '?$select=fullname,annualincome,jobtitle,description'
 
-   Write-Host "Contact '$($retrievedRafelShillo1.fullname) retrieved."
+   Write-Host "`nContact '$($retrievedRafelShillo1.fullname) retrieved."
    Write-Host "`tAnnual income:" `
    ($retrievedRafelShillo1.'annualincome@OData.Community.Display.V1.FormattedValue')
    Write-Host "`tJob title:" `
@@ -66,32 +71,25 @@ Invoke-DataverseCommands {
       'description'  = 'Assignment to-be-determined'
    }
 
-   Write-Host "`nContact" `
-   ($retrievedRafelShillo1.fullname) `
-      "updated."
-   Write-Host "`tAnnual income:" `
-   ($rafelShilloUpdate2.annualincome)
-   Write-Host "`tJob title:" `
-   ($rafelShilloUpdate2.jobtitle)
-   Write-Host "`tDescription:" `
-   ($rafelShilloUpdate2.description)
-
    # Update record with new values
    Update-Record `
       -setName 'contacts' `
       -id $rafelShilloId `
       -body $rafelShilloUpdate2
 
+   Write-Host "Contact '$($retrievedRafelShillo1.fullname)' updated"
+   Write-Host "`tJob title: $($rafelShilloUpdate2.jobtitle)"
+   Write-Host "`tAnnual income: $($rafelShilloUpdate2.annualincome)"
+   Write-Host "`tDescription: $($rafelShilloUpdate2.description)"
+
    #Set single column value
    Set-ColumnValue `
       -setName 'contacts' `
       -id $rafelShilloId `
       -property 'telephone1' `
-      -value '555-0105'
+      -value '555-0105' | Out-Null
 
-   Write-Host "`nContact" `
-   ($retrievedRafelShillo1.fullname) `
-      "phone number updated."
+   Write-Host "`nContact '$($retrievedRafelShillo1.fullname)' phone number updated."
    
    # Retrieve just the telephone1 column
    $telephone1 = Get-ColumnValue `
@@ -99,8 +97,7 @@ Invoke-DataverseCommands {
       -id $rafelShilloId `
       -property 'telephone1'
 
-   Write-Host "`nContacts telephone number is:" `
-      $telephone1
+   Write-Host "`tContact's telephone number is: $telephone1"
 
    #endregion Section 1: Basic Create and Update operations
 
@@ -108,7 +105,7 @@ Invoke-DataverseCommands {
    #  Demonstrates creation of records and simultaneous association to another, 
    #  existing record. 
 
-   Write-Host "`n--Section 2 started--"
+   Write-Host "`n--Section 2 started--`n"
 
    #Create a new account and associate with existing contact in one operation. 
    $accountContoso = @{
@@ -121,14 +118,13 @@ Invoke-DataverseCommands {
 
    # To delete later
    $recordsToDelete += [PsObject]@{
+      'description' = "Account '$($accountContoso.name)'"
       'setName' = 'accounts'
       'id'      = $accountContosoId
    }
 
-   Write-Host 'Account' `
-   ($accountContoso.name) `
-      'created.'
-   Write-Host "Id: $accountContosoId"
+   Write-Host "Account '$($accountContoso.name)' created."
+   Write-Host "`tAccount URI: accounts($accountContosoId)"
 
    # Retrieve account name and primary contact info
    $retrievedAccountContoso = Get-Record `
@@ -136,15 +132,16 @@ Invoke-DataverseCommands {
       -id $accountContosoId `
       -query '?$select=name,&$expand=primarycontactid($select=fullname,jobtitle,annualincome)'
    
-   Write-Host "Account '$($retrievedAccountContoso.name)' has primary contact " `
+   Write-Host "`nAccount '$($retrievedAccountContoso.name)' has primary contact" `
       "'$($retrievedAccountContoso.primarycontactid.fullname)':"
    Write-Host "`tJob title: $($retrievedAccountContoso.primarycontactid.jobtitle)"
    Write-Host "`tAnnual income: $($retrievedAccountContoso.primarycontactid.'annualincome@OData.Community.Display.V1.FormattedValue')"
+   
    #endregion Section 2: Create record associated to another
 
    #region Section 3: Create related entities
    # Demonstrates creation of entity instance and related entities in a single operation.
-   Write-Host "`n--Section 3 started--"
+   Write-Host "`n--Section 3 started--`n"
    # Create the following entries in one operation: an account, its 
    #  associated primary contact, and open tasks for that contact.  These 
    #  entity types have the following relationships:
@@ -192,11 +189,13 @@ Invoke-DataverseCommands {
   
    # To delete later
    $recordsToDelete += [PsObject]@{
+      'description' = "Account '$($accountFourthCoffee.name)'"
       'setName' = 'accounts'
       'id'      = $accountFourthCoffeeId
    }
 
-   Write-Host "Account $($accountFourthCoffee.name) created."
+   Write-Host "Account '$($accountFourthCoffee.name)' created."
+   Write-Host "`tAccount URI: accounts($accountFourthCoffeeId)"
 
    #  Retrieve account, primary contact info, and assigned tasks for contact.
    #  Dataverse only supports querying-by-expansion one level deep, so first query 
@@ -207,7 +206,7 @@ Invoke-DataverseCommands {
       -id $accountFourthCoffeeId `
       -query '?$select=name&$expand=primarycontactid($select=fullname,jobtitle,annualincome)'
 
-   Write-Host "Account '$($retrievedAccountFourthCoffee.name)' has primary contact" `
+   Write-Host "`nAccount '$($retrievedAccountFourthCoffee.name)' has primary contact" `
       "'$($retrievedAccountFourthCoffee.primarycontactid.fullname)':"
    Write-Host "`tJob title: $($retrievedAccountFourthCoffee.primarycontactid.jobtitle)"
    Write-Host "`tAnnual income: $($retrievedAccountFourthCoffee.primarycontactid.'annualincome@OData.Community.Display.V1.FormattedValue')"
@@ -216,6 +215,7 @@ Invoke-DataverseCommands {
 
    # To delete later
    $recordsToDelete += [PsObject]@{
+      'description' = "Contact '$($retrievedAccountFourthCoffee.primarycontactid.fullname)'"
       'setName' = 'contacts'
       'id'      = $contactSusieCurtisId
    }
@@ -227,11 +227,11 @@ Invoke-DataverseCommands {
       -id $contactSusieCurtisId `
       -query '?$select=fullname&$expand=Contact_Tasks($select=subject,description,scheduledstart,scheduledend)'
 
-   Write-Host "Contact '$($contactSusieCurtis.fullname)' has the following assigned tasks:"
+   Write-Host "`nContact '$($contactSusieCurtis.fullname)' has the following assigned tasks:"
 
    foreach ($task in $contactSusieCurtis.Contact_Tasks) {
       Write-Host "`tSubject: $($task.subject)`n" `
-         "`t`tDescription: $($task.description)"
+      "`t`tDescription: $($task.description)"
       "`t`tStart: $($task.'scheduledstart@OData.Community.Display.V1.FormattedValue')"
       "`t`tEnd: $($task.'scheduledend@OData.Community.Display.V1.FormattedValue')"
    }
@@ -240,7 +240,7 @@ Invoke-DataverseCommands {
 
    #region Section 4: Associate and Disassociate entities
    # Demonstrates associating and disassociating existing records.
-   Write-Host "`n--Section 4 started--"
+   Write-Host "`n--Section 4 started--`n"
 
    #  Add 'Rafel Shillo' to the contact list of 'Fourth Coffee', 
    #   a 1-to-N relationship.
@@ -250,7 +250,7 @@ Invoke-DataverseCommands {
       -targetId $accountFourthCoffeeId `
       -collectionName 'contact_customer_accounts' `
       -setName 'contacts' `
-      -id $rafelShilloId
+      -id $rafelShilloId | Out-Null
 
    # Retrieve and output all contacts for account 'Fourth Coffee'.
 
@@ -259,7 +259,8 @@ Invoke-DataverseCommands {
       -query ('({0})/contact_customer_accounts?$select=fullname,jobtitle' `
          -f $accountFourthCoffeeId)
 
-   # Find 'Rafel Shillo' in the list of  'Fourth Coffee' account contacts
+   # Find 'Rafel Shillo' in the list of 'Fourth Coffee' account contacts
+   Write-Host "Contact list for account '$($accountFourthCoffee.name)':"
    foreach ($contact in $fourthCoffeeContacts.value) {
       Write-Host "`tName: $($contact.fullname)," `
          "Job title: $($contact.jobtitle)"
@@ -271,7 +272,7 @@ Invoke-DataverseCommands {
       -targetSetName 'accounts' `
       -targetId $accountFourthCoffeeId `
       -collectionName 'contact_customer_accounts' `
-      -id $rafelShilloId
+      -id $rafelShilloId | Out-Null
 
    # Create role and assign it to systemuser using systemuserroles_association
 
@@ -290,6 +291,7 @@ Invoke-DataverseCommands {
 
    # To delete later
    $recordsToDelete += [PsObject]@{
+      'description' = "Role '$($exampleSecurityRole.name)'"
       'setName' = 'roles'
       'id'      = $exampleSecurityRoleId
    }
@@ -302,13 +304,15 @@ Invoke-DataverseCommands {
       -setName 'roles' `
       -id $exampleSecurityRoleId
 
-   Write-Host "Security Role $($exampleSecurityRole.name) associated with to your user account."
+   Write-Host "Security Role '$($exampleSecurityRole.name)' associated with your user account."
 
    # Retrieve the new security role as part via the systemuserroles_association
 
-   $myRoles = Get-records -setName 'systemusers' -query ('({0})/systemuserroles_association?$select=name' -f $myUserId)
+   $myRoles = Get-records `
+      -setName 'systemusers' `
+      -query ('({0})/systemuserroles_association?$select=name' -f $myUserId)
 
-   Write-Host "Security roles associated to my account:"
+   Write-Host "`nSecurity roles associated to my account:"
 
    foreach ($role in $myRoles.value) {
       Write-Host "`t-$($role.name)"
@@ -320,21 +324,26 @@ Invoke-DataverseCommands {
       -targetSetName 'systemusers' `
       -targetId $myUserId `
       -collectionName 'systemuserroles_association' `
-      -id $exampleSecurityRoleId
+      -id $exampleSecurityRoleId | Out-Null
 
    #endregion Section 4: Associate and Disassociate entities
 
    #region Section 5: Delete sample records
 
+   Write-Host "`n--Section 5 started--`n"
+
    if ($deleteCreatedRecords) {
       Write-Host '--Deleting sample records--'
       foreach ($record in $recordsToDelete) {
+         Write-Host "`tDeleting $($record.description)"
          Remove-Record `
             -setName $record['setName'] `
-            -id $record['id']
+            -id $record['id'] | Out-Null
       }
    }
 
    #endregion Section 5: Delete sample records
+
+   Write-Host  `n'--Basic Operations sample completed--'
 
 }
