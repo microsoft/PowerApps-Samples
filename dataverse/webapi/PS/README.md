@@ -163,7 +163,7 @@ It constructs the request URI by appending the target entity set name, the targe
 It also adds the necessary headers and converts the record URI to JSON format. 
 It creates a reference between the target record and the record to be added to the collection.
 
-[Learn to associate and disassociate table rows using the Web API](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/associate-disassociate-entities-using-web-api)
+[Learn to associate and disassociate table rows](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/associate-disassociate-entities-using-web-api)
 
 #### Parameters
 
@@ -236,7 +236,7 @@ The `Get-Record` function uses the [Invoke-ResilientRestMethod function](#invoke
 It constructs the request URI by appending the entity set name, the record ID, and the query parameters to the base URI. 
 It also adds the necessary headers to include annotations in the response. It returns the record as an object.
 
-[Learn to Retrieve a table row](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/retrieve-entity-using-web-api)
+[Learn to retrieve a table row](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/retrieve-entity-using-web-api)
 
 #### Parameters
 
@@ -252,7 +252,7 @@ This function returns the response containing the record data.
 
 #### Example
 
-This example gets the fullname, annualincome, jobtitle, and description of the contact with the specified ID.
+This example gets the `fullname`, `annualincome`, `jobtitle`, and `description` of the contact with the specified ID.
 
 ```powershell
 $retrievedRafelShillo1 = Get-Record `
@@ -265,7 +265,7 @@ $retrievedRafelShillo1 = Get-Record `
 
 Gets a set of records from a Dataverse table.
 
-The `Get-Records` function uses the [Invoke-ResilientRestMethod function](#invoke-resilientrestmethod-function) to send a GET request to the Dataverse API.
+The `Get-Records` function uses the [Invoke-ResilientRestMethod function](#invoke-resilientrestmethod-function) to send a `GET` request to the Dataverse API.
 It constructs the request URI by appending the entity set name and the query parameters to the base URI.
 It also adds the necessary headers to include annotations in the response.
 
@@ -308,7 +308,7 @@ It constructs the request URI by appending the entity set name to the base URI.
 It also adds the necessary headers and converts the `body` hashtable to JSON format. 
 It returns the GUID ID value of the created record.
 
-[Learn to create records using the Dataverse Web API](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/create-entity-web-api)
+[Learn to create records](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/create-entity-web-api)
 
 #### Parameters
 
