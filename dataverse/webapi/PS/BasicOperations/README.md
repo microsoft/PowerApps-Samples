@@ -73,13 +73,13 @@ Operations:
 - Update a single property of the contact record using the `Set-ColumnValue` function
 - Retrieve a single property of the contact record using the `Get-ColumnValue` function
 
-See [HTTP Web API Basic Operations Sample Section 1: Basic create and update operations](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/web-api-basic-operations-sample#section-1-basic-create-and-update-operations) for details
+See [HTTP Web API Basic Operations Sample Section 1: Basic create and update operations](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/web-api-basic-operations-sample#section-1-basic-create-and-update-operations) for low-level details.
 
 ### Section 2: Create record associated to another
 
 Operations: Associate a new record to an existing one using the `New-Record` function.
 
-See [HTTP Web API Basic Operations Sample Section 2: Create with association](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/web-api-basic-operations-sample#section-2-create-with-association) for details
+See [HTTP Web API Basic Operations Sample Section 2: Create with association](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/web-api-basic-operations-sample#section-2-create-with-association) for low-level details.
 
 ### Section 3: Create related entities
 
@@ -101,7 +101,7 @@ Operations:
 
 - Retrieve the related records using the `Get-Record` function
 
-See [HTTP Web API Basic Operations Sample Section 3: Create related table rows (deep insert)](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/web-api-basic-operations-sample#section-3-create-related-table-rows-deep-insert) for details.
+See [HTTP Web API Basic Operations Sample Section 3: Create related table rows (deep insert)](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/web-api-basic-operations-sample#section-3-create-related-table-rows-deep-insert) for low-level details.
 
 ### Section 4: Associate and Disassociate entities
 
@@ -112,7 +112,7 @@ Operations:
 - Associate a security role to a user using the `systemuserroles_association` collection using the `Add-ToCollection` function
 - Remove a security role for a user using the `systemuserroles_association` collection using the `Remove-FromCollection` function
 
-See [HTTP Web API Basic Operations Sample Section 4: Associate and disassociate existing entities](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/web-api-basic-operations-sample#section-4-associate-and-disassociate-existing-entities) for details.
+See [HTTP Web API Basic Operations Sample Section 4: Associate and disassociate existing entities](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/web-api-basic-operations-sample#section-4-associate-and-disassociate-existing-entities) for low-level details.
 
 ### Section 5: Delete sample entities
 
@@ -120,7 +120,7 @@ Operations: A reference to each record created in this sample was added to a lis
 
 When the `$deleteCreatedRecords` variable to `$true`, this section loops through that list and deletes each record using the `Remove-Record` function.
 
-See [HTTP Web API Basic Operations Sample Section 5: Delete table rows](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/web-api-basic-operations-sample#section-5-delete-table-rows) for details.
+See [HTTP Web API Basic Operations Sample Section 5: Delete table rows](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/web-api-basic-operations-sample#section-5-delete-table-rows) for low-level details.
 
 ## Clean up
 
