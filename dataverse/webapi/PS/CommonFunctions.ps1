@@ -10,7 +10,10 @@ It constructs the request URI by appending the WhoAmI function name to the base 
 It also adds the necessary headers. It returns an object that contains the user ID, business unit ID, and organization ID.
 
 .EXAMPLE
-Get-WhoAmI
+$WhoIAm = Get-WhoAmI
+$myBusinessUnit = $WhoIAm.BusinessUnitId
+$myUserId = $WhoIAm.UserId
+
 This example gets the current user information from the Dataverse Web API.
 #>
 

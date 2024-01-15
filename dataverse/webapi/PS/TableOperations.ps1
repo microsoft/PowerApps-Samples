@@ -18,6 +18,15 @@ The query parameters to filter, sort, or select the records. This parameter is m
 .EXAMPLE
 (Get-Records -setName accounts -query '?$select=name&$top=10').value
 This example gets the name of the first 10 accounts from Dataverse.
+
+
+$accountContacts = (Get-Records `
+   -setName 'accounts' `
+   -query ('({0})/contact_customer_accounts?$select=fullname,jobtitle' `
+      -f $accountId)).value
+
+This example uses the query parameter to return a collection of contact records related to an account using the contact_customer_accounts relationship.
+
 #>
 
 function Get-Records {
@@ -67,7 +76,7 @@ $rafelShilloId = New-Record `
    -setName 'contacts' `
    -body $contactRafelShillo
 
-   This example creates a new contact record with the firstname 'Rafel' and the lastname 'Shillo'. It returns the GUID ID of the created record.
+This example creates a new contact record with the firstname 'Rafel' and the lastname 'Shillo'. It returns the GUID ID of the created record.
 #>
 
 function New-Record {
@@ -121,7 +130,7 @@ The query parameters to filter, expand, or select the record properties. This pa
       -id $rafelShilloId `
       -query '?$select=fullname,annualincome,jobtitle,description'
 
-This example gets the fullname, annualincome, jobtitle, and description of the contact with the specified ID
+This example gets the fullname, annualincome, jobtitle, and description of the contact with the specified ID.
 #>
 
 function Get-Record {
@@ -290,7 +299,7 @@ Set-ColumnValue `
    -property 'telephone1' `
    -value '555-0105'
 
-This example sets the telephone1 of the contact with the specified ID to 555-0105.
+This example sets the telephone1 column value of the contact with the specified ID to 555-0105.
 #>
 
 
@@ -319,7 +328,7 @@ function Set-ColumnValue {
       Uri     = $uri
       Method  = 'Put'
       Headers = $headers
-      Body    =  ConvertTo-Json $body
+      Body    = ConvertTo-Json $body
    }
    Invoke-ResilientRestMethod $SetColumnValueRequest
 }
@@ -361,7 +370,7 @@ This example adds the contact with the specified ID to the contact_customer_acco
 #>
 
 
-function Add-ToCollection{
+function Add-ToCollection {
    param (
       [Parameter(Mandatory)] 
       [String] 
@@ -396,7 +405,7 @@ function Add-ToCollection{
       Uri     = $uri
       Method  = 'Post'
       Headers = $headers
-      Body    =  ConvertTo-Json $body
+      Body    = ConvertTo-Json $body
    }
    Invoke-ResilientRestMethod $AssociateRequest
 }
@@ -432,7 +441,7 @@ This example removes the contact with the specified ID from the contact_customer
 #>
 
 
-function Remove-FromCollection{
+function Remove-FromCollection {
    param (
       [Parameter(Mandatory)] 
       [String] 

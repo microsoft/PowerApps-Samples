@@ -11,7 +11,7 @@ description: "This sample demonstrates how to perform common data operations usi
 
 This PowerShell version 7.4.0 sample demonstrates how to perform common data operations using the Dataverse Web API and Visual Studio Code.
 
-This sample uses the [Dataverse Web API PowerShell Helper functions](../README.md) to manage authentication and provide re-usable functions to perform common operations. These scripts are referenced using dot sourcing](https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about/about_scripts#script-scope-and-dot-sourcing) with the following lines:
+This sample uses the [Dataverse Web API PowerShell Helper functions](../README.md) to manage authentication and provide re-usable functions to perform common operations. These scripts are referenced using [dot sourcing](https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about/about_scripts#script-scope-and-dot-sourcing) with the following lines:
 
 ```powershell
 . $PSScriptRoot\..\Core.ps1
@@ -58,39 +58,48 @@ To connect as a different user, run the [Disconnect-AzAccount command](https://l
 
 This sample has 5 regions that demonstrate common data operations described in detail within the [HTTP Web API Basic Operations Sample](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/web-api-basic-operations-sample)
 
+To begin, the sample:
+
+- Connects using the `Connect` function
+- All operations are performed within the `Invoke-DataverseCommands` function
+
 ### Section 1: Basic Create and Update operations
 
 Operations:
 
-- Create a contact record.
-- Update the contact record.
-- Retrieve the contact record.
-- Update a single property of the contact record.
-- Retrieve a single property of the contact record.
+- Create a contact record using the `New-Record` function
+- Update the contact record using the `Update-Record` function
+- Retrieve the contact record using the `Get-Record` function
+- Update a single property of the contact record using the `Set-ColumnValue` function
+- Retrieve a single property of the contact record using the `Get-ColumnValue` function
 
 See [HTTP Web API Basic Operations Sample Section 1: Basic create and update operations](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/web-api-basic-operations-sample#section-1-basic-create-and-update-operations) for details
 
 ### Section 2: Create record associated to another
 
-Operations: Associate a new record to an existing one.
+Operations: Associate a new record to an existing one using the `New-Record` function.
 
 See [HTTP Web API Basic Operations Sample Section 2: Create with association](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/web-api-basic-operations-sample#section-2-create-with-association) for details
 
 ### Section 3: Create related entities
 
-Operations: Create the following records in one operation:
+Operations: 
 
-- An account
-- A contact associated as the primary contact for the account record
-- 3 open tasks for that contact.  
+- Create the following records in one operation using the `New-Record` function.:
 
-These records have the following relationships:
+   - An account
+   - A contact associated as the primary contact for the account record
+   - 3 open tasks for that contact.  
 
-```
-Accounts
-    |---[Primary] Contact (N-to-1)
-        |---Tasks (1-to-N)
-```
+   These records have the following relationships:
+
+   ```
+   Accounts
+      |---[Primary] Contact (N-to-1)
+         |---Tasks (1-to-N)
+   ```
+
+- Retrieve the related records using the `Get-Record` function
 
 See [HTTP Web API Basic Operations Sample Section 3: Create related table rows (deep insert)](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/web-api-basic-operations-sample#section-3-create-related-table-rows-deep-insert) for details.
 
@@ -98,10 +107,10 @@ See [HTTP Web API Basic Operations Sample Section 3: Create related table rows (
 
 Operations:
 
-- Add a contact to the account `contact_customer_accounts` collection.
-- Remove a contact from the account `contact_customer_accounts` collection.
-- Associate a security role to a user using the `systemuserroles_association` collection.
-- Remove a security role for a user using the `systemuserroles_association` collection.
+- Add a contact to the account `contact_customer_accounts` collection using the `Add-ToCollection` function
+- Remove a contact from the account `contact_customer_accounts` collection using the `Remove-FromCollection` function
+- Associate a security role to a user using the `systemuserroles_association` collection using the `Add-ToCollection` function
+- Remove a security role for a user using the `systemuserroles_association` collection using the `Remove-FromCollection` function
 
 See [HTTP Web API Basic Operations Sample Section 4: Associate and disassociate existing entities](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/web-api-basic-operations-sample#section-4-associate-and-disassociate-existing-entities) for details.
 
@@ -109,7 +118,7 @@ See [HTTP Web API Basic Operations Sample Section 4: Associate and disassociate 
 
 Operations: A reference to each record created in this sample was added to a list as it was created.
 
-When the `$deleteCreatedRecords` variable to `$true`, this section loops through that list and deletes each record.
+When the `$deleteCreatedRecords` variable to `$true`, this section loops through that list and deletes each record using the `Remove-Record` function.
 
 See [HTTP Web API Basic Operations Sample Section 5: Delete table rows](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/web-api-basic-operations-sample#section-5-delete-table-rows) for details.
 

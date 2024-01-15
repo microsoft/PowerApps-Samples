@@ -11,7 +11,8 @@ $proxyUrl = 'http://127.0.0.1:8888'
 Connects to Dataverse Web API using Azure authentication.
 
 .DESCRIPTION
-The Connect function uses the Get-AzAccessToken cmdlet to obtain an access token for the specified resource URI. It then sets the global variables baseHeaders and baseURI to be used for subsequent requests to the resource.
+The Connect function uses the Get-AzAccessToken cmdlet to obtain an access token for the specified resource URI. 
+It then sets the global variables baseHeaders and baseURI to be used for subsequent requests to the resource.
 
 .PARAMETER uri
 The resource URI to connect to. This parameter is mandatory.
@@ -54,7 +55,8 @@ function Connect {
 Invokes a set of commands against the Dataverse Web API.
 
 .DESCRIPTION
-The Invoke-DataverseCommands function uses the Invoke-Command cmdlet to run a script block of commands against the Dataverse Web API. It handles any errors that may occur from the Dataverse API or the script itself.
+The Invoke-DataverseCommands function uses the Invoke-Command cmdlet to run a script block of commands against the Dataverse Web API. 
+It handles any errors that may occur from the Dataverse API or the script itself.
 
 .PARAMETER commands
 The script block of commands to run against the Dataverse resource. This parameter is mandatory.
