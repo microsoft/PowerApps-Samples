@@ -1,5 +1,7 @@
 ﻿# Load the environment script
 . "$PSScriptRoot\..\Common\EnterprisePolicyOperations.ps1"
+. "$PSScriptRoot\ValidateVnetLocationForEnterprisePolicy.ps1"
+
 
 function UpdateSubnetInjectionEnterprisePolicy
 {
@@ -56,6 +58,13 @@ function UpdateSubnetInjectionEnterprisePolicy
     if ($vnetId -ne "N/A")
     {
         Write-Host "Updating vnetId as $vnetId" -ForegroundColor Green
+
+        $vnet = ValidateAndGetVnet -vnetId $vnetId -enterprisePolicylocation $policy.Location
+        if ($vnet -eq $null)
+        {
+           Write-Host "Enterprise Policy not updated" -ForegroundColor Red
+           return
+        }
         $policy.properties.networkInjection.virtualNetworks[0].id = $vnetId
     }
     if ($subnetName -ne "N/A")
@@ -67,11 +76,11 @@ function UpdateSubnetInjectionEnterprisePolicy
     $updatedPolicy = UpdateEnterprisePolicy $policy
     if ($updatedPolicy.ResourceId -eq $null)
     {
-         Write-Host "Policy not updated"
+         Write-Host "Enterprise Policy not updated"
          return
     }
     $policyString = $updatedPolicy | ConvertTo-Json -Depth 7
-    Write-Host "Policy updated"
+    Write-Host "Enterprise Policy updated"
     Write-Host $policyString   
 }
 UpdateSubnetInjectionEnterprisePolicy

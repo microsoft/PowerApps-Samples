@@ -258,19 +258,7 @@ Sample Input : </br>
 Sample Output :</br>
 ![alt text](./ReadMeImages/UpdateSubnetInjectionEnterprisePolicy2.png)</br>
 
-7. **Delete Subnet Injection Enterprise Policy** : This script deletes the Subnet Injection Enterprise Policy for a given policy Id. </br>
-**If the Subnet Injection enterprise policy is associated with one or more environments, the delete operation will fail, and the script will return an error.**</br>
-Script name : RemoveSubnetInjectionEnterprisePolicy.ps1</br>
-Input parameter :
-    - policyArmId : The ARM ID of the Subnet Injection enterprise policy to be deleted
-
-Sample Input : </br>
-![alt text](./ReadMeImages/RemoveSubnetInjectionEnterprisePolicy1.png)</br>
-
-Sample Output :</br>
-![alt text](./ReadMeImages/RemoveSubnetInjectionEnterprisePolicy2.png)</br>
-
-8. **Set Subnet Injection for an environment** : This script applies a Subnet Injection enterprise policy to a given Power Platform environment.</br>
+7. **Set Subnet Injection for an environment** : This script applies a Subnet Injection enterprise policy to a given Power Platform environment.</br>
 The script adds the environment to the enterprise policy and optionally polls for the operation outcome.</br>
 Script name : NewSubnetInjection.ps1</br>
 Input parameters :
@@ -283,7 +271,7 @@ Sample Input :</br>
 Sample Output :</br>
 ![alt text](./ReadMeImages/NewSubnetInjection2.png)</br>
 
-9. **Get Subnet Injection for an environment** : This script returns the Subnet Injection enterprise policy if applied to a given Power Platform environment.</br>
+8. **Get Subnet Injection for an environment** : This script returns the Subnet Injection enterprise policy if applied to a given Power Platform environment.</br>
 Script name : GetSubnetInjectionEnterprisePolicyForEnvironment.ps1</br>
 Input parameter :
     - environmentId : The Power Platform environment ID
@@ -294,7 +282,7 @@ Sample Input :</br>
 Sample Output :</br>
 ![alt text](./ReadMeImages/GetSubnetInjectionEnterprisePolicyForEnvironment2.png)</br>
 
-10. **Remove Subnet Injection from an environment** : The script removes the Subnet Injection enterprise policy from an environment, </br>
+9. **Remove Subnet Injection from an environment** : The script removes the Subnet Injection enterprise policy from an environment, </br>
 Script name : RevertSubnetInjection.ps1</br>
 Input parameters :
     - environmentId : The Power Platform environment ID
