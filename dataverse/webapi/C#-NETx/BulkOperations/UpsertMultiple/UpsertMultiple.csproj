@@ -18,6 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.59.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\WebAPIService\WebAPIService.csproj" />
   </ItemGroup>
 
