@@ -6,7 +6,7 @@ namespace PowerApps.Samples.Messages
     public class UpsertMultipleRequest : HttpRequestMessage
     {
         /// <summary>
-        /// Initializes the CreateMultipleRequest
+        /// Initializes the UpsertMultipleRequest
         /// </summary>
         /// <param name="entitySetName">The entity set name for the table.</param>
         /// <param name="targets">JObject containing the data to update.</param>
