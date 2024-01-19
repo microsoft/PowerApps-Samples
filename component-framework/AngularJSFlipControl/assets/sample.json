@@ -3,7 +3,7 @@
      "name": "powerapps-pcf-angular-js-flip-control",
      "source": "PowerAppsDev",
      "title": "Implementing Flip component",
-     "shortDescription": "shows how to use third-party libraries to create components in Power Apps component framework. The flip sample component is implemented based on angular.js, angular-ui, angular-animate, angular-sanitize, bootstrap.",
+     "shortDescription": "This sample shows how to use third-party libraries to create components in Power Apps component framework. The flip sample component is implemented based on angular.js, angular-ui, angular-animate, angular-sanitize, bootstrap.",
      "url": "https://github.com/microsoft/PowerApps-Samples/tree/master/component-framework/AngularJSFlipControl",
      "downloadUrl":"https://github.com/microsoft/PowerApps-Samples/tree/master/component-framework/AngularJSFlipControl",
      "longDescription": [
