@@ -198,8 +198,10 @@ Input parameters :
     - enterprisePolicyLocation : The Azure geo where Subnet Injection enterprise policy needs to be created. Example: unitedstates, europe, australia.</br>
       To get the complete supported locations for enterprise policy, below command can be used:</br>
       ((Get-AzResourceProvider -ProviderNamespace Microsoft.PowerPlatform).ResourceTypes | Where-Object ResourceTypeName -eq enterprisePolicies).Locations
-    - vnetId : The ARM resource ID of the virtual network used for Subnet Injection
-    - subnetName : The name of the subnet in the virtual network that will be used for Subnet Injection
+    - primaryVnetId : The ARM resource ID of the primary virtual network used for Subnet Injection
+    - primarySubnetName : The name of the subnet in the primary virtual network that will be used for Subnet Injection
+    - secondaryVnetId : The ARM resource ID of the secondary virtual network used for Subnet Injection
+    - secondarySubnetName : The name of the subnet in the secondary virtual network that will be used for Subnet Injection
 
 Sample Input :</br>
 ![alt text](./ReadMeImages/CreateSubnetInjectionEnterprisePolicy1.png)</br>
@@ -241,7 +243,7 @@ Sample Input : </br>
 Sample Output :</br>
 ![alt text](./ReadMeImages/GetSubnetInjectionEnterprisePoliciesInResourceGroup2.png)</br>
 
-6. **Update Subnet Injection Enterprise Policy** : This script updates a Subnet Injection Enterprise Policy. The updates allowed are for virtual network Id and/or subnet name.</br>
+6. **Update Subnet Injection Enterprise Policy** : This script updates a Subnet Injection Enterprise Policy. The updates allowed are for primary/secondary virtual network Id and/or primary/secondary subnet name.</br>
 If you are changing only some of the allowed parameter values, provide “N/A” when prompted for the parameters that you don’t want to change.</br>
  **If the enterprise policy is associated with one or more environments, the update operation will fail, and the script will return an error.**</br>
 Script name : UpdateSubnetInjectionEnterprisePolicy.ps1</br>
@@ -249,8 +251,10 @@ Input parameters :
     - subscriptionId : The Azure subscription Id of the Subnet Injection Enterprise Policy
     - resourceGroup : The Azure resource group of the Subnet Injection Enterprise Policy
     - enterprisePolicyName : The name of the Subnet Injection enterprise policy that needs to be updated
-    - vnetId : The ARM resource ID of the virtual network if it needs to be updated. Provide "N/A" if update is not required for virtual network Id
-    - subnetName: The name of the subnet if it needs to be updated. Provide "N/A" if update is not required for name of the subnet
+    - primaryVnetId : The ARM resource ID of the primary virtual network if it needs to be updated. Provide "N/A" if update is not required for the primary virtual network Id
+    - primarySubnetName: The name of the subnet in the primary virtual network if it needs to be updated. Provide "N/A" if update is not required for name of the subnet in the primary virtual network
+    - secondaryVnetId : The ARM resource ID of the secondary virtual network if it needs to be updated. Provide "N/A" if update is not required for the secondary virtual network Id
+    - secondarySubnetName: The name of the subnet in the secondary virtual network if it needs to be updated. Provide "N/A" if update is not required for name of the subnet in the secondary virtual network
 
 Sample Input : </br>
 ![alt text](./ReadMeImages/UpdateSubnetInjectionEnterprisePolicy1.png)</br>
