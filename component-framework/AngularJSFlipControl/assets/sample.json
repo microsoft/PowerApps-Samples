@@ -32,7 +32,7 @@
        {
          "type": "image",
          "order": 100,
-         "url": "https://learn.microsoft.com/en-us/power-apps/developer/component-framework/media/angular-flip.png",
+         "url": "https://learn.microsoft.com/power-apps/developer/component-framework/media/angular-flip.png",
          "alt": "Screenshot of the Angular JavaScript flip control sample"
        }
      ],

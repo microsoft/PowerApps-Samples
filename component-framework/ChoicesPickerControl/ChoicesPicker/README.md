@@ -1,23 +1,23 @@
 ---
 languages:
-- javascript
+- typescript
 products:
 - power-platform
 - power-apps
 page_type: sample
-description: "This sample shows how to use third-party libraries to create components in Power Apps component framework. The flip sample component is implemented based on angular.js, angular-ui, angular-animate, angular-sanitize, bootstrap. The code may not reveal the best practices for the mentioned third-party libraries."
+description: "This code component displays a set of choices on the form with an icon next to each choice value. The component uses some of the advanced features of model-driven apps, such as choices column definitions (metadata) and column-level security"
 ---
-# Angular JavaScript Flip Control Power Apps component framework sample
+# Model-driven Power Apps field component framework sample
 
 ## Summary
 
-This sample shows how to use third-party libraries to create components in Power Apps component framework. The flip sample component is implemented based on angular.js, angular-ui, angular-animate, angular-sanitize, bootstrap. The code may not reveal the best practices for the mentioned third-party libraries.
+This code component displays a set of choices on the form with an icon next to each choice value. The component uses some of the advanced features of model-driven apps, such as choices column definitions (metadata) and column-level security.
 
-![Preview of the sample](https://learn.microsoft.com/power-apps/developer/component-framework/media/angular-flip.png)
+![Preview of the sample](https://learn.microsoft.com/power-apps/developer/component-framework/media/field-component-result.gif)
 
 ## Compatibility
 
-This sample works for both Model-driven and canvas apps.
+This sample works for model-driven apps.
 
 ## Applies to
 
@@ -33,7 +33,7 @@ This sample was created by the Power Apps component framework team.
 
 Version|Date|Comments
 -------|----|--------
-1.0|January 11, 2024|README created
+1.0|January 18, 2024|README created
 
 ## Prerequisites
 
@@ -45,7 +45,7 @@ Follow the steps in the [README.md](../README.md) to generate solutions containi
 
 ## More information
 
-See [Implementing Flip component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/angular-flip-control)
+See [Tutorial: Creating a model-driven app field component](https://learn.microsoft.com/power-apps/developer/component-framework/tutorial-create-model-driven-field-component)
 
 
 ## Disclaimer
