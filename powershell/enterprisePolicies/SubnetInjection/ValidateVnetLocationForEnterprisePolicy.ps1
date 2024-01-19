@@ -45,7 +45,7 @@ function ValidateAndGetVnet($vnetId, $enterprisePolicylocation) {
         return $vnetResource
     }
 
-    Write-Host "The location of vnet $vnetLocation is not a supported for enterprise policy location $enterprisePolicylocation`n" -ForegroundColor Red
+    Write-Host "The location $vnetLocation of vnet $vnetId is not supported for enterprise policy location $enterprisePolicylocation`n" -ForegroundColor Red
     $vnetLocationsAllowedString = $vnetLocationsAllowed -join ","
     Write-Host "The supported vnet location for enterprise policy location $enterprisePolicylocation are $vnetLocationsAllowedString`n" -ForegroundColor Red
     return $null
