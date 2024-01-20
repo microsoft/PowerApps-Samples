@@ -1,23 +1,24 @@
 ---
 languages:
-- javascript
+- typescript
 products:
 - power-platform
 - power-apps
 page_type: sample
-description: "This sample shows how to use third-party libraries to create components in Power Apps component framework. The flip sample component is implemented based on angular.js, angular-ui, angular-animate, angular-sanitize, bootstrap. The code may not reveal the best practices for the mentioned third-party libraries."
+description: "The code component displays a paged, scrollable dataset grid that provides sortable and filterable columns. It also allows highlighting specific rows by configuring an indicator column. The dataset code component can be linked to a table main grid, view, or subgrid."
 ---
-# Angular JavaScript Flip Control Power Apps component framework sample
+# Model-driven app dataset Power Apps component framework sample
 
 ## Summary
 
-This sample shows how to use third-party libraries to create components in Power Apps component framework. The flip sample component is implemented based on angular.js, angular-ui, angular-animate, angular-sanitize, bootstrap. The code may not reveal the best practices for the mentioned third-party libraries.
+The code component displays a paged, scrollable dataset grid that provides sortable and filterable columns. It also allows highlighting specific rows by configuring an indicator column. The dataset code component can be linked to a table main grid, view, or subgrid.
 
-![Preview of the sample](https://learn.microsoft.com/power-apps/developer/component-framework/media/angular-flip.png)
+
+![Preview of the sample](https://learn.microsoft.com/power-apps/developer/component-framework/media/model-driven-grid-demo1.gif)
 
 ## Compatibility
 
-This sample works for both Model-driven and canvas apps.
+This sample works for model-driven and canvas apps.
 
 ## Applies to
 
@@ -33,7 +34,7 @@ This sample was created by the Power Apps component framework team.
 
 Version|Date|Comments
 -------|----|--------
-1.0|January 11, 2024|README created
+1.0|January 18, 2024|README created
 
 ## Prerequisites
 
@@ -45,8 +46,7 @@ Follow the steps in the [README.md](../README.md) to generate solutions containi
 
 ## More information
 
-See [Implementing Flip component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/angular-flip-control)
-
+See [Tutorial: Creating a model-driven app dataset component](https://learn.microsoft.com/power-apps/developer/component-framework/tutorial-create-model-driven-app-dataset-component)
 
 ## Disclaimer
 

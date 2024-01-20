@@ -67,7 +67,7 @@ export class IFrameControl implements ComponentFramework.StandardControl<IInputs
 	 */
 	private updateBingMapURL(latitude: number, longitude: number): void {
 		// Bing Map API:
-		// https://msdn.microsoft.com/en-us/library/dn217138.aspx
+		// https://learn.microsoft.com/bingmaps/articles/create-a-custom-map-url
 
 		// Provide bing map query string parameters to format and style map view
 		const bingMapUrlPrefix = "https://www.bing.com/maps/embed?h=400&w=300&cp=";

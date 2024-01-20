@@ -1,23 +1,21 @@
 ---
 languages:
-- javascript
+- typescript
 products:
 - power-platform
 - power-apps
 page_type: sample
-description: "This sample shows how to use third-party libraries to create components in Power Apps component framework. The flip sample component is implemented based on angular.js, angular-ui, angular-animate, angular-sanitize, bootstrap. The code may not reveal the best practices for the mentioned third-party libraries."
+description: "This sample component shows how to use object type output properties. This component generates a static object and output via a property which then can be accessed in a canvas app or via client APIs in a model form."
 ---
-# Angular JavaScript Flip Control Power Apps component framework sample
+# Navigation API Power Apps component framework sample
 
 ## Summary
 
-This sample shows how to use third-party libraries to create components in Power Apps component framework. The flip sample component is implemented based on angular.js, angular-ui, angular-animate, angular-sanitize, bootstrap. The code may not reveal the best practices for the mentioned third-party libraries.
-
-![Preview of the sample](https://learn.microsoft.com/power-apps/developer/component-framework/media/angular-flip.png)
+This sample component shows how to use object type output properties. This component generates a static object and output via a property which then can be accessed in a canvas app or via client APIs in a model form.
 
 ## Compatibility
 
-This sample works for both Model-driven and canvas apps.
+This sample works for model-driven and canvas apps.
 
 ## Applies to
 
@@ -33,7 +31,7 @@ This sample was created by the Power Apps component framework team.
 
 Version|Date|Comments
 -------|----|--------
-1.0|January 11, 2024|README created
+1.0|January 18, 2024|README created
 
 ## Prerequisites
 
@@ -45,8 +43,7 @@ Follow the steps in the [README.md](../README.md) to generate solutions containi
 
 ## More information
 
-See [Implementing Flip component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/angular-flip-control)
-
+See [Object Output Component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/object-output)
 
 ## Disclaimer
 

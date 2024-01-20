@@ -1,23 +1,26 @@
 ---
 languages:
-- javascript
+- typescript
 products:
 - power-platform
 - power-apps
 page_type: sample
-description: "This sample shows how to use third-party libraries to create components in Power Apps component framework. The flip sample component is implemented based on angular.js, angular-ui, angular-animate, angular-sanitize, bootstrap. The code may not reveal the best practices for the mentioned third-party libraries."
+description: "This sample demonstrates how to customize the Power Apps editable grid control."
 ---
-# Angular JavaScript Flip Control Power Apps component framework sample
+# Navigation API Power Apps component framework sample
 
 ## Summary
 
-This sample shows how to use third-party libraries to create components in Power Apps component framework. The flip sample component is implemented based on angular.js, angular-ui, angular-animate, angular-sanitize, bootstrap. The code may not reveal the best practices for the mentioned third-party libraries.
+This sample demonstrates how to customize the Power Apps editable grid control as described in [Customize the editable grid control](https://learn.microsoft.com/power-apps/developer/component-framework/customize-editable-grid-control).
 
-![Preview of the sample](https://learn.microsoft.com/power-apps/developer/component-framework/media/angular-flip.png)
+This sample changes the main grid page for a table that is configured to use this control. All text columns will use green text. Any values for the `creditlimit` column will display as blue if the value is greater than 100,000 and red otherwise.
+
+
+![Preview of the sample](https://learn.microsoft.com/power-apps/developer/component-framework/media/editable-grid-control-sample-customized-account-main-grid.png)
 
 ## Compatibility
 
-This sample works for both Model-driven and canvas apps.
+This sample works for model-driven apps.
 
 ## Applies to
 
@@ -33,7 +36,7 @@ This sample was created by the Power Apps component framework team.
 
 Version|Date|Comments
 -------|----|--------
-1.0|January 11, 2024|README created
+1.0|January 18, 2024|README created
 
 ## Prerequisites
 
@@ -45,8 +48,7 @@ Follow the steps in the [README.md](../README.md) to generate solutions containi
 
 ## More information
 
-See [Implementing Flip component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/angular-flip-control)
-
+See [Customized editable grid](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/customized-editable-grid-control)
 
 ## Disclaimer
 
