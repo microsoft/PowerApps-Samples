@@ -45,7 +45,7 @@ Set these variables when debugging using Fiddler:
 |Variable|Type|Description|
 |---|---|---|
 |`$debug`|bool|Set to `$true` only while debugging with Fiddler|
-|`$proxyUrl`|string|Set this value to the Fiddler proxy URL configured on your computer|
+|`$proxyUrl`|string|Set this value to the Fiddler proxy URL configured on your computer. The default value is `http://127.0.0.1:8888`.|
 
 These global variables are set by the [Connection function](#connect-function).
 
@@ -125,20 +125,20 @@ Invoke-DataverseCommands {
 
 ### Invoke-ResilientRestMethod function
 
-Invokes a REST method with resilience to handle 429 errors.
+Invokes a REST method with resilience to handle 429 (Too Many Requests) errors.
 
 The `Invoke-ResilientRestMethod` function uses the `Invoke-RestMethod` cmdlet to send an HTTP request to a RESTful web service. 
-It handles any 429 errors (Too Many Requests) by retrying the request using the `Retry-After` header value as the retry interval. 
+It handles any 429 errors by retrying the request using the `Retry-After` header value as the retry interval, which Dataverse provides.
 It also supports using a proxy if the `$debug` variable is set to true.
 
-[Learn about Dataverse service protection limits](https://learn.microsoft.com/power-apps/developer/data-platform/api-limits?tabs=webapi)
+[Learn about Dataverse service protection limits](https://learn.microsoft.com/power-apps/developer/data-platform/api-limits)
 
 #### Parameters
 
 |Parameter|Type|Description|
 |---|---|---|
-|`request`|hashtable|**Required**. A hashtable of parameters to pass to the `Invoke-RestMethod` cmdlet.|
-|`returnHeader`|bool|Whether to return the response headers instead of the response body|
+|`request`|hashtable|**Required**. Parameters to pass to the `Invoke-RestMethod` cmdlet.|
+|`returnHeader`|bool|Whether to return the response headers instead of the response body.|
 
 
 #### Returns
@@ -158,9 +158,9 @@ The [TableOperations.ps1](TableOperations.ps1) file contains these functions.
 
 Adds a record to a collection-valued navigation property of another record.
 
-The `Add-ToCollection` function uses the [Invoke-ResilientRestMethod function](#invoke-resilientrestmethod-function) to send a `POST` request to the Dataverse API. 
-It constructs the request URI by appending the target entity set name, the target record ID, and the collection name to the base URI. 
-It also adds the necessary headers and converts the record URI to JSON format. 
+The `Add-ToCollection` function uses the [Invoke-ResilientRestMethod function](#invoke-resilientrestmethod-function) to send a `POST` request to the Dataverse API.
+It constructs the request URI by appending the target entity set name, the target record ID, and the collection name to the base URI.
+It also adds the necessary headers and converts the record URI to JSON format.
 It creates a reference between the target record and the record to be added to the collection.
 
 [Learn to associate and disassociate table rows](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/associate-disassociate-entities-using-web-api)
@@ -198,8 +198,8 @@ Add-ToCollection `
 
 Gets the value of a single property from a Dataverse record.
 
-The `Get-ColumnValue` function uses the [Invoke-ResilientRestMethod function](#invoke-resilientrestmethod-function) to send a `GET` request to the Dataverse API. 
-It constructs the request URI by appending the entity set name, the record ID, and the property name to the base URI. 
+The `Get-ColumnValue` function uses the [Invoke-ResilientRestMethod function](#invoke-resilientrestmethod-function) to send a `GET` request to the Dataverse API.
+It constructs the request URI by appending the entity set name, the record ID, and the property name to the base URI.
 It also adds the necessary headers to avoid caching. It returns the value of the property as a string.
 
 [Learn to retrieve specific properties](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/retrieve-entity-using-web-api#retrieve-specific-properties)
@@ -303,9 +303,9 @@ $accountContacts = (Get-Records `
 
 Creates a new record in a Dataverse table.
 
-The `New-Record` function uses the [Invoke-ResilientRestMethod function](#invoke-resilientrestmethod-function) to send a POST request to the Dataverse Web API. 
-It constructs the request URI by appending the entity set name to the base URI. 
-It also adds the necessary headers and converts the `body` hashtable to JSON format. 
+The `New-Record` function uses the [Invoke-ResilientRestMethod function](#invoke-resilientrestmethod-function) to send a `POST` request to the Dataverse Web API.
+It constructs the request URI by appending the entity set name to the base URI.
+It also adds the necessary headers and converts the `body` hashtable to JSON format.
 It returns the GUID ID value of the created record.
 
 [Learn to create records](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/create-entity-web-api)
@@ -324,7 +324,7 @@ This function returns the GUID value of the record created.
 
 #### Example
 
-This example creates a new contact record with the firstname 'Rafel' and the lastname 'Shillo'. It returns the GUID ID of the created record.
+This example creates a new contact record with the `firstname` 'Rafel' and the `lastname` 'Shillo'. It returns the GUID ID of the created record.
 
 ```powershell
 $contactRafelShillo = @{
@@ -341,8 +341,8 @@ $rafelShilloId = New-Record `
 
 Removes a record from a collection-valued navigation property of another record.
 
-The `Remove-FromCollection` function uses the [Invoke-ResilientRestMethod function](#invoke-resilientrestmethod-function) to send a `DELETE` request to the Dataverse API. 
-It constructs the request URI by appending the target entity set name, the target record ID, the collection name, and the record ID to the base URI. 
+The `Remove-FromCollection` function uses the [Invoke-ResilientRestMethod function](#invoke-resilientrestmethod-function) to send a `DELETE` request to the Dataverse API.
+It constructs the request URI by appending the target entity set name, the target record ID, the collection name, and the record ID to the base URI.
 It also adds the necessary headers. It deletes the reference between the target record and the record to be removed from the collection.
 
 [Learn to associate and disassociate table rows using the Web API](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/associate-disassociate-entities-using-web-api)
@@ -376,8 +376,8 @@ Remove-FromCollection `
 
 Deletes a record from a Dataverse table.
 
-The `Remove-Record` function uses the [Invoke-ResilientRestMethod function](#invoke-resilientrestmethod-function) to send a `DELETE` request to the Dataverse API. 
-It constructs the request URI by appending the entity set name and the record ID to the base URI. 
+The `Remove-Record` function uses the [Invoke-ResilientRestMethod function](#invoke-resilientrestmethod-function) to send a `DELETE` request to the Dataverse API.
+It constructs the request URI by appending the entity set name and the record ID to the base URI.
 It also adds the necessary headers. It deletes the record with the specified ID from the table.
 
 [Learn to delete records](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/update-delete-entities-using-web-api#basic-delete)
@@ -407,9 +407,9 @@ Remove-Record `
 
 Sets the value of a single property for a Dataverse record.
 
-The `Set-ColumnValue` function uses the [Invoke-ResilientRestMethod function](#invoke-resilientrestmethod-function) to send a `PUT` request to the Dataverse API. 
-It constructs the request URI by appending the entity set name, the record ID, and the property name to the base URI. 
-It also adds the necessary headers and converts the value to JSON format. 
+The `Set-ColumnValue` function uses the [Invoke-ResilientRestMethod function](#invoke-resilientrestmethod-function) to send a `PUT` request to the Dataverse API.
+It constructs the request URI by appending the entity set name, the record ID, and the property name to the base URI.
+It also adds the necessary headers and converts the value to JSON format.
 It overwrites the existing value of the property with the new value.
 
 [Learn to update a single property value](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/update-delete-entities-using-web-api#update-a-single-property-value)
@@ -443,9 +443,9 @@ Set-ColumnValue `
 
 Updates an existing record in a Dataverse table.
 
-The `Update-Record` function uses the [Invoke-ResilientRestMethod function](#invoke-resilientrestmethod-function) to send a `PATCH` request to the Dataverse API. 
-It constructs the request URI by appending the entity set name and the record ID to the base URI. 
-It also adds the necessary headers and converts the body hashtable to JSON format. 
+The `Update-Record` function uses the [Invoke-ResilientRestMethod function](#invoke-resilientrestmethod-function) to send a `PATCH` request to the Dataverse API.
+It constructs the request URI by appending the entity set name and the record ID to the base URI.
+It also adds the necessary headers and converts the body hashtable to JSON format.
 It uses the `If-Match` header with a value of `'*'` to prevent creating a new record if the record ID does not exist.
 
 [Learn to update a record](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/update-delete-entities-using-web-api#basic-update)
@@ -491,8 +491,8 @@ The [CommonFunctions.ps1](CommonFunctions.ps1) file currently contains just one 
 
 Gets the current user information from the Dataverse Web API.
 
-The `Get-WhoAmI` function uses the [Invoke-ResilientRestMethod function](#invoke-resilientrestmethod-function) to send a `GET` request to the Dataverse API. 
-It constructs the request URI by appending the [WhoAmI function](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/whoami?view=dataverse-latest) name to the base URI. 
+The `Get-WhoAmI` function uses the [Invoke-ResilientRestMethod function](#invoke-resilientrestmethod-function) to send a `GET` request to the Dataverse API.
+It constructs the request URI by appending the [WhoAmI function](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/whoami?view=dataverse-latest) name to the base URI.
 It also adds the necessary headers. It returns an object that contains the user ID, business unit ID, and organization ID.
 
 #### Parameters

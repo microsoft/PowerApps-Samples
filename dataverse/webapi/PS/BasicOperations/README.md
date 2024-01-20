@@ -83,7 +83,7 @@ See [HTTP Web API Basic Operations Sample Section 2: Create with association](ht
 
 ### Section 3: Create related entities
 
-Operations: 
+Operations:
 
 - Create the following records in one operation using the `New-Record` function.:
 

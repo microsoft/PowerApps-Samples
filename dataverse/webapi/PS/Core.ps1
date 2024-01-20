@@ -1,6 +1,3 @@
-#Requires -Version 7.4.0
-#Requires -Modules @{ ModuleName="Az"; ModuleVersion="11.1.0" }
-
 # Set to $true only while debugging with Fiddler
 $debug = $false
 # Set this value to the Fiddler proxy URL configured on your computer
