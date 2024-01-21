@@ -5,7 +5,7 @@ The files in this folder are PowerShell helper functions that Dataverse Web API 
 |File|Description|
 |---|---|
 |[Core.ps1](Core.ps1)|Contains functions that all other functions or samples depend on.|
-|[TableOperations.ps1](TableOperationsre.ps1)|Contains function that enable performing data operations on table rows|
+|[TableOperations.ps1](TableOperationsre.ps1)|Contains functions that enable performing data operations on table rows|
 |[CommonFunctions.ps1](CommonFunctions.ps1)|Contains common Dataverse functions|
 
 Samples that use these common functions reference them using [dot sourcing](https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about/about_scripts#script-scope-and-dot-sourcing) as demonstrated by the [BasicOperations/BasicOperations.ps1](BasicOperations/BasicOperations.ps1):
@@ -47,7 +47,7 @@ Set these variables when debugging using Fiddler:
 |`$debug`|bool|Set to `$true` only while debugging with Fiddler|
 |`$proxyUrl`|string|Set this value to the Fiddler proxy URL configured on your computer. The default value is `http://127.0.0.1:8888`.|
 
-These global variables are set by the [Connection function](#connect-function).
+These global variables are set by the [Connect function](#connect-function).
 
 |Variable|Type|Description|
 |---|---|---|
