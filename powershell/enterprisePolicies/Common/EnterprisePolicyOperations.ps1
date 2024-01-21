@@ -99,7 +99,7 @@ function RemoveEnterprisePolicy($policyArmId)
 
 }
 
-function GenerateEnterprisePolicyBody ($policyType, $policyLocation, $policyName, $keyVaultId, $keyName, $keyVersion, $vnetId, $subnetName)
+function GenerateEnterprisePolicyBody ($policyType, $policyLocation, $policyName, $keyVaultId, $keyName, $keyVersion, $primaryVnetId, $primarySubnetName, $secondaryVnetId, $secondarySubnetName)
 {   
     if ("cmk" -eq $policyType)
     {
@@ -152,18 +152,20 @@ function GenerateEnterprisePolicyBody ($policyType, $policyLocation, $policyName
                     "name" = $policyName
                     "location"= $policyLocation
                     "kind" = "NetworkInjection"
-                
-                    "identity" = @{
-                        "type"= "SystemAssigned"
-                    }
-                
+                               
                     "properties" = @{
                         "networkInjection" = @{
                             "virtualNetworks" = @(
                                 @{
-                                    "id" = $vnetId
+                                    "id" = $primaryVnetId
                                     "subnet" = @{
-                                        "name" = $subnetName
+                                        "name" = $primarySubnetName
+                                    }
+                                },
+                                 @{
+                                    "id" = $secondaryVnetId
+                                    "subnet" = @{
+                                        "name" = $secondarySubnetName
                                     }
                                 }
                             )
