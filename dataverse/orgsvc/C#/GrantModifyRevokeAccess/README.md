@@ -2,11 +2,11 @@
 
 This sample shows how to share a record using the following messages:
 
-[GrantAccessRequest](https://docs.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.grantaccessrequest?view=dynamics-general-ce-9)
+[GrantAccessRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.grantaccessrequest)
 
-[ModifyAccessRequest](https://docs.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.modifyaccessrequest?view=dynamics-general-ce-9)
+[ModifyAccessRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.modifyaccessrequest)
 
-[RevokeAccessRequest](https://docs.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.revokeaccessrequest?view=dynamics-general-ce-9)
+[RevokeAccessRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.revokeaccessrequest)
 
 This sample requires additional users that are not in your system. Create the required users manually in **Office 365** in order to run the sample without any errors. For this sample create 2 user profiles **as is** shown below. 
 

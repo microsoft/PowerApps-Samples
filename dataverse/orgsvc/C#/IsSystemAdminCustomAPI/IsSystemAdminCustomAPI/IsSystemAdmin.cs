@@ -35,7 +35,7 @@ namespace PowerApps.Samples
                     //Query systemuserroles first
 
                     // 627090FF-40A3-4053-8790-584EDC5BE201 is a fixed guid for the System Administrator role
-                    ///<seealso cref="https://docs.microsoft.com/powerapps/developer/data-platform/security-roles#standard-role-templates"/>
+                    ///<seealso cref="https://learn.microsoft.com/powerapps/developer/data-platform/security-roles#standard-role-templates"/>
 
                     string systemUserRolesFetchXml = $@"<fetch mapping='logical' >
                       <entity name='systemuserroles'>

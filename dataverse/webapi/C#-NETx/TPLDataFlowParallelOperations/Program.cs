@@ -6,7 +6,7 @@ using System.Threading.Tasks.Dataflow;
 namespace TPLDataFlowParallelOperations
 {
     // This sample demonstrates the use of Task Parallel Library (TPL) Dataflow components
-    // See https://docs.microsoft.com/en-us/dotnet/standard/parallel-programming/dataflow-task-parallel-library
+    // See https://learn.microsoft.com/dotnet/standard/parallel-programming/dataflow-task-parallel-library
 
     internal class Program
     {

@@ -27,7 +27,7 @@ This sample uses the common helper code in the [WebAPIService](https://github.co
 
    |Property|Instructions  |
    |---------|---------|
-   |`Url`|The Url for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. See [View developer resources](https://docs.microsoft.com/power-apps/developer/data-platform/view-download-developer-resources) to find this. |
+   |`Url`|The Url for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. See [View developer resources](https://learn.microsoft.com/power-apps/developer/data-platform/view-download-developer-resources) to find this. |
    |`UserPrincipalName`|Replace the placeholder `you@yourorg.onmicrosoft.com` value with the UPN value you use to access the environment.|
    |`Password`|Replace the placeholder `yourPassword` value with the password you use.|
 

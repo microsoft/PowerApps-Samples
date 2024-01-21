@@ -2,9 +2,9 @@
 
 This topic provides information about the files available in the **build-tools** folder.
 
-For Power Apps developer documentation, see [PowerApps for developers](https://docs.microsoft.com/powerapps/#pivot=home&panel=developer).
+For Power Apps developer documentation, see [PowerApps for developers](https://learn.microsoft.com/powerapps/#pivot=home&panel=developer).
 
-For build tools documentation, see [Power Platform Build Tools for Azure DevOps](https://docs.microsoft.com/power-platform/alm/devops-build-tools).
+For build tools documentation, see [Power Platform Build Tools for Azure DevOps](https://learn.microsoft.com/power-platform/alm/devops-build-tools).
 
 
 

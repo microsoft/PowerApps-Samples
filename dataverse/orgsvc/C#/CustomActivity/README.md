@@ -1,6 +1,6 @@
 # Create a custom activity
 
-The following code example demonstrates how to create a custom activity using [CreateEntityRequest](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createentityrequest?view=dynamics-general-ce-9) and [CreateAttributeRequest](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createattributerequest?view=dynamics-general-ce-9).  
+The following code example demonstrates how to create a custom activity using [CreateEntityRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createentityrequest) and [CreateAttributeRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createattributerequest).  
 
 ## How to run this sample
 

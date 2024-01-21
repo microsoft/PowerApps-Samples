@@ -14,7 +14,7 @@ namespace PowerApps.Samples
     /// Stage and asynchronously import a solution. Environment variables and
     /// connection references in the solution are supported.
     /// </summary>
-    /// <see cref="https://docs.microsoft.com/power-platform/alm/solution-async"/>
+    /// <see cref="https://learn.microsoft.com/power-platform/alm/solution-async"/>
     class Program
     {
         static void Main(string[] args)

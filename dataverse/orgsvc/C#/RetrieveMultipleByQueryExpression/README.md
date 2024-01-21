@@ -1,6 +1,6 @@
 # Sample: Retrieve multiple with the QueryByAttribute class
 
-This sample shows how to retrieve multiple entities using the [IOrganizationService.RetrieveMultiple(QueryBase)](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.retrievemultiple?view=dynamics-general-ce-9#Microsoft_Xrm_Sdk_IOrganizationService_RetrieveMultiple_Microsoft_Xrm_Sdk_Query_QueryBase_) method with [QueryExpression](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.query.queryexpression?view=dynamics-general-ce-9) along with their related table columns.
+This sample shows how to retrieve multiple entities using the [IOrganizationService.RetrieveMultiple(QueryBase)](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.retrievemultiple#Microsoft_Xrm_Sdk_IOrganizationService_RetrieveMultiple_Microsoft_Xrm_Sdk_Query_QueryBase_) method with [QueryExpression](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.query.queryexpression) along with their related table columns.
 
 ## How to run this sample
 

@@ -2,7 +2,7 @@
 
 This topic provides information about the sample data files available in the **ai-builder/labs** folder.
 
-AI Builder documentation is available in the [AI Builder documentation](https://docs.microsoft.com/ai-builder).
+AI Builder documentation is available in the [AI Builder documentation](https://learn.microsoft.com/ai-builder).
 
 ## AIBuilder_Lab.zip
 
@@ -31,8 +31,8 @@ This will create five (5) Dataverse tables - **Object Detection Product**, **Hea
 
 #### Step 2: Upload data to the entities created in step 1
 
-- **Prediction**: Follow the instructions in [Prediction data preparation](https://docs.microsoft.com/ai-builder/binary-classification-data-prep) to upload the **Online Shopping Intent** data.
-- **Category classification**: Go to the **Lab Data/CategoryClassification** folder within the lab files, and then upload the data from **pai_healthcare_feedbacks**. Follow the instructions in [Before you build a category classification model](https://docs.microsoft.com/ai-builder/before-you-build-text-classification-model).
-- **Entity extraction**: Go to the **Lab Data/EntityExtraction** folder with the lab files, and then upload the data from **aib_travelfeedback**. Follow the instructions in [Use sample data to do entity extraction](https://docs.microsoft.com/ai-builder/entity-extraction-sample-data).
+- **Prediction**: Follow the instructions in [Prediction data preparation](https://learn.microsoft.com/ai-builder/binary-classification-data-prep) to upload the **Online Shopping Intent** data.
+- **Category classification**: Go to the **Lab Data/CategoryClassification** folder within the lab files, and then upload the data from **pai_healthcare_feedbacks**. Follow the instructions in [Before you build a category classification model](https://learn.microsoft.com/ai-builder/before-you-build-text-classification-model).
+- **Entity extraction**: Go to the **Lab Data/EntityExtraction** folder with the lab files, and then upload the data from **aib_travelfeedback**. Follow the instructions in [Use sample data to do entity extraction](https://learn.microsoft.com/ai-builder/entity-extraction-sample-data).
 
 For business card reader, document processing, identity document reader, object detection, receipt processing, and text recognition labs, you'll need images/pdfs that are available in the **Lab Images** folder.

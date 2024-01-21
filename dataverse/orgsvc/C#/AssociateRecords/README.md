@@ -1,6 +1,6 @@
 # Associate and disassociate table rows
 
-This sample shows how to associate and disassociate tables rows using the [IOrganizationService.Associate](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.associate?view=dynamics-general-ce-9) and [IOrganization.Disassociate](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.disassociate?view=dynamics-general-ce-9) messages. 
+This sample shows how to associate and disassociate tables rows using the [IOrganizationService.Associate](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.associate) and [IOrganization.Disassociate](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.disassociate) messages. 
 
 ## How to run this sample
 

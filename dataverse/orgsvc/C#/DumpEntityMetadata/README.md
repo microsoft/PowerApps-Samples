@@ -1,6 +1,6 @@
 # Dump table definitions to a file
 
-This sample shows how to write out table definitions to an `XML` file. It uses the [RetrieveAllEntitiesRequest](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.retrieveallentitiesrequest?view=dynamics-general-ce-9) message.
+This sample shows how to write out table definitions to an `XML` file. It uses the [RetrieveAllEntitiesRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.retrieveallentitiesrequest) message.
 
 The following sample creates a new file at `\DumpEntityMetadata\bin\Debug\EntityInfo.xml`. You can open this file in **Office Excel** to see a tabular report. You may need this information to discover the entity type code for a custom table for use in reports.
 

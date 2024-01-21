@@ -4,8 +4,8 @@ using System;
 namespace xMultiplePluginSamples
 {
     /// <summary>
-    /// Plugin development guide: https://docs.microsoft.com/powerapps/developer/common-data-service/plug-ins
-    /// Best practices and guidance: https://docs.microsoft.com/powerapps/developer/common-data-service/best-practices/business-logic/
+    /// Plugin development guide: https://learn.microsoft.com/powerapps/developer/common-data-service/plug-ins
+    /// Best practices and guidance: https://learn.microsoft.com/powerapps/developer/common-data-service/best-practices/business-logic/
     /// </summary>
     public class UpdateSingle : PluginBase
     {
@@ -13,7 +13,7 @@ namespace xMultiplePluginSamples
             : base(typeof(UpdateSingle))
         {
             // TODO: Implement your custom configuration handling
-            // https://docs.microsoft.com/powerapps/developer/common-data-service/register-plug-in#set-configuration-data
+            // https://learn.microsoft.com/powerapps/developer/common-data-service/register-plug-in#set-configuration-data
         }
 
         // Entry point for custom business logic execution

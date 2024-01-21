@@ -1,6 +1,6 @@
 # Query the working hours of a user
 
-This sample shows how to retrieve the working hours of a user by using the [QueryScheduleRequest](https://docs.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.queryschedulerequest?view=dynamics-general-ce-9) message.
+This sample shows how to retrieve the working hours of a user by using the [QueryScheduleRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.queryschedulerequest) message.
 
 ## How to run this sample
 

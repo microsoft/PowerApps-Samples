@@ -14,7 +14,7 @@
 
   <!--
     NuGet pack and restore as MSBuild targets reference:
-    https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets
+    https://learn.microsoft.com/nuget/reference/msbuild-targets
   -->
   <PropertyGroup>
     <PackageId>xMultiplePluginSamples</PackageId>

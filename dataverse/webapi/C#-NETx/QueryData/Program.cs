@@ -293,7 +293,7 @@ namespace QueryData
             // 3) Using filter operators and logical operators (e.g.: eq, ne, gt, and, or, etc…)
             // 4) Set precedence using parenthesis (e.g.: ((criteria1) and (criteria2)) or (criteria3)
             // For more info, see:
-            // https://docs.microsoft.com/power-apps/developer/data-platform/webapi/query-data-web-api#filter-results
+            // https://learn.microsoft.com/power-apps/developer/data-platform/webapi/query-data-web-api#filter-results
 
             Console.WriteLine("-- Filter Criteria --");
             // Filter 1: Using standard query functions to filter results. This operation
@@ -312,7 +312,7 @@ namespace QueryData
 
             // Filter 2: Using Dataverse query functions to filter results. In this operation, we will query
             // for all contacts that were created in the last hour. For complete list of Dataverse query
-            // functions, see: https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/queryfunctions
+            // functions, see: https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/queryfunctions
 
             RetrieveMultipleResponse createdInLastHourCollection =
                 await service.RetrieveMultiple(queryUri: "contacts?" +
@@ -329,7 +329,7 @@ namespace QueryData
 
             // Filter 3: Using operators. Building on the previous operation, this will further limit
             // the results by the contact's income. For more info on standard filter operators,
-            // https://docs.microsoft.com/power-apps/developer/data-platform/webapi/query-data-web-api#filter-results
+            // https://learn.microsoft.com/power-apps/developer/data-platform/webapi/query-data-web-api#filter-results
 
             RetrieveMultipleResponse highIncomeContacts =
                 await service.RetrieveMultiple(queryUri: "contacts?" +
@@ -384,7 +384,7 @@ namespace QueryData
             // Parameterized aliases can be used as parameters in a query. Use these parameters
             // in $filter and $orderby options. Using the previous operation as basis, parameterizing the
             // query will give us the same results. For more info, see:
-            // https://docs.microsoft.com/power-apps/developer/data-platform/webapi/use-web-api-functions#passing-parameters-to-a-function
+            // https://learn.microsoft.com/power-apps/developer/data-platform/webapi/use-web-api-functions#passing-parameters-to-a-function
 
             Console.WriteLine("\n-- Parameterized Aliases --");
 
@@ -414,7 +414,7 @@ namespace QueryData
             // To limit records returned, use the $top query option.  Specifying a limit number for $top
             // returns at most that number of results per request. Extra results are ignored.
             // For more information, see:
-            // https://docs.microsoft.com/power-apps/developer/data-platform/webapi/query-data-web-api#use-top-query-option
+            // https://learn.microsoft.com/power-apps/developer/data-platform/webapi/query-data-web-api#use-top-query-option
             Console.WriteLine("\n-- Top Results --");
 
             RetrieveMultipleResponse topFive =
@@ -629,7 +629,7 @@ namespace QueryData
             
             // Use FetchXML to query for all contacts whose fullname contains '(sample)'.
             // Note: XML string must be URI encoded. For more information, see:
-            // https://docs.microsoft.com/power-apps/developer/data-platform/webapi/use-fetchxml-web-api
+            // https://learn.microsoft.com/power-apps/developer/data-platform/webapi/use-fetchxml-web-api
             // In this sample the FetchXmlResponse class encodes the URI.
             Console.WriteLine("\n-- FetchXML -- ");
             string fetchXmlQuery =
@@ -761,7 +761,7 @@ namespace QueryData
             //   1) Saved query (system view)
             //   2) User query (saved view)
             // For more info, see:
-            // https://docs.microsoft.com/power-apps/developer/data-platform/webapi/retrieve-and-execute-predefined-queries#predefined-queries
+            // https://learn.microsoft.com/power-apps/developer/data-platform/webapi/retrieve-and-execute-predefined-queries#predefined-queries
 
             // 1) Saved Query - retrieve "Active Accounts", run it, then display the results.
             Console.WriteLine("\n-- Saved Query -- ");
@@ -787,7 +787,7 @@ namespace QueryData
 
             // 2) Create a user query, then retrieve and execute it to display its results.
             // For more info, see:
-            // https://docs.microsoft.com/power-apps/developer/data-platform/saved-queries
+            // https://learn.microsoft.com/power-apps/developer/data-platform/saved-queries
             Console.WriteLine("\n-- User Query -- ");
 
 

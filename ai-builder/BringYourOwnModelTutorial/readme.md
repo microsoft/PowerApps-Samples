@@ -2,8 +2,8 @@
 
 
 AI Builder provides unprecedented ease in deploying AI and ML models in
-applications, automation, and against business data. With “bring your own
-model”, you can deploy *any* model to AI Builder and make it accessible to any
+applications, automation, and against business data. With "bring your own
+model", you can deploy *any* model to AI Builder and make it accessible to any
 user with access to Microsoft Power Platform or Microsoft Dataverse. In this
 article, we will show you how to quickly integrate your own models into AI
 Builder and Microsoft Power Apps. You will be able to register a model from
@@ -16,16 +16,16 @@ integrate in the end shows predictions based on images in the app.
 
 **NOTE**:
 -   This is a preview feature.
--   Preview features aren’t meant for production use and may have restricted
+-   Preview features aren't meant for production use and may have restricted
     functionality. These features are available before an official release so
     that customers can get early access and provide feedback.
 
 ## Prerequisites
 
--   A Power Apps [environment](https://docs.microsoft.com/en-us/power-platform/admin/environments-overview).
+-   A Power Apps [environment](https://learn.microsoft.com/power-platform/admin/environments-overview).
 
 -   An Azure Machine Learning workspace. Please refer to this
-    [documentation](https://docs.microsoft.com/azure/machine-learning/tutorial-1st-experiment-sdk-setup)
+    [documentation](https://learn.microsoft.com/azure/machine-learning/tutorial-1st-experiment-sdk-setup)
     to set your Azure Machine Learning workspace, notebook and a compute to run
     a notebook.
 
@@ -65,7 +65,7 @@ Builder.
 
     ![](media/4e0502923aaf74a4aaf325533e592c8b.png)
 
-5.  Open the SetupService.ipynb notebook. If you haven’t created a notebook
+5.  Open the SetupService.ipynb notebook. If you haven't created a notebook
     compute, use the + button in the notebook window header and create a compute
     to be used for your notebooks. Any compute should work such as a
     Standard_DS2_v2.
@@ -74,10 +74,10 @@ Builder.
     detection model to an Azure Container Instance.
 
 7.  When accessing a resource, you may be prompted to log in with a message that
-    looks like this: **“Performing interactive authentication. Please follow the
+    looks like this: **"Performing interactive authentication. Please follow the
     instructions on the terminal. To sign in, use a web browser to open the page
     https://microsoft.com/devicelogin and enter the code XXXXXXXXXX to
-    authenticate.”** To log in, click the link, enter the code, and follow any
+    authenticate."** To log in, click the link, enter the code, and follow any
     login prompts to continue.
 
 8.  Once you complete all the notebook cells you will have the model deployed as
@@ -95,10 +95,10 @@ To register the model with AI Builder, follow these steps:
 
 2.  Run all the cells to register the deployed Pneumonia detection model with AI
     Builder. During this process you will be prompted to log into AI Builder
-    with the following message: **“Performing interactive authentication. Please
+    with the following message: **"Performing interactive authentication. Please
     follow the instructions on the terminal. To sign in, use a web browser to
     open the page https://microsoft.com/devicelogin and enter the code
-    XXXXXXXXXX to authenticate.”** To log in, click the link, enter the code and
+    XXXXXXXXXX to authenticate."** To log in, click the link, enter the code and
     follow any login prompts to continue.
 
 3.  Once you run all the steps successfully, you can view the registered model
@@ -134,7 +134,7 @@ provided.
 ### Step 3.2: Integrate the registered model
 
 After importing the sample app into Power
-Apps, it’s time to integrate the AI model you registered earlier with the
+Apps, it's time to integrate the AI model you registered earlier with the
 imported canvas app.
 
 1.  Select **Edit** to modify the canvas application.
@@ -157,7 +157,7 @@ imported canvas app.
     ![](media/0ad7bac004069b105d5413f7acab8691.png)
 
 1.  Click on the **Diagnose** button in the app. The formula bar will show up at
-    the top. Ensure that the model’s name is same as the selected model
+    the top. Ensure that the model's name is same as the selected model
     (pneumonia-detection-v1 in this case). Now select run on the top right
     corner to preview the app.
 

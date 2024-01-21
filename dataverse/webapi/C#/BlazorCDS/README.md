@@ -2,7 +2,7 @@
 
 This sample shows how to use the Global Discovery service from a Blazor WebAssembly application.
 
-This sample is a modification of the steps in the [Tutorial: Create an ASP.NET Core Blazor WebAssembly app using Microsoft Dataverse](https://docs.microsoft.com/power-apps/developer/data-platform/walkthrough-blazor-webassembly-single-tenant)
+This sample is a modification of the steps in the [Tutorial: Create an ASP.NET Core Blazor WebAssembly app using Microsoft Dataverse](https://learn.microsoft.com/power-apps/developer/data-platform/walkthrough-blazor-webassembly-single-tenant)
 
 You can try this sample online here: [https://blazorcds.mohsinonxrm.com/](https://blazorcds.mohsinonxrm.com/)
 
@@ -87,5 +87,5 @@ This sample makes no changes to data in your environment.
 
 ### See Also
 
-[Discover user organizations](https://docs.microsoft.com/power-apps/developer/data-platform/discovery-service)<br />
-[Sample: Global Discovery Service (C#)](https://docs.microsoft.com/power-apps/developer/data-platform/sample-global-discovery-service-csharp)
+[Discover user organizations](https://learn.microsoft.com/power-apps/developer/data-platform/discovery-service)<br />
+[Sample: Global Discovery Service (C#)](https://learn.microsoft.com/power-apps/developer/data-platform/sample-global-discovery-service-csharp)

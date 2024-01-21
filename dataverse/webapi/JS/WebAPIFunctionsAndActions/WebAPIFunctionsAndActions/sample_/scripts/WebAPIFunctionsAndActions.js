@@ -132,7 +132,7 @@ Sdk.request = function (action, uri, data, addHeader) {
  * @function Sdk.startSample
  * @description Initiates a chain of promises to show use of Functions and Actions with the Web API.
  * Functions and actions represent re-usable operations you can perform using the Web API.
- * For more info, see https://msdn.microsoft.com/en-us/library/mt607990.aspx#bkmk_actions
+ * For more info, see https://learn.microsoft.com/power-apps/developer/data-platform/webapi/use-web-api-actions
  * The following standard CRM Web API functions and actions are invoked:
  *  - WhoAmI, a basic unbound function
  *  - GetTimeZoneCodeByLocalizedName, an unbound function that requires parameters
@@ -153,13 +153,13 @@ Sdk.startSample = function () {
  .then(function () {
   console.log("-- Working with functions --");
   // Bound and Unbound functions
-  // See https://msdn.microsoft.com/en-us/library/gg309638.aspx#bkmk_boundAndUnboundFunctions
+  // See https://learn.microsoft.com/power-apps/developer/data-platform/webapi/use-web-api-functions#bound-and-unbound-functions
 
   console.log("Using functions to look up your full name.");
   // Calling a basic unbound function without parameters.
   // Retrieves the user's full name using a series of function requests.
   //  - Call WhoAmI via the Sdk.getUsersFullName function.
-  // For more info on the WhoAmI function, see https://msdn.microsoft.com/en-us/library/mt607925.aspx
+  // For more info on the WhoAmI function, see https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/whoami
   return Sdk.getUsersFullName();
  })
  .then(function (fullName) {
@@ -169,7 +169,7 @@ Sdk.startSample = function () {
   // Calling a basic unbound function with no parameters.
   // Retrieves the time zone code for the specified time zone.
   //  - Pass parameters to an unbound function by calling  the GetTimeZoneCodeByLocalizedName Function.
-  // For more info, see https://msdn.microsoft.com/library/mt607644.aspx
+  // For more info, see https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/gettimezonecodebylocalizedname
   var localizedStandardName = 'Pacific Standard Time';
   var localeId = 1033;
   // Demonstrates best practice of passing parameters.
@@ -186,7 +186,7 @@ Sdk.startSample = function () {
  })
  .then(function (request) {
   // Returns GetTimeZoneCodeByLocalizedNameResponse ComplexType. 
-  // For more info, see https://msdn.microsoft.com/library/mt607889.aspx
+  // For more info, see https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/gettimezonecodebylocalizednameresponse
   var localizedStandardName = 'Pacific Standard Time';
   var timeZoneCode = JSON.parse(request.response).TimeZoneCode;
   console.log("\tFunction returned time zone %s, with code '%s'.", localizedStandardName, timeZoneCode);
@@ -195,26 +195,26 @@ Sdk.startSample = function () {
   // Calling a basic bound function that requires parameters.
   // Retrieve the total time, in minutes, spent on all tasks associated with this incident.
   //  - Use CalculateTotalTimeIncident to get the total duration of all closed activities.
-  // For more info, see https://msdn.microsoft.com/library/mt593054.aspx
+  // For more info, see https://learn.microsoft.com/previous-versions/dynamicscrm-2016/developers-guide/mt593054(v=crm.8)
   // Note that in a bound function the full function name includes the  
   // namespace Microsoft.Dynamics.CRM. Functions that aren’t bound must not use the full name.
   return Sdk.request("GET", incidentUri + "/Microsoft.Dynamics.CRM.CalculateTotalTimeIncident()")
  })
  .then(function (request) {
   // Returns CalculateTotalTimeIncidentResponse ComplexType.
-  // For more info, see https://msdn.microsoft.com/library/mt607924.aspx
+  // For more info, see https://learn.microsoft.com/previous-versions/dynamicscrm-2016/developers-guide/mt607924(v=crm.8)
   var totalTime = JSON.parse(request.response).TotalTime; //returns 90
   console.log("\tFunction returned %s minutes - total duration of tasks associated with the incident.\n",
    totalTime);
 
   console.log("-- Working with Actions --");
-  // For more info about Action, see https://msdn.microsoft.com/en-us/library/mt607600.aspx
+  // For more info about Action, see https://learn.microsoft.com/power-apps/developer/data-platform/webapi/use-web-api-actions
 
   console.log("Unbound Action: WinOpportunity");
   // Calling an unbound action that requires parameters.
   // Closes an opportunity and markt it as won.
   //  - Update the WinOpportunity (created by Sdk.createRequiredRecords()) by closing it as won.
-  // Use WinOpportunity Action (https://msdn.microsoft.com/library/mt607971.aspx)
+  // Use WinOpportunity Action (https://learn.microsoft.com/previous-versions/dynamicscrm-2016/developers-guide/mt607971(v=crm.8))
   // This action does not return a value
   var parameters = {
    "Status": 3,
@@ -236,7 +236,7 @@ Sdk.startSample = function () {
   //  - Get a reference to the current user.
   //  - Get a reference to the letter activity.
   //  - Add letter to current user's queue via the bound action AddToQueue.
-  // For more info on AddToQueue, see https://msdn.microsoft.com/en-us/library/mt607880.aspx
+  // For more info on AddToQueue, see https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/addtoqueue
 
   return Sdk.request("GET", "/WhoAmI");
  })
@@ -277,7 +277,7 @@ Sdk.startSample = function () {
   // This custom action is installed when you install this sample's solution to your CRM server.
   //  - Add a note to an existing contact (e.g.: contactUri)
   //  - Get the note info and the contact's full name.
-  // For more info, see https://msdn.microsoft.com/en-us/library/mt607600.aspx#bkmk_customActions
+  // For more info, see https://learn.microsoft.com/power-apps/developer/data-platform/custom-actions
   //sample_AddNoteToContact custom action parameters
   var parameters = {
    NoteTitle: "The Title of the Note",
@@ -425,12 +425,12 @@ Sdk.deleteEntities = function () {
  */
 Sdk.getUsersFullName = function () {
  return new Promise(function (resolve, reject) {
-  //Use WhoAmI Function (https://msdn.microsoft.com/library/mt607925.aspx)
+  //Use WhoAmI Function (https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/whoami)
   Sdk.request("GET", "/WhoAmI")
   .then(function (request) {
-   //Returns WhoAmIResponse ComplexType (https://msdn.microsoft.com/library/mt607982.aspx)
+   //Returns WhoAmIResponse ComplexType (https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/whoamiresponse)
    var myId = JSON.parse(request.response).UserId;
-   //Retrieve the systemuser Entity fullname property (https://msdn.microsoft.com/library/mt608065.aspx)
+   //Retrieve the systemuser Entity fullname property (https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/systemuser)
    return Sdk.request("GET", "/systemusers(" + myId + ")?$select=fullname")
   })
   .then(function (request) {
