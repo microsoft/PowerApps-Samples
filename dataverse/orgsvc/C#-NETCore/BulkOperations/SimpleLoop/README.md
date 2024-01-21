@@ -1,6 +1,6 @@
 ﻿# SimpleLoop README
 
-This project simply loops through the list of prepared Entity instances to perform create and update individual operations sequentially using the [CreateRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createrequest?view=dataverse-sdk-latest) and [UpdateRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.updaterequest?view=dataverse-sdk-latest) classes.
+This project simply loops through the list of prepared Entity instances to perform create and update individual operations sequentially using the [CreateRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createrequest) and [UpdateRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.updaterequest) classes.
 
 It depends on the common structure for other projects in this solution that is described in [CreateUpdateMultiple/README.md](../README.md).
 

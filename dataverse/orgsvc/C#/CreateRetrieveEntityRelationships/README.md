@@ -3,12 +3,12 @@
 
 This sample shows how to create and retrieve table relationships. The following methods are used to create and retrieve the relationships:
 
-- [CreateOneToManyRequest](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createonetomanyrequest?view=dynamics-general-ce-9)
-- [CreateManyToManyRequest](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createmanytomanyrequest?view=dynamics-general-ce-9)
-- [CanBeReferencedRequest](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.canbereferencedrequest?view=dynamics-general-ce-9)
-- [CanBeReferencingRequest](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.canbereferencingrequest?view=dynamics-general-ce-9)
-- [CanManyToManyRequest](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.canmanytomanyrequest?view=dynamics-general-ce-9)
-- [RetrieveRelationshipRequest](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.retrieverelationshiprequest?view=dynamics-general-ce-9)
+- [CreateOneToManyRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createonetomanyrequest)
+- [CreateManyToManyRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createmanytomanyrequest)
+- [CanBeReferencedRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.canbereferencedrequest)
+- [CanBeReferencingRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.canbereferencingrequest)
+- [CanManyToManyRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.canmanytomanyrequest)
+- [RetrieveRelationshipRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.retrieverelationshiprequest)
 
 ## How to run this sample
 

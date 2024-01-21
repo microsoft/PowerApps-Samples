@@ -59,7 +59,7 @@ var taskProperties = ["subject", "description"];
  * @param {object} data - An object representing an entity. Required for create and update action.
  * @param {boolean} formattedValue - If "true" then include formatted value; "false" otherwise.
  *    For more info on formatted value, see:
- *    https://msdn.microsoft.com/en-us/library/gg334767.aspx#bkmk_includeFormattedValues
+ *    https://learn.microsoft.com/power-apps/developer/data-platform/webapi/query-data-web-api#formatted-values
  * @param {number} maxPageSize - Indicate the page size. Default is 10 if not defined.
  * @returns {Promise} - A Promise that returns either the request object or an error object.
  */
@@ -293,7 +293,7 @@ Sdk.startSample = function () {
         // 2) Using CRM query functions (e.g.: LastXhours, Last7Days, Today, Between, In, ...)
         // 3) Using filter operators and logical operators (e.g.: eq, ne, gt, and, or, etc…)
         // 4) Set precedence using parenthesis (e.g.: ((criteria1) and (criteria2)) or (criteria3)
-        // For more info, see: https://msdn.microsoft.com/en-us/library/gg334767.aspx#bkmk_filter
+        // For more info, see: https://learn.microsoft.com/power-apps/developer/data-platform/webapi/query-data-web-api#filter-rows
         console.log("-- Filter Criteria --");
 
         // Filter 1: Using standard query functions to filter results.
@@ -309,7 +309,7 @@ Sdk.startSample = function () {
         // Filter 2: Using CRM query functions to filter results.
         // In this operation, we will query for all contacts that was created in the last hour. 
         // For complete list of CRM query functions, see:
-        // https://msdn.microsoft.com/en-us/library/mt607843.aspx
+        // https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/queryfunctions
         var filter = "&$filter=Microsoft.Dynamics.CRM.LastXHours(PropertyName='createdon',PropertyValue='1')";
         var query = "?$select=" + contactProperties.join() + filter;
         return Sdk.request("GET", "/contacts" + query, null, true); // Remember page size limit is set to 10.
@@ -321,7 +321,7 @@ Sdk.startSample = function () {
         // Filter 3: Using operators
         // Building on the previous operation, we will further limit the results by the contact's income.
         // For more info on standard filter operators, see:
-        // https://msdn.microsoft.com/en-us/library/gg334767.aspx#bkmk_filter
+        // https://learn.microsoft.com/power-apps/developer/data-platform/webapi/query-data-web-api#filter-rows
         var filter = "&$filter=contains(fullname,'(sample)') and annualincome gt 55000";
         var query = "?$select=" + contactProperties.join() + filter;
         return Sdk.request("GET", "/contacts" + query, null, true);
@@ -359,7 +359,7 @@ Sdk.startSample = function () {
         // Parameterized Aliases.
         // Aliases can be used as parameters in a query. These parameters can be used in $filter and $orderby options.
         // Using the previous operation as basis, parameterizing the query will give us the same results.
-        // For more info, see: https://msdn.microsoft.com/en-us/library/gg309638.aspx#bkmk_passParametersToFunctions
+        // For more info, see: https://learn.microsoft.com/power-apps/developer/data-platform/webapi/use-web-api-functions#passing-parameters-to-a-function
         console.log("\n-- Parameterized Aliases --");
         var filter = "&$filter=contains(@p1,'(sample)') " +
             "&$orderby=@p2 asc, @p3 desc&@p1=fullname&@p2=jobtitle&@p3=annualincome";
@@ -513,7 +513,7 @@ Sdk.startSample = function () {
         // FetchXML
         // Using FetchXML to query for all contacts whose fullname contains '(sample)'.
         // NOTE: XML string must be URI encoded.
-        // For more information, see: https://msdn.microsoft.com/en-us/library/gg328117.aspx
+        // For more information, see: https://learn.microsoft.com/power-apps/developer/data-platform/webapi/use-fetchxml-web-api
         console.log("\n-- FetchXML -- ");
         var fetchXML = "<fetch mapping=\"logical\" output-format=\"xml-platform\" version=\"1.0\" distinct=\"false\"> \
   <entity name=\"contact\"> \
@@ -536,7 +536,7 @@ Sdk.startSample = function () {
         // Noticed the attribute "page=3" and "count=4" in this XML. 
         // We want to retrieve entities in page 3 but limit results to only 4 entities.
         // If the result return zero records for the page, that means we have reached the end of the result set.
-        // For more info, see: https://msdn.microsoft.com/en-us/library/mt607533.aspx#bkmk_useFetchXML
+        // For more info, see: https://learn.microsoft.com/power-apps/developer/data-platform/webapi/use-fetchxml-web-api
         var fetchXML = "<fetch mapping=\"logical\" output-format=\"xml-platform\" version=\"1.0\" \
 distinct=\"false\" page=\"3\" count=\"4\"> \
   <entity name=\"contact\"> \
@@ -563,7 +563,7 @@ distinct=\"false\" page=\"3\" count=\"4\"> \
         // 1) Saved query
         // 2) User query
         // For more info, see: 
-        // https://msdn.microsoft.com/en-us/library/mt607533.aspx
+        // https://learn.microsoft.com/power-apps/developer/data-platform/webapi/retrieve-and-execute-predefined-queries
 
         // Saved Query
         // Get the Saved Query "Active Accounts" and display results to output.
@@ -586,7 +586,7 @@ distinct=\"false\" page=\"3\" count=\"4\"> \
 
         // User Query
         // Create a user query then get it from the server and execute that query for results.
-        // For more info, see: https://msdn.microsoft.com/en-us/library/gg509053.aspx
+        // For more info, see: https://learn.microsoft.com/power-apps/developer/data-platform/webapi/retrieve-and-execute-predefined-queries
         console.log("\n-- User Query -- ");
         var userquery = {
             "name": "My User Query",
@@ -632,7 +632,7 @@ distinct=\"false\" page=\"3\" count=\"4\"> \
         
         // House cleaning - deleting sample data
         // For more info on cascading delete, see: 
-        // https://msdn.microsoft.com/en-us/library/gg309412.aspx#BKMK_CascadingBehavior
+        // https://learn.microsoft.com/power-apps/developer/data-platform/configure-entity-relationship-cascading-behavior
         console.log("\n-- Deleting Sample Data --");
         if (deleteData) {
             for (var i = 0; i < entitiesToDelete.length; i++) {

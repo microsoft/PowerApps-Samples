@@ -39,7 +39,7 @@ namespace MetaViz
         private DumpStage nextStageToExecute = DumpStage.Initialize;
 
         #region Fetch XMLs
-        // https://docs.microsoft.com/en-us/dynamics365/customer-engagement/developer/entities/solution
+        // https://learn.microsoft.com/dynamics365/customer-engagement/developer/entities/solution
         private const string URL_SOLUTIONS = "/solutions?fetchXml=";
         private const string URL_SOLUTIONS_FETCHXML = @"<fetch no-lock='true'>
 <entity name='solution'>
@@ -57,19 +57,19 @@ namespace MetaViz
 </entity>
 </fetch>";
 
-        // https://docs.microsoft.com/en-us/dynamics365/customer-engagement/web-api/solutioncomponent?view=dynamics-ce-odata-9
+        // https://learn.microsoft.com/dynamics365/customer-engagement/web-api/solutioncomponent?view=dynamics-ce-odata-9
         private const string URL_SOLUTIONCOMPONENTS = "/solutioncomponents?$select=objectid,_solutionid_value";
 
-        // https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/webapi/retrieve-metadata-name-metadataid
+        // https://learn.microsoft.com/powerapps/developer/common-data-service/webapi/retrieve-metadata-name-metadataid
         private const string URL_ENTITIES = "/EntityDefinitions?$select=MetadataId,DisplayName,LogicalName,PrimaryIdAttribute,PrimaryNameAttribute,EntitySetName,ObjectTypeCode,Description,IsIntersect";
 
-        // https://docs.microsoft.com/en-us/dynamics365/customer-engagement/developer/entities/workflow
+        // https://learn.microsoft.com/dynamics365/customer-engagement/developer/entities/workflow
         // workflow type 1 Definition 2 Activation 3 Template
         // showing 1 Definition here, accuracy wise 2 Activation more makes sense (if we think workflow published different time 'different') but duplications make folks more confused
         private const string URL_WORKFLOWS_FIELDS = "workflowid,_activeworkflowid_value,_sdkmessageid_value,name,uniquename,primaryentity,mode,category,triggeroncreate,triggerondelete,triggeronupdateattributelist,ondemand,createstage,deletestage,updatestage,description,solutionid,ismanaged,asyncautodelete,statecode,statuscode,componentstate,subprocess,rendererobjecttypecode";
         private const string URL_WORKFLOWS = "/workflows?$filter=type%20eq%201&$select=" + URL_WORKFLOWS_FIELDS;
 
-        // https://docs.microsoft.com/en-us/dynamics365/customer-engagement/developer/entities/plugintype
+        // https://learn.microsoft.com/dynamics365/customer-engagement/developer/entities/plugintype
         // Excludes InternalOperationPlugin -> "plugintypeid": "29efe3a5-047c-40a3-b89c-2787eff38eee", "typename": "Microsoft.Crm.Extensibility.InternalOperationPlugin", 
         private const string URL_PLUGINTYPES = "/plugintypes?fetchXml=";
         private const string URL_PLUGINTYPES_FETCHXML = @"<fetch no-lock='true'>
@@ -86,7 +86,7 @@ namespace MetaViz
 </entity>
 </fetch>";
 
-        // https://docs.microsoft.com/en-us/dynamics365/customer-engagement/developer/entities/sdkmessageprocessingstep
+        // https://learn.microsoft.com/dynamics365/customer-engagement/developer/entities/sdkmessageprocessingstep
         // plugintypes(29efe3a5-047c-40a3-b89c-2787eff38eee) Microsoft.Crm.Extensibility.InternalOperationPlugin
         // plugintypes(6237eef9-3a11-4c09-b197-96fd9cb134dd) Microsoft.Crm.ObjectModel.SyncWorkflowExecutionPlugin
         // plugintypes(582f2a68-e023-4600-b8f1-e0bcb6c330c1) Microsoft.Crm.Workflow.WorkflowExpansionPlugin

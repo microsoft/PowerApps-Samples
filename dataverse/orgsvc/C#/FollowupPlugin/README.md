@@ -27,5 +27,5 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### See also
 
-[Write a plug-in](https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/write-plug-in)  
-[Register a plug-in](https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/register-plug-in)
+[Write a plug-in](https://learn.microsoft.com/powerapps/developer/common-data-service/write-plug-in)  
+[Register a plug-in](https://learn.microsoft.com/powerapps/developer/common-data-service/register-plug-in)

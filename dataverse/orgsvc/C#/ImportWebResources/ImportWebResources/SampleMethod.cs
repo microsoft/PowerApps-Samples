@@ -63,7 +63,7 @@ namespace PowerApps.Samples
             {
                 UniqueName = "sdksamplesimportwebresourcessample",
                 FriendlyName = "SDK Samples Import Web Resources Sample",
-                SupportingWebsiteUrl = "http://msdn.microsoft.com/en-us/dynamics/crm/default.aspx",
+                SupportingWebsiteUrl = "https://learn.microsoft.com/power-apps/developer/data-platform/overview",
                 CustomizationPrefix = "sample",
                 EMailAddress = "someone@microsoft.com",
                 Description = "This publisher is used by the Import Web Resources sample from the Software Development Kit (SDK) documentation."

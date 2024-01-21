@@ -4,14 +4,14 @@ This sample shows how to work with choice.
 
 Typically, you use choice column to set columns so that different columns can share the same set of options, which are maintained in one location. Unlike local choice columns which are defined only for a specific column, you can reuse choice. You will also see them used in request parameters in a manner similar to an enumeration.
 
-When you define a choice column by using [CreateOptionSetRequest](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createoptionsetrequest?view=dynamics-general-ce-9), we recommend that you let the system assign a value. You do this by passing a null value when you create the new OptionMetadata instance. When you define an option, it will contain an option value prefix specific to the context of the publisher set for the solution that the option set is created in. This prefix helps reduce the chance of creating duplicate option sets for a managed solution, and in any option sets that are defined in organizations where your managed solution is installed. For more information, see [Merge choice values](https://docs.microsoft.com/powerapps/developer/common-data-service/understand-managed-solutions-merged#merge-option-set-options).
+When you define a choice column by using [CreateOptionSetRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createoptionsetrequest), we recommend that you let the system assign a value. You do this by passing a null value when you create the new OptionMetadata instance. When you define an option, it will contain an option value prefix specific to the context of the publisher set for the solution that the option set is created in. This prefix helps reduce the chance of creating duplicate option sets for a managed solution, and in any option sets that are defined in organizations where your managed solution is installed. For more information, see [Merge choice values](https://learn.microsoft.com/powerapps/developer/common-data-service/understand-managed-solutions-merged#merge-option-set-options).
 
 This sample uses the following message request classes to work with choice columns:
 
-- [CreateOptionSetRequest](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createoptionsetrequest?view=dynamics-general-ce-9)
-- [UpdateOptionSetRequest](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.updateoptionsetrequest?view=dynamics-general-ce-9)
-- [RetrieveOptionSetRequest](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.retrieveoptionsetrequest?view=dynamics-general-ce-9)
-- [DeleteOptionSetRequest](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.deleteoptionsetrequest?view=dynamics-general-ce-9)
+- [CreateOptionSetRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createoptionsetrequest)
+- [UpdateOptionSetRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.updateoptionsetrequest)
+- [RetrieveOptionSetRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.retrieveoptionsetrequest)
+- [DeleteOptionSetRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.deleteoptionsetrequest)
 
 ## What this sample does
 

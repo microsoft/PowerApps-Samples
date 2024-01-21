@@ -36,7 +36,7 @@ namespace PowerApps.Samples
                     {
                         UniqueName = "powerappssamples",
                         FriendlyName = "PowerApps SDK Samples",
-                        SupportingWebsiteUrl = "http://msdn.microsoft.com/en-us/dynamics/crm/default.aspx",
+                        SupportingWebsiteUrl = "https://learn.microsoft.com/power-apps/developer/data-platform/overview",
                         CustomizationPrefix = "sample",
                         EMailAddress = "someone@microsoft.com",
                         Description = "This publisher was created with samples from the PowerApps SDK"

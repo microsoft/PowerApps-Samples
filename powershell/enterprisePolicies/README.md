@@ -80,7 +80,7 @@ Sample Output :</br>
 5. **Validate Azure Key Vault** : This script checks if the Key Vault is setup correctly according to the pre-requisites required by the Power Platform CMK Enterprise Policy. For details please follow the setup instructions at https://learn.microsoft.com/power-platform/admin/customer-managed-key#create-encryption-key-and-grant-access</br>
 	Following major validations are performed:
     - Soft-delete is enabled for key vault: Please follow the instructions at </br>
-      https://docs.microsoft.com/azure/key-vault/general/soft-delete-change to update the soft delete property.
+      https://learn.microsoft.com/azure/key-vault/general/soft-delete-change to update the soft delete property.
     - Purge protection is enabled for key vault: Please follow the istructions at </br>
 	  https://learn.microsoft.com/azure/key-vault/general/key-vault-recovery?tabs=azure-portal to get details about enabling Purge Protection</br>
 	- "Key Vault Crypto Service Encryption User" role assignment is present for the given enterprise policy if key vault permission model is Azure role based access control.</br>

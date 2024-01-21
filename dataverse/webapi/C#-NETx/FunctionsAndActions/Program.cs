@@ -88,7 +88,7 @@ namespace FunctionsAndActions
             Console.WriteLine();
             // InitializeFrom returns an entity with default values set based on mapping configuration
             // for each organization.
-            // See https://docs.microsoft.com/power-apps/developer/data-platform/webapi/create-entity-web-api#create-a-new-record-from-another-record
+            // See https://learn.microsoft.com/power-apps/developer/data-platform/webapi/create-entity-web-api#create-a-new-record-from-another-record
             JObject originalAccount = new() {
 
                 {"accountcategorycode", 1 }, //Preferred Customer
@@ -257,7 +257,7 @@ namespace FunctionsAndActions
             Console.WriteLine("Starting Section 4: Unbound Functions: RetrieveCurrentOrganization");
             Console.WriteLine();
             // RetrieveCurrentOrganization function retrieves data about the current organization.
-            // See https://docs.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/retrievecurrentorganization?view=dataverse-latest
+            // See https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/retrievecurrentorganization?view=dataverse-latest
 
             RetrieveCurrentOrganizationRequest retrieveCurrentOrganizationRequest =
                 new(accessType: EndpointAccessType.Default);
@@ -307,7 +307,7 @@ namespace FunctionsAndActions
             Console.WriteLine();
             // RetrieveTotalRecordCount Function Returns data on the total number of records for specific entities.
             // The data retrieved will be from a snapshot within last 24 hours.
-            // See https://docs.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/retrievetotalrecordcount?view=dataverse-latest
+            // See https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/retrievetotalrecordcount?view=dataverse-latest
 
             RetrieveTotalRecordCountRequest retrieveTotalRecordCountRequest = new(
                 entityNames: new string[] { "account", "contact" });
@@ -336,7 +336,7 @@ namespace FunctionsAndActions
             // Because this Custom API is not likely to be in the environment
             // The ManageIsSystemAdminFunction will install it by importing the 
             // managed solution found in Resources/IsSystemAdminFunction_1_0_0_0_managed.zip
-            // See: https://docs.microsoft.com/en-us/power-apps/developer/data-platform/org-service/samples/issystemadmin-customapi-sample-plugin
+            // See: https://learn.microsoft.com/power-apps/developer/data-platform/org-service/samples/issystemadmin-customapi-sample-plugin
 
 
             await ManageIsSystemAdminFunction(service: service, recordsToDelete: recordsToDelete);
@@ -375,7 +375,7 @@ namespace FunctionsAndActions
             Console.WriteLine();
 
             // GrantAccess is an action used to share a record with another user
-            // See: https://docs.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/grantaccess?view=dataverse-latest
+            // See: https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/grantaccess?view=dataverse-latest
 
             JObject accountRecord = new() {
                 {"name","Account to Share" }
@@ -458,7 +458,7 @@ namespace FunctionsAndActions
             Console.WriteLine();
 
             // AddPrivilegesRole adds a set of existing privileges to an existing role.
-            // See https://docs.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/addprivilegesrole?view=dataverse-latest
+            // See https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/addprivilegesrole?view=dataverse-latest
 
             //Create a role
 

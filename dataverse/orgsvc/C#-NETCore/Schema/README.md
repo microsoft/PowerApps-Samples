@@ -1,14 +1,14 @@
 # Schema samples
 
-This collection of samples demonstrates messages related to working with Dataverse schema definitions using the [Microsoft.PowerPlatform.Dataverse.Client](https://www.nuget.org/packages/Microsoft.PowerPlatform.Dataverse.Client/) NuGet package. Specifically, using the [ServiceClient](https://docs.microsoft.com/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient) class.
+This collection of samples demonstrates messages related to working with Dataverse schema definitions using the [Microsoft.PowerPlatform.Dataverse.Client](https://www.nuget.org/packages/Microsoft.PowerPlatform.Dataverse.Client/) NuGet package. Specifically, using the [ServiceClient](https://learn.microsoft.com/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient) class.
 
-More information: [Transition apps to Dataverse ServiceClient](https://docs.microsoft.com/power-apps/developer/data-platform/sdk-client-transition)
+More information: [Transition apps to Dataverse ServiceClient](https://learn.microsoft.com/power-apps/developer/data-platform/sdk-client-transition)
 
 The provided code samples are listed below.
 
 |Sample folder|Description|Build target|
 |---|---|---|
-|[RetrieveMetadataChanges](RetrieveMetadataChanges)|Demonstrates the use of the [RetrieveMetadataChangesRequest](https://learn.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.messages.retrievemetadatachangesrequest) and [RetrieveMetadataChangesResponse](https://learn.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.messages.retrievemetadatachangesresponse) classes to create a simple client-side persistent cache of Dataverse schema data.|.NET 6|
+|[RetrieveMetadataChanges](RetrieveMetadataChanges)|Demonstrates the use of the [RetrieveMetadataChangesRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.retrievemetadatachangesrequest) and [RetrieveMetadataChangesResponse](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.retrievemetadatachangesresponse) classes to create a simple client-side persistent cache of Dataverse schema data.|.NET 6|
 
 
 ## Instructions

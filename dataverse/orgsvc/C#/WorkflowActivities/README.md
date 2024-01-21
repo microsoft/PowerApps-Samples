@@ -47,6 +47,6 @@ Relationship Behavior Type: Referential
 
 ### See Also
 
-[Workflow extensions](https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/workflow/workflow-extensions)  
-[Tutorial: Create workflow extension](https://docs.microsoft.com/powerapps/developer/common-data-service/workflow/tutorial-create-workflow-extension)  
-[Create a custom table](https://docs.microsoft.com/powerapps/maker/common-data-service/data-platform-create-entity)
+[Workflow extensions](https://learn.microsoft.com/powerapps/developer/common-data-service/workflow/workflow-extensions)  
+[Tutorial: Create workflow extension](https://learn.microsoft.com/powerapps/developer/common-data-service/workflow/tutorial-create-workflow-extension)  
+[Create a custom table](https://learn.microsoft.com/powerapps/maker/common-data-service/data-platform-create-entity)

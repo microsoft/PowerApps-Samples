@@ -11,7 +11,7 @@ description: "This sample demonstrates how to achieve higher throughput by sendi
 
 This .NET 6.0 sample demonstrates how to achieve higher throughput by sending requests in parallel to the Dataverse Web API.
 
-Sending requests in parallel is a recommended strategy to increase total throughput when performing bulk operations with Dataverse. For more information see: [Service protection API limits > How to maximize throughput > Use multiple threads](https://docs.microsoft.com/en-us/power-apps/developer/data-platform/api-limits#use-multiple-threads)
+Sending requests in parallel is a recommended strategy to increase total throughput when performing bulk operations with Dataverse. For more information see: [Service protection API limits > How to maximize throughput > Use multiple threads](https://learn.microsoft.com/power-apps/developer/data-platform/api-limits#use-multiple-threads)
 
 This sample uses the common helper code in the [WebAPIService](../WebAPIService) class library project.
 
@@ -28,7 +28,7 @@ This sample uses the common helper code in the [WebAPIService](../WebAPIService)
 
    |Property|Instructions  |
    |---------|---------|
-   |`Url`|The Url for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. See [View developer resources](https://docs.microsoft.com/power-apps/developer/data-platform/view-download-developer-resources) to find this. |
+   |`Url`|The Url for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. See [View developer resources](https://learn.microsoft.com/power-apps/developer/data-platform/view-download-developer-resources) to find this. |
    |`UserPrincipalName`|Replace the placeholder `you@yourorg.onmicrosoft.com` value with the UPN value you use to access the environment.|
    |`Password`|Replace the placeholder `yourPassword` value with the password you use.|
 
@@ -43,9 +43,9 @@ This sample first sends a request simply to access the value of the `x-ms-dop-hi
 
 To encounter service protection limits with this sample you should raise the `numberOfRecords` variable to over 10,000 or whatever is needed for the sample to run for more than 5 minutes. You should also change the code to set the `maxDegreeOfParallelism` to be significantly greater than `x-ms-dop-hint` response header value. Then, using Fiddler you should be able to observe how WebAPIService retries the requests that return this error.
 
-This example uses the [Parallel.ForEachAsync Method](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.parallel.foreachasync) introduced with .NET 6.0.
+This example uses the [Parallel.ForEachAsync Method](https://learn.microsoft.com/dotnet/api/system.threading.tasks.parallel.foreachasync) introduced with .NET 6.0.
 
-This sample processes a list of requests to create account records, sending the requests in parallel and then uses the data returned to add requests to delete the created accounts to a [ConcurrentBag](https://docs.microsoft.com/en-us/dotnet/api/system.collections.concurrent.concurrentbag-1?view=net-6.0). After the records are created, the number of seconds to create the records is displayed.
+This sample processes a list of requests to create account records, sending the requests in parallel and then uses the data returned to add requests to delete the created accounts to a [ConcurrentBag](https://learn.microsoft.com/dotnet/api/system.collections.concurrent.concurrentbag-1?view=net-6.0). After the records are created, the number of seconds to create the records is displayed.
 
 Then, the delete requests in the `ConcurrentBag` are processed and the time spent deleting the records is displayed.
 

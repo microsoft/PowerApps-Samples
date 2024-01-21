@@ -25,7 +25,7 @@ This sample obtains the data context from the current Microsoft Dataverse operat
 
 ## What this sample does
 
-This sample shows how to write a custom workflow activity that can post the data context from the current CDS operation to the Azure Service Bus. The posting of the data context is accomplished through the [Execute(EntityReference,IExecutionContext )](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.iserviceendpointnotificationservice.execute?view=dynamics-general-ce-9#Microsoft_Xrm_Sdk_IServiceEndpointNotificationService_Execute_Microsoft_Xrm_Sdk_EntityReference_Microsoft_Xrm_Sdk_IExecutionContext_) call.
+This sample shows how to write a custom workflow activity that can post the data context from the current CDS operation to the Azure Service Bus. The posting of the data context is accomplished through the [Execute(EntityReference,IExecutionContext )](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.iserviceendpointnotificationservice.execute#Microsoft_Xrm_Sdk_IServiceEndpointNotificationService_Execute_Microsoft_Xrm_Sdk_EntityReference_Microsoft_Xrm_Sdk_IExecutionContext_) call.
 
 ## How this sample works
 
@@ -37,5 +37,5 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ## See Also
 
-[Configure Azure integration with Dataverse](https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/configure-azure-integration)  
-[Workflow extensions](https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/workflow/workflow-extensions)
+[Configure Azure integration with Dataverse](https://learn.microsoft.com/powerapps/developer/common-data-service/configure-azure-integration)  
+[Workflow extensions](https://learn.microsoft.com/powerapps/developer/common-data-service/workflow/workflow-extensions)

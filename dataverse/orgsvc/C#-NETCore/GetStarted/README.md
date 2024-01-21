@@ -11,7 +11,7 @@ description: "This sample demonstrates how to get started using the Dataverse SD
 
 To get started writing code that accesses Dataverse business data you must first be able to authenticate with the web service, execute (send) a request to perform some operation, and then retrieve data from the response. This process can be repeated for the many web service requests that Dataverse supports.
 
-Related article: [Quickstart: Execute an SDK for .NET request (C#)](https://docs.microsoft.com/power-apps/developer/data-platform/org-service/quick-start-org-service-console-app)
+Related article: [Quickstart: Execute an SDK for .NET request (C#)](https://learn.microsoft.com/power-apps/developer/data-platform/org-service/quick-start-org-service-console-app)
 
 ## About the sample code
 

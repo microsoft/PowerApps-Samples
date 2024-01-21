@@ -15,14 +15,14 @@ function GetAndValidateKeyVaultProperties($keyVaultName)
      #validate soft-delete
     if ($keyVault.EnableSoftDelete -eq $null -or  $keyVault.EnableSoftDelete.Equals("False"))
     {
-       Write-Host "Soft delete not enabled for keyVault $keyVaultName. Please enable it as per the instruction at https://docs.microsoft.com/en-us/azure/key-vault/general/soft-delete-change " -ForegroundColor Red
+       Write-Host "Soft delete not enabled for keyVault $keyVaultName. Please enable it as per the instruction at https://learn.microsoft.com/azure/key-vault/general/soft-delete-change " -ForegroundColor Red
        return $null
     }
 
     #validate purge-protection
     if ($keyVault.EnablePurgeProtection -eq $null -or $keyVault.EnablePurgeProtection.Equals("False"))
     {
-       Write-Host "Purge protection not enabled for keyVault $keyVaultName. Please enable it as per the instruction at https://learn.microsoft.com/en-us/azure/key-vault/general/soft-delete-overview#permitted-purge" -ForegroundColor Red
+       Write-Host "Purge protection not enabled for keyVault $keyVaultName. Please enable it as per the instruction at https://learn.microsoft.com/azure/key-vault/general/soft-delete-overview#permitted-purge" -ForegroundColor Red
        return $null
     }
     Write-Host "KeyVault $keyVaultName reterieved with soft delete and purge protection enabled" -ForegroundColor Green `n

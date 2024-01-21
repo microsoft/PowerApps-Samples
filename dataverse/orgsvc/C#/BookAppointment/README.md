@@ -1,6 +1,6 @@
 # Book an Appointment
 
-This sample shows how to book or schedule an appointment by using the [BookRequest](https://docs.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.bookrequest?view=dynamics-general-ce-9) message.
+This sample shows how to book or schedule an appointment by using the [BookRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.bookrequest) message.
 
 ## How to run this sample
 
@@ -21,7 +21,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### Demonstrate
 
-Creates the appointment instance using the [BookRequest](https://docs.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.bookrequest?view=dynamics-general-ce-9) message and verifies that the appointment has been scheduled or not.
+Creates the appointment instance using the [BookRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.bookrequest) message and verifies that the appointment has been scheduled or not.
 
 ### Clean up
 

@@ -39,7 +39,7 @@ namespace BlazorCDS
             // Create an named definition of an HttpClient that can be created in a component page
             builder.Services.AddHttpClient("CDSClient", client =>
             {
-                // See https://docs.microsoft.com/powerapps/developer/common-data-service/webapi/compose-http-requests-handle-errors                
+                // See https://learn.microsoft.com/powerapps/developer/common-data-service/webapi/compose-http-requests-handle-errors                
                 client.Timeout = TimeSpan.FromSeconds(timeoutSeconds);
                 client.DefaultRequestHeaders.Add("OData-Version", "4.0");
                 client.DefaultRequestHeaders.Add("OData-MaxVersion", "4.0");

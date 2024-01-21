@@ -6,7 +6,7 @@ Please note that these scripts are provided under MIT license and its usage is t
 
 ## How to run these scripts
 
-Follow the instructions in the article [Use managed identities for Azure with your Azure data lake storage (preview)](https://review.learn.microsoft.com/en-us/power-apps/maker/data-platform/azure-synapse-link-msi?branch=matp-3225222)
+Follow the instructions in the article [Use managed identities for Azure with your Azure data lake storage (preview)](https://learn.microsoft.com/power-apps/maker/data-platform/azure-synapse-link-msi)
 
 ## What the scripts do
 

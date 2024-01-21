@@ -1,6 +1,6 @@
 # Promote an email message
 
-This sample shows how to create an email activity instance from the specified email message in Dynamics 365 by using the [DeliverPromoteEmailRequest](https://docs.microsoft.com/en-us/dotnet/api/microsoft.crm.sdk.messages.deliverpromoteemailrequest?view=dynamics-general-ce-9) message.
+This sample shows how to create an email activity instance from the specified email message in Dynamics 365 by using the [DeliverPromoteEmailRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.deliverpromoteemailrequest) message.
 
 ## How to run this sample
 

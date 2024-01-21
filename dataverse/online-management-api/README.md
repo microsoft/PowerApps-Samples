@@ -24,8 +24,8 @@ Before you can run this sample, make sure that you have:
 - .NET Framework 4.6.2
 
 To run the sample:
-1. [Download](https://code.msdn.microsoft.com/Sample-Retrieve-Customer-94e4076d) the sample, and extract it.
-2. Double-click the Visual Studio solution file (.sln) under the C# folder at the extracted location to open the solution in Visual Studio.
+1. Clone or download this repository.
+2. Double-click the 'dataverse\online-management-api\RetrieveInstances\SampleAppForOnlineAdminAPI.sln' file to open the solution in Visual Studio.
 3. In the **Programs.cs** file, specify a different service URL if the region is not North America. For a list of service URL values for worldwide regions, see [Service URL](get-started-online-management-api.md#service-url).
     ```csharp
     //TODO: Change this value if your Office 365 tenant is in a different region than North America
@@ -46,6 +46,6 @@ To run the sample:
 
 ### Related Topics  
 
-[Get started with Online Management API](https://docs.microsoft.com/powerapps/developer/common-data-service/online-management-api/get-started-online-management-api)
+[Get started with Online Management API](https://learn.microsoft.com/powerapps/developer/common-data-service/online-management-api/get-started-online-management-api)
 
-[Online Management API Reference](https://docs.microsoft.com/rest/api/admin.services.crm.dynamics.com/)
+[Online Management API Reference](https://learn.microsoft.com/rest/api/admin.services.crm.dynamics.com/)

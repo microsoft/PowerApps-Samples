@@ -2,11 +2,11 @@
 
 This topic provides information about the sample data files available in the **ai-builder** folder.
 
-AI Builder documentation is available here: <https://docs.microsoft.com/ai-builder>
+AI Builder documentation is available here: <https://learn.microsoft.com/ai-builder>
 
 ## Sample data for prediction
 
-To help you get started quickly with prediction, use these three sample datasets. For information on how to import the sample data and use it in a prediction model, see [Data Preparation](https://docs.microsoft.com/ai-builder/prediction-data-prep) in AI Builder docs.
+To help you get started quickly with prediction, use these three sample datasets. For information on how to import the sample data and use it in a prediction model, see [Data Preparation](https://learn.microsoft.com/ai-builder/prediction-data-prep) in AI Builder docs.
 
 Please note that you do not need to download the CSV files, but rather link the raw URL of the CSV files during the data import flow.
 

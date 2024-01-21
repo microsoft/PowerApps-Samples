@@ -191,7 +191,7 @@ If you do not choose to apply a partitioning strategy for your elastic table, yo
 
 To have strong consistency on retrieve operations you need to send the current session token. Each write operation returns the `x-ms-session-token`, so this value is refreshed on each request so it can be sent with any requests to retrieve data. More information: [Work with session token](https://learn.microsoft.com/power-apps/developer/data-platform/use-elastic-tables?tabs=sdk#work-with-session-token)
 
-**Note**: Because of the need to capture and send this session token value, you can only use the [IOrganizationService.Execute method](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.execute?view=dataverse-sdk-latest) to send requests. You cannot use the other [IOrganizationService methods](https://learn.microsoft.com/power-apps/developer/data-platform/org-service/use-messages?tabs=sdk#iorganizationservice-methods) because they don't currently enable managing the session token values.
+**Note**: Because of the need to capture and send this session token value, you can only use the [IOrganizationService.Execute method](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.execute) to send requests. You cannot use the other [IOrganizationService methods](https://learn.microsoft.com/power-apps/developer/data-platform/org-service/use-messages?tabs=sdk#iorganizationservice-methods) because they don't currently enable managing the session token values.
 
 #### Upsert replace behavior
 
@@ -205,14 +205,14 @@ If you choose to apply a partitioning strategy on the elastic table you must alw
 To include this `partitionid`, you have three options:
 
 1. **Use the alternate key style** with the values for the `KeyForNoSqlEntityWithPKPartitionId` alternate key created for all elastic tables. More information: [Using Alternate Key](https://learn.microsoft.com/power-apps/developer/data-platform/use-elastic-tables?tabs=sdk#using-alternate-key)
-1. **Use the `partitionId` parameter**. This [optional parameter](https://learn.microsoft.com/power-apps/developer/data-platform/optional-parameters?tabs=sdk) can be used with classes that are derived from [OrganizationRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.organizationrequest?view=dataverse-sdk-latest).  More information: [Using partitionId parameter](https://learn.microsoft.com/power-apps/developer/data-platform/use-elastic-tables?tabs=sdk#using-partitionid-parameter)
+1. **Use the `partitionId` parameter**. This [optional parameter](https://learn.microsoft.com/power-apps/developer/data-platform/optional-parameters?tabs=sdk) can be used with classes that are derived from [OrganizationRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.organizationrequest).  More information: [Using partitionId parameter](https://learn.microsoft.com/power-apps/developer/data-platform/use-elastic-tables?tabs=sdk#using-partitionid-parameter)
 1. **Using `partitionid` column directly**. When you create a record, you must explicitly set the value of the `partitionid` column. For Update and Upsert operations you can't currently use the `partitionId` parameter, so you must either use the alternate key style, or you can set the value of the `partitionid` column. More information [Using partitionid column directly](https://learn.microsoft.com/power-apps/developer/data-platform/use-elastic-tables?tabs=sdk#using-partitionid-column-directly)
 
 **Note**: The examples in this section use static methods such as `CreateRecord`, `UpdateRecord`, and `UpdateRecordWithAlternateKey` to make the different patterns of working with `partitionid` clear for each operation.
 
 ### Region 3: CreateMultiple and UpdateMultiple Examples
 
-This section demonstrates the use of the SDK [CreateMultipleRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createmultiplerequest?view=dataverse-sdk-latest) and [UpdateMultipleRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.updatemultiplerequest?view=dataverse-sdk-latest) classes.
+This section demonstrates the use of the SDK [CreateMultipleRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createmultiplerequest) and [UpdateMultipleRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.updatemultiplerequest) classes.
 
 With elastic tables, we recommend sending requests in batches of 100. This is different from the recommended practice for standard tables described in [Use CreateMultiple and UpdateMultiple (preview)](https://learn.microsoft.com/power-apps/developer/data-platform/org-service/use-createmultiple-updatemultiple?tabs=sdk).
 
@@ -220,7 +220,7 @@ With elastic tables, we recommend sending requests in batches of 100. This is di
 
 ### Region 4: ExecuteCosmosSqlQuery Example
 
-This section demonstrates composing a CosmosDB SQL query and sending it using the `ExecuteCosmosSqlQuery` message. There is currently no `ExecuteCosmosSqlQueryRequest` class in the SDK, so this example shows using the [OrganizationRequest Class](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.organizationrequest?view=dataverse-sdk-latest).
+This section demonstrates composing a CosmosDB SQL query and sending it using the `ExecuteCosmosSqlQuery` message. There is currently no `ExecuteCosmosSqlQueryRequest` class in the SDK, so this example shows using the [OrganizationRequest Class](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.organizationrequest).
 
 The `ExecuteCosmosSqlQuery` message has the following parameters:
 
@@ -228,12 +228,12 @@ The `ExecuteCosmosSqlQuery` message has the following parameters:
 |---------|---------|---------|
 |`QueryText`|string|(Required) Cosmos sql query.|
 |`EntityLogicalName`|string|(Required) The logical name of the table.|
-|`QueryParameters`|[ParameterCollection](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.parametercollection?view=dataverse-sdk-latest)|(Optional) Values for any parameters that are specified in the QueryText parameter.|
+|`QueryParameters`|[ParameterCollection](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.parametercollection)|(Optional) Values for any parameters that are specified in the QueryText parameter.|
 |`PageSize`|Long|(Optional) Number of records returned in a single page.|
 |`PagingCookie`|string|(Optional) Paging cookie to be used.|
 |`PartitionId`|string|(Optional) Partitionid to set the scope of the query.|
 
-The `ExecuteCosmosSqlQuery` message returns an [Entity](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.entity?view=dataverse-sdk-latest) that is an open type. To access the values returned, this sample uses a `ExecuteCosmosSqlQueryResponse` class that inherits from `Entity`. More information: [Custom closed types](https://learn.microsoft.com/power-apps/developer/data-platform/use-open-types?tabs=sdk#custom-closed-types)
+The `ExecuteCosmosSqlQuery` message returns an [Entity](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.entity) that is an open type. To access the values returned, this sample uses a `ExecuteCosmosSqlQueryResponse` class that inherits from `Entity`. More information: [Custom closed types](https://learn.microsoft.com/power-apps/developer/data-platform/use-open-types?tabs=sdk#custom-closed-types)
 
 The `ExecuteCosmosSqlQueryResponse` class includes the values that are returned:
 
@@ -247,13 +247,13 @@ This example specifies the query and demonstrates how to manage retrieving paged
 
 ### Region 5: DeleteMultiple Example
 
-This section demonstrates using the `DeleteMultiple` message with the [OrganizationRequest Class](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.organizationrequest?view=dataverse-sdk-latest). The SDK doesn't currently have `DeleteMultipleRequest` class.
+This section demonstrates using the `DeleteMultiple` message with the [OrganizationRequest Class](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.organizationrequest). The SDK doesn't currently have `DeleteMultipleRequest` class.
 
 As was done with `CreateMultiple` and `UpdateMultiple`, the records are deleted in batches of 100.
 
 ### Region 6: Delete contoso_SensorData table
 
-The `Utility.DeleteSensorDataEntity` deletes the `contoso_SensorData` table using the [DeleteEntityRequest Class](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.deleteentityrequest?view=dataverse-sdk-latest).
+The `Utility.DeleteSensorDataEntity` deletes the `contoso_SensorData` table using the [DeleteEntityRequest Class](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.deleteentityrequest).
 
 ### Clean up
 

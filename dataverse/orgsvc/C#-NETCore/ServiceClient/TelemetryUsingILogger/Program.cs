@@ -12,7 +12,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
     /// <remarks>Set the appropriate Url and Username values for your test
     /// environment in the appsettings.json file before running this program.
     /// You will be prompted in the default browser to enter a password.</remarks>
-    /// <see cref="https://docs.microsoft.com/power-apps/developer/data-platform/xrm-tooling/use-connection-strings-xrm-tooling-connect#connection-string-parameters"/>
+    /// <see cref="https://learn.microsoft.com/power-apps/developer/data-platform/xrm-tooling/use-connection-strings-xrm-tooling-connect#connection-string-parameters"/>
     /// <permission cref="https://github.com/microsoft/PowerApps-Samples/blob/master/LICENSE"
     /// <author>Peter Hecke</author>
     class Program

@@ -9,9 +9,9 @@ description: "This sample demonstrates how to use capabilities to efficiently qu
 ---
 # RetrieveMetadataChanges Sample
 
-This sample demonstrates the use of the [RetrieveMetadataChanges Function](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/retrievemetadatachanges) using the Dataverse Web API.
+This sample demonstrates the use of the [RetrieveMetadataChanges Function](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/retrievemetadatachanges) using the Dataverse Web API.
 
-This sample depends on the [WebAPIService Class Library project](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/samples/webapiservice) which provides common helper code for all the Dataverse C# Web API Samples.
+This sample depends on the [WebAPIService Class Library project](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/samples/webapiservice) which provides common helper code for all the Dataverse C# Web API Samples.
 
 ## Instructions
 

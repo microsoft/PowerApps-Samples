@@ -70,7 +70,7 @@ namespace PowerApps.Samples
                 // so that output is not sent to console.
                 // You may wish to enable logging.
                 // More information:
-                // https://docs.microsoft.com/dotnet/core/extensions/logging-providers
+                // https://learn.microsoft.com/dotnet/core/extensions/logging-providers
                 logging.ClearProviders();
             });
 
@@ -97,7 +97,7 @@ namespace PowerApps.Samples
             httpClient.Timeout = TimeSpan.FromSeconds(config.TimeoutInSeconds);
             httpClient.DefaultRequestHeaders.Add("User-Agent", $"WebAPIService/{Assembly.GetExecutingAssembly().GetName().Version}");
             // Set default headers for all requests
-            // See https://docs.microsoft.com/power-apps/developer/data-platform/webapi/compose-http-requests-handle-errors#http-headers
+            // See https://learn.microsoft.com/power-apps/developer/data-platform/webapi/compose-http-requests-handle-errors#http-headers
             httpClient.DefaultRequestHeaders.Add("OData-MaxVersion", "4.0");
             httpClient.DefaultRequestHeaders.Add("OData-Version", "4.0");
             httpClient.DefaultRequestHeaders.TryAddWithoutValidation("If-None-Match", "null");           
@@ -123,7 +123,7 @@ namespace PowerApps.Samples
                         HttpResponseHeaders headers = response.Result.Headers;
 
                         // Use the value of the Retry-After header if it exists
-                        // See https://docs.microsoft.com/power-apps/developer/data-platform/api-limits#retry-operations
+                        // See https://learn.microsoft.com/power-apps/developer/data-platform/api-limits#retry-operations
 
                         if (headers.Contains("Retry-After"))
                         {

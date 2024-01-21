@@ -5,7 +5,7 @@ class App {
 }
 
 # 1st party app list from:
-# https://learn.microsoft.com/en-us/troubleshoot/azure/active-directory/verify-first-party-apps-sign-in#application-ids-of-commonly-used-microsoft-applications
+# https://learn.microsoft.com/troubleshoot/azure/active-directory/verify-first-party-apps-sign-in#application-ids-of-commonly-used-microsoft-applications
 function Get-FirstPartyAppList{
 	@(
 		[App]@{IsCommonlyUsedApp=$false;ApplicationName='ACOM Azure Website';AppId='23523755-3a2b-41ca-9315-f81f3f566a95'},

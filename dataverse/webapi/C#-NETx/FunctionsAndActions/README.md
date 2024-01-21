@@ -26,7 +26,7 @@ This sample uses the common helper code in the [WebAPIService](../WebAPIService)
 
    |Property|Instructions  |
    |---------|---------|
-   |`Url`|The Url for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. See [View developer resources](https://docs.microsoft.com/power-apps/developer/data-platform/view-download-developer-resources) to find this. |
+   |`Url`|The Url for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. See [View developer resources](https://learn.microsoft.com/power-apps/developer/data-platform/view-download-developer-resources) to find this. |
    |`UserPrincipalName`|Replace the placeholder `you@yourorg.onmicrosoft.com` value with the UPN value you use to access the environment.|
    |`Password`|Replace the placeholder `yourPassword` value with the password you use.|
 
@@ -39,23 +39,23 @@ This sample has 9 regions:
 
 ### Section 1: Unbound Functions: WhoAmI
 
-Operations: Use the [WhoAmI Function](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/whoami) with the WebAPIService [WhoAmIRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/WhoAmIRequest.cs) and [WhoAmIResponse](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/WhoAmIResponse.cs) classes.
+Operations: Use the [WhoAmI Function](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/whoami) with the WebAPIService [WhoAmIRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/WhoAmIRequest.cs) and [WhoAmIResponse](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/WhoAmIResponse.cs) classes.
 
 ### Section 2: Unbound Functions: FormatAddress
 
-Operations: Use the [FormatAddress Function](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/formataddress) with the WebAPIService [FormatAddressRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/FormatAddressRequest.cs) and [FormatAddressResponse](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/FormatAddressResponse.cs) classes.
+Operations: Use the [FormatAddress Function](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/formataddress) with the WebAPIService [FormatAddressRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/FormatAddressRequest.cs) and [FormatAddressResponse](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/FormatAddressResponse.cs) classes.
 
 ### Section 3: Unbound Functions: InitializeFrom
 
-Operations: Use the [InitializeFrom Function](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/initializefrom) with the WebAPIService [InitializeFromRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/InitializeFromRequest.cs) and [InitializeFromResponse](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/InitializeFromResponse.cs) classes.
+Operations: Use the [InitializeFrom Function](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/initializefrom) with the WebAPIService [InitializeFromRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/InitializeFromRequest.cs) and [InitializeFromResponse](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/InitializeFromResponse.cs) classes.
 
 ### Section 4: Unbound Functions: RetrieveCurrentOrganization
 
-Operations: Use the [RetrieveCurrentOrganization Function](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/retrievecurrentorganization) with the WebAPIService [RetrieveCurrentOrganizationRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/RetrieveCurrentOrganizationRequest.cs) and [RetrieveCurrentOrganizationResponse](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/RetrieveCurrentOrganizationResponse.cs) classes.
+Operations: Use the [RetrieveCurrentOrganization Function](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/retrievecurrentorganization) with the WebAPIService [RetrieveCurrentOrganizationRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/RetrieveCurrentOrganizationRequest.cs) and [RetrieveCurrentOrganizationResponse](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/RetrieveCurrentOrganizationResponse.cs) classes.
 
 ### Section 5: Unbound Functions: RetrieveTotalRecordCount
 
-Operations: Use the [RetrieveTotalRecordCount Function](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/retrievetotalrecordcount) with the WebAPIService [RetrieveTotalRecordCountRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/RetrieveTotalRecordCountRequest.cs) and [RetrieveTotalRecordCountResponse](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/RetrieveTotalRecordCountResponse.cs) classes.
+Operations: Use the [RetrieveTotalRecordCount Function](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/retrievetotalrecordcount) with the WebAPIService [RetrieveTotalRecordCountRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/RetrieveTotalRecordCountRequest.cs) and [RetrieveTotalRecordCountResponse](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/RetrieveTotalRecordCountResponse.cs) classes.
 
 ### Section 6: Bound Functions: IsSystemAdmin
 
@@ -69,11 +69,11 @@ This sample will retrieve a set of users and test each one to determine whether 
 
 ### Section 7: Unbound Actions: GrantAccess
 
-Operations: Use the [GrantAccess Action](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/grantaccess) with the WebAPIService [GrantAccessRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/GrantAccessRequest.cs) class.
+Operations: Use the [GrantAccess Action](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/grantaccess) with the WebAPIService [GrantAccessRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/GrantAccessRequest.cs) class.
 
 ### Section 8: Bound Actions: AddPrivilegesRole
 
-Operations: Use the [AddPrivilegesRole Action](https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/addprivilegesrole) with the WebAPIService [AddPrivilegesRoleRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/AddPrivilegesRoleRequest.cs) class.
+Operations: Use the [AddPrivilegesRole Action](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/addprivilegesrole) with the WebAPIService [AddPrivilegesRoleRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/AddPrivilegesRoleRequest.cs) class.
 
 ### Section 9: Delete sample records
 

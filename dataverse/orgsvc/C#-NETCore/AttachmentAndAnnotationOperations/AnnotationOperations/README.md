@@ -16,11 +16,11 @@ The `AnnotationOperations` project demonstrates:
 - Updating the note to refer to a different file.
 - Using the following Dataverse Web API actions to work with notes, especially for large files.
    
-   - [InitializeAnnotationBlocksUploadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeannotationblocksuploadrequest?view=dataverse-sdk-latest) and [InitializeAnnotationBlocksUploadResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeannotationblocksuploadresponse?view=dataverse-sdk-latest) classes.
-   - [UploadBlockRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.uploadblockrequest?view=dataverse-sdk-latest) and [UploadBlockResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.uploadblockresponse?view=dataverse-sdk-latest) classes.
-   - [CommitAnnotationBlocksUploadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.commitannotationblocksuploadrequest?view=dataverse-sdk-latest) and [CommitAnnotationBlocksUploadResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.commitannotationblocksuploadresponse?view=dataverse-sdk-latest) classes.
-   - [InitializeAnnotationBlocksDownloadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeannotationblocksdownloadrequest?view=dataverse-sdk-latest) and [InitializeAnnotationBlocksDownloadResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeannotationblocksdownloadresponse?view=dataverse-sdk-latest) classes.
-   - [DownloadBlockRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.downloadblockrequest?view=dataverse-sdk-latest) and [DownloadBlockResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.downloadblockresponse?view=dataverse-sdk-latest) classes.
+   - [InitializeAnnotationBlocksUploadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeannotationblocksuploadrequest) and [InitializeAnnotationBlocksUploadResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeannotationblocksuploadresponse) classes.
+   - [UploadBlockRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.uploadblockrequest) and [UploadBlockResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.uploadblockresponse) classes.
+   - [CommitAnnotationBlocksUploadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.commitannotationblocksuploadrequest) and [CommitAnnotationBlocksUploadResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.commitannotationblocksuploadresponse) classes.
+   - [InitializeAnnotationBlocksDownloadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeannotationblocksdownloadrequest) and [InitializeAnnotationBlocksDownloadResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeannotationblocksdownloadresponse) classes.
+   - [DownloadBlockRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.downloadblockrequest) and [DownloadBlockResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.downloadblockresponse) classes.
 
 The code for this sample is in the [Program.cs](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/orgsvc/C%23-NETCore/AttachmentAndAnnotationOperations/AnnotationOperations/Program.cs) file.
 
@@ -49,16 +49,16 @@ The sample performs the following operations:
    
    The static `UploadNote` method encapsulates the use of these Dataverse SDK classes:
    
-   - [InitializeAnnotationBlocksUploadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeannotationblocksuploadrequest?view=dataverse-sdk-latest) 
-   - [UploadBlockRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.uploadblockrequest?view=dataverse-sdk-latest)
-   - [CommitAnnotationBlocksUploadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.commitannotationblocksuploadrequest?view=dataverse-sdk-latest)
+   - [InitializeAnnotationBlocksUploadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeannotationblocksuploadrequest) 
+   - [UploadBlockRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.uploadblockrequest)
+   - [CommitAnnotationBlocksUploadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.commitannotationblocksuploadrequest)
    
 1. Download the note file using the static `DownloadNote` method.
    
    The static `DownloadNote` method encapsulates the use of these Dataverse SDK classes:
    
-   - [InitializeAnnotationBlocksDownloadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeannotationblocksdownloadrequest?view=dataverse-sdk-latest)
-   - [DownloadBlockRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.downloadblockrequest?view=dataverse-sdk-latest)
+   - [InitializeAnnotationBlocksDownloadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeannotationblocksdownloadrequest)
+   - [DownloadBlockRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.downloadblockrequest)
    
 1. Delete the account record. All the notes associated with it are deleted as well.
 

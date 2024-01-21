@@ -1,6 +1,6 @@
 # Create an Email table
 
-This sample shows how to create and update a table using the [CreateEntityRequest](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createentityrequest?view=dynamics-general-ce-9) message.
+This sample shows how to create and update a table using the [CreateEntityRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createentityrequest) message.
 
 ## How to run this sample
 
