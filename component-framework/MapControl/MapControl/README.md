@@ -5,13 +5,13 @@ products:
 - power-platform
 - power-apps
 page_type: sample
-description: "This sample component changes the user experience of interacting with address fields on the form. Along with the text values of the address, this component provides the ability to visually identify a particular address on a map without navigating to another tab or screen. "
+description: "This sample component changes the user experience of interacting with address fields on the form. Along with the text values of the address, this component provides the ability to visually identify a particular address on a map without navigating to another tab or screen."
 ---
 # Map Power Apps component framework sample
 
 ## Summary
 
-This sample component changes the user experience of interacting with address fields on the form. Along with the text values of the address, this component provides the ability to visually identify a particular address on a map without navigating to another tab or screen. 
+This sample component changes the user experience of interacting with address fields on the form. Along with the text values of the address, this component provides the ability to visually identify a particular address on a map without navigating to another tab or screen.
 
 
 ![Preview of the sample](https://learn.microsoft.com/power-apps/developer/component-framework/media/map-control.png)

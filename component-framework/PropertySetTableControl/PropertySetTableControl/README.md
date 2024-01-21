@@ -5,19 +5,19 @@ products:
 - power-platform
 - power-apps
 page_type: sample
-description: "This sample shows how to use React to create components using Power Apps component framework. The facepile sample component is implemented based on React and the Office UI Fabric React components. The code may not reveal the best practices for the mentioned third-party libraries."
+description: "This sample shows how to create a dataset component for canvas apps. The dataset component also showcases how to use the dataset API methods to get column metadata, record data, page through data, and handle navigation."
 ---
-# Facepile Power Apps component framework sample
+# Dataset component for canvas Power Apps component framework sample
 
 ## Summary
 
-This sample shows how to use React to create components using Power Apps component framework. The facepile sample component is implemented based on React and the Office UI Fabric React components. The code may not reveal the best practices for the mentioned third-party libraries.
+This sample shows how to create a dataset component for canvas apps. The dataset component also showcases how to use the dataset API methods to get column metadata, record data, page through data, and handle navigation.
 
-![Preview of the sample](https://learn.microsoft.com/power-apps/developer/component-framework/media/react-facepile.png)
+![Preview of the sample](https://learn.microsoft.com/power-apps/developer/component-framework/media/data-set-grid-control-canvas.png)
 
 ## Compatibility
 
-This sample works for model-driven and canvas apps.
+This sample works for canvas apps.
 
 ## Applies to
 
@@ -45,7 +45,7 @@ Follow the steps in the [README.md](../README.md) to generate solutions containi
 
 ## More information
 
-See [Implementing the FacePile component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/react-facepile-control)
+See [Implementing dataset component for canvas apps](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/data-set-component-canvas)
 
 ## Disclaimer
 

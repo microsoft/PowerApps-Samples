@@ -7,7 +7,7 @@ products:
 page_type: sample
 description: "This sample component demonstrates how to leverage the multi select option set type on properties of field components. By binding the code component's primary property to this type, users can create all new types of controls with choices column."
 ---
-# Choices (multi select option set)Power Apps component framework sample
+# Choices (multi select option set) Power Apps component framework sample
 
 ## Summary
 
