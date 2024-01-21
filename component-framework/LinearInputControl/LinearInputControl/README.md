@@ -7,7 +7,7 @@ products:
 page_type: sample
 description: "This sample component changes the user experience of interacting with numeric types on the form. Instead of typing in the numbers, the linear input component provides a linear slider using which the value of the attribute can be set on the form."
 ---
-# Increment Power Apps component framework sample
+# Linear Input Power Apps component framework sample
 
 ## Summary
 

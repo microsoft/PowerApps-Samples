@@ -7,7 +7,7 @@ products:
 page_type: sample
 description: "This sample component shows how to use object type output properties. This component generates a static object and output via a property which then can be accessed in a canvas app or via client APIs in a model form."
 ---
-# Navigation API Power Apps component framework sample
+# Object Output Power Apps component framework sample
 
 ## Summary
 

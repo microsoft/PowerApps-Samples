@@ -5,7 +5,7 @@ products:
 - power-platform
 - power-apps
 page_type: sample
-description: "This code component displays a set of choices on the form with an icon next to each choice value. The component uses some of the advanced features of model-driven apps, such as choices column definitions (metadata) and column-level security"
+description: "This code component displays a set of choices on the form with an icon next to each choice value. The component uses some of the advanced features of model-driven apps, such as choices column definitions (metadata) and column-level security."
 ---
 # Model-driven Power Apps field component framework sample
 

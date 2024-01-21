@@ -7,7 +7,7 @@ products:
 page_type: sample
 description: "This sample demonstrates how to customize the Power Apps editable grid control."
 ---
-# Navigation API Power Apps component framework sample
+# Customized editable grid Power Apps component framework sample
 
 ## Summary
 
