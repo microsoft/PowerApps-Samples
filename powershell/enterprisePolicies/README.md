@@ -176,7 +176,8 @@ Sample Output :</br>
 
 The Subnet Injection scripts are present in folder SubnetInjection at current location
 
-1. **Setup virtual network for Subnet Injection** : This script adds the subnet delegation for Microsoft.PowerPlatform/enterprisePolicies for a given virtual network and subnet </br>
+### 1. **Setup virtual network for Subnet Injection**
+This script adds the subnet delegation for Microsoft.PowerPlatform/enterprisePolicies for a given virtual network and subnet </br>
 Script name : SetupVnetForSubnetDelegation.ps1</br>
 Input parameters :
     - virtualNetworkSubscriptionId : The subscriptionId of the virtual network
@@ -189,7 +190,8 @@ Sample Input :</br>
 Sample Output : </br>
 ![alt text](./ReadMeImages/SetupVirtualNetwork2.png)</br>
 
-2. **Create Subnet Injection Enterprise Policy** : This script creates a Subnet Injection enterprise policy</br>
+ ### 2. **Create Subnet Injection Enterprise Policy** 
+This script creates a Subnet Injection enterprise policy</br>
 Script name : CreateSubnetInjectionEnterprisePolicy.ps1</br>
 Input parameters :
     - subscriptionId : The subscriptionId where Subnet Injection enterprise policy needs to be created
@@ -209,7 +211,8 @@ Sample Input :</br>
 Sample Output : </br>
 ![alt text](./ReadMeImages/CreateSubnetInjectionEnterprisePolicy2.png)</br>
 
-3. **Get Subnet Injection Enterprise Policy By ResourceId** : The script gets a Subnet Injection enterprise policy by ARM resourceId</br>
+### 3. **Get Subnet Injection Enterprise Policy By ResourceId**
+The script gets a Subnet Injection enterprise policy by ARM resourceId</br>
 Script name : GetSubnetInjectionEnterprisePolicyByResourceId.ps1</br>
 Input parameter :
     - enterprisePolicyArmId : The ARM resource ID of the Subnet Injection Enterprise Policy
@@ -220,7 +223,8 @@ Sample Input :</br>
 Sample Output :</br>
 ![alt text](./ReadMeImages/GetSubnetInjectionEnterprisePolicyByResourceId2.png)</br>
 
-4. **Get Subnet Injection Enterprise Policies in Subscription** : The script gets all Subnet Injection enterprise policies in an Azure subscription</br>
+### 4. **Get Subnet Injection Enterprise Policies in Subscription** 
+The script gets all Subnet Injection enterprise policies in an Azure subscription</br>
 Script name : GetSubnetInjectionEnterprisePoliciesInSubscription.ps1</br>
 Input parameter :
     - subscriptionId: : The Azure subscription Id
@@ -231,7 +235,8 @@ Sample Input :</br>
 Sample Output :</br>
 ![alt text](./ReadMeImages/GetSubnetInjectionEnterprisePoliciesInSubscription2.png)</br>
 
-5. **Get Subnet Injection Enterprise Policies in Resource Group** : The script gets all Subnet Injection enterprise policies in an Azure resource group</br>
+### 5. **Get Subnet Injection Enterprise Policies in Resource Group**
+The script gets all Subnet Injection enterprise policies in an Azure resource group</br>
 Script name : GetSubnetInjectionEnterprisePoliciesInResourceGroup.ps1</br>
 Input parameters :
     - subscriptionId : The Azure subscription Id
@@ -243,7 +248,8 @@ Sample Input : </br>
 Sample Output :</br>
 ![alt text](./ReadMeImages/GetSubnetInjectionEnterprisePoliciesInResourceGroup2.png)</br>
 
-6. **Update Subnet Injection Enterprise Policy** : This script updates a Subnet Injection Enterprise Policy. The updates allowed are for primary/secondary virtual network Id and/or primary/secondary subnet name.</br>
+### 6. **Update Subnet Injection Enterprise Policy**
+This script updates a Subnet Injection Enterprise Policy. The updates allowed are for primary/secondary virtual network Id and/or primary/secondary subnet name.</br>
 If you are changing only some of the allowed parameter values, provide “N/A” when prompted for the parameters that you don’t want to change.</br>
  **If the enterprise policy is associated with one or more environments, the update operation will fail, and the script will return an error.**</br>
 Script name : UpdateSubnetInjectionEnterprisePolicy.ps1</br>
@@ -262,7 +268,8 @@ Sample Input : </br>
 Sample Output :</br>
 ![alt text](./ReadMeImages/UpdateSubnetInjectionEnterprisePolicy2.png)</br>
 
-7. **Set Subnet Injection for an environment** : This script applies a Subnet Injection enterprise policy to a given Power Platform environment.</br>
+### 7. **Set Subnet Injection for an environment**
+This script applies a Subnet Injection enterprise policy to a given Power Platform environment.</br>
 The script adds the environment to the enterprise policy and optionally polls for the operation outcome.</br>
 Script name : NewSubnetInjection.ps1</br>
 Input parameters :
@@ -275,7 +282,8 @@ Sample Input :</br>
 Sample Output :</br>
 ![alt text](./ReadMeImages/NewSubnetInjection2.png)</br>
 
-8. **Get Subnet Injection for an environment** : This script returns the Subnet Injection enterprise policy if applied to a given Power Platform environment.</br>
+### 8. **Get Subnet Injection for an environment**
+This script returns the Subnet Injection enterprise policy if applied to a given Power Platform environment.</br>
 Script name : GetSubnetInjectionEnterprisePolicyForEnvironment.ps1</br>
 Input parameter :
     - environmentId : The Power Platform environment ID
@@ -286,7 +294,8 @@ Sample Input :</br>
 Sample Output :</br>
 ![alt text](./ReadMeImages/GetSubnetInjectionEnterprisePolicyForEnvironment2.png)</br>
 
-9. **Remove Subnet Injection from an environment** : The script removes the Subnet Injection enterprise policy from an environment, </br>
+### 9. **Remove Subnet Injection from an environment**
+The script removes the Subnet Injection enterprise policy from an environment, </br>
 Script name : RevertSubnetInjection.ps1</br>
 Input parameters :
     - environmentId : The Power Platform environment ID
