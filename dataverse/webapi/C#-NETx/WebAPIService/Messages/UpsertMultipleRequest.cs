@@ -12,7 +12,11 @@ namespace PowerApps.Samples.Messages
         /// <param name="targets">JObject containing the data to update.</param>
         /// <param name="entityLogicalName">The logical name for the table. Required when using setType.</param>
         /// <param name="setType">Option to set the @odata.type if the property not set on the targets.</param>
-        public UpsertMultipleRequest(string entitySetName, List<JObject> targets, string? entityLogicalName = null, bool setType = false)
+        public UpsertMultipleRequest(
+            string entitySetName, 
+            List<JObject> targets, 
+            string? entityLogicalName = null,
+            bool setType = false)
         {
             // Provides an option to set the required @odata.type property
             // if the targets do not already have it.

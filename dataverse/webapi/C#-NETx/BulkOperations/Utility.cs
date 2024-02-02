@@ -288,6 +288,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
         }
 
+        //TODO: I don't think you need this method
         /// <summary>
 		/// This method will create unique key for an entity using given parameters.
 		/// </summary>
@@ -296,14 +297,28 @@ namespace PowerPlatform.Dataverse.CodeSamples
 		/// <param name="keyDisplayName">keyDisplayName</param>
 		/// <param name="keyAttributes">keyAttributes</param>
 		/// <returns></returns>
-		public static async Task<HttpResponseMessage> CreateUniqueKey(Service service, string entitySchemaName, string keySchemaName, string keyDisplayName, List<string> keyAttributes)
+		public static async Task<HttpResponseMessage> CreateUniqueKey(
+            Service service, 
+            string entitySchemaName, 
+            string keySchemaName, 
+            string keyDisplayName, 
+            List<string> keyAttributes)
         {
+            
+
             // Create Alternate Key
-            var keyResponse = await CreateAlternateKeyToEntityAsync(service, entitySchemaName, keySchemaName, keyDisplayName, keyAttributes).ConfigureAwait(false);
+            var keyResponse = await CreateAlternateKeyToEntityAsync(
+                service: service,  
+                entitySchemaName: entitySchemaName, 
+                schemaName: keySchemaName, 
+                displayName: keyDisplayName, 
+                keyAttributes: keyAttributes).ConfigureAwait(false);
 
             return keyResponse;
         }
 
+        // TODO: If you had the  CreateEntityKeyResponse.EntityKeyId , you wouldn't need to introduce other methods like 
+        // GetUrlFromResponse. You could just retrieve the record using service.Retrieve
         public static async Task<string> ValidateAlternateKeyIsCreated(Service service, HttpResponseMessage keyResponse)
         {
             try
@@ -327,6 +342,11 @@ namespace PowerPlatform.Dataverse.CodeSamples
                         Thread.Sleep(pollingInterval * 1000);
 
                         // Retrieve Key Status
+                        // TODO: WebAPIService.Metadata.Messages should have RetrieveEntityKeyRequest/RetrieveEntityKeyResponse classes
+                        // That align with the SDK classes so this operation is reusable and uses
+                        // the EntityKeyMetadata class we already have
+                        // https://learn.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.messages.retrieveentitykeyrequest?view=dataverse-sdk-latest
+                        // https://learn.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.messages.retrieveentitykeyresponse?view=dataverse-sdk-latest
                         var keyMetadata = await GetEntityRecords(service, keyUrl).ConfigureAwait(false);
 
                         var indexStatus = keyMetadata.Value<string>("EntityKeyIndexStatus");
@@ -366,10 +386,16 @@ namespace PowerPlatform.Dataverse.CodeSamples
 		/// <param name="query">The relative URL of the message request</param>
 		/// <param name="httpRequestHeaders">Http request header details</param>
 		/// <returns>Returns the response object</returns>
-		public static async Task<JObject> GetEntityRecords(Service service, string query, Dictionary<string, string> httpRequestHeaders = null)
+		public static async Task<JObject> GetEntityRecords(
+            Service service, 
+            string query, 
+            Dictionary<string, string> httpRequestHeaders = null)
         {
             var request = new RetrieveMultipleRequest(query);
 
+            // TODO: You can use service.SendAsync<RetrieveMultipleResponse>(request) to get 
+            // a typed RetrieveMultipleResponse object returned with a Records property that could
+            //  replace this whole method.
             var response = await service.SendAsync(request).ConfigureAwait(false);
 
             JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -400,10 +426,18 @@ namespace PowerPlatform.Dataverse.CodeSamples
 		/// These attributes should exists in the specified entity.
 		/// These attributes must be of type Decimal or Integer or String.</param>
 		/// <returns>Return True if success</returns>
-		private static async Task<HttpResponseMessage> CreateAlternateKeyToEntityAsync(Service service, string entitySchemaName, string schemaName, string displayName, List<string> keyAttributes, bool isSynchronous = false, bool isSecondaryKey = false, HttpStatusCode expectedStatusCode = HttpStatusCode.NoContent)
+		private static async Task<HttpResponseMessage> CreateAlternateKeyToEntityAsync(Service service, 
+            string entitySchemaName, 
+            string schemaName, 
+            string displayName, 
+            List<string> keyAttributes, 
+            bool isSynchronous = false,  //TODO: Remove unused parameters
+            bool isSecondaryKey = false, 
+            HttpStatusCode expectedStatusCode = HttpStatusCode.NoContent)
         {
             var entityKeyMetadata = new EntityKeyMetadata
             {
+                // TODO
                 SchemaName = string.Format("new_{0}", schemaName),
                 LogicalName = string.Format("new_{0}", schemaName),
                 EntityLogicalName = entitySchemaName,
@@ -411,9 +445,14 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 DisplayName = new Label(displayName, 1033)
             };
 
+            // TODO you don't need this method
             var entityId = await GetEntityMetadataId(service, entitySchemaName).ConfigureAwait(false);
 
+            // TODO: CreateEntityKeyRequest could be refactored to support LogicalName (entitySchemaName.ToLower()) 
+            // instead of using the MetadataId.
             var createEntityKeyRequest = new CreateEntityKeyRequest(entityKeyMetadata, entityId);
+            // TODO: If you used service.SendAsync<CreateEntityKeyResponse>(createEntityKeyRequest) you should have an 
+            // CreateEntityKeyResponse.EntityKeyId 
             var response = await service.SendAsync(createEntityKeyRequest).ConfigureAwait(false);
 
             return response;

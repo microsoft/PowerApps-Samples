@@ -17,6 +17,8 @@ namespace PowerApps.Samples.Metadata.Messages
         public CreateEntityKeyRequest(EntityKeyMetadata entityKeyMetadata, Guid entityId, bool useStrongConsistency = false)
         {
             Method = HttpMethod.Post;
+            //TODO: This doesn't need to use the metadataid, it can use the LogicalName
+            // EntityDefinitions(LogicalName='{tableLogicalName}')
             RequestUri = new Uri(uriString: $"EntityDefinitions({entityId})/Keys", uriKind: UriKind.Relative);
             if (useStrongConsistency)
             {
