@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using PowerApps.Samples;
 using PowerApps.Samples.Messages;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 
 namespace PowerPlatform.Dataverse.CodeSamples
@@ -26,12 +27,46 @@ namespace PowerPlatform.Dataverse.CodeSamples
             try
             {
                 // Create Example table
-                await Utility.CreateExampleTable(service: service, tableSchemaName: tableSchemaName, isElastic: Settings.UseElastic);
+                await Utility.CreateExampleTable(service: service, 
+                    tableSchemaName: tableSchemaName, 
+                    isElastic: Settings.UseElastic);
 
-                // Create alternate key for standard table and validate that the key is created before sending Bulk Operation resquests
+                // Create alternate key for standard table and validate that the key is created
+                // before sending Bulk Operation resquests
                 if(Settings.CreateAlternateKey && !Settings.UseElastic)
                 {
-                    var response = await Utility.CreateUniqueKey(service, tableSchemaName, "sample_TestKey", "Sample Test Key", new List<string> { "sample_keyattribute" });
+                    // TODO: This could be greatly simplified if you used something like this:
+                    //
+                    // EntityKeyMetadata entityKeyMetadata = new()
+                    //{
+                    //    SchemaName = string.Format("new_{0}", tableAlternateKey),
+                    //    LogicalName = string.Format("new_{0}", tableAlternateKey.ToLower()),
+                    //    EntityLogicalName = tableLogicalName,
+                    //    KeyAttributes = ...
+                    //    DisplayName = ...
+                    //};
+                    // CreateEntityKeyRequest createEntityKeyRequest = new(entityName: tableLogicalName, entityKey: entityKeyMetadata );
+                    // var createEntityKeyResponse = service.SendAsync<CreateEntityKeyResponse>(createEntityKeyRequest)
+                    // RetrieveEntityKeyRequest retrieveEntityKeyRequest = new(
+                    //  entityLogicalName: tableLogicalName,
+                    //  logicalName: tableAlternateKey,
+                    //  metadataId: createEntityKeyResponse.EntityKeyId);
+                    // var retrieveEntityKeyResponse = service.SendAsync<RetrieveEntityKeyResponse>(retrieveEntityKeyRequest)
+                    // EntityKeyMetadata entityKeyMetadata = retrieveEntityKeyResponse.EntityKeyMetadata 
+                    // Keep sending this request until entityKeyMetadata.EntityKeyIndexStatus is EntityKeyIndexStatus.Active
+                    // These classes already exist:
+                    //  - EntityKeyIndexStatus
+                    //  - EntityKeyMetadata
+                    //  - CreateEntityKeyRequest
+                    //  You only need to implement the RetrieveEntityKeyRequest/RetrieveEntityKeyResponse classes
+                    //  But then they will be there next time we need them.
+
+
+                    var response = await Utility.CreateUniqueKey( service:service, 
+                        entitySchemaName: tableSchemaName, 
+                        keySchemaName: "sample_TestKey", 
+                        keyDisplayName: "Sample Test Key", 
+                        keyAttributes: new List<string> { "sample_keyattribute" });
 
                     var keyStatus = await Utility.ValidateAlternateKeyIsCreated(service, response);
                 }
@@ -62,9 +97,13 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
                     // Create a List of entity instances to be updated during UpsertMultiple call.
 
-                    var numRecCreate = Math.Ceiling((double)(numberOfRecords / 2)); // To handle cases where number of records is an odd number
+                    // To handle cases where number of records is an odd number
+                    var numRecCreate = Math.Ceiling((double)(numberOfRecords / 2)); 
+                    
                     Console.WriteLine($"\nPreparing {numRecCreate} records to create..");
+
                     List<JObject> entityList = new();
+
                     // Populate the list with the number of records to test.
                     for (int i = 0; i < numRecCreate; i++)
                     {
@@ -83,13 +122,15 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
                             if (Settings.UseElastic)
                             {
-                                entity.Add("@odata.id", $"{tableLogicalName}s({tablePrimaryKeyName}={Guid.NewGuid()},{elasticTablePartitionId}='sample pre-upsert record key {i + 1:0000000}')");
+                                entity.Add("@odata.id", 
+                                    $"{tableLogicalName}s({tablePrimaryKeyName}={Guid.NewGuid()}," +
+                                    $"{elasticTablePartitionId}='sample pre-upsert record key {i + 1:0000000}')");
                             }
                             else
                             {
                                 // Add the alternate key in the payload in @odata.id tag
-                                entity.Add
-                                    (new JProperty("@odata.id", $"{tableLogicalName}s({tableAlternateKey}='sample pre-upsert record key {i + 1:0000000}')"));
+                                entity.Add(new JProperty("@odata.id", 
+                                    $"{tableLogicalName}s({tableAlternateKey}='sample pre-upsert record key {i + 1:0000000}')"));
                             }
                         }
                     }
@@ -101,8 +142,11 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
                     // Add a tag optional parameter to set a shared variable to be available to a plug-in.
                     // See https://learn.microsoft.com/power-apps/developer/data-platform/optional-parameters?tabs=webapi#add-a-shared-variable-to-the-plugin-execution-context
+
+                    // TODO?: We could add a string 'tag' parameter to the UpsertMultipleRequest constructor and append it to the URL when it is provided.
+                    // CreateMultiple and UpdateMultiple don't have this though...
                     upsertMultipleRequest.RequestUri = new Uri(
-                        upsertMultipleRequest.RequestUri.ToString() + "?tag=CreateUpdateMultiple",
+                        upsertMultipleRequest.RequestUri.ToString() + "?tag=UpsertMultiple",
                         uriKind: UriKind.Relative);
 
                     if (Settings.BypassCustomPluginExecution)
@@ -114,6 +158,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
 
                     Console.WriteLine($"Sending POST request to /{tableSetName}/Microsoft.Dynamics.CRM.UpsertMultiple");
+
                     await service.SendAsync(upsertMultipleRequest);
 
                     // Prepare above created entity records to be updated by UpsertMultiple
@@ -138,8 +183,11 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     var retrieveMultipleRequest = new RetrieveMultipleRequest(
                         queryUri: retrieveMultipleQuery);
 
+                    
                     var retrieveMultipleResponse = await service.SendAsync<RetrieveMultipleResponse>(retrieveMultipleRequest);
 
+                    // TODO: RetrieveMultipleResponse.Records contains a JArray of JObjects
+                    // You don't need to use JsonConvert.DeserializeObject<JObject>, it is already done for you.
                     var jsonResponse = JsonConvert.DeserializeObject<JObject>(await retrieveMultipleResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
 
                      var numRecUpdatePK = Math.Ceiling((double)(numRecCreate / 2));
@@ -186,8 +234,9 @@ namespace PowerPlatform.Dataverse.CodeSamples
                         num = numRecUpsertCreate;
                     }
 
-                    // 1. Create numberOfRecords/4 records to be created using PK
-                    Console.WriteLine($"\nPreparing {num} records to Upsert(create) using PK..");
+                    // 1. Create numberOfRecords/4 records to be created using Primary Key
+                    Console.WriteLine($"\nPreparing {num} records to Upsert(create) using Primary Key..");
+
                     for (int i = 0; i < num; i++)
                     {
                         entityList.Add(new JObject() {
@@ -198,10 +247,10 @@ namespace PowerPlatform.Dataverse.CodeSamples
                         });
                     }
 
-                    // 2. Create numberOfRecords/4 records to be created using AK
+                    // 2. Create numberOfRecords/4 records to be created using Alternate Key
                     if (Settings.CreateAlternateKey)
                     {
-                        Console.WriteLine($"\nPreparing {num} records to Upsert(create) using AK..");
+                        Console.WriteLine($"\nPreparing {num} records to Upsert(create) using Alternate Key..");
                         for (int i = (int)num; i < numRecUpsertCreate; i++)
                         {
                             if (Settings.UseElastic)
@@ -232,7 +281,13 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
                     // Add a tag optional parameter to set a shared variable to be available to a plug-in.
                     // See https://learn.microsoft.com/power-apps/developer/data-platform/optional-parameters?tabs=webapi#add-a-shared-variable-to-the-plugin-execution-context
-                    upsertMultipleRequest2.RequestUri = new Uri(upsertMultipleRequest2.RequestUri.ToString() + "?tag=CreateUpdateMultiple", uriKind: UriKind.Relative);
+
+                    // TODO?: Add a 'tag' parameter to the UpsertMultipleRequest constructor provide the option to set this
+                    // rather than updating the existing URL?
+                    // CreateMultiple and UpdateMultiple don't have this though...
+                    upsertMultipleRequest2.RequestUri = new Uri(
+                        uriString: upsertMultipleRequest2.RequestUri.ToString() + "?tag=UpsertMultiple", 
+                        uriKind: UriKind.Relative);
 
                     if (Settings.BypassCustomPluginExecution)
                     {
@@ -242,6 +297,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     }
 
                     Console.WriteLine($"Sending POST request to /{tableSetName}/Microsoft.Dynamics.CRM.UpsertMultiple");
+
                     Stopwatch upsertStopwatch = Stopwatch.StartNew();
                     // Send the request
                     await service.SendAsync(upsertMultipleRequest2);
@@ -257,7 +313,8 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     var retrieveRequest = new RetrieveMultipleRequest(queryUri: retrieveMultipleQuery);
 
                     var retrieveMultipleResponse2 = await service.SendAsync<RetrieveMultipleResponse>(retrieveRequest);
-
+                    // TODO: RetrieveMultipleResponse.Records contains a JArray of JObjects
+                    // You don't need to use JsonConvert.DeserializeObject<JObject>
                     var jsonResponse2 = JsonConvert.DeserializeObject<JObject>(await retrieveMultipleResponse2.Content.ReadAsStringAsync().ConfigureAwait(false));
 
                     var idsToDelete = new List<Guid>();

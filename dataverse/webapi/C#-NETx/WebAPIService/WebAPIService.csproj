@@ -16,6 +16,8 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
+	<!--TODO: You shouldn't need to add these here.
+	The WebAPIService project should have them like all the other messages-->
   <ItemGroup>
     <Compile Update="Messages\UpsertMultipleRequest.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

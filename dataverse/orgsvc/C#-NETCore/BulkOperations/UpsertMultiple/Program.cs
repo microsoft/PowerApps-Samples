@@ -37,6 +37,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
         {
             if (Settings.UseElastic == true)
             {
+                // TODO: Were you going to update this sample to work with elastic tables?
                 Console.WriteLine("This sample doesn't currently support elastic tables.");
                 Console.WriteLine("Change UseElastic in Settings.cs to false and try again.");
                 return;
