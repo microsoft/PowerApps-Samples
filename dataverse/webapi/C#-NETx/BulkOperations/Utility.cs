@@ -288,6 +288,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
         }
 
+        //TODO: I don't think you need this method
         /// <summary>
 		/// This method will create unique key for an entity using given parameters.
 		/// </summary>
@@ -316,7 +317,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
             return keyResponse;
         }
 
-        // If you had the  CreateEntityKeyResponse.EntityKeyId , you wouldn't need to introduce other methods like 
+        // TODO: If you had the  CreateEntityKeyResponse.EntityKeyId , you wouldn't need to introduce other methods like 
         // GetUrlFromResponse. You could just retrieve the record using service.Retrieve
         public static async Task<string> ValidateAlternateKeyIsCreated(Service service, HttpResponseMessage keyResponse)
         {
@@ -436,6 +437,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
         {
             var entityKeyMetadata = new EntityKeyMetadata
             {
+                // TODO
                 SchemaName = string.Format("new_{0}", schemaName),
                 LogicalName = string.Format("new_{0}", schemaName),
                 EntityLogicalName = entitySchemaName,
@@ -446,7 +448,8 @@ namespace PowerPlatform.Dataverse.CodeSamples
             // TODO you don't need this method
             var entityId = await GetEntityMetadataId(service, entitySchemaName).ConfigureAwait(false);
 
-            // TODO: CreateEntityKeyRequest could be factored to support LogicalName (entitySchemaName.ToLower())
+            // TODO: CreateEntityKeyRequest could be refactored to support LogicalName (entitySchemaName.ToLower()) 
+            // instead of using the MetadataId.
             var createEntityKeyRequest = new CreateEntityKeyRequest(entityKeyMetadata, entityId);
             // TODO: If you used service.SendAsync<CreateEntityKeyResponse>(createEntityKeyRequest) you should have an 
             // CreateEntityKeyResponse.EntityKeyId 
