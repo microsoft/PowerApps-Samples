@@ -10,22 +10,25 @@ namespace PowerApps.Samples
     /// </summary>
     /// <remarks>Register this plug-in on the Create message, account entity, and asynchronous mode.
     /// </remarks>
-    public sealed class FollowupPlugin : IPlugin  // Implements the IPlugin interface
+    public class FollowupPlugin : PluginBase  // Inherits from PluginBase
     {
-        /// <summary>
-        /// Execute method that is required by the IPlugin interface.
-        /// </summary>
-        /// <param name="serviceProvider">The service provider from which you can obtain the
-        /// tracing service, plug-in execution context, organization service, and more.</param>
-        public void Execute(IServiceProvider serviceProvider)
-        {
-            //Extract the tracing service for use in debugging sandboxed plug-ins.
-            ITracingService tracingService =
-                (ITracingService)serviceProvider.GetService(typeof(ITracingService));
+        public  FollowupPlugin(string unsecureConfiguration, string secureConfiguration)
+            : base(typeof(FollowupPlugin)) { /*empty*/ }
 
-            // Obtain the execution context from the service provider.
-            IPluginExecutionContext context = (IPluginExecutionContext)
-                serviceProvider.GetService(typeof(IPluginExecutionContext));
+        // Entry point for custom business logic execution
+        protected override void ExecuteDataversePlugin(ILocalPluginContext localPluginContext)
+        {
+            if (localPluginContext == null)
+            {
+                throw new ArgumentNullException(nameof(localPluginContext));
+            }
+
+            // Obtain the tracing service for use in debugging sandboxed plug-ins.
+            var tracingService = localPluginContext.TracingService;
+
+
+            // Obtain the execution context from the local context.
+            var context = localPluginContext.PluginExecutionContext;
 
             // The InputParameters collection contains all the data passed in the message request.
             if (context.InputParameters.Contains("Target") &&
@@ -62,7 +65,7 @@ namespace PowerApps.Samples
                     }
 
                     // Obtain the organization service reference.
-                    IOrganizationServiceFactory serviceFactory = (IOrganizationServiceFactory)serviceProvider.GetService(typeof(IOrganizationServiceFactory));
+                    var serviceFactory = localPluginContext.OrgSvcFactory;
                     IOrganizationService service = serviceFactory.CreateOrganizationService(context.UserId);
 
                     // Create the task in Microsoft Dynamics CRM.
