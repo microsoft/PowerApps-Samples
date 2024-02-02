@@ -704,9 +704,17 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
                 if (Settings.CreateAlternateKey)
                 {
+                    if (!Settings.UseElastic)
+                    {
 #pragma warning disable CS0162 // Unreachable code detected
-                    entity["sample_keyattribute"] = $"sample pre-upsert record key {i + 1:0000000}";
+                        entity["sample_keyattribute"] = $"sample pre-upsert record key {i + 1:0000000}";
 #pragma warning restore CS0162 // Unreachable code detected
+                    }
+                    else
+                    {
+                        entity.KeyAttributes.Add(tableLogicalName + "id", Guid.NewGuid());
+                        entity.KeyAttributes.Add("partitionid", $"sample pre-upsert record key {i + 1:0000000}");
+                    }
                 }
 
                 entityList.Add(entity);

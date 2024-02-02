@@ -35,12 +35,12 @@ namespace PowerPlatform.Dataverse.CodeSamples
         }
         static void Main()
         {
-            if (Settings.UseElastic == true)
+            /*if (Settings.UseElastic == true)
             {
                 Console.WriteLine("This sample doesn't currently support elastic tables.");
                 Console.WriteLine("Change UseElastic in Settings.cs to false and try again.");
                 return;
-            }
+            }*/
 
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
@@ -48,7 +48,8 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
             int numberOfRecords = Settings.NumberOfRecords; //100 by default
             string tableSchemaName = "sample_Example";
-            string tableLogicalName = tableSchemaName.ToLower(); //sample_example            
+            string tableLogicalName = tableSchemaName.ToLower(); //sample_example
+            string elasticTablePartitionId = "partitionid";
 
             // Create a Dataverse service client using the default connection string.
             ServiceClient serviceClient =
@@ -101,9 +102,17 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
                     if (Settings.CreateAlternateKey)
                     {
+                        if (!Settings.UseElastic)
+                        {
 #pragma warning disable CS0162 // Unreachable code detected
-                        query.ColumnSet.AddColumn("sample_keyattribute");
+                            query.ColumnSet.AddColumn("sample_keyattribute");
 #pragma warning restore CS0162 // Unreachable code detected
+                        }
+                        else
+                        {
+                            query.ColumnSet.AddColumn(tableLogicalName + "id");
+                            query.ColumnSet.AddColumn(elasticTablePartitionId);
+                        }
                     }
 
                     retrieveMultipleRequest.Query = query;
@@ -138,7 +147,15 @@ namespace PowerPlatform.Dataverse.CodeSamples
                         {
                             Entity entity = new(tableLogicalName);
                             entity.Attributes.Add("sample_name", $"sample Upsert(Create by AK) record {i + 1:0000000}");
-                            entity.KeyAttributes.Add("sample_keyattribute", $"sample upsert record key {i + 1:0000000}");
+                            if (!Settings.UseElastic)
+                            {
+                                entity.KeyAttributes.Add("sample_keyattribute", $"sample upsert record key {i + 1:0000000}");
+                            }
+                            else
+                            {
+                                entity.KeyAttributes.Add(tableLogicalName + "id", Guid.NewGuid());
+                                entity.KeyAttributes.Add("partitionid", $"sample upsert record key {i + 1:0000000}");
+                            }
                             entities.Entities.Add(entity);
                         }
                     }
@@ -149,8 +166,17 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     // Assign Id values to created items to prepare to update them
                     for (int i = 0; i < recordsCreated.Count / 2; i++)
                     {
-                        entities.Entities[i].Id = recordsCreated[i].Id;
                         entities.Entities[i]["sample_name"] += " Updated using PK";
+                        if (!Settings.UseElastic)
+                        {
+                            entities.Entities[i][tableLogicalName + "id"] = recordsCreated[i].Id;
+                            entities.Entities[i].Attributes.Remove("sample_keyattribute");
+                        }
+                        else
+                        {
+                            entities.Entities[i].Id = recordsCreated[i].Id;
+                            entities.Entities[i].KeyAttributes.Clear();
+                        }
                     }
 
                     if (Settings.CreateAlternateKey)
@@ -159,15 +185,23 @@ namespace PowerPlatform.Dataverse.CodeSamples
                         Console.WriteLine($"\tPreparing {numberOfRecords / 4} entity instances to update  with existing alternate key value..");
                         for (int i = recordsCreated.Count / 2; i < recordsCreated.Count; i++)
                         {
-                            entities.Entities[i].KeyAttributes.Add("sample_keyattribute", recordsCreated[i]["sample_keyattribute"]);
-                            entities.Entities[i]["sample_name"] += " Updated using AK";
+                            if (Settings.UseElastic)
+                            {
+                                entities.Entities[i]["sample_name"] += " Updated using AK";
+                            }
+                            else
+                            {
+                                entities.Entities[i].Attributes.Remove("sample_keyattribute");
+                                entities.Entities[i].KeyAttributes.Add("sample_keyattribute", recordsCreated[i]["sample_keyattribute"]);
+                                entities.Entities[i]["sample_name"] += " Updated using AK";
+                            }
                         }
                     }
 
 
                     #region Verify Alternate Key is active
 
-                    if (Settings.CreateAlternateKey)
+                    if (Settings.CreateAlternateKey && !Settings.UseElastic)
                     {
 
 #pragma warning disable CS0162 // Unreachable code detected
@@ -181,7 +215,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                             Console.WriteLine("\tThe sample cannot continue. Please try again.");
                         }
 
-                        Console.WriteLine($"\tAlternate key {(isAlternateKeyCreated? "is available" : "is not available")}\n");
+                        Console.WriteLine($"\tAlternate key {(isAlternateKeyCreated ? "is available" : "is not available")}\n");
                     }
 
                     #endregion
@@ -211,6 +245,12 @@ namespace PowerPlatform.Dataverse.CodeSamples
                         $"in {Math.Round(updateStopwatch.Elapsed.TotalSeconds)} seconds.");
 
                     #endregion
+
+                    var retrievemultiplerequest2 = new RetrieveMultipleRequest();
+                    retrievemultiplerequest2.Query = query;
+
+                    var retrieveResponse = (RetrieveMultipleResponse)serviceClient.Execute(retrieveMultipleRequest);
+                    var recordsUpserted = retrieveMultipleResponseRaw.EntityCollection.Entities.ToList();
 
                     #region Validate UpsertMultiple Response
 
