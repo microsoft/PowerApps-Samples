@@ -1,12 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Polly;
 using PowerApps.Samples.Metadata.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PowerApps.Samples.Metadata.Messages
 {

@@ -306,7 +306,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                         Thread.Sleep(pollingInterval * 1000);
 
                         var request = new RetrieveEntityKeyRequest(entityLogicalName, keyLogicalName);
-                        var response = await service.SendAsync<RetrieveEntityKeyResponse>(request).ConfigureAwait(false);
+                        var response = await service.SendAsync<RetrieveEntityKeyResponse>(request);
 
                         var keyMetadata = response.EntityKeyMetadata;
 
@@ -358,7 +358,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
             };
 
             var createEntityKeyRequest = new CreateEntityKeyRequest(entityKeyMetadata, entityLogicalName.ToLower());
-            await service.SendAsync<CreateEntityKeyResponse>(createEntityKeyRequest).ConfigureAwait(false);
+            await service.SendAsync<CreateEntityKeyResponse>(createEntityKeyRequest);
         }
     }
 }

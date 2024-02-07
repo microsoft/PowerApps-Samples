@@ -117,7 +117,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     // See https://learn.microsoft.com/power-apps/developer/data-platform/optional-parameters?tabs=webapi#add-a-shared-variable-to-the-plugin-execution-context
 
                     upsertMultipleRequest.RequestUri = new Uri(
-                        upsertMultipleRequest.RequestUri.ToString() + "?tag=CreateUpdateMultiple",
+                        upsertMultipleRequest.RequestUri.ToString() + "?tag=UpsertMultiple",
                         uriKind: UriKind.Relative);
 
                     if (Settings.BypassCustomPluginExecution)
@@ -249,7 +249,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     // Add a tag optional parameter to set a shared variable to be available to a plug-in.
                     // See https://learn.microsoft.com/power-apps/developer/data-platform/optional-parameters?tabs=webapi#add-a-shared-variable-to-the-plugin-execution-context
                     upsertMultipleRequest2.RequestUri = new Uri(
-                        uriString: upsertMultipleRequest2.RequestUri.ToString() + "?tag=CreateUpdateMultiple", 
+                        uriString: upsertMultipleRequest2.RequestUri.ToString() + "?tag=UpsertMultiple", 
                         uriKind: UriKind.Relative);
 
                     if (Settings.BypassCustomPluginExecution)

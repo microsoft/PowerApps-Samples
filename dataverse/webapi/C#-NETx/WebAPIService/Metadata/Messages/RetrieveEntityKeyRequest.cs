@@ -1,14 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using PowerApps.Samples.Metadata.Types;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PowerApps.Samples.Metadata.Messages
+﻿namespace PowerApps.Samples.Metadata.Messages
 {
     public sealed class RetrieveEntityKeyRequest : HttpRequestMessage
     {
@@ -25,7 +15,7 @@ namespace PowerApps.Samples.Metadata.Messages
 
             GenerateUri();
 
-            this.Method = HttpMethod.Get;
+            Method = HttpMethod.Get;
             RequestUri = new Uri(uriString: _uri, uriKind: UriKind.Relative);
             Headers.Add("Consistency", "Strong");
             _query = query;
@@ -94,6 +84,8 @@ namespace PowerApps.Samples.Metadata.Messages
         {
             string baseUri = new($"EntityDefinitions(LogicalName='{_entityLogicalName}')" +
                 $"/Keys(LogicalName='{_logicalName}')");
+
+
             if (_query != null)
             {
 
