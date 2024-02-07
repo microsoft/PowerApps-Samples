@@ -1,10 +1,7 @@
 ﻿# UpsertMultiple README
 
-> **Note**:
-> This project currently doesn't support elastic tables
-
 This project uses [UpsertMultipleRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.upsertmultiplerequest) 
-class to perform bulk create and update operations.
+class to perform bulk upsert operations.
 
 ## Create table for sample
 
