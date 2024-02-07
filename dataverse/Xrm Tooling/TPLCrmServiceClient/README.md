@@ -4,13 +4,13 @@ Task Parallel Library (TPL) makes developers more productive by simplifying the 
 
 Adding parallelism and concurrency can significantly improve the total throughput for applications that need to perform a large number of CDS operations in a short period of time.
 
-Because the [Microsoft.Xrm.Tooling.Connector.CrmServiceClient Class](https://docs.microsoft.com/dotnet/api/microsoft.xrm.tooling.connector.crmserviceclient) includes handling for the transient errors thrown by the CDS service protection limits, the combination of TPL and CrmServiceClient is valuable to create applications that can optimize throughput while being resilient to the service protection limit errors by re-trying requests that are rejected due to these limits.
+Because the [Microsoft.Xrm.Tooling.Connector.CrmServiceClient Class](https://learn.microsoft.com/dotnet/api/microsoft.xrm.tooling.connector.crmserviceclient) includes handling for the transient errors thrown by the CDS service protection limits, the combination of TPL and CrmServiceClient is valuable to create applications that can optimize throughput while being resilient to the service protection limit errors by re-trying requests that are rejected due to these limits.
 
-The [CrmServiceClient.Clone Method](https://docs.microsoft.com/dotnet/api/microsoft.xrm.tooling.connector.crmserviceclient.clone) enables TPL to use the client with multiple threads.
+The [CrmServiceClient.Clone Method](https://learn.microsoft.com/dotnet/api/microsoft.xrm.tooling.connector.crmserviceclient.clone) enables TPL to use the client with multiple threads.
 
 ## Demonstrates
 
-This simple sample will generate a number of account table records using the [System.Threading.Tasks.Parallel.ForEach Method](https://docs.microsoft.com/dotnet/api/system.threading.tasks.parallel.foreach).
+This simple sample will generate a number of account table records using the [System.Threading.Tasks.Parallel.ForEach Method](https://learn.microsoft.com/dotnet/api/system.threading.tasks.parallel.foreach).
 
 Then it will use that technique again to delete the entities created.
 
@@ -30,4 +30,4 @@ This sample is not configured to disable the Azure Affinity cookies, which is an
 ### More information
 
 [Sample: Task Parallel Library with CrmServiceClient](https://learn.microsoft.com/power-apps/developer/data-platform/xrm-tooling/sample-tpl-crmserviceclient)  
-[Task Parallel Library (TPL)](https://docs.microsoft.com/dotnet/standard/parallel-programming/task-parallel-library-tpl)
+[Task Parallel Library (TPL)](https://learn.microsoft.com/dotnet/standard/parallel-programming/task-parallel-library-tpl)

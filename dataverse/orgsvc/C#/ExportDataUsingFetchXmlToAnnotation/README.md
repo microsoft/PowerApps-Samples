@@ -278,6 +278,6 @@ Content-Type: application/json; odata.metadata=minimal
 
 ## See also
 
-[Create and use Custom APIs](https://docs.microsoft.com/powerapps/developer/data-platform/custom-api)<br />
-[Write a plug-in](https://docs.microsoft.com/powerapps/developer/common-data-service/write-plug-in)<br />
-[Register a plug-in](https://docs.microsoft.com/powerapps/developer/common-data-service/register-plug-in)
+[Create and use Custom APIs](https://learn.microsoft.com/powerapps/developer/data-platform/custom-api)<br />
+[Write a plug-in](https://learn.microsoft.com/powerapps/developer/common-data-service/write-plug-in)<br />
+[Register a plug-in](https://learn.microsoft.com/powerapps/developer/common-data-service/register-plug-in)

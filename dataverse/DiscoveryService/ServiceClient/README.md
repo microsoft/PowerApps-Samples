@@ -19,7 +19,7 @@ You must first set the `username` and `password` variables in the `Program.Main`
 
 ## What this sample does
 
-This sample uses the [Microsoft.PowerPlatform.Dataverse.Client](https://www.nuget.org/packages/Microsoft.PowerPlatform.Dataverse.Client/) [ServiceClient Class](https://docs.microsoft.com/en-us/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient?view=dataverse-sdk-latest) to query the global discovery service with a user's credentials to determine which environments they can connect with.
+This sample uses the [Microsoft.PowerPlatform.Dataverse.Client](https://www.nuget.org/packages/Microsoft.PowerPlatform.Dataverse.Client/) [ServiceClient Class](https://learn.microsoft.com/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient) to query the global discovery service with a user's credentials to determine which environments they can connect with.
 
 If one or more environments are returned, the sample will prompt the user to choose one, and then use a `WhoAmIRequest` to return the `SystemUser.UserId` for that environment.
 
@@ -36,8 +36,8 @@ In Cloud.cs there is a `Cloud` enumeration for each of the known discovery regio
 ### Demonstrate
 
 1. Using the user credentials and the `cloud` value, the program uses the `GetAllOrganizations` static method to retrieve all known environments for the user.
-1. The `GetAllOrganizations` method extracts the data center global discovery service Url from the member `Description` decoration and uses it together with the user credentials to execute the [ServiceClient.DiscoverOnlineOrganizationsAsync Method](https://docs.microsoft.com/en-us/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient.discoveronlineorganizationsasync?view=dataverse-sdk-latest) to retrieve the environments the user has access to.
-1. If any environments are returned by the `GetAllOrganizations` method, they will be listed in the console and you will be prompted to choose one by typing a number. If your choice is valid, the selected [OrganizationDetail](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.discovery.organizationdetail?view=dataverse-sdk-latest) data is passed to the `ShowUserId` method that executes a `WhoAmIRequest` and displays the `SystemUser.UserId` for the user in that environment.
+1. The `GetAllOrganizations` method extracts the data center global discovery service Url from the member `Description` decoration and uses it together with the user credentials to execute the [ServiceClient.DiscoverOnlineOrganizationsAsync Method](https://learn.microsoft.com/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient.discoveronlineorganizationsasync) to retrieve the environments the user has access to.
+1. If any environments are returned by the `GetAllOrganizations` method, they will be listed in the console and you will be prompted to choose one by typing a number. If your choice is valid, the selected [OrganizationDetail](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.discovery.organizationdetail) data is passed to the `ShowUserId` method that executes a `WhoAmIRequest` and displays the `SystemUser.UserId` for the user in that environment.
 
 ### Clean up
 

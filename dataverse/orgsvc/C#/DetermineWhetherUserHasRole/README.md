@@ -1,6 +1,6 @@
 # Determine whether a user has a role
 
-This sample shows how to determine whether a user in Microsoft Dataverse has been associated with a specific role. This is performed by using a query with the [IOrganizationService.RetrieveMultiple](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.retrievemultiple?view=dynamics-general-ce-9) method.  
+This sample shows how to determine whether a user in Microsoft Dataverse has been associated with a specific role. This is performed by using a query with the [IOrganizationService.RetrieveMultiple](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.retrievemultiple) method.  
 
 This sample requires an additional user that isn't available in your system. Create the required user manually in **Office 365** in order to run the sample without any errors. For this sample create a user profile **as is** shown below. 
 
@@ -15,7 +15,7 @@ See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/mas
 
 ## What this sample does
 
-The [IOrganizationService.RetrieveMultiple](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.retrievemultiple?view=dynamics-general-ce-9) message is intended to be used in a scenario where it retrieves a collection of records.
+The [IOrganizationService.RetrieveMultiple](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.retrievemultiple) message is intended to be used in a scenario where it retrieves a collection of records.
 
 ## How this sample works
 

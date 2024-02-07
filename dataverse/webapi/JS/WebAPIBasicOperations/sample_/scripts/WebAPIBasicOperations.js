@@ -179,7 +179,7 @@ Sdk.startSample = function () {
          "description"].join();
 
         // NOTE: For performance best practices, use $select to limit the properties you want to return
-        // See also: https://msdn.microsoft.com/en-us/library/gg334767.aspx#bkmk_requestProperties
+        // See also: https://learn.microsoft.com/power-apps/developer/data-platform/webapi/query-data-web-api#select-columns
         var query = "?$select=" + properties;
         return Sdk.request("GET", contact1Uri + query, null);
     })
@@ -405,7 +405,7 @@ Sdk.startSample = function () {
         // Expand on primarycontactid to select some of contact's properties.
         // NOTE: With $expand, the CRM server will return values for the selected properties. 
         // The CRM Web API only supports expansions one level deep.
-        // See also: https://msdn.microsoft.com/en-us/library/mt607871.aspx#bkmk_expandRelated
+        // See also: https://learn.microsoft.com/power-apps/developer/data-platform/webapi/query-data-web-api#join-tables
         var query = "?$select=name&$expand=primarycontactid($select=" + contactProperties + ")";
         return Sdk.request("GET", account2Uri + query, null);
     })
@@ -590,7 +590,7 @@ Sdk.startSample = function () {
         // by default, automatically cascade delete child instances. In this program, 
         // tasks related using the Contact_Tasks relationship have contact as their parent. 
         // Other relationships may behave differently.
-        // See also: https://msdn.microsoft.com/en-us/library/gg309412.aspx#BKMK_CascadingBehavior
+        // See also: https://learn.microsoft.com/power-apps/developer/data-platform/configure-entity-relationship-cascading-behavior
         console.log("\n--Section 5 started--");
         if (deleteData) {
             for (var i = 0; i < entitiesToDelete.length; i++) {

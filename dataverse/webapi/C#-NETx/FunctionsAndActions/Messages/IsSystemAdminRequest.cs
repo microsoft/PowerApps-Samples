@@ -3,7 +3,7 @@
     /// <summary>
     /// Contains the data to send the IsSystemAdminRequest
     /// This is a Function defined by a Custom API
-    /// See https://docs.microsoft.com/power-apps/developer/data-platform/org-service/samples/issystemadmin-customapi-sample-plugin
+    /// See https://learn.microsoft.com/power-apps/developer/data-platform/org-service/samples/issystemadmin-customapi-sample-plugin
     /// </summary>
     public sealed class IsSystemAdminRequest : HttpRequestMessage
     {

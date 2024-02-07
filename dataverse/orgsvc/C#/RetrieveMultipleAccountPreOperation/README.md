@@ -2,11 +2,11 @@
 
 This sample shows how to write a plug-in that modifies a query defined within the `PreOperation` stage of a `RetrieveMultiple` request.
 
-Data filtering in a plug-in is commonly done in the `PostOperation` stage. The [EntityCollection.Entities](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.entitycollection.entities) data can be examined and entities that should not be returned are removed from the collection. But this pattern introduces issues where the number of records returned within a page may not match the expected paging sizes.
+Data filtering in a plug-in is commonly done in the `PostOperation` stage. The [EntityCollection.Entities](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.entitycollection.entities) data can be examined and entities that should not be returned are removed from the collection. But this pattern introduces issues where the number of records returned within a page may not match the expected paging sizes.
 
 The approach described by this sample is different. Rather than filter entities after they have been retrieved, this plug-in will apply changes to the query in the `PreOperation` stage before it is executed. 
 
-A key point demonstrated by this sample is that the [RetrieveMultipleRequest.Query](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.messages.retrievemultiplerequest.query) can be one of three different types that are derived from the [QueryBase Class](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.query.querybase). To accommodate queries of any type, the plug-in code
+A key point demonstrated by this sample is that the [RetrieveMultipleRequest.Query](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.retrievemultiplerequest.query) can be one of three different types that are derived from the [QueryBase Class](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.query.querybase). To accommodate queries of any type, the plug-in code
 must detect the type of query and implement the appropriate type of filter.
 
 You can download the sample from [here](https://github.com/Microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/C%23/RetrieveMultipleAccountPreOperation).
@@ -21,9 +21,9 @@ You can download the sample from [here](https://github.com/Microsoft/PowerApps-S
 
 ## What this sample does
 
-When executed, the plug-in will ensure that inactive account records will not be returned for the most common types of queries: [QueryExpression](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.query.queryexpression) and [FetchExpression](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.query.fetchexpression).
+When executed, the plug-in will ensure that inactive account records will not be returned for the most common types of queries: [QueryExpression](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.query.queryexpression) and [FetchExpression](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.query.fetchexpression).
 
-[QueryByAttribute](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.query.querybyattribute) is a third type of query that may also be used. It doesn't support complex queries and therefore complex filtering cannot be applied using this method. Fortunately, this type of query is not frequently used. You may want to reject queries of this type by throwing an [InvalidPluginExecutionException](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.invalidpluginexecutionexception) in the `PreValidation` stage.
+[QueryByAttribute](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.query.querybyattribute) is a third type of query that may also be used. It doesn't support complex queries and therefore complex filtering cannot be applied using this method. Fortunately, this type of query is not frequently used. You may want to reject queries of this type by throwing an [InvalidPluginExecutionException](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.invalidpluginexecutionexception) in the `PreValidation` stage.
 
 ## How this sample works
 
@@ -35,7 +35,7 @@ In order to simulate the scenario described in [What this sample does](#what-thi
 
 ### FetchExpression
 
-1. Parse the [FetchExpression.Query](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.query.fetchexpression.query) value containing the FetchXml into an [XDocument](https://docs.microsoft.com/en-us/dotnet/api/system.xml.linq.xdocument)
+1. Parse the [FetchExpression.Query](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.query.fetchexpression.query) value containing the FetchXml into an [XDocument](https://learn.microsoft.com/dotnet/api/system.xml.linq.xdocument)
 1. Verify that the `entity` element `attribute` column specifies the `account` table.
 1. Examine all the `filter` elements in the query for conditions that test the `statecode` column.
 1. Remove any existing conditions based on that column.
@@ -93,10 +93,10 @@ if (fetchExpressionQuery != null)
 
 ### QueryExpression
 
-1. Verify that the [QueryExpression.EntityName](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.query.queryexpression.entityname) is the `account` table.
-1. Loop through the [QueryExpression.Criteria.Filters](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.query.filterexpression.filters) collection
-1. Use the recursive `RemoveAttributeConditions` method to look for any [ConditionExpression](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.query.conditionexpression) instances that test the statecode column and remove them.
-1. Add a new [FilterExpression](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.query.filterexpression) to the `QueryExpression.Criteria.Filters` collection that requires that only accounts where the `statecode` is not equal to 1 (Inactive) will be returned.
+1. Verify that the [QueryExpression.EntityName](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.query.queryexpression.entityname) is the `account` table.
+1. Loop through the [QueryExpression.Criteria.Filters](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.query.filterexpression.filters) collection
+1. Use the recursive `RemoveAttributeConditions` method to look for any [ConditionExpression](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.query.conditionexpression) instances that test the statecode column and remove them.
+1. Add a new [FilterExpression](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.query.filterexpression) to the `QueryExpression.Criteria.Filters` collection that requires that only accounts where the `statecode` is not equal to 1 (Inactive) will be returned.
 
 ```csharp
 if (queryExpressionQuery != null)
@@ -302,5 +302,5 @@ catch (Exception ex)
 
 ### See also
 
-[Use plug-ins to extend business processes](https://docs.microsoft.com/powerapps/developer/common-data-service/plug-ins)<br/>
-[Register a plug-in](https://docs.microsoft.com/powerapps/developer/common-data-service/register-plug-in)
+[Use plug-ins to extend business processes](https://learn.microsoft.com/powerapps/developer/common-data-service/plug-ins)<br/>
+[Register a plug-in](https://learn.microsoft.com/powerapps/developer/common-data-service/register-plug-in)

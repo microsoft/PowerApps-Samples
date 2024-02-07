@@ -56,8 +56,8 @@ Based on a [FileInfo](https://learn.microsoft.com/dotnet/api/system.io.fileinfo?
 
 ### GetMaxUploadFileSize
 
-Using the [IOrganizationService](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice?view=dataverse-sdk-latest) `service` parameter, this function returns the integer `maxuploadfilesize` value from the `organization` table.
+Using the [IOrganizationService](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice) `service` parameter, this function returns the integer `maxuploadfilesize` value from the `organization` table.
 
 ### SetMaxUploadFileSize
 
-Using the [IOrganizationService](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice?view=dataverse-sdk-latest) `service` parameter, this function sets the integer `maxuploadfilesize` value from the `organization` table to the value of the integer `maxUploadFileSizeInBytes` parameter.
+Using the [IOrganizationService](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice) `service` parameter, this function sets the integer `maxuploadfilesize` value from the `organization` table to the value of the integer `maxUploadFileSizeInBytes` parameter.

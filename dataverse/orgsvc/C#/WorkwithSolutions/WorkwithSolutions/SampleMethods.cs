@@ -25,7 +25,7 @@ namespace PowerApps.Samples
         private static bool prompt = true;
         // Specify which language code to use in the sample. If you are using a language
         // other than US English, you will need to modify this value accordingly.
-        // See http://msdn.microsoft.com/en-us/library/0h88fahh.aspx
+        // See https://learn.microsoft.com/previous-versions/windows/embedded/ms912047(v=winembedded.10)
         private const int _languageCode = 1033;
         // <summary>
         /// Function to set up the sample.
@@ -76,7 +76,7 @@ namespace PowerApps.Samples
             {
                 UniqueName = "sdksamples",
                 FriendlyName = "PowerApps SDK Samples",
-                SupportingWebsiteUrl = "http://msdn.microsoft.com/en-us/dynamics/crm/default.aspx",
+                SupportingWebsiteUrl = "https://learn.microsoft.com/power-apps/developer/data-platform/overview",
                 CustomizationPrefix = "sample",
                 EMailAddress = "someone@microsoft.com",
                 Description = "This publisher was created with samples from the Microsoft Dynamics CRM SDK"

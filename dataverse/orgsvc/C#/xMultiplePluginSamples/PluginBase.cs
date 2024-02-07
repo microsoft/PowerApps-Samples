@@ -9,8 +9,8 @@ namespace xMultiplePluginSamples
 {
     /// <summary>
     /// Base class for all plug-in classes.
-    /// Plugin development guide: https://docs.microsoft.com/powerapps/developer/common-data-service/plug-ins
-    /// Best practices and guidance: https://docs.microsoft.com/powerapps/developer/common-data-service/best-practices/business-logic/
+    /// Plugin development guide: https://learn.microsoft.com/powerapps/developer/common-data-service/plug-ins
+    /// Best practices and guidance: https://learn.microsoft.com/powerapps/developer/common-data-service/best-practices/business-logic/
     /// </summary>
     public abstract class PluginBase : IPlugin
     {

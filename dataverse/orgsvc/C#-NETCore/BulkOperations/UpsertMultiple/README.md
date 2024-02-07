@@ -33,7 +33,7 @@ More information: [Monitor index creation for alternate keys](https://learn.micr
 ## Executing UpsertMultiple and validating responses
 
 After the prepared collection of entity instances is sent using `UpsertMultiple`, the sample inspects the 
-[UpsertMultipleResponse.Results](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.upsertmultipleresponse.results?view=dataverse-sdk-latest) property, which is an array of [UpsertResponse](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.upsertresponse?view=dataverse-sdk-latest). The [UpsertResponse.RecordCreated](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.upsertresponse.recordcreated?view=dataverse-sdk-latest) boolean property tells you whether the operation resulted in an Create or Update operation.
+[UpsertMultipleResponse.Results](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.upsertmultipleresponse.results) property, which is an array of [UpsertResponse](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.upsertresponse). The [UpsertResponse.RecordCreated](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.upsertresponse.recordcreated) boolean property tells you whether the operation resulted in an Create or Update operation.
 
 ## Deleting records
 

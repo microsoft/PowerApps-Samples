@@ -10,8 +10,7 @@ namespace PowerApps.Samples
     /// </summary>
     /// <remarks>Register this plug-in on the Create message, account entity, and asynchronous mode.
     /// </remarks>
-
-    public sealed class FollowupPlugin : IPlugin
+    public sealed class FollowupPlugin : IPlugin  // Implements the IPlugin interface
     {
         /// <summary>
         /// Execute method that is required by the IPlugin interface.

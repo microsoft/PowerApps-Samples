@@ -1,6 +1,6 @@
 # Reschedule and cancel a recurring appointment
 
-This sample demonstrates how to reschedule and cancel appointment instances in a recurring appointment series using the [RescheduleRequest](https://docs.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.reschedulerequest?view=dynamics-general-ce-9) message.
+This sample demonstrates how to reschedule and cancel appointment instances in a recurring appointment series using the [RescheduleRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.reschedulerequest) message.
 
 ## How to run this sample
 

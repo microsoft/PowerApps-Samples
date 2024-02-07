@@ -11,7 +11,7 @@
  */
 
 /**
- * This JS shows how to use a 3rd party libary to create a control in PowerApps Control Framework
+ * This JS shows how to use a 3rd party library to create a control in PowerApps Control Framework
  * Sample is based on angular.js, angular-ui, angular-animate, angular-sanitize, bootstrap for sampling purpose only
  * The code may not reveal the best practices for the mentioned 3rd party libraries
  */

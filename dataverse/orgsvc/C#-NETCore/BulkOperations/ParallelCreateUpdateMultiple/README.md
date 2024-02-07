@@ -3,16 +3,16 @@
 This project uses the 
 [System.Threading.Tasks.Parallel.ForEachAsync Method](https://learn.microsoft.com/dotnet/api/system.threading.tasks.parallel.foreachasync?view=net-6.0)
 together with the 
-[Microsoft.PowerPlatform.Dataverse.Client.ServiceClient.ExecuteAsync Method](https://learn.microsoft.com/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient.executeasync?view=dataverse-sdk-latest) 
+[Microsoft.PowerPlatform.Dataverse.Client.ServiceClient.ExecuteAsync Method](https://learn.microsoft.com/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient.executeasync) 
 and the 
-[CreateMultipleRequest ](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createmultiplerequest?view=dataverse-sdk-latest)
-and [UpdateMultipleRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.updatemultiplerequest?view=dataverse-sdk-latest)
+[CreateMultipleRequest ](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createmultiplerequest)
+and [UpdateMultipleRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.updatemultiplerequest)
 classes to perform multiple create and update operations using multiple threads.
 
 It depends on the common structure for other projects in this solution that is described in [CreateUpdateMultiple/README.md](../README.md).
 
 The number of threads used will depend on the 
-[ServiceClient.RecommendedDegreesOfParallelism Property](https://learn.microsoft.com/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient.recommendeddegreesofparallelism?view=dataverse-sdk-latest), 
+[ServiceClient.RecommendedDegreesOfParallelism Property](https://learn.microsoft.com/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient.recommendeddegreesofparallelism), 
 which is based on the value of the `x-ms-dop-hint` response header. 
 The `x-ms-dop-hint` response header provides a hint for the Degree Of Parallelism (DOP) that represents a number of threads 
 that should provide good results for a given environment.

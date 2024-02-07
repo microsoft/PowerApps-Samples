@@ -21,7 +21,7 @@ This sample works for both Model-driven and canvas apps.
 
 ## Applies to
 
-[Power Apps component framework](https://learn.microsoft.com/en-us/power-apps/developer/component-framework/overview)
+[Power Apps component framework](https://learn.microsoft.com/power-apps/developer/component-framework/overview)
 
 Get your own free development tenant by subscribing to [Power Apps Developer Plan](https://learn.microsoft.com/power-platform/developer/plan)
 

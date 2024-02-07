@@ -1,6 +1,6 @@
 # Sample: Metadata query changes
 
-This sample shows how to retrieve and detect metadata changes using [RetrieveMetadataChangeRequest](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.retrievemetadatachangesrequest?view=dynamics-general-ce-9) method.
+This sample shows how to retrieve and detect metadata changes using [RetrieveMetadataChangeRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.retrievemetadatachangesrequest) method.
 
 ## How to run this sample
 
@@ -8,7 +8,7 @@ See [How to run samples](https://github.com/microsoft/PowerApps-Samples/blob/mas
 
 ## What this sample does
 
-The `RetrieveMetadataChangeRequest` message is intended to be used in a scenario where it contains the data  that is needed to to retrieve a collection of metadata records that satisfy the specified criteria. The [RetrieveMetadataChangesResponse](https://docs.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.retrievemetadatachangesresponse?view=dynamics-general-ce-9) returns a timestamp value that can be used with this request at a later time to return information about how metadata has changed since the last request.
+The `RetrieveMetadataChangeRequest` message is intended to be used in a scenario where it contains the data  that is needed to to retrieve a collection of metadata records that satisfy the specified criteria. The [RetrieveMetadataChangesResponse](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.retrievemetadatachangesresponse) returns a timestamp value that can be used with this request at a later time to return information about how metadata has changed since the last request.
 
 ## How this sample works
 

@@ -11,7 +11,7 @@ You must first set the `username` and `password` variables in the `SampleProgram
 
 ## What this sample does
 
-This sample uses the SDK Assembly [`CrmServiceClient`](https://docs.microsoft.com/en-us/dotnet/api/microsoft.xrm.tooling.connector.crmserviceclient?view=dynamics-xrmtooling-ce-9) to query the global discovery service with a user's credentials to determine which environments they can connect with.
+This sample uses the SDK Assembly [`CrmServiceClient`](https://learn.microsoft.com/dotnet/api/microsoft.xrm.tooling.connector.crmserviceclient?view=dynamics-xrmtooling-ce-9) to query the global discovery service with a user's credentials to determine which environments they can connect with.
 
 If one or more environments are returned, the sample will prompt the user to choose one, and then use a `WhoAmIRequest` to return the `SystemUser.UserId` for that environment.
 

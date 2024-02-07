@@ -9,7 +9,7 @@ namespace PowerApps.Samples.Metadata.Messages
     public sealed class RetrieveEntityRequest : HttpRequestMessage
     {
         // This uses the RetrieveEntity Function
-        // https://docs.microsoft.com/power-apps/developer/data-platform/webapi/reference/retrieveentity
+        // https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/retrieveentity
         // It returns a ComplexEntityMetadata ComplexType rather than EntityMetadata EntityType
         // Not including LogicalName parameter because it cannot be used without MetadataId
         // See RetrieveEntityDefinitionRequest to

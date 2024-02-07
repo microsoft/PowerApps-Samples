@@ -1,6 +1,6 @@
 # Sample: Retrieve field permissions
 
-This sample shows how to retrieve secured columns for a user according to the steps outlined in [Field security entities](https://docs.microsoft.com/dynamics365/customer-engagement/developer/field-security-entities).
+This sample shows how to retrieve secured columns for a user according to the steps outlined in [Field security entities](https://learn.microsoft.com/dynamics365/customer-engagement/developer/field-security-entities).
 
 This sample requires additional users that are not in your system. Create the required users manually in **Office 365** in order to run the sample without any errors. For this sample create a user profile **as is** shown below. 
 

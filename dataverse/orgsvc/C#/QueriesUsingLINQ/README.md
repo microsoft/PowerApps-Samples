@@ -1,7 +1,7 @@
 
 # Sample: Query data using LINQ
 
-These samples show how to query business data using [Language-Integrated Query (LINQ)](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/introduction-to-linq-queries).
+These samples show how to query business data using [Language-Integrated Query (LINQ)](https://learn.microsoft.com/dotnet/csharp/programming-guide/concepts/linq/introduction-to-linq-queries).
 
 ## How to run this sample
 
