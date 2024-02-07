@@ -1,8 +1,6 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using PowerApps.Samples;
 using PowerApps.Samples.Messages;
-using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 
 namespace PowerPlatform.Dataverse.CodeSamples
@@ -16,6 +14,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
         static readonly string tablePrimaryKeyName = "sample_exampleid";
         static readonly string tablePrimaryNameColumnName = "sample_name";
         static readonly string tableAlternateKey = "sample_keyattribute";
+        static readonly string partitionValue = "PARTITION_VALUE";
 
         static async Task Main()
         {
@@ -95,15 +94,17 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
                             if (Settings.UseElastic)
                             {
+                                
                                 entity.Add("@odata.id", 
                                     $"{tableLogicalName}s({tablePrimaryKeyName}={Guid.NewGuid()}," +
-                                    $"{Settings.ElasticTablePartitionId}='sample pre-upsert record key {i + 1:0000000}')");
+                                    $"partitionid='{partitionValue}')");
+                                entity.Add("partitionid", partitionValue);
                             }
                             else
                             {
                                 // Add the alternate key in the payload in @odata.id tag
                                 entity.Add(new JProperty("@odata.id", 
-                                    $"{tableLogicalName}s({tableAlternateKey}='sample pre-upsert record key {i + 1:0000000}')"));
+                                    $"{tableLogicalName}s({tableAlternateKey}='{i + 1:0000000}')"));
                             }
                         }
                     }
@@ -142,7 +143,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     {
                         if (Settings.UseElastic)
                         {
-                            retrieveMultipleQuery += $",{Settings.ElasticTablePartitionId}";
+                            retrieveMultipleQuery += $",partitionid";
                         }
                         else
                         {
@@ -224,7 +225,9 @@ namespace PowerPlatform.Dataverse.CodeSamples
                             {
                                 entityList.Add(new JObject() {
                             { "sample_name", $"sample record {i+1:0000000}"},
-                            { "@odata.id", $"{tableLogicalName}s({tablePrimaryKeyName}={Guid.NewGuid()},{Settings.ElasticTablePartitionId}='sample record upsert record key {i + 1:0000000}')" },
+                            { "partitionid", partitionValue},
+
+                            { "@odata.id", $"{tableLogicalName}s({tablePrimaryKeyName}={Guid.NewGuid()},partitionid='{partitionValue}" },
                             // Each record MUST have the @odata.type specified.
                             {"@odata.type",$"Microsoft.Dynamics.CRM.{tableLogicalName}" }
                         });
@@ -302,7 +305,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
             }
             finally
             {
-                await Utility.DeleteExampleTable(service: service, tableSchemaName: tableSchemaName);
+               // await Utility.DeleteExampleTable(service: service, tableSchemaName: tableSchemaName);
             }
         }
     }
