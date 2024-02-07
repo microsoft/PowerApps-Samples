@@ -182,6 +182,10 @@ namespace PowerPlatform.Dataverse.CodeSamples
                         {
                             // 3. Upsert(Update) records using AK
                             entity[tablePrimaryNameColumnName] += " UpdatedByAK";
+                            if(Settings.UseElastic)
+                            {
+                                entity.Remove("partitionid");
+                            }
                         }
                         else
                         {
@@ -205,14 +209,30 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     // 1. Create numberOfRecords/4 records to be created using Primary Key
                     Console.WriteLine($"\nPreparing {num} records to Upsert(create) using Primary Key..");
 
-                    for (int i = 0; i < num; i++)
+                    if (!Settings.UseElastic)
                     {
-                        entityList.Add(new JObject() {
+                        for (int i = 0; i < num; i++)
+                        {
+                            entityList.Add(new JObject() {
                             {"sample_name", $"sample record {i+1:0000000}"},
                             {tablePrimaryKeyName, Guid.NewGuid() },
                             // Each record MUST have the @odata.type specified.
                             {"@odata.type",$"Microsoft.Dynamics.CRM.{tableLogicalName}" }
                         });
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < num; i++)
+                        {
+                            entityList.Add(new JObject() {
+                            {"sample_name", $"sample record {i+1:0000000}"},
+                            {tablePrimaryKeyName, Guid.NewGuid() },
+                            {"partitionid", partitionValue },
+                            // Each record MUST have the @odata.type specified.
+                            {"@odata.type",$"Microsoft.Dynamics.CRM.{tableLogicalName}" }
+                        });
+                        }
                     }
 
                     // 2. Create numberOfRecords/4 records to be created using Alternate Key
@@ -225,9 +245,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                             {
                                 entityList.Add(new JObject() {
                             { "sample_name", $"sample record {i+1:0000000}"},
-                            { "partitionid", partitionValue},
-
-                            { "@odata.id", $"{tableLogicalName}s({tablePrimaryKeyName}={Guid.NewGuid()},partitionid='{partitionValue}" },
+                            { "@odata.id", $"{tableLogicalName}s({tablePrimaryKeyName}={Guid.NewGuid()},partitionid='{partitionValue}')" },
                             // Each record MUST have the @odata.type specified.
                             {"@odata.type",$"Microsoft.Dynamics.CRM.{tableLogicalName}" }
                         });
@@ -245,6 +263,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     }
 
                     // Use UpsertMultipleRequest
+                    
                     UpsertMultipleRequest upsertMultipleRequest2 = new(
                         entitySetName: tableSetName,
                         targets: entityList);
@@ -305,7 +324,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
             }
             finally
             {
-               // await Utility.DeleteExampleTable(service: service, tableSchemaName: tableSchemaName);
+               await Utility.DeleteExampleTable(service: service, tableSchemaName: tableSchemaName);
             }
         }
     }
