@@ -7,7 +7,11 @@ class to perform bulk upsert operations.
 
 This sample will create a new table that the code will use. It depends on the common structure for other projects in this solution that is described in [BulkOperations/README.md](../README.md).
 
-This sample demonstrates upserting records using both primary and alternate keys. The `CreateAlternateKey` property in Settings.cs controls whether an alternate key will be created for the table. The default value is `true`. The name of the column defined as an alternate key is `sample_keyattribute`.
+This sample demonstrates upserting records using both primary and alternate keys. 
+
+For standard tables, the `CreateAlternateKey` property in Settings.cs controls whether an alternate key will be created for the table. The default value is `true`. The name of the column defined as an alternate key is `sample_keyattribute`.
+
+Elastic tables have a single alternate key defined and you can't create a new one. When configured for elastic tables, this sample will use the primary key and `partitionid` columns to uniquely identify records.
 
 ## Preparing data for upsert
 

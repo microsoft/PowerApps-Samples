@@ -120,5 +120,5 @@ Details about each project and the default output are described in their respect
 - [ParallelCreateUpdate/README.md](ParallelCreateUpdate/README.md)
 - [ParallelCreateUpdateMultiple.md](ParallelCreateUpdateMultiple/README.md)
 - [SimpleLoop/README.md](SimpleLoop/README.md)
-- [UpsertMultiple/README.md](SimpleLoop/README.md)
+- [UpsertMultiple/README.md](UpsertMultiple/README.md)
 
