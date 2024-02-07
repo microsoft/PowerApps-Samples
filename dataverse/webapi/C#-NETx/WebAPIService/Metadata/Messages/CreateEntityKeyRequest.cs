@@ -12,14 +12,12 @@ namespace PowerApps.Samples.Metadata.Messages
         /// <summary>
         /// Initializes the CreateEntityKeyRequest
         /// </summary>
-        /// <param name="entityMetadata">The data that defines the table</param>
-        /// <param name="solutionUniqueName">The name of the solution to add the table to.</param>
-        public CreateEntityKeyRequest(EntityKeyMetadata entityKeyMetadata, Guid entityId, bool useStrongConsistency = false)
+        /// <param name="entityKeyMetadata">The data that defines the entity key</param>
+        /// <param name="tableLogicalName">The LogicalName of the table.</param>
+        public CreateEntityKeyRequest(EntityKeyMetadata entityKeyMetadata, string tableLogicalName, bool useStrongConsistency = false)
         {
             Method = HttpMethod.Post;
-            //TODO: This doesn't need to use the metadataid, it can use the LogicalName
-            // EntityDefinitions(LogicalName='{tableLogicalName}')
-            RequestUri = new Uri(uriString: $"EntityDefinitions({entityId})/Keys", uriKind: UriKind.Relative);
+            RequestUri = new Uri(uriString: $"EntityDefinitions(LogicalName='{tableLogicalName}')/Keys", uriKind: UriKind.Relative);
             if (useStrongConsistency)
             {
                 Headers.Add("Consistency", "Strong");

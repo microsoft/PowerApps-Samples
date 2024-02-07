@@ -5,7 +5,7 @@
         /// <summary>
         /// Whether you want to use elastic tables. Otherwise, standard table will be used.
         /// </summary>
-        public const bool UseElastic = false;
+        public const bool UseElastic = true;
 
         /// <summary>
         /// The number of records to create for all samples in this solution.
@@ -45,7 +45,10 @@
         /// </summary>
         public const bool CreateAlternateKey = true;
 
-
+        /// <summary>
+        /// Column name for PartitionId in Elastic tables
+        /// </summary>
+        public const string ElasticTablePartitionId = "partitionid";
 
 
     }

@@ -288,49 +288,13 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
         }
 
-        //TODO: I don't think you need this method
-        /// <summary>
-		/// This method will create unique key for an entity using given parameters.
-		/// </summary>
-		/// <param name="entitySchemaName">entitySchemaName</param>
-		/// <param name="keySchemaName">keySchemaName</param>
-		/// <param name="keyDisplayName">keyDisplayName</param>
-		/// <param name="keyAttributes">keyAttributes</param>
-		/// <returns></returns>
-		public static async Task<HttpResponseMessage> CreateUniqueKey(
-            Service service, 
-            string entitySchemaName, 
-            string keySchemaName, 
-            string keyDisplayName, 
-            List<string> keyAttributes)
-        {
-            
-
-            // Create Alternate Key
-            var keyResponse = await CreateAlternateKeyToEntityAsync(
-                service: service,  
-                entitySchemaName: entitySchemaName, 
-                schemaName: keySchemaName, 
-                displayName: keyDisplayName, 
-                keyAttributes: keyAttributes).ConfigureAwait(false);
-
-            return keyResponse;
-        }
-
-        // TODO: If you had the  CreateEntityKeyResponse.EntityKeyId , you wouldn't need to introduce other methods like 
-        // GetUrlFromResponse. You could just retrieve the record using service.Retrieve
-        public static async Task<string> ValidateAlternateKeyIsCreated(Service service, HttpResponseMessage keyResponse)
+        public static async Task<string> ValidateAlternateKeyIsCreated(Service service, string entityLogicalName, string keySchemaName)
         {
             try
             {
-                var keyUrl = GetUrlFromResponse(keyResponse);
-
-                var entityKeys = new List<string>
-                {
-                    keyUrl
-                };
-
                 bool waitForKeyStatus = true;
+
+                var keyLogicalName = keySchemaName.ToLower();
 
                 // wait for key status to be Active/Failed for default test scenarios //
                 if (waitForKeyStatus)
@@ -341,28 +305,18 @@ namespace PowerPlatform.Dataverse.CodeSamples
                     {
                         Thread.Sleep(pollingInterval * 1000);
 
-                        // Retrieve Key Status
-                        // TODO: WebAPIService.Metadata.Messages should have RetrieveEntityKeyRequest/RetrieveEntityKeyResponse classes
-                        // That align with the SDK classes so this operation is reusable and uses
-                        // the EntityKeyMetadata class we already have
-                        // https://learn.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.messages.retrieveentitykeyrequest?view=dataverse-sdk-latest
-                        // https://learn.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.messages.retrieveentitykeyresponse?view=dataverse-sdk-latest
-                        var keyMetadata = await GetEntityRecords(service, keyUrl).ConfigureAwait(false);
+                        var request = new RetrieveEntityKeyRequest(entityLogicalName, keyLogicalName);
+                        var response = await service.SendAsync<RetrieveEntityKeyResponse>(request).ConfigureAwait(false);
 
-                        var indexStatus = keyMetadata.Value<string>("EntityKeyIndexStatus");
+                        var keyMetadata = response.EntityKeyMetadata;
 
-                        if (indexStatus != null && indexStatus.Equals("Active", StringComparison.OrdinalIgnoreCase))
+                        var indexStatus = keyMetadata?.EntityKeyIndexStatus;
+
+                        if (indexStatus != null && indexStatus == EntityKeyIndexStatus.Active)
                         {
                             return "Success";
                         }
-                        else if (indexStatus != null && indexStatus.Equals("Failed", StringComparison.OrdinalIgnoreCase))
-                        {
-                            var asyncJobId = keyMetadata["AsyncJob"].ToString();
 
-                            var asyncJobResponse = await GetEntityRecords(service, "asyncoperations(" + asyncJobId + ")").ConfigureAwait(false);
-
-                            return asyncJobResponse["Message"].ToString();
-                        }
                         timeOutInterval -= pollingInterval;
                     }
                 }
@@ -379,95 +333,32 @@ namespace PowerPlatform.Dataverse.CodeSamples
         }
 
         /// <summary>
-		/// Returns the entity records
-		/// </summary>
-		/// <example>accounts</example>
-		/// <example>tasks(6b5941dd-d175-e511-80d4-00155d2a68d1)</example>
-		/// <param name="query">The relative URL of the message request</param>
-		/// <param name="httpRequestHeaders">Http request header details</param>
-		/// <returns>Returns the response object</returns>
-		public static async Task<JObject> GetEntityRecords(
-            Service service, 
-            string query, 
-            Dictionary<string, string> httpRequestHeaders = null)
-        {
-            var request = new RetrieveMultipleRequest(query);
-
-            // TODO: You can use service.SendAsync<RetrieveMultipleResponse>(request) to get 
-            // a typed RetrieveMultipleResponse object returned with a Records property that could
-            //  replace this whole method.
-            var response = await service.SendAsync(request).ConfigureAwait(false);
-
-            JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
-            return jsonResponse;
-        }
-
-        /// <summary>
-		/// Get the response url from Response Message
-		/// </summary>
-		/// <param name="response"></param>
-		/// <returns></returns>
-		private static string GetUrlFromResponse(HttpResponseMessage response)
-        {
-            var responseUrl = response.Headers.GetValues("OData-EntityId").FirstOrDefault().ToString();
-
-            var returnUrl = responseUrl.Substring(responseUrl.IndexOf("EntityDefinitions"));
-
-            return returnUrl;
-        }
-
-        /// <summary>
 		/// Creates alternate key to the entity requested.
 		/// </summary>
-		/// <param name="entitySchemaNane">Entity schema name</param>
-		/// <param name="schemaName">Schema name.</param>
-		/// <param name="displayName">Display name.</param>
+		/// <param name="entityLogicalName">Table logical name</param>
+		/// <param name="schemaName">Schema name of the Key.</param>
+		/// <param name="displayName">Display name of the Key.</param>
 		/// <param name="keyAttributes">List of Key Attributes.
 		/// These attributes should exists in the specified entity.
 		/// These attributes must be of type Decimal or Integer or String.</param>
 		/// <returns>Return True if success</returns>
-		private static async Task<HttpResponseMessage> CreateAlternateKeyToEntityAsync(Service service, 
-            string entitySchemaName, 
+		internal static async void CreateAlternateKeyToEntity(Service service, 
+            string entityLogicalName, 
             string schemaName, 
             string displayName, 
-            List<string> keyAttributes, 
-            bool isSynchronous = false,  //TODO: Remove unused parameters
-            bool isSecondaryKey = false, 
-            HttpStatusCode expectedStatusCode = HttpStatusCode.NoContent)
+            List<string> keyAttributes)
         {
             var entityKeyMetadata = new EntityKeyMetadata
             {
-                // TODO
-                SchemaName = string.Format("new_{0}", schemaName),
-                LogicalName = string.Format("new_{0}", schemaName),
-                EntityLogicalName = entitySchemaName,
+                SchemaName = schemaName,
+                LogicalName = schemaName.ToLower(),
+                EntityLogicalName = entityLogicalName,
                 KeyAttributes = keyAttributes.ToArray(),
                 DisplayName = new Label(displayName, 1033)
             };
 
-            // TODO you don't need this method
-            var entityId = await GetEntityMetadataId(service, entitySchemaName).ConfigureAwait(false);
-
-            // TODO: CreateEntityKeyRequest could be refactored to support LogicalName (entitySchemaName.ToLower()) 
-            // instead of using the MetadataId.
-            var createEntityKeyRequest = new CreateEntityKeyRequest(entityKeyMetadata, entityId);
-            // TODO: If you used service.SendAsync<CreateEntityKeyResponse>(createEntityKeyRequest) you should have an 
-            // CreateEntityKeyResponse.EntityKeyId 
-            var response = await service.SendAsync(createEntityKeyRequest).ConfigureAwait(false);
-
-            return response;
-        }
-
-        /// <summary>
-		/// Returns the MetadataId of the requested entity
-		/// </summary>
-		/// <param name="entityName">Name of the entity, like Account, Contact, Lead, etc...</param>
-		/// <returns>Return the Entity MetadataId</returns>
-		public static async Task<Guid> GetEntityMetadataId(Service service, string entityName)
-        {
-            JObject jsonResponse = await GetEntityRecords(service, string.Format("EntityDefinitions?$select=DisplayName&$filter=SchemaName eq '{0}'", entityName)).ConfigureAwait(false);
-
-            return (Guid)jsonResponse["value"][0]["MetadataId"];
+            var createEntityKeyRequest = new CreateEntityKeyRequest(entityKeyMetadata, entityLogicalName.ToLower());
+            await service.SendAsync<CreateEntityKeyResponse>(createEntityKeyRequest).ConfigureAwait(false);
         }
     }
 }

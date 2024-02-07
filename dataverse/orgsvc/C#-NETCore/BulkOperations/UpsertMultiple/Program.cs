@@ -35,14 +35,6 @@ namespace PowerPlatform.Dataverse.CodeSamples
         }
         static void Main()
         {
-            /*if (Settings.UseElastic == true)
-            {
-                // TODO: Were you going to update this sample to work with elastic tables?
-                Console.WriteLine("This sample doesn't currently support elastic tables.");
-                Console.WriteLine("Change UseElastic in Settings.cs to false and try again.");
-                return;
-            }*/
-
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             Program app = new();
@@ -50,7 +42,6 @@ namespace PowerPlatform.Dataverse.CodeSamples
             int numberOfRecords = Settings.NumberOfRecords; //100 by default
             string tableSchemaName = "sample_Example";
             string tableLogicalName = tableSchemaName.ToLower(); //sample_example
-            string elasticTablePartitionId = "partitionid";
 
             // Create a Dataverse service client using the default connection string.
             ServiceClient serviceClient =
@@ -112,7 +103,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                         else
                         {
                             query.ColumnSet.AddColumn(tableLogicalName + "id");
-                            query.ColumnSet.AddColumn(elasticTablePartitionId);
+                            query.ColumnSet.AddColumn(Settings.ElasticTablePartitionId);
                         }
                     }
 
@@ -155,7 +146,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                             else
                             {
                                 entity.KeyAttributes.Add(tableLogicalName + "id", Guid.NewGuid());
-                                entity.KeyAttributes.Add("partitionid", $"sample upsert record key {i + 1:0000000}");
+                                entity.KeyAttributes.Add(Settings.ElasticTablePartitionId, $"sample upsert record key {i + 1:0000000}");
                             }
                             entities.Entities.Add(entity);
                         }
