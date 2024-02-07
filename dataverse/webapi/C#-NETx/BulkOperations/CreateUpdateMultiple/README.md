@@ -1,6 +1,6 @@
 ﻿# CreateUpdateMultiple README
 
-This project uses CreateMultiple and UpdateMultiple actions to perform bulk create and update operations.
+This project uses [CreateMultiple](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/createmultiple) and [UpdateMultiple](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/updatemultiple) actions to perform bulk create and update operations.
 
 It depends on the common structure for other projects in this solution that is described in [BulkOperations/README.md](../README.md).
 
