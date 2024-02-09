@@ -248,6 +248,20 @@ namespace PowerPlatform.Dataverse.CodeSamples
             CreateEntityRequest createEntityRequest = new(entityMetadata: entity, solutionUniqueName: null, useStrongConsistency: true);
             await service.SendAsync<CreateEntityResponse>(createEntityRequest);
 
+
+            // Create alternate key for standard table and validate that the key is created
+            // before sending Bulk Operation resquests
+            if (Settings.CreateAlternateKey && !Settings.UseElastic)
+            {
+                CreateAlternateKeyToEntity(
+            service: service,
+            entityLogicalName: tableSchemaName.ToLower(),
+            schemaName: "sample_TestKey",
+            displayName: "Sample Test Key",
+            keyAttributes: new List<string> { "sample_keyattribute" });
+
+                var keyStatus = await Utility.ValidateAlternateKeyIsCreated(service, tableSchemaName.ToLower(), "sample_TestKey");
+            }
         }
 
         /// <summary>
