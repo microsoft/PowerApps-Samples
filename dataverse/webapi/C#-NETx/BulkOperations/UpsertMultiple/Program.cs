@@ -24,6 +24,12 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
             try
             {
+                // UpsertMultiple scenarios covered in this sample for x records
+                // 1. Create x/4 records letting the system set the primary key
+                // 2. Create x/4 records with a unique alternate key value
+                // 3. Update x/4 records by providing Primary Key (PK) which is entity.Id
+                // 4. Update x/4 records by providing Alternate Key (AK) which is entity.KeyAttribute
+
                 // Create Example table
                 await Utility.CreateExampleTable(service: service,
                     tableSchemaName: tableSchemaName,
@@ -49,16 +55,6 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 {
                     if (Settings.UseElastic)
                     {
-                        ElasticEntityUpsertMultiple(service);
-                    }
-                    else
-                    {
-                        // UpsertMultiple scenarios covered in this sample for x records
-                        // 1. Create x/4 records letting the system set the primary key
-                        // 2. Create x/4 records with a unique alternate key value
-                        // 3. Update x/4 records by providing Primary Key (PK) which is entity.Id
-                        // 4. Update x/4 records by providing Alternate Key (AK) which is entity.KeyAttribute
-
                         // Create a List of entity instances to be updated during UpsertMultiple call.
 
                         // To handle cases where number of records is an odd number
@@ -73,42 +69,18 @@ namespace PowerPlatform.Dataverse.CodeSamples
                         {
                             entityList.Add(new JObject() {
                             {"sample_name", $"sample record {i+1:0000000}"},
+                            { "partitionid", partitionValue},
                             // Each record MUST have the @odata.type specified.
-                            {"@odata.type",$"Microsoft.Dynamics.CRM.{tableLogicalName}" }
+                            { "@odata.type",$"Microsoft.Dynamics.CRM.{tableLogicalName}" }
                         });
                         }
 
-                        if (Settings.CreateAlternateKey)
-                        {
-                            for (int i = 0; i < numRecCreate; i++)
-                            {
-                                var entity = entityList[i];
-                                // Add the alternate key in the payload in @odata.id tag
-                                entity.Add(new JProperty("@odata.id",
-                                    $"{tableLogicalName}s({tableAlternateKey}='{i + 1:0000000}')"));
-                            }
-                        }
-
-                        // UpsertMultiple
-                        await SendUpsertMultipleRequest(service, entityList);
+                        // Use CreateMultiple
+                        var createMultipleResponse = await SendCreateMultipleRequest(service, entityList);
 
                         // Prepare above created entity records to be updated by UpsertMultiple
 
                         Console.WriteLine($"\nPreparing {numRecCreate} records to Upsert(update)..");
-
-                        var retrieveMultipleQuery = $"{tableLogicalName}s?$select={tablePrimaryKeyName},{tablePrimaryNameColumnName}";
-
-                        if (Settings.CreateAlternateKey)
-                        {
-                            retrieveMultipleQuery += $",{tableAlternateKey}";
-                        }
-
-                        // Retrieve the record ids for records to be updated using PK
-                        using var retrieveMultipleRequest = new RetrieveMultipleRequest(
-                            queryUri: retrieveMultipleQuery);
-
-
-                        var retrieveMultipleResponse = await service.SendAsync<RetrieveMultipleResponse>(retrieveMultipleRequest);
 
                         var numRecUpdatePK = Math.Ceiling((double)(numRecCreate / 2));
 
@@ -119,13 +91,6 @@ namespace PowerPlatform.Dataverse.CodeSamples
 #pragma warning restore CS0162 // Unreachable code detected
                         }
 
-                        // 3. Assign ID values to created items to prepare to upsert them using PK.
-                        for (int i = 0; i < numRecUpdatePK; i++)
-                        {
-                            entityList[i].Add(tablePrimaryKeyName, retrieveMultipleResponse.Records?[i]?[tablePrimaryKeyName]);
-                            entityList[i].Remove("@odata.id");
-                        }
-
                         // Update the sample_name value. We want to Update num/2 records using Primary Key and num/2 records using Alternate Keys
                         var j = 0;
                         foreach (JObject entity in entityList)
@@ -134,11 +99,15 @@ namespace PowerPlatform.Dataverse.CodeSamples
                             {
                                 // 3. Upsert(Update) records using AK
                                 entity[tablePrimaryNameColumnName] += " UpdatedByAK";
+                                entity.Add(new JProperty("@odata.id", $"{tableLogicalName}s({tablePrimaryKeyName}={createMultipleResponse.Ids[j]},partitionid='{partitionValue}')"));
+                                entity.Remove("partitionid");
                             }
                             else
                             {
                                 // 4. Upsert(Update) records using PK
                                 entity[tablePrimaryNameColumnName] += " UpdatedByPK";
+                                entity.Add(tablePrimaryKeyName, createMultipleResponse.Ids[j]);
+                                entity.Remove("@odata.id");
                             }
 
                             j++;
@@ -156,7 +125,123 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
                         // 1. Create numberOfRecords/4 records to be created using Primary Key
                         Console.WriteLine($"\nPreparing {num} records to Upsert(create) using Primary Key..");
-                        for (int i = 0; i < num; i++)
+                        for (int i = (int)numRecCreate; i < (num + numRecCreate); i++)
+                        {
+                            entityList.Add(new JObject() {
+                            { "sample_name", $"sample record {i+1:0000000}"},
+                            { tablePrimaryKeyName, Guid.NewGuid() },
+                            { "partitionid", partitionValue },
+                            // Each record MUST have the @odata.type specified.
+                            { "@odata.type",$"Microsoft.Dynamics.CRM.{tableLogicalName}" }
+                        });
+                        }
+
+                        // 2. Create numberOfRecords/4 records to be created using Alternate Key
+                        if (Settings.CreateAlternateKey)
+                        {
+                            Console.WriteLine($"\nPreparing {num} records to Upsert(create) using Alternate Key..");
+                            for (int i = (int)(num + numRecCreate); i < numberOfRecords; i++)
+                            {
+                                entityList.Add(new JObject() {
+                            { "sample_name", $"sample record {i+1:0000000}"},
+                            { "partitionid", partitionValue },
+                            { "@odata.id", $"{tableLogicalName}s({tablePrimaryKeyName}={Guid.NewGuid()},partitionid='{partitionValue}')" },
+                            // Each record MUST have the @odata.type specified.
+                            { "@odata.type",$"Microsoft.Dynamics.CRM.{tableLogicalName}" }
+                        });
+
+                            }
+                        }
+
+                        // Use UpsertMultipleRequest
+
+                        await SendUpsertMultipleRequest(service, entityList, true);
+
+                        var retrieveMultipleQuery = $"{tableLogicalName}s?$select={tablePrimaryKeyName},{tablePrimaryNameColumnName}";
+
+                        if (Settings.CreateAlternateKey)
+                        {
+                            retrieveMultipleQuery += $",partitionid";
+                        }
+
+                        await BulkDeleteCreatedRecords(service, "partitionid", retrieveMultipleQuery);
+                    }
+                    else
+                    {
+                        // Create a List of entity instances to be updated during UpsertMultiple call.
+
+                        // To handle cases where number of records is an odd number
+                        var numRecCreate = Math.Ceiling((double)(numberOfRecords / 2));
+
+                        Console.WriteLine($"\nPreparing {numRecCreate} records to create..");
+
+                        List<JObject> entityList = new();
+
+                        // Populate the list with the number of records to test.
+                        for (int i = 0; i < numRecCreate; i++)
+                        {
+                            entityList.Add(new JObject() {
+                            { "sample_name", $"sample record {i+1:0000000}"},
+                            // Each record MUST have the @odata.type specified.
+                            { "@odata.type",$"Microsoft.Dynamics.CRM.{tableLogicalName}" }
+                        });
+                            if(Settings.CreateAlternateKey)
+                            {
+                                entityList[i].Add(new JProperty(tableAlternateKey, $"{i + 1:0000000}"));
+                            }
+                        }
+
+                        // CreateMultiple
+                        var createMultipleResponse = await SendCreateMultipleRequest(service, entityList);
+
+                        // Prepare above created entity records to be updated by UpsertMultiple
+
+                        Console.WriteLine($"\nPreparing {numRecCreate} records to Upsert(update)..");
+
+                        var numRecUpdatePK = Math.Ceiling((double)(numRecCreate / 2));
+
+                        if (!Settings.CreateAlternateKey)
+                        {
+#pragma warning disable CS0162 // Unreachable code detected
+                            numRecUpdatePK = numRecCreate;
+#pragma warning restore CS0162 // Unreachable code detected
+                        }
+
+                        // Update the sample_name value. We want to Update num/2 records using Primary Key and num/2 records using Alternate Keys
+                        var j = 0;
+                        foreach (JObject entity in entityList)
+                        {
+                            if (j >= numRecUpdatePK && Settings.CreateAlternateKey)
+                            {
+                                // 3. Upsert(Update) records using AK
+                                entity[tablePrimaryNameColumnName] += " UpdatedByAK";
+                                entity.Add(new JProperty("@odata.id", $"{tableLogicalName}s({tableAlternateKey}='{j + 1:0000000}')"));
+                                entity.Remove(tableAlternateKey);
+                            }
+                            else
+                            {
+                                // 4. Upsert(Update) records using PK
+                                entity[tablePrimaryNameColumnName] += " UpdatedByPK";
+                                entity.Add(tablePrimaryKeyName, createMultipleResponse?.Ids[j]);
+                                entity.Remove(tableAlternateKey);
+                            }
+
+                            j++;
+
+                        }
+
+                        var numRecUpsertCreate = numberOfRecords - numRecCreate;
+
+                        var num = Math.Ceiling((double)(numRecUpsertCreate / 2));
+
+                        if (!Settings.CreateAlternateKey)
+                        {
+                            num = numRecUpsertCreate;
+                        }
+
+                        // 1. Create numberOfRecords/4 records to be created using Primary Key
+                        Console.WriteLine($"\nPreparing {num} records to Upsert(create) using Primary Key..");
+                        for (int i = (int)numRecCreate; i < (num + numRecCreate); i++)
                         {
                             entityList.Add(new JObject() {
                             {"sample_name", $"sample record {i+1:0000000}"},
@@ -171,11 +256,11 @@ namespace PowerPlatform.Dataverse.CodeSamples
                         if (Settings.CreateAlternateKey)
                         {
                             Console.WriteLine($"\nPreparing {num} records to Upsert(create) using Alternate Key..");
-                            for (int i = (int)num; i < numRecUpsertCreate; i++)
+                            for (int i = (int)(num + numRecCreate); i < numberOfRecords; i++)
                             {
                                 entityList.Add(new JObject() {
                             {"sample_name", $"sample record {i+1:0000000}"},
-                            { "@odata.id", $"{tableLogicalName}s({tableAlternateKey}='sample record upsert record key {i+1:0000000}')" },
+                            { "@odata.id", $"{tableLogicalName}s({tableAlternateKey}='{i+1:0000000}')" },
                             // Each record MUST have the @odata.type specified.
                             {"@odata.type",$"Microsoft.Dynamics.CRM.{tableLogicalName}" }
                         });
@@ -186,6 +271,12 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
                         await SendUpsertMultipleRequest(service, entityList, true);
 
+                        var retrieveMultipleQuery = $"{tableLogicalName}s?$select={tablePrimaryKeyName},{tablePrimaryNameColumnName}";
+
+                        if (Settings.CreateAlternateKey)
+                        {
+                            retrieveMultipleQuery += $",{tableAlternateKey}";
+                        }
                         await BulkDeleteCreatedRecords(service, tableAlternateKey, retrieveMultipleQuery);
                     }
                 }
@@ -199,149 +290,6 @@ namespace PowerPlatform.Dataverse.CodeSamples
             {
                 await Utility.DeleteExampleTable(service: service, tableSchemaName: tableSchemaName);
             }
-        }
-
-        private static async void ElasticEntityUpsertMultiple(Service service)
-        {
-            // UpsertMultiple scenarios covered in this sample for x records
-            // 1. Create x/4 records letting the system set the primary key
-            // 2. Create x/4 records with a unique alternate key value
-            // 3. Update x/4 records by providing Primary Key (PK) which is entity.Id
-            // 4. Update x/4 records by providing Alternate Key (AK) which is entity.KeyAttribute
-
-            // Create a List of entity instances to be updated during UpsertMultiple call.
-
-            // To handle cases where number of records is an odd number
-            var numRecCreate = Math.Ceiling((double)(numberOfRecords / 2));
-
-            Console.WriteLine($"\nPreparing {numRecCreate} records to create..");
-
-            List<JObject> entityList = new();
-
-            // Populate the list with the number of records to test.
-            for (int i = 0; i < numRecCreate; i++)
-            {
-                entityList.Add(new JObject() {
-                            {"sample_name", $"sample record {i+1:0000000}"},
-                            // Each record MUST have the @odata.type specified.
-                            {"@odata.type",$"Microsoft.Dynamics.CRM.{tableLogicalName}" }
-                        });
-            }
-
-            if (Settings.CreateAlternateKey)
-            {
-                for (int i = 0; i < numRecCreate; i++)
-                {
-                    var entity = entityList[i];
-
-                    entity.Add("@odata.id",
-                        $"{tableLogicalName}s({tablePrimaryKeyName}={Guid.NewGuid()}," +
-                        $"partitionid='{partitionValue}')");
-                    entity.Add("partitionid", partitionValue);
-                }
-            }
-
-            // Use UpsertMultiple
-            await SendUpsertMultipleRequest(service, entityList);
-
-            // Prepare above created entity records to be updated by UpsertMultiple
-
-            Console.WriteLine($"\nPreparing {numRecCreate} records to Upsert(update)..");
-
-            var retrieveMultipleQuery = $"{tableLogicalName}s?$select={tablePrimaryKeyName},{tablePrimaryNameColumnName}";
-
-            if (Settings.CreateAlternateKey)
-            {
-                retrieveMultipleQuery += $",partitionid";
-            }
-
-            // Retrieve the record ids for records to be updated using PK
-            using var retrieveMultipleRequest = new RetrieveMultipleRequest(
-                queryUri: retrieveMultipleQuery);
-
-
-            var retrieveMultipleResponse = await service.SendAsync<RetrieveMultipleResponse>(retrieveMultipleRequest);
-
-            var numRecUpdatePK = Math.Ceiling((double)(numRecCreate / 2));
-
-            if (!Settings.CreateAlternateKey)
-            {
-#pragma warning disable CS0162 // Unreachable code detected
-                numRecUpdatePK = numRecCreate;
-#pragma warning restore CS0162 // Unreachable code detected
-            }
-
-            // 3. Assign ID values to created items to prepare to upsert them using PK.
-            for (int i = 0; i < numRecUpdatePK; i++)
-            {
-                entityList[i].Add(tablePrimaryKeyName, retrieveMultipleResponse.Records?[i]?[tablePrimaryKeyName]);
-                entityList[i].Remove("@odata.id");
-            }
-
-            // Update the sample_name value. We want to Update num/2 records using Primary Key and num/2 records using Alternate Keys
-            var j = 0;
-            foreach (JObject entity in entityList)
-            {
-                if (j >= numRecUpdatePK && Settings.CreateAlternateKey)
-                {
-                    // 3. Upsert(Update) records using AK
-                    entity[tablePrimaryNameColumnName] += " UpdatedByAK";
-                }
-                else
-                {
-                    // 4. Upsert(Update) records using PK
-                    entity[tablePrimaryNameColumnName] += " UpdatedByPK";
-                }
-
-                j++;
-
-            }
-
-            var numRecUpsertCreate = numberOfRecords - numRecCreate;
-
-            var num = Math.Ceiling((double)(numRecUpsertCreate / 2));
-
-            if (!Settings.CreateAlternateKey)
-            {
-                num = numRecUpsertCreate;
-            }
-
-            // 1. Create numberOfRecords/4 records to be created using Primary Key
-            Console.WriteLine($"\nPreparing {num} records to Upsert(create) using Primary Key..");
-            for (int i = 0; i < num; i++)
-            {
-                entityList.Add(new JObject() {
-                            { "sample_name", $"sample record {i+1:0000000}"},
-                            { tablePrimaryKeyName, Guid.NewGuid() },
-                            { "partitionid", partitionValue },
-                            // Each record MUST have the @odata.type specified.
-                            { "@odata.type",$"Microsoft.Dynamics.CRM.{tableLogicalName}" }
-                        });
-            }
-
-            // 2. Create numberOfRecords/4 records to be created using Alternate Key
-            if (Settings.CreateAlternateKey)
-            {
-                Console.WriteLine($"\nPreparing {num} records to Upsert(create) using Alternate Key..");
-                for (int i = (int)num; i < numRecUpsertCreate; i++)
-                {
-                    entityList.Add(new JObject() {
-                            { "sample_name", $"sample record {i+1:0000000}"},
-                            { "partitionid", partitionValue },
-                            { "@odata.id", $"{tableLogicalName}s({tablePrimaryKeyName}={Guid.NewGuid()},partitionid='{partitionValue}')" },
-                            // Each record MUST have the @odata.type specified.
-                            { "@odata.type",$"Microsoft.Dynamics.CRM.{tableLogicalName}" }
-                        });
-
-                }
-            }
-
-            // Use UpsertMultipleRequest
-
-            await SendUpsertMultipleRequest(service, entityList, true);
-
-            await BulkDeleteCreatedRecords(service, "partitionid", retrieveMultipleQuery);
-
         }
 
         /// <summary>
@@ -410,6 +358,43 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 jobName: "Deleting records created by UpsertMultiple Sample.");
 
             Console.WriteLine($"\tBulk Delete status: {deleteJobStatus}\n");
+        }
+
+        /// <summary>
+        /// Method used to create and send the CreateMultiple request
+        /// </summary>
+        /// <param name="service"></param>
+        /// <param name="entityList"></param>
+        /// <param name="measureDuration"></param>
+        private static async Task<CreateMultipleResponse> SendCreateMultipleRequest(Service service, List<JObject> entityList, bool measureDuration = false)
+        {
+            // Use createMultiple
+            CreateMultipleRequest createMultipleRequest = new(
+                entitySetName: tableSetName,
+                targets: entityList);
+
+            createMultipleRequest.RequestUri = new Uri(
+                createMultipleRequest.RequestUri.ToString(),
+                uriKind: UriKind.Relative);
+
+            Console.WriteLine($"Sending POST request to /{tableSetName}/Microsoft.Dynamics.CRM.CreateMultiple");
+
+            CreateMultipleResponse? response;
+            if (measureDuration)
+            {
+                Stopwatch createStopwatch = Stopwatch.StartNew();
+                // Send the request
+                response = await service.SendAsync<CreateMultipleResponse>(createMultipleRequest);
+                createStopwatch.Stop();
+                Console.WriteLine($"\tcreateed {entityList.Count} records " +
+                    $"in {Math.Round(createStopwatch.Elapsed.TotalSeconds)} seconds.");
+            }
+            else
+            {
+                response = await service.SendAsync<CreateMultipleResponse>(createMultipleRequest);
+            }
+
+            return response;
         }
     }
 }
