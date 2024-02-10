@@ -5,14 +5,14 @@ products:
 - power-platform
 - power-apps
 page_type: sample
-description: "This sample demonstrates how to use the CreateMultiple and UpdateMultiple actions for standard and elastic tables using the Dataverse Web API."
+description: "This sample demonstrates how to use the CreateMultiple, UpdateMultiple and UpsertMultiple actions for standard and elastic tables using the Dataverse Web API."
 ---
 
-# Create and Update Multiple Web API Sample
+# Create, Update, and Upsert Multiple Web API Sample
 
-This sample shows how to perform bulk create and update operations using the 
-[CreateMultiple](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/createmultiple) and 
-[UpdateMultiple](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/updatemultiple) 
+This sample shows how to perform bulk create, update and upsert operations using the 
+[CreateMultiple](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/createmultiple), 
+[UpdateMultiple](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/updatemultiple), and [UpsertMultiple](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/upsertmultiple) 
 actions. These messages are optimized to provide the most performant way to create or update records with Dataverse.
 
 This sample provides the option to use *standard* or *elastic* tables so you can compare the different performance characteristics.
@@ -20,7 +20,9 @@ This sample provides the option to use *standard* or *elastic* tables so you can
 This sample or the [SDK version](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/orgsvc/C%23-NETCore/BulkOperations/README.md) are prerequisites for the 
 [CreateMultiple and UpdateMultiple plug-ins Sample](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/C%23/xMultiplePluginSamples)
 
-This sample is a Visual Studio .NET 6.0 solution that contains 2 projects that perform the same operations in different ways so that you can compare the performance of each method.
+This sample is a Visual Studio .NET 6.0 solution that contains 2 projects (**CreateUpdateMultiple** and **ParallelCreateUpdateMultiple**) that perform the same operations in different ways so that you can compare the performance of each method.
+
+The third **UpsertMultiple** project demonstrates bulk upsert of records and can use either standard or elastic tables.
 
 You can find the sample [here](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/C%23-NETx/BulkOperations).
 
@@ -38,12 +40,13 @@ You can find the sample [here](https://github.com/microsoft/PowerApps-Samples/tr
 
    - **CreateUpdateMultiple**: Creates and updates a configurable number of records by sending two requests.
    - **ParallelCreateUpdateMultiple**: Creates and updates a configurable number of records by sending requests in parallel.
+   - **UpsertMultiple**: Demonstrates *upserting* a configurable number of records.
    
    **Note**: The **WebAPIService** project is included so that each of the other projects can depend on the common helper code provided by the service. The samples use several classes in the `WebAPIService/Messages` folder.
    
    In **Solution Explorer**, right-click the project you want to run and choose **Set as Startup Project**.
 
-1. In either project, edit the `appsettings.json` file to set the following property values:
+1. In any project, edit the `appsettings.json` file to set the following property values:
 
    |Property|Instructions  |
    |---------|---------|
@@ -59,7 +62,7 @@ You can find the sample [here](https://github.com/microsoft/PowerApps-Samples/tr
 
 ## What this sample does
 
-This sample is a .NET 6.0 Visual Studio 2022 solution that contains 5 projects that perform the same operations:
+This sample is a .NET 6.0 Visual Studio 2022 solution that contains 2 projects (**CreateUpdateMultiple** and **ParallelCreateUpdateMultiple**) that perform the same operations:
 
 1. Create a new custom table named `sample_example` if it doesn't already exist.
    
@@ -98,7 +101,7 @@ The shared `Utility.cs` class contains static methods to perform operations that
 
 ## How this sample works
 
-By default the **CreateUpdateMultiple** project should be set as the startup project for the solution. To try the **ParallelCreateUpdateMultiple** sample, select the project in Solution Explorer and choose **Set as startup project**.
+By default the **CreateUpdateMultiple** project should be set as the startup project for the solution. To try the **ParallelCreateUpdateMultiple** or **UpsertMultiple** sample, select the project in Solution Explorer and choose **Set as startup project**.
 
 ### Demonstrate
 
@@ -113,5 +116,6 @@ Both projects in this solution sends requests in the following way:
 Details about each project and the default output are described in their respective README files:
 
 - [CreateUpdateMultiple/README.md](CreateUpdateMultiple/README.md)
-- [ParallelCreateUpdateMultiple.md](ParallelCreateUpdateMultiple/README.md)
+- [ParallelCreateUpdateMultiple/README.md](ParallelCreateUpdateMultiple/README.md)
+- [UpsertMultiple/README.md](UpsertMultiple/README.md)
 

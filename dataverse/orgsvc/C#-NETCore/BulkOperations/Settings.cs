@@ -45,7 +45,10 @@
         /// </summary>
         public const bool CreateAlternateKey = true;
 
-
+        /// <summary>
+        /// Column name for PartitionId in Elastic tables
+        /// </summary>
+        public const string ElasticTablePartitionId = "partitionid";
 
 
     }

@@ -41,8 +41,15 @@
         /// </summary>
         public const bool DeleteTable = true;
 
+        /// <summary>
+        /// Whether to create alternate key for the table at the end of each sample.
+        /// </summary>
+        public const bool CreateAlternateKey = false;
 
-
+        /// <summary>
+        /// Column name for PartitionId in Elastic tables
+        /// </summary>
+        public const string ElasticTablePartitionId = "partitionid";
 
     }
 }

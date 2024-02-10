@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PowerApps.Samples;
 using PowerApps.Samples.Messages;
 using PowerApps.Samples.Metadata.Messages;
@@ -6,6 +7,8 @@ using PowerApps.Samples.Metadata.Types;
 using PowerApps.Samples.Methods;
 using PowerApps.Samples.Types;
 using System.Diagnostics;
+using System.Net;
+using System.Text;
 
 namespace PowerPlatform.Dataverse.CodeSamples
 {
@@ -229,9 +232,36 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 }
             };
 
+            if (Settings.CreateAlternateKey && !isElastic)
+            {
+                entity.Attributes.Add(new StringAttributeMetadata()
+                {
+                    SchemaName = "sample_keyattribute",
+                    RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None),
+                    MaxLength = 100,
+                    FormatName = new StringFormatName(StringFormatNameValues.Text),
+                    DisplayName = new Label("sample_keyattribute", 1033),
+                    Description = new Label("The Alernate Key attribute.", 1033),
+                });
+            }
+
             CreateEntityRequest createEntityRequest = new(entityMetadata: entity, solutionUniqueName: null, useStrongConsistency: true);
             await service.SendAsync<CreateEntityResponse>(createEntityRequest);
 
+
+            // Create alternate key for standard table and validate that the key is created
+            // before sending Bulk Operation resquests
+            if (Settings.CreateAlternateKey && !Settings.UseElastic)
+            {
+                CreateAlternateKeyToEntity(
+            service: service,
+            entityLogicalName: tableSchemaName.ToLower(),
+            schemaName: "sample_TestKey",
+            displayName: "Sample Test Key",
+            keyAttributes: new List<string> { "sample_keyattribute" });
+
+                var keyStatus = await Utility.ValidateAlternateKeyIsCreated(service, tableSchemaName.ToLower(), "sample_TestKey");
+            }
         }
 
         /// <summary>
@@ -272,8 +302,77 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
         }
 
+        public static async Task<string> ValidateAlternateKeyIsCreated(Service service, string entityLogicalName, string keySchemaName)
+        {
+            try
+            {
+                bool waitForKeyStatus = true;
 
+                var keyLogicalName = keySchemaName.ToLower();
+
+                // wait for key status to be Active/Failed for default test scenarios //
+                if (waitForKeyStatus)
+                {
+                    int timeOutInterval = 305; // in seconds //
+                    int pollingInterval = 15;
+                    while (timeOutInterval > 0)
+                    {
+                        Thread.Sleep(pollingInterval * 1000);
+
+                        var request = new RetrieveEntityKeyRequest(entityLogicalName, keyLogicalName);
+                        var response = await service.SendAsync<RetrieveEntityKeyResponse>(request);
+
+                        var keyMetadata = response.EntityKeyMetadata;
+
+                        var indexStatus = keyMetadata?.EntityKeyIndexStatus;
+
+                        if (indexStatus != null && indexStatus == EntityKeyIndexStatus.Active)
+                        {
+                            return "Success";
+                        }
+
+                        timeOutInterval -= pollingInterval;
+                    }
+                }
+                else
+                {
+                    waitForKeyStatus = true;
+                }
+                return "Pending";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        /// <summary>
+		/// Creates alternate key to the entity requested.
+		/// </summary>
+		/// <param name="entityLogicalName">Table logical name</param>
+		/// <param name="schemaName">Schema name of the Key.</param>
+		/// <param name="displayName">Display name of the Key.</param>
+		/// <param name="keyAttributes">List of Key Attributes.
+		/// These attributes should exists in the specified entity.
+		/// These attributes must be of type Decimal or Integer or String.</param>
+		/// <returns>Return True if success</returns>
+		internal static async void CreateAlternateKeyToEntity(Service service, 
+            string entityLogicalName, 
+            string schemaName, 
+            string displayName, 
+            List<string> keyAttributes)
+        {
+            var entityKeyMetadata = new EntityKeyMetadata
+            {
+                SchemaName = schemaName,
+                LogicalName = schemaName.ToLower(),
+                EntityLogicalName = entityLogicalName,
+                KeyAttributes = keyAttributes.ToArray(),
+                DisplayName = new Label(displayName, 1033)
+            };
+
+            var createEntityKeyRequest = new CreateEntityKeyRequest(entityKeyMetadata, entityLogicalName.ToLower());
+            await service.SendAsync<CreateEntityKeyResponse>(createEntityKeyRequest);
+        }
     }
 }
-
-
