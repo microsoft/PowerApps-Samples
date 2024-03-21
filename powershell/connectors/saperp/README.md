@@ -5,7 +5,7 @@ This is a helper script that is used to diagnose issues when setting up an on-pr
 During implementation or production to determine why your Kerberos authentication into SAP from the on-premises data gateway is not working.
 
 # How to use it?
-See the `Get-Help .\opdg-check.ps1 -Detailed` for specific parameter information. The example parameters below will need to be replaced with values specific to your environment.
+See the `Get-Help .\saperp-opdg-check.ps1 -Detailed` for specific parameter information. The example parameters below will need to be replaced with values specific to your environment.
 ```
 .\saperp-opdg-checks.ps1
   -sapServicePrincipalName SAP/DV6
