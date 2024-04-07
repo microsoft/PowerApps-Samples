@@ -100,7 +100,7 @@ function New-Record {
 
    }
    $rh = Invoke-ResilientRestMethod -request $CreateRequest -returnHeader $true
-   $url = $rh[1]['OData-EntityId']
+   $url = $rh['OData-EntityId']
    $selectedString = Select-String -InputObject $url -Pattern '(?<=\().*?(?=\))'
    return [System.Guid]::New($selectedString.Matches.Value.ToString())
 }

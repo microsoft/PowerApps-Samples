@@ -136,10 +136,11 @@ function Invoke-ResilientRestMethod {
       $request.Add('Proxy', $proxyUrl)
    }
    try {
-      Invoke-RestMethod @request -ResponseHeadersVariable rhv
       if ($returnHeader) {
+         Invoke-RestMethod @request -ResponseHeadersVariable rhv | Out-Null
          return $rhv
       }
+      Invoke-RestMethod @request
    }
    catch [Microsoft.PowerShell.Commands.HttpResponseException] {
       $statuscode = $_.Exception.Response.StatusCode
@@ -152,10 +153,11 @@ function Invoke-ResilientRestMethod {
             # the cmdlet uses that value for the retry interval, even if RetryIntervalSec is specified
          }
          # Will attempt retry up to 3 times
-         Invoke-RestMethod @request -ResponseHeadersVariable rhv
          if ($returnHeader) {
+            Invoke-RestMethod @request -ResponseHeadersVariable rhv | Out-Null
             return $rhv
          }
+         Invoke-RestMethod @request
       }
       else {
          throw $_
