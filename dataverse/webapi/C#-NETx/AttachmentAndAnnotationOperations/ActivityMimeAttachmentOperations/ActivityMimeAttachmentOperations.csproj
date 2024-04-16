@@ -39,7 +39,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Identity.Client" Version="4.49.1" />
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.59.1" />
   </ItemGroup>
 
   <ItemGroup>
