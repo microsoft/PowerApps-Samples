@@ -1,7 +1,7 @@
 . $PSScriptRoot\..\Core.ps1
 . $PSScriptRoot\..\TableOperations.ps1
 . $PSScriptRoot\..\CommonFunctions.ps1
-. $PSScriptRoot\MetadataOperations.ps1
+. $PSScriptRoot\..\MetadataOperations.ps1
 
 # Change this to the URL of your Dataverse environment
 Connect 'https://yourorg.crm.dynamics.com/' 
@@ -296,9 +296,9 @@ Invoke-DataverseCommands {
    $boolColumnQuery += "'$($boolColumnData.SchemaName)'"
    $boolColumnQuery += "&`$select=SchemaName,DisplayName"
    
-   $boolColumnQueryResults = (Get-TableColumns `
-         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-         -query $boolColumnQuery).value
+   $boolColumnQueryResults = Get-TableColumns `
+      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+      -query $boolColumnQuery
 
    if ($boolColumnQueryResults.Length -eq 0) {
       # Create the column if it doesn't exist
@@ -308,8 +308,6 @@ Invoke-DataverseCommands {
          -solutionUniqueName $solutionData.uniquename
             
       Write-Host 'Example Boolean column created successfully'
-
-
 
       $boolColumnToDelete = @{ 
          'setName' = $tableAttributesPath
@@ -361,36 +359,39 @@ Invoke-DataverseCommands {
       'Value' = 'ApplicationRequired'
    }
 
-   Update-Column `
-      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-      -column $retrievedBooleanColumn1 `
-      -type 'Boolean' `
-      -solutionUniqueName $solutionData.uniquename `
-      -mergeLabels $true
+   # TODO: Uncomment this later...
+   # Update-Column `
+   #    -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+   #    -column $retrievedBooleanColumn1 `
+   #    -type 'Boolean' `
+   #    -solutionUniqueName $solutionData.uniquename `
+   #    -mergeLabels $true
 
    Write-Host "Sample Boolean Column updated successfully"
 
    #region Update option values
 
    # Update the True Option Label
-   Update-OptionValue `
-      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-      -columnLogicalName ($boolColumnData.SchemaName.ToLower()) `
-      -value 1 `
-      -label 'Up' `
-      -languageCode $languageCode `
-      -solutionUniqueName ($solutionData.uniquename) `
-      -mergeLabels $true
+   # TODO: Uncomment this later...
+   # Update-OptionValue `
+   #    -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+   #    -columnLogicalName ($boolColumnData.SchemaName.ToLower()) `
+   #    -value 1 `
+   #    -label 'Up' `
+   #    -languageCode $languageCode `
+   #    -solutionUniqueName ($solutionData.uniquename) `
+   #    -mergeLabels $true
    
    # Update the False Option Label
-   Update-OptionValue `
-      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-      -columnLogicalName ($boolColumnData.SchemaName.ToLower()) `
-      -value 0 `
-      -label 'Down' `
-      -languageCode $languageCode `
-      -solutionUniqueName ($solutionData.uniquename) `
-      -mergeLabels $true
+   # TODO: Uncomment this later...
+   # Update-OptionValue `
+   #    -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+   #    -columnLogicalName ($boolColumnData.SchemaName.ToLower()) `
+   #    -value 0 `
+   #    -label 'Down' `
+   #    -languageCode $languageCode `
+   #    -solutionUniqueName ($solutionData.uniquename) `
+   #    -mergeLabels $true
 
    Write-Host "Option values updated successfully"
 
@@ -446,9 +447,9 @@ Invoke-DataverseCommands {
    $dateTimeColumnQuery += "'$($dateTimeColumnData.SchemaName)'"
    $dateTimeColumnQuery += "&`$select=SchemaName,DisplayName"
    
-   $dateTimeColumnQueryResults = (Get-TableColumns `
-         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-         -query $dateTimeColumnQuery).value
+   $dateTimeColumnQueryResults = Get-TableColumns `
+      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+      -query $dateTimeColumnQuery
 
    if ($dateTimeColumnQueryResults.Length -eq 0) {
       # Create the column if it doesn't exist
@@ -517,9 +518,9 @@ Invoke-DataverseCommands {
    $decimalColumnQuery += "'$($decimalColumnData.SchemaName)'"
    $decimalColumnQuery += "&`$select=SchemaName,DisplayName"
 
-   $decimalColumnQueryResults = (Get-TableColumns `
-         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-         -query $decimalColumnQuery).value
+   $decimalColumnQueryResults = Get-TableColumns `
+      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+      -query $decimalColumnQuery
 
    if ($decimalColumnQueryResults.Length -eq 0) {
       # Create the column if it doesn't exist
@@ -589,9 +590,9 @@ Invoke-DataverseCommands {
    $integerColumnQuery += "'$($integerColumnData.SchemaName)'"
    $integerColumnQuery += "&`$select=SchemaName,DisplayName"
 
-   $integerColumnQueryResults = (Get-TableColumns `
-         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-         -query $integerColumnQuery).value
+   $integerColumnQueryResults = Get-TableColumns `
+      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+      -query $integerColumnQuery
    
    if ($integerColumnQueryResults.Length -eq 0) {
       # Create the column if it doesn't exist
@@ -662,9 +663,9 @@ Invoke-DataverseCommands {
    $memoColumnQuery += "'$($memoColumnData.SchemaName)'"
    $memoColumnQuery += "&`$select=SchemaName,DisplayName"
 
-   $memoColumnQueryResults = (Get-TableColumns `
-         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-         -query $memoColumnQuery).value
+   $memoColumnQueryResults = Get-TableColumns `
+      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+      -query $memoColumnQuery
 
    if ($memoColumnQueryResults.Length -eq 0) {
       # Create the column if it doesn't exist
@@ -737,9 +738,9 @@ Invoke-DataverseCommands {
    $moneyColumnQuery += "'$($moneyColumnData.SchemaName)'"
    $moneyColumnQuery += "&`$select=SchemaName,DisplayName"
 
-   $moneyColumnQueryResults = (Get-TableColumns `
-         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-         -query $moneyColumnQuery).value
+   $moneyColumnQueryResults = Get-TableColumns `
+      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+      -query $moneyColumnQuery
 
    if ($moneyColumnQueryResults.Length -eq 0) {
       # Create the column if it doesn't exist
@@ -818,7 +819,7 @@ Invoke-DataverseCommands {
                      }
                   )
                }
-               Value         = [int]$publisherData.customizationoptionvalueprefix + '0000'
+               Value         = [int]([string]$publisherData.customizationoptionvalueprefix + '0000')
             },
             @{
                '@odata.type' = 'Microsoft.Dynamics.CRM.OptionMetadata'
@@ -830,7 +831,7 @@ Invoke-DataverseCommands {
                      }
                   )
                }
-               Value         = [int]$publisherData.customizationoptionvalueprefix + '0001'
+               Value         = [int]([string]$publisherData.customizationoptionvalueprefix + '0001')
             },
             @{
                '@odata.type' = 'Microsoft.Dynamics.CRM.OptionMetadata'
@@ -842,7 +843,7 @@ Invoke-DataverseCommands {
                      }
                   )
                }
-               Value         = [int]$publisherData.customizationoptionvalueprefix + '0002'
+               Value         = [int]([string]$publisherData.customizationoptionvalueprefix + '0002')
             },
             @{
                '@odata.type' = 'Microsoft.Dynamics.CRM.OptionMetadata'
@@ -854,7 +855,7 @@ Invoke-DataverseCommands {
                      }
                   )
                }
-               Value         = [int]$publisherData.customizationoptionvalueprefix + '0003'
+               Value         = [int]([string]$publisherData.customizationoptionvalueprefix + '0003')
             },
             @{
                '@odata.type' = 'Microsoft.Dynamics.CRM.OptionMetadata'
@@ -866,7 +867,7 @@ Invoke-DataverseCommands {
                      }
                   )
                }
-               Value         = [int]$publisherData.customizationoptionvalueprefix + '0004'
+               Value         = [int]([string]$publisherData.customizationoptionvalueprefix + '0004')
             }
          )
       }
@@ -877,9 +878,9 @@ Invoke-DataverseCommands {
    $picklistColumnQuery += "'$($picklistColumnData.SchemaName)'"
    $picklistColumnQuery += "&`$select=SchemaName,DisplayName"
 
-   $picklistColumnQueryResults = (Get-TableColumns `
-         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-         -query $picklistColumnQuery).value
+   $picklistColumnQueryResults = Get-TableColumns `
+      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+      -query $picklistColumnQuery
 
    if ($picklistColumnQueryResults.Length -eq 0) {
       # Create the column if it doesn't exist
@@ -902,34 +903,657 @@ Invoke-DataverseCommands {
       $picklistColumnId = $picklistColumnQueryResults[0].MetadataId
    }
 
-   # Retrieve the picklist column
-   $picklistColumn = Get-Column `
+   # Retrieve the picklist column with OptionSet
+   $picklistColumnV1 = Get-Column `
       -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
       -logicalName ($picklistColumnData.SchemaName.ToLower()) `
       -type 'Picklist' `
       -query "?`$select=SchemaName,DisplayName&`$expand=OptionSet"
 
-   Write-Host "Retrieved $($picklistColumn.DisplayName.UserLocalizedLabel.Label) column."
+   Write-Host "Retrieved $($picklistColumnV1.DisplayName.UserLocalizedLabel.Label) column."
 
    Write-Host 'Retrieved Choice column options:'
-   foreach ($option in $picklistColumn.OptionSet.Options) {
-      Write-Host " Label: $($option.Label.UserLocalizedLabel.Label)"
-      Write-Host " Value: $($option.Value)"
+   foreach ($option in $picklistColumnV1.OptionSet.Options) {
+      Write-Host " Value: $($option.Value) Label: $($option.Label.UserLocalizedLabel.Label)"
    }
 
+   #region Add an option to the local optionset if it doesn't exist
 
+   $echoOptionValue = [int]([string]$publisherData.customizationoptionvalueprefix + '0005')
+   $echoOptionExists = $picklistColumnV1.OptionSet.Options | 
+   Where-Object { $_.Value -eq $echoOptionValue } | 
+   Measure-Object | 
+   ForEach-Object { $_.Count -gt 0 }
+   
+
+   if (-not $echoOptionExists) {
+      # Add an option to the local optionset
+
+      New-OptionValue `
+         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+         -columnLogicalName ($picklistColumnData.SchemaName.ToLower()) `
+         -label 'Echo' `
+         -languageCode $languageCode `
+         -value ([int]([string]$publisherData.customizationoptionvalueprefix + '0005')) `
+         -solutionUniqueName $solutionData.uniquename | Out-Null
+      # Setting Out-Null to suppress the output of the value 
+      # returned by the New-OptionValue function because we are providing
+      # the value to use. If not provided, the system will generate a value
+      # and the New-OptionValue function function will return it.
+      Write-Host 'Echo option added to the local optionset.'
+
+      # Retrieve the picklist column again with OptionSet and new option
+      $picklistColumnV2 = Get-Column `
+         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+         -logicalName ($picklistColumnData.SchemaName.ToLower()) `
+         -type 'Picklist' `
+         -query "?`$select=SchemaName,DisplayName&`$expand=OptionSet"
+
+      Write-Host "Retrieved $($picklistColumnV2.DisplayName.UserLocalizedLabel.Label) column again."
+
+      Write-Host 'Retrieved Choice column options:'
+      foreach ($option in $picklistColumnV2.OptionSet.Options) {
+         Write-Host " Value: $($option.Value) Label: $($option.Label.UserLocalizedLabel.Label)"
+      }
+   }
+   #endregion Add an option to the local optionset
+
+   #region Re-order choice column options
+
+   # Retrieve the picklist column again with OptionSet and new option
+   $picklistColumnV3 = Get-Column `
+      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+      -logicalName ($picklistColumnData.SchemaName.ToLower()) `
+      -type 'Picklist' `
+      -query "?`$select=SchemaName,DisplayName&`$expand=OptionSet"
+
+   $retrievedChoiceOptions = $picklistColumnV3.OptionSet.Options
+   $retrievedChoiceOptions = $retrievedChoiceOptions | 
+   Sort-Object -Property @{ Expression = { $_.Label.UserLocalizedLabel.Label } }
+   $newOrder = @()
+   $retrievedChoiceOptions | ForEach-Object {
+      $newOrder += $_.Value
+   }
+
+   # Update the order of the options
+   Update-OptionsOrder `
+      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+      -columnLogicalName ($picklistColumnData.SchemaName.ToLower()) `
+      -values $newOrder `
+      -solutionUniqueName $solutionData.uniquename
+
+   Write-Host 'Choice column options re-ordered.'
+
+   # Retrieve the picklist column again with OptionSet and new option
+   $picklistColumnV4 = Get-Column `
+      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+      -logicalName ($picklistColumnData.SchemaName.ToLower()) `
+      -type 'Picklist' `
+      -query "?`$select=SchemaName,DisplayName&`$expand=OptionSet"
+
+   Write-Host "Retrieved $($picklistColumnV4.DisplayName.UserLocalizedLabel.Label) column again."
+
+   Write-Host 'Retrieved Choice column options with new order:'
+   foreach ($option in $picklistColumnV4.OptionSet.Options) {
+      Write-Host " Value: $($option.Value) Label: $($option.Label.UserLocalizedLabel.Label)"
+   }
+   #endregion Re-order choice column options
+
+   #region Delete local option value
+
+   $foxTrotOptionValue = [int]([string]$publisherData.customizationoptionvalueprefix + '0004')
+   $foxTrotOptionExists = $picklistColumnV4.OptionSet.Options | 
+   Where-Object { $_.Value -eq $foxTrotOptionValue } | 
+   Measure-Object | 
+   ForEach-Object { $_.Count -gt 0 }
+
+   if ($foxTrotOptionExists) {
+      # Delete the option from the local optionset
+      Remove-OptionValue `
+         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+         -columnLogicalName ($picklistColumnData.SchemaName.ToLower()) `
+         -value $foxTrotOptionValue `
+         -solutionUniqueName $solutionData.uniquename
+
+      Write-Host 'Foxtrot option deleted from the local optionset.'
+   }
+
+   #endregion Delete local option value
    #endregion Picklist
 
+   #region MultiSelectPicklist
+
+   $multiSelectPicklistColumnData = @{
+      '@odata.type' = 'Microsoft.Dynamics.CRM.MultiSelectPicklistAttributeMetadata'
+      SchemaName    = "$($publisherData.customizationprefix)_MultiSelectChoice"
+      RequiredLevel = @{
+         Value = 'None'
+      }
+      DisplayName   = @{
+         LocalizedLabels = @(
+            @{
+               Label        = 'Sample MultiSelect Choice'
+               LanguageCode = $languageCode
+            }
+         )
+      }
+      Description   = @{
+         LocalizedLabels = @(
+            @{
+               Label        = 'Sample MultiSelect Choice column description'
+               LanguageCode = $languageCode
+            }
+         )
+      }
+      OptionSet     = @{
+         '@odata.type' = 'Microsoft.Dynamics.CRM.OptionSetMetadata'
+         OptionSetType = 'Picklist'
+         IsGlobal      = $false
+         Options       = @(
+            @{
+               '@odata.type' = 'Microsoft.Dynamics.CRM.OptionMetadata'
+               Label         = @{
+                  LocalizedLabels = @(
+                     @{
+                        Label        = 'Appetizer'
+                        LanguageCode = $languageCode
+                     }
+                  )
+               }
+               Value         = [int]([string]$publisherData.customizationoptionvalueprefix + '0000')
+            },
+            @{
+               '@odata.type' = 'Microsoft.Dynamics.CRM.OptionMetadata'
+               Label         = @{
+                  LocalizedLabels = @(
+                     @{
+                        Label        = 'Entree'
+                        LanguageCode = $languageCode
+                     }
+                  )
+               }
+               Value         = [int]([string]$publisherData.customizationoptionvalueprefix + '0001')
+            },
+            @{
+               '@odata.type' = 'Microsoft.Dynamics.CRM.OptionMetadata'
+               Label         = @{
+                  LocalizedLabels = @(
+                     @{
+                        Label        = 'Dessert'
+                        LanguageCode = $languageCode
+                     }
+                  )
+               }
+               Value         = [int]([string]$publisherData.customizationoptionvalueprefix + '0002')
+            }
+         )
+      }
+   }
+
+   # Check if the column already exists
+   $multiSelectPicklistColumnQuery = "?`$filter=SchemaName eq "
+   $multiSelectPicklistColumnQuery += "'$($multiSelectPicklistColumnData.SchemaName)'"
+   $multiSelectPicklistColumnQuery += "&`$select=SchemaName,DisplayName"
+
+   $multiSelectPicklistColumnQueryResults = Get-TableColumns `
+      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+      -query $multiSelectPicklistColumnQuery
+
+   if ($multiSelectPicklistColumnQueryResults.Length -eq 0) {
+      # Create the column if it doesn't exist
+      $multiSelectPicklistColumnId = New-Column `
+         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+         -column $multiSelectPicklistColumnData `
+         -solutionUniqueName $solutionData.uniquename
+            
+      Write-Host 'Example MultiSelect Choice column created successfully'
+
+      $multiSelectPicklistColumnToDelete = @{ 
+         'setName' = $tableAttributesPath
+         'id'      = $multiSelectPicklistColumnId 
+      }
+      $recordsToDelete += $multiSelectPicklistColumnToDelete
+   }
+   else {
+      # Example MultiSelectPicklist column already exists
+      Write-Host "$($multiSelectPicklistColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) table already exists"
+      $multiSelectPicklistColumnId = $multiSelectPicklistColumnQueryResults[0].MetadataId
+   }
+
+   # Retrieve the MultiSelectPicklist column with OptionSet
+   $multiSelectPicklistColumn = Get-Column `
+      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+      -logicalName ($multiSelectPicklistColumnData.SchemaName.ToLower()) `
+      -type 'MultiSelectPicklist' `
+      -query "?`$select=SchemaName,DisplayName&`$expand=OptionSet"
+
+   Write-Host "Retrieved $($multiSelectPicklistColumn.DisplayName.UserLocalizedLabel.Label) column."
+
+   Write-Host 'Retrieved MultiSelect Choice column options:'
+   foreach ($option in $multiSelectPicklistColumn.OptionSet.Options) {
+      Write-Host " Value: $($option.Value) Label: $($option.Label.UserLocalizedLabel.Label)"
+   }
+   #endregion MultiSelectPicklist
+
+   #region BigInt
+
+   $bigIntColumnData = @{
+      '@odata.type' = 'Microsoft.Dynamics.CRM.BigIntAttributeMetadata'
+      SchemaName    = "$($publisherData.customizationprefix)_BigInt"
+      RequiredLevel = @{
+         Value = 'None'
+      }
+      DisplayName   = @{
+         LocalizedLabels = @(
+            @{
+               Label        = 'Sample BigInt'
+               LanguageCode = $languageCode
+            }
+         )
+      }
+      Description   = @{
+         LocalizedLabels = @(
+            @{
+               Label        = 'Sample BigInt column description'
+               LanguageCode = $languageCode
+            }
+         )
+      }
+   }
+
+   # Check if the column already exists
+   $bigIntColumnQuery = "?`$filter=SchemaName eq "
+   $bigIntColumnQuery += "'$($bigIntColumnData.SchemaName)'"
+   $bigIntColumnQuery += "&`$select=SchemaName,DisplayName"
+
+   $bigIntColumnQueryResults = Get-TableColumns `
+      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+      -query $bigIntColumnQuery
+
+   if ($bigIntColumnQueryResults.Length -eq 0) {
+      # Create the column if it doesn't exist
+      $bigIntColumnId = New-Column `
+         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+         -column $bigIntColumnData `
+         -solutionUniqueName $solutionData.uniquename
+            
+      Write-Host 'Example BigInt column created successfully'
+
+      $bigIntColumnToDelete = @{ 
+         'setName' = $tableAttributesPath
+         'id'      = $bigIntColumnId 
+      }
+      $recordsToDelete += $bigIntColumnToDelete
+   }
+   else {
+      # Example BigInt column already exists
+      Write-Host "$($bigIntColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) table already exists"
+      $bigIntColumnId = $bigIntColumnQueryResults[0].MetadataId
+   }
+
+   # Retrieve the BigInt column
+   $bigIntColumn = Get-Column `
+      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+      -logicalName ($bigIntColumnData.SchemaName.ToLower()) `
+      -type 'BigInt' `
+      -query "?`$select=SchemaName,DisplayName,MaxValue,MinValue"
+
+   Write-Host "Retrieved $($bigIntColumn.DisplayName.UserLocalizedLabel.Label) column."   
+   Write-Host " MaxValue: $($bigIntColumn.MaxValue)"
+   Write-Host " MinValue: $($bigIntColumn.MinValue)"
+
+   #endregion BigInt
+
+   #region InsertStatusValue
+
+   # Retrieve the status column with OptionSet
+   $statusColumnV1 = Get-Column `
+      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+      -logicalName 'statuscode' `
+      -type 'Status' `
+      -query "?`$select=SchemaName,DisplayName&`$expand=OptionSet"
+
+
+   $frozenOptionExists = $statusColumnV1.OptionSet.Options | 
+   Where-Object { $_.Label.UserLocalizedLabel.Label -eq 'Frozen' }
+   Measure-Object | 
+   ForEach-Object { $_.Count -gt 0 } | Out-Null
+
+   if (!$frozenOptionExists) {
+   
+      # Add a new status value to the status column
+      $frozenStatusValue = New-StatusOption `
+         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+         -label 'Frozen' `
+         -languageCode $languageCode `
+         -stateCode 1 `
+         -solutionUniqueName $solutionData.uniquename
+      Write-Host 'Frozen status added to the status column.'
+      Write-Host "With the value of: $frozenStatusValue"
+
+      # Retrieve the status column again with OptionSet and new option
+      $statusColumnV2 = Get-Column `
+         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+         -logicalName 'statuscode' `
+         -type 'Status' `
+         -query "?`$select=SchemaName,DisplayName&`$expand=OptionSet"
+
+      Write-Host "Retrieved $($statusColumnV2.DisplayName.UserLocalizedLabel.Label) column again."
+
+      Write-Host 'Retrieved status column options:'
+      foreach ($option in $statusColumnV2.OptionSet.Options) {
+         Write-Host " Value: $($option.Value) Label: $($option.Label.UserLocalizedLabel.Label) State: $($option.State)"
+      }
+
+   }
+   else {
+      Write-Host "'Frozen' status option already exists"
+   }
+
+   #endregion InsertStatusValue
 
    #endregion Section 2: Create, Retrieve and Update Columns
 
    #region Section 3: Create and use Global OptionSet
+
+   $colorsGlobalOptionSetData = @{
+      '@odata.type' = 'Microsoft.Dynamics.CRM.OptionSetMetadata'
+      Name          = "$($publisherData.customizationprefix)_colors"
+      DisplayName   = @{
+         LocalizedLabels = @(
+            @{
+               Label        = 'Colors'
+               LanguageCode = $languageCode
+            }
+         )
+      }
+      Description   = @{
+         LocalizedLabels = @(
+            @{
+               Label        = 'Color Choice description'
+               LanguageCode = $languageCode
+            }
+         )
+      }
+      IsGlobal      = $true
+      Options       = @(
+         @{
+            # '@odata.type' = 'Microsoft.Dynamics.CRM.OptionMetadata'
+            Label = @{
+               LocalizedLabels = @(
+                  @{
+                     Label        = 'Red'
+                     LanguageCode = $languageCode
+                  }
+               )
+            }
+            Value = [int]([string]$publisherData.customizationoptionvalueprefix + '0000')
+         },
+         @{
+            # '@odata.type' = 'Microsoft.Dynamics.CRM.OptionMetadata'
+            Label = @{
+               LocalizedLabels = @(
+                  @{
+                     Label        = 'Yellow'
+                     LanguageCode = $languageCode
+                  }
+               )
+            }
+            Value = [int]([string]$publisherData.customizationoptionvalueprefix + '0001')
+         },
+         @{
+            # '@odata.type' = 'Microsoft.Dynamics.CRM.OptionMetadata'
+            Label = @{
+               LocalizedLabels = @(
+                  @{
+                     Label        = 'Green'
+                     LanguageCode = $languageCode
+                  }
+               )
+            }
+            Value = [int]([string]$publisherData.customizationoptionvalueprefix + '0002')
+         }
+      )
+   }
+
+   # Check if the global optionset already exists
+   # Get-GlobalOptionSet returns $null if not found
+
+   $colorsGlobalOptionSet = Get-GlobalOptionSet `
+      -name $colorsGlobalOptionSetData.Name `
+      -type 'OptionSet' `
+      -query "?`$select=Name,DisplayName,Options"
+
+   if ($null -eq $colorsGlobalOptionSet) {
+      # Create the global optionset if it doesn't exist
+      $colorsGlobalOptionSetId = New-GlobalOptionSet `
+         -optionSet $colorsGlobalOptionSetData `
+         -solutionUniqueName $solutionData.uniquename
+            
+      Write-Host 'Colors global optionset created successfully'
+
+      $colorsGlobalOptionSetToDelete = @{ 
+         'setName' = 'GlobalOptionSetDefinitions'
+         'id'      = $colorsGlobalOptionSetId 
+      }
+      $recordsToDelete += $colorsGlobalOptionSetToDelete
+
+      # Retrieve the global optionset
+      $colorsGlobalOptionSet = Get-GlobalOptionSet `
+         -type 'OptionSet' `
+         -id $colorsGlobalOptionSetId `
+         -query "?`$select=Name,DisplayName,Options"
+
+      Write-Host "Retrieved $($colorsGlobalOptionSet.DisplayName.UserLocalizedLabel.Label) global optionset."
+   }
+   else {
+      # Colors global optionset already exists
+      Write-Host "$($colorsGlobalOptionSet.DisplayName.UserLocalizedLabel.Label) global optionset already exists"
+      $colorsGlobalOptionSetId = $colorsGlobalOptionSet.MetadataId
+   }
+
+   Write-Host 'Retrieved global optionset options:'
+   foreach ($option in $colorsGlobalOptionSet.Options) {
+      Write-Host " Value: $($option.Value) Label: $($option.Label.UserLocalizedLabel.Label)"
+   }
+
+   # Create a column that uses the global optionset
+   $colorColumnData = @{
+      '@odata.type'                = 'Microsoft.Dynamics.CRM.PicklistAttributeMetadata'
+      SchemaName                   = "$($publisherData.customizationprefix)_Colors"
+      RequiredLevel                = @{
+         Value = 'None'
+      }
+      DisplayName                  = @{
+         LocalizedLabels = @(
+            @{
+               Label        = 'Sample Colors Choice'
+               LanguageCode = $languageCode
+            }
+         )
+      }
+      Description                  = @{
+         LocalizedLabels = @(
+            @{
+               Label        = 'Sample Colors Choice column description'
+               LanguageCode = $languageCode
+            }
+         )
+      }
+      'GlobalOptionSet@odata.bind' = "/GlobalOptionSetDefinitions($colorsGlobalOptionSetId)"
+   }
+
+   # Check if the column already exists
+   $colorColumnQuery = "?`$filter=SchemaName eq "
+   $colorColumnQuery += "'$($colorColumnData.SchemaName)'"
+   $colorColumnQuery += "&`$select=SchemaName,DisplayName"
+
+   $colorColumnQueryResults = Get-TableColumns `
+      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+      -query $colorColumnQuery
+
+   if ($colorColumnQueryResults.Length -eq 0) {
+      # Create the column if it doesn't exist
+      $colorColumnId = New-Column `
+         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+         -column $colorColumnData `
+         -solutionUniqueName $solutionData.uniquename
+            
+      Write-Host 'Example Colors Choice column created successfully'
+
+      $colorColumnToDelete = @{ 
+         'setName' = $tableAttributesPath
+         'id'      = $colorColumnId 
+      }
+      $recordsToDelete += $colorColumnToDelete
+   }
+   else {
+      # Example Colors Choice column already exists
+      Write-Host "$($colorColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) table already exists"
+      $colorColumnId = $colorColumnQueryResults[0].MetadataId
+   }
+
+   # Retrieve the color column with GlobalOptionSet
+   $colorColumn = Get-Column `
+      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+      -logicalName ($colorColumnData.SchemaName.ToLower()) `
+      -type 'Picklist' `
+      -query "?`$select=SchemaName,DisplayName&`$expand=GlobalOptionSet"
+
+   Write-Host "Retrieved $($colorColumn.DisplayName.UserLocalizedLabel.Label) column."
+   
+   Write-Host 'Retrieved Choice column options:'
+   foreach ($option in $colorColumn.GlobalOptionSet.Options) {
+      Write-Host " Value: $($option.Value) Label: $($option.Label.UserLocalizedLabel.Label)"
+   }
+
    #endregion Section 3: Create and use Global OptionSet
 
    #region Section 4: Create Customer Relationship
+
+   $customerLookupData = @{
+      # '@odata.type' = 'Microsoft.Dynamics.CRM.LookupAttributeMetadata'
+      SchemaName    = "$($publisherData.customizationprefix)_CustomerId"
+      RequiredLevel = @{
+         Value = 'None'
+      }
+      DisplayName   = @{
+         LocalizedLabels = @(
+            @{
+               Label        = 'Sample Bank Account owner'
+               LanguageCode = $languageCode
+            }
+         )
+      }
+      Description   = @{
+         LocalizedLabels = @(
+            @{
+               Label        = 'The owner of the bank account'
+               LanguageCode = $languageCode
+            }
+         )
+      }
+      Targets       = @('account', 'contact')
+   }
+
+   $customerRelationships = @(
+      @{
+         SchemaName        = "$($publisherData.customizationprefix)_BankAccount_Customer_Account"
+         ReferencedEntity  = 'account'
+         ReferencingEntity = $bankAccountTableData.SchemaName.ToLower()
+         RelationshipType  = 'OneToManyRelationship'
+      },
+      @{
+         SchemaName        = "$($publisherData.customizationprefix)_BankAccount_Customer_Contact"
+         ReferencedEntity  = 'contact'
+         ReferencingEntity = $bankAccountTableData.SchemaName.ToLower()
+         RelationshipType  = 'OneToManyRelationship'
+      }
+   )
+
+   # Check if the column already exists
+   $customerLookupQuery = "?`$filter=SchemaName eq "
+   $customerLookupQuery += "'$($customerLookupData.SchemaName)'"
+   $customerLookupQuery += "&`$select=SchemaName,DisplayName"
+
+   $customerLookupQueryResults = Get-TableColumns `
+      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+      -query $customerLookupQuery
+
+   if ($customerLookupQueryResults.Length -eq 0) {
+      # Create the column if it doesn't exist
+      $response = New-CustomerRelationship `
+         -lookup $customerLookupData `
+         -oneToManyRelationships $customerRelationships `
+         -solutionUniqueName $solutionData.uniquename
+   
+      Write-Host 'Customer relationship created successfully'
+   
+      $customerLookupRelationshipIds = $response.RelationshipIds
+      $customerLookupId = $response.AttributeId
+            
+      Write-Host 'Example Customer Lookup column created successfully'
+
+      $customerLookupToDelete = @{ 
+         'setName' = $tableAttributesPath
+         'id'      = $customerLookupId 
+      }
+      $recordsToDelete += $customerLookupToDelete
+
+ 
+   }
+   else {
+      # Example Customer Lookup column already exists
+      Write-Host "$($customerLookupQueryResults[0].DisplayName.UserLocalizedLabel.Label) table already exists"
+      $customerLookupId = $customerLookupQueryResults[0].MetadataId
+   }
+
+   $retrievedCustomerLookup = Get-Column `
+      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+      -logicalName ($customerLookupData.SchemaName.ToLower()) `
+      -type 'Lookup' `
+      -query "?`$select=SchemaName,DisplayName,Targets" 
+
+   Write-Host "Retrieved $($retrievedCustomerLookup.DisplayName.UserLocalizedLabel.Label) column Targets:"
+   foreach ($target in $retrievedCustomerLookup.Targets) {
+      Write-Host " $target"
+   }
+
+   # $customerLookupRelationshipIds are set when the relationship is created.
+   if ($customerLookupRelationshipIds) {
+      Write-Host 'Retrieved Customer relationship IDs:'
+      foreach ($relationshipId in $customerLookupRelationshipIds) {
+         $relationship = Get-Relationship `
+            -id $relationshipId `
+            -query "?`$select=SchemaName"
+         Write-Host " $($relationship.SchemaName)"
+      }
+   }
+
    #endregion Section 4: Create Customer Relationship
 
    #region Section 5: Create and retrieve a one-to-many relationship
+
+   #region Validate 1:N relationship eligibility
+   $canBeReferenced = Get-CanBeReferenced `
+      -tableLogicalName $table.SchemaName.ToLower()
+
+   $message = "`nThe $($table.DisplayName.UserLocalizedLabel.Label) table"
+   $message += ($canBeReferenced) ? " is" : " is not"
+   $message += " eligible to be a primary table in a one-to-many relationship."
+   Write-Host $message
+
+   $canBeReferencing = Get-CanBeReferencing `
+      -tableLogicalName $table.SchemaName.ToLower()
+
+   $message = "`nThe $($table.DisplayName.UserLocalizedLabel.Label) table"
+   $message += ($canBeReferencing) ? " is" : " is not"
+   $message += " eligible to be a related table in a one-to-many relationship."
+   Write-Host $message
+   
+   
+   #endregion Validate 1:N relationship eligibility
+
    #endregion Section 5: Create and retrieve a one-to-many relationship
 
    #region Section 6: Create and retrieve a many-to-one relationship
@@ -942,7 +1566,7 @@ Invoke-DataverseCommands {
    #endregion Section 8: Export managed solution
 
    #region Section 9: Delete sample records
-   if ($deleteCreatedRecords) {
+   if ($deleteCreatedRecords -and ($recordsToDelete.Length -gt 0)) {
       Write-Host 'Deleting sample records...'
 
       # In the reverse order of creation, delete the records created by this sample
