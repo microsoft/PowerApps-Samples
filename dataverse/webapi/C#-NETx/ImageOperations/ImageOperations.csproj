@@ -37,7 +37,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
-		<PackageReference Include="Microsoft.Identity.Client" Version="4.49.1" />
+		<PackageReference Include="Microsoft.Identity.Client" Version="4.59.1" />
 	</ItemGroup>
 
 	<ItemGroup>
