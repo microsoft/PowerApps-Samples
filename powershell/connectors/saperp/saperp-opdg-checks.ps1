@@ -461,5 +461,4 @@ function checkHostConnection($hostName, $port) {
 
     Remove-Job -Force -Job $job
 }
-
 main
