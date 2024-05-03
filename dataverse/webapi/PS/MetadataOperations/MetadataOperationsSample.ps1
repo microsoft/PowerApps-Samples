@@ -4,24 +4,28 @@
 . $PSScriptRoot\..\MetadataOperations.ps1
 
 # Change this to the URL of your Dataverse environment
-Connect 'https://yourorg.crm.dynamics.com/' 
+Connect 'https://crmue.crm.dynamics.com/' 
 
 # Change this if you want to keep the records created by this sample
-$deleteCreatedRecords = $true 
+$deleteCreatedRecords = $false
+# $recordsToDelete contains references to all records created by this sample 
+# that will be deleted if $deleteCreatedRecords is $true
 $recordsToDelete = @()
 $publisherId = $null
 $languageCode = 1033
+# Set $skipUpdates to $true if you want to skip the update operations
+$skipUpdates = $true
 
 Invoke-DataverseCommands { 
 
    #region Section 0: Create Publisher and Solution
 
    $publisherData = @{
-      'uniquename'                     = 'examplepublisher'
-      'friendlyname'                   = 'Example Publisher'
-      'description'                    = 'An example publisher for samples'
-      'customizationprefix'            = 'sample'
-      'customizationoptionvalueprefix' = 72700
+      uniquename                     = 'examplepublisher'
+      friendlyname                   = 'Example Publisher'
+      description                    = 'An example publisher for samples'
+      customizationprefix            = 'sample'
+      customizationoptionvalueprefix = 72700
    } 
 
    # Check if the publisher already exists
@@ -45,8 +49,8 @@ Invoke-DataverseCommands {
       
       Write-Host 'Example Publisher created successfully'
       $publisherRecordToDelete = @{ 
-         'setName' = 'publishers'
-         'id'      = $publisherId 
+         setName = 'publishers'
+         id      = $publisherId 
       }
       $recordsToDelete += $publisherRecordToDelete
 
@@ -58,10 +62,10 @@ Invoke-DataverseCommands {
    }
 
    $solutionData = @{
-      'uniquename'             = 'metadataexamplesolution'
-      'friendlyname'           = 'Metadata Example Solution'
-      'description'            = 'An example solution for metadata samples'
-      'version'                = '1.0.0.0'
+      uniquename               = 'metadataexamplesolution'
+      friendlyname             = 'Metadata Example Solution'
+      description              = 'An example solution for metadata samples'
+      version                  = '1.0.0.0'
       'publisherid@odata.bind' = "/publishers($publisherId)"
    }
 
@@ -81,11 +85,11 @@ Invoke-DataverseCommands {
          -setName 'solutions' `
          -body $solutionData
       
-      Write-Host 'Example Solution created successfully'
-      # Must be deleted before publisher, so add it to the beginning of the array
+      Write-Host "$($solutionData.friendlyname) created successfully"
+      
       $solutionRecordToDelete = @{ 
-         'setName' = 'solutions'
-         'id'      = $solutionId 
+         setName = 'solutions'
+         id      = $solutionId 
       }
       $recordsToDelete += $solutionRecordToDelete
    }
@@ -100,71 +104,71 @@ Invoke-DataverseCommands {
    
    # Definition of new 'sample_BankAccount' table to create
    $bankAccountTableData = @{
-      '@odata.type'           = "Microsoft.Dynamics.CRM.EntityMetadata"
-      'SchemaName'            = "$($publisherData.customizationprefix)_BankAccount"
-      'DisplayName'           = @{
-         '@odata.type'     = 'Microsoft.Dynamics.CRM.Label'
-         'LocalizedLabels' = @(
+      '@odata.type'         = "Microsoft.Dynamics.CRM.EntityMetadata"
+      SchemaName            = "$($publisherData.customizationprefix)_BankAccount"
+      DisplayName           = @{
+         '@odata.type'   = 'Microsoft.Dynamics.CRM.Label'
+         LocalizedLabels = @(
             @{
-               '@odata.type'  = 'Microsoft.Dynamics.CRM.LocalizedLabel'
-               'Label'        = 'Bank Account'
-               'LanguageCode' = $languageCode
+               '@odata.type' = 'Microsoft.Dynamics.CRM.LocalizedLabel'
+               Label         = 'Bank Account'
+               LanguageCode  = $languageCode
             }
          )
       }
-      'DisplayCollectionName' = @{
-         '@odata.type'     = 'Microsoft.Dynamics.CRM.Label'
-         'LocalizedLabels' = @(
+      DisplayCollectionName = @{
+         '@odata.type'   = 'Microsoft.Dynamics.CRM.Label'
+         LocalizedLabels = @(
             @{
-               '@odata.type'  = 'Microsoft.Dynamics.CRM.LocalizedLabel'
-               'Label'        = 'Bank Accounts'
-               'LanguageCode' = $languageCode
+               '@odata.type' = 'Microsoft.Dynamics.CRM.LocalizedLabel'
+               Label         = 'Bank Accounts'
+               LanguageCode  = $languageCode
             }
          )
       }
-      'Description'           = @{
-         '@odata.type'     = 'Microsoft.Dynamics.CRM.Label'
-         'LocalizedLabels' = @(
+      Description           = @{
+         '@odata.type'   = 'Microsoft.Dynamics.CRM.Label'
+         LocalizedLabels = @(
             @{
-               '@odata.type'  = 'Microsoft.Dynamics.CRM.LocalizedLabel'
-               'Label'        = 'A table to store information about customer bank accounts'
-               'LanguageCode' = $languageCode
+               '@odata.type' = 'Microsoft.Dynamics.CRM.LocalizedLabel'
+               Label         = 'A table to store information about customer bank accounts'
+               LanguageCode  = $languageCode
             }
          )
       }
-      'HasActivities'         = $false
-      'HasNotes'              = $false
-      'OwnershipType'         = 'UserOwned'
-      'PrimaryNameAttribute'  = "$($publisherData.customizationprefix)_name"
-      'Attributes'            = @(
+      HasActivities         = $false
+      HasNotes              = $false
+      OwnershipType         = 'UserOwned'
+      PrimaryNameAttribute  = "$($publisherData.customizationprefix)_name"
+      Attributes            = @(
          @{
-            '@odata.type'   = 'Microsoft.Dynamics.CRM.StringAttributeMetadata'
-            'IsPrimaryName' = $true
-            'SchemaName'    = "$($publisherData.customizationprefix)_Name"
-            'RequiredLevel' = @{
-               'Value' = 'ApplicationRequired'
+            '@odata.type' = 'Microsoft.Dynamics.CRM.StringAttributeMetadata'
+            IsPrimaryName = $true
+            SchemaName    = "$($publisherData.customizationprefix)_Name"
+            RequiredLevel = @{
+               Value = 'ApplicationRequired'
             }
-            'DisplayName'   = @{
-               '@odata.type'     = 'Microsoft.Dynamics.CRM.Label'
-               'LocalizedLabels' = @(
+            DisplayName   = @{
+               '@odata.type'   = 'Microsoft.Dynamics.CRM.Label'
+               LocalizedLabels = @(
                   @{
-                     '@odata.type'  = 'Microsoft.Dynamics.CRM.LocalizedLabel'
-                     'Label'        = 'Name'
-                     'LanguageCode' = $languageCode
+                     '@odata.type' = 'Microsoft.Dynamics.CRM.LocalizedLabel'
+                     Label         = 'Name'
+                     LanguageCode  = $languageCode
                   }
                )
             }
-            'Description'   = @{
-               '@odata.type'     = 'Microsoft.Dynamics.CRM.Label'
-               'LocalizedLabels' = @(
+            Description   = @{
+               '@odata.type'   = 'Microsoft.Dynamics.CRM.Label'
+               LocalizedLabels = @(
                   @{
-                     '@odata.type'  = 'Microsoft.Dynamics.CRM.LocalizedLabel'
-                     'Label'        = 'The name of the bank account'
-                     'LanguageCode' = $languageCode
+                     '@odata.type' = 'Microsoft.Dynamics.CRM.LocalizedLabel'
+                     Label         = 'The name of the bank account'
+                     LanguageCode  = $languageCode
                   }
                )
             }
-            'MaxLength'     = 100
+            MaxLength     = 100
          }
       )
    }
@@ -183,10 +187,10 @@ Invoke-DataverseCommands {
          -body $bankAccountTableData `
          -solutionUniqueName $solutionData.uniquename
             
-      Write-Host 'Example Table created successfully'
+      Write-Host "$($bankAccountTableData.DisplayName.LocalizedLabels[0].Label) table created successfully"
       $tableToDelete = @{ 
-         'setName' = 'EntityDefinitions'
-         'id'      = $tableId 
+         setName = 'EntityDefinitions'
+         id      = $tableId 
       }
       $recordsToDelete += $tableToDelete
    }
@@ -196,32 +200,33 @@ Invoke-DataverseCommands {
       $tableId = $tableQueryResults[0].MetadataId
    }
 
-   # Retrieve the table to update it
-   $table = Get-Table `
-      -logicalName ($bankAccountTableData.SchemaName.ToLower())
+   if (!$skipUpdates) {
+      # Retrieve the table to update it
+      $table = Get-Table `
+         -logicalName ($bankAccountTableData.SchemaName.ToLower())
 
-   Write-Host "Retrieved $($table.DisplayName.UserLocalizedLabel.Label) table."
+      Write-Host "Retrieved $($table.DisplayName.UserLocalizedLabel.Label) table."
 
-   # Update the table
-   $table.HasActivities = $true
-   $table.Description = @{
-      '@odata.type'     = 'Microsoft.Dynamics.CRM.Label'
-      'LocalizedLabels' = @(
-         @{
-            '@odata.type'  = 'Microsoft.Dynamics.CRM.LocalizedLabel'
-            'Label'        = 'Contains information about customer bank accounts'
-            'LanguageCode' = $languageCode
-         }
-      )
+      # Update the table
+      $table.HasActivities = $true
+      $table.Description = @{
+         '@odata.type'   = 'Microsoft.Dynamics.CRM.Label'
+         LocalizedLabels = @(
+            @{
+               '@odata.type' = 'Microsoft.Dynamics.CRM.LocalizedLabel'
+               Label         = 'Contains information about customer bank accounts'
+               LanguageCode  = $languageCode
+            }
+         )
+      }
+      # Send the request to update the table
+      Update-Table `
+         -table $table `
+         -solutionUniqueName $solutionData.uniquename `
+         -mergeLabels $true
+
+      Write-Host "$($table.DisplayName.UserLocalizedLabel.Label) table updated successfully"
    }
-   # Send the request to update the table
-   # TODO: Uncomment this later...
-   # Update-Table `
-   #    -table $table `
-   #    -solutionUniqueName $solutionData.uniquename `
-   #    -mergeLabels $true
-
-   # Write-Host "$($table.DisplayName.UserLocalizedLabel.Label) table updated successfully"
 
    #endregion Section 1: Create, Retrieve and Update Table
 
@@ -234,56 +239,56 @@ Invoke-DataverseCommands {
    #region Boolean
 
    $boolColumnData = @{
-      '@odata.type'   = 'Microsoft.Dynamics.CRM.BooleanAttributeMetadata'
-      'SchemaName'    = "$($publisherData.customizationprefix)_Boolean"
-      'DefaultValue'  = $false
-      'RequiredLevel' = @{
-         'Value' = 'None'
+      '@odata.type' = 'Microsoft.Dynamics.CRM.BooleanAttributeMetadata'
+      SchemaName    = "$($publisherData.customizationprefix)_Boolean"
+      DefaultValue  = $false
+      RequiredLevel = @{
+         Value = 'None'
       }
-      'DisplayName'   = @{
-         '@odata.type'     = 'Microsoft.Dynamics.CRM.Label'
-         'LocalizedLabels' = @(
+      DisplayName   = @{
+         '@odata.type'   = 'Microsoft.Dynamics.CRM.Label'
+         LocalizedLabels = @(
             @{
-               '@odata.type'  = 'Microsoft.Dynamics.CRM.LocalizedLabel'
-               'Label'        = 'Sample Boolean'
-               'LanguageCode' = $languageCode
+               '@odata.type' = 'Microsoft.Dynamics.CRM.LocalizedLabel'
+               Label         = 'Sample Boolean'
+               LanguageCode  = $languageCode
             }
          )
       }
-      'Description'   = @{
-         '@odata.type'     = 'Microsoft.Dynamics.CRM.Label'
-         'LocalizedLabels' = @(
+      Description   = @{
+         '@odata.type'   = 'Microsoft.Dynamics.CRM.Label'
+         LocalizedLabels = @(
             @{
-               '@odata.type'  = 'Microsoft.Dynamics.CRM.LocalizedLabel'
-               'Label'        = 'Sample Boolean column description'
-               'LanguageCode' = $languageCode
+               '@odata.type' = 'Microsoft.Dynamics.CRM.LocalizedLabel'
+               Label         = 'Sample Boolean column description'
+               LanguageCode  = $languageCode
             }
          )
       }
-      'OptionSet'     = @{
+      OptionSet     = @{
          '@odata.type' = 'Microsoft.Dynamics.CRM.BooleanOptionSetMetadata'
-         'TrueOption'  = @{
-            'Value' = 1
-            'Label' = @{
-               '@odata.type'     = 'Microsoft.Dynamics.CRM.Label'
-               'LocalizedLabels' = @(
+         TrueOption    = @{
+            Value = 1
+            Label = @{
+               '@odata.type'   = 'Microsoft.Dynamics.CRM.Label'
+               LocalizedLabels = @(
                   @{
-                     '@odata.type'  = 'Microsoft.Dynamics.CRM.LocalizedLabel'
-                     'Label'        = 'True'
-                     'LanguageCode' = $languageCode
+                     '@odata.type' = 'Microsoft.Dynamics.CRM.LocalizedLabel'
+                     Label         = 'True'
+                     LanguageCode  = $languageCode
                   }
                )
             }
          }
-         'FalseOption' = @{
-            'Value' = 0
-            'Label' = @{
-               '@odata.type'     = 'Microsoft.Dynamics.CRM.Label'
-               'LocalizedLabels' = @(
+         FalseOption   = @{
+            Value = 0
+            Label = @{
+               '@odata.type'   = 'Microsoft.Dynamics.CRM.Label'
+               LocalizedLabels = @(
                   @{
-                     '@odata.type'  = 'Microsoft.Dynamics.CRM.LocalizedLabel'
-                     'Label'        = 'False'
-                     'LanguageCode' = $languageCode
+                     '@odata.type' = 'Microsoft.Dynamics.CRM.LocalizedLabel'
+                     Label         = 'False'
+                     LanguageCode  = $languageCode
                   }
                )
             }
@@ -307,11 +312,11 @@ Invoke-DataverseCommands {
          -column $boolColumnData `
          -solutionUniqueName $solutionData.uniquename
             
-      Write-Host 'Example Boolean column created successfully'
+      Write-Host "$($boolColumnData.DisplayName.LocalizedLabels[0].Label) column created successfully"
 
       $boolColumnToDelete = @{ 
-         'setName' = $tableAttributesPath
-         'id'      = $boolColumnId 
+         setName = $tableAttributesPath
+         id      = $boolColumnId 
       }
       $recordsToDelete += $boolColumnToDelete
    }
@@ -321,93 +326,92 @@ Invoke-DataverseCommands {
       $boolColumnId = $boolColumnQueryResults[0].MetadataId
    }
 
-   $retrievedBooleanColumn1 = Get-Column `
-      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-      -logicalName ($boolColumnData.SchemaName.ToLower()) `
-      -type 'Boolean' `
-      -query "?`$expand=OptionSet" # So options will be returned
+   if (!$skipUpdates) {
+      $retrievedBooleanColumn1 = Get-Column `
+         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+         -logicalName ($boolColumnData.SchemaName.ToLower()) `
+         -type 'Boolean' `
+         -query "?`$expand=OptionSet" # So options will be returned
 
-   $trueOption = $retrievedBooleanColumn1.OptionSet.TrueOption;
-   $falseOption = $retrievedBooleanColumn1.OptionSet.FalseOption;
+      $trueOption = $retrievedBooleanColumn1.OptionSet.TrueOption;
+      $falseOption = $retrievedBooleanColumn1.OptionSet.FalseOption;
    
-   Write-Host "Original Option Labels:"
-   Write-Host " True Option Label: $($trueOption.Label.UserLocalizedLabel.Label)"
-   Write-Host " False Option Label: $($falseOption.Label.UserLocalizedLabel.Label)"
+      Write-Host "Original Option Labels:"
+      Write-Host " True Option Label: $($trueOption.Label.UserLocalizedLabel.Label)"
+      Write-Host " False Option Label: $($falseOption.Label.UserLocalizedLabel.Label)"
 
-   # Update the column
-   $retrievedBooleanColumn1.DisplayName = @{
-      '@odata.type'     = 'Microsoft.Dynamics.CRM.Label'
-      'LocalizedLabels' = @(
-         @{
-            '@odata.type'  = 'Microsoft.Dynamics.CRM.LocalizedLabel'
-            'Label'        = 'Sample Boolean Column Updated'
-            'LanguageCode' = $languageCode
-         }
-      )
-   }
-   $retrievedBooleanColumn1.Description = @{
-      '@odata.type'     = 'Microsoft.Dynamics.CRM.Label'
-      'LocalizedLabels' = @(
-         @{
-            '@odata.type'  = 'Microsoft.Dynamics.CRM.LocalizedLabel'
-            'Label'        = 'Sample Boolean column description updated'
-            'LanguageCode' = $languageCode
-         }
-      )
-   }
-   $retrievedBooleanColumn1.RequiredLevel = @{
-      'Value' = 'ApplicationRequired'
-   }
+      # Update the column
+      $retrievedBooleanColumn1.DisplayName = @{
+         '@odata.type'   = 'Microsoft.Dynamics.CRM.Label'
+         LocalizedLabels = @(
+            @{
+               '@odata.type' = 'Microsoft.Dynamics.CRM.LocalizedLabel'
+               Label         = 'Sample Boolean Column Updated'
+               LanguageCode  = $languageCode
+            }
+         )
+      }
+      $retrievedBooleanColumn1.Description = @{
+         '@odata.type'   = 'Microsoft.Dynamics.CRM.Label'
+         LocalizedLabels = @(
+            @{
+               '@odata.type' = 'Microsoft.Dynamics.CRM.LocalizedLabel'
+               Label         = 'Sample Boolean column description updated'
+               LanguageCode  = $languageCode
+            }
+         )
+      }
+      $retrievedBooleanColumn1.RequiredLevel = @{
+         Value = 'ApplicationRequired'
+      }
 
-   # TODO: Uncomment this later...
-   # Update-Column `
-   #    -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-   #    -column $retrievedBooleanColumn1 `
-   #    -type 'Boolean' `
-   #    -solutionUniqueName $solutionData.uniquename `
-   #    -mergeLabels $true
+ 
+      Update-Column `
+         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+         -column $retrievedBooleanColumn1 `
+         -type 'Boolean' `
+         -solutionUniqueName $solutionData.uniquename `
+         -mergeLabels $true
 
-   Write-Host "Sample Boolean Column updated successfully"
+      Write-Host "Sample Boolean Column updated successfully"
 
-   #region Update option values
+      #region Update option values
 
-   # Update the True Option Label
-   # TODO: Uncomment this later...
-   # Update-OptionValue `
-   #    -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-   #    -columnLogicalName ($boolColumnData.SchemaName.ToLower()) `
-   #    -value 1 `
-   #    -label 'Up' `
-   #    -languageCode $languageCode `
-   #    -solutionUniqueName ($solutionData.uniquename) `
-   #    -mergeLabels $true
+      # Update the True Option Label
+      Update-OptionValue `
+         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+         -columnLogicalName ($boolColumnData.SchemaName.ToLower()) `
+         -value 1 `
+         -label 'Up' `
+         -languageCode $languageCode `
+         -solutionUniqueName ($solutionData.uniquename) `
+         -mergeLabels $true
    
-   # Update the False Option Label
-   # TODO: Uncomment this later...
-   # Update-OptionValue `
-   #    -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-   #    -columnLogicalName ($boolColumnData.SchemaName.ToLower()) `
-   #    -value 0 `
-   #    -label 'Down' `
-   #    -languageCode $languageCode `
-   #    -solutionUniqueName ($solutionData.uniquename) `
-   #    -mergeLabels $true
+      # Update the False Option Label
+      Update-OptionValue `
+         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+         -columnLogicalName ($boolColumnData.SchemaName.ToLower()) `
+         -value 0 `
+         -label 'Down' `
+         -languageCode $languageCode `
+         -solutionUniqueName ($solutionData.uniquename) `
+         -mergeLabels $true
 
-   Write-Host "Option values updated successfully"
+      Write-Host "Option values updated successfully"
 
-   $retrievedBooleanColumn2 = Get-Column `
-      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-      -logicalName ($boolColumnData.SchemaName.ToLower()) `
-      -type 'Boolean' `
-      -query "?`$expand=OptionSet" # So options will be returned
+      $retrievedBooleanColumn2 = Get-Column `
+         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+         -logicalName ($boolColumnData.SchemaName.ToLower()) `
+         -type 'Boolean' `
+         -query "?`$expand=OptionSet" # So options will be returned
 
-   $trueOption = $retrievedBooleanColumn2.OptionSet.TrueOption;
-   $falseOption = $retrievedBooleanColumn2.OptionSet.FalseOption;
+      $trueOption = $retrievedBooleanColumn2.OptionSet.TrueOption;
+      $falseOption = $retrievedBooleanColumn2.OptionSet.FalseOption;
    
-   Write-Host "Updated Option Labels:"
-   Write-Host " True Option Label: $($trueOption.Label.UserLocalizedLabel.Label)"
-   Write-Host " False Option Label: $($falseOption.Label.UserLocalizedLabel.Label)"
-
+      Write-Host "Updated Option Labels:"
+      Write-Host " True Option Label: $($trueOption.Label.UserLocalizedLabel.Label)"
+      Write-Host " False Option Label: $($falseOption.Label.UserLocalizedLabel.Label)"
+   }
    #endregion Update option values
 
    #endregion Boolean
@@ -471,18 +475,18 @@ Invoke-DataverseCommands {
       Write-Host "$($dateTimeColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) table already exists"
       $dateTimeColumnId = $dateTimeColumnQueryResults[0].MetadataId
    }
-
-   # Retrieve the dateTime column
-   $dateTimeColumn = Get-Column `
-      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-      -logicalName ($dateTimeColumnData.SchemaName.ToLower()) `
-      -type 'DateTime' `
-      -query "?`$select=SchemaName,DisplayName,DateTimeBehavior,Format,ImeMode"
+   if (!$skipUpdates) {
+      # Retrieve the dateTime column
+      $dateTimeColumn = Get-Column `
+         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+         -logicalName ($dateTimeColumnData.SchemaName.ToLower()) `
+         -type 'DateTime' `
+         -query "?`$select=SchemaName,DisplayName,DateTimeBehavior,Format,ImeMode"
    
-   Write-Host "Retrieved $($dateTimeColumn.DisplayName.UserLocalizedLabel.Label) column."
-   Write-Host " DateTimeBehavior: $($dateTimeColumn.DateTimeBehavior.Value)"
-   Write-Host " Format: $($dateTimeColumn.Format)"
-
+      Write-Host "Retrieved $($dateTimeColumn.DisplayName.UserLocalizedLabel.Label) column."
+      Write-Host " DateTimeBehavior: $($dateTimeColumn.DateTimeBehavior.Value)"
+      Write-Host " Format: $($dateTimeColumn.Format)"
+   }
    #endregion DateTime
 
    #region Decimal
@@ -529,11 +533,11 @@ Invoke-DataverseCommands {
          -column $decimalColumnData `
          -solutionUniqueName $solutionData.uniquename
             
-      Write-Host 'Example Decimal column created successfully'
+      Write-Host "$($decimalColumnData.DisplayName.LocalizedLabels[0].Label) column created successfully"
 
       $decimalColumnToDelete = @{ 
-         'setName' = $tableAttributesPath
-         'id'      = $decimalColumnId 
+         setName = $tableAttributesPath
+         id      = $decimalColumnId 
       }
       $recordsToDelete += $decimalColumnToDelete
    }
@@ -542,19 +546,19 @@ Invoke-DataverseCommands {
       Write-Host "$($decimalColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) table already exists"
       $decimalColumnId = $decimalColumnQueryResults[0].MetadataId
    }
+   if (!$skipUpdates) {
+      # Retrieve the decimal column
+      $decimalColumn = Get-Column `
+         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+         -logicalName ($decimalColumnData.SchemaName.ToLower()) `
+         -type 'Decimal' `
+         -query "?`$select=SchemaName,DisplayName,MaxValue,MinValue,Precision"
 
-   # Retrieve the decimal column
-   $decimalColumn = Get-Column `
-      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-      -logicalName ($decimalColumnData.SchemaName.ToLower()) `
-      -type 'Decimal' `
-      -query "?`$select=SchemaName,DisplayName,MaxValue,MinValue,Precision"
-
-   Write-Host "Retrieved $($decimalColumn.DisplayName.UserLocalizedLabel.Label) column."
-   Write-Host " MaxValue: $($decimalColumn.MaxValue)"
-   Write-Host " MinValue: $($decimalColumn.MinValue)"
-   Write-Host " Precision: $($decimalColumn.Precision)"
-
+      Write-Host "Retrieved $($decimalColumn.DisplayName.UserLocalizedLabel.Label) column."
+      Write-Host " MaxValue: $($decimalColumn.MaxValue)"
+      Write-Host " MinValue: $($decimalColumn.MinValue)"
+      Write-Host " Precision: $($decimalColumn.Precision)"
+   }
    #endregion Decimal
 
    #region Integer
@@ -601,11 +605,11 @@ Invoke-DataverseCommands {
          -column $integerColumnData `
          -solutionUniqueName $solutionData.uniquename
             
-      Write-Host 'Example Integer column created successfully'
+      Write-Host "$($integerColumnData.DisplayName.LocalizedLabels[0].Label) column created successfully"
 
       $integerColumnToDelete = @{ 
-         'setName' = $tableAttributesPath
-         'id'      = $integerColumnId 
+         setName = $tableAttributesPath
+         id      = $integerColumnId 
       }
       $recordsToDelete += $integerColumnToDelete
    }
@@ -614,19 +618,19 @@ Invoke-DataverseCommands {
       Write-Host "$($integerColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) table already exists"
       $integerColumnId = $integerColumnQueryResults[0].MetadataId
    }
-
-   # Retrieve the integer column
-   $integerColumn = Get-Column `
-      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-      -logicalName ($integerColumnData.SchemaName.ToLower()) `
-      -type 'Integer' `
-      -query "?`$select=SchemaName,DisplayName,MaxValue,MinValue,Format"
+   if (!$skipUpdates) {
+      # Retrieve the integer column
+      $integerColumnData = Get-Column `
+         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+         -logicalName ($integerColumnData.SchemaName.ToLower()) `
+         -type 'Integer' `
+         -query "?`$select=SchemaName,DisplayName,MaxValue,MinValue,Format"
    
-   Write-Host "Retrieved $($integerColumn.DisplayName.UserLocalizedLabel.Label) column."
-   Write-Host " MaxValue: $($integerColumn.MaxValue)"
-   Write-Host " MinValue: $($integerColumn.MinValue)"
-   Write-Host " Format: $($integerColumn.Format)"
-
+      Write-Host "Retrieved $($integerColumn.DisplayName.UserLocalizedLabel.Label) column."
+      Write-Host " MaxValue: $($integerColumn.MaxValue)"
+      Write-Host " MinValue: $($integerColumn.MinValue)"
+      Write-Host " Format: $($integerColumn.Format)"
+   }
    #endregion Integer
 
    #region Memo
@@ -674,11 +678,11 @@ Invoke-DataverseCommands {
          -column $memoColumnData `
          -solutionUniqueName $solutionData.uniquename
             
-      Write-Host 'Example Memo column created successfully'
+      Write-Host "$($memoColumnData.DisplayName.LocalizedLabels[0].Label) column created successfully"
 
       $memoColumnToDelete = @{ 
-         'setName' = $tableAttributesPath
-         'id'      = $memoColumnId 
+         setName = $tableAttributesPath
+         id      = $memoColumnId 
       }
       $recordsToDelete += $memoColumnToDelete
    }
@@ -687,19 +691,19 @@ Invoke-DataverseCommands {
       Write-Host "$($memoColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) table already exists"
       $memoColumnId = $memoColumnQueryResults[0].MetadataId
    }
+   if (!$skipUpdates) {
+      # Retrieve the memo column
+      $memoColumn = Get-Column `
+         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+         -logicalName ($memoColumnData.SchemaName.ToLower()) `
+         -type 'Memo' `
+         -query "?`$select=SchemaName,DisplayName,Format,ImeMode,MaxLength"
 
-   # Retrieve the memo column
-   $memoColumn = Get-Column `
-      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-      -logicalName ($memoColumnData.SchemaName.ToLower()) `
-      -type 'Memo' `
-      -query "?`$select=SchemaName,DisplayName,Format,ImeMode,MaxLength"
-
-   Write-Host "Retrieved $($memoColumn.DisplayName.UserLocalizedLabel.Label) column."
-   Write-Host " Format: $($memoColumn.Format)"
-   Write-Host " ImeMode: $($memoColumn.ImeMode)"
-   Write-Host " MaxLength: $($memoColumn.MaxLength)"
-
+      Write-Host "Retrieved $($memoColumn.DisplayName.UserLocalizedLabel.Label) column."
+      Write-Host " Format: $($memoColumn.Format)"
+      Write-Host " ImeMode: $($memoColumn.ImeMode)"
+      Write-Host " MaxLength: $($memoColumn.MaxLength)"
+   }
    #endregion Memo
 
    #region Money
@@ -749,11 +753,11 @@ Invoke-DataverseCommands {
          -column $moneyColumnData `
          -solutionUniqueName $solutionData.uniquename
             
-      Write-Host 'Example Money column created successfully'
+      Write-Host "$($moneyColumnData.DisplayName.LocalizedLabels[0].Label) column created successfully"
 
       $moneyColumnToDelete = @{ 
-         'setName' = $tableAttributesPath
-         'id'      = $moneyColumnId 
+         setName = $tableAttributesPath
+         id      = $moneyColumnId 
       }
       $recordsToDelete += $moneyColumnToDelete
    }
@@ -762,21 +766,21 @@ Invoke-DataverseCommands {
       Write-Host "$($moneyColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) table already exists"
       $moneyColumnId = $moneyColumnQueryResults[0].MetadataId
    }
+   if (!$skipUpdates) {
+      # Retrieve the money column
+      $moneyColumn = Get-Column `
+         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+         -logicalName ($moneyColumnData.SchemaName.ToLower()) `
+         -type 'Money' `
+         -query "?`$select=SchemaName,DisplayName,MaxValue,MinValue,Precision,PrecisionSource,ImeMode"
 
-   # Retrieve the money column
-   $moneyColumn = Get-Column `
-      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-      -logicalName ($moneyColumnData.SchemaName.ToLower()) `
-      -type 'Money' `
-      -query "?`$select=SchemaName,DisplayName,MaxValue,MinValue,Precision,PrecisionSource,ImeMode"
-
-   Write-Host "Retrieved $($moneyColumn.DisplayName.UserLocalizedLabel.Label) column."
-   Write-Host " MaxValue: $($moneyColumn.MaxValue)"
-   Write-Host " MinValue: $($moneyColumn.MinValue)"
-   Write-Host " Precision: $($moneyColumn.Precision)"
-   Write-Host " PrecisionSource: $($moneyColumn.PrecisionSource)"
-   Write-Host " ImeMode: $($moneyColumn.ImeMode)"
-
+      Write-Host "Retrieved $($moneyColumn.DisplayName.UserLocalizedLabel.Label) column."
+      Write-Host " MaxValue: $($moneyColumn.MaxValue)"
+      Write-Host " MinValue: $($moneyColumn.MinValue)"
+      Write-Host " Precision: $($moneyColumn.Precision)"
+      Write-Host " PrecisionSource: $($moneyColumn.PrecisionSource)"
+      Write-Host " ImeMode: $($moneyColumn.ImeMode)"
+   }
 
    #endregion Money
 
@@ -889,11 +893,11 @@ Invoke-DataverseCommands {
          -column $picklistColumnData `
          -solutionUniqueName $solutionData.uniquename
             
-      Write-Host 'Example Picklist column created successfully'
+      Write-Host "$($picklistColumnData.DisplayName.LocalizedLabels[0].Label) column created successfully"
 
       $picklistColumnToDelete = @{ 
-         'setName' = $tableAttributesPath
-         'id'      = $picklistColumnId 
+         setName = $tableAttributesPath
+         id      = $picklistColumnId 
       }
       $recordsToDelete += $picklistColumnToDelete
    }
@@ -902,122 +906,122 @@ Invoke-DataverseCommands {
       Write-Host "$($picklistColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) table already exists"
       $picklistColumnId = $picklistColumnQueryResults[0].MetadataId
    }
-
-   # Retrieve the picklist column with OptionSet
-   $picklistColumnV1 = Get-Column `
-      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-      -logicalName ($picklistColumnData.SchemaName.ToLower()) `
-      -type 'Picklist' `
-      -query "?`$select=SchemaName,DisplayName&`$expand=OptionSet"
-
-   Write-Host "Retrieved $($picklistColumnV1.DisplayName.UserLocalizedLabel.Label) column."
-
-   Write-Host 'Retrieved Choice column options:'
-   foreach ($option in $picklistColumnV1.OptionSet.Options) {
-      Write-Host " Value: $($option.Value) Label: $($option.Label.UserLocalizedLabel.Label)"
-   }
-
-   #region Add an option to the local optionset if it doesn't exist
-
-   $echoOptionValue = [int]([string]$publisherData.customizationoptionvalueprefix + '0005')
-   $echoOptionExists = $picklistColumnV1.OptionSet.Options | 
-   Where-Object { $_.Value -eq $echoOptionValue } | 
-   Measure-Object | 
-   ForEach-Object { $_.Count -gt 0 }
-   
-
-   if (-not $echoOptionExists) {
-      # Add an option to the local optionset
-
-      New-OptionValue `
-         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-         -columnLogicalName ($picklistColumnData.SchemaName.ToLower()) `
-         -label 'Echo' `
-         -languageCode $languageCode `
-         -value ([int]([string]$publisherData.customizationoptionvalueprefix + '0005')) `
-         -solutionUniqueName $solutionData.uniquename | Out-Null
-      # Setting Out-Null to suppress the output of the value 
-      # returned by the New-OptionValue function because we are providing
-      # the value to use. If not provided, the system will generate a value
-      # and the New-OptionValue function function will return it.
-      Write-Host 'Echo option added to the local optionset.'
-
-      # Retrieve the picklist column again with OptionSet and new option
-      $picklistColumnV2 = Get-Column `
+   if (!$skipUpdates) {
+      # Retrieve the picklist column with OptionSet
+      $picklistColumnV1 = Get-Column `
          -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
          -logicalName ($picklistColumnData.SchemaName.ToLower()) `
          -type 'Picklist' `
          -query "?`$select=SchemaName,DisplayName&`$expand=OptionSet"
 
-      Write-Host "Retrieved $($picklistColumnV2.DisplayName.UserLocalizedLabel.Label) column again."
+      Write-Host "Retrieved $($picklistColumnV1.DisplayName.UserLocalizedLabel.Label) column."
 
       Write-Host 'Retrieved Choice column options:'
-      foreach ($option in $picklistColumnV2.OptionSet.Options) {
+      foreach ($option in $picklistColumnV1.OptionSet.Options) {
          Write-Host " Value: $($option.Value) Label: $($option.Label.UserLocalizedLabel.Label)"
       }
-   }
-   #endregion Add an option to the local optionset
 
-   #region Re-order choice column options
+      #region Add an option to the local optionset if it doesn't exist
 
-   # Retrieve the picklist column again with OptionSet and new option
-   $picklistColumnV3 = Get-Column `
-      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-      -logicalName ($picklistColumnData.SchemaName.ToLower()) `
-      -type 'Picklist' `
-      -query "?`$select=SchemaName,DisplayName&`$expand=OptionSet"
+      $echoOptionValue = [int]([string]$publisherData.customizationoptionvalueprefix + '0005')
+      $echoOptionExists = $picklistColumnV1.OptionSet.Options | 
+      Where-Object { $_.Value -eq $echoOptionValue } | 
+      Measure-Object | 
+      ForEach-Object { $_.Count -gt 0 }
+   
 
-   $retrievedChoiceOptions = $picklistColumnV3.OptionSet.Options
-   $retrievedChoiceOptions = $retrievedChoiceOptions | 
-   Sort-Object -Property @{ Expression = { $_.Label.UserLocalizedLabel.Label } }
-   $newOrder = @()
-   $retrievedChoiceOptions | ForEach-Object {
-      $newOrder += $_.Value
-   }
+      if (-not $echoOptionExists) {
+         # Add an option to the local optionset
 
-   # Update the order of the options
-   Update-OptionsOrder `
-      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-      -columnLogicalName ($picklistColumnData.SchemaName.ToLower()) `
-      -values $newOrder `
-      -solutionUniqueName $solutionData.uniquename
+         New-OptionValue `
+            -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+            -columnLogicalName ($picklistColumnData.SchemaName.ToLower()) `
+            -label 'Echo' `
+            -languageCode $languageCode `
+            -value ([int]([string]$publisherData.customizationoptionvalueprefix + '0005')) `
+            -solutionUniqueName $solutionData.uniquename | Out-Null
+         # Setting Out-Null to suppress the output of the value 
+         # returned by the New-OptionValue function because we are providing
+         # the value to use. If not provided, the system will generate a value
+         # and the New-OptionValue function function will return it.
+         Write-Host 'Echo option added to the local optionset.'
 
-   Write-Host 'Choice column options re-ordered.'
+         # Retrieve the picklist column again with OptionSet and new option
+         $picklistColumnV2 = Get-Column `
+            -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+            -logicalName ($picklistColumnData.SchemaName.ToLower()) `
+            -type 'Picklist' `
+            -query "?`$select=SchemaName,DisplayName&`$expand=OptionSet"
 
-   # Retrieve the picklist column again with OptionSet and new option
-   $picklistColumnV4 = Get-Column `
-      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-      -logicalName ($picklistColumnData.SchemaName.ToLower()) `
-      -type 'Picklist' `
-      -query "?`$select=SchemaName,DisplayName&`$expand=OptionSet"
+         Write-Host "Retrieved $($picklistColumnV2.DisplayName.UserLocalizedLabel.Label) column again."
 
-   Write-Host "Retrieved $($picklistColumnV4.DisplayName.UserLocalizedLabel.Label) column again."
+         Write-Host 'Retrieved Choice column options:'
+         foreach ($option in $picklistColumnV2.OptionSet.Options) {
+            Write-Host " Value: $($option.Value) Label: $($option.Label.UserLocalizedLabel.Label)"
+         }
+      }
+      #endregion Add an option to the local optionset
 
-   Write-Host 'Retrieved Choice column options with new order:'
-   foreach ($option in $picklistColumnV4.OptionSet.Options) {
-      Write-Host " Value: $($option.Value) Label: $($option.Label.UserLocalizedLabel.Label)"
-   }
-   #endregion Re-order choice column options
+      #region Re-order choice column options
 
-   #region Delete local option value
+      # Retrieve the picklist column again with OptionSet and new option
+      $picklistColumnV3 = Get-Column `
+         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+         -logicalName ($picklistColumnData.SchemaName.ToLower()) `
+         -type 'Picklist' `
+         -query "?`$select=SchemaName,DisplayName&`$expand=OptionSet"
 
-   $foxTrotOptionValue = [int]([string]$publisherData.customizationoptionvalueprefix + '0004')
-   $foxTrotOptionExists = $picklistColumnV4.OptionSet.Options | 
-   Where-Object { $_.Value -eq $foxTrotOptionValue } | 
-   Measure-Object | 
-   ForEach-Object { $_.Count -gt 0 }
+      $retrievedChoiceOptions = $picklistColumnV3.OptionSet.Options
+      $retrievedChoiceOptions = $retrievedChoiceOptions | 
+      Sort-Object -Property @{ Expression = { $_.Label.UserLocalizedLabel.Label } }
+      $newOrder = @()
+      $retrievedChoiceOptions | ForEach-Object {
+         $newOrder += $_.Value
+      }
 
-   if ($foxTrotOptionExists) {
-      # Delete the option from the local optionset
-      Remove-OptionValue `
+      # Update the order of the options
+      Update-OptionsOrder `
          -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
          -columnLogicalName ($picklistColumnData.SchemaName.ToLower()) `
-         -value $foxTrotOptionValue `
+         -values $newOrder `
          -solutionUniqueName $solutionData.uniquename
 
-      Write-Host 'Foxtrot option deleted from the local optionset.'
-   }
+      Write-Host 'Choice column options re-ordered.'
 
+      # Retrieve the picklist column again with OptionSet and new option
+      $picklistColumnV4 = Get-Column `
+         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+         -logicalName ($picklistColumnData.SchemaName.ToLower()) `
+         -type 'Picklist' `
+         -query "?`$select=SchemaName,DisplayName&`$expand=OptionSet"
+
+      Write-Host "Retrieved $($picklistColumnV4.DisplayName.UserLocalizedLabel.Label) column again."
+
+      Write-Host 'Retrieved Choice column options with new order:'
+      foreach ($option in $picklistColumnV4.OptionSet.Options) {
+         Write-Host " Value: $($option.Value) Label: $($option.Label.UserLocalizedLabel.Label)"
+      }
+      #endregion Re-order choice column options
+
+      #region Delete local option value
+
+      $foxTrotOptionValue = [int]([string]$publisherData.customizationoptionvalueprefix + '0004')
+      $foxTrotOptionExists = $picklistColumnV4.OptionSet.Options | 
+      Where-Object { $_.Value -eq $foxTrotOptionValue } | 
+      Measure-Object | 
+      ForEach-Object { $_.Count -gt 0 }
+
+      if ($foxTrotOptionExists) {
+         # Delete the option from the local optionset
+         Remove-OptionValue `
+            -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+            -columnLogicalName ($picklistColumnData.SchemaName.ToLower()) `
+            -value $foxTrotOptionValue `
+            -solutionUniqueName $solutionData.uniquename
+
+         Write-Host 'Foxtrot option deleted from the local optionset.'
+      }
+   }
    #endregion Delete local option value
    #endregion Picklist
 
@@ -1106,11 +1110,11 @@ Invoke-DataverseCommands {
          -column $multiSelectPicklistColumnData `
          -solutionUniqueName $solutionData.uniquename
             
-      Write-Host 'Example MultiSelect Choice column created successfully'
+      Write-Host "$($multiSelectPicklistColumnData.DisplayName.LocalizedLabels[0].Label) column created successfully"
 
       $multiSelectPicklistColumnToDelete = @{ 
-         'setName' = $tableAttributesPath
-         'id'      = $multiSelectPicklistColumnId 
+         setName = $tableAttributesPath
+         id      = $multiSelectPicklistColumnId 
       }
       $recordsToDelete += $multiSelectPicklistColumnToDelete
    }
@@ -1119,19 +1123,20 @@ Invoke-DataverseCommands {
       Write-Host "$($multiSelectPicklistColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) table already exists"
       $multiSelectPicklistColumnId = $multiSelectPicklistColumnQueryResults[0].MetadataId
    }
+   if (!$skipUpdates) {
+      # Retrieve the MultiSelectPicklist column with OptionSet
+      $multiSelectPicklistColumn = Get-Column `
+         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+         -logicalName ($multiSelectPicklistColumnData.SchemaName.ToLower()) `
+         -type 'MultiSelectPicklist' `
+         -query "?`$select=SchemaName,DisplayName&`$expand=OptionSet"
 
-   # Retrieve the MultiSelectPicklist column with OptionSet
-   $multiSelectPicklistColumn = Get-Column `
-      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-      -logicalName ($multiSelectPicklistColumnData.SchemaName.ToLower()) `
-      -type 'MultiSelectPicklist' `
-      -query "?`$select=SchemaName,DisplayName&`$expand=OptionSet"
+      Write-Host "Retrieved $($multiSelectPicklistColumn.DisplayName.UserLocalizedLabel.Label) column."
 
-   Write-Host "Retrieved $($multiSelectPicklistColumn.DisplayName.UserLocalizedLabel.Label) column."
-
-   Write-Host 'Retrieved MultiSelect Choice column options:'
-   foreach ($option in $multiSelectPicklistColumn.OptionSet.Options) {
-      Write-Host " Value: $($option.Value) Label: $($option.Label.UserLocalizedLabel.Label)"
+      Write-Host 'Retrieved MultiSelect Choice column options:'
+      foreach ($option in $multiSelectPicklistColumn.OptionSet.Options) {
+         Write-Host " Value: $($option.Value) Label: $($option.Label.UserLocalizedLabel.Label)"
+      }
    }
    #endregion MultiSelectPicklist
 
@@ -1177,11 +1182,11 @@ Invoke-DataverseCommands {
          -column $bigIntColumnData `
          -solutionUniqueName $solutionData.uniquename
             
-      Write-Host 'Example BigInt column created successfully'
+      Write-Host "$($bigIntColumnData.DisplayName.LocalizedLabels[0].Label) column created successfully"
 
       $bigIntColumnToDelete = @{ 
-         'setName' = $tableAttributesPath
-         'id'      = $bigIntColumnId 
+         setName = $tableAttributesPath
+         id      = $bigIntColumnId 
       }
       $recordsToDelete += $bigIntColumnToDelete
    }
@@ -1190,18 +1195,18 @@ Invoke-DataverseCommands {
       Write-Host "$($bigIntColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) table already exists"
       $bigIntColumnId = $bigIntColumnQueryResults[0].MetadataId
    }
+   if (!$skipUpdates) {
+      # Retrieve the BigInt column
+      $bigIntColumn = Get-Column `
+         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+         -logicalName ($bigIntColumnData.SchemaName.ToLower()) `
+         -type 'BigInt' `
+         -query "?`$select=SchemaName,DisplayName,MaxValue,MinValue"
 
-   # Retrieve the BigInt column
-   $bigIntColumn = Get-Column `
-      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-      -logicalName ($bigIntColumnData.SchemaName.ToLower()) `
-      -type 'BigInt' `
-      -query "?`$select=SchemaName,DisplayName,MaxValue,MinValue"
-
-   Write-Host "Retrieved $($bigIntColumn.DisplayName.UserLocalizedLabel.Label) column."   
-   Write-Host " MaxValue: $($bigIntColumn.MaxValue)"
-   Write-Host " MinValue: $($bigIntColumn.MinValue)"
-
+      Write-Host "Retrieved $($bigIntColumn.DisplayName.UserLocalizedLabel.Label) column."   
+      Write-Host " MaxValue: $($bigIntColumn.MaxValue)"
+      Write-Host " MinValue: $($bigIntColumn.MinValue)"
+   }
    #endregion BigInt
 
    #region InsertStatusValue
@@ -1249,6 +1254,8 @@ Invoke-DataverseCommands {
    else {
       Write-Host "'Frozen' status option already exists"
    }
+
+   # TODO: Remove frozen status option
 
    #endregion InsertStatusValue
 
@@ -1333,8 +1340,8 @@ Invoke-DataverseCommands {
       Write-Host 'Colors global optionset created successfully'
 
       $colorsGlobalOptionSetToDelete = @{ 
-         'setName' = 'GlobalOptionSetDefinitions'
-         'id'      = $colorsGlobalOptionSetId 
+         setName = 'GlobalOptionSetDefinitions'
+         id      = $colorsGlobalOptionSetId 
       }
       $recordsToDelete += $colorsGlobalOptionSetToDelete
 
@@ -1351,10 +1358,11 @@ Invoke-DataverseCommands {
       Write-Host "$($colorsGlobalOptionSet.DisplayName.UserLocalizedLabel.Label) global optionset already exists"
       $colorsGlobalOptionSetId = $colorsGlobalOptionSet.MetadataId
    }
-
-   Write-Host 'Retrieved global optionset options:'
-   foreach ($option in $colorsGlobalOptionSet.Options) {
-      Write-Host " Value: $($option.Value) Label: $($option.Label.UserLocalizedLabel.Label)"
+   if (!$skipUpdates) {
+      Write-Host 'Retrieved global optionset options:'
+      foreach ($option in $colorsGlobalOptionSet.Options) {
+         Write-Host " Value: $($option.Value) Label: $($option.Label.UserLocalizedLabel.Label)"
+      }
    }
 
    # Create a column that uses the global optionset
@@ -1402,8 +1410,8 @@ Invoke-DataverseCommands {
       Write-Host 'Example Colors Choice column created successfully'
 
       $colorColumnToDelete = @{ 
-         'setName' = $tableAttributesPath
-         'id'      = $colorColumnId 
+         setName = $tableAttributesPath
+         id      = $colorColumnId 
       }
       $recordsToDelete += $colorColumnToDelete
    }
@@ -1412,21 +1420,21 @@ Invoke-DataverseCommands {
       Write-Host "$($colorColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) table already exists"
       $colorColumnId = $colorColumnQueryResults[0].MetadataId
    }
+   if (!$skipUpdates) {
+      # Retrieve the color column with GlobalOptionSet
+      $colorColumn = Get-Column `
+         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+         -logicalName ($colorColumnData.SchemaName.ToLower()) `
+         -type 'Picklist' `
+         -query "?`$select=SchemaName,DisplayName&`$expand=GlobalOptionSet"
 
-   # Retrieve the color column with GlobalOptionSet
-   $colorColumn = Get-Column `
-      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-      -logicalName ($colorColumnData.SchemaName.ToLower()) `
-      -type 'Picklist' `
-      -query "?`$select=SchemaName,DisplayName&`$expand=GlobalOptionSet"
-
-   Write-Host "Retrieved $($colorColumn.DisplayName.UserLocalizedLabel.Label) column."
+      Write-Host "Retrieved $($colorColumn.DisplayName.UserLocalizedLabel.Label) column."
    
-   Write-Host 'Retrieved Choice column options:'
-   foreach ($option in $colorColumn.GlobalOptionSet.Options) {
-      Write-Host " Value: $($option.Value) Label: $($option.Label.UserLocalizedLabel.Label)"
+      Write-Host 'Retrieved Choice column options:'
+      foreach ($option in $colorColumn.GlobalOptionSet.Options) {
+         Write-Host " Value: $($option.Value) Label: $($option.Label.UserLocalizedLabel.Label)"
+      }
    }
-
    #endregion Section 3: Create and use Global OptionSet
 
    #region Section 4: Create Customer Relationship
@@ -1495,8 +1503,8 @@ Invoke-DataverseCommands {
       Write-Host 'Example Customer Lookup column created successfully'
 
       $customerLookupToDelete = @{ 
-         'setName' = $tableAttributesPath
-         'id'      = $customerLookupId 
+         setName = $tableAttributesPath
+         id      = $customerLookupId 
       }
       $recordsToDelete += $customerLookupToDelete
 
@@ -1507,26 +1515,27 @@ Invoke-DataverseCommands {
       Write-Host "$($customerLookupQueryResults[0].DisplayName.UserLocalizedLabel.Label) table already exists"
       $customerLookupId = $customerLookupQueryResults[0].MetadataId
    }
+   if (!$skipUpdates) {
+      $retrievedCustomerLookup = Get-Column `
+         -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
+         -logicalName ($customerLookupData.SchemaName.ToLower()) `
+         -type 'Lookup' `
+         -query "?`$select=SchemaName,DisplayName,Targets" 
 
-   $retrievedCustomerLookup = Get-Column `
-      -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
-      -logicalName ($customerLookupData.SchemaName.ToLower()) `
-      -type 'Lookup' `
-      -query "?`$select=SchemaName,DisplayName,Targets" 
+      Write-Host "Retrieved $($retrievedCustomerLookup.DisplayName.UserLocalizedLabel.Label) column Targets:"
+      foreach ($target in $retrievedCustomerLookup.Targets) {
+         Write-Host " $target"
+      }
 
-   Write-Host "Retrieved $($retrievedCustomerLookup.DisplayName.UserLocalizedLabel.Label) column Targets:"
-   foreach ($target in $retrievedCustomerLookup.Targets) {
-      Write-Host " $target"
-   }
-
-   # $customerLookupRelationshipIds are set when the relationship is created.
-   if ($customerLookupRelationshipIds) {
-      Write-Host 'Retrieved Customer relationship IDs:'
-      foreach ($relationshipId in $customerLookupRelationshipIds) {
-         $relationship = Get-Relationship `
-            -id $relationshipId `
-            -query "?`$select=SchemaName"
-         Write-Host " $($relationship.SchemaName)"
+      # $customerLookupRelationshipIds are set when the relationship is created.
+      if ($customerLookupRelationshipIds) {
+         Write-Host 'Retrieved Customer relationship IDs:'
+         foreach ($relationshipId in $customerLookupRelationshipIds) {
+            $relationship = Get-Relationship `
+               -id $relationshipId `
+               -query "?`$select=SchemaName"
+            Write-Host " $($relationship.SchemaName)"
+         }
       }
    }
 
@@ -1535,6 +1544,8 @@ Invoke-DataverseCommands {
    #region Section 5: Create and retrieve a one-to-many relationship
 
    #region Validate 1:N relationship eligibility
+
+   if (!$skipUpdates) {
    $canBeReferenced = Get-CanBeReferenced `
       -tableLogicalName $table.SchemaName.ToLower()
 
@@ -1550,7 +1561,7 @@ Invoke-DataverseCommands {
    $message += ($canBeReferencing) ? " is" : " is not"
    $message += " eligible to be a related table in a one-to-many relationship."
    Write-Host $message
-   
+   }
    
    #endregion Validate 1:N relationship eligibility
 

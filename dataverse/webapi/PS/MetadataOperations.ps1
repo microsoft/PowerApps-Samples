@@ -97,7 +97,7 @@ function Update-Table {
       $updateHeaders.Add('MSCRM.SolutionUniqueName', $solutionUniqueName)
    }
    if ($mergeLabels) {
-      $updateHeaders.Add('MSCRM.MergeLabels ', $true)
+      $updateHeaders.Add('MSCRM.MergeLabels', $true)
    }
    $UpdateRequest = @{
       Uri     = $uri
