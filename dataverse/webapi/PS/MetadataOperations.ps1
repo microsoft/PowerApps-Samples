@@ -655,8 +655,8 @@ function Get-GlobalOptionSet {
    }
 }
 
-function New-CustomerRelationship{
- param(
+function New-CustomerRelationship {
+   param(
       [Parameter(Mandatory)]
       [hashtable]
       $lookup,
@@ -665,12 +665,12 @@ function New-CustomerRelationship{
       $oneToManyRelationships,
       [String]
       $solutionUniqueName
- )
+   )
    $body = @{
-      Lookup = $lookup
+      Lookup                 = $lookup
       OneToManyRelationships = $oneToManyRelationships
    }
-   if($solutionUniqueName){
+   if ($solutionUniqueName) {
       $body.SolutionUniqueName = $solutionUniqueName
    }
 
@@ -685,11 +685,11 @@ function New-CustomerRelationship{
       Body    = ConvertTo-Json $body `
          -Depth 5 # 5 should be enough for most cases, the default is 2.
    }
-  Invoke-ResilientRestMethod -request $CreateRequest 
+   Invoke-ResilientRestMethod -request $CreateRequest 
 
 }
 
-function Get-Relationship{
+function Get-Relationship {
    param(
       [String]
       $schemaName,
@@ -715,9 +715,11 @@ function Get-Relationship{
    $key = ''
    if ($id) {
       $key = "($id)"
-   } elseif ($schemaName) {
+   }
+   elseif ($schemaName) {
       $key = "(SchemaName='$schemaName')"
-   } else {
+   }
+   else {
       throw 'Either the schemaName or the id of the relationship must be provided.'
    }
 
@@ -733,7 +735,7 @@ function Get-Relationship{
    Invoke-ResilientRestMethod $RetrieveRequest
 }
 
-function Get-CanBeReferenced{
+function Get-CanBeReferenced {
    param(
       [Parameter(Mandatory)]
       [String]
@@ -759,7 +761,7 @@ function Get-CanBeReferenced{
    Select-Object -ExpandProperty CanBeReferenced
 }
 
-function Get-CanBeReferencing{
+function Get-CanBeReferencing {
    param(
       [Parameter(Mandatory)]
       [String]
@@ -784,5 +786,252 @@ function Get-CanBeReferencing{
    Invoke-ResilientRestMethod -request $CanBeReferencingRequest | 
    Select-Object -ExpandProperty CanBeReferencing
 }
+
+function Get-ValidReferencingTables {
+   param(
+      [Parameter(Mandatory)]
+      [String]
+      $tableLogicalName
+   )
+
+   $uri = $baseURI + "GetValidReferencingEntities(ReferencedEntityName='$tableLogicalName')"
+   $getHeaders = $baseHeaders.Clone()
+   $getHeaders.Add('Consistency', 'Strong')
+
+   $GetValidReferencingEntitiesRequest = @{
+      Uri     = $uri
+      Method  = 'Get'
+      Headers = $getHeaders
+   }
+
+   Invoke-ResilientRestMethod -request $GetValidReferencingEntitiesRequest | 
+   Select-Object -ExpandProperty EntityNames
+}
+
+function New-Relationship {
+   param (
+      [Parameter(Mandatory)] 
+      [hashtable]
+      $relationship,
+      [String] 
+      $solutionUniqueName
+   )
+
+   $postHeaders = $baseHeaders.Clone()
+   $postHeaders.Add('Content-Type', 'application/json')
+   $postHeaders.Add('Consistency', 'Strong')
+   if ($solutionUniqueName -ne $null) {
+      $postHeaders.Add('MSCRM.SolutionUniqueName', $solutionUniqueName)
+   }
+   
+   $CreateRequest = @{
+      Uri     = $baseURI + 'RelationshipDefinitions'
+      Method  = 'Post'
+      Headers = $postHeaders
+      Body    = ConvertTo-Json $relationship -Depth 5 # 5 should be enough for most cases, the default is 2.
+
+   }
+   $rh = Invoke-ResilientRestMethod -request $CreateRequest -returnHeader $true
+   $url = $rh['OData-EntityId']
+   $selectedString = $url | Select-String `
+      -Pattern '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' `
+      -AllMatches | % { $_.Matches }
+   return [System.Guid]::New($selectedString.Value.ToString())
+}
+
+function Get-Relationships {
+   param (
+      [Parameter(Mandatory)] 
+      [String] 
+      $query,
+      [Parameter(Mandatory)] 
+      [bool] 
+      $isManyToMany
+   )
+
+   $type = $isManyToMany ? 'ManyToManyRelationshipMetadata' : 'OneToManyRelationshipMetadata'
+
+   $uri = $baseURI + 'RelationshipDefinitions/Microsoft.Dynamics.CRM.' + $type + $query
+   # Header for GET operations that have annotations
+   $getHeaders = $baseHeaders.Clone()
+   $getHeaders.Add('If-None-Match', $null)
+   $getHeaders.Add('Consistency', 'Strong')
+   $RetrieveMultipleRequest = @{
+      Uri     = $uri
+      Method  = 'Get'
+      Headers = $getHeaders
+   }
+   Invoke-ResilientRestMethod $RetrieveMultipleRequest
+}
+
+function Get-CanManyToMany {
+   param (
+      [Parameter(Mandatory)] 
+      [String] 
+      $tableLogicalName
+   )
+
+   $uri = $baseURI + 'CanManyToMany'
+   $postHeaders = $baseHeaders.Clone()
+   $postHeaders.Add('Content-Type', 'application/json')
+   $postHeaders.Add('Consistency', 'Strong')
+   $body = @{
+      EntityName = $tableLogicalName
+   }
+
+   $CanManyToManyRequest = @{
+      Uri     = $uri
+      Method  = 'Post'
+      Headers = $postHeaders
+      Body    = ConvertTo-Json $body
+   }
+
+   Invoke-ResilientRestMethod -request $CanManyToManyRequest | 
+   Select-Object -ExpandProperty CanManyToMany
+}
+
+function Get-ValidManyToManyTables {
+
+   $uri = $baseURI + 'GetValidManyToMany'
+   $getHeaders = $baseHeaders.Clone()
+   $getHeaders.Add('Consistency', 'Strong')
+
+   $GetValidManyToManyEntitiesRequest = @{
+      Uri     = $uri
+      Method  = 'Get'
+      Headers = $getHeaders
+   }
+
+   Invoke-ResilientRestMethod -request $GetValidManyToManyEntitiesRequest | 
+   Select-Object -ExpandProperty EntityNames
+}
+
+function Export-Solution {
+   param (
+      [Parameter(Mandatory)] 
+      [string]
+      $solutionName,
+      [Parameter(Mandatory)] 
+      [bool] 
+      $managed,
+      [bool] 
+      $exportAutoNumberingSettings,
+      [bool] 
+      $exportCalendarSettings,
+      [bool] 
+      $exportCustomizationSettings,
+      [bool] 
+      $exportEmailTrackingSettings,
+      [bool] 
+      $exportGeneralSettings,
+      [bool] 
+      $exportMarketingSettings,
+      [bool] 
+      $exportOutlookSynchronizationSettings,
+      [bool] 
+      $exportRelationshipRoles,
+      [bool] 
+      $exportIsvConfig,
+      [bool] 
+      $exportSales,
+      [bool] 
+      $exportExternalApplications,
+      [hashtable] 
+      $exportComponentsParams
+   )
+
+   $uri = $baseURI + 'ExportSolution'
+   $postHeaders = $baseHeaders.Clone()
+   $postHeaders.Add('Content-Type', 'application/json')
+   $postHeaders.Add('Consistency', 'Strong')
+   $body = @{
+      SolutionName                         = $solutionName
+      Managed                              = $managed
+      ExportAutoNumberingSettings          = $exportAutoNumberingSettings
+      ExportCalendarSettings               = $exportCalendarSettings
+      ExportCustomizationSettings          = $exportCustomizationSettings
+      ExportEmailTrackingSettings          = $exportEmailTrackingSettings
+      ExportGeneralSettings                = $exportGeneralSettings
+      ExportMarketingSettings              = $exportMarketingSettings
+      ExportOutlookSynchronizationSettings = $exportOutlookSynchronizationSettings
+      ExportRelationshipRoles              = $exportRelationshipRoles
+      ExportIsvConfig                      = $exportIsvConfig
+      ExportSales                          = $exportSales
+      ExportExternalApplications           = $exportExternalApplications
+   }
+   if ($exportComponentsParams) {
+      $body.ExportComponentsParams = $exportComponentsParams
+   }
+   
+   $ExportSolutionRequest = @{
+      Uri     = $uri
+      Method  = 'Post'
+      Headers = $postHeaders
+      Body    = ConvertTo-Json $body -Depth 5 # 5 should be enough for most cases, the default is 2.
+   }
+
+   $encodedString = Invoke-ResilientRestMethod -request $ExportSolutionRequest |
+   Select-Object -ExpandProperty ExportSolutionFile
+
+   return [System.Convert]::FromBase64String($encodedString)
+
+}
+
+function Import-Solution {
+   param (
+      [Parameter(Mandatory)] 
+      [byte[]]
+      $customizationFile,
+      [Parameter(Mandatory)] 
+      [bool] 
+      $overwriteUnmanagedCustomizations,
+      [Parameter(Mandatory)]
+      [guid]
+      $importJobId,
+      [bool] 
+      $publishWorkflows,
+      [bool] 
+      $convertToManaged,
+      [bool] 
+      $skipProductUpdateDependencies,
+      [bool] 
+      $holdingSolution,
+      [hashtable[]] 
+      $componentParameters,
+      [hashtable] 
+      $solutionParameters
+   )
+
+   $uri = $baseURI + 'ImportSolution'
+   $postHeaders = $baseHeaders.Clone()
+   $postHeaders.Add('Content-Type', 'application/json')
+   $postHeaders.Add('Consistency', 'Strong')
+   $body = @{
+      CustomizationFile                = [System.Convert]::ToBase64String($customizationFile)
+      OverwriteUnmanagedCustomizations = $overwriteUnmanagedCustomizations
+      PublishWorkflows                 = $publishWorkflows
+      ImportJobId                      = $importJobId
+      ConvertToManaged                 = $convertToManaged
+      SkipProductUpdateDependencies    = $skipProductUpdateDependencies
+      HoldingSolution                  = $holdingSolution
+   }
+
+   if ($componentParameters) {
+      $body.ComponentParameters = $componentParameters
+   }
+   if ($solutionParameters) {
+      $body.SolutionParameters = $solutionParameters
+   }
+
+   $ImportSolutionRequest = @{
+      Uri     = $uri
+      Method  = 'Post'
+      Headers = $postHeaders
+      Body    = ConvertTo-Json $body -Depth 5 # 5 should be enough for most cases, the default is 2.
+   }
+
+   Invoke-ResilientRestMethod -request $ImportSolutionRequest
+}
+
 
 

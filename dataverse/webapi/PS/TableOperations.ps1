@@ -496,14 +496,21 @@ function Remove-Record {
       $setName,
       [Parameter(Mandatory)] 
       [Guid] 
-      $id
+      $id,
+      [bool] 
+      $strongConsistency
    )
    $uri = $baseURI + $setName
    $uri = $uri + '(' + $id.Guid + ')'
+   $deleteHeaders = $baseHeaders.Clone()
+   if ($strongConsistency) {
+      $deleteHeaders.Add('Consistency', 'Strong')
+   }
+
    $DeleteRequest = @{
       Uri     = $uri
       Method  = 'Delete'
-      Headers = $baseHeaders
+      Headers = $deleteHeaders
    }
    Invoke-ResilientRestMethod $DeleteRequest
 }

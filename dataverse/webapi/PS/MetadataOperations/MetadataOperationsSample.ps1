@@ -4,17 +4,17 @@
 . $PSScriptRoot\..\MetadataOperations.ps1
 
 # Change this to the URL of your Dataverse environment
-Connect 'https://crmue.crm.dynamics.com/' 
+Connect 'https://yourorg.crm.dynamics.com/' 
 
 # Change this if you want to keep the records created by this sample
-$deleteCreatedRecords = $false
+$deleteCreatedRecords = $true
 # $recordsToDelete contains references to all records created by this sample 
 # that will be deleted if $deleteCreatedRecords is $true
 $recordsToDelete = @()
 $publisherId = $null
 $languageCode = 1033
 # Set $skipUpdates to $true if you want to skip the update operations
-$skipUpdates = $true
+$skipUpdates = $false
 
 Invoke-DataverseCommands { 
 
@@ -200,16 +200,18 @@ Invoke-DataverseCommands {
       $tableId = $tableQueryResults[0].MetadataId
    }
 
+  
+   # Retrieve the table to update it
+   $bankAccountTable = Get-Table `
+      -logicalName ($bankAccountTableData.SchemaName.ToLower())
+   # No query so all properties will be returned
+
+   Write-Host "Retrieved $($bankAccountTable.DisplayName.UserLocalizedLabel.Label) table."
+
    if (!$skipUpdates) {
-      # Retrieve the table to update it
-      $table = Get-Table `
-         -logicalName ($bankAccountTableData.SchemaName.ToLower())
-
-      Write-Host "Retrieved $($table.DisplayName.UserLocalizedLabel.Label) table."
-
       # Update the table
-      $table.HasActivities = $true
-      $table.Description = @{
+      $bankAccountTable.HasActivities = $true
+      $bankAccountTable.Description = @{
          '@odata.type'   = 'Microsoft.Dynamics.CRM.Label'
          LocalizedLabels = @(
             @{
@@ -221,11 +223,11 @@ Invoke-DataverseCommands {
       }
       # Send the request to update the table
       Update-Table `
-         -table $table `
+         -table $bankAccountTable `
          -solutionUniqueName $solutionData.uniquename `
          -mergeLabels $true
 
-      Write-Host "$($table.DisplayName.UserLocalizedLabel.Label) table updated successfully"
+      Write-Host "$($bankAccountTable.DisplayName.UserLocalizedLabel.Label) table updated successfully"
    }
 
    #endregion Section 1: Create, Retrieve and Update Table
@@ -322,7 +324,7 @@ Invoke-DataverseCommands {
    }
    else {
       # Example bool column already exists
-      Write-Host "$($boolColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) table already exists"
+      Write-Host "$($boolColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) column already exists"
       $boolColumnId = $boolColumnQueryResults[0].MetadataId
    }
 
@@ -472,7 +474,7 @@ Invoke-DataverseCommands {
    }
    else {
       # Example DateTime column already exists
-      Write-Host "$($dateTimeColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) table already exists"
+      Write-Host "$($dateTimeColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) column already exists"
       $dateTimeColumnId = $dateTimeColumnQueryResults[0].MetadataId
    }
    if (!$skipUpdates) {
@@ -543,7 +545,7 @@ Invoke-DataverseCommands {
    }
    else {
       # Example Decimal column already exists
-      Write-Host "$($decimalColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) table already exists"
+      Write-Host "$($decimalColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) column already exists"
       $decimalColumnId = $decimalColumnQueryResults[0].MetadataId
    }
    if (!$skipUpdates) {
@@ -615,7 +617,7 @@ Invoke-DataverseCommands {
    }
    else {
       # Example Integer column already exists
-      Write-Host "$($integerColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) table already exists"
+      Write-Host "$($integerColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) column already exists"
       $integerColumnId = $integerColumnQueryResults[0].MetadataId
    }
    if (!$skipUpdates) {
@@ -688,7 +690,7 @@ Invoke-DataverseCommands {
    }
    else {
       # Example Memo column already exists
-      Write-Host "$($memoColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) table already exists"
+      Write-Host "$($memoColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) column already exists"
       $memoColumnId = $memoColumnQueryResults[0].MetadataId
    }
    if (!$skipUpdates) {
@@ -763,7 +765,7 @@ Invoke-DataverseCommands {
    }
    else {
       # Example Money column already exists
-      Write-Host "$($moneyColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) table already exists"
+      Write-Host "$($moneyColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) column already exists"
       $moneyColumnId = $moneyColumnQueryResults[0].MetadataId
    }
    if (!$skipUpdates) {
@@ -903,7 +905,7 @@ Invoke-DataverseCommands {
    }
    else {
       # Example Picklist column already exists
-      Write-Host "$($picklistColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) table already exists"
+      Write-Host "$($picklistColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) column already exists"
       $picklistColumnId = $picklistColumnQueryResults[0].MetadataId
    }
    if (!$skipUpdates) {
@@ -1120,7 +1122,7 @@ Invoke-DataverseCommands {
    }
    else {
       # Example MultiSelectPicklist column already exists
-      Write-Host "$($multiSelectPicklistColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) table already exists"
+      Write-Host "$($multiSelectPicklistColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) column already exists"
       $multiSelectPicklistColumnId = $multiSelectPicklistColumnQueryResults[0].MetadataId
    }
    if (!$skipUpdates) {
@@ -1192,7 +1194,7 @@ Invoke-DataverseCommands {
    }
    else {
       # Example BigInt column already exists
-      Write-Host "$($bigIntColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) table already exists"
+      Write-Host "$($bigIntColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) column already exists"
       $bigIntColumnId = $bigIntColumnQueryResults[0].MetadataId
    }
    if (!$skipUpdates) {
@@ -1417,7 +1419,7 @@ Invoke-DataverseCommands {
    }
    else {
       # Example Colors Choice column already exists
-      Write-Host "$($colorColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) table already exists"
+      Write-Host "$($colorColumnQueryResults[0].DisplayName.UserLocalizedLabel.Label) column already exists"
       $colorColumnId = $colorColumnQueryResults[0].MetadataId
    }
    if (!$skipUpdates) {
@@ -1440,7 +1442,6 @@ Invoke-DataverseCommands {
    #region Section 4: Create Customer Relationship
 
    $customerLookupData = @{
-      # '@odata.type' = 'Microsoft.Dynamics.CRM.LookupAttributeMetadata'
       SchemaName    = "$($publisherData.customizationprefix)_CustomerId"
       RequiredLevel = @{
          Value = 'None'
@@ -1512,10 +1513,11 @@ Invoke-DataverseCommands {
    }
    else {
       # Example Customer Lookup column already exists
-      Write-Host "$($customerLookupQueryResults[0].DisplayName.UserLocalizedLabel.Label) table already exists"
+      Write-Host "$($customerLookupQueryResults[0].DisplayName.UserLocalizedLabel.Label) column already exists"
       $customerLookupId = $customerLookupQueryResults[0].MetadataId
    }
    if (!$skipUpdates) {
+
       $retrievedCustomerLookup = Get-Column `
          -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
          -logicalName ($customerLookupData.SchemaName.ToLower()) `
@@ -1543,37 +1545,344 @@ Invoke-DataverseCommands {
 
    #region Section 5: Create and retrieve a one-to-many relationship
 
-   #region Validate 1:N relationship eligibility
+   
 
    if (!$skipUpdates) {
-   $canBeReferenced = Get-CanBeReferenced `
-      -tableLogicalName $table.SchemaName.ToLower()
+      #region Validate 1:N relationship eligibility
+      $canBeReferenced = Get-CanBeReferenced `
+         -tableLogicalName $bankAccountTable.LogicalName
 
-   $message = "`nThe $($table.DisplayName.UserLocalizedLabel.Label) table"
-   $message += ($canBeReferenced) ? " is" : " is not"
-   $message += " eligible to be a primary table in a one-to-many relationship."
-   Write-Host $message
+      $message = "The $($bankAccountTable.DisplayName.UserLocalizedLabel.Label) table"
+      $message += ($canBeReferenced) ? " is" : " is not"
+      $message += " eligible to be a primary table in a one-to-many relationship."
+      Write-Host $message
 
-   $canBeReferencing = Get-CanBeReferencing `
-      -tableLogicalName $table.SchemaName.ToLower()
+      $canBeReferencing = Get-CanBeReferencing `
+         -tableLogicalName $bankAccountTable.LogicalName
 
-   $message = "`nThe $($table.DisplayName.UserLocalizedLabel.Label) table"
-   $message += ($canBeReferencing) ? " is" : " is not"
-   $message += " eligible to be a related table in a one-to-many relationship."
-   Write-Host $message
+      $message = "The $($bankAccountTable.DisplayName.UserLocalizedLabel.Label) table"
+      $message += ($canBeReferencing) ? " is" : " is not"
+      $message += " eligible to be a related table in a one-to-many relationship."
+      Write-Host $message
+
+      #endregion Validate 1:N relationship eligibility
+
+
+      #region Identify Potential Referencing Entities
+
+      $validReferencingTables = Get-ValidReferencingTables `
+         -tableLogicalName $bankAccountTable.LogicalName
+
+      $contactIsValidReferencingTable = $validReferencingTables -contains 'contact'
+
+      $message = "The contact table"
+      $message += ($contactIsValidReferencingTable) ? " is" : " is not"
+      $message += " in the list of potential referencing entities for"
+      $message += " the $($bankAccountTable.DisplayName.UserLocalizedLabel.Label) table."
+      Write-Host $message
+
+      #endregion Identify Potential Referencing Entities
+
+   }
+
+   $oneToManyRelationshipData = @{
+      '@odata.type'               = 'Microsoft.Dynamics.CRM.OneToManyRelationshipMetadata'
+      SchemaName                  = "$($publisherData.customizationprefix)_BankAccount_Contacts"
+      ReferencedAttribute         = $bankAccountTable.PrimaryIdAttribute
+      ReferencedEntity            = $bankAccountTableData.SchemaName.ToLower()
+      ReferencingEntity           = 'contact'
+      Lookup                      = @{
+         SchemaName  = "$($publisherData.customizationprefix)_BankAccountId"
+         DisplayName = @{
+            LocalizedLabels = @(
+               @{
+                  Label        = 'Bank Account'
+                  LanguageCode = $languageCode
+               }
+            )
+         }
+         Description = @{
+            LocalizedLabels = @(
+               @{
+                  Label        = 'The bank account this contact has access to.'
+                  LanguageCode = $languageCode
+               }
+            )
+         }
+      }
+      AssociatedMenuConfiguration = @{
+         Behavior = 'UseLabel'
+         Group    = 'Details'
+         Label    = @{
+            LocalizedLabels = @(
+               @{
+                  Label        = 'Cardholders'
+                  LanguageCode = $languageCode
+               }
+            )
+         }
+         Order    = 10000
+      }
+      CascadeConfiguration        = @{
+         Assign     = 'NoCascade'
+         Share      = 'NoCascade'
+         Unshare    = 'NoCascade'
+         RollupView = 'NoCascade'
+         Reparent   = 'NoCascade'
+         Delete     = 'RemoveLink'
+         Merge      = 'NoCascade'
+      }
+
+   }
+
+   # Check if the relationship already exists
+   $relationshipQuery = "?`$filter=SchemaName eq "
+   $relationshipQuery += "'$($oneToManyRelationshipData.SchemaName)' "
+   $relationshipQuery += "&`$select=SchemaName"
+   
+   $relationshipQueryResults = (Get-Relationships `
+         -query $relationshipQuery `
+         -isManyToMany $false).value
+   if ($relationshipQueryResults.Length -eq 0) {
+      
+      # Create the relationship if it doesn't exist
+      $oneToManyRelationshipId = New-Relationship `
+         -relationship $oneToManyRelationshipData `
+         -solutionUniqueName $solutionData.uniquename
+      Write-Host "$($oneToManyRelationshipData.SchemaName) One-to-Many relationship created successfully"
+   
+      # Add the relationship to the list of records to delete
+      $oneToManyRelationshipToDelete = @{ 
+         setName = 'RelationshipDefinitions'
+         id      = $oneToManyRelationshipId 
+      }
+      $recordsToDelete += $oneToManyRelationshipToDelete
+   }
+   else {
+      # Example One-to-Many relationship already exists
+      Write-Host "$($relationshipQueryResults[0].SchemaName) relationship already exists"
+      $oneToManyRelationshipId = $relationshipQueryResults[0].MetadataId
    }
    
-   #endregion Validate 1:N relationship eligibility
-
    #endregion Section 5: Create and retrieve a one-to-many relationship
 
    #region Section 6: Create and retrieve a many-to-one relationship
+
+   $manyToOneRelationshipData = @{
+      '@odata.type'               = 'Microsoft.Dynamics.CRM.OneToManyRelationshipMetadata'
+      SchemaName                  = "$($publisherData.customizationprefix)_Account_BankAccounts"
+      ReferencedAttribute         = 'accountid'
+      ReferencedEntity            = 'account'
+      ReferencingEntity           = $bankAccountTableData.SchemaName.ToLower()
+      Lookup                      = @{
+         SchemaName  = "$($publisherData.customizationprefix)_RelatedAccountId"
+         DisplayName = @{
+            LocalizedLabels = @(
+               @{
+                  Label        = 'Related Account'
+                  LanguageCode = $languageCode
+               }
+            )
+         }
+         Description = @{
+            LocalizedLabels = @(
+               @{
+                  Label        = 'An Account related to the bank account.'
+                  LanguageCode = $languageCode
+               }
+            )
+         }
+      }
+      AssociatedMenuConfiguration = @{
+         Behavior = 'UseLabel'
+         Group    = 'Details'
+         Label    = @{
+            LocalizedLabels = @(
+               @{
+                  Label        = 'Related Bank Accounts'
+                  LanguageCode = $languageCode
+               }
+            )
+         }
+         Order    = 10000
+      }
+      CascadeConfiguration        = @{
+         Assign     = 'NoCascade'
+         Share      = 'NoCascade'
+         Unshare    = 'NoCascade'
+         RollupView = 'NoCascade'
+         Reparent   = 'NoCascade'
+         Delete     = 'RemoveLink'
+         Merge      = 'NoCascade'
+      }
+
+   }
+
+   # Check if the relationship already exists
+   $relationshipQuery = "?`$filter=SchemaName eq "
+   $relationshipQuery += "'$($manyToOneRelationshipData.SchemaName)' "
+   $relationshipQuery += "&`$select=SchemaName"
+
+   $relationshipQueryResults = (Get-Relationships `
+         -query $relationshipQuery `
+         -isManyToMany $false).value
+
+   if ($relationshipQueryResults.Length -eq 0) {
+
+      # Create the relationship if it doesn't exist
+      $manyToOneRelationshipId = New-Relationship `
+         -relationship $manyToOneRelationshipData `
+         -solutionUniqueName $solutionData.uniquename
+      Write-Host "$($manyToOneRelationshipData.SchemaName) Many-to-One relationship created successfully"
+   
+      # Add the relationship to the list of records to delete
+      $manyToOneRelationshipToDelete = @{ 
+         setName = 'RelationshipDefinitions'
+         id      = $manyToOneRelationshipId 
+      }
+      $recordsToDelete += $manyToOneRelationshipToDelete
+   }
+   else {
+      # Example Many-to-One relationship already exists
+      Write-Host "$($relationshipQueryResults[0].SchemaName) relationship already exists"
+      $manyToOneRelationshipId = $relationshipQueryResults[0].MetadataId
+   }
+
    #endregion Section 6: Create and retrieve a many-to-one relationship
 
    #region Section 7: Create and retrieve a many-to-many relationship
+
+   
+   if (!$skipUpdates) {
+      #region Validate N:N relationship eligibility
+      $contactCanManytoMany = Get-CanManyToMany `
+         -tableLogicalName 'contact'
+   
+      $message = "The contact table"
+      $message += ($contactCanManytoMany) ? " can" : " can not"
+      $message += " participate in many-to-many relationships."
+      Write-Host $message
+
+      $bankAccountCanManytoMany = Get-CanManyToMany `
+         -tableLogicalName $bankAccountTable.LogicalName 
+
+      $message = "The $($bankAccountTable.DisplayName.UserLocalizedLabel.Label) table"
+      $message += ($bankAccountCanManytoMany) ? " can" : " can not"
+      $message += " participate in many-to-many relationships."
+      Write-Host $message
+      #endregion Validate N:N relationship eligibility
+   
+
+      #region Identify Potential Entities for N:N relationships
+
+      $validManyToManyTables = Get-ValidManyToManyTables
+   
+      $contactIsValidManyToManyTable = $validManyToManyTables -contains 'contact'
+   
+      $message = "The contact table"
+      $message += ($contactIsValidManyToManyTable) ? " is" : " is not"
+      $message += " in the list of tables that can participate in many-to-many relationships"
+      Write-Host $message
+
+      $bankAccountIsValidManyToManyTable = $validManyToManyTables -contains $($bankAccountTable.LogicalName)
+   
+      $message = "The $($bankAccountTable.DisplayName.UserLocalizedLabel.Label) table"
+      $message += ($contactIsValidManyToManyTable) ? " is" : " is not"
+      $message += " in the list of tables that can participate in many-to-many relationships"
+      Write-Host $message
+
+      #endregion Identify Potential Entities for N:N relationships
+   }
+
+   #region Create N:N relationship
+
+   $manyToManyRelationshipSchemaName = "$($publisherData.customizationprefix)"
+   $manyToManyRelationshipSchemaName += "_$($bankAccountTable.CollectionSchemaName)"
+   $manyToManyRelationshipSchemaName += '_Contacts'
+
+
+   $manyToManyRelationshipData = @{
+      '@odata.type'                      = 'Microsoft.Dynamics.CRM.ManyToManyRelationshipMetadata'
+      SchemaName                         = $manyToManyRelationshipSchemaName
+      IntersectEntityName                = $manyToManyRelationshipSchemaName
+      Entity1LogicalName                 = $bankAccountTable.LogicalName
+      Entity1AssociatedMenuConfiguration = @{
+         Behavior = 'UseLabel'
+         Group    = 'Details'
+         Label    = @{
+            LocalizedLabels = @(
+               @{
+                  Label        = 'Bank Accounts'
+                  LanguageCode = $languageCode
+               }
+            )
+         }
+         Order    = 10000
+      }
+      Entity2LogicalName                 = 'contact'
+      Entity2AssociatedMenuConfiguration = @{
+         Behavior = 'UseLabel'
+         Group    = 'Details'
+         Label    = @{
+            LocalizedLabels = @(
+               @{
+                  Label        = 'Contacts'
+                  LanguageCode = $languageCode
+               }
+            )
+         }
+         Order    = 10000
+      }
+   }
+
+   # Check if the relationship already exists
+   $relationshipQuery = "?`$filter=SchemaName eq "
+   $relationshipQuery += "'$($manyToManyRelationshipData.SchemaName)' "
+   $relationshipQuery += "&`$select=SchemaName"
+
+   $relationshipQueryResults = (Get-Relationships `
+         -query $relationshipQuery `
+         -isManyToMany $true).value
+
+   if ($relationshipQueryResults.Length -eq 0) {
+         
+      # Create the relationship if it doesn't exist
+      $manyToManyRelationshipId = New-Relationship `
+         -relationship $manyToManyRelationshipData `
+         -solutionUniqueName $solutionData.uniquename
+      Write-Host "$($manyToManyRelationshipData.SchemaName) Many-to-Many relationship created successfully"
+      
+      # Add the relationship to the list of records to delete
+      $manyToManyRelationshipToDelete = @{ 
+         setName = 'RelationshipDefinitions'
+         id      = $manyToManyRelationshipId 
+      }
+      $recordsToDelete += $manyToManyRelationshipToDelete
+   }
+   else {
+      # Example Many-to-Many relationship already exists
+      Write-Host "$($relationshipQueryResults[0].SchemaName) relationship already exists"
+      $manyToManyRelationshipId = $relationshipQueryResults[0].MetadataId
+   }
+
+   #endregion Create N:N relationship
+
    #endregion Section 7: Create and retrieve a many-to-many relationship
 
    #region Section 8: Export managed solution
+
+   $solutionFile = Export-Solution `
+      -solutionName $solutionData.uniquename `
+      -managed $true
+
+   # Save the solution file to the current directory
+   $saveSolutionFilePath = "$(Get-location)\MetadataOperations\$($solutionData.uniquename).zip"
+
+   [IO.File]::WriteAllBytes($saveSolutionFilePath, $solutionFile)
+   
+   Write-Host "Managed solution exported to $saveSolutionFilePath"
+   $managedSolutionExported = $true
+
    #endregion Section 8: Export managed solution
 
    #region Section 9: Delete sample records
@@ -1583,13 +1892,59 @@ Invoke-DataverseCommands {
       # In the reverse order of creation, delete the records created by this sample
       for ($i = $recordsToDelete.Length - 1; $i -ge 0; $i--) {
          $recordToDelete = $recordsToDelete[$i]
-         Remove-Record -setName $recordToDelete.setName -id $recordToDelete.id | Out-Null
-         Write-Host "$($recordToDelete.setName) record with ID: $($recordToDelete.id) deleted"
+         Remove-Record `
+            -setName $recordToDelete.setName `
+            -id $recordToDelete.id `
+            -strongConsistency $true | Out-Null
+         Write-Host "$($recordToDelete.setName) record with ID: $($recordToDelete.id) deleted."
       }
    }
    #endregion Section 9: Delete sample records
 
    #region Section 10: Import and Delete managed solution
+
+   # Import of managed solution will fail 
+   # if the unmanaged solution already exists in the target environment
+  
+
+   if ($deleteCreatedRecords -and $managedSolutionExported) {
+
+      $importJobId = New-Guid
+
+      Write-Host 'Importing managed solution...'
+      Import-Solution `
+         -customizationFile ([System.IO.File]::ReadAllBytes($saveSolutionFilePath)) `
+         -overwriteUnmanagedCustomizations $false `
+         -importJobId $importJobId
+
+      Write-Host "Managed solution imported."
+
+      # Get the ID of the imported solution
+      $solutionQuery = "?`$filter=uniquename eq "
+      $solutionQuery += "'$($solutionData.uniquename)' "
+      $solutionQuery += "&`$select=solutionid"
+
+      $solutionQueryResults = (Get-Records `
+            -setName 'solutions' `
+            -query $solutionQuery).value
+
+      if ($solutionQueryResults.Length -eq 1) {
+
+         $solutionId = $solutionQueryResults[0].solutionid
+         # Delete the imported managed solution
+         Remove-Record `
+            -setName 'solutions' `
+            -id $solutionId | Out-Null
+         
+         Write-Host "Managed solution deleted."
+      }
+      else {
+         Write-Host "No solution found with name: '$($solutionData.uniquename)'."
+      }
+      
+   }
+
+
    #endregion Section 10: Import and Delete managed solution
 
 }
