@@ -117,11 +117,11 @@ Operations:
 
 Operations:
 
-- Verify that the `sample_BankAccount` table is eligible to be referenced in a 1:N relationship using the TODO
-- Verify that the `contact` table is eligible to be reference other tables in a 1:N relationship using the TODO.
-- Identify what other tables can reference the `sample_BankAccount` table in a 1:N relationship using the WebAPIService TODO.
-- Create a 1:N relationship between `sample_BankAccount` and `contact` tables using the TODO.
-- Retrieve the 1:N relationship using the TODO.
+- Verify that the `sample_BankAccount` table is eligible to be referenced in a 1:N relationship using the `Get-CanBeReferenced`  function.
+- Verify that the `contact` table is eligible to be reference other tables in a 1:N relationship using the `Get-CanBeReferencing` function.
+- Identify what other tables can reference the `sample_BankAccount` table in a 1:N relationship using the `Get-ValidReferencingTables` function.
+- Check whether a 1:N relationship exists using the `Get-Relationships` function.
+- If it doesn't exist, create a 1:N relationship between `sample_BankAccount` and `contact` tables using the `New-Relationship` function.
 
 ### Section 6: Create and retrieve a many-to-one relationship
 
