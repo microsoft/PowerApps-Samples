@@ -1287,7 +1287,6 @@ Invoke-DataverseCommands {
       IsGlobal      = $true
       Options       = @(
          @{
-            # '@odata.type' = 'Microsoft.Dynamics.CRM.OptionMetadata'
             Label = @{
                LocalizedLabels = @(
                   @{
@@ -1299,7 +1298,6 @@ Invoke-DataverseCommands {
             Value = [int]([string]$publisherData.customizationoptionvalueprefix + '0000')
          },
          @{
-            # '@odata.type' = 'Microsoft.Dynamics.CRM.OptionMetadata'
             Label = @{
                LocalizedLabels = @(
                   @{
@@ -1311,7 +1309,6 @@ Invoke-DataverseCommands {
             Value = [int]([string]$publisherData.customizationoptionvalueprefix + '0001')
          },
          @{
-            # '@odata.type' = 'Microsoft.Dynamics.CRM.OptionMetadata'
             Label = @{
                LocalizedLabels = @(
                   @{
