@@ -14,7 +14,7 @@ The `AnnotationOperations` project demonstrates:
 - Setting the the `annotation.documentbody` property with the Base64 encoded string value for the file.
 - Retrieving the note and saving the file.
 - Updating the note to refer to a different file.
-- Using the following Dataverse Web API actions to work with notes, especially for large files.
+- Using the following Dataverse SDK for .NET classes to work with notes, especially for large files.
    
    - [InitializeAnnotationBlocksUploadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeannotationblocksuploadrequest) and [InitializeAnnotationBlocksUploadResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeannotationblocksuploadresponse) classes.
    - [UploadBlockRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.uploadblockrequest) and [UploadBlockResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.uploadblockresponse) classes.

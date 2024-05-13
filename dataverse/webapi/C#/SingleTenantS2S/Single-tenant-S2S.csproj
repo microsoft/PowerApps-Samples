@@ -34,8 +34,29 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Identity.Client, Version=4.52.0.0, Culture=neutral, PublicKeyToken=0a613f4dd989e8ae, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.Identity.Client.4.52.0\lib\net461\Microsoft.Identity.Client.dll</HintPath>
+    <Reference Include="C">
+      <HintPath>..\..\C</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="C">
+      <HintPath>..\..\C</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="C">
+      <HintPath>..\..\C</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="C">
+      <HintPath>..\..\C</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="C">
+      <HintPath>..\..\C</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="C">
+      <HintPath>..\..\C</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.IdentityModel.Abstractions, Version=6.28.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.IdentityModel.Abstractions.6.28.1\lib\net472\Microsoft.IdentityModel.Abstractions.dll</HintPath>
