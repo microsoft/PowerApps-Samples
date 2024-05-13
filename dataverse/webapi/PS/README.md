@@ -6,7 +6,7 @@ The files in this folder are PowerShell helper functions that Dataverse Web API 
 |---|---|
 |[Core.ps1](Core.ps1)|Contains functions that all other functions or samples depend on.|
 |[TableOperations.ps1](TableOperationsre.ps1)|Contains functions that enable performing data operations on table rows|
-|[MetadataOperation.ps1](MetadataOperations.ps1)|Contains common Dataverse functions|
+|[MetadataOperation.ps1](MetadataOperations.ps1)|Contains functions that enable performing table, column, and relationship schema change operations, as well as solution operations.|
 
 
 Samples that use these common functions reference them using [dot sourcing](https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about/about_scripts#script-scope-and-dot-sourcing) as demonstrated by the [BasicOperations/BasicOperations.ps1](BasicOperations/BasicOperations.ps1):
@@ -22,16 +22,40 @@ Samples that use these common functions reference them using [dot sourcing](http
 |Group|Function|Description|
 |---|---|---|
 |Core|[Connect](#connect-function)|Connects to Dataverse Web API using Azure authentication.|
+|Metadata|[Export-Solution](#export-solution-function)|Export a solution from Dataverse.|
 |Core|[Invoke-DataverseCommands](#invoke-dataversecommands-function)|Invokes a set of commands against the Dataverse Web API.|
 |Core|[Invoke-ResilientRestMethod](#invoke-resilientrestmethod-function)|Invokes a REST method with resilience to handle 429 errors.|
 |TableOperations|[Add-ToCollection](#add-tocollection-function)|Adds a record to a collection-valued navigation property of another record.|
+|Metadata|[Get-CanBeReferenced](#get-canbereferenced-function)|Check whether a table can be referenced in a relationship.|
+|Metadata|[Get-CanBeReferencing](#get-canbereferencing-function)|Check whether a table can be referencing in a relationship.|
+|Metadata|[Get-CanManyToMany](#get-canmanytomany-function)|Check if a table can have many-to-many relationships in Dataverse.|
+|Metadata|[Get-Column](#get-column-function)|Retrieve a column from a Dataverse table.|
 |TableOperations|[Get-ColumnValue](#get-columnvalue-function)|Gets the value of a single property from a Dataverse record.|
 |TableOperations|[Get-Record](#get-record-function)|Gets a single record from a Dataverse table by its primary key value.|
 |TableOperations|[Get-Records](#get-records-function)|Gets a set of records from a Dataverse table|
+|Metadata|[Get-GlobalOptionSet](#get-globaloptionset-function)|Retrieve a global option set from Dataverse.|
+|Metadata|[Get-Relationship](#get-relationship-function)|Retrieve a relationship from Dataverse.|
+|Metadata|[Get-Relationships](#get-relationships-function)|Retrieve relationships from Dataverse.|
+|Metadata|[Get-Table](#get-table-function)|Get a table definition from Dataverse.|
+|Metadata|[Get-TableColumns](#get-tablecolumns-function)|Retrieve the columns of a table in Dataverse.|
+|Metadata|[Get-Tables](#get-tables-function)|Gets table definitions from Dataverse.|
+|Metadata|[Get-ValidManyToManyTables](#get-validmanytomanytables-function)|Get valid tables for many-to-many relationships in Dataverse.|
+|Metadata|[Get-ValidReferencingTables](#get-validreferencingtables-function)|Get valid referencing tables for a specified table in Dataverse.|
+|Metadata|[Import-Solution](#import-solution-function)|Import a solution into Dataverse.|
+|Metadata|[New-Column](#new-column-function)|Create a new column in a Dataverse table.|
+|Metadata|[New-CustomerRelationship](#new-customerrelationship-function)|Create a new customer relationship in Dataverse.|
+|Metadata|[New-GlobalOptionSet](#new-globaloptionset-function)|Create a new global option set in Dataverse.|
+|Metadata|[New-OptionValue](#new-optionvalue-function)|Create a new option value in a column in a Dataverse table.|
 |TableOperations|[New-Record](#new-record-function)|Creates a new record in a Dataverse table.|
+|Metadata|[New-Relationship](#new-relationship-function)|Create a new relationship in Dataverse.|
+|Metadata|[New-StatusOption](#new-statusoption-function)|Create a new status option in a Dataverse table column.|
+|Metadata|[New-Table](#new-table-function)|Create a new Dataverse table.|
 |TableOperations|[Remove-FromCollection](#remove-fromcollection-function)|Removes a record from a collection-valued navigation property of another record.|
+|Metadata|[Remove-OptionValue](#remove-optionvalue-function)|Remove an option value from a column in a Dataverse table.|
 |TableOperations|[Remove-Record](#remove-record-function)|Deletes a record from a Dataverse table.|
 |TableOperations|[Set-ColumnValue](#set-columnvalue-function)|Sets the value of a single property for a Dataverse record.|
+|Metadata|[Update-Column](#update-column-function)|Update a column in a Dataverse table.|
+|Metadata|[Update-OptionValue](#update-optionvalue-function)|Update the value of an option in a column in a table in Dataverse.|
 |TableOperations|[Update-Record](#update-record-function)|Updates an existing record in a Dataverse table.|
 |CommonFunctions|[Get-WhoAmI](#get-whoami-function)|Gets the current user information from the Dataverse Web API.|
 
@@ -516,17 +540,253 @@ $myUserId = $WhoIAm.UserId
 
 ## Metadata Operations functions
 
-The following functions are used in the [MetadataOperations sample](MetadataOperations/README.md)
+The [MetadataOperations.ps1](MetadataOperations.ps1) file contains these functions used in the [MetadataOperations sample](MetadataOperations/README.md).
+
+### Export-Solution function
+
+A function to export a solution from Dataverse.
+
+#### Parameters
+
+|Parameter|Type|Description|
+|---|---|---|
+|`solutionName`|string|The name of the solution to be exported.|
+|`managed`|boolean|A boolean value indicating whether the solution is managed.|
+|`exportAutoNumberingSettings`|boolean|A boolean value indicating whether to export auto-numbering settings.|
+|`exportCalendarSettings`|boolean|A boolean value indicating whether to export calendar settings.|
+|`exportCustomizationSettings`|boolean|A boolean value indicating whether to export customization settings.|
+|`exportEmailTrackingSettings`|boolean|A boolean value indicating whether to export email tracking settings.|
+|`exportGeneralSettings`|boolean|A boolean value indicating whether to export general settings.|
+|`exportMarketingSettings`|boolean|A boolean value indicating whether to export marketing settings.|
+|`exportOutlookSynchronizationSettings`|boolean|A boolean value indicating whether to export Outlook synchronization settings.|
+|`exportRelationshipRoles`|boolean|A boolean value indicating whether to export relationship roles.|
+|`exportIsvConfig`|boolean|A boolean value indicating whether to export ISV configuration.|
+|`exportSales`|boolean|A boolean value indicating whether to export sales settings.|
+|`exportExternalApplications`|boolean|A boolean value indicating whether to export external applications settings.|
+|`exportComponentsParams`|hashtable|A hashtable containing additional parameters for exporting components.|
+
+#### Returns
+
+The function returns the exported solution as a byte array.
+
+#### Example
+
+```powershell
+$solutionFile = Export-Solution `
+   -solutionName 'mySolution'`
+   -managed $true
+```
+
+
+
+### Get-CanBeReferenced function
+
+A function to check whether a table can be referenced in a relationship.
+
+#### Parameters
+
+|Parameter|Type|Description|
+|---|---|---|
+|`tableLogicalName`|string|The logical name of the table to be checked.|
+
+#### Returns
+
+A boolean value indicating whether the table can be referenced.
+
+#### Example
+
+```powershell
+Get-CanBeReferenced -tableLogicalName "account"
+```
+### Get-CanBeReferencing function
+
+A function to check whether a table can be referencing in a relationship.
+
+#### Parameters
+
+|Parameter|Type|Description|
+|---|---|---|
+|`tableLogicalName`|string|The logical name of the table to be checked.|
+
+#### Returns
+
+A boolean value indicating whether the table can be referencing.
+
+#### Example
+
+```powershell
+Get-CanBeReferencing -tableLogicalName "account"
+```
+
+### Get-CanManyToMany function
+
+A function to check if a table can have many-to-many relationships in Dataverse.
+
+#### Parameters
+
+|Parameter|Type|Description|
+|---|---|---|
+|`tableLogicalName`|string|The logical name of the table to be checked.|
+
+#### Returns
+
+A boolean value indicating whether the table can have many-to-many relationships.
+
+#### Example
+
+```powershell
+Get-CanManyToMany -tableLogicalName "account"
+```
+
+### Get-Column function
+
+A function to retrieve a column from a Dataverse table.
+
+#### Parameters
+
+|Parameter|Type|Description|
+|---|---|---|
+|`tableLogicalName`|string|The logical name of the table from which the column will be retrieved.|
+|`logicalName`|string|The logical name of the column to be retrieved.|
+|`type`|string|The type of the column to be retrieved. This function supports the following types: 'BigInt', 'Boolean', 'DateTime', 'Decimal', 'Double', 'File', 'Image', 'Integer', 'Lookup', 'ManagedProperty', 'Memo', 'Money', 'String', 'EntityName', 'UniqueIdentifier', 'MultiSelectPicklist', 'Picklist', 'State', 'Status'.|
+|`query`|string|The query string to be appended to the base URI to form the complete URI for the GET request.|
+
+#### Returns
+
+Details of the specified column.
+
+#### Example
+
+```powershell
+Get-Column `
+   -tableLogicalName 'account' `
+   -logicalName 'accountid' `
+   -type 'UniqueIdentifier" `
+   -query "?`$select=SchemaName,DisplayName,AttributeType"
+```
+
+### Get-GlobalOptionSet function
+
+A function to retrieve a global option set from Dataverse.
+
+#### Parameters
+
+|Parameter|Type|Description|
+|---|---|---|
+|`name`|string|The name of the global option set to be retrieved. Either this or the id must be provided.|
+|`id`|string|The GUID of the global option set to be retrieved. Either this or the name must be provided.|
+|`type`|string|The type of the global option set to be retrieved. It can be 'OptionSet' or 'Boolean'. If this parameter is not provided, the function will not enable expanding the options.|
+|`query`|string|An OData query string to filter the global option set to be retrieved.|
+
+#### Returns
+
+Returns the global option set if found, or `$null` if not found.
+If the server returns an error other than 404, the function will throw an exception.
+
+#### Example
+
+```powershell
+Get-GlobalOptionSet -name "new_globaloptionset" -type "OptionSet"
+```
+
+
+### Get-Relationship function
+
+A function to retrieve a relationship from Dataverse.
+
+#### Parameters
+
+|Parameter|Type|Description|
+|---|---|---|
+|`schemaName`|string|The schema name of the relationship to be retrieved. Either this or the id must be provided.|
+|`id`|GUID|The GUID of the relationship to be retrieved. Either this or the schema name must be provided.|
+|`type`|string|The type of the relationship to be retrieved. It can be 'OneToMany', 'ManyToOne', or 'ManyToMany'. If this parameter is not provided, the function will not enable expanding or selecting type specific properties.|
+|`query`|string|An OData query string to filter the relationship to be retrieved.|
+
+#### Returns
+
+The relationship if found.
+
+#### Example
+
+```powershell
+Get-Relationship -schemaName "new_account_customer" -type "OneToMany"
+```
+
+### Get-Relationships function
+
+A function to retrieve relationships from Dataverse.
+
+#### Parameters
+
+|Parameter|Type|Description|
+|---|---|---|
+|`query`|string|An OData query string to filter the relationships to be retrieved.|
+|`isManyToMany`|boolean|A boolean value indicating whether to retrieve many-to-many relationships. If this parameter is set to true, many-to-many relationships are retrieved; otherwise, one-to-many relationships are retrieved.|
+
+#### Returns
+
+The relationships that match the provided query.
+
+#### Example
+
+```powershell
+$relationshipQuery = "?`$filter=SchemaName eq '"
+$relationshipQuery += 'sample_BankAccount_Contacts'
+$relationshipQuery += "'&`$select=SchemaName"
+   
+$relationshipQueryResults = (Get-Relationships `
+      -query $relationshipQuery `
+      -isManyToMany $false).value
+```
+
+
+### Get-Table function
+
+A function to get a table definition from Dataverse.
+
+#### Parameters
+
+|Parameter|Type|Description|
+|---|---|---|
+|`logicalName`|string|The logical name of the table to be retrieved.|
+|`query`|string|The query string to be appended to the base URI to form the complete URI for the GET request.|
+
+#### Returns
+
+The definition of the table.
+
+#### Example
+
+```powershell
+$bankAccountTable = Get-Table -logicalName 'new_bankaccount' `
+   -query "?`$select=SchemaName,DisplayName,TableType"
+```
+
+### Get-TableColumns function
+
+A function to retrieve the columns of a table in Dataverse.
+
+#### Parameters
+
+|Parameter|Type|Description|
+|---|---|---|
+|`tableLogicalName`|string|The logical name of the table whose columns are to be retrieved.|
+|`query`|string|The query string to be appended to the base URI to form the complete URI for the GET request.|
+
+#### Returns
+
+The columns of the table that match the query.
+
+#### Example
+
+```powershell
+Get-TableColumns -tableLogicalName 'account' -query "?`$filter=SchemaName eq 'Name'"
+```
 
 ### Get-Tables function
 
 Gets table definitions from Dataverse.
-
-The `Get-Tables` function uses the [Invoke-ResilientRestMethod function](#invoke-resilientrestmethod-function) to send a `GET` request to the Dataverse API. 
-It constructs the request URI by appending the query string to the base URI. 
-It uses resilient REST method to handle potential network issues.
-
-[Learn to retrieve table definitions](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/retrieve-tables-using-web-api)
 
 #### Parameters
 
@@ -551,38 +811,445 @@ $tableQueryResults = (Get-Tables `
       -query $tableQuery).value
 ```
 
-### Get-Table function
+### Get-ValidManyToManyTables function
 
-A function to get a specific table definition from Dataverse.
+A function to get valid tables for many-to-many relationships in Dataverse.
 
-This function sends a GET request to a specified URI to retrieve specific table data. 
-It uses resilient REST method to handle potential network issues.
+#### Example
+
+```powershell
+Get-ValidManyToManyTables
+```
+
+#### Returns
+
+An array of strings, each string being the logical name of a valid table for many-to-many relationships.
+
+
+### Get-ValidReferencingTables function
+
+A function to get valid referencing tables for a specified table in Dataverse.
 
 #### Parameters
 
 |Parameter|Type|Description|
 |---|---|---|
-|`logicalName`|string|The logical name of the table to be retrieved.|
-|`query`|string|The query string to be appended to the base URI to form the complete URI for the GET request.|
+|`tableLogicalName`|string|The logical name of the table for which to retrieve valid referencing tables.|
+
+#### Returns
+
+An array of strings, each string being the logical name of a valid referencing table.
 
 #### Example
 
 ```powershell
-$bankAccountTable = Get-Table -logicalName 'new_bankaccount' `
-   -query "?`$select=SchemaName,DisplayName,TableType"
+Get-ValidReferencingTables -tableLogicalName "account"
 ```
 
-#### Notes
+### Import-Solution function
 
-The function requires a global variable `$baseURI` and `$baseHeaders` to be set before it is called.
-The function also calls another function `Invoke-ResilientRestMethod` which is not defined in this snippet.
+A function to import a solution into Dataverse.
+
+#### Parameters
+
+|Parameter|Type|Description|
+|---|---|---|
+|`customizationFile`|byte array|The solution file to be imported.|
+|`overwriteUnmanagedCustomizations`|boolean|A boolean value indicating whether to overwrite unmanaged customizations.|
+|`importJobId`|GUID|The GUID of the import job.|
+|`publishWorkflows`|boolean|A boolean value indicating whether to publish workflows.|
+|`convertToManaged`|boolean|A boolean value indicating whether to convert the solution to managed.|
+|`skipProductUpdateDependencies`|boolean|A boolean value indicating whether to skip product update dependencies.|
+|`holdingSolution`|boolean|A boolean value indicating whether the solution is a holding solution.|
+|`componentParameters`|array of hashtables|An array of hashtables containing additional parameters for importing components.|
+|`solutionParameters`|hashtable|A hashtable containing additional parameters for importing the solution.|
+
+#### Returns
+
+This function doesn't return a value.
+
+#### Example
+
+```powershell
+$importJobId = New-Guid
+   
+Import-Solution `
+   -customizationFile ([System.IO.File]::ReadAllBytes("C:\path\to\solution.zip")) `
+   -overwriteUnmanagedCustomizations $false `
+   -importJobId $importJobId
+```
+
+### New-Column function
+
+A function to create a new column in a Dataverse table.
+
+#### Parameters
+
+|Parameter|Type|Description|
+|---|---|---|
+|`tableLogicalName`|string|The logical name of the table where the new column will be created.|
+|`column`|hashtable|A hashtable that represents the new column to be created. It should contain the details of the column.|
+|`solutionUniqueName`|string|The unique name of the solution where the table is located. If this parameter is not provided, the column will be created in the table in the default solution.|
+
+#### Returns
+
+The GUID of the newly created column.
+
+#### Example
+
+```powershell
+$boolColumnData = @{
+      '@odata.type' = 'Microsoft.Dynamics.CRM.BooleanAttributeMetadata'
+      SchemaName    = "sample_Boolean"
+      DefaultValue  = $false
+      RequiredLevel = @{
+         Value = 'None'
+      }
+      DisplayName   = @{
+         '@odata.type'   = 'Microsoft.Dynamics.CRM.Label'
+         LocalizedLabels = @(
+            @{
+               '@odata.type' = 'Microsoft.Dynamics.CRM.LocalizedLabel'
+               Label         = 'Sample Boolean'
+               LanguageCode  = $languageCode
+            }
+         )
+      }
+      Description   = @{
+         '@odata.type'   = 'Microsoft.Dynamics.CRM.Label'
+         LocalizedLabels = @(
+            @{
+               '@odata.type' = 'Microsoft.Dynamics.CRM.LocalizedLabel'
+               Label         = 'Sample Boolean column description'
+               LanguageCode  = $languageCode
+            }
+         )
+      }
+      OptionSet     = @{
+         '@odata.type' = 'Microsoft.Dynamics.CRM.BooleanOptionSetMetadata'
+         TrueOption    = @{
+            Value = 1
+            Label = @{
+               '@odata.type'   = 'Microsoft.Dynamics.CRM.Label'
+               LocalizedLabels = @(
+                  @{
+                     '@odata.type' = 'Microsoft.Dynamics.CRM.LocalizedLabel'
+                     Label         = 'True'
+                     LanguageCode  = $languageCode
+                  }
+               )
+            }
+         }
+         FalseOption   = @{
+            Value = 0
+            Label = @{
+               '@odata.type'   = 'Microsoft.Dynamics.CRM.Label'
+               LocalizedLabels = @(
+                  @{
+                     '@odata.type' = 'Microsoft.Dynamics.CRM.LocalizedLabel'
+                     Label         = 'False'
+                     LanguageCode  = $languageCode
+                  }
+               )
+            }
+         }
+      }
+   }
+
+# Create the column
+$boolColumnId = New-Column `
+   -tableLogicalName 'sample_bankaccount' `
+   -column $boolColumnData `
+   -solutionUniqueName 'mysolution'
+```
+
+### New-CustomerRelationship function
+
+A function to create a new customer relationship in Dataverse.
+
+#### Parameters
+
+|Parameter|Type|Description|
+|---|---|---|
+|`lookup`|hashtable|A hashtable containing the details of the lookup field for the customer relationship.|
+|`oneToManyRelationships`|array|An array of hashtables, each containing the details of a one-to-many relationship for the customer relationship.|
+|`solutionUniqueName`|string|The unique name of the solution where the customer relationship will be created. If this parameter is not provided, the customer relationship will be created in the default solution.|
+
+#### Returns
+
+A [CreateCustomerRelationshipsResponse complex type](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/createcustomerrelationshipsresponse) which includes the ID values of the lookup column and the relationships created to support it.
+
+
+#### Example
+
+```powershell
+$customerLookupData = @{
+      SchemaName    = "sample_CustomerId"
+      RequiredLevel = @{
+         Value = 'None'
+      }
+      DisplayName   = @{
+         LocalizedLabels = @(
+            @{
+               Label        = 'Sample Bank Account owner'
+               LanguageCode = 1033
+            }
+         )
+      }
+      Description   = @{
+         LocalizedLabels = @(
+            @{
+               Label        = 'The owner of the bank account'
+               LanguageCode = 1033
+            }
+         )
+      }
+      Targets       = @('account', 'contact')
+   }
+
+   $customerRelationships = @(
+      @{
+         SchemaName        = "sample_BankAccount_Customer_Account"
+         ReferencedEntity  = 'account'
+         ReferencingEntity = 'sample_bankaccount'
+         RelationshipType  = 'OneToManyRelationship'
+      },
+      @{
+         SchemaName        = "sample_BankAccount_Customer_Contact"
+         ReferencedEntity  = 'contact'
+         ReferencingEntity = 'sample_bankaccount'
+         RelationshipType  = 'OneToManyRelationship'
+      }
+   )
+
+   $response = New-CustomerRelationship `
+   -lookup $customerLookupData `
+   -oneToManyRelationships $customerRelationships `
+   -solutionUniqueName $solutionData.uniquename
+   
+   
+   $customerLookupRelationshipIds = $response.RelationshipIds
+   $customerLookupId = $response.AttributeId
+```
+
+### New-GlobalOptionSet function
+
+A function to create a new global option set in Dataverse.
+
+#### Parameters
+
+|Parameter|Type|Description|
+|---|---|---|
+|`optionSet`|hashtable|A hashtable containing the details of the global option set to be created.|
+|`solutionUniqueName`|string|The unique name of the solution where the global option set will be created. If this parameter is not provided, the global option set will be created in the default solution.|
+
+#### Returns
+
+The GUID ID of the newly created global option set.
+
+#### Example
+
+```powershell
+$colorsGlobalOptionSetData = @{
+   '@odata.type' = 'Microsoft.Dynamics.CRM.OptionSetMetadata'
+   Name          = "sample_colors"
+   DisplayName   = @{
+      LocalizedLabels = @(
+         @{
+            Label        = 'Colors'
+            LanguageCode = 1033
+         }
+      )
+   }
+   Description   = @{
+      LocalizedLabels = @(
+         @{
+            Label        = 'Color Choice description'
+            LanguageCode = 1033
+         }
+      )
+   }
+   IsGlobal      = $true
+   Options       = @(
+      @{
+         Label = @{
+            LocalizedLabels = @(
+               @{
+                  Label        = 'Red'
+                  LanguageCode = 1033
+               }
+            )
+         }
+         Value = 100000000
+      },
+      @{
+         Label = @{
+            LocalizedLabels = @(
+               @{
+                  Label        = 'Yellow'
+                  LanguageCode = 1033
+               }
+            )
+         }
+         Value = 100000001
+      },
+      @{
+         Label = @{
+            LocalizedLabels = @(
+               @{
+                  Label        = 'Green'
+                  LanguageCode = 1033
+               }
+            )
+         }
+         Value = 100000002
+      }
+   )
+}
+New-GlobalOptionSet `
+   -optionSet $colorsGlobalOptionSetData `
+   -solutionUniqueName "MySolution"
+```
+
+### New-OptionValue function
+
+A function to create a new option value in a column in a Dataverse table.
+
+#### Parameters
+
+|Parameter|Type|Description|
+|---|---|---|
+|`tableLogicalName`|string|The logical name of the table where the column is located.|
+|`columnLogicalName`|string|The logical name of the column where the new option value will be created.|
+|`label`|string|The label for the new option value.|
+|`languageCode`|integer|The language code for the label.|
+|`value`|varies|The value for the new option.|
+|`solutionUniqueName`|string|The unique name of the solution where the table is located. If this parameter is not provided, the new option value will be created in the table in the default solution.|
+
+#### Returns
+
+The value of the newly created option.
+
+#### Example
+
+```powershell
+New-OptionValue `
+   -tableLogicalName 'sample_bankaccount' `
+   -columnLogicalName 'sample_picklist' `
+   -label 'Echo' `
+   -languageCode 1033 `
+   -solutionUniqueName 'mysolution'
+```
+
+### New-Relationship function
+
+A function to create a new relationship in Dataverse.
+
+#### Parameters
+
+|Parameter|Type|Description|
+|---|---|---|
+|`relationship`|hashtable|A hashtable containing the details of the relationship to be created.|
+|`solutionUniqueName`|string|The unique name of the solution where the relationship will be created. If this parameter is not provided, the relationship will be created in the default solution.|
+
+#### Returns
+
+The GUID of the created relationship.
+
+#### Example
+
+```powershell
+$oneToManyRelationshipData = @{
+   '@odata.type'               = 'Microsoft.Dynamics.CRM.OneToManyRelationshipMetadata'
+   SchemaName                  = 'sample_BankAccount_Contacts'
+   ReferencedAttribute         = 'sample_bankaccountid'
+   ReferencedEntity            = 'sample_bankaccount'
+   ReferencingEntity           = 'contact'
+   Lookup                      = @{
+      SchemaName  = 'sample_BankAccountId'
+      DisplayName = @{
+         LocalizedLabels = @(
+            @{
+               Label        = 'Bank Account'
+               LanguageCode = 1033
+            }
+         )
+      }
+      Description = @{
+         LocalizedLabels = @(
+            @{
+               Label        = 'The bank account this contact has access to.'
+               LanguageCode = 1033
+            }
+         )
+      }
+   }
+   AssociatedMenuConfiguration = @{
+      Behavior = 'UseLabel'
+      Group    = 'Details'
+      Label    = @{
+         LocalizedLabels = @(
+            @{
+               Label        = 'Cardholders'
+               LanguageCode = 1033
+            }
+         )
+      }
+      Order    = 10000
+   }
+   CascadeConfiguration        = @{
+      Assign     = 'NoCascade'
+      Share      = 'NoCascade'
+      Unshare    = 'NoCascade'
+      RollupView = 'NoCascade'
+      Reparent   = 'NoCascade'
+      Delete     = 'RemoveLink'
+      Merge      = 'NoCascade'
+   }
+}
+New-Relationship `
+   -relationship $oneToManyRelationshipData `
+   -solutionUniqueName 'MySolution'
+```
+
+### New-StatusOption function
+
+A function to create a new status option in a Dataverse table column.
+
+#### Parameters
+
+|Parameter|Type|Description|
+|---|---|---|
+|`tableLogicalName`|string|The logical name of the Dataverse table where the status option will be created.|
+|`label`|string|The label of the new status option.|
+|`languageCode`|integer|The language code for the label and description of the new status option.|
+|`stateCode`|integer|The state code of the new status option.|
+|`value`|varies|The value of the new status option. If this parameter is not provided, a value will be automatically assigned.|
+|`color`|string|The color of the new status option. If this parameter is not provided, a default color will be used.|
+|`description`|string|The description of the new status option.|
+|`solutionUniqueName`|string|The unique name of the solution where the Dataverse table is located. If this parameter is not provided, the status option will be created in the table in the default solution.|
+
+#### Returns
+
+The value of the new status option.
+
+#### Example
+
+```powershell
+New-StatusOption `
+   -tableLogicalName "account" `
+   -label "New Status" `
+   -languageCode 1033 `
+   -stateCode 1 `
+   -value 100000000 `
+   -color "FF0000" `
+   -description "This is a new status option" `
+   -solutionUniqueName "MySolution"
+```
 
 ### New-Table function
 
-A function to create a new table in Dataverse.
-
-This function sends a POST request to a specified URI to create a new table in the database. 
-It uses resilient REST method to handle potential network issues.
+A function to create a new Dataverse table.
 
 #### Parameters
 
@@ -590,6 +1257,10 @@ It uses resilient REST method to handle potential network issues.
 |---|---|---|
 |`body`|hashtable|The body of the POST request, which should be a hashtable containing the details of the table to be created.|
 |`solutionUniqueName`|string|The unique name of the solution where the table will be created. If this parameter is not provided, the table will be created in the default solution.|
+
+#### Returns
+
+The GUID ID of the newly created table.
 
 #### Example
 
@@ -667,213 +1338,36 @@ New-Table -body $tableDetails -solutionUniqueName "MySolution"
 
 ```
 
-#### Notes
+### Remove-OptionValue function
 
-The function requires a global variable `$baseURI` and `$baseHeaders` to be set before it is called.
-The function also calls another function `Invoke-ResilientRestMethod` which is not defined in this snippet.
-The function returns the GUID of the newly created table.
-
-### Update-Table function
-
-A function to update an existing table in a database.
-
-This function sends a PUT request to a specified URI to update an existing table in the database. 
-It uses resilient REST method to handle potential network issues.
+A function to remove an option value from a column in a Dataverse table.
 
 #### Parameters
 
 |Parameter|Type|Description|
 |---|---|---|
-|`table`|PSCustomObject|A PSCustomObject that represents the table to be updated. It must include all the properties retrieved from Dataverse.|
-|`solutionUniqueName`|string|The unique name of the solution where the table is located. If this parameter is not provided, the table in the default solution will be updated.|
-|`mergeLabels`|boolean|A boolean value that indicates whether to merge labels during the update. If this parameter is not provided, labels will not be merged.|
+|`tableLogicalName`|string|The logical name of the table where the column is located.|
+|`columnLogicalName`|string|The logical name of the column where the option value is located.|
+|`value`|varies|The value of the option to be removed.|
+|`solutionUniqueName`|string|The unique name of the solution where the table is located. If this parameter is not provided, the option value will be removed from the table in the default solution.|
+
+#### Returns
+
+This function doesn't return a value.
 
 #### Example
 
 ```powershell
-# Retrieve the table to update it
-$bankAccountTable = Get-Table `
-   -logicalName 'new_bankaccount'
-# No query so all properties will be returned
-
-# Update the table
-$bankAccountTable.HasActivities = $true
-$bankAccountTable.Description = @{
-   '@odata.type'   = 'Microsoft.Dynamics.CRM.Label'
-   LocalizedLabels = @(
-      @{
-         '@odata.type' = 'Microsoft.Dynamics.CRM.LocalizedLabel'
-         Label         = 'Contains information about customer bank accounts'
-         LanguageCode  = $languageCode
-      }
-   )
-}
-# Send the request to update the table
-Update-Table `
-   -table $bankAccountTable `
-   -solutionUniqueName 'mysolution' `
-   -mergeLabels $true
+Remove-OptionValue `
+   -tableLogicalName "account" `
+   -columnLogicalName "new_type" `
+   -value 3 `
+   -solutionUniqueName "MySolution"
 ```
-
-#### Notes
-
-The function requires a global variable `$baseURI` and `$baseHeaders` to be set before it is called.
-The function also calls another function `Invoke-ResilientRestMethod` which is not defined in this snippet.
-
-### Get-TableColumns function
-
-A function to retrieve the columns of a specific table in Dataverse.
-
-This function sends a GET request to a specified URI to retrieve the columns (attributes) of a specific table in the database. 
-It uses resilient REST method to handle potential network issues.
-
-#### Parameters
-
-|Parameter|Type|Description|
-|---|---|---|
-|`tableLogicalName`|string|The logical name of the table whose columns are to be retrieved.|
-|`query`|string|The query string to be appended to the base URI to form the complete URI for the GET request.|
-
-#### Example
-
-```powershell
-Get-TableColumns -tableLogicalName 'account' -query "?`$filter=SchemaName eq 'Name'"
-```
-
-#### Notes
-
-The function requires a global variable `$baseURI` and `$baseHeaders` to be set before it is called.
-The function also calls another function `Invoke-ResilientRestMethod` which is not defined in this snippet.
-The function returns the columns of the specified table.
-
-### New-Column function
-
-A function to create a new column in a specific table in a database.
-
-This function sends a POST request to a specified URI to create a new column in a specific table in the database. 
-It uses resilient REST method to handle potential network issues.
-
-#### Parameters
-
-|Parameter|Type|Description|
-|---|---|---|
-|`tableLogicalName`|string|The logical name of the table where the new column will be created.|
-|`column`|hashtable|A hashtable that represents the new column to be created. It should contain the details of the column.|
-|`solutionUniqueName`|string|The unique name of the solution where the table is located. If this parameter is not provided, the column will be created in the table in the default solution.|
-
-#### Example
-
-```powershell
-$boolColumnData = @{
-      '@odata.type' = 'Microsoft.Dynamics.CRM.BooleanAttributeMetadata'
-      SchemaName    = "sample_Boolean"
-      DefaultValue  = $false
-      RequiredLevel = @{
-         Value = 'None'
-      }
-      DisplayName   = @{
-         '@odata.type'   = 'Microsoft.Dynamics.CRM.Label'
-         LocalizedLabels = @(
-            @{
-               '@odata.type' = 'Microsoft.Dynamics.CRM.LocalizedLabel'
-               Label         = 'Sample Boolean'
-               LanguageCode  = $languageCode
-            }
-         )
-      }
-      Description   = @{
-         '@odata.type'   = 'Microsoft.Dynamics.CRM.Label'
-         LocalizedLabels = @(
-            @{
-               '@odata.type' = 'Microsoft.Dynamics.CRM.LocalizedLabel'
-               Label         = 'Sample Boolean column description'
-               LanguageCode  = $languageCode
-            }
-         )
-      }
-      OptionSet     = @{
-         '@odata.type' = 'Microsoft.Dynamics.CRM.BooleanOptionSetMetadata'
-         TrueOption    = @{
-            Value = 1
-            Label = @{
-               '@odata.type'   = 'Microsoft.Dynamics.CRM.Label'
-               LocalizedLabels = @(
-                  @{
-                     '@odata.type' = 'Microsoft.Dynamics.CRM.LocalizedLabel'
-                     Label         = 'True'
-                     LanguageCode  = $languageCode
-                  }
-               )
-            }
-         }
-         FalseOption   = @{
-            Value = 0
-            Label = @{
-               '@odata.type'   = 'Microsoft.Dynamics.CRM.Label'
-               LocalizedLabels = @(
-                  @{
-                     '@odata.type' = 'Microsoft.Dynamics.CRM.LocalizedLabel'
-                     Label         = 'False'
-                     LanguageCode  = $languageCode
-                  }
-               )
-            }
-         }
-      }
-   }
-
-# Create the column
-$boolColumnId = New-Column `
-   -tableLogicalName 'sample_bankaccount' `
-   -column $boolColumnData `
-   -solutionUniqueName 'mysolution'
-```
-
-#### Notes
-
-The function requires a global variable `$baseURI` and `$baseHeaders` to be set before it is called.
-The function also calls another function `Invoke-ResilientRestMethod` which is not defined in this snippet.
-The function returns the GUID of the newly created column.
-
-
-### Get-Column function
-
-A function to retrieve a specific column from a specific table in a database.
-
-This function sends a GET request to a specified URI to retrieve a specific column from a specific table in the database. 
-It uses resilient REST method to handle potential network issues.
-
-#### Parameters
-
-|Parameter|Type|Description|
-|---|---|---|
-|`tableLogicalName`|string|The logical name of the table from which the column will be retrieved.|
-|`logicalName`|string|The logical name of the column to be retrieved.|
-|`type`|string|The type of the column to be retrieved. This function supports the following types: 'BigInt', 'Boolean', 'DateTime', 'Decimal', 'Double', 'File', 'Image', 'Integer', 'Lookup', 'ManagedProperty', 'Memo', 'Money', 'String', 'EntityName', 'UniqueIdentifier', 'MultiSelectPicklist', 'Picklist', 'State', 'Status'.|
-|`query`|string|The query string to be appended to the base URI to form the complete URI for the GET request.|
-
-#### Example
-
-```powershell
-Get-Column `
-   -tableLogicalName 'account' `
-   -logicalName 'accountid' `
-   -type 'UniqueIdentifier" `
-   -query "?`$select=SchemaName,DisplayName,AttributeType"
-```
-
-#### Notes
-
-The function requires a global variable `$baseURI` and `$baseHeaders` to be set before it is called.
-The function also calls another function `Invoke-ResilientRestMethod` which is not defined in this snippet.
-The function returns the details of the specified column.
 
 ### Update-Column function
 
-A function to update a specific column in a specific table in a database.
-
-This function sends a PUT request to a specified URI to update a specific column in a specific table in the database. 
-It uses resilient REST method to handle potential network issues.
+A function to update a column in a Dataverse table.
 
 #### Parameters
 
@@ -884,6 +1378,10 @@ It uses resilient REST method to handle potential network issues.
 |`type`|string|The type of the column to be updated. This function supports the following types: 'BigInt', 'Boolean', 'DateTime', 'Decimal', 'Double', 'File', 'Image', 'Integer', 'Lookup', 'ManagedProperty', 'Memo', 'Money', 'String', 'UniqueIdentifier'.|
 |`solutionUniqueName`|string|The unique name of the solution where the table is located. If this parameter is not provided, the column will be updated in the table in the default solution.|
 |`mergeLabels`|boolean|A boolean value that indicates whether to merge labels during the update operation.|
+
+#### Returns
+
+This function doesn't return a value.
 
 #### Example
 
@@ -926,18 +1424,9 @@ Update-Column `
    -mergeLabels $true
 ```
 
-#### Notes
-
-The function requires a global variable `$baseURI` and `$baseHeaders` to be set before it is called.
-The function also calls another function `Invoke-ResilientRestMethod` which is not defined in this snippet.
-The function does not return any value.
-
 ### Update-OptionValue function
 
-A function to update the value of an option in a specific column in a specific table in Dataverse.
-
-This function sends a POST request to a specified URI to update the value of an option in a specific column in a specific table in the database. 
-It uses resilient REST method to handle potential network issues.
+A function to update the value of an option in a column in a table in Dataverse.
 
 #### Parameters
 
@@ -950,6 +1439,10 @@ It uses resilient REST method to handle potential network issues.
 |`languageCode`|integer|The language code for the label.|
 |`mergeLabels`|boolean|A boolean value that indicates whether to merge labels during the update operation.|
 |`solutionUniqueName`|string|The unique name of the solution where the table is located. If this parameter is not provided, the option will be updated in the table in the default solution.|
+
+#### Returns
+
+This function doesn't return a value.
 
 #### Example
 
@@ -964,56 +1457,9 @@ Update-OptionValue `
    -solutionUniqueName "MySolution"
 ```
 
-#### Notes
-
-The function requires a global variable `$baseURI` and `$baseHeaders` to be set before it is called.
-The function also calls another function `Invoke-ResilientRestMethod` which is not defined in this snippet.
-The function does not return any value.
-
-### New-OptionValue function
-
-A function to create a new option value in a specific column in a specific table in a database.
-
-This function sends a POST request to a specified URI to create a new option value in a specific column in a specific table in the database. 
-It uses resilient REST method to handle potential network issues.
-
-#### Parameters
-
-|Parameter|Type|Description|
-|---|---|---|
-|`tableLogicalName`|string|The logical name of the table where the column is located.|
-|`columnLogicalName`|string|The logical name of the column where the new option value will be created.|
-|`label`|string|The label for the new option value.|
-|`languageCode`|integer|The language code for the label.|
-|`value`|varies|The value for the new option.|
-|`solutionUniqueName`|string|The unique name of the solution where the table is located. If this parameter is not provided, the new option value will be created in the table in the default solution.|
-
-#### Example
-
-```powershell
-New-OptionValue `
-   -tableLogicalName 'sample_bankaccount' `
-   -columnLogicalName 'sample_picklist' `
-   -label 'Echo' `
-   -languageCode 1033 `
-   -solutionUniqueName 'mysolution'
-```
-
-#### Return
-
-The function returns the value of the newly created option.
-
-#### Notes
-
-The function requires a global variable `$baseURI` and `$baseHeaders` to be set before it is called.
-The function also calls another function `Invoke-ResilientRestMethod` which is not defined in this snippet.
-
 ### Update-OptionsOrder function
 
-A function to update the order of options in a specific column in a specific Dataverse table.
-
-This function sends a POST request to a specified URI to update the order of options in a specific column in a specific table in the database. 
-It uses resilient REST method to handle potential network issues.
+A function to update the order of options in a column in a Dataverse table.
 
 #### Parameters
 
@@ -1023,6 +1469,10 @@ It uses resilient REST method to handle potential network issues.
 |`columnLogicalName`|string|The logical name of the column where the options are located.|
 |`values`|array of integers|An array of integers representing the new order of the options.|
 |`solutionUniqueName`|string|The unique name of the solution where the table is located. If this parameter is not provided, the order of options will be updated in the table in the default solution.|
+
+#### Returns
+
+This function doesn't return a value.
 
 #### Example
 
@@ -1034,603 +1484,45 @@ Update-OptionsOrder `
    -solutionUniqueName "MySolution"
 ```
 
-#### Notes
+### Update-Table function
 
-The function requires a global variable `$baseURI` and `$baseHeaders` to be set before it is called.
-The function also calls another function `Invoke-ResilientRestMethod` which is not defined in this snippet.
-The function does not return any value.
-
-### Remove-OptionValue function
-
-A function to remove an option value from a specific column in a specific Dataverse table.
-
-This function sends a POST request to a specified URI to remove an option value from a specific column in a specific table in the database. 
-It uses resilient REST method to handle potential network issues.
+A function to update an existing Dataverse table.
 
 #### Parameters
 
 |Parameter|Type|Description|
 |---|---|---|
-|`tableLogicalName`|string|The logical name of the table where the column is located.|
-|`columnLogicalName`|string|The logical name of the column where the option value is located.|
-|`value`|varies|The value of the option to be removed.|
-|`solutionUniqueName`|string|The unique name of the solution where the table is located. If this parameter is not provided, the option value will be removed from the table in the default solution.|
+|`table`|PSCustomObject|A PSCustomObject that represents the table to be updated. It must include all the properties retrieved from Dataverse.|
+|`solutionUniqueName`|string|The unique name of the solution where the table is located. If this parameter is not provided, the table in the default solution will be updated.|
+|`mergeLabels`|boolean|A boolean value that indicates whether to merge labels during the update. If this parameter is not provided, labels will not be merged.|
+
+#### Returns
+
+This function doesn't return a value.
 
 #### Example
 
 ```powershell
-Remove-OptionValue `
-   -tableLogicalName "account" `
-   -columnLogicalName "new_type" `
-   -value 3 `
-   -solutionUniqueName "MySolution"
-```
+# Retrieve the table to update it
+$bankAccountTable = Get-Table `
+   -logicalName 'new_bankaccount'
+# No query so all properties will be returned
 
-#### Notes
-
-The function requires a global variable `$baseURI` and `$baseHeaders` to be set before it is called.
-The function also calls another function `Invoke-ResilientRestMethod` which is not defined in this snippet.
-The function does not return any value.
-
-### New-StatusOption function
-
-A function to create a new status option in a specific Dataverse table column.
-
-This function sends a POST request to a specified URI to create a new status option in a specific Dataverse table. 
-It uses resilient REST method to handle potential network issues.
-
-#### Parameters
-
-|Parameter|Type|Description|
-|---|---|---|
-|`tableLogicalName`|string|The logical name of the Dataverse table where the status option will be created.|
-|`label`|string|The label of the new status option.|
-|`languageCode`|integer|The language code for the label and description of the new status option.|
-|`stateCode`|integer|The state code of the new status option.|
-|`value`|varies|The value of the new status option. If this parameter is not provided, a value will be automatically assigned.|
-|`color`|string|The color of the new status option. If this parameter is not provided, a default color will be used.|
-|`description`|string|The description of the new status option.|
-|`solutionUniqueName`|string|The unique name of the solution where the Dataverse table is located. If this parameter is not provided, the status option will be created in the table in the default solution.|
-
-#### Example
-
-```powershell
-New-StatusOption `
-   -tableLogicalName "account" `
-   -label "New Status" `
-   -languageCode 1033 `
-   -stateCode 1 `
-   -value 100000000 `
-   -color "FF0000" `
-   -description "This is a new status option" `
-   -solutionUniqueName "MySolution"
-```
-
-#### Notes
-
-The function requires a global variable `$baseURI` and `$baseHeaders` to be set before it is called.
-The function also calls another function `Invoke-ResilientRestMethod` which is not defined in this snippet.
-The function returns the value of the new status option.
-
-### New-GlobalOptionSet function
-
-A function to create a new global option set in Dataverse.
-
-This function sends a POST request to a specified URI to create a new global option set in Dataverse. 
-It uses resilient REST method to handle potential network issues.
-
-#### Parameters
-
-|Parameter|Type|Description|
-|---|---|---|
-|`optionSet`|hashtable|A hashtable containing the details of the global option set to be created.|
-|`solutionUniqueName`|string|The unique name of the solution where the global option set will be created. If this parameter is not provided, the global option set will be created in the default solution.|
-
-#### Example
-
-```powershell
-$colorsGlobalOptionSetData = @{
-   '@odata.type' = 'Microsoft.Dynamics.CRM.OptionSetMetadata'
-   Name          = "sample_colors"
-   DisplayName   = @{
-      LocalizedLabels = @(
-         @{
-            Label        = 'Colors'
-            LanguageCode = 1033
-         }
-      )
-   }
-   Description   = @{
-      LocalizedLabels = @(
-         @{
-            Label        = 'Color Choice description'
-            LanguageCode = 1033
-         }
-      )
-   }
-   IsGlobal      = $true
-   Options       = @(
+# Update the table
+$bankAccountTable.HasActivities = $true
+$bankAccountTable.Description = @{
+   '@odata.type'   = 'Microsoft.Dynamics.CRM.Label'
+   LocalizedLabels = @(
       @{
-         Label = @{
-            LocalizedLabels = @(
-               @{
-                  Label        = 'Red'
-                  LanguageCode = 1033
-               }
-            )
-         }
-         Value = 100000000
-      },
-      @{
-         Label = @{
-            LocalizedLabels = @(
-               @{
-                  Label        = 'Yellow'
-                  LanguageCode = 1033
-               }
-            )
-         }
-         Value = 100000001
-      },
-      @{
-         Label = @{
-            LocalizedLabels = @(
-               @{
-                  Label        = 'Green'
-                  LanguageCode = 1033
-               }
-            )
-         }
-         Value = 100000002
+         '@odata.type' = 'Microsoft.Dynamics.CRM.LocalizedLabel'
+         Label         = 'Contains information about customer bank accounts'
+         LanguageCode  = $languageCode
       }
    )
 }
-New-GlobalOptionSet `
-   -optionSet $colorsGlobalOptionSetData `
-   -solutionUniqueName "MySolution"
+# Send the request to update the table
+Update-Table `
+   -table $bankAccountTable `
+   -solutionUniqueName 'mysolution' `
+   -mergeLabels $true
 ```
-
-#### Notes
-
-The function requires a global variable `$baseURI` and `$baseHeaders` to be set before it is called.
-The function also calls another function `Invoke-ResilientRestMethod` which is not defined in this snippet.
-The function returns the GUID of the newly created global option set.
-
-### Get-GlobalOptionSet function
-
-A function to retrieve a global option set from Dataverse.
-
-This function sends a GET request to a specified URI to retrieve a global option set from Dataverse. 
-It uses resilient REST method to handle potential network issues.
-
-#### Parameters
-
-|Parameter|Type|Description|
-|---|---|---|
-|`name`|string|The name of the global option set to be retrieved. Either this or the id must be provided.|
-|`id`|string|The GUID of the global option set to be retrieved. Either this or the name must be provided.|
-|`type`|string|The type of the global option set to be retrieved. It can be 'OptionSet' or 'Boolean'. If this parameter is not provided, the function will not enable expanding the options.|
-|`query`|string|An OData query string to filter the global option set to be retrieved.|
-
-#### Example
-
-```powershell
-Get-GlobalOptionSet -name "new_globaloptionset" -type "OptionSet"
-```
-
-#### Notes
-
-The function requires a global variable `$baseURI` and `$baseHeaders` to be set before it is called.
-The function also calls another function `Invoke-ResilientRestMethod` which is not defined in this snippet.
-The function returns the global option set if found, or `$null` if not found.
-If the server returns an error other than 404, the function will throw an exception.
-
-### New-CustomerRelationship function
-
-A function to create a new customer relationship in Dataverse.
-
-This function sends a POST request to a specified URI to create a new customer relationship in Dataverse. 
-It uses resilient REST method to handle potential network issues.
-
-#### Parameters
-
-|Parameter|Type|Description|
-|---|---|---|
-|`lookup`|hashtable|A hashtable containing the details of the lookup field for the customer relationship.|
-|`oneToManyRelationships`|array|An array of hashtables, each containing the details of a one-to-many relationship for the customer relationship.|
-|`solutionUniqueName`|string|The unique name of the solution where the customer relationship will be created. If this parameter is not provided, the customer relationship will be created in the default solution.|
-
-#### Example
-
-```powershell
-$customerLookupData = @{
-      SchemaName    = "sample_CustomerId"
-      RequiredLevel = @{
-         Value = 'None'
-      }
-      DisplayName   = @{
-         LocalizedLabels = @(
-            @{
-               Label        = 'Sample Bank Account owner'
-               LanguageCode = 1033
-            }
-         )
-      }
-      Description   = @{
-         LocalizedLabels = @(
-            @{
-               Label        = 'The owner of the bank account'
-               LanguageCode = 1033
-            }
-         )
-      }
-      Targets       = @('account', 'contact')
-   }
-
-   $customerRelationships = @(
-      @{
-         SchemaName        = "sample_BankAccount_Customer_Account"
-         ReferencedEntity  = 'account'
-         ReferencingEntity = 'sample_bankaccount'
-         RelationshipType  = 'OneToManyRelationship'
-      },
-      @{
-         SchemaName        = "sample_BankAccount_Customer_Contact"
-         ReferencedEntity  = 'contact'
-         ReferencingEntity = 'sample_bankaccount'
-         RelationshipType  = 'OneToManyRelationship'
-      }
-   )
-
-   $response = New-CustomerRelationship `
-   -lookup $customerLookupData `
-   -oneToManyRelationships $customerRelationships `
-   -solutionUniqueName $solutionData.uniquename
-   
-   
-   $customerLookupRelationshipIds = $response.RelationshipIds
-   $customerLookupId = $response.AttributeId
-```
-
-#### Notes
-
-The function requires a global variable `$baseURI` and `$baseHeaders` to be set before it is called.
-The function also calls another function `Invoke-ResilientRestMethod` which is not defined in this snippet.
-The function does not return a value.
-
-### Get-Relationship function
-
-A function to retrieve a relationship from Dataverse.
-
-This function sends a GET request to a specified URI to retrieve a relationship from Dataverse. 
-It uses resilient REST method to handle potential network issues.
-
-#### Parameters
-
-|Parameter|Type|Description|
-|---|---|---|
-|`schemaName`|string|The schema name of the relationship to be retrieved. Either this or the id must be provided.|
-|`id`|GUID|The GUID of the relationship to be retrieved. Either this or the schema name must be provided.|
-|`type`|string|The type of the relationship to be retrieved. It can be 'OneToMany', 'ManyToOne', or 'ManyToMany'. If this parameter is not provided, the function will not enable expanding or selecting type specific properties.|
-|`query`|string|An OData query string to filter the relationship to be retrieved.|
-
-#### Example
-
-```powershell
-Get-Relationship -schemaName "new_account_customer" -type "OneToMany"
-```
-
-#### Notes
-
-The function requires a global variable `$baseURI` and `$baseHeaders` to be set before it is called.
-The function also calls another function `Invoke-ResilientRestMethod` which is not defined in this snippet.
-The function returns the relationship if found.
-
-### Get-CanBeReferenced function
-
-A function to check if a table can be referenced in Dataverse.
-
-This function sends a POST request to a specified URI to check if a table can be referenced in Dataverse. 
-It uses resilient REST method to handle potential network issues.
-
-#### Parameters
-
-|Parameter|Type|Description|
-|---|---|---|
-|`tableLogicalName`|string|The logical name of the table to be checked.|
-
-#### Example
-
-```powershell
-Get-CanBeReferenced -tableLogicalName "account"
-```
-
-#### Notes
-
-The function requires a global variable `$baseURI` and `$baseHeaders` to be set before it is called.
-The function also calls another function `Invoke-ResilientRestMethod` which is not defined in this snippet.
-The function returns a boolean value indicating whether the table can be referenced.
-
-### Get-CanBeReferencing function
-
-A function to check if a table can be referencing in Dataverse.
-
-This function sends a POST request to a specified URI to check if a table can be referencing in Dataverse. 
-It uses resilient REST method to handle potential network issues.
-
-#### Parameters
-
-|Parameter|Type|Description|
-|---|---|---|
-|`tableLogicalName`|string|The logical name of the table to be checked.|
-
-#### Example
-
-```powershell
-Get-CanBeReferencing -tableLogicalName "account"
-```
-
-#### Notes
-
-The function requires a global variable `$baseURI` and `$baseHeaders` to be set before it is called.
-The function also calls another function `Invoke-ResilientRestMethod` which is not defined in this snippet.
-The function returns a boolean value indicating whether the table can be referencing.
-
-### Get-ValidReferencingTables function
-
-A function to get valid referencing tables for a specified table in Dataverse.
-
-This function sends a GET request to a specified URI to retrieve valid referencing tables for a specified table in Dataverse. 
-It uses resilient REST method to handle potential network issues.
-
-#### Parameters
-
-|Parameter|Type|Description|
-|---|---|---|
-|`tableLogicalName`|string|The logical name of the table for which to retrieve valid referencing tables.|
-
-#### Example
-
-```powershell
-Get-ValidReferencingTables -tableLogicalName "account"
-```
-
-#### Notes
-
-The function requires a global variable `$baseURI` and `$baseHeaders` to be set before it is called.
-The function also calls another function `Invoke-ResilientRestMethod` which is not defined in this snippet.
-The function returns an array of strings, each string being the logical name of a valid referencing table.
-
-### New-Relationship function
-
-A function to create a new relationship in Dataverse.
-
-This function sends a POST request to a specified URI to create a new relationship in Dataverse. 
-It uses resilient REST method to handle potential network issues.
-
-#### Parameters
-
-|Parameter|Type|Description|
-|---|---|---|
-|`relationship`|hashtable|A hashtable containing the details of the relationship to be created.|
-|`solutionUniqueName`|string|The unique name of the solution where the relationship will be created. If this parameter is not provided, the relationship will be created in the default solution.|
-
-#### Example
-
-```powershell
-$oneToManyRelationshipData = @{
-   '@odata.type'               = 'Microsoft.Dynamics.CRM.OneToManyRelationshipMetadata'
-   SchemaName                  = 'sample_BankAccount_Contacts'
-   ReferencedAttribute         = 'sample_bankaccountid'
-   ReferencedEntity            = 'sample_bankaccount'
-   ReferencingEntity           = 'contact'
-   Lookup                      = @{
-      SchemaName  = 'sample_BankAccountId'
-      DisplayName = @{
-         LocalizedLabels = @(
-            @{
-               Label        = 'Bank Account'
-               LanguageCode = 1033
-            }
-         )
-      }
-      Description = @{
-         LocalizedLabels = @(
-            @{
-               Label        = 'The bank account this contact has access to.'
-               LanguageCode = 1033
-            }
-         )
-      }
-   }
-   AssociatedMenuConfiguration = @{
-      Behavior = 'UseLabel'
-      Group    = 'Details'
-      Label    = @{
-         LocalizedLabels = @(
-            @{
-               Label        = 'Cardholders'
-               LanguageCode = 1033
-            }
-         )
-      }
-      Order    = 10000
-   }
-   CascadeConfiguration        = @{
-      Assign     = 'NoCascade'
-      Share      = 'NoCascade'
-      Unshare    = 'NoCascade'
-      RollupView = 'NoCascade'
-      Reparent   = 'NoCascade'
-      Delete     = 'RemoveLink'
-      Merge      = 'NoCascade'
-   }
-}
-New-Relationship `
-   -relationship $oneToManyRelationshipData `
-   -solutionUniqueName 'MySolution'
-```
-
-#### Notes
-
-The function requires a global variable `$baseURI` and `$baseHeaders` to be set before it is called.
-The function also calls another function `Invoke-ResilientRestMethod` which is not defined in this snippet.
-The function returns the GUID of the created relationship.
-
-### Get-Relationships function
-
-A function to retrieve relationships from Dataverse.
-
-This function sends a GET request to a specified URI to retrieve relationships from Dataverse. 
-It uses resilient REST method to handle potential network issues.
-
-#### Parameters
-
-|Parameter|Type|Description|
-|---|---|---|
-|`query`|string|An OData query string to filter the relationships to be retrieved.|
-|`isManyToMany`|boolean|A boolean value indicating whether to retrieve many-to-many relationships. If this parameter is set to true, many-to-many relationships are retrieved; otherwise, one-to-many relationships are retrieved.|
-
-#### Example
-
-```powershell
-$relationshipQuery = "?`$filter=SchemaName eq '"
-$relationshipQuery += 'sample_BankAccount_Contacts'
-$relationshipQuery += "'&`$select=SchemaName"
-   
-$relationshipQueryResults = (Get-Relationships `
-      -query $relationshipQuery `
-      -isManyToMany $false).value
-```
-
-#### Notes
-
-The function requires a global variable `$baseURI` and `$baseHeaders` to be set before it is called.
-The function also calls another function `Invoke-ResilientRestMethod` which is not defined in this snippet.
-The function returns the relationships that match the provided query.
-
-### Get-CanManyToMany function
-
-A function to check if a table can have many-to-many relationships in Dataverse.
-
-This function sends a POST request to a specified URI to check if a table can have many-to-many relationships in Dataverse. 
-It uses resilient REST method to handle potential network issues.
-
-#### Parameters
-
-|Parameter|Type|Description|
-|---|---|---|
-|`tableLogicalName`|string|The logical name of the table to be checked.|
-
-#### Example
-
-```powershell
-Get-CanManyToMany -tableLogicalName "account"
-```
-
-#### Notes
-
-The function requires a global variable `$baseURI` and `$baseHeaders` to be set before it is called.
-The function also calls another function `Invoke-ResilientRestMethod` which is not defined in this snippet.
-The function returns a boolean value indicating whether the table can have many-to-many relationships.
-
-### Get-ValidManyToManyTables function
-
-A function to get valid tables for many-to-many relationships in Dataverse.
-
-This function sends a GET request to a specified URI to retrieve valid tables for many-to-many relationships in Dataverse. 
-It uses resilient REST method to handle potential network issues.
-
-#### Example
-
-```powershell
-Get-ValidManyToManyTables
-```
-
-#### Notes
-
-The function requires a global variable `$baseURI` and `$baseHeaders` to be set before it is called.
-The function also calls another function `Invoke-ResilientRestMethod` which is not defined in this snippet.
-The function returns an array of strings, each string being the logical name of a valid table for many-to-many relationships.
-
-### Export-Solution function
-
-A function to export a solution from Dataverse.
-
-This function sends a POST request to a specified URI to export a solution from Dataverse. 
-It uses resilient REST method to handle potential network issues.
-
-#### Parameters
-
-|Parameter|Type|Description|
-|---|---|---|
-|`solutionName`|string|The name of the solution to be exported.|
-|`managed`|boolean|A boolean value indicating whether the solution is managed.|
-|`exportAutoNumberingSettings`|boolean|A boolean value indicating whether to export auto-numbering settings.|
-|`exportCalendarSettings`|boolean|A boolean value indicating whether to export calendar settings.|
-|`exportCustomizationSettings`|boolean|A boolean value indicating whether to export customization settings.|
-|`exportEmailTrackingSettings`|boolean|A boolean value indicating whether to export email tracking settings.|
-|`exportGeneralSettings`|boolean|A boolean value indicating whether to export general settings.|
-|`exportMarketingSettings`|boolean|A boolean value indicating whether to export marketing settings.|
-|`exportOutlookSynchronizationSettings`|boolean|A boolean value indicating whether to export Outlook synchronization settings.|
-|`exportRelationshipRoles`|boolean|A boolean value indicating whether to export relationship roles.|
-|`exportIsvConfig`|boolean|A boolean value indicating whether to export ISV configuration.|
-|`exportSales`|boolean|A boolean value indicating whether to export sales settings.|
-|`exportExternalApplications`|boolean|A boolean value indicating whether to export external applications settings.|
-|`exportComponentsParams`|hashtable|A hashtable containing additional parameters for exporting components.|
-
-#### Example
-
-```powershell
-$solutionFile = Export-Solution `
-   -solutionName 'mySolution'`
-   -managed $true
-```
-
-#### Notes
-
-The function requires a global variable `$baseURI` and `$baseHeaders` to be set before it is called.
-The function also calls another function `Invoke-ResilientRestMethod` which is not defined in this snippet.
-The function returns the exported solution as a byte array.
-
-### Import-Solution function
-
-A function to import a solution into Dataverse.
-
-This function sends a POST request to a specified URI to import a solution into Dataverse. 
-It uses resilient REST method to handle potential network issues.
-
-#### Parameters
-
-|Parameter|Type|Description|
-|---|---|---|
-|`customizationFile`|byte array|The solution file to be imported.|
-|`overwriteUnmanagedCustomizations`|boolean|A boolean value indicating whether to overwrite unmanaged customizations.|
-|`importJobId`|GUID|The GUID of the import job.|
-|`publishWorkflows`|boolean|A boolean value indicating whether to publish workflows.|
-|`convertToManaged`|boolean|A boolean value indicating whether to convert the solution to managed.|
-|`skipProductUpdateDependencies`|boolean|A boolean value indicating whether to skip product update dependencies.|
-|`holdingSolution`|boolean|A boolean value indicating whether the solution is a holding solution.|
-|`componentParameters`|array of hashtables|An array of hashtables containing additional parameters for importing components.|
-|`solutionParameters`|hashtable|A hashtable containing additional parameters for importing the solution.|
-
-#### Example
-
-```powershell
-$importJobId = New-Guid
-   
-Import-Solution `
-   -customizationFile ([System.IO.File]::ReadAllBytes("C:\path\to\solution.zip")) `
-   -overwriteUnmanagedCustomizations $false `
-   -importJobId $importJobId
-```
-
-#### Notes
-
-The function requires a global variable `$baseURI` and `$baseHeaders` to be set before it is called.
-The function also calls another function `Invoke-ResilientRestMethod` which is not defined in this snippet.
-The function does not return a value.
-
-
-
-
