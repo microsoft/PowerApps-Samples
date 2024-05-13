@@ -17,7 +17,7 @@ This PowerShell sample demonstrates how to work with the following using the Dat
 - Relationship definitions
 - Importing and exporting solutions
 
-This sample uses the common helper libraries created as described in [Use PowerShell and Visual Studio Code with the Dataverse Web API](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/use-ps-and-vscode-web-api). These functions are defined in the [MetadataOperations.ps1](../MetadataOperations.ps1) file.
+This sample uses the common helper libraries created as described in [Use PowerShell and Visual Studio Code with the Dataverse Web API](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/use-ps-and-vscode-web-api). These functions are defined in the [MetadataOperations.ps1](../MetadataOperations.ps1) file. You can find descriptions and examples in [Dataverse Web API PowerShell Helper Metadata operations](../README.md#metadata-operations-functions)
 
 ## Prerequisites
 
@@ -59,7 +59,7 @@ This sample has 11 regions:
 
 Operations: Create a solution record and an associated publisher record.
 
-- After first checking whether these records already exist using the `Get-Records` function, the script creates them if they don't exist using the `New-Record` function. These functions are in the [TableOperations.ps1](../TableOperations.ps1) file.
+- After first checking whether these records already exist using the [Get-Records function](../README.md#get-records-function), the script creates them if they don't exist using the [New-Record function](../README.md#new-record-function). These functions are in the [TableOperations.ps1](../TableOperations.ps1) file.
 - All solution components created in this sample will be associated to the solution so that they can be exported. This association is created using the `MSCRM.SolutionUniqueName` request header setting the solution unique name set as the value.
 - All names of solution components are prefixed using the publisher customization prefix.
 - Details about these records are added to the `$recordsToDelete` array so that they can be deleted later.
@@ -68,40 +68,40 @@ Operations: Create a solution record and an associated publisher record.
 
 Operations:
 
-- Check whether a `sample_BankAccount` table exists using the `Get-Tables` function.
-- If the column doesn't exist, create a new `sample_BankAccount` user-owned table using the `New-Table` function.
-- Retrieve the created table using the `Get-Table` function.
-- Update the table using the `Update-Table` function.
+- Check whether a `sample_BankAccount` table exists using the [Get-Tables function](../README.md#get-tables-function).
+- If the column doesn't exist, create a new `sample_BankAccount` user-owned table using the [New-Table function](../README.md#new-table-function).
+- Retrieve the created table using the [Get-Table function](../README.md#get-table-function).
+- Update the table using the [Update-Table function](../README.md#update-table-function).
 
 ### Section 2: Create, Retrieve and Update Columns
 
 Operations:
 
-- Check whether a boolean column named `sample_Boolean` exists in the `sample_BankAccount` table using the `Get-TableColumns` function.
-- If the column doesn't exist, create a new boolean column for the `sample_BankAccount` table using the `New-Column` function.
-- Retrieve the boolean column using the `Get-Column` function.
-- Update the boolean column using the the `Update-Column` function.
-- Update the option labels for the boolean column using the `Update-OptionValue` function.
+- Check whether a boolean column named `sample_Boolean` exists in the `sample_BankAccount` table using the [Get-TableColumns function](../README.md#get-tablecolumns-function).
+- If the column doesn't exist, create a new boolean column for the `sample_BankAccount` table using the [New-Column function](../README.md#new-column-function).
+- Retrieve the boolean column using the [Get-Column function](../README.md#get-column-function).
+- Update the boolean column using the the [Update-Column function](../README.md#update-column-function).
+- Update the option labels for the boolean column using the [Update-OptionValue function](../README.md#update-optionvalue-function).
 - Query, create, and retrieve a new datetime column for the `sample_BankAccount` table using the `Get-TableColumns`, `New-Column`, and `Get-Column` functions.
 - Query, create, and retrieve a new decimal column for the `sample_BankAccount` table.
 - Query, create, and retrieve a new integer column for the `sample_BankAccount` table.
 - Query, create, and retrieve a new memo column for the `sample_BankAccount` table.
 - Query, create, and retrieve a new money column for the `sample_BankAccount` table.
 - Query, create, and retrieve a new choice (`Picklist`) column for the `sample_BankAccount` table.
-   - Add a new option to the choice column using the `New-OptionValue` function
-   - Change the order of the options of the choice column using the `Update-OptionsOrder` function.
-   - Delete one of the options of the choice column using the `Remove-OptionValue` function.
+   - Add a new option to the choice column using the [New-OptionValue function](../README.md#new-optionvalue-function)
+   - Change the order of the options of the choice column using the [Update-OptionsOrder function](../README.md#update-optionsorder-function).
+   - Delete one of the options of the choice column using the [Remove-OptionValue function](../README.md#remove-optionvalue-function).
 - Query, create, and retrieve a new choices (`MultiSelectPicklist`) column for the `sample_BankAccount` table.
 - Query, create, and retrieve a new big int column for the `sample_BankAccount` table.
-- Create a new Status option for the `sample_BankAccount` table using the `New-StatusOption` function.
+- Create a new Status option for the `sample_BankAccount` table using the [New-StatusOption function](../README.md#new-statusoption-function).
 
 ### Section 3: Create and use Global OptionSet
 
 Operations:
 
-- Check whether global choice already exists using the `Get-GlobalOptionSet` function.
-- If it doesn't exist, create a new global choice using the `New-GlobalOptionSet` function.
-- Retrieve the global choice using the `Get-GlobalOptionSet` function
+- Check whether global choice already exists using the [Get-GlobalOptionSet function](../README.md#get-globaloptionset-function).
+- If it doesn't exist, create a new global choice using the [New-GlobalOptionSet function](../README.md#new-globaloptionset-function).
+- Retrieve the global choice using the [Get-GlobalOptionSet function](../README.md#get-globaloptionset-function)
 - Create a new choice column for the `sample_BankAccount` table using the global choice using the `New-Column` function
 
 ### Section 4: Create Customer Relationship
@@ -109,49 +109,49 @@ Operations:
 Operations:
 
 - Check whether a customer column exists using the `Get-TableColumns` function.
-- If it doesn't exist, create a new customer column for the `sample_BankAccount` table using the `New-CustomerRelationship` function.
+- If it doesn't exist, create a new customer column for the `sample_BankAccount` table using the [New-CustomerRelationship function](../README.md#new-customerrelationship-function).
 - Retrieve the customer column using the `Get-Column` function
-- Retrieve the relationships created for the customer column using the `Get-Relationship` function.
+- Retrieve the relationships created for the customer column using the [Get-Relationship function](../README.md#get-relationship-function).
 
 ### Section 5: Create and retrieve a one-to-many relationship
 
 Operations:
 
-- Verify that the `sample_BankAccount` table is eligible to be referenced in a 1:N relationship using the `Get-CanBeReferenced`  function.
-- Verify that the `contact` table is eligible to be reference other tables in a 1:N relationship using the `Get-CanBeReferencing` function.
-- Identify what other tables can reference the `sample_BankAccount` table in a 1:N relationship using the `Get-ValidReferencingTables` function.
-- Check whether a 1:N relationship exists using the `Get-Relationships` function.
-- If it doesn't exist, create a 1:N relationship between `sample_BankAccount` and `contact` tables using the `New-Relationship` function.
+- Verify that the `sample_BankAccount` table is eligible to be referenced in a 1:N relationship using the [Get-CanBeReferenced function](../README.md#get-canbereferenced-function).
+- Verify that the `contact` table is eligible to be reference other tables in a 1:N relationship using the [Get-CanBeReferencing function](../README.md#get-canbereferencing-function).
+- Identify what other tables can reference the `sample_BankAccount` table in a 1:N relationship using the [Get-ValidReferencingTables function](../README.md#get-validreferencingtables-function).
+- Check whether a 1:N relationship exists using the [Get-Relationships function](../README.md#get-relationships-function).
+- If it doesn't exist, create a 1:N relationship between `sample_BankAccount` and `contact` tables using the [New-Relationship function](../README.md#new-relationship-function).
 
 ### Section 6: Create and retrieve a many-to-one relationship
 
 Operations:
 
-- Create a N:1 relationship between `sample_BankAccount` and `account` tables using the TODO.
-- Retrieve the N:1 relationship using the TODO
+- Create a N:1 relationship between `sample_BankAccount` and `account` tables using the [New-Relationship function](../README.md#new-relationship-function).
+- Retrieve the N:1 relationship using the [Get-Relationships function](../README.md#get-relationships-function)
 
 ### Section 7: Create and retrieve a many-to-many relationship
 
 Operations:
 
-- Verify that the `sample_BankAccount` and `contact` tables are eligible to participate in a N:N relationship using the TODO
-- Verify that the `sample_BankAccount` and `contact` tables are eligible to participate in a N:N relationship using the TODO
-- Create a N:N relationship between `sample_BankAccount` and `contact` tables using the TODO
-- Retrieve the N:N relationship using the TODO
+- Verify that the `sample_BankAccount` and `contact` tables are eligible to participate in a N:N relationship using the [Get-CanManyToMany function](../README.md#get-canmanytomany-function)
+- Verify that the `sample_BankAccount` and `contact` tables are eligible to participate in a N:N relationship using the [Get-ValidManyToManyTables function](../README.md#get-validmanytomanytables-function)
+- Create a N:N relationship between `sample_BankAccount` and `contact` tables using the [New-Relationship function](../README.md#new-relationship-function)
+- Retrieve the N:N relationship using the [Get-Relationships function](../README.md#get-relationships-function)
 
 ### Section 8: Export managed solution
 
-Operations: Export the solution containing the items created in this sample using the TODO
+Operations: Export the solution containing the items created in this sample using the [Export-Solution function](../README.md#export-solution-function)
 
 ### Section 9: Delete sample records
 
-Operations: A reference to each record created in this sample was added to a list as it was created. In this sample the records are deleted using a `$batch` operation using the TODO
+Operations: A reference to each record created in this sample was added to a list as it was created. In this sample the records are deleted in the reverse order they were created using the [Remove-Record function](../README.md#remove-record-function)
 
 ### Section 10: Import and Delete managed solution
 
 Operations:
 
-- Import the solution exported in [Section 8](#section-8-export-managed-solution) using the TODO
+- Import the solution exported in [Section 8](#section-8-export-managed-solution) using the [Import-Solution function](../README.md#import-solution-function)
 - Query the solution table to get the id of the imported solution
 - Delete the imported solution.
 
