@@ -39,8 +39,8 @@ This sample requires:
 
 ## How to run the sample
 
-1. Clone or download the [PowerApps-Samples](../../../../../PowerApps-Samples) repository.
-1. Open the [MetadataOperations.ps1](MetadataOperations.ps1) file using Visual Studio Code
+1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
+1. Open the [MetadataOperations.ps1](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/PS/MetadataOperations/MetadataOperationsSample.ps1) file using Visual Studio Code
 1. Edit this line to use the URL of the environment you want to connect to:
 
    `Connect 'https://yourorg.crm.dynamics.com/' # change this`
@@ -162,3 +162,151 @@ By default this sample will delete all the records created in it.
 If you want to view created records after the sample is completed, change the `deleteCreatedRecords` variable to `false` and you will be prompted to decide if you want to delete the records.
 
 **Note**: If you do not delete the un-managed solution components created by this sample, the code in [Section 10](#section-10-import-and-delete-managed-solution) will fail.
+
+## Console Output
+
+The complete output to the console should look something like this:
+
+```text
+PS C:\GitHub\PowerApps-Samples\dataverse\webapi\PS>
+PS C:\GitHub\PowerApps-Samples\dataverse\webapi\PS> . 'C:\GitHub\PowerApps-Samples\dataverse\webapi\PS\MetadataOperations\MetadataOperationsSample.ps1'
+Example Publisher created successfully
+Metadata Example Solution created successfully
+Bank Account table created successfully
+Retrieved Bank Account table.
+Bank Account table updated successfully
+Sample Boolean column created successfully
+Original Option Labels:
+ True Option Label: True
+ False Option Label: False
+Sample Boolean Column updated successfully
+Option values updated successfully
+Updated Option Labels:
+ True Option Label: Up
+ False Option Label: Down
+Example DateTime column created successfully
+Retrieved Sample DateTime column.
+ DateTimeBehavior: DateOnly
+ Format: DateOnly
+Sample Decimal column created successfully
+Retrieved Sample Decimal column.
+ MaxValue: 100
+ MinValue: 0
+ Precision: 1
+Sample Integer column created successfully
+Retrieved Sample Integer column.
+ MaxValue: 100
+ MinValue: 0
+ Format: None
+Sample Memo column created successfully
+Retrieved Sample Memo column.
+ Format: Text
+ ImeMode: Disabled
+ MaxLength: 500
+Sample Money column created successfully
+Retrieved Sample Money column.
+ MaxValue: 1000
+ MinValue: 0
+ Precision: 1
+ PrecisionSource: 1
+ ImeMode: Disabled
+Sample Choice column created successfully
+Retrieved Sample Choice column.
+Retrieved Choice column options:
+ Value: 727000000 Label: Bravo
+ Value: 727000001 Label: Delta
+ Value: 727000002 Label: Alpha
+ Value: 727000003 Label: Charlie
+ Value: 727000004 Label: Foxtrot
+Echo option added to the local optionset.
+Retrieved Sample Choice column again.
+Retrieved Choice column options:
+ Value: 727000000 Label: Bravo
+ Value: 727000001 Label: Delta
+ Value: 727000002 Label: Alpha
+ Value: 727000003 Label: Charlie
+ Value: 727000004 Label: Foxtrot
+ Value: 727000005 Label: Echo
+Choice column options re-ordered.
+Retrieved Sample Choice column again.
+Retrieved Choice column options with new order:
+ Value: 727000002 Label: Alpha
+ Value: 727000000 Label: Bravo
+ Value: 727000003 Label: Charlie
+ Value: 727000001 Label: Delta
+ Value: 727000005 Label: Echo
+ Value: 727000004 Label: Foxtrot
+Foxtrot option deleted from the local optionset.
+Sample MultiSelect Choice column created successfully
+Retrieved Sample MultiSelect Choice column.
+Retrieved MultiSelect Choice column options:
+ Value: 727000000 Label: Appetizer
+ Value: 727000001 Label: Entree
+ Value: 727000002 Label: Dessert
+Sample BigInt column created successfully
+Retrieved Sample BigInt column.
+ MaxValue: 9223372036854775807
+ MinValue: -9223372036854775808
+Frozen status added to the status column.
+With the value of: 727000000
+Retrieved Status Reason column again.
+Retrieved status column options:
+ Value: 1 Label: Active State: 0
+ Value: 2 Label: Inactive State: 1
+ Value: 727000000 Label: Frozen State: 1
+Colors global optionset created successfully                                                                
+Retrieved Colors global optionset.
+Retrieved global optionset options:
+ Value: 727000000 Label: Red
+ Value: 727000001 Label: Yellow
+ Value: 727000002 Label: Green
+Example Colors Choice column created successfully
+Retrieved Sample Colors Choice column.
+Retrieved Choice column options:
+ Value: 727000000 Label: Red
+ Value: 727000001 Label: Yellow
+ Value: 727000002 Label: Green
+Customer relationship created successfully
+Example Customer Lookup column created successfully
+Retrieved Sample Bank Account owner column Targets:
+ account
+ contact
+Retrieved Customer relationship IDs:
+ sample_BankAccount_Customer_Account
+ sample_BankAccount_Customer_Contact
+The Bank Account table is eligible to be a primary table in a one-to-many relationship.
+The Bank Account table is eligible to be a related table in a one-to-many relationship.
+The contact table is in the list of potential referencing entities for the Bank Account table.
+sample_BankAccount_Contacts One-to-Many relationship created successfully
+sample_Account_BankAccounts Many-to-One relationship created successfully
+The contact table can participate in many-to-many relationships.
+The Bank Account table can participate in many-to-many relationships.
+The contact table is in the list of tables that can participate in many-to-many relationships
+The Bank Account table is in the list of tables that can participate in many-to-many relationships
+sample_sample_BankAccounts_Contacts Many-to-Many relationship created successfully
+Managed solution exported to C:\GitHub\PowerApps-Samples\dataverse\webapi\PS\MetadataOperations\metadataexamplesolution.zip
+Deleting sample records...
+RelationshipDefinitions record with ID: 7746b5ec-7c11-ef11-9f89-7c1e520b124e deleted.
+RelationshipDefinitions record with ID: 037f08e2-7c11-ef11-9f89-6045bdec757e deleted.
+RelationshipDefinitions record with ID: db9953d9-7c11-ef11-9f89-7c1e520b124e deleted.
+EntityDefinitions(LogicalName='sample_bankaccount')/Attributes record with ID: a49d9074-b9bc-425d-9ca6-8b846269316c deleted.
+EntityDefinitions(LogicalName='sample_bankaccount')/Attributes record with ID: 5302e1c4-7c11-ef11-9f89-6045bdec757e deleted.
+GlobalOptionSetDefinitions record with ID: 7c2d43c3-7c11-ef11-9f89-7c1e520b124e deleted.
+EntityDefinitions(LogicalName='sample_bankaccount')/Attributes record with ID: cd48ebbf-7c11-ef11-9f89-6045bdec7f44 deleted.
+EntityDefinitions(LogicalName='sample_bankaccount')/Attributes record with ID: 201015b8-7c11-ef11-9f89-6045bdec757e deleted.
+EntityDefinitions(LogicalName='sample_bankaccount')/Attributes record with ID: 496638ab-7c11-ef11-9f89-6045bdec757e deleted.
+EntityDefinitions(LogicalName='sample_bankaccount')/Attributes record with ID: 873943a2-7c11-ef11-9f89-7c1e520b124e deleted.
+EntityDefinitions(LogicalName='sample_bankaccount')/Attributes record with ID: 554ba99e-7c11-ef11-9f89-6045bdec7f44 deleted.
+EntityDefinitions(LogicalName='sample_bankaccount')/Attributes record with ID: 7479559c-7c11-ef11-9f89-7c1e5214ffc0 deleted.
+EntityDefinitions(LogicalName='sample_bankaccount')/Attributes record with ID: 2ae45795-7c11-ef11-9f89-7c1e520b124e deleted.
+EntityDefinitions(LogicalName='sample_bankaccount')/Attributes record with ID: c2c38696-7c11-ef11-9f89-6045bdec757e deleted.
+EntityDefinitions(LogicalName='sample_bankaccount')/Attributes record with ID: c5437c8b-7c11-ef11-9f89-6045bdec7f44 deleted.
+EntityDefinitions record with ID: 441f9871-7c11-ef11-9f89-6045bdec7f44 deleted.
+solutions record with ID: 411f9871-7c11-ef11-9f89-6045bdec7f44 deleted.
+publishers record with ID: 3e1f9871-7c11-ef11-9f89-6045bdec7f44 deleted.
+Importing managed solution...
+
+Managed solution imported.
+Managed solution deleted.
+PS C:\GitHub\PowerApps-Samples\dataverse\webapi\PS>
+```

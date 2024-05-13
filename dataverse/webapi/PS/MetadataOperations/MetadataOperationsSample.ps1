@@ -622,7 +622,7 @@ Invoke-DataverseCommands {
    }
    if (!$skipUpdates) {
       # Retrieve the integer column
-      $integerColumnData = Get-Column `
+      $integerColumn = Get-Column `
          -tableLogicalName ($bankAccountTableData.SchemaName.ToLower()) `
          -logicalName ($integerColumnData.SchemaName.ToLower()) `
          -type 'Integer' `
