@@ -96,7 +96,7 @@ function Invoke-DataverseCommands {
       Write-Host "StatusCode: $statuscode ($statusText)"
       # Replaces escaped characters in the JSON
       [Regex]::Replace($_.ErrorDetails.Message, "\\[Uu]([0-9A-Fa-f]{4})", 
-         {[char]::ToString([Convert]::ToInt32($args[0].Groups[1].Value, 16))} )
+         { [char]::ToString([Convert]::ToInt32($args[0].Groups[1].Value, 16)) } )
 
    }
    catch {
