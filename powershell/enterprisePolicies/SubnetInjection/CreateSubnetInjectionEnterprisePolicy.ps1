@@ -68,7 +68,7 @@ function CreateSubnetInjectionEnterprisePolicy
 	Write-Host "Setting subscription to"$subscriptionId -ForegroundColor Green
 	Set-AzContext -Subscription $subscriptionId
     Write-Host "Creating Enterprise policy..." -ForegroundColor Green
-    $setSubscription = Set-AzContext -Subscription $subscriptionId
+
     $primaryVnet = ValidateAndGetVnet -vnetId $primaryVnetId -enterprisePolicylocation $enterprisePolicylocation
     if ($primaryVnet -eq $null)
     {
