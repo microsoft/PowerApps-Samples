@@ -63,7 +63,8 @@ function UpdateSubnetInjectionEnterprisePolicy
     }
 
     Write-Host "Logged In..." -ForegroundColor Green
-
+	Write-Host "Setting subscription to"$subscriptionId -ForegroundColor Green
+	Set-AzContext -Subscription $subscriptionId
     $policyArmId = "/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.PowerPlatform/enterprisePolicies/$enterprisePolicyName"
     $policy = GetEnterprisePolicy $policyArmId
     if ($policy -eq $null)
