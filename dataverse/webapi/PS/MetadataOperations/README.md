@@ -40,7 +40,7 @@ This sample requires:
 ## How to run the sample
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
-1. Open the [MetadataOperations.ps1](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/PS/MetadataOperations/MetadataOperationsSample.ps1) file using Visual Studio Code
+1. Open the [MetadataOperationsSample.ps1](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/PS/MetadataOperations/MetadataOperationsSample.ps1) file using Visual Studio Code
 1. Edit this line to use the URL of the environment you want to connect to:
 
    `Connect 'https://yourorg.crm.dynamics.com/' # change this`
