@@ -27,7 +27,8 @@ This sample simulates the scenario described in [What this sample does](#what-th
 
 ### Setup
 
-This sample requires no special setup, other than the valid user credentials `username` and `password` you configure.
+- This sample requires no special setup, other than the valid user credentials `username` and `password` you configure.
+- You may need to update your project to the current .NET version with the [.NET Upgrade Assistant](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.upgradeassistant) extension. Once the extension is installed, right-click your project and select **Upgrade**.
 
 In `Cloud.cs`, there's a `Cloud` enumeration for each of the known discovery regions. Each enumeration member is decorated with a `Description` notation. All members have the URL for the global discovery service for that cloud set as the description.
 
