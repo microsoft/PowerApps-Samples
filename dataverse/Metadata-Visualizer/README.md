@@ -1,102 +1,107 @@
 # Metadata Visualizer
 
-![Entity diagram example](images/intro-graphic.PNG)
+:::image type="content" source="images/intro-graphic.PNG" alt-text="Screnshot of a visual display of entities and their relationships.":::
 
 Metadata Visualizer (MetaViz) downloads the metadata of your Dynamics 365 Customer Engagement or Microsoft Dataverse organization to visually display the entities, entity relationships, and registered plug-in information.
 
 ## What can you do with MetaViz?
 
-The application can download entity, plug-in, and custom workflow activity metadata information from your organization into a text file and you can browse that data offline.
-Since this metadata information is downloaded into readable files you can: keep it in a repo, compare metadata of different environments, track changes to metadata, let somebody check the information without giving them access to the organization, and more.
+The application can download entity, plug-in, and custom workflow activity metadata information from your organization into a text file and you can browse that data offline. Since this metadata information is downloaded into readable files you can:
 
-Below is a description of the files that are generated when you download an organization's metadata.
+- Keep the metadata in a repo
+- Compare metadata of different environments
+- Track changes to metadata
+- Let somebody check the information without giving them access to the organization
 
-- Trigger definitions (HTML file)
+### Generated files
 
-Registered synchronous and asynchronous plug-ins and custom workflow activities (and their filtering attributes) are dumped into the html file.
-You can find what activity or plug-in is registered on an entity to trace what code will be triggered when a core system operation (create, update, delete, etc.) occurs.
+Here's a description of the files generated when you download an organization's metadata.
 
-- Entity definitions (text file)
+- **Trigger definitions (HTML file)**
 
-Localized/customized display names for all attributes, descriptions, and data-types across all entities are dumped into a text file.
-You can compare the scheme across environments and/or releases easily by using your preferred text comparison (differences) tools.
+  Registered synchronous and asynchronous plug-ins and custom workflow activities (and their filtering attributes) are dumped into the HTML file. You can find what activity or plug-in is registered on an entity to trace what code is triggered with a core system operation (create, update, delete).
 
-- Entity relationship diagram (JSON file)
+- **Entity definitions (text file)**
 
-The ER Viewer allows you to visually browse the relationships across your chosen entities.
-You can select specific entities and check their relationships in a visual diagram.
+  Localized/customized display names for all attributes, descriptions, and data-types across all entities are dumped into a text file. You can compare the schema across environments and/or releases easily by using your preferred text comparison (differences) tools.
+
+- **Entity relationship (ER) diagram (JSON file)**
+
+  The ER Viewer allows you to visually browse the relationships across your chosen entities. You can select specific entities and check their relationships in a visual diagram.
 
 ## How to use the application
 
 ### Building and running the application
 
 1. Load the solution into Visual Studio, build, and then run the program.
-2. After the download dialog is displayed, enter your target organization URL in the provided field of the dialog.
-3. When prompted, specify a folder where the organization's metadata is to be stored.
-4. When prompted, provide your organization logon information.
-5. The organization metadata download will start, and this may take several minutes.
-6. The entity relationship (ER Viewer) window opens and displays an initial (default) diagram of the pre-selected entities.
-7. Resize the window as appropriate.
-8. Select the zoom (+) icon in the toolbar to enlarge the diagram and the pan (hand) icon to pan around the view.
-9. Hover the cursor over the other icons in the toolbar to see what other functionality is available.
+1. After the download dialog is displayed, enter your target organization URL in the provided field of the dialog.
+1. When prompted, specify a folder where the organization's metadata is to be stored.
+1. When prompted, provide your organization logon information.
+1. The organization metadata download starts. The download might take several minutes.
+1. The entity relationship (ER Viewer) window opens and displays an initial (default) diagram of the pre-selected entities.
+1. Resize the window as appropriate.
+1. Select the zoom (+) icon in the toolbar to enlarge the diagram and the pan (hand) icon to pan around the view.
+1. Hover the cursor over the other icons in the toolbar to see what other functionality is available.
 
 ### Changing the entity diagram
 
 1. In the ER Viewer, select **Entities** > **Clear**.
-2. In the left panel select any entities that you want to be rendered in the diagram (i.e., account, contact, activityparty).
-3. Select **Diagram** > **Draw Selected Entities** to view those entities and their relationships.
-4. Next, select **Diagram** > **Draw Related Entities** to view all other entities that have a relationship with the entities specified in step #2.
+1. In the left panel select any entities that you want to be rendered in the diagram (for example account, contact, or activityparty).
+1. Select **Diagram** > **Draw Selected Entities** to view those entities and their relationships.
+1. Select **Diagram** > **Draw Related Entities** to view all other entities that have a relationship with the entities you chose in step #2.
 
-![Entity Relationship (ER) Viewer](images/er-viewer.PNG)
+:::image type="content" source="images/er-viewer.PNG" alt-text="Screenshot of the ER Viewer showing an entity list on the left and the entity diagram on the right in Metadata Visualizer.":::
 
 ### Viewing entity metadata
 
 1. In the ER Viewer, hover the cursor over an entity in the entity diagram to view a summary description.
-2. Select the entity in the diagram to display the Schema Viewer showing the entity's metadata (attributes and relationships).
-3. Select another entity in the diagram to now view its metadata in the Schema Viewer window.
-4. Logon to your organization using your default internet browser.
-5. In the ER Viewer window, select an entity and choose **Selected Entity** > **Copy URL**.
-6. Paste the URL into your browser to see the list of records for that entity. Note that you may need to choose a different view in the browser page other than the default view to see the records for that entity.
+1. Select the entity in the diagram to display the Schema Viewer showing the entity's metadata (attributes and relationships).
+1. Select another entity in the diagram to view its metadata in the Schema Viewer window.
+1. Sign in to your organization using your default internet browser.
+1. In the ER Viewer window, select an entity and choose **Selected Entity** > **Copy URL**.
+1. Paste the URL into your browser to see the list of records for that entity. You might need to choose a different view in the browser page other than the default view to see the records for that entity.
 
-![Schema Viewer](images/schema-viewer.PNG)
+:::image type="content" source="images/schema-viewer.PNG" alt-text="Screenshot that shows the Schema Viewer account details such as attribute, type, description, entity, relationship (for example, one-to-many), and the entity that's related in Metadata Visualizer.":::
 
 ### Viewing plug-in and custom activity registrations
 
-1. Logon to an organization in your default internet browser.
-2. In the ER Viewer, select **Diagram** > **Trigger information**. A browser window or tab will open displaying entity information and registered plug-in/custom workflow activity information.
-3. Select an entity link (blue underlined text) to jump to the plug-in/custom activity information for that entity.
-4. Select other links to see what kind of information is available from that browser page.
+1. Sign in to an organization in your default internet browser.
+1. In the ER Viewer, select **Diagram** > **Trigger information**. A browser window or tab opens displaying entity information and registered plug-in/custom workflow activity information.
+1. Select an entity link (blue underlined text) to jump to the plug-in/custom activity information for that entity.
+1. Select other links to see what kind of information is available from that browser page.
 
-![Trigger information page](images/trigger-view.PNG)
+:::image type="content" source="images/trigger-view.PNG" alt-text="Screenshot that shows the trigger information page that includes details like logical (entity set) name, description, OTC, primary, display names, and other details in Metadata Visualizer.":::
 
 ## FAQs
 
-Please check this FAQ section for further information on how this application works.
+You can find common questions and answers in this FAQ section.
 
 **Q. How can I specify the entities rendered in the ER Viewer diagram?**
 
 You need to select a list of entities you want to use.
 
-1. Choose **Entities > Clear** to de-select all entities.
-2. Select (check) the entities you are interested in viewing.
-3. Use either **Diagram > Draw Selected Entities** or the **Draw Related Entities** menu items.
+1. Choose **Entities > Clear** to deselect all entities.
+1. Check mark the entities you want to view.
+1. Use either **Diagram > Draw Selected Entities** or the **Draw Related Entities** menu items.
 
-The **Draw Selected Entities** menu automatically expands the selection to the related entities to the ones currently selected.
-You can copy and paste the list of entities selected by choosing **Entities > Copy** and **Entities > Paste** menu items.
+   The **Draw Selected Entities** menu automatically expands the selection to the related entities to the ones currently selected. You can copy and paste the list of entities selected by choosing the **Entities > Copy** and **Entities > Paste** menu items.
 
-**Q. How to add related entities to/remove the entity from the diagram?**
+**Q. How do I add or remove related entities to or from the diagram?**
 
-Click the entity in the diagram and then choose the **Selected Entity > Remove** menu item. In the same way you can perform different operations such as **Select Related Entities** on the selected entity.
+Select the entity in the diagram and then choose the **Selected Entity > Remove** menu item. You perform other operations choosing **Select Related Entities** on the selected entity.
 
 **Q. What library is used to render the ER Viewer diagram?**
 
-[Microsoft Automatic Graph Layout](https://www.microsoft.com/research/project/microsoft-automatic-graph-layout/) (MSAGL). *MSAGL is a .NET tool for graph layout and viewing. It was developed in Microsoft by Lev Nachmanson, Sergey Pupyrev, Tim Dwyer and Ted Hart.*
+[Microsoft Automatic Graph Layout](https://www.microsoft.com/research/project/microsoft-automatic-graph-layout/) (MSAGL).
+
+> [!NOTE]
+> MSAGL is a .NET tool for graph layout and viewing. This tool was developed at Microsoft by Lev Nachmanson, Sergey Pupyrev, Tim Dwyer and Ted Hart.
 
 ## Version history
 
 04-06-2021
 
-- Added the global plug-in in the report
-- Added the workflow activities registration status in the reports
-- Improved the registration status message
-- Added the categories for plug-in and workflows in the reports
+- Added the global plug-in in the report.
+- Added the workflow activities registration status in the reports.
+- Improved the registration status message.
+- Added the categories for plug-in and workflows in the reports.
