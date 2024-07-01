@@ -24,4 +24,7 @@ For example, from within the `bin/Debug` folder of the project (where the exe fi
 GenerateEntityDiagram.exe account contact
 ```
 
+> [!TIP]
+> To change the connection string information, uncomment it in `App.config` and replace `Username` and `Url` with your own account username and environment URL.
+
 For more information, see [Use metadata to generate entity diagram](https://learn.microsoft.com/dynamics365/customer-engagement/developer/use-metadata-generate-entity-diagrams).
