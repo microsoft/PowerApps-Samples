@@ -160,15 +160,12 @@ namespace PowerApps.Samples
         private static string GetConnectionStringFromAppConfig(string name)
         {
             //Verify cds/App.config contains a valid connection string with the name.
-            try
+            if (ConfigurationManager.ConnectionStrings[name] == null)
             {
-                return ConfigurationManager.ConnectionStrings[name].ConnectionString;
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("You can set connection data in cds/App.config before running this sample. - Switching to Interactive Mode");
+                Console.WriteLine("You can define a connection string in PowerApps-Samples/dataverse/App.config before running this sample. Switching to interactive mode...");
                 return string.Empty;
             }
+            return ConfigurationManager.ConnectionStrings[name].ConnectionString;
         }
 
         public static CrmServiceClient Connect(string name) {
