@@ -42,8 +42,8 @@ You can run the sample in Visual Studio in two different ways with either the de
 
 ## Option 2: Run sample with your own connection string and entities.
 
-1. Edit the `App.config` file and uncomment the <connectionstring /> information. Do so by removing the preceding \<!-- and terminating --> characters.
-1. Replace the `Username` and `Url` values with your account username and environment URL. You can also add a `Password=` parameter in the connection string.
+1. Edit the `App.config` file and uncomment the \<connectionstring /> information. Do so by removing the preceding \<!-- and terminating --> characters.
+1. Replace the `Username` and `Url` values with your Dataverse environment username and service URL. You can also add a `Password=` parameter in the connection string.
 
    :::image type="content" source="connection-string.png" alt-text="Screenshot that shows the commented out connection string code and where to change the user name and URL.":::
 
