@@ -44,6 +44,17 @@ Version|Date|Comments
 
 Follow the steps in the [README.md](../README.md) to generate solutions containing the controls so you can import and try the sample components in your model-driven or canvas app.
 
+**NOTE**
+
+When you run try to run this sample using the test harness, you will get the following error:
+
+```
+Error occured during initilization of control: SampleNamespace.MultiSelectOptionSetControl;Message: Cannot read properties of undefined (reading 'forEach')
+TypeError: Cannot read properties of undefined (reading 'forEach') at multiSelectOptionSetControl.init
+```
+
+The reason is that the option set control data can't be simulated/mocked in the test harness. This sample will only run correctly when you configure it for a field in a model-driven app.
+
 ## More information
 
 See [Implementing choices (multi select option set) component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/multi-select-option-set-control)
