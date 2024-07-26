@@ -3,7 +3,7 @@
 
 This sample creates some sample data to show you how to work with [activity party](https://learn.microsoft.com/power-apps/developer/data-platform/activityparty-entity?view=dataverse-latest) records.
 
-For more information, see [ActivityParty entity](https://learn.microsoft.com/previous-versions/dynamicscrm-2013/developers-guide/gg328549(v=crm.6)).
+For more information, see [ActivityParty entity](https://learn.microsoft.com/power-apps/developer/data-platform/activityparty-entity).
 
 ## How to run this sample
 
