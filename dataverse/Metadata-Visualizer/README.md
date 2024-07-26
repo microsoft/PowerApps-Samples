@@ -4,7 +4,7 @@
 
 Metadata Visualizer (MetaViz) downloads the metadata of your Dynamics 365 Customer Engagement or Microsoft Dataverse organization to visually display the entities, entity relationships, and registered plug-in information.
 
-## What can you do with MetaViz?
+## What can I do with MetaViz?
 
 The application can download entity, plug-in, and custom workflow activity metadata information from your organization into a text file and you can browse that data offline. Since this metadata information is downloaded into readable files you can:
 
@@ -31,19 +31,19 @@ Here's a description of the files generated when you download an organization's 
 
 ## How to use the application
 
-### Building and running the application
+### Build and run the application
 
 1. Load the solution into Visual Studio, build, and then run the program.
-1. After the download dialog is displayed, enter your target organization URL in the provided field of the dialog.
-1. When prompted, specify a folder where the organization's metadata is to be stored.
-1. When prompted, provide your organization logon information.
-1. The organization metadata download starts. The download might take several minutes.
-1. The entity relationship (ER Viewer) window opens and displays an initial (default) diagram of the pre-selected entities.
-1. Resize the window as appropriate.
-1. Select the zoom (+) icon in the toolbar to enlarge the diagram and the pan (hand) icon to pan around the view.
-1. Hover the cursor over the other icons in the toolbar to see what other functionality is available.
+2. After the download dialog is displayed, enter your target organization URL in the provided field of the dialog.
+3. When prompted, specify a folder where you want to store the organization's metadata.
+4. When prompted, provide your organization sign-in information.
+5. The organization metadata download starts. The download might take several minutes.
+6. The entity relationship (ER Viewer) window opens and displays an initial (default) diagram of the pre-selected entities.
+7. Resize the window as appropriate.
+8. Select the zoom (+) icon in the toolbar or scrollwheel on your mouse to enlarge the diagram and the pan (hand) icon to pan around the view.
+9. Hover the cursor over the other icons in the toolbar to see what other functionality is available.
 
-### Changing the entity diagram
+### Change the entity diagram
 
 1. In the ER Viewer, select **Entities** > **Clear**.
 1. In the left panel select any entities that you want to be rendered in the diagram (for example account, contact, or activityparty).
@@ -52,14 +52,17 @@ Here's a description of the files generated when you download an organization's 
 
 :::image type="content" source="images/er-viewer.PNG" alt-text="Screenshot of the ER Viewer showing an entity list on the left and the entity diagram on the right in Metadata Visualizer.":::
 
-### Viewing entity metadata
+### View entity metadata
 
 1. In the ER Viewer, hover the cursor over an entity in the entity diagram to view a summary description.
 1. Select the entity in the diagram to display the Schema Viewer showing the entity's metadata (attributes and relationships).
+   :::image type="content" source="images/schema-viewer.PNG" alt-text="Screenshot that shows the Schema Viewer, a window that appears from running the application and selecting an entity in the ER Viewer.":::
 1. Select another entity in the diagram to view its metadata in the Schema Viewer window.
 1. Sign in to your organization using your default internet browser.
 1. In the ER Viewer window, select an entity and choose **Selected Entity** > **Copy URL**.
-1. Paste the URL into your browser to see the list of records for that entity. You might need to choose a different view in the browser page other than the default view to see the records for that entity.
+1. Paste the URL into your browser to see the list of records for that entity.
+   > [!NOTE]
+   > You might need to choose a different view in the browser page other than the default view to see the records for that entity.
 
 :::image type="content" source="images/schema-viewer.PNG" alt-text="Screenshot that shows the Schema Viewer account details such as attribute, type, description, entity, relationship (for example, one-to-many), and the entity that's related in Metadata Visualizer.":::
 
@@ -67,18 +70,16 @@ Here's a description of the files generated when you download an organization's 
 
 1. Sign in to an organization in your default internet browser.
 1. In the ER Viewer, select **Diagram** > **Trigger information**. A browser window or tab opens displaying entity information and registered plug-in/custom workflow activity information.
-1. Select an entity link (blue underlined text) to jump to the plug-in/custom activity information for that entity.
+1. Select an entity blue link to jump to the plug-in/custom activity information for that entity.
 1. Select other links to see what kind of information is available from that browser page.
 
 :::image type="content" source="images/trigger-view.PNG" alt-text="Screenshot that shows the trigger information page that includes details like logical (entity set) name, description, OTC, primary, display names, and other details in Metadata Visualizer.":::
 
 ## FAQs
 
-You can find common questions and answers in this FAQ section.
+### Can I choose the entities in the ER Viewer diagram?
 
-**Q. How can I specify the entities rendered in the ER Viewer diagram?**
-
-You need to select a list of entities you want to use.
+You can select a list of entities you want to use.
 
 1. Choose **Entities > Clear** to deselect all entities.
 1. Check mark the entities you want to view.
@@ -86,11 +87,11 @@ You need to select a list of entities you want to use.
 
    The **Draw Selected Entities** menu automatically expands the selection to the related entities to the ones currently selected. You can copy and paste the list of entities selected by choosing the **Entities > Copy** and **Entities > Paste** menu items.
 
-**Q. How do I add or remove related entities to or from the diagram?**
+### How do I add or remove related entities in the diagram?
 
-Select the entity in the diagram and then choose the **Selected Entity > Remove** menu item. You perform other operations choosing **Select Related Entities** on the selected entity.
+Select (check) the entity in the diagram and then choose the **Selected Entity > Remove** menu item. You can perform other operations choosing **Select Related Entities** on the selected entity.
 
-**Q. What library is used to render the ER Viewer diagram?**
+### What library is used to render the ER Viewer diagram?
 
 [Microsoft Automatic Graph Layout](https://www.microsoft.com/research/project/microsoft-automatic-graph-layout/) (MSAGL).
 
