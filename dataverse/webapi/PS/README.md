@@ -5,7 +5,7 @@ The files in this folder are PowerShell helper functions that Dataverse Web API 
 |File|Description|
 |---|---|
 |[Core.ps1](Core.ps1)|Contains functions that all other functions or samples depend on.|
-|[TableOperations.ps1](TableOperationsre.ps1)|Contains functions that enable performing data operations on table rows|
+|[TableOperations.ps1](TableOperations.ps1)|Contains functions that enable performing data operations on table rows|
 |[MetadataOperation.ps1](MetadataOperations.ps1)|Contains functions that enable performing table, column, and relationship schema change operations, as well as solution operations.|
 
 
