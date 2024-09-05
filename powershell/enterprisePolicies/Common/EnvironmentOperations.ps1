@@ -129,3 +129,72 @@ function PollLinkUnlinkOperation ($operationLink, $pollInterval)
         }
     }
 }
+
+function LinkEnterprisePolicyToPlatformAppsData ($policyType, $policySystemId)
+{
+    $ApiVersion = "2024-05-01"
+    
+    $body = [pscustomobject]@{
+        "SystemId" = $policySystemId
+        }
+
+    $linkResult = CallBAPLinkOrUnlinkForPlatformAppsData $ApiVersion "Post" $body true $policyType
+ 
+    return $linkResult
+}
+
+function CallBAPLinkOrUnlinkForPlatformAppsData ($ApiVersion, $method, $body, $isLink, $PolicyType)
+{
+    $operationName = switch ( $isLink )
+    {
+        true { "link" }
+        false { "unlink" }
+    }
+
+    $policyTypeInUrl = switch ($policyType)
+    {
+        "cmk" { "Encryption" }
+        "vnet" { "NetworkInjection" }
+        "identity" { "Identity" }
+    }
+
+    $linkEnterprisePolicyUri = "https://{bapEndpoint}/providers/Microsoft.BusinessAppPlatform/platformapps/enterprisePolicies/{policyTypeInUrl}/{operationName}?&api-version={apiVersion}" `
+    | ReplaceMacro -Macro "{operationName}" -Value $operationName | ReplaceMacro -Macro "{policyTypeInUrl}" -Value $policyTypeInUrl
+
+    $linkEnterprisePolicyResult = InvokeApi -Method $method -Route $linkEnterprisePolicyUri -ApiVersion $ApiVersion -Body $body
+
+    return $linkEnterprisePolicyResult
+}
+
+
+function UnLinkEnterprisePolicyForPlatformAppsData ($policyType, $policySystemId)
+{
+    $ApiVersion = "2024-05-01"
+
+    $body = [pscustomobject]@{
+        "SystemId" = $policySystemId
+        }
+
+    $unlinkResult = CallBAPLinkOrUnlinkForPlatformAppsData $ApiVersion "Post" $body false $policyType $policyType
+
+
+    return $unlinkResult
+}
+
+function GetPlatformApps () 
+{
+    $ApiVersion = "2024-05-01"
+    $method = "GET"
+
+    $getPlatformAppsUri = "https://{bapEndpoint}/providers/Microsoft.BusinessAppPlatform/platformapps/status?&api-version={apiVersion}" `
+
+    $platformAppsResult = InvokeApi -Method $method -Route $getPlatformAppsUri -ApiVersion $ApiVersion -Body $body
+
+    if ($platformAppsResult -eq $null) 
+    {
+        Write-Host "Error getting platformapps for endpoint $endpoint Error = $platformAppsResult `n" -ForegroundColor Red
+        return $null
+    }
+    
+    return $platformAppsResult
+}

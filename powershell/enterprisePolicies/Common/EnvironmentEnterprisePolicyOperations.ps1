@@ -378,6 +378,155 @@ function GetEnterprisePolicyForEnvironment
     Write-Host "Enterprise Policy Arm Id $policyArmId"
 }
 
+function LinkPolicyToPlatformAppsData 
+{
+    param(
+        [Parameter(Mandatory=$true)]
+        [ValidateSet("cmk","vnet", "identity")]
+        [ValidateNotNullOrEmpty()]
+        [String]$policyType,
+
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [String]$policyArmId,
+
+        [Parameter(Mandatory=$false)]
+        [ValidateSet("tip1", "tip2", "prod")]
+        [String]$endpoint
+
+    )
+
+    if (![bool]$endpoint) {
+        $endpoint = "prod"
+    }
+
+    Write-Host "Logging In..." -ForegroundColor Green
+    $connect = Login $endpoint
+    if ($false -eq $connect)
+    {
+        return
+    }
+
+    Write-Host "Logged In..." -ForegroundColor Green
+
+     #Validate PlatformApps enrollment
+    $platformAppsStatus = GetPlatformApps
+
+    if ($platformAppsStatus -eq $null -or $platformAppsStatus.enrollmentState -ne "Enrolled") 
+    {
+        Write-Host "PlatformApps not enrolled"
+        return
+    }
+    Write-Host "PlatformApps enrolled `n" -ForegroundColor Green
+
+    #Validate Enterprise Policy
+    $policySystemId = GetEnterprisePolicySystemId $policyArmId
+    if ($null -eq $policySystemId)
+    {
+        return
+    }
+    Write-Host "Enterprise Policy reterieved `n" -ForegroundColor Green
+
+
+    $linkResult = LinkEnterprisePolicyToPlatformAppsData $policyType $policySystemId
+
+    $linkResultString = $linkResult | ConvertTo-Json
+
+    if ($null -eq $linkResult -or $linkResult.StatusCode -ne "202")
+    {
+        Write-Host "Linking of $policyType policy did not start for platformapps"
+        Write-Host "Error: $linkResultString"
+        return 
+    }
+
+    Write-Host "Linking of $policyType policy started for platformapps"
+}
+
+
+function UnLinkPolicyFromPlatformAppsData 
+{
+    param(
+        [Parameter(Mandatory=$true)]
+        [ValidateSet("cmk","vnet", "identity")]
+        [ValidateNotNullOrEmpty()]
+        [String]$policyType,
+
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [String]$policyArmId,
+
+        [Parameter(Mandatory=$false)]
+        [ValidateSet("tip1", "tip2", "prod")]
+        [String]$endpoint
+
+    )
+
+    if (![bool]$endpoint) {
+        $endpoint = "prod"
+    }
+
+    Write-Host "Logging In..." -ForegroundColor Green
+    $connect = Login $endpoint
+    if ($false -eq $connect)
+    {
+        return
+    }
+
+    Write-Host "Logged In..." -ForegroundColor Green
+
+    $epPropertyName = switch ( $policyType )
+    {
+        "cmk" { "CustomerManagedKeys" }
+        "vnet" { "VNets" }
+        "identity" { "Identity" }
+    }
+
+     #Validate PlatformApps enrollment
+    $platformAppsStatus = GetPlatformApps
+
+    if ($platformAppsStatus -eq $null -or $platformAppsStatus.enrollmentState -ne "Enrolled") 
+    {
+        Write-Host "PlatformApps not enrolled"
+        return
+    }
+    Write-Host "PlatformApps enrolled `n" -ForegroundColor Green
+  
+    if ($null -eq $platformAppsStatus.enterprisePolicies -or $null -eq $platformAppsStatus.enterprisePolicies.$epPropertyName)
+    {
+        Write-Host "No enterprise policy present of type $policyType to remove from PlatformApps"
+        return
+    }
+
+    if (!$policyArmId.Equals($platformAppsStatus.enterprisePolicies.$epPropertyName.id))
+    {
+        Write-Host "Given policyArmId $policyArmId not matching with $policyType policy ArmId for Platformapps"
+        return 
+    }
+    
+    #Validate Enterprise Policy
+    $policySystemId = GetEnterprisePolicySystemId $policyArmId
+    if ($null -eq $policySystemId)
+    {
+        return
+    }
+    Write-Host "Enterprise Policy reterieved `n" -ForegroundColor Green
+
+
+    $unLinkResult = UnLinkEnterprisePolicyForPlatformAppsData $policyType $policySystemId
+
+    $unLinkResultString = $UnLinkResult | ConvertTo-Json
+
+    if ($null -eq $unLinkResult -or $unLinkResult.StatusCode -ne "202")
+    {
+        Write-Host "Unlinking of $policyType policy did not start for platformapps"
+        Write-Host "Error: $unLinkResultString"
+        return 
+    }
+
+    Write-Host "Unlinking of $policyType policy started for platformapps"
+    
+}
+
 
 
 
