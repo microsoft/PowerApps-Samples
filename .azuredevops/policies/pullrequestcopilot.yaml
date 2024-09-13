@@ -1,0 +1,78 @@
+# metadata 
+name: This is a PullRequest copilot default config file
+description: description
+
+# filters
+resource: repository
+
+# primitive configuration
+configuration:
+  pullRequestCopilotPrimitive:
+    enabled: true
+#   branches:                     # If you want to limit to select branches for all experiences
+#   - Main                        # If you want to enable only on main or Master
+#   - Branch1                     # If you want to enable a particular branch1
+    maxReviewCommentsAllowed: 3   # Maximum number of review comments allowed between 0 to 10
+#   additionalInstructionForReview:  # Additional instructions for code review to be considered by LLM
+#   - Instruction 1                  # Max 5 instructions, total max 1000 characters, no hyperlinks
+#   - Instruction 2
+#   severityThreshold: 0.75          # To update severity of comments, between 0.5 to 0.9, 0.9 being extremely cricical
+#   focusAreas:                       # Options to include/ exclude focus areas from performance, security, reliability, refactoring, readability
+#   - performance
+#   - '!refactoring'                 # Cannot opt out of security reviews
+
+    onPullRequestCreate:
+
+    - prompt: 'copilot: review'   # Auto-review on pull request create 
+      autoResolve: false          # Code review comment as open by default, can be marked at true for closed
+# Note: the combination of include and exclude is considered, with exclude taking precedence  
+      exclude:                    # Content and path filters to be excluded for reviewing by bot
+        pathFilters:              # List of all pathfilters excluded by default
+        - '*.ini'
+        - '*.yml'
+        - '*.json'
+        - '*.yaml'
+        - '*.bicep'
+        - '*.csproj'
+        - '*.sln'
+        - '*.xml'
+        - '*.resx'
+        - '*.proj'
+        - '*.png'
+        - '*.vsdx'
+        - '*.pbix'
+        - '*.pdf'
+        - '*.pfx'
+        - '*.bin'
+        - '*.jpeg'
+#       - 'Src/Extensions/*'       # To exclude certain folers
+#       contentFilters:            # To exclude files with certain content
+#       - '(i?)auto-generated file'#example content in a file
+#     include:                     # Content and path filters to be included for reviewing by bot
+#       pathFilters:
+#       contentFilters:
+#     ignoreUser:             
+#     - UserAlias1                 # Alias of users to be excluded from auto experience
+#     - UserAlias2                 
+#     enabledUsers:             
+#     - UserAlias1                 # Alias of users to be excluded from auto experience
+#     - UserAlias2
+        
+    - prompt: 'copilot: summary'   # Auto PR description updated w/ AI summary 
+#   - prompt: 'copilot: description'   # To post AI summary as a PR comments vs. update description field
+      autoResolve: true           # AI description generated comment as closed by default, can be marked true for open
+#     exclude:                     # Content and path filters to be excluded for reviewing by bot
+#       pathFilters: 
+      #     branches:                  # If you want to limit to select branches for review only
+      #     contentFilters:            # To exclude files with certain content
+#     ignoreUser:             
+#     - UserAlias1                 # Alias of users to be excluded from auto experience
+#     - UserAlias2                 
+#     enabledUsers:             
+#     - UserAlias1                 # Alias of users to be excluded from auto experience
+#     - UserAlias2
+#     prependAISummary: false      # To have AI summary on top of summary description vs appended at bottom
+
+#   - prompt: 'copilot: generateworkitem'    # On every PR create to create a work item
+#   workItemMappings:                           # Area path where work item needs to be generated is mandatory
+#   - areaPath: your-area-path                  # Please ensure MerlinBot has permissions to create workitems in this area path
