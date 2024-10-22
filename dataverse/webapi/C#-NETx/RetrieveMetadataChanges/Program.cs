@@ -3,6 +3,7 @@ using PowerApps.Samples.Messages;
 using PowerApps.Samples.Metadata.Messages;
 using PowerApps.Samples.Metadata.Types;
 using PowerApps.Samples.Methods;
+using PowerApps.Samples.Types;
 
 namespace PowerPlatform.Dataverse.CodeSamples
 {
@@ -35,7 +36,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                             new MetadataConditionExpression(
                                 propertyName:"LogicalName",
                                 conditionOperator: MetadataConditionOperator.Equals,
-                                value: new PowerApps.Samples.Metadata.Types.Object{
+                                value: new PowerApps.Samples.Types.Object{
                                         Type = ObjectType.String,
                                         Value = "contact"
                                     }
@@ -54,7 +55,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                                 new MetadataConditionExpression(
                                     propertyName:"AttributeTypeName",
                                     conditionOperator:MetadataConditionOperator.Equals,
-                                    value: new PowerApps.Samples.Metadata.Types.Object(
+                                    value: new PowerApps.Samples.Types.Object(
                                         type:ObjectType.AttributeTypeDisplayName,
                                         value:"PicklistType")
                                     )
