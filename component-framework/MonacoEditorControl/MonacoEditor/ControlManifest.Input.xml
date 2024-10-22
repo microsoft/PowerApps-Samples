@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="SampleNamespace" constructor="MonacoEditor" version="0.0.1" display-name-key="MonacoEditor_Display_Key" description-key="MonacoEditor_Desc_Key" control-type="virtual" >
+    <external-service-usage enabled="false">
+    </external-service-usage>
+    <type-group name="strings">
+      <type>SingleLine.Text</type>
+      <type>SingleLine.TextArea</type>
+      <type>Multiple</type>
+    </type-group>
+    <property name="selectedRecord" display-name-key="Selected_Record_Display_Key" description-key="Selected_Record_Desc_Key" of-type-group="strings" usage="bound" required="true" />
+    <property 
+        name="languageSelectionMode"
+        display-name-key="Language_SelectionMode_Display_Name"
+        description-key="Language_SelectionMode_Description"
+        of-type="Enum" usage="input" required="false">
+          <value 
+            name="liquid"
+            display-name-key="Language_SelectionMode_Liquid_Display_Name">liquid</value>
+          <value
+            name="css"
+            display-name-key="Language_SelectionMode_Css_Display_Name">css</value>
+          <value 
+            name="javascript"
+            display-name-key="Language_SelectionMode_Javascript_Display_Name">javascript</value>
+    </property>
+    <resources>
+      <code path="index.ts" order="1"/>
+      <platform-library name="React" version="16.8.6" />
+      <platform-library name="Fluent" version="8.29.0" />
+      <resx path="strings/MonacoEditor.1033.resx" version="1.0.0" />
+    </resources>
+  </control>
+</manifest>
