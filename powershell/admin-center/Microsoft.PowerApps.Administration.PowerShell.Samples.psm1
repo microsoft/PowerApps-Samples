@@ -1622,6 +1622,8 @@ function SetManagedEnvironmentSolutionCheckerEnforcementLevel
      The id (usually a GUID) of the environment.
      .PARAMETER Level
      The enforcement level (none, warn, block).
+     .PARAMETER RuleOverrides
+     Optional. The rule overrides for the solution checker (e.g. "web-use-async,web-use-offline").
      .EXAMPLE
      SetManagedEnvironmentSolutionCheckerEnforcementLevel -EnvironmentId 8d996ece-8558-4c4e-b459-a51b3beafdb4 -Level block
      Sets solution checker enforcement for Managed environment with id 8d996ece-8558-4c4e-b459-a51b3beafdb4 to the "block" level.
@@ -1632,7 +1634,9 @@ function SetManagedEnvironmentSolutionCheckerEnforcementLevel
         [string]$EnvironmentId,
 
         [Parameter(Mandatory = $true)]
-        [string][ValidateSet("none", "warn", "block")]$Level
+        [string][ValidateSet("none", "warn", "block")]$Level,
+
+        [string]$RuleOverrides
     )
 
     Write-Host "Retrieving environment."
@@ -1653,6 +1657,11 @@ function SetManagedEnvironmentSolutionCheckerEnforcementLevel
     }
     
     $governanceConfiguration.settings.extendedSettings | Add-Member -MemberType NoteProperty -Name 'solutionCheckerMode' -Value $Level -Force
+
+    if ($RuleOverrides -ne $null)
+    {
+        $governanceConfiguration.settings.extendedSettings | Add-Member -MemberType NoteProperty -Name 'solutionCheckerRuleOverrides' -Value $RuleOverrides -Force
+    }
     
     $response = Set-AdminPowerAppEnvironmentGovernanceConfiguration -EnvironmentName $EnvironmentId -UpdatedGovernanceConfiguration $GovernanceConfiguration
     if ($response.Code -ne 202)
