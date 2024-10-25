@@ -55,7 +55,7 @@ namespace PowerPlatform_Dataverse_CodeSamples
         }
 
         /// <summary>
-        /// The main logic of this program.
+        /// The main logic of this program being demonstrated.
         /// </summary>
         /// <param name="service">Authenticated web service connection.</param>
         /// <param name="entityStore">Collection of entities created in Dataverse.</param>
@@ -83,13 +83,13 @@ cc: Denise Smith";
                                           FirstName = c.FirstName,
                                           LastName = c.LastName
                                       }).ToList<Contact>();
-            Console.Write("Contacts retrieved, ");
+            Console.Write(contacts.Count + " contacts retrieved, ");
 
             // Create an Activity Party (in-memory) object for each contact.
             var activityParty1 = new ActivityParty
             {
                 PartyId = new EntityReference(Contact.EntityLogicalName,
-                    contacts[0].ContactId.Value),
+                    contacts[0].ContactId .Value),
             };
 
             var activityParty2 = new ActivityParty
@@ -123,15 +123,15 @@ cc: Denise Smith";
             // Commit the context changes to Dataverse.
             try
             {
-                orgContext.SaveChanges();
-                // TODO Add the letter to entityStore
+                var results = orgContext.SaveChanges(SaveChangesOptions.None);
 
-                Console.WriteLine("and Letter Activity created.");
+                //TODO Add ID to letter entity.
+                entityStore.Entities.Add(letter);
                 return true;
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Run(): an error ocurred creating the Letter Activity: \r\t{ex.Message}");
+                Console.WriteLine("Run(): an error ocurred creating the Letter Activity: \r\t"+ex.Message);
                 return false;
             }
         }
@@ -194,11 +194,9 @@ cc: Denise Smith";
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Setup(): an error ocurred creating table row data: \r\t{ex.Message}");
-                foreach (Entity entity in entityStore.Entities)
-                {
-                    Console.WriteLine($"Setup(): logical name={entity.LogicalName}, ID={entity.Id} was created.");
-                }
+                Console.WriteLine($"Setup(): an error ocurred creating table row data. \r\t"+ex.Message);
+                Console.WriteLine($"Setup(): some contacts could not be created.");
+                throw;
             }
 
         }
@@ -210,7 +208,8 @@ cc: Denise Smith";
         /// <param name="entityStore">Collection of entities created in Dataverse.</param>
         public void Cleanup(ServiceClient service, EntityCollection entityStore)
         {
-            if (service.IsReady == false)
+            // Do some checking of the passed parameter values.
+            if (service == null || service.IsReady == false)
             {
                 Console.WriteLine("Cleanup(): web service connection is not available, cleanup aborted.");
                 return;
@@ -223,16 +222,24 @@ cc: Denise Smith";
                 return;
             }
 
-            try
+            // Delete in Dataverse each entity in the entity store.
+            foreach (Entity entity in entityStore.Entities)
             {
-                foreach (Entity entity in entityStore.Entities)
+                try
                 {
                     service.Delete(entity.LogicalName, entity.Id);
+                    entityStore.Entities.Remove(entity);
+                }
+                catch (Exception)
+                {
+                    continue;
                 }
             }
-            catch (Exception ex)
+
+            // Output a list of entities that could not be deleted.
+            if(entityStore.Entities.Count > 0)
             {
-                Console.WriteLine($"Cleanup(): an error ocurred deleting table row data: \r\t{ex.Message}");
+                Console.WriteLine("Cleanup(): the following entities could not be deleted:");
                 foreach (Entity entity in entityStore.Entities)
                 {
                     Console.WriteLine($"Cleanup(): logical name={entity.LogicalName}, ID={entity.Id}");
