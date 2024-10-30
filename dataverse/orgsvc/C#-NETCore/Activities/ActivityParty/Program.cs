@@ -62,13 +62,11 @@ namespace PowerPlatform_Dataverse_CodeSamples
         /// <returns>True if successful; otherwise false.</returns>
         public bool Run(IOrganizationService service, EntityCollection entityStore)
         {
-            var _sampleLetter = @"Greetings, Mr. Andreshak,
-
-This is a sample letter activity as part of the SDK Samples.
-
-Sincerely,
-Mary Kay Andersen
-
+            var _sampleLetter = 
+@"Greetings, Mr. Andreshak,\n\n
+This is a sample letter activity as part of the SDK Samples.\n\n
+Sincerely,\n
+Mary Kay Andersen\n\n
 cc: Denise Smith";
 
             // Use the OrganizationServiceContext class and create a LINQ query.
@@ -125,7 +123,7 @@ cc: Denise Smith";
             {
                 var results = orgContext.SaveChanges(SaveChangesOptions.None);
 
-                //TODO Add ID to letter entity.
+                //TODO Add ID to letter entity before adding to entityStore
                 entityStore.Entities.Add(letter);
                 return true;
             }
