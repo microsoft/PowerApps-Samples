@@ -2,7 +2,7 @@
 <manifest>
   <control namespace="SampleNamespace" constructor="TableGrid" version="1.1.0" display-name-key="TableGrid_Display_Key" description-key="TableGrid_Desc_Key" control-type="standard">
     <data-set name="simpleTableGrid" display-name-key="SimpleTableGridProperty_Display_Key">
-	  </data-set>
+    </data-set>
     <resources>
       <code path="index.ts" order="1" />
       <css path="css/TableGrid.css" order="2" />

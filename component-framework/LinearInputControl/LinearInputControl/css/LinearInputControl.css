@@ -1,70 +1,70 @@
 /*
-	This file is part of the Microsoft PowerApps code samples. 
-	Copyright (C) Microsoft Corporation.  All rights reserved. 
-	This source code is intended only as a supplement to Microsoft Development Tools and/or  
-	on-line documentation.  See these other materials for detailed information regarding  
-	Microsoft code samples. 
+	This file is part of the Microsoft PowerApps code samples.
+	Copyright (C) Microsoft Corporation.  All rights reserved.
+	This source code is intended only as a supplement to Microsoft Development Tools and/or
+	on-line documentation.  See these other materials for detailed information regarding
+	Microsoft code samples.
 
-	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER  
-	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF  
-	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. 
+	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-.SampleNamespace\.LinearInputControl input[type=range].linearslider {   
-	margin: 1px 0;   
-	background:transparent;
-	-webkit-appearance:none;
-	width:100%;padding:0;
-	height:24px;
-	-webkit-tap-highlight-color:transparent
+.SampleNamespace\.LinearInputControl input[type="range"].linearslider {
+	margin: 1px 0;
+	background: transparent;
+	-webkit-appearance: none;
+	width: 100%;
+	padding: 0;
+	height: 24px;
+	-webkit-tap-highlight-color: transparent;
 }
-.SampleNamespace\.LinearInputControl input[type=range].linearslider:focus {
+.SampleNamespace\.LinearInputControl input[type="range"].linearslider:focus {
 	outline: none;
 }
-.SampleNamespace\.LinearInputControl input[type=range].linearslider::-webkit-slider-runnable-track {   
+.SampleNamespace\.LinearInputControl input[type="range"].linearslider::-webkit-slider-runnable-track {
 	background: #666;
-	height:2px;
-	cursor:pointer
-}   
-.SampleNamespace\.LinearInputControl input[type=range].linearslider::-webkit-slider-thumb {   
-	background: #666;   
-	border:0 solid #f00;
-	height:24px;
-	width:10px;
-	border-radius:48px;
-	cursor:pointer;
-	opacity:1;
-	-webkit-appearance:none;
-	margin-top:-12px
-}    
-.SampleNamespace\.LinearInputControl input[type=range].linearslider::-moz-range-track {   
-	background: #666;   
-	height:2px;
-	cursor:pointer  
-}   
-.SampleNamespace\.LinearInputControl input[type=range].linearslider::-moz-range-thumb {   
-	background: #666;   
-	border:0 solid #f00;
-	height:24px;
-	width:10px;
-	border-radius:48px;
-	cursor:pointer;
-	opacity:1;
-	-webkit-appearance:none;
-	margin-top:-12px
-}   
-.SampleNamespace\.LinearInputControl input[type=range].linearslider::-ms-track {   
-	background: #666;   
-	height:2px;
-	cursor:pointer  
-}    
-.SampleNamespace\.LinearInputControl input[type=range].linearslider::-ms-thumb {   
-	background: #666;   
-	border:0 solid #f00;
-	height:24px;
-	width:10px;
-	border-radius:48px;
-	cursor:pointer;
-	opacity:1;
-	-webkit-appearance:none;
-  
+	height: 2px;
+	cursor: pointer;
+}
+.SampleNamespace\.LinearInputControl input[type="range"].linearslider::-webkit-slider-thumb {
+	background: #666;
+	border: 0 solid #f00;
+	height: 24px;
+	width: 10px;
+	border-radius: 48px;
+	cursor: pointer;
+	opacity: 1;
+	-webkit-appearance: none;
+	margin-top: -12px;
+}
+.SampleNamespace\.LinearInputControl input[type="range"].linearslider::-moz-range-track {
+	background: #666;
+	height: 2px;
+	cursor: pointer;
+}
+.SampleNamespace\.LinearInputControl input[type="range"].linearslider::-moz-range-thumb {
+	background: #666;
+	border: 0 solid #f00;
+	height: 24px;
+	width: 10px;
+	border-radius: 48px;
+	cursor: pointer;
+	opacity: 1;
+	-webkit-appearance: none;
+	margin-top: -12px;
+}
+.SampleNamespace\.LinearInputControl input[type="range"].linearslider::-ms-track {
+	background: #666;
+	height: 2px;
+	cursor: pointer;
+}
+.SampleNamespace\.LinearInputControl input[type="range"].linearslider::-ms-thumb {
+	background: #666;
+	border: 0 solid #f00;
+	height: 24px;
+	width: 10px;
+	border-radius: 48px;
+	cursor: pointer;
+	opacity: 1;
+	-webkit-appearance: none;
 }

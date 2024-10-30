@@ -1,67 +1,58 @@
 /*
-	This file is part of the Microsoft PowerApps code samples. 
-	Copyright (C) Microsoft Corporation.  All rights reserved. 
-	This source code is intended only as a supplement to Microsoft Development Tools and/or  
-	on-line documentation.  See these other materials for detailed information regarding  
-	Microsoft code samples. 
+	This file is part of the Microsoft PowerApps code samples.
+	Copyright (C) Microsoft Corporation.  All rights reserved.
+	This source code is intended only as a supplement to Microsoft Development Tools and/or
+	on-line documentation.  See these other materials for detailed information regarding
+	Microsoft code samples.
 
-	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER  
-	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF  
-	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. 
+	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-.SampleNamespace\.TableControl
-{
-	font-family: 'SegoeUI-Semibold', 'Segoe UI Semibold', 'Segoe UI Regular', 'Segoe UI';
+.SampleNamespace\.TableControl {
+	font-family: "SegoeUI-Semibold", "Segoe UI Semibold", "Segoe UI Regular", "Segoe UI";
 }
 
-.SampleNamespace\.TableControl .Table_Container
-{
+.SampleNamespace\.TableControl .Table_Container {
 	overflow-x: auto;
 }
 
-.SampleNamespace\.TableControl .SampleControlHtmlTable_HtmlRow
-{
-	background-color: #FFFFFF;
+.SampleNamespace\.TableControl .SampleControlHtmlTable_HtmlRow {
+	background-color: #ffffff;
 }
 
-.SampleNamespace\.TableControl .SampleControlHtmlTable_HtmlHeaderCell
-{
+.SampleNamespace\.TableControl .SampleControlHtmlTable_HtmlHeaderCell {
 	text-align: center;
 }
 
-.SampleNamespace\.TableControl .SampleControlHtmlTable_HtmlCell, 
-.SampleNamespace\.TableControl .SampleControlHtmlTable_HtmlHeaderCell
-{
+.SampleNamespace\.TableControl .SampleControlHtmlTable_HtmlCell,
+.SampleNamespace\.TableControl .SampleControlHtmlTable_HtmlHeaderCell {
 	border: 1px solid black;
 	padding-left: 3px;
 	padding-right: 3px;
 }
 
-.SampleNamespace\.TableControl .SampleControlHtmlTable_HtmlHeaderCell
-{
+.SampleNamespace\.TableControl .SampleControlHtmlTable_HtmlHeaderCell {
 	font-weight: bold;
 	font-size: 16px;
 }
 
-.SampleNamespace\.TableControl .SampleControlHtmlTable_HtmlCell_Key
-{
-	color: #1160B7;
+.SampleNamespace\.TableControl .SampleControlHtmlTable_HtmlCell_Key {
+	color: #1160b7;
 }
 
-.SampleNamespace\.TableControl .SampleControlHtmlTable_HtmlCell_Value
-{
-	color: #1160B7;
+.SampleNamespace\.TableControl .SampleControlHtmlTable_HtmlCell_Value {
+	color: #1160b7;
 	text-align: center;
 }
 
-.SampleNamespace\.TableControl .SampleControlHtmlTable_ButtonClass
-{
+.SampleNamespace\.TableControl .SampleControlHtmlTable_ButtonClass {
 	text-decoration: none;
 	display: inline-block;
 	font-size: 14px;
 	cursor: pointer;
-	color: #1160B7;
-	background-color: #FFFFFF;
+	color: #1160b7;
+	background-color: #ffffff;
 	border: 1px solid black;
 	padding: 5px;
 	text-align: center;
@@ -71,7 +62,6 @@
 	display: block;
 }
 
-.SampleNamespace\.TableControl .lookupObjectsResultDiv
-{
-	color: #1160B7;
+.SampleNamespace\.TableControl .lookupObjectsResultDiv {
+	color: #1160b7;
 }

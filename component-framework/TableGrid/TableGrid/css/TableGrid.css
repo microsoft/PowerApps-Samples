@@ -1,104 +1,103 @@
 /*
-	This file is part of the Microsoft PowerApps code samples. 
-	Copyright (C) Microsoft Corporation.  All rights reserved. 
-	This source code is intended only as a supplement to Microsoft Development Tools and/or  
-	on-line documentation.  See these other materials for detailed information regarding  
-	Microsoft code samples. 
+	This file is part of the Microsoft PowerApps code samples.
+	Copyright (C) Microsoft Corporation.  All rights reserved.
+	This source code is intended only as a supplement to Microsoft Development Tools and/or
+	on-line documentation.  See these other materials for detailed information regarding
+	Microsoft code samples.
 
-	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER  
-	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF  
-	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. 
+	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-.SampleNamespace\.TableGrid table.SimpleTable_Table_Style{
-    border-spacing:0;
-    text-align:left;
-    width:100%;
-    margin:0 auto;
-    overflow: auto;
-    height: 94%;
-    display: block;
+.SampleNamespace\.TableGrid table.SimpleTable_Table_Style {
+	border-spacing: 0;
+	text-align: left;
+	width: 100%;
+	margin: 0 auto;
+	overflow: auto;
+	height: 94%;
+	display: block;
 }
 
-.SampleNamespace\.TableGrid div.SimpleTable_TableCellInnerDiv_Style{
-    word-wrap:break-word;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    line-height:1.5rem; 
-    max-height:1.5rem;
+.SampleNamespace\.TableGrid div.SimpleTable_TableCellInnerDiv_Style {
+	word-wrap: break-word;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	line-height: 1.5rem;
+	max-height: 1.5rem;
 }
 
-.SampleNamespace\.TableGrid th.SimpleTable_TableHeader_Style{
-    height:3rem;
-    font-family:"Segoe UI Regular","Segoe UI", Arial, Sans-Serif;
-    font-size:1rem;
-    line-height:1.384;
-    background-color:rgb(0, 0, 0);
-    color: #fff;
-    text-align:left;
-    padding:0.5rem;
-    border-left:.1rem solid rgba(255,255,255,.1);
-    vertical-align: middle;
-    width: 100vw;
+.SampleNamespace\.TableGrid th.SimpleTable_TableHeader_Style {
+	height: 3rem;
+	font-family: "Segoe UI Regular", "Segoe UI", Arial, Sans-Serif;
+	font-size: 1rem;
+	line-height: 1.384;
+	background-color: rgb(0, 0, 0);
+	color: #fff;
+	text-align: left;
+	padding: 0.5rem;
+	border-left: 0.1rem solid rgba(255, 255, 255, 0.1);
+	vertical-align: middle;
+	width: 100vw;
 }
 
-.SampleNamespace\.TableGrid tr.SimpleTable_TableRow_Style{
-    height:3.5rem;
-    background-color:#fff;
-    color:#333
+.SampleNamespace\.TableGrid tr.SimpleTable_TableRow_Style {
+	height: 3.5rem;
+	background-color: #fff;
+	color: #333;
 }
 
-.SampleNamespace\.TableGrid tr.SimpleTable_TableRow_Style:hover{
-    cursor:pointer;
-    border: solid thin rgb(59, 121, 183);
-    background:rgba(160,160,160,.15);
+.SampleNamespace\.TableGrid tr.SimpleTable_TableRow_Style:hover {
+	cursor: pointer;
+	border: solid thin rgb(59, 121, 183);
+	background: rgba(160, 160, 160, 0.15);
 }
 
 .SampleNamespace\.TableGrid td.SimpleTable_TableCell_Style {
-    font-size:1rem;
-    line-height:1.467;
-    padding:0 .5rem;
-    vertical-align: middle;
-    width: 100vw;
-    font-weight: bold;
-    font-family: "Segoe UI Light";
-    color: rgb(59, 121, 183);
+	font-size: 1rem;
+	line-height: 1.467;
+	padding: 0 0.5rem;
+	vertical-align: middle;
+	width: 100vw;
+	font-weight: bold;
+	font-family: "Segoe UI Light";
+	color: rgb(59, 121, 183);
 }
 
 .SampleNamespace\.TableGrid td.No_Record_Style {
-    text-align: center;
-    padding: 20px;
+	text-align: center;
+	padding: 20px;
 }
-
 
 .SampleNamespace\.TableGrid table.SimpleIncrement_Button_Style {
 	text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    margin: 4px 6px;
-    cursor: pointer;
+	display: inline-block;
+	font-size: 14px;
+	margin: 4px 6px;
+	cursor: pointer;
 	color: white;
-    border-radius: 10px;
+	border-radius: 10px;
 	background-color: black;
-    border: none;
-    padding: 5px;
-    text-align: center;
+	border: none;
+	padding: 5px;
+	text-align: center;
 }
 
-.SampleNamespace\.TableGrid input.SimpleIncrement_Input_Error_Style{
+.SampleNamespace\.TableGrid input.SimpleIncrement_Input_Error_Style {
 	color: red;
 }
 
-.SampleNamespace\.TableGrid button.LoadMoreButton_Hidden_Style{
-    display: none;
+.SampleNamespace\.TableGrid button.LoadMoreButton_Hidden_Style {
+	display: none;
 }
 
-.SampleNamespace\.TableGrid button.LoadMoreButton_Style{
-    background-color:#e5e5e5;
-    font-size:1.3rem;
-    font-weight:bold;
-    height:6%;
-    text-align:center;
-    width:100%;
-    border:none
+.SampleNamespace\.TableGrid button.LoadMoreButton_Style {
+	background-color: #e5e5e5;
+	font-size: 1.3rem;
+	font-weight: bold;
+	height: 6%;
+	text-align: center;
+	width: 100%;
+	border: none;
 }

@@ -1,12 +1,13 @@
 ---
 languages:
-- typescript
+  - typescript
 products:
-- power-platform
-- power-apps
+  - power-platform
+  - power-apps
 page_type: sample
 description: "This sample component renders as an Upload button to upload the image and a default image when the component loads for the first time. When you click on the Upload, a file explorer pops up to pick an image."
 ---
+
 # Image Upload Power Apps component framework sample
 
 ## Summary
@@ -14,7 +15,6 @@ description: "This sample component renders as an Upload button to upload the im
 This sample component renders as an **Upload** button to upload the image and a default image when the component loads for the first time. When you click on the **Upload**, a file explorer pops up to pick an image.
 
 The selected image renders within the component. Meanwhile, the **Remove** button is shown if we need to reset. When you click on the **Remove** button, the default image is displayed.
-
 
 ![Preview of the sample](https://learn.microsoft.com/power-apps/developer/component-framework/media/image-upload-control.png)
 
@@ -34,9 +34,9 @@ This sample was created by the Power Apps component framework team.
 
 ## Version history
 
-Version|Date|Comments
--------|----|--------
-1.0|January 18, 2024|README created
+| Version | Date             | Comments       |
+| ------- | ---------------- | -------------- |
+| 1.0     | January 18, 2024 | README created |
 
 ## Prerequisites
 
@@ -52,4 +52,4 @@ See [Implementing an image upload component](https://learn.microsoft.com/power-a
 
 ## Disclaimer
 
-**THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
+**THIS CODE IS PROVIDED _AS IS_ WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**

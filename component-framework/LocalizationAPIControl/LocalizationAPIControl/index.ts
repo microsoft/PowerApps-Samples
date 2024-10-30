@@ -1,22 +1,22 @@
 ﻿/*
-	This file is part of the Microsoft PowerApps code samples. 
-	Copyright (C) Microsoft Corporation.  All rights reserved. 
-	This source code is intended only as a supplement to Microsoft Development Tools and/or  
-	on-line documentation.  See these other materials for detailed information regarding  
-	Microsoft code samples. 
+	This file is part of the Microsoft PowerApps code samples.
+	Copyright (C) Microsoft Corporation.  All rights reserved.
+	This source code is intended only as a supplement to Microsoft Development Tools and/or
+	on-line documentation.  See these other materials for detailed information regarding
+	Microsoft code samples.
 
-	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER  
-	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF  
-	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. 
+	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 
 export class LocalizationAPIControl implements ComponentFramework.StandardControl<IInputs, IOutputs> {
-	// Value of the field is stored and used inside the control 
+	// Value of the field is stored and used inside the control
 	private _value: number;
 
-	// PCF framework delegate which will be assigned to this object which would be called whenever any update happens. 
+	// PCF framework delegate which will be assigned to this object which would be called whenever any update happens.
 	private _notifyOutputChanged: () => void;
 
 	// label element created as part of this control
@@ -44,17 +44,21 @@ export class LocalizationAPIControl implements ComponentFramework.StandardContro
 	 * @param state A piece of data that persists in one session for a single user. Can be set at any point in a controls life cycle by calling 'setControlState' in the Mode interface.
 	 * @param container If a control is marked control-type='standard', it will receive an empty div element within which it can render its content.
 	 */
-	public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container: HTMLDivElement): void {
+	public init(
+		context: ComponentFramework.Context<IInputs>,
+		notifyOutputChanged: () => void,
+		state: ComponentFramework.Dictionary,
+		container: HTMLDivElement
+	): void {
 		// Creating the label for the control and setting the relevant values.
 		this.label = document.createElement("input");
 		this.label.setAttribute("type", "label");
 		this.label.addEventListener("blur", this.onInputBlur.bind(this));
 
-
 		//Create a button to increment the value by 1.
 		this.button = document.createElement("button");
 
-		// Get the localized string from localized string 
+		// Get the localized string from localized string
 		this.button.innerHTML = context.resources.getString("PCF_LocalizationSample_ButtonLabel");
 
 		this.button.classList.add("LocalizationSample_Button_Style");
@@ -84,7 +88,7 @@ export class LocalizationAPIControl implements ComponentFramework.StandardContro
 	 */
 	private onInputBlur(event: Event): void {
 		const inputNumber = Number(this.label.value);
-		this._value = isNaN(inputNumber) ? (this.label.value as any) as number : inputNumber;
+		this._value = isNaN(inputNumber) ? (this.label.value as unknown as number) : inputNumber;
 		this._notifyOutputChanged();
 	}
 
@@ -100,25 +104,24 @@ export class LocalizationAPIControl implements ComponentFramework.StandardContro
 
 		if (context.parameters.value.error) {
 			this.label.classList.add("LocalizationSample_Input_Error_Style");
-		}
-		else {
+		} else {
 			this.label.classList.remove("LocalizationSample_Input_Error_Style");
 		}
 	}
 
-	/** 
-	 * It is called by the framework prior to a control receiving new data. 
+	/**
+	 * It is called by the framework prior to a control receiving new data.
 	 * @returns an object based on nomenclature defined in manifest, expecting object[s] for property marked as "bound" or "output"
 	 */
 	public getOutputs(): IOutputs {
 		// custom code goes here - remove the line below and return the correct output
 		const result: IOutputs = {
-			value: this._value
+			value: this._value,
 		};
 		return result;
 	}
 
-	/** 
+	/**
 	 * Called when the control is to be removed from the DOM tree. Controls should use this call for cleanup.
 	 * i.e. cancelling any pending remote calls, removing listeners, etc.
 	 */

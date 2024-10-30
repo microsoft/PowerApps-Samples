@@ -1,18 +1,18 @@
 ---
 languages:
-- typescript
+  - typescript
 products:
-- power-platform
-- power-apps
+  - power-platform
+  - power-apps
 page_type: sample
 description: "This sample component changes the user experience of interacting with numeric types on the form. Instead of typing in the numbers, the linear input component provides a linear slider using which the value of the attribute can be set on the form."
 ---
+
 # Linear Input Power Apps component framework sample
 
 ## Summary
 
 This sample component changes the user experience of interacting with numeric types on the form. Instead of typing in the numbers, the linear input component provides a linear slider using which the value of the attribute can be set on the form.
-
 
 ![Preview of the sample](https://learn.microsoft.com/power-apps/developer/component-framework/media/linear-input-control.png)
 
@@ -32,9 +32,9 @@ This sample was created by the Power Apps component framework team.
 
 ## Version history
 
-Version|Date|Comments
--------|----|--------
-1.0|January 18, 2024|README created
+| Version | Date             | Comments       |
+| ------- | ---------------- | -------------- |
+| 1.0     | January 18, 2024 | README created |
 
 ## Prerequisites
 
@@ -50,4 +50,4 @@ See [Implementing linear input component](https://learn.microsoft.com/power-apps
 
 ## Disclaimer
 
-**THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
+**THIS CODE IS PROVIDED _AS IS_ WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**

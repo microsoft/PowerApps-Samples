@@ -1,19 +1,19 @@
 /*
-	This file is part of the Microsoft PowerApps code samples. 
-	Copyright (C) Microsoft Corporation.  All rights reserved. 
-	This source code is intended only as a supplement to Microsoft Development Tools and/or  
-	on-line documentation.  See these other materials for detailed information regarding  
-	Microsoft code samples. 
+	This file is part of the Microsoft PowerApps code samples.
+	Copyright (C) Microsoft Corporation.  All rights reserved.
+	This source code is intended only as a supplement to Microsoft Development Tools and/or
+	on-line documentation.  See these other materials for detailed information regarding
+	Microsoft code samples.
 
-	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER  
-	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF  
-	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. 
+	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 
 export class NavigationAPIControl implements ComponentFramework.StandardControl<IInputs, IOutputs> {
-	// PCF framework delegate which will be assigned to this object which would be called whenever any update happens. 
+	// PCF framework delegate which will be assigned to this object which would be called whenever any update happens.
 	private _notifyOutputChanged: () => void;
 
 	// Reference to the div element that hold together all the HTML elements that we are creating as part of this control
@@ -53,7 +53,12 @@ export class NavigationAPIControl implements ComponentFramework.StandardControl<
 	 * @param state A piece of data that persists in one session for a single user. Can be set at any point in a controls life cycle by calling 'setControlState' in the Mode interface.
 	 * @param container If a control is marked control-type='standard', it will receive an empty div element within which it can render its content.
 	 */
-	public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container: HTMLDivElement): void {
+	public init(
+		context: ComponentFramework.Context<IInputs>,
+		notifyOutputChanged: () => void,
+		state: ComponentFramework.Dictionary,
+		container: HTMLDivElement
+	): void {
 		this._notifyOutputChanged = notifyOutputChanged;
 		this._context = context;
 		this._container = container;
@@ -101,47 +106,46 @@ export class NavigationAPIControl implements ComponentFramework.StandardControl<
 	 * Handles the events raised by each of the buttons that are binded according to their id
 	 * @param event : event object that contains all the properties regarding the raised event
 	 */
-	public raiseEvent(event: Event): void {
+	public raiseEvent(event: Event): Promise<unknown> | void {
 		const inputSource = (event.target as Element)?.id;
 		switch (inputSource) {
 			case "openAlertDialogButton":
-				this._context.navigation.openAlertDialog({ text: "This is an alert.", confirmButtonLabel: "Yes", }).then(
-					() => this.openAlertDialogButton.innerHTML = "Alert dialog closed",
-					() => this.openAlertDialogButton.innerHTML = "Error in Alert Dialog",
+				return this._context.navigation.openAlertDialog({ text: "This is an alert.", confirmButtonLabel: "Yes" }).then(
+					() => (this.openAlertDialogButton.innerHTML = "Alert dialog closed"),
+					() => (this.openAlertDialogButton.innerHTML = "Error in Alert Dialog")
 				);
-				break;
 
 			case "openConfirmDialogButton":
-				this._context.navigation.openConfirmDialog({ title: "Confirmation Dialog", text: "This is a confirmation.", }, { height: 200, width: 450 }).then(
-					(success) => {
+				return this._context.navigation
+					.openConfirmDialog(
+						{ title: "Confirmation Dialog", text: "This is a confirmation." },
+						{ height: 200, width: 450 }
+					)
+					.then((success) => {
 						if (success.confirmed) {
 							this.openConfirmDialogButton.innerHTML = "Ok button clicked.";
-						}
-						else {
+						} else {
 							this.openConfirmDialogButton.innerHTML = "Cancel or X button clicked.";
 						}
-					}
-				);
-				break;
+						return;
+					});
 
-			case "openFileButton":
-				{
-					const file: ComponentFramework.FileObject = {
-						fileContent: "U2FtcGxlIGNvbnRlbnQgZm9yIERlbW8=", //Contents of the file in base64 encoded format. 
-						fileName: "Sample.txt", //Name of the file.
-						fileSize: 29, //Size of the file in KB.
-						mimeType: "text/plain" //MIME type of the file.
-					};
-					this._context.navigation.openFile(file, { openMode: 2 });
-				}
-				break;
+			case "openFileButton": {
+				const file: ComponentFramework.FileObject = {
+					fileContent: "U2FtcGxlIGNvbnRlbnQgZm9yIERlbW8=", //Contents of the file in base64 encoded format.
+					fileName: "Sample.txt", //Name of the file.
+					fileSize: 29, //Size of the file in KB.
+					mimeType: "text/plain", //MIME type of the file.
+				};
+				return this._context.navigation.openFile(file, { openMode: 2 });
+			}
 
 			case "openUrlButton":
-				this._context.navigation.openUrl("https://www.microsoft.com");
-				break;
+				return this._context.navigation.openUrl("https://www.microsoft.com");
 		}
 
 		//this._notifyOutputChanged();
+		return;
 	}
 
 	/**
@@ -152,8 +156,8 @@ export class NavigationAPIControl implements ComponentFramework.StandardControl<
 		this._context = context;
 	}
 
-	/** 
-	 * It is called by the framework prior to a control receiving new data. 
+	/**
+	 * It is called by the framework prior to a control receiving new data.
 	 * @returns an object based on nomenclature defined in manifest, expecting object[s] for property marked as "bound" or "output"
 	 */
 	public getOutputs(): IOutputs {
@@ -161,7 +165,7 @@ export class NavigationAPIControl implements ComponentFramework.StandardControl<
 		return {};
 	}
 
-	/** 
+	/**
 	 * Called when the control is to be removed from the DOM tree. Controls should use this call for cleanup.
 	 * i.e. cancelling any pending remote calls, removing listeners, etc.
 	 */

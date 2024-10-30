@@ -1,27 +1,28 @@
 .msFacepileExample {
-    max-width: 300px;
-  }
-  
-  .msFacepileExample .control {
-    padding-top: 20px;
-  }
-  
-  .msFacepileExample .ms-Dropdown-container, .msFacepileExample.ms-Slider {
-    margin: 10px 0 10px 0;
-  }
-  
-  .msFacepileExample .ms-Dropdown-container .ms-Label {
-    padding-top: 0;
-  }
-  
-  .msFacepileExample .ms-Checkbox {
-    padding-top: 15px;
-  }
-  
-  .exampleCheckbox {
-    margin: 10px 0;
-  }
-  
-  .exampleLabel {
-    margin: 10px 0;
-  }
+	max-width: 300px;
+}
+
+.msFacepileExample .control {
+	padding-top: 20px;
+}
+
+.msFacepileExample .ms-Dropdown-container,
+.msFacepileExample.ms-Slider {
+	margin: 10px 0 10px 0;
+}
+
+.msFacepileExample .ms-Dropdown-container .ms-Label {
+	padding-top: 0;
+}
+
+.msFacepileExample .ms-Checkbox {
+	padding-top: 15px;
+}
+
+.exampleCheckbox {
+	margin: 10px 0;
+}
+
+.exampleLabel {
+	margin: 10px 0;
+}

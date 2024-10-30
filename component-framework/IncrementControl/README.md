@@ -9,6 +9,7 @@ description: "This sample component shows how to bind data with Power Apps compo
 
 To implement this component, the first thing you need to define the Manifest file, and then implement the custom logic in TypeScript."
 ---
+
 # Increment Power Apps component framework sample
 
 ## Summary
@@ -33,9 +34,9 @@ This sample was created by the Power Apps component framework team.
 
 ## Version history
 
-Version|Date|Comments
--------|----|--------
-1.0|January 18, 2024|README created
+| Version | Date             | Comments       |
+| ------- | ---------------- | -------------- |
+| 1.0     | January 18, 2024 | README created |
 
 ## Prerequisites
 
@@ -51,4 +52,4 @@ See [Implementing increment component](https://learn.microsoft.com/power-apps/de
 
 ## Disclaimer
 
-**THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
+**THIS CODE IS PROVIDED _AS IS_ WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**

@@ -1,12 +1,13 @@
 ---
 languages:
-- typescript
+  - typescript
 products:
-- power-platform
-- power-apps
+  - power-platform
+  - power-apps
 page_type: sample
 description: "This sample demonstrates how to customize the Power Apps editable grid control."
 ---
+
 # Customized editable grid Power Apps component framework sample
 
 ## Summary
@@ -14,7 +15,6 @@ description: "This sample demonstrates how to customize the Power Apps editable 
 This sample demonstrates how to customize the Power Apps editable grid control as described in [Customize the editable grid control](https://learn.microsoft.com/power-apps/developer/component-framework/customize-editable-grid-control).
 
 This sample changes the main grid page for a table that is configured to use this control. All text columns will use green text. Any values for the `creditlimit` column will display as blue if the value is greater than 100,000 and red otherwise.
-
 
 ![Preview of the sample](https://learn.microsoft.com/power-apps/developer/component-framework/media/editable-grid-control-sample-customized-account-main-grid.png)
 
@@ -34,9 +34,9 @@ This sample was created by the Power Apps component framework team.
 
 ## Version history
 
-Version|Date|Comments
--------|----|--------
-1.0|January 18, 2024|README created
+| Version | Date             | Comments       |
+| ------- | ---------------- | -------------- |
+| 1.0     | January 18, 2024 | README created |
 
 ## Prerequisites
 
@@ -52,4 +52,4 @@ See [Customized editable grid](https://learn.microsoft.com/power-apps/developer/
 
 ## Disclaimer
 
-**THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
+**THIS CODE IS PROVIDED _AS IS_ WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
