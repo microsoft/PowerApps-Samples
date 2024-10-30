@@ -100,11 +100,11 @@ export class DeviceApiControl implements ComponentFramework.StandardControl<IInp
 		return null;
 	}
 
-	public getImage(context: ComponentFramework.Context<IInputs>): void {
+	public getImage(context: ComponentFramework.Context<IInputs>): Promise<void> | void {
 		const lbl: HTMLElement = this.container.querySelector("figcaption") as HTMLElement;
 
 		if (context.device.captureImage) {
-			context.device
+			return context.device
 				.captureImage({ height: 250, width: 400, allowEdit: true, preferFrontCamera: false, quality: 100 })
 				.then((file) => {
 					if (file) {
@@ -113,19 +113,21 @@ export class DeviceApiControl implements ComponentFramework.StandardControl<IInp
 						// if captureImage failed: device not capable, user cancel, etc.
 						this.pickFile(context, lbl);
 					}
+					return;
 				});
 		} else {
 			this.pickFile(context, lbl);
 		}
 	}
 
-	public captureAudio(context: ComponentFramework.Context<IInputs>): void {
+	public captureAudio(context: ComponentFramework.Context<IInputs>): Promise<void> | void {
 		try {
-			context.device
+			return context.device
 				.captureAudio()
 				.then((audioFile) => {
 					alert(`Success ${audioFile.fileName}, ${audioFile.fileSize}, ${audioFile.mimeType}`);
 					console.log(audioFile);
+					return;
 				})
 				.catch((er) => console.log(er));
 		} catch (err) {
@@ -133,13 +135,14 @@ export class DeviceApiControl implements ComponentFramework.StandardControl<IInp
 		}
 	}
 
-	public captureVideo(context: ComponentFramework.Context<IInputs>): void {
+	public captureVideo(context: ComponentFramework.Context<IInputs>): Promise<void> | void {
 		try {
-			context.device
+			return context.device
 				.captureVideo()
 				.then((videoFile) => {
 					alert(`Success ${videoFile.fileName}, ${videoFile.fileSize}, ${videoFile.mimeType}`);
 					console.log(videoFile);
+					return;
 				})
 				.catch((er) => console.log(er));
 		} catch (err) {
@@ -147,12 +150,13 @@ export class DeviceApiControl implements ComponentFramework.StandardControl<IInp
 		}
 	}
 
-	public getBarcode(context: ComponentFramework.Context<IInputs>): void {
+	public getBarcode(context: ComponentFramework.Context<IInputs>): Promise<void> | void {
 		try {
-			context.device
+			return context.device
 				.getBarcodeValue()
 				.then((barcode) => {
 					alert(barcode);
+					return;
 				})
 				.catch((er) => console.log(er));
 		} catch (err) {
@@ -160,8 +164,8 @@ export class DeviceApiControl implements ComponentFramework.StandardControl<IInp
 		}
 	}
 
-	private pickFile(context: ComponentFramework.Context<IInputs>, lbl: HTMLElement): void {
-		context.device
+	private pickFile(context: ComponentFramework.Context<IInputs>, lbl: HTMLElement): Promise<void> {
+		return context.device
 			.pickFile({
 				accept: "image",
 				allowMultipleFiles: false,
@@ -177,6 +181,7 @@ export class DeviceApiControl implements ComponentFramework.StandardControl<IInp
 					lbl.setAttribute("class", "warning");
 					lbl.innerText = "⚠ Image not available";
 				}
+				return;
 			})
 			.catch((error) => this.showError(error, context, "figcaption"));
 	}
@@ -186,9 +191,8 @@ export class DeviceApiControl implements ComponentFramework.StandardControl<IInp
 			const caption: HTMLElement = this.container.querySelector("figcaption") as HTMLElement;
 
 			if (file?.fileContent && file.mimeType?.length) {
-				(
-					this.container.querySelector("img#imageResult") as HTMLImageElement
-				).src = `data:${file.mimeType};base64, ${file.fileContent}`;
+				(this.container.querySelector("img#imageResult") as HTMLImageElement).src =
+					`data:${file.mimeType};base64, ${file.fileContent}`;
 				caption.innerText = `✔ ${file.fileName}`;
 				caption.setAttribute("class", "success");
 			} else {
@@ -206,12 +210,15 @@ export class DeviceApiControl implements ComponentFramework.StandardControl<IInp
 		element.innerText = `❌ Error: ${error.message}`;
 	}
 
-	public getLocation(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void): void {
+	public getLocation(
+		context: ComponentFramework.Context<IInputs>,
+		notifyOutputChanged: () => void
+	): Promise<void> | void {
 		if (context.device.getCurrentPosition) {
 			const lbl: HTMLDivElement = this.container.querySelector("div#locationResult") as HTMLDivElement;
 
 			try {
-				context.device
+				return context.device
 					.getCurrentPosition()
 					.then((location) => {
 						if (location && location.coords && location.coords.latitude && location.coords.longitude) {
@@ -226,6 +233,7 @@ export class DeviceApiControl implements ComponentFramework.StandardControl<IInp
 							lbl.setAttribute("class", "warning");
 							lbl.innerText = "⚠ Location data not available";
 						}
+						return;
 					})
 					.catch(() => {
 						// location not available from host device/app

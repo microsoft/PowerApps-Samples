@@ -1,12 +1,13 @@
 ---
 languages:
-- javascript
+  - javascript
 products:
-- power-platform
-- power-apps
+  - power-platform
+  - power-apps
 page_type: sample
 description: "This sample shows how to use third-party libraries to create components in Power Apps component framework. The flip sample component is implemented based on angular.js, angular-ui, angular-animate, angular-sanitize, bootstrap. The code may not reveal the best practices for the mentioned third-party libraries."
 ---
+
 # Angular JavaScript Flip Control Power Apps component framework sample
 
 ## Summary
@@ -31,9 +32,9 @@ This sample was created by the Power Apps component framework team.
 
 ## Version history
 
-Version|Date|Comments
--------|----|--------
-1.0|January 11, 2024|README created
+| Version | Date             | Comments       |
+| ------- | ---------------- | -------------- |
+| 1.0     | January 11, 2024 | README created |
 
 ## Prerequisites
 
@@ -47,7 +48,6 @@ Follow the steps in the [README.md](../README.md) to generate solutions containi
 
 See [Implementing Flip component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/angular-flip-control)
 
-
 ## Disclaimer
 
-**THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
+**THIS CODE IS PROVIDED _AS IS_ WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**

@@ -1,12 +1,13 @@
 ---
 languages:
-- typescript
+  - typescript
 products:
-- power-platform
-- power-apps
+  - power-platform
+  - power-apps
 page_type: sample
 description: "This sample component showcases Device API capabilities of the Power Apps component framework."
 ---
+
 # Implementing data-set Power Apps component framework sample
 
 ## Summary
@@ -31,9 +32,9 @@ This sample was created by the Power Apps component framework team.
 
 ## Version history
 
-Version|Date|Comments
--------|----|--------
-1.0|January 18, 2024|README created
+| Version | Date             | Comments       |
+| ------- | ---------------- | -------------- |
+| 1.0     | January 18, 2024 | README created |
 
 ## Prerequisites
 
@@ -47,7 +48,6 @@ Follow the steps in the [README.md](../README.md) to generate solutions containi
 
 See [Implementing a Device API component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/device-api-control)
 
-
 ## Disclaimer
 
-**THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
+**THIS CODE IS PROVIDED _AS IS_ WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**

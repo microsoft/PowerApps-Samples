@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-	<control namespace="SampleNamespace" constructor="TableControl" version="1.1.0" display-name-key="TableControl_Display_Key" description-key="TableControl_Desc_Key" control-type="standard">
-		<property name="stringProperty" display-name-key="stringProperty_Display_Key" description-key="stringProperty_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
-		<resources>
-			<code path="index.ts" order="1" />
-			<css path="css/TableControl.css" order="2" />
-			<resx path="strings/TableControl.1033.resx" version="1.0.0" />
-		</resources>
-		<feature-usage>
-			<uses-feature name="Utility" required="true" />
-		</feature-usage>
-	</control>
+  <control namespace="SampleNamespace" constructor="TableControl" version="1.1.0" display-name-key="TableControl_Display_Key" description-key="TableControl_Desc_Key" control-type="standard">
+    <property name="stringProperty" display-name-key="stringProperty_Display_Key" description-key="stringProperty_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
+    <resources>
+      <code path="index.ts" order="1" />
+      <css path="css/TableControl.css" order="2" />
+      <resx path="strings/TableControl.1033.resx" version="1.0.0" />
+    </resources>
+    <feature-usage>
+      <uses-feature name="Utility" required="true" />
+    </feature-usage>
+  </control>
 </manifest>

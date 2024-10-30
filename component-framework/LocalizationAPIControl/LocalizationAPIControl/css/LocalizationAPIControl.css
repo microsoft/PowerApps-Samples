@@ -1,17 +1,15 @@
-
 /*
-	This file is part of the Microsoft PowerApps code samples. 
-	Copyright (C) Microsoft Corporation.  All rights reserved. 
-	This source code is intended only as a supplement to Microsoft Development Tools and/or  
-	on-line documentation.  See these other materials for detailed information regarding  
-	Microsoft code samples. 
+	This file is part of the Microsoft PowerApps code samples.
+	Copyright (C) Microsoft Corporation.  All rights reserved.
+	This source code is intended only as a supplement to Microsoft Development Tools and/or
+	on-line documentation.  See these other materials for detailed information regarding
+	Microsoft code samples.
 
-	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER  
-	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF  
-	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. 
+	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-.SampleNamespace\.LocalizationAPIControl button.LocalizationSample_Button_Style
-{
+.SampleNamespace\.LocalizationAPIControl button.LocalizationSample_Button_Style {
 	text-decoration: none;
 	display: inline-block;
 	font-size: 14px;
@@ -25,7 +23,6 @@
 	text-align: center;
 }
 
-.SampleNamespace\.LocalizationAPIControl button.LocalizationSample_Input_Error_Style
-{
+.SampleNamespace\.LocalizationAPIControl button.LocalizationSample_Input_Error_Style {
 	color: red;
 }

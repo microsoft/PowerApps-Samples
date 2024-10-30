@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-	<control namespace="SampleNamespace" constructor="WebAPIControl" version="1.1.0" display-name-key="WebAPIControl_Display_Key" description-key="WebAPIControl_Desc_Display_Key" control-type="standard">
-		<property name="stringProperty" display-name-key="stringProperty_Display_Key" description-key="stringProperty_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
-		<resources>
-			<code path="index.ts" order="1" />
-			<css path="css/WebAPIControl.css" order="2" />
-			<resx path="strings/WebAPIControl.1033.resx" version="1.0.0" />
-		</resources>
-		<feature-usage>
-			<uses-feature name="Utility" required="true" />
-			<uses-feature name="WebAPI" required="true" />
-		</feature-usage>
-	</control>
+  <control namespace="SampleNamespace" constructor="WebAPIControl" version="1.1.0" display-name-key="WebAPIControl_Display_Key" description-key="WebAPIControl_Desc_Display_Key" control-type="standard">
+    <property name="stringProperty" display-name-key="stringProperty_Display_Key" description-key="stringProperty_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
+    <resources>
+      <code path="index.ts" order="1" />
+      <css path="css/WebAPIControl.css" order="2" />
+      <resx path="strings/WebAPIControl.1033.resx" version="1.0.0" />
+    </resources>
+    <feature-usage>
+      <uses-feature name="Utility" required="true" />
+      <uses-feature name="WebAPI" required="true" />
+    </feature-usage>
+  </control>
 </manifest>

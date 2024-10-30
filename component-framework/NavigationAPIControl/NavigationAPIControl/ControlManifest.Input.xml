@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-	<control namespace="SampleNamespace" constructor="NavigationAPIControl" version="1.1.0" display-name-key="NavigationAPIControl_Display_Key" description-key="NavigationAPI_Desc_Key" control-type="standard">
-		<type-group name="numbers">
-			<type>Whole.None</type>
-			<type>Currency</type>
-			<type>FP</type>
-			<type>Decimal</type>
-		</type-group>
-		<property name="controlValue" display-name-key="controlValue_Display_Key" description-key="controlValue_Desc_Key" of-type-group="numbers" usage="bound" required="true" />
-		<resources>
-			<code path="index.ts" order="1" />
-			<css path="css/NavigationAPIControl.css" order="2" />
-			<resx path="strings/NavigationAPIControl.1033.resx" version="1.0.0" />
-		</resources>
-	</control>
+  <control namespace="SampleNamespace" constructor="NavigationAPIControl" version="1.1.0" display-name-key="NavigationAPIControl_Display_Key" description-key="NavigationAPI_Desc_Key" control-type="standard">
+    <type-group name="numbers">
+      <type>Whole.None</type>
+      <type>Currency</type>
+      <type>FP</type>
+      <type>Decimal</type>
+    </type-group>
+    <property name="controlValue" display-name-key="controlValue_Display_Key" description-key="controlValue_Desc_Key" of-type-group="numbers" usage="bound" required="true" />
+    <resources>
+      <code path="index.ts" order="1" />
+      <css path="css/NavigationAPIControl.css" order="2" />
+      <resx path="strings/NavigationAPIControl.1033.resx" version="1.0.0" />
+    </resources>
+  </control>
 </manifest>

@@ -19,10 +19,10 @@
     </external-service-usage>
     <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
     <property name="value" display-name-key="Value_Name" description-key="Value_Desc" of-type="OptionSet" usage="bound" required="true"/>
-    <property name="configuration" display-name-key="Configuration_Name" description-key="Configuration_Desc" of-type="Multiple" usage="input" required="true"/> 
-   
-    <!-- 
-      Property node's of-type attribute can be of-type-group attribute. 
+    <property name="configuration" display-name-key="Configuration_Name" description-key="Configuration_Desc" of-type="Multiple" usage="input" required="true"/>
+
+    <!--
+      Property node's of-type attribute can be of-type-group attribute.
       Example:
       <type-group name="numbers">
         <type>Whole.None</type>
@@ -37,7 +37,7 @@
       <resx path="strings/ChoicesPicker.1033.resx" version="1.0.0" />
       <!-- UNCOMMENT TO ADD MORE RESOURCES
       <css path="css/ChoicesPicker.css" order="1" />
-     
+
       -->
     </resources>
     <!-- UNCOMMENT TO ENABLE THE SPECIFIED API
