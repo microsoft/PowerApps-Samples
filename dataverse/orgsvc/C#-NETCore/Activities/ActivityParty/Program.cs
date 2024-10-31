@@ -62,13 +62,6 @@ namespace PowerPlatform_Dataverse_CodeSamples
         /// <returns>True if successful; otherwise false.</returns>
         public bool Run(IOrganizationService service, EntityCollection entityStore)
         {
-            var _sampleLetter = 
-@"Greetings, Mr. Andreshak,\n\n
-This is a sample letter activity as part of the SDK Samples.\n\n
-Sincerely,\n
-Mary Kay Andersen\n\n
-cc: Denise Smith";
-
             // Use the OrganizationServiceContext class and create a LINQ query.
             var orgContext = new OrganizationServiceContext(service);
 
@@ -104,13 +97,21 @@ cc: Denise Smith";
 
             // Create a Letter activity and set From and To fields to the
             // respective Activity Party rows.
+
+            var _letterBody =
+@"Greetings, Mr. Andreshak,\n\n
+This is a sample letter activity as part of the SDK Samples.\n\n
+Sincerely,\n
+Mary Kay Andersen\n\n
+cc: Denise Smith";
+
             var letter = new Letter
             {
                 RegardingObjectId = new EntityReference(Contact.EntityLogicalName,
                     contacts[2].ContactId.Value),
                 Subject = "Sample Letter Activity",
                 ScheduledEnd = DateTime.Now + TimeSpan.FromDays(5),
-                Description = _sampleLetter,
+                Description = _letterBody,
                 From = new ActivityParty[] { activityParty1 },
                 To = new ActivityParty[] { activityParty3, activityParty2 }
             };
