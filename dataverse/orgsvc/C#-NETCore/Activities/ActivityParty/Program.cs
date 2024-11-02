@@ -144,38 +144,38 @@ cc: Denise Smith";
         {
             var contact1 = new Entity("contact")    
             {
-                ["FirstName"] = "Mary Kay",
-                ["LastName"] = "Andersen",
-                ["Address1_Line1"] = "23 Market St.",
-                ["Address1_City"] = "Sammamish",
-                ["Address1_StateOrProvince"] = "MT",
-                ["Address1_PostalCode"] = "99999",
-                ["Telephone1"] = "12345678",
-                ["EMailAddress1"] = "marykay@contoso.com"
+                ["firstname"] = "Mary Kay",
+                ["lastname"] = "Andersen",
+                ["address1_line1"] = "23 Market St.",
+                ["address1_city"] = "Sammamish",
+                ["address1_stateorprovince"] = "MT",
+                ["address1_postalcode"] = "99999",
+                ["telephone1"] = "12345678",
+                ["emailaddress1"] = "marykay@contoso.com"
             };
 
             var contact2 = new Entity("contact")
             {
-                ["FirstName"] = "Joe",
-                ["LastName"] = "Andreshak",
-                ["Address1_Line1"] = "23 Market St.",
-                ["Address1_City"] = "Sammamish",
-                ["Address1_StateOrProvince"] = "MT",
-                ["Address1_PostalCode"] = "99999",
-                ["Telephone1"] = "12345678",
-                ["EMailAddress1"] = "joe@contoso.com"
+                ["firstname"] = "Joe",
+                ["lastname"] = "Andreshak",
+                ["address1_line1"] = "23 Market St.",
+                ["address1_city"] = "Sammamish",
+                ["address1_stateorprovince"] = "MT",
+                ["address1_postalcode"] = "99999",
+                ["telephone1"] = "12345678",
+                ["emailaddress1"] = "joe@contoso.com"
             };
 
             var contact3 = new Entity("contact")
             {
-                ["FirstName"] = "Denise",
-                ["LastName"] = "Smith",
-                ["Address1_Line1"] = "23 Market St.",
-                ["Address1_City"] = "Sammamish",
-                ["Address1_StateOrProvince"] = "MT",
-                ["Address1_PostalCode"] = "99999",
-                ["Telephone1"] = "12345678",
-                ["EMailAddress1"] = "denise@contoso.com"
+                ["firstname"] = "Denise",
+                ["lastname"] = "Smith",
+                ["address1_line1"] = "23 Market St.",
+                ["address1_city"] = "Sammamish",
+                ["address1_stateorprovince"] = "MT",
+                ["address1_postalcode"] = "99999",
+                ["telephone1"] = "12345678",
+                ["emailaddress1"] = "denise@contoso.com"
             };
 
             entityStore = new EntityCollection();
@@ -227,6 +227,7 @@ cc: Denise Smith";
                 try
                 {
                     service.Delete(entity.LogicalName, entity.Id);
+                    // TODO Fix crash due to collection being modified
                     entityStore.Entities.Remove(entity);
                 }
                 catch (Exception)
