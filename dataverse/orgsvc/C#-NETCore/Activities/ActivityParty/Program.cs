@@ -231,8 +231,9 @@ namespace PowerPlatform_Dataverse_CodeSamples
                     service.Delete(entref.LogicalName, entref.Id);
                     entityStore.Remove(key);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Console.WriteLine($"Cleanup(): exception deleting {key}\n\t{ex.Message}");
                     continue;
                 }
             }
