@@ -31,6 +31,7 @@ namespace PowerPlatform_Dataverse_CodeSamples
 
         static void Main(string[] args)
         {
+            // Entity name and reference collection.
             Dictionary<string,EntityReference> entityStore;
 
             Program app = new();
@@ -58,9 +59,10 @@ namespace PowerPlatform_Dataverse_CodeSamples
         /// The main logic of this program being demonstrated.
         /// </summary>
         /// <param name="service">Authenticated web service connection.</param>
-        /// <param name="entityStore">Collection of entities created in Dataverse.</param>
+        /// <param name="entityStore">Entity name and reference collection.</param>
         /// <returns>True if successful; otherwise false.</returns>
-        public bool Run(IOrganizationService service, Dictionary<string, EntityReference> entityStore)
+        public bool Run(IOrganizationService service, 
+            Dictionary<string, EntityReference> entityStore)
         {
             // Use the OrganizationServiceContext class and create a LINQ query.
             var orgContext = new OrganizationServiceContext(service);
@@ -140,7 +142,7 @@ cc: Denise Smith";
         /// Initializes any pre-existing data and resources required by the Run() method.
         /// </summary>
         /// <param name="service">Authenticated web service connection.</param>
-        /// <param name="entityStore">Collection of entities created in Dataverse.</param>
+        /// <param name="entityStore">Entity name and reference collection.</param>
         public void Setup(IOrganizationService service, out Dictionary<string, 
             EntityReference> entityStore)
         {
@@ -206,8 +208,9 @@ cc: Denise Smith";
         /// Dispose of any data and resources created by the this program.
         /// </summary>
         /// <param name="service">Authenticated web service connection.</param>
-        /// <param name="entityStore">Collection of entities created in Dataverse.</param>
-        public void Cleanup(ServiceClient service, Dictionary<string, EntityReference> entityStore)
+        /// <param name="entityStore">Entity name and reference collection.</param>
+        public void Cleanup(ServiceClient service, 
+            Dictionary<string, EntityReference> entityStore)
         {
             // Do some checking of the passed parameter values.
             if (service == null || service.IsReady == false)
