@@ -31,7 +31,7 @@ namespace PowerPlatform_Dataverse_CodeSamples
 
         static void Main(string[] args)
         {
-            EntityCollection entityStore;
+            Dictionary<string,EntityReference> entityStore;
 
             Program app = new();
 
@@ -60,7 +60,7 @@ namespace PowerPlatform_Dataverse_CodeSamples
         /// <param name="service">Authenticated web service connection.</param>
         /// <param name="entityStore">Collection of entities created in Dataverse.</param>
         /// <returns>True if successful; otherwise false.</returns>
-        public bool Run(IOrganizationService service, EntityCollection entityStore)
+        public bool Run(IOrganizationService service, Dictionary<string, EntityReference> entityStore)
         {
             // Use the OrganizationServiceContext class and create a LINQ query.
             var orgContext = new OrganizationServiceContext(service);
@@ -124,8 +124,9 @@ cc: Denise Smith";
             {
                 var results = orgContext.SaveChanges(SaveChangesOptions.None);
 
-                //TODO Add ID to letter entity before adding to entityStore
-                entityStore.Entities.Add(letter);
+                //TODO Add ID to letter entref before adding to entityStore
+                entityStore.Add(letter.Subject, 
+                    new EntityReference("letter", (Guid)letter.ActivityId));
                 return true;
             }
             catch (Exception ex)
@@ -140,7 +141,7 @@ cc: Denise Smith";
         /// </summary>
         /// <param name="service">Authenticated web service connection.</param>
         /// <param name="entityStore">Collection of entities created in Dataverse.</param>
-        public void Setup(IOrganizationService service, out EntityCollection entityStore)
+        public void Setup(IOrganizationService service, out Dictionary<string, EntityReference> entityStore)
         {
             var contact1 = new Entity("contact")    
             {
@@ -178,18 +179,18 @@ cc: Denise Smith";
                 ["emailaddress1"] = "denise@contoso.com"
             };
 
-            entityStore = new EntityCollection();
+            entityStore = new Dictionary<string, EntityReference>();
 
             try
             {
                 contact1.Id = service.Create(contact1);
-                entityStore.Entities.Add(contact1);
+                entityStore.Add("contact1", new EntityReference("contact",contact1.Id));
 
                 contact2.Id = service.Create(contact2);
-                entityStore.Entities.Add(contact2);
+                entityStore.Add("contact2", new EntityReference("contact", contact2.Id));
 
                 contact3.Id = service.Create(contact3);
-                entityStore.Entities.Add(contact3);
+                entityStore.Add("contact3", new EntityReference("contact", contact3.Id));
             }
             catch (Exception ex)
             {
@@ -205,7 +206,7 @@ cc: Denise Smith";
         /// </summary>
         /// <param name="service">Authenticated web service connection.</param>
         /// <param name="entityStore">Collection of entities created in Dataverse.</param>
-        public void Cleanup(ServiceClient service, EntityCollection entityStore)
+        public void Cleanup(ServiceClient service, Dictionary<string, EntityReference> entityStore)
         {
             // Do some checking of the passed parameter values.
             if (service == null || service.IsReady == false)
@@ -216,19 +217,22 @@ cc: Denise Smith";
 
             if (entityStore == null)
             {
-                Console.WriteLine("Cleanup(): entity store collection is null, cleanup aborted.");
+                Console.WriteLine("Cleanup(): entref store collection is null, cleanup aborted.");
                 Console.WriteLine("Cleanup(): be sure to run Setup() prior to Cleanup().");
                 return;
             }
 
+            // Collect the keys of entities to be deleted.
+            var keysToDelete = new List<string>(entityStore.Keys);
+
             // Delete in Dataverse each entity in the entity store.
-            foreach (Entity entity in entityStore.Entities)
+            foreach (var key in keysToDelete)
             {
+                var entref = entityStore[key];
                 try
                 {
-                    service.Delete(entity.LogicalName, entity.Id);
-                    // TODO Fix crash due to collection being modified
-                    entityStore.Entities.Remove(entity);
+                    service.Delete(entref.LogicalName, entref.Id);
+                    entityStore.Remove(key);
                 }
                 catch (Exception)
                 {
@@ -237,12 +241,13 @@ cc: Denise Smith";
             }
 
             // Output a list of entities that could not be deleted.
-            if(entityStore.Entities.Count > 0)
+            if (entityStore.Count > 0)
             {
                 Console.WriteLine("Cleanup(): the following entities could not be deleted:");
-                foreach (Entity entity in entityStore.Entities)
+                foreach (var item in entityStore)
                 {
-                    Console.WriteLine($"Cleanup(): logical name={entity.LogicalName}, ID={entity.Id}");
+                    Console.WriteLine($"Cleanup(): name={item.Key}, " +
+                        $"logical name={item.Value.LogicalName}, ID={item.Value.Id}");
                 }
             }
         }
