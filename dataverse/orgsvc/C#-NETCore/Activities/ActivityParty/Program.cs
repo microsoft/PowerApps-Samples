@@ -131,7 +131,7 @@ cc: Denise Smith";
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Run(): an error ocurred creating the Letter Activity: \r\t"+ex.Message);
+                Console.WriteLine("Run(): an error ocurred creating the Letter Activity: \n\t"+ex.Message);
                 return false;
             }
         }
@@ -141,7 +141,8 @@ cc: Denise Smith";
         /// </summary>
         /// <param name="service">Authenticated web service connection.</param>
         /// <param name="entityStore">Collection of entities created in Dataverse.</param>
-        public void Setup(IOrganizationService service, out Dictionary<string, EntityReference> entityStore)
+        public void Setup(IOrganizationService service, out Dictionary<string, 
+            EntityReference> entityStore)
         {
             var contact1 = new Entity("contact")    
             {
@@ -194,7 +195,7 @@ cc: Denise Smith";
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Setup(): an error ocurred creating table row data. \r\t"+ex.Message);
+                Console.WriteLine($"Setup(): an error ocurred creating table row data. \n\t"+ex.Message);
                 Console.WriteLine($"Setup(): some contacts could not be created.");
                 throw;
             }
