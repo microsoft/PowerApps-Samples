@@ -1,20 +1,19 @@
 /*
-	This file is part of the Microsoft PowerApps code samples. 
-	Copyright (C) Microsoft Corporation.  All rights reserved. 
-	This source code is intended only as a supplement to Microsoft Development Tools and/or  
-	on-line documentation.  See these other materials for detailed information regarding  
-	Microsoft code samples. 
+	This file is part of the Microsoft PowerApps code samples.
+	Copyright (C) Microsoft Corporation.  All rights reserved.
+	This source code is intended only as a supplement to Microsoft Development Tools and/or
+	on-line documentation.  See these other materials for detailed information regarding
+	Microsoft code samples.
 
-	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER  
-	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF  
-	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. 
+	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 
 import DataSetInterfaces = ComponentFramework.PropertyHelper.DataSetApi;
 type DataSet = ComponentFramework.PropertyTypes.DataSet;
-
 
 // Define const here
 const RowRecordId = "rowRecId";
@@ -58,7 +57,12 @@ export class PropertySetTableControl implements ComponentFramework.StandardContr
 	 * @param state A piece of data that persists in one session for a single user. Can be set at any point in a controls life cycle by calling 'setControlState' in the Mode interface.
 	 * @param container If a control is marked control-type='standard', it will receive an empty div element within which it can render its content.
 	 */
-	public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container: HTMLDivElement): void {
+	public init(
+		context: ComponentFramework.Context<IInputs>,
+		notifyOutputChanged: () => void,
+		state: ComponentFramework.Dictionary,
+		container: HTMLDivElement
+	): void {
 		// Need to track container resize so that control could get the available width.
 		// In Model-driven app, the available height won't be provided even this is true
 		// In Canvas-app, the available height will be provided in context.mode.allocatedHeight
@@ -86,7 +90,7 @@ export class PropertySetTableControl implements ComponentFramework.StandardContr
 		this.loadNextPageButton.classList.add("Button_Style");
 		this.loadNextPageButton.addEventListener("click", this.onLoadNextButtonClick.bind(this));
 
-		// Create main table container div. 
+		// Create main table container div.
 		this.mainContainer = document.createElement("div");
 
 		// Adding the main table and loadNextPage button created to the container DIV.
@@ -124,7 +128,9 @@ export class PropertySetTableControl implements ComponentFramework.StandardContr
 			}
 
 			this.dataTable.appendChild(this.createTableHeader(columnsOnView, columnWidthDistribution));
-			this.dataTable.appendChild(this.createTableBody(columnsOnView, columnWidthDistribution, context.parameters.sampleDataSet));
+			this.dataTable.appendChild(
+				this.createTableBody(columnsOnView, columnWidthDistribution, context.parameters.sampleDataSet)
+			);
 
 			if (this.dataTable.parentElement) {
 				this.dataTable.parentElement.style.height = `${context.mode.allocatedHeight - 50}px`;
@@ -193,7 +199,7 @@ export class PropertySetTableControl implements ComponentFramework.StandardContr
 	}
 
 	/**
-	 * Get column width distribution using visualSizeFactor. 
+	 * Get column width distribution using visualSizeFactor.
 	 * In model-driven app, visualSizeFactor can be configured from view's settiong.
 	 * In Canvas app, currently there is no way to configure this value. In all data sources, all columns will have the same visualSizeFactor value.
 	 * Control does not have to render the control using these values, controls are free to display any columns with any width, or making column width adjustable.
@@ -202,12 +208,15 @@ export class PropertySetTableControl implements ComponentFramework.StandardContr
 	 * @param columnsOnView columns array on the configured view
 	 * @returns column width distribution
 	 */
-	private getColumnWidthDistribution(context: ComponentFramework.Context<IInputs>, columnsOnView: DataSetInterfaces.Column[]): string[] {
+	private getColumnWidthDistribution(
+		context: ComponentFramework.Context<IInputs>,
+		columnsOnView: DataSetInterfaces.Column[]
+	): string[] {
 		const widthDistribution: string[] = [];
 
 		// Considering need to remove border & padding length
 		const totalWidth: number = context.mode.allocatedWidth;
-		const widthSum = columnsOnView.reduce((sum, columnItem) => sum += columnItem.visualSizeFactor, 0);
+		const widthSum = columnsOnView.reduce((sum, columnItem) => (sum += columnItem.visualSizeFactor), 0);
 
 		let remainWidth: number = totalWidth;
 
@@ -217,18 +226,19 @@ export class PropertySetTableControl implements ComponentFramework.StandardContr
 				const cellWidth = Math.round((item.visualSizeFactor / widthSum) * totalWidth);
 				remainWidth = remainWidth - cellWidth;
 				widthPerCell = `${cellWidth}px`;
-			}
-			else {
+			} else {
 				widthPerCell = `${remainWidth}px`;
 			}
 			widthDistribution.push(widthPerCell);
 		});
 
 		return widthDistribution;
-
 	}
 
-	private createTableHeader(columnsOnView: DataSetInterfaces.Column[], widthDistribution: string[]): HTMLTableSectionElement {
+	private createTableHeader(
+		columnsOnView: DataSetInterfaces.Column[],
+		widthDistribution: string[]
+	): HTMLTableSectionElement {
 		const tableHeader: HTMLTableSectionElement = document.createElement("thead");
 		const tableHeaderRow: HTMLTableRowElement = document.createElement("tr");
 		tableHeaderRow.classList.add("SimpleTable_TableRow_Style");
@@ -255,7 +265,11 @@ export class PropertySetTableControl implements ComponentFramework.StandardContr
 		return tableHeader;
 	}
 
-	private createTableBody(columnsOnView: DataSetInterfaces.Column[], widthDistribution: string[], gridParam: DataSet): HTMLTableSectionElement {
+	private createTableBody(
+		columnsOnView: DataSetInterfaces.Column[],
+		widthDistribution: string[],
+		gridParam: DataSet
+	): HTMLTableSectionElement {
 		const tableBody: HTMLTableSectionElement = document.createElement("tbody");
 
 		if (gridParam.sortedRecordIds.length > 0) {
@@ -283,8 +297,7 @@ export class PropertySetTableControl implements ComponentFramework.StandardContr
 
 				tableBody.appendChild(tableRecordRow);
 			}
-		}
-		else {
+		} else {
 			const tableRecordRow: HTMLTableRowElement = document.createElement("tr");
 			const tableRecordCell: HTMLTableCellElement = document.createElement("td");
 			tableRecordCell.classList.add("No_Record_Style");
@@ -297,13 +310,12 @@ export class PropertySetTableControl implements ComponentFramework.StandardContr
 		return tableBody;
 	}
 
-
 	/**
 	 * Row Click Event handler for the associated row when being clicked
 	 * @param event
 	 */
 	private onRowClick(event: Event): void {
-		const rowElement = (event.currentTarget as HTMLTableRowElement);
+		const rowElement = event.currentTarget as HTMLTableRowElement;
 		const rowRecordId = rowElement.getAttribute(RowRecordId);
 		if (rowRecordId) {
 			const record = this.contextObj.parameters.sampleDataSet.records[rowRecordId];
@@ -330,7 +342,6 @@ export class PropertySetTableControl implements ComponentFramework.StandardContr
 		} else if (!gridParam.paging.hasNextPage) {
 			this.loadNextPageButton.disabled = true;
 		}
-
 	}
 
 	/**
@@ -342,7 +353,6 @@ export class PropertySetTableControl implements ComponentFramework.StandardContr
 		} else if (!gridParam.paging.hasPreviousPage) {
 			this.loadPrevPageButton.disabled = true;
 		}
-
 	}
 
 	/**

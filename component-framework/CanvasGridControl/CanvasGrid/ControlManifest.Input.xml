@@ -36,7 +36,7 @@
     <!-- 'property-set' node represents a unique, configurable property that each record in the dataset must provide. -->
     <!-- UNCOMMENT TO ADD PROPERTY-SET NODE
       <property-set name="samplePropertySet" display-name-key="Property_Display_Key" description-key="Property_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
-      -->
+    -->
 
     <property name="FilteredRecordCount"
       display-name-key="FilteredRecordCount_Disp"

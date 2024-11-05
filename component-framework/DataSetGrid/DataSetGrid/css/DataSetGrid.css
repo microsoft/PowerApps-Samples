@@ -1,71 +1,71 @@
 /*
-	This file is part of the Microsoft PowerApps code samples. 
-	Copyright (C) Microsoft Corporation.  All rights reserved. 
-	This source code is intended only as a supplement to Microsoft Development Tools and/or  
-	on-line documentation.  See these other materials for detailed information regarding  
-	Microsoft code samples. 
+	This file is part of the Microsoft PowerApps code samples.
+	Copyright (C) Microsoft Corporation.  All rights reserved.
+	This source code is intended only as a supplement to Microsoft Development Tools and/or
+	on-line documentation.  See these other materials for detailed information regarding
+	Microsoft code samples.
 
-	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER  
-	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF  
-	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. 
+	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
- .SampleNamespace\.DataSetGrid .DataSetControl_main-container {
-    overflow-y: auto;
+.SampleNamespace\.DataSetGrid .DataSetControl_main-container {
+	overflow-y: auto;
 }
 
 .SampleNamespace\.DataSetGrid .DataSetControl_grid-container {
-    background-color: transparent;
-    border: solid thin lightgray;
-    padding: 10px;
-    display: inline-block;
-    overflow: auto;
+	background-color: transparent;
+	border: solid thin lightgray;
+	padding: 10px;
+	display: inline-block;
+	overflow: auto;
 }
 
 .SampleNamespace\.DataSetGrid .DataSetControl_grid-item {
-    margin: 5px;
-    width: 200px;
-    height: 200px;
-    background-color: rgb(59, 121, 183);
-    color: white;
-    border: solid thin black;
-    padding: 5px;
-    text-align: center;
-    float: left;
+	margin: 5px;
+	width: 200px;
+	height: 200px;
+	background-color: rgb(59, 121, 183);
+	color: white;
+	border: solid thin black;
+	padding: 5px;
+	text-align: center;
+	float: left;
 }
 
 .SampleNamespace\.DataSetGrid .DataSetControl_grid-text-label {
-    font-size: 12px;
-    white-space: normal;
-    margin: 2px;
-    display: block;
-    color: lightgray;
+	font-size: 12px;
+	white-space: normal;
+	margin: 2px;
+	display: block;
+	color: lightgray;
 }
 
 .SampleNamespace\.DataSetGrid .DataSetControl_grid-text-value {
-    font-size: 12px;
-    white-space: normal;
-    margin: 1px;
-    display: block;
-    color: white;
-    font-weight: bold;
+	font-size: 12px;
+	white-space: normal;
+	margin: 1px;
+	display: block;
+	color: white;
+	font-weight: bold;
 }
 
 .SampleNamespace\.DataSetGrid button.DataSetControl_LoadMoreButton_Style {
-    background-color:#e5e5e5;
-    font-size:1.5rem;
-    font-weight:bold;
-    height:3.5rem;
-    text-align:center;
-    width:100%;
-    border:none
+	background-color: #e5e5e5;
+	font-size: 1.5rem;
+	font-weight: bold;
+	height: 3.5rem;
+	text-align: center;
+	width: 100%;
+	border: none;
 }
 
 .SampleNamespace\.DataSetGrid button.DataSetControl_LoadMoreButton_Hidden_Style {
-    display: none;
+	display: none;
 }
 
 .SampleNamespace\.DataSetGrid .DataSetControl_grid-norecords {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

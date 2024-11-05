@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-	<control namespace="SampleNamespace" constructor="AngularJSFlipControl" version="1.1.0" display-name-key="JS_AngularJSFlipControl_Display_Key" description-key="JS_AngularJSFlipControl_Desc_Key" control-type="standard">
-		<property name="flipModel" display-name-key="flipModel_Display_Key" description-key="flipModel_Desc_Key" of-type="TwoOptions" usage="bound" required="true" />
-		<resources>
-			<code path="index.ts" order="1" />
-			<css path="css/AngularJSFlipControl.css" order="2" />
-			<resx version="1.0.0" path="strings/AngularJSFlipControl.1033.resx"/>
-		</resources>
-	</control>
+  <control namespace="SampleNamespace" constructor="AngularJSFlipControl" version="1.1.0" display-name-key="JS_AngularJSFlipControl_Display_Key" description-key="JS_AngularJSFlipControl_Desc_Key" control-type="standard">
+    <property name="flipModel" display-name-key="flipModel_Display_Key" description-key="flipModel_Desc_Key" of-type="TwoOptions" usage="bound" required="true" />
+    <resources>
+      <code path="index.ts" order="1" />
+      <css path="css/AngularJSFlipControl.css" order="2" />
+      <resx version="1.0.0" path="strings/AngularJSFlipControl.1033.resx"/>
+    </resources>
+  </control>
 </manifest>

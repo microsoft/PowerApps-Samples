@@ -1,0 +1,63 @@
+[
+	{
+		"name": "powerapps-pcf-formatting-api-control",
+		"source": "PowerAppsDev",
+		"title": "Formatting API component Power Apps component framework sample",
+		"shortDescription": "This sample component explores the various methods available as part of the Power Apps component framework formatting API.",
+		"url": "https://github.com/microsoft/PowerApps-Samples/tree/master/component-framework/FormattingAPIControl",
+		"downloadUrl": "https://github.com/microsoft/PowerApps-Samples/tree/master/component-framework/FormattingAPIControl",
+		"longDescription": [
+			"This sample component explores the various methods available as part of the Power Apps component framework formatting API. In this sample, you create a series of input elements which calls into the respective methods of the formatting API that matches with the value displayed."
+		],
+		"creationDateTime": "2021-06-09",
+		"updateDateTime": "2023-08-01",
+		"products": ["PowerApps"],
+		"metadata": [
+			{
+				"key": "PowerApps-PCF-SAMPLE-SOURCE",
+				"value": "PowerAppsDev"
+			},
+			{
+				"key": "PowerApps-PCF-SAMPLE-LANGUAGE",
+				"value": "typescript"
+			},
+			{
+				"key": "PowerApps-PCF-SAMPLE-FEATURES",
+				"value": "formatting API"
+			}
+		],
+		"thumbnails": [
+			{
+				"type": "image",
+				"order": 100,
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/media/formatting-api.png",
+				"alt": "Preview of the sample"
+			}
+		],
+		"authors": [
+			{
+				"gitHubAccount": "JimDaly",
+				"pictureUrl": "https://avatars.githubusercontent.com/u/6353736?v=4",
+				"name": "Jim Daly"
+			}
+		],
+		"references": [
+			{
+				"name": "Power Apps component framework overview",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/overview"
+			},
+			{
+				"name": "Create and build a code component",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/create-custom-controls-using-pcf"
+			},
+			{
+				"name": "Best practices and guidance for code components created using Power Apps component framework",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/code-components-best-practices"
+			},
+			{
+				"name": "Implementing formatting API component",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/formatting-api-control"
+			}
+		]
+	}
+]

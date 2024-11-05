@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
   <control namespace="SampleNamespace" constructor="ModelDrivenGrid" version="1.0.21" display-name-key="Model Driven Grid" description-key="Model Driven Grid" control-type="standard">
-  
+
     <!--external-service-usage node declares whether this 3rd party PCF control is using external service or not, if yes, this control will be considered as premium and please also add the external domain it is using.
     If it is not using any external service, please set the enabled="false" and DO NOT add any domain below. The "enabled" will be false by default.
     Example1:
@@ -17,15 +17,15 @@
       cds-data-set-options="displayCommandBar:true;displayViewSelector:true;displayQuickFind:true">
       <property-set name="HighlightIndicator" display-name-key="HighlightIndicator_Disp" description-key="HighlightIndicator_Desc" of-type="OptionSet" usage="bound" required="true" />
     </data-set>
-      <!-- 'property-set' node represents a unique, configurable property that each record in the dataset must provide. -->
-      <!-- UNCOMMENT TO ADD PROPERTY-SET NODE
+    <!-- 'property-set' node represents a unique, configurable property that each record in the dataset must provide. -->
+    <!-- UNCOMMENT TO ADD PROPERTY-SET NODE
       <property-set name="samplePropertySet" display-name-key="Property_Display_Key" description-key="Property_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
-      -->
-    
+    -->
+
     <property name="HighlightValue" display-name-key="HighlightValue_Disp" description-key="HighlightValue_Desc" of-type="SingleLine.Text" usage="input" required="true"/>
     <property name="HighlightColor" display-name-key="HighlightColor_Disp" description-key="HighlightColor_Desc" of-type="SingleLine.Text" usage="input" required="true"/>
     <property name="SubGridHeight" display-name-key="SubGridHeight_Disp" description-key="SubGridHeight_Desc" of-type="Whole.None" usage="input" required="false"/>
-    
+
     <resources>
       <code path="index.ts" order="1"/>
       <resx path="strings/ModelDrivenGrid.1033.resx" version="1.0.0" />

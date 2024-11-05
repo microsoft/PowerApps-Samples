@@ -1,0 +1,63 @@
+[
+	{
+		"name": "powerapps-pcf-control-state-api",
+		"source": "PowerAppsDev",
+		"title": "Implementing control state API Power Apps component framework sample",
+		"shortDescription": "This code component demonstrates how to to persist state of component across multiple renderings of the component within the same session.",
+		"url": "https://github.com/microsoft/PowerApps-Samples/tree/master/component-framework/ControlStateAPI",
+		"downloadUrl": "https://github.com/microsoft/PowerApps-Samples/tree/master/component-framework/ControlStateAPI",
+		"longDescription": [
+			"This code component demonstrates how to to persist state of component across multiple renderings of the component within the same session. It provides you with the ability to build components that can maintain user state throughout the user's session as the user navigates to and from the component."
+		],
+		"creationDateTime": "2021-06-09",
+		"updateDateTime": "2023-08-01",
+		"products": ["PowerApps"],
+		"metadata": [
+			{
+				"key": "PowerApps-PCF-SAMPLE-SOURCE",
+				"value": "PowerAppsDev"
+			},
+			{
+				"key": "PowerApps-PCF-SAMPLE-LANGUAGE",
+				"value": "typescript"
+			},
+			{
+				"key": "PowerApps-PCF-SAMPLE-FEATURES",
+				"value": "control state API"
+			}
+		],
+		"thumbnails": [
+			{
+				"type": "image",
+				"order": 100,
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/media/control-state-api.png",
+				"alt": "Preview of the sample"
+			}
+		],
+		"authors": [
+			{
+				"gitHubAccount": "JimDaly",
+				"pictureUrl": "https://avatars.githubusercontent.com/u/6353736?v=4",
+				"name": "Jim Daly"
+			}
+		],
+		"references": [
+			{
+				"name": "Power Apps component framework overview",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/overview"
+			},
+			{
+				"name": "Create and build a code component",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/create-custom-controls-using-pcf"
+			},
+			{
+				"name": "Best practices and guidance for code components created using Power Apps component framework",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/code-components-best-practices"
+			},
+			{
+				"name": "Implementing control state API component",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/control-state-api"
+			}
+		]
+	}
+]

@@ -1,0 +1,64 @@
+[
+	{
+		"name": "powerapps-pcf-localization-api",
+		"source": "PowerAppsDev",
+		"title": "Localization Power Apps component framework sample",
+		"shortDescription": "This sample showcases how localization is done for code components.",
+		"url": "https://github.com/microsoft/PowerApps-Samples/tree/master/component-framework/LocalizationAPIControl",
+		"downloadUrl": "https://github.com/microsoft/PowerApps-Samples/tree/master/component-framework/LocalizationAPIControl",
+		"longDescription": [
+			"This sample showcases how localization is done for code components. In this sample, we use the Increment component to localize the text that is displayed on the increment button based on the user's selected language.",
+			"Power Apps component framework uses the concept of implementing RESX web resources that are used to manage the localized strings shown on any user interface."
+		],
+		"creationDateTime": "2021-06-09",
+		"updateDateTime": "2023-08-01",
+		"products": ["PowerApps"],
+		"metadata": [
+			{
+				"key": "PowerApps-PCF-SAMPLE-SOURCE",
+				"value": "PowerAppsDev"
+			},
+			{
+				"key": "PowerApps-PCF-SAMPLE-LANGUAGE",
+				"value": "typescript"
+			},
+			{
+				"key": "PowerApps-PCF-SAMPLE-FEATURES",
+				"value": "localization API"
+			}
+		],
+		"thumbnails": [
+			{
+				"type": "image",
+				"order": 100,
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/media/localization-api-control.png",
+				"alt": "Preview of the sample"
+			}
+		],
+		"authors": [
+			{
+				"gitHubAccount": "JimDaly",
+				"pictureUrl": "https://avatars.githubusercontent.com/u/6353736?v=4",
+				"name": "Jim Daly"
+			}
+		],
+		"references": [
+			{
+				"name": "Power Apps component framework overview",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/overview"
+			},
+			{
+				"name": "Create and build a code component",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/create-custom-controls-using-pcf"
+			},
+			{
+				"name": "Best practices and guidance for code components created using Power Apps component framework",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/code-components-best-practices"
+			},
+			{
+				"name": "Implementing localization API component",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/localization-api-control"
+			}
+		]
+	}
+]

@@ -1,0 +1,63 @@
+[
+	{
+		"name": "powerapps-pcf-linear-input-control",
+		"source": "PowerAppsDev",
+		"title": "Linear Input Power Apps component framework sample",
+		"shortDescription": "This sample component changes the user experience of interacting with numeric types on the form.",
+		"url": "https://github.com/microsoft/PowerApps-Samples/tree/master/component-framework/LinearInputControl",
+		"downloadUrl": "https://github.com/microsoft/PowerApps-Samples/tree/master/component-framework/LinearInputControl",
+		"longDescription": [
+			"This sample component changes the user experience of interacting with numeric types on the form. Instead of typing in the numbers, the linear input component provides a linear slider using which the value of the attribute can be set on the form."
+		],
+		"creationDateTime": "2021-06-09",
+		"updateDateTime": "2023-08-01",
+		"products": ["PowerApps"],
+		"metadata": [
+			{
+				"key": "PowerApps-PCF-SAMPLE-SOURCE",
+				"value": "PowerAppsDev"
+			},
+			{
+				"key": "PowerApps-PCF-SAMPLE-LANGUAGE",
+				"value": "typescript"
+			},
+			{
+				"key": "PowerApps-PCF-SAMPLE-FEATURES",
+				"value": "linear input control"
+			}
+		],
+		"thumbnails": [
+			{
+				"type": "image",
+				"order": 100,
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/media/linear-input-control.png",
+				"alt": "Preview of the sample"
+			}
+		],
+		"authors": [
+			{
+				"gitHubAccount": "JimDaly",
+				"pictureUrl": "https://avatars.githubusercontent.com/u/6353736?v=4",
+				"name": "Jim Daly"
+			}
+		],
+		"references": [
+			{
+				"name": "Power Apps component framework overview",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/overview"
+			},
+			{
+				"name": "Create and build a code component",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/create-custom-controls-using-pcf"
+			},
+			{
+				"name": "Best practices and guidance for code components created using Power Apps component framework",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/code-components-best-practices"
+			},
+			{
+				"name": "Implementing linear input component",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/linear-input-control"
+			}
+		]
+	}
+]

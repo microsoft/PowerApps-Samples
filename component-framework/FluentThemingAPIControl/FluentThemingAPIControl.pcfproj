@@ -8,8 +8,8 @@
   <Import Project="$(PowerAppsTargetsPath)\Microsoft.PowerApps.VisualStudio.Pcf.props" Condition="Exists('$(PowerAppsTargetsPath)\Microsoft.PowerApps.VisualStudio.Pcf.props')" />
 
   <PropertyGroup>
-    <Name>FluentThemingAPIControl</Name>
-    <ProjectGuid>a7472d73-5406-42d5-86cd-af26a9792399</ProjectGuid>
+    <Name>FacepileReactControl</Name>
+    <ProjectGuid>0e67062b-92a1-438e-95ce-f09a913d9571</ProjectGuid>
     <OutputPath>$(MSBuildThisFileDirectory)out\controls</OutputPath>
   </PropertyGroup>
 
