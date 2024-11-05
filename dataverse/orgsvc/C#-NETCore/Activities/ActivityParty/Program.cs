@@ -126,7 +126,6 @@ cc: Denise Smith";
             {
                 var results = orgContext.SaveChanges(SaveChangesOptions.None);
 
-                //TODO Check the status of the results.
                 if (results.Count > 0 && results[0].Error == null)
                 {
                     entityStore.Add(letter.Subject,
@@ -135,13 +134,16 @@ cc: Denise Smith";
                 }
                 else
                 {
-                    Console.WriteLine("Run(): an error ocurred creating the Letter Activity: \n\t" + results[0].Error.Message);
+                    Console.WriteLine(
+                        "Run(): an error ocurred creating the Letter Activity: \n\t" + 
+                        results[0].Error.Message);
                     return false;
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Run(): an error ocurred creating the Letter Activity: \n\t"+ex.Message);
+                Console.WriteLine(
+                    "Run(): an error ocurred creating the Letter Activity: \n\t"+ex.Message);
                 return false;
             }
         }
