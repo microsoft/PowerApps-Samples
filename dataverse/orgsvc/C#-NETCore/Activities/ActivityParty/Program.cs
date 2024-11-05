@@ -67,53 +67,35 @@ namespace PowerPlatform_Dataverse_CodeSamples
             // Use the OrganizationServiceContext class and create a LINQ query.
             var orgContext = new OrganizationServiceContext(service);
 
-            // Retrieve the contact table rows that were created during setup.
-            List<Contact> contacts = (from c in orgContext.CreateQuery<Contact>()
-                                      where c.Address1_City == "Sammamish"
-                                      select new Contact
-                                      {
-                                          ContactId = c.ContactId,
-                                          FirstName = c.FirstName,
-                                          LastName = c.LastName
-                                      }).ToList<Contact>();
-            Console.Write(contacts.Count + " contacts retrieved, ");
-
             // Create an Activity Party (in-memory) object for each contact.
             var activityParty1 = new ActivityParty
-            {
-                PartyId = new EntityReference(Contact.EntityLogicalName,
-                    contacts[0].ContactId .Value),
+            { 
+                PartyId = new EntityReference(
+                    Contact.EntityLogicalName, entityStore["contact1"].Id)
             };
 
             var activityParty2 = new ActivityParty
             {
-                PartyId = new EntityReference(Contact.EntityLogicalName,
-                    contacts[1].ContactId.Value),
+                PartyId = new EntityReference(
+                    Contact.EntityLogicalName, entityStore["contact2"].Id)
             };
 
             var activityParty3 = new ActivityParty
             {
-                PartyId = new EntityReference(Contact.EntityLogicalName,
-                    contacts[2].ContactId.Value),
+                PartyId = new EntityReference(
+                    Contact.EntityLogicalName, entityStore["contact3"].Id)
             };
 
             // Create a Letter activity and set From and To fields to the
             // respective Activity Party rows.
 
-            var _letterBody =
-@"Greetings, Mr. Andreshak,\n\n
-This is a sample letter activity as part of the SDK Samples.\n\n
-Sincerely,\n
-Mary Kay Andersen\n\n
-cc: Denise Smith";
-
             var letter = new Letter
             {
                 RegardingObjectId = new EntityReference(Contact.EntityLogicalName,
-                    contacts[2].ContactId.Value),
+                    entityStore["contact2"].Id),
                 Subject = "Sample Letter Activity",
                 ScheduledEnd = DateTime.Now + TimeSpan.FromDays(5),
-                Description = _letterBody,
+                Description = File.ReadAllText("letter.txt"),
                 From = new ActivityParty[] { activityParty1 },
                 To = new ActivityParty[] { activityParty3, activityParty2 }
             };
@@ -121,11 +103,12 @@ cc: Denise Smith";
             // Add the letter activity to the context.
             orgContext.AddObject(letter);
 
-            // Commit the context changes to Dataverse.
             try
             {
+                // Commit the context changes to Dataverse.
                 var results = orgContext.SaveChanges(SaveChangesOptions.None);
 
+                // Check for success and handle failure.
                 if (results.Count > 0 && results[0].Error == null)
                 {
                     entityStore.Add(letter.Subject,
@@ -143,7 +126,7 @@ cc: Denise Smith";
             catch (Exception ex)
             {
                 Console.WriteLine(
-                    "Run(): an error ocurred creating the Letter Activity: \n\t"+ex.Message);
+                    "Run(): an exception ocurred creating the Letter Activity: \n\t"+ex.Message);
                 return false;
             }
         }
