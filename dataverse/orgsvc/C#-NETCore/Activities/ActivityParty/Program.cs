@@ -126,10 +126,18 @@ cc: Denise Smith";
             {
                 var results = orgContext.SaveChanges(SaveChangesOptions.None);
 
-                //TODO Add ID to letter entref before adding to entityStore
-                entityStore.Add(letter.Subject, 
-                    new EntityReference("letter", (Guid)letter.ActivityId));
-                return true;
+                //TODO Check the status of the results.
+                if (results.Count > 0 && results[0].Error == null)
+                {
+                    entityStore.Add(letter.Subject,
+                        new EntityReference("letter", (Guid)letter.ActivityId));
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine("Run(): an error ocurred creating the Letter Activity: \n\t" + results[0].Error.Message);
+                    return false;
+                }
             }
             catch (Exception ex)
             {
