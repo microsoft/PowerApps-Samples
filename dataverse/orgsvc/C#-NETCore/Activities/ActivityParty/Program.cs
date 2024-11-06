@@ -2,6 +2,7 @@
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Client;
+using Microsoft.Xrm.Sdk.Messages;
 using MyApp.DataModel;
 
 namespace PowerPlatform_Dataverse_CodeSamples
@@ -106,19 +107,22 @@ namespace PowerPlatform_Dataverse_CodeSamples
             try
             {
                 // Commit the context changes to Dataverse.
-                var results = orgContext.SaveChanges(SaveChangesOptions.None);
+                SaveChangesResultCollection results = 
+                    orgContext.SaveChanges(SaveChangesOptions.None);
 
                 // Check for success and handle failure.
                 if (results.Count > 0 && results[0].Error == null)
                 {
+                    CreateResponse response = (CreateResponse)results[0].Response;
+
                     entityStore.Add(letter.Subject,
-                        new EntityReference("letter", (Guid)letter.ActivityId));
+                        new EntityReference("letter", response.id ));
                     return true;
                 }
                 else
                 {
                     Console.WriteLine(
-                        "Run(): an error ocurred creating the Letter Activity: \n\t" + 
+                        "Run(): an error ocurred creating the letter activity: \n\t" + 
                         results[0].Error.Message);
                     return false;
                 }
