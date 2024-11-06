@@ -16,16 +16,16 @@ Related article: [Activity tables](https://learn.microsoft.com/power-apps/develo
 
 ## About the sample code
 
-The code samples demonstrates how to create a letter activity. Specifically, the samples demonstrate how to:
-
-1. Connect to Dataverse using a [connection string](https://learn.microsoft.com/power-apps/developer/data-platform/xrm-tooling/use-connection-strings-xrm-tooling-connect) that defines required connection information
-1. Create a [letter activity](https://learn.microsoft.com/power-apps/developer/data-platform/reference/entities/letter) to send to multiple contacts
-1. Use the Dataverse [organization service context](https://learn.microsoft.com/power-apps/developer/data-platform/org-service/organizationservicecontext) to process the data changes
-1. Use [early-bound](https://learn.microsoft.com/power-apps/developer/data-platform/org-service/early-bound-programming#early-bound) entity types
-
 |Sample|Description|Build target|
 |---|---|---|
 |ActivityParty|Demonstrates creating a letter activity.|.NET 8|
+
+The code samples demonstrates how to create a letter activity. Specifically, the samples demonstrates how to:
+
+1. Connect to Dataverse using a [connection string](https://learn.microsoft.com/power-apps/developer/data-platform/xrm-tooling/use-connection-strings-xrm-tooling-connect) that defines required connection information
+1. Create a [letter activity](https://learn.microsoft.com/power-apps/developer/data-platform/reference/entities/letter) to send to multiple [contacts](https://learn.microsoft.com/power-apps/developer/data-platform/reference/entities/contact)
+1. Use the Dataverse [organization service context](https://learn.microsoft.com/power-apps/developer/data-platform/org-service/organizationservicecontext) to process the data changes
+1. Use [early-bound](https://learn.microsoft.com/power-apps/developer/data-platform/org-service/early-bound-programming#early-bound) entity types
 
 The early-bound entity files in the project's *DataModel* folder were generated using the following PAC CLI command:
 `pac modelbuilder build`. More information: [pac modelbuilder](https://learn.microsoft.com/en-us/power-platform/developer/cli/reference/modelbuilder)
