@@ -12,8 +12,8 @@
   "optionSetsTypesFolder": "OptionSets",
   "entityNamesFilter": [
     "activityparty",
-    "systemuser",
-    "appointment"
+    "contact",
+    "letter"
   ],
   "emitEntityETC": false,
   "emitVirtualAttributes": false

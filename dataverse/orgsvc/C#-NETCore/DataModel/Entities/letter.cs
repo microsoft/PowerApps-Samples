@@ -14,50 +14,11 @@ namespace MyApp.DataModel
 	
 	
 	/// <summary>
-	/// Attachment errors for detail form.
+	/// Priority code of the letter.
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("Dataverse Model Builder", "2.0.0.11")]
-	public enum appointment_attachmenterrors
-	{
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		None = 0,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		TheappointmentwassavedasaMicrosoftDynamics365appointmentrecordbutnotalltheattachmentscouldbesavedwithitAnattachmentcannotbesavedifitisblockedorifitsfiletypeisinvalid = 1,
-	}
-	
-	/// <summary>
-	/// Type of instance of a recurring series.
-	/// </summary>
-	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("Dataverse Model Builder", "2.0.0.11")]
-	public enum appointment_instancetypecode
-	{
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		NotRecurring = 0,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		RecurringMaster = 1,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		RecurringInstance = 2,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		RecurringException = 3,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		RecurringFutureException = 4,
-	}
-	
-	/// <summary>
-	/// Priority of the appointment.
-	/// </summary>
-	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("Dataverse Model Builder", "2.0.0.11")]
-	public enum appointment_prioritycode
+	public enum letter_prioritycode
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -71,11 +32,11 @@ namespace MyApp.DataModel
 	}
 	
 	/// <summary>
-	/// Status of the appointment.
+	/// Status of the letter activity.
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("Dataverse Model Builder", "2.0.0.11")]
-	public enum appointment_statecode
+	public enum letter_statecode
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -86,60 +47,54 @@ namespace MyApp.DataModel
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Canceled = 2,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Scheduled = 3,
 	}
 	
 	/// <summary>
-	/// Reason for the status of the appointment.
+	/// Reason for the status of the letter activity.
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("Dataverse Model Builder", "2.0.0.11")]
-	public enum appointment_statuscode
+	public enum letter_statuscode
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Free = 1,
+		Open = 1,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Tentative = 2,
+		Draft = 2,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Completed = 3,
+		Received = 3,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Canceled = 4,
+		Sent = 4,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Busy = 5,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		OutofOffice = 6,
+		Canceled = 5,
 	}
 	
 	/// <summary>
-	/// Commitment representing a time interval with start/end times and duration.
+	/// Activity that tracks the delivery of a letter. The activity can contain the electronic copy of the letter.
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("appointment")]
+	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("letter")]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("Dataverse Model Builder", "2.0.0.11")]
-	public partial class Appointment : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	public partial class Letter : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>
-		public Appointment() : 
+		public Letter() : 
 				base(EntityLogicalName)
 		{
 		}
 		
-		public const string EntityLogicalName = "appointment";
+		public const string EntityLogicalName = "letter";
 		
-		public const string EntityLogicalCollectionName = "appointments";
+		public const string EntityLogicalCollectionName = "letters";
 		
-		public const string EntitySetName = "appointments";
+		public const string EntitySetName = "letters";
 		
 		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
 		
@@ -162,25 +117,7 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// For internal use only.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("activityadditionalparams")]
-		public string ActivityAdditionalParams
-		{
-			get
-			{
-				return this.GetAttributeValue<string>("activityadditionalparams");
-			}
-			set
-			{
-				this.OnPropertyChanging("ActivityAdditionalParams");
-				this.SetAttributeValue("activityadditionalparams", value);
-				this.OnPropertyChanged("ActivityAdditionalParams");
-			}
-		}
-		
-		/// <summary>
-		/// Unique identifier of the appointment.
+		/// Unique identifier of the letter activity.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("activityid")]
 		public System.Nullable<System.Guid> ActivityId
@@ -219,7 +156,7 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// Type of activity.
+		/// Shows the type of activity.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("activitytypecode")]
 		public string ActivityTypeCode
@@ -231,7 +168,7 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// Shows the value selected in the Duration field on the appointment at the time that the appointment is closed as completed. The duration is used to report the time spent on the activity.
+		/// Type the number of minutes spent creating and sending the letter. The duration is used in reporting.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("actualdurationminutes")]
 		public System.Nullable<int> ActualDurationMinutes
@@ -249,7 +186,7 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// Enter the actual end date and time of the appointment. By default, it displays the date and time when the activity was completed or canceled, but can be edited to capture the actual duration of the appointment.
+		/// Enter the actual end date and time of the letter. By default, it displays the date and time when the activity was completed or canceled, but can be edited to capture the actual time to create and send the letter.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("actualend")]
 		public System.Nullable<System.DateTime> ActualEnd
@@ -267,7 +204,7 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// Enter the actual start date and time for the appointment. By default, it displays the date and time when the activity was created, but can be edited to capture the actual duration of the appointment.
+		/// Enter the actual start date and time for the letter. By default, it displays the date and time when the activity was created, but can be edited to capture the actual time to create and send the letter.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("actualstart")]
 		public System.Nullable<System.DateTime> ActualStart
@@ -285,37 +222,59 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// Shows the number of attachments on the appointment.
+		/// Type the complete recipient address for the letter to ensure timely delivery.
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("attachmentcount")]
-		public System.Nullable<int> AttachmentCount
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address")]
+		public string Address
 		{
 			get
 			{
-				return this.GetAttributeValue<System.Nullable<int>>("attachmentcount");
-			}
-		}
-		
-		/// <summary>
-		/// Select the error code to identify issues with the outlook item recipients or attachments, such as blocked attachments.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("attachmenterrors")]
-		public virtual appointment_attachmenterrors? AttachmentErrors
-		{
-			get
-			{
-				return ((appointment_attachmenterrors?)(EntityOptionSetEnum.GetEnum(this, "attachmenterrors")));
+				return this.GetAttributeValue<string>("address");
 			}
 			set
 			{
-				this.OnPropertyChanging("AttachmentErrors");
-				this.SetAttributeValue("attachmenterrors", value.HasValue ? new Microsoft.Xrm.Sdk.OptionSetValue((int)value) : null);
-				this.OnPropertyChanged("AttachmentErrors");
+				this.OnPropertyChanging("Address");
+				this.SetAttributeValue("address", value);
+				this.OnPropertyChanged("Address");
 			}
 		}
 		
 		/// <summary>
-		/// Type a category to identify the appointment type, such as sales demo, prospect call, or service call, to tie the appointment to a business group or function.
+		/// Enter the recipients that are included in the letter distribution, but are not displayed to other recipients.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("bcc")]
+		public System.Collections.Generic.IEnumerable<MyApp.DataModel.ActivityParty> Bcc
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.EntityCollection collection = this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityCollection>("bcc");
+				if (((collection != null) 
+							&& (collection.Entities != null)))
+				{
+					return System.Linq.Enumerable.Cast<MyApp.DataModel.ActivityParty>(collection.Entities);
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("Bcc");
+				if ((value == null))
+				{
+					this.SetAttributeValue("bcc", value);
+				}
+				else
+				{
+					this.SetAttributeValue("bcc", new Microsoft.Xrm.Sdk.EntityCollection(new System.Collections.Generic.List<Microsoft.Xrm.Sdk.Entity>(value)));
+				}
+				this.OnPropertyChanged("Bcc");
+			}
+		}
+		
+		/// <summary>
+		/// Type a category to identify the letter type, such as sales offer or past due notice, to tie the letter to a business group or function.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("category")]
 		public string Category
@@ -329,6 +288,40 @@ namespace MyApp.DataModel
 				this.OnPropertyChanging("Category");
 				this.SetAttributeValue("category", value);
 				this.OnPropertyChanged("Category");
+			}
+		}
+		
+		/// <summary>
+		/// Enter the recipients that should be copied on the letter.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("cc")]
+		public System.Collections.Generic.IEnumerable<MyApp.DataModel.ActivityParty> Cc
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.EntityCollection collection = this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityCollection>("cc");
+				if (((collection != null) 
+							&& (collection.Entities != null)))
+				{
+					return System.Linq.Enumerable.Cast<MyApp.DataModel.ActivityParty>(collection.Entities);
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("Cc");
+				if ((value == null))
+				{
+					this.SetAttributeValue("cc", value);
+				}
+				else
+				{
+					this.SetAttributeValue("cc", new Microsoft.Xrm.Sdk.EntityCollection(new System.Collections.Generic.List<Microsoft.Xrm.Sdk.Entity>(value)));
+				}
+				this.OnPropertyChanged("Cc");
 			}
 		}
 		
@@ -369,7 +362,7 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// Type additional information to describe the purpose of the appointment.
+		/// Type the letter body or additional information to describe the letter, such as the primary message or the products and services described.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("description")]
 		public string Description
@@ -387,6 +380,24 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
+		/// Select the direction of the letter as incoming or outbound.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("directioncode")]
+		public System.Nullable<bool> DirectionCode
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("directioncode");
+			}
+			set
+			{
+				this.OnPropertyChanging("DirectionCode");
+				this.SetAttributeValue("directioncode", value);
+				this.OnPropertyChanged("DirectionCode");
+			}
+		}
+		
+		/// <summary>
 		/// Shows the conversion rate of the record's currency. The exchange rate is used to convert all money fields in the record from the local currency to the system's default currency.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("exchangerate")]
@@ -399,44 +410,36 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// Formatted scheduled end time of the appointment.
+		/// Enter the account, contact, lead, or user who sent the letter.
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("formattedscheduledend")]
-		public System.Nullable<System.DateTime> FormattedScheduledEnd
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("from")]
+		public System.Collections.Generic.IEnumerable<MyApp.DataModel.ActivityParty> From
 		{
 			get
 			{
-				return this.GetAttributeValue<System.Nullable<System.DateTime>>("formattedscheduledend");
-			}
-		}
-		
-		/// <summary>
-		/// Formatted scheduled start time of the appointment.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("formattedscheduledstart")]
-		public System.Nullable<System.DateTime> FormattedScheduledStart
-		{
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<System.DateTime>>("formattedscheduledstart");
-			}
-		}
-		
-		/// <summary>
-		/// Shows the ID of the appointment in Microsoft Office Outlook. The ID is used to synchronize the appointment between Microsoft Dynamics 365 and the correct Exchange account.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("globalobjectid")]
-		public string GlobalObjectId
-		{
-			get
-			{
-				return this.GetAttributeValue<string>("globalobjectid");
+				Microsoft.Xrm.Sdk.EntityCollection collection = this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityCollection>("from");
+				if (((collection != null) 
+							&& (collection.Entities != null)))
+				{
+					return System.Linq.Enumerable.Cast<MyApp.DataModel.ActivityParty>(collection.Entities);
+				}
+				else
+				{
+					return null;
+				}
 			}
 			set
 			{
-				this.OnPropertyChanging("GlobalObjectId");
-				this.SetAttributeValue("globalobjectid", value);
-				this.OnPropertyChanged("GlobalObjectId");
+				this.OnPropertyChanging("From");
+				if ((value == null))
+				{
+					this.SetAttributeValue("from", value);
+				}
+				else
+				{
+					this.SetAttributeValue("from", new Microsoft.Xrm.Sdk.EntityCollection(new System.Collections.Generic.List<Microsoft.Xrm.Sdk.Entity>(value)));
+				}
+				this.OnPropertyChanged("From");
 			}
 		}
 		
@@ -459,37 +462,7 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// Type of instance of a recurring series.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("instancetypecode")]
-		public virtual appointment_instancetypecode? InstanceTypeCode
-		{
-			get
-			{
-				return ((appointment_instancetypecode?)(EntityOptionSetEnum.GetEnum(this, "instancetypecode")));
-			}
-		}
-		
-		/// <summary>
-		/// Select whether the appointment is an all-day event to make sure that the required resources are scheduled for the full day.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("isalldayevent")]
-		public System.Nullable<bool> IsAllDayEvent
-		{
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<bool>>("isalldayevent");
-			}
-			set
-			{
-				this.OnPropertyChanging("IsAllDayEvent");
-				this.SetAttributeValue("isalldayevent", value);
-				this.OnPropertyChanged("IsAllDayEvent");
-			}
-		}
-		
-		/// <summary>
-		/// Information regarding whether the appointment was billed as part of resolving a case.
+		/// Shows whether the letter activity was billed as part of resolving a case.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("isbilled")]
 		public System.Nullable<bool> IsBilled
@@ -507,61 +480,7 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// Information regarding whether the appointment is a draft.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("isdraft")]
-		public System.Nullable<bool> IsDraft
-		{
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<bool>>("isdraft");
-			}
-			set
-			{
-				this.OnPropertyChanging("IsDraft");
-				this.SetAttributeValue("isdraft", value);
-				this.OnPropertyChanged("IsDraft");
-			}
-		}
-		
-		/// <summary>
-		/// For internal use only.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("ismapiprivate")]
-		public System.Nullable<bool> IsMapiPrivate
-		{
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<bool>>("ismapiprivate");
-			}
-			set
-			{
-				this.OnPropertyChanging("IsMapiPrivate");
-				this.SetAttributeValue("ismapiprivate", value);
-				this.OnPropertyChanged("IsMapiPrivate");
-			}
-		}
-		
-		/// <summary>
-		/// Displays whether or not this is an online meeting.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("isonlinemeeting")]
-		public System.Nullable<bool> IsOnlineMeeting
-		{
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<bool>>("isonlinemeeting");
-			}
-			set
-			{
-				this.OnPropertyChanging("IsOnlineMeeting");
-				this.SetAttributeValue("isonlinemeeting", value);
-				this.OnPropertyChanged("IsOnlineMeeting");
-			}
-		}
-		
-		/// <summary>
-		/// Information regarding whether the activity is a regular activity type or event type.
+		/// Shows whether the activity is a regular activity type or event type.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("isregularactivity")]
 		public System.Nullable<bool> IsRegularActivity
@@ -573,19 +492,7 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// For internal use only.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("isunsafe")]
-		public System.Nullable<int> IsUnsafe
-		{
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<int>>("isunsafe");
-			}
-		}
-		
-		/// <summary>
-		/// Information regarding whether the appointment was created from a workflow rule.
+		/// Shows whether the letter activity was created by a workflow rule.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("isworkflowcreated")]
 		public System.Nullable<bool> IsWorkflowCreated
@@ -621,24 +528,6 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// Type the location where the appointment will take place, such as a conference room or customer office.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("location")]
-		public string Location
-		{
-			get
-			{
-				return this.GetAttributeValue<string>("location");
-			}
-			set
-			{
-				this.OnPropertyChanging("Location");
-				this.SetAttributeValue("location", value);
-				this.OnPropertyChanged("Location");
-			}
-		}
-		
-		/// <summary>
 		/// Shows who last updated the record.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
@@ -647,18 +536,6 @@ namespace MyApp.DataModel
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedby");
-			}
-		}
-		
-		/// <summary>
-		/// For internal use only. 
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedfieldsmask")]
-		public string ModifiedFieldsMask
-		{
-			get
-			{
-				return this.GetAttributeValue<string>("modifiedfieldsmask");
 			}
 		}
 		
@@ -675,7 +552,7 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// Shows who created the record on behalf of another user.
+		/// Shows who last updated the record on behalf of another user.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
 		public Microsoft.Xrm.Sdk.EntityReference ModifiedOnBehalfBy
@@ -695,176 +572,6 @@ namespace MyApp.DataModel
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<int>>("onholdtime");
-			}
-		}
-		
-		/// <summary>
-		/// Shows the online meeting chat id.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("onlinemeetingchatid")]
-		public string OnlineMeetingChatId
-		{
-			get
-			{
-				return this.GetAttributeValue<string>("onlinemeetingchatid");
-			}
-			set
-			{
-				this.OnPropertyChanging("OnlineMeetingChatId");
-				this.SetAttributeValue("onlinemeetingchatid", value);
-				this.OnPropertyChanged("OnlineMeetingChatId");
-			}
-		}
-		
-		/// <summary>
-		/// Shows the online meeting id.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("onlinemeetingid")]
-		public string OnlineMeetingId
-		{
-			get
-			{
-				return this.GetAttributeValue<string>("onlinemeetingid");
-			}
-			set
-			{
-				this.OnPropertyChanging("OnlineMeetingId");
-				this.SetAttributeValue("onlinemeetingid", value);
-				this.OnPropertyChanged("OnlineMeetingId");
-			}
-		}
-		
-		/// <summary>
-		/// Shows the online meeting join url.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("onlinemeetingjoinurl")]
-		public string OnlineMeetingJoinUrl
-		{
-			get
-			{
-				return this.GetAttributeValue<string>("onlinemeetingjoinurl");
-			}
-			set
-			{
-				this.OnPropertyChanging("OnlineMeetingJoinUrl");
-				this.SetAttributeValue("onlinemeetingjoinurl", value);
-				this.OnPropertyChanged("OnlineMeetingJoinUrl");
-			}
-		}
-		
-		/// <summary>
-		/// Displays the online meeting type.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("onlinemeetingtype")]
-		public virtual onlinemeetingtype? OnlineMeetingType
-		{
-			get
-			{
-				return ((onlinemeetingtype?)(EntityOptionSetEnum.GetEnum(this, "onlinemeetingtype")));
-			}
-			set
-			{
-				this.OnPropertyChanging("OnlineMeetingType");
-				this.SetAttributeValue("onlinemeetingtype", value.HasValue ? new Microsoft.Xrm.Sdk.OptionSetValue((int)value) : null);
-				this.OnPropertyChanged("OnlineMeetingType");
-			}
-		}
-		
-		/// <summary>
-		/// Enter the account, contact, lead, user, or other equipment resources that are not needed at the appointment, but can optionally attend.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("optionalattendees")]
-		public System.Collections.Generic.IEnumerable<MyApp.DataModel.ActivityParty> OptionalAttendees
-		{
-			get
-			{
-				Microsoft.Xrm.Sdk.EntityCollection collection = this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityCollection>("optionalattendees");
-				if (((collection != null) 
-							&& (collection.Entities != null)))
-				{
-					return System.Linq.Enumerable.Cast<MyApp.DataModel.ActivityParty>(collection.Entities);
-				}
-				else
-				{
-					return null;
-				}
-			}
-			set
-			{
-				this.OnPropertyChanging("OptionalAttendees");
-				if ((value == null))
-				{
-					this.SetAttributeValue("optionalattendees", value);
-				}
-				else
-				{
-					this.SetAttributeValue("optionalattendees", new Microsoft.Xrm.Sdk.EntityCollection(new System.Collections.Generic.List<Microsoft.Xrm.Sdk.Entity>(value)));
-				}
-				this.OnPropertyChanged("OptionalAttendees");
-			}
-		}
-		
-		/// <summary>
-		/// Enter the user who is in charge of coordinating or leading the appointment to make sure the appointment is displayed in the user's My Activities view.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("organizer")]
-		public System.Collections.Generic.IEnumerable<MyApp.DataModel.ActivityParty> Organizer
-		{
-			get
-			{
-				Microsoft.Xrm.Sdk.EntityCollection collection = this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityCollection>("organizer");
-				if (((collection != null) 
-							&& (collection.Entities != null)))
-				{
-					return System.Linq.Enumerable.Cast<MyApp.DataModel.ActivityParty>(collection.Entities);
-				}
-				else
-				{
-					return null;
-				}
-			}
-			set
-			{
-				this.OnPropertyChanging("Organizer");
-				if ((value == null))
-				{
-					this.SetAttributeValue("organizer", value);
-				}
-				else
-				{
-					this.SetAttributeValue("organizer", new Microsoft.Xrm.Sdk.EntityCollection(new System.Collections.Generic.List<Microsoft.Xrm.Sdk.Entity>(value)));
-				}
-				this.OnPropertyChanged("Organizer");
-			}
-		}
-		
-		/// <summary>
-		/// The original start date of the appointment.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("originalstartdate")]
-		public System.Nullable<System.DateTime> OriginalStartDate
-		{
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<System.DateTime>>("originalstartdate");
-			}
-		}
-		
-		/// <summary>
-		/// Unique identifier of the Microsoft Office Outlook appointment owner that correlates to the PR_OWNER_APPT_ID MAPI property.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("outlookownerapptid")]
-		public System.Nullable<int> OutlookOwnerApptId
-		{
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<int>>("outlookownerapptid");
-			}
-			set
-			{
-				this.OnPropertyChanging("OutlookOwnerApptId");
-				this.SetAttributeValue("outlookownerapptid", value);
-				this.OnPropertyChanged("OutlookOwnerApptId");
 			}
 		}
 		
@@ -905,7 +612,7 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// Shows the business unit that the record owner belongs to.
+		/// Unique identifier of the business unit that owns the letter activity.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningbusinessunit")]
 		public Microsoft.Xrm.Sdk.EntityReference OwningBusinessUnit
@@ -917,7 +624,7 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// Unique identifier of the team that owns the appointment.
+		/// Unique identifier of the team that owns the letter activity.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
 		public Microsoft.Xrm.Sdk.EntityReference OwningTeam
@@ -929,7 +636,7 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// Unique identifier of the user that owns the appointment.
+		/// Unique identifier of the user that owns the letter activity.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
 		public Microsoft.Xrm.Sdk.EntityReference OwningUser
@@ -944,11 +651,11 @@ namespace MyApp.DataModel
 		/// Select the priority so that preferred customers or critical issues are handled quickly.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("prioritycode")]
-		public virtual appointment_prioritycode? PriorityCode
+		public virtual letter_prioritycode? PriorityCode
 		{
 			get
 			{
-				return ((appointment_prioritycode?)(EntityOptionSetEnum.GetEnum(this, "prioritycode")));
+				return ((letter_prioritycode?)(EntityOptionSetEnum.GetEnum(this, "prioritycode")));
 			}
 			set
 			{
@@ -977,7 +684,7 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// Choose the record that the appointment relates to.
+		/// Choose the record that the letter relates to.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
 		public Microsoft.Xrm.Sdk.EntityReference RegardingObjectId
@@ -995,41 +702,7 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// Enter the account, contact, lead, user, or other equipment resources that are required to attend the appointment.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("requiredattendees")]
-		public System.Collections.Generic.IEnumerable<MyApp.DataModel.ActivityParty> RequiredAttendees
-		{
-			get
-			{
-				Microsoft.Xrm.Sdk.EntityCollection collection = this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityCollection>("requiredattendees");
-				if (((collection != null) 
-							&& (collection.Entities != null)))
-				{
-					return System.Linq.Enumerable.Cast<MyApp.DataModel.ActivityParty>(collection.Entities);
-				}
-				else
-				{
-					return null;
-				}
-			}
-			set
-			{
-				this.OnPropertyChanging("RequiredAttendees");
-				if ((value == null))
-				{
-					this.SetAttributeValue("requiredattendees", value);
-				}
-				else
-				{
-					this.SetAttributeValue("requiredattendees", new Microsoft.Xrm.Sdk.EntityCollection(new System.Collections.Generic.List<Microsoft.Xrm.Sdk.Entity>(value)));
-				}
-				this.OnPropertyChanged("RequiredAttendees");
-			}
-		}
-		
-		/// <summary>
-		/// Shows the expected duration of the appointment, in minutes.
+		/// Scheduled duration of the letter activity, specified in minutes.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("scheduleddurationminutes")]
 		public System.Nullable<int> ScheduledDurationMinutes
@@ -1038,16 +711,10 @@ namespace MyApp.DataModel
 			{
 				return this.GetAttributeValue<System.Nullable<int>>("scheduleddurationminutes");
 			}
-			set
-			{
-				this.OnPropertyChanging("ScheduledDurationMinutes");
-				this.SetAttributeValue("scheduleddurationminutes", value);
-				this.OnPropertyChanged("ScheduledDurationMinutes");
-			}
 		}
 		
 		/// <summary>
-		/// Enter the expected due date and time for the activity to be completed to provide details about the timing of the appointment.
+		/// Enter the expected due date and time.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("scheduledend")]
 		public System.Nullable<System.DateTime> ScheduledEnd
@@ -1065,7 +732,7 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// Enter the expected start date and time for the activity to provide details about the timing of the appointment.
+		/// Enter the expected due date and time.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("scheduledstart")]
 		public System.Nullable<System.DateTime> ScheduledStart
@@ -1083,19 +750,7 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// Shows the ID of the recurring series of an instance.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("seriesid")]
-		public System.Nullable<System.Guid> SeriesId
-		{
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<System.Guid>>("seriesid");
-			}
-		}
-		
-		/// <summary>
-		/// Choose the service level agreement (SLA) that you want to apply to the appointment record.
+		/// Choose the service level agreement (SLA) that you want to apply to the Letter record.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("slaid")]
 		public Microsoft.Xrm.Sdk.EntityReference SLAId
@@ -1113,7 +768,7 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// Last SLA that was applied to this appointment. This field is for internal use only.
+		/// Last SLA that was applied to this Letter. This field is for internal use only.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("slainvokedid")]
 		public Microsoft.Xrm.Sdk.EntityReference SLAInvokedId
@@ -1161,14 +816,14 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// Shows whether the appointment is open, completed, or canceled. Completed and canceled appointments are read-only and can't be edited.
+		/// Shows whether the letter is open, completed, or canceled. Completed and canceled letters are read-only and can't be edited.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
-		public virtual appointment_statecode? StateCode
+		public virtual letter_statecode? StateCode
 		{
 			get
 			{
-				return ((appointment_statecode?)(EntityOptionSetEnum.GetEnum(this, "statecode")));
+				return ((letter_statecode?)(EntityOptionSetEnum.GetEnum(this, "statecode")));
 			}
 			set
 			{
@@ -1179,14 +834,14 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// Select the appointment's status.
+		/// Select the letter's status.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
-		public virtual appointment_statuscode? StatusCode
+		public virtual letter_statuscode? StatusCode
 		{
 			get
 			{
-				return ((appointment_statuscode?)(EntityOptionSetEnum.GetEnum(this, "statuscode")));
+				return ((letter_statuscode?)(EntityOptionSetEnum.GetEnum(this, "statuscode")));
 			}
 			set
 			{
@@ -1197,7 +852,7 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// Type a subcategory to identify the appointment type and relate the activity to a specific product, sales region, business group, or other function.
+		/// Type a subcategory to identify the letter type and relate the activity to a specific product, sales region, business group, or other function.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("subcategory")]
 		public string Subcategory
@@ -1215,7 +870,7 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// Type a short description about the objective or primary topic of the appointment.
+		/// Type a short description about the objective or primary topic of the letter.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("subject")]
 		public string Subject
@@ -1265,6 +920,40 @@ namespace MyApp.DataModel
 				this.OnPropertyChanging("TimeZoneRuleVersionNumber");
 				this.SetAttributeValue("timezoneruleversionnumber", value);
 				this.OnPropertyChanged("TimeZoneRuleVersionNumber");
+			}
+		}
+		
+		/// <summary>
+		/// Enter the account, contact, lead, or user recipients for the letter.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("to")]
+		public System.Collections.Generic.IEnumerable<MyApp.DataModel.ActivityParty> To
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.EntityCollection collection = this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityCollection>("to");
+				if (((collection != null) 
+							&& (collection.Entities != null)))
+				{
+					return System.Linq.Enumerable.Cast<MyApp.DataModel.ActivityParty>(collection.Entities);
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("To");
+				if ((value == null))
+				{
+					this.SetAttributeValue("to", value);
+				}
+				else
+				{
+					this.SetAttributeValue("to", new Microsoft.Xrm.Sdk.EntityCollection(new System.Collections.Generic.List<Microsoft.Xrm.Sdk.Entity>(value)));
+				}
+				this.OnPropertyChanged("To");
 			}
 		}
 		
@@ -1323,7 +1012,7 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// Version number of the appointment.
+		/// Version number of the letter.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("versionnumber")]
 		public System.Nullable<long> VersionNumber
@@ -1335,85 +1024,39 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// 1:N appointment_activity_parties
+		/// 1:N letter_activity_parties
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("appointment_activity_parties")]
-		public System.Collections.Generic.IEnumerable<MyApp.DataModel.ActivityParty> appointment_activity_parties
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("letter_activity_parties")]
+		public System.Collections.Generic.IEnumerable<MyApp.DataModel.ActivityParty> letter_activity_parties
 		{
 			get
 			{
-				return this.GetRelatedEntities<MyApp.DataModel.ActivityParty>("appointment_activity_parties", null);
+				return this.GetRelatedEntities<MyApp.DataModel.ActivityParty>("letter_activity_parties", null);
 			}
 			set
 			{
-				this.OnPropertyChanging("appointment_activity_parties");
-				this.SetRelatedEntities<MyApp.DataModel.ActivityParty>("appointment_activity_parties", null, value);
-				this.OnPropertyChanged("appointment_activity_parties");
+				this.OnPropertyChanging("letter_activity_parties");
+				this.SetRelatedEntities<MyApp.DataModel.ActivityParty>("letter_activity_parties", null, value);
+				this.OnPropertyChanged("letter_activity_parties");
 			}
 		}
 		
 		/// <summary>
-		/// N:1 lk_appointment_createdby
+		/// N:1 Contact_Letters
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_appointment_createdby")]
-		public MyApp.DataModel.SystemUser lk_appointment_createdby
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Contact_Letters")]
+		public MyApp.DataModel.Contact Contact_Letters
 		{
 			get
 			{
-				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_appointment_createdby", null);
+				return this.GetRelatedEntity<MyApp.DataModel.Contact>("Contact_Letters", null);
 			}
-		}
-		
-		/// <summary>
-		/// N:1 lk_appointment_createdonbehalfby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_appointment_createdonbehalfby")]
-		public MyApp.DataModel.SystemUser lk_appointment_createdonbehalfby
-		{
-			get
+			set
 			{
-				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_appointment_createdonbehalfby", null);
-			}
-		}
-		
-		/// <summary>
-		/// N:1 lk_appointment_modifiedby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_appointment_modifiedby")]
-		public MyApp.DataModel.SystemUser lk_appointment_modifiedby
-		{
-			get
-			{
-				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_appointment_modifiedby", null);
-			}
-		}
-		
-		/// <summary>
-		/// N:1 lk_appointment_modifiedonbehalfby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_appointment_modifiedonbehalfby")]
-		public MyApp.DataModel.SystemUser lk_appointment_modifiedonbehalfby
-		{
-			get
-			{
-				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_appointment_modifiedonbehalfby", null);
-			}
-		}
-		
-		/// <summary>
-		/// N:1 user_appointment
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_appointment")]
-		public MyApp.DataModel.SystemUser user_appointment
-		{
-			get
-			{
-				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("user_appointment", null);
+				this.OnPropertyChanging("Contact_Letters");
+				this.SetRelatedEntity<MyApp.DataModel.Contact>("Contact_Letters", null, value);
+				this.OnPropertyChanged("Contact_Letters");
 			}
 		}
 	}

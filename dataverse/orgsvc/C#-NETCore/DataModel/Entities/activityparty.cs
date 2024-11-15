@@ -459,40 +459,40 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// N:1 appointment_activity_parties
+		/// N:1 contact_activity_parties
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("activityid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("appointment_activity_parties")]
-		public MyApp.DataModel.Appointment appointment_activity_parties
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("partyid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_activity_parties")]
+		public MyApp.DataModel.Contact contact_activity_parties
 		{
 			get
 			{
-				return this.GetRelatedEntity<MyApp.DataModel.Appointment>("appointment_activity_parties", null);
+				return this.GetRelatedEntity<MyApp.DataModel.Contact>("contact_activity_parties", null);
 			}
 			set
 			{
-				this.OnPropertyChanging("appointment_activity_parties");
-				this.SetRelatedEntity<MyApp.DataModel.Appointment>("appointment_activity_parties", null, value);
-				this.OnPropertyChanged("appointment_activity_parties");
+				this.OnPropertyChanging("contact_activity_parties");
+				this.SetRelatedEntity<MyApp.DataModel.Contact>("contact_activity_parties", null, value);
+				this.OnPropertyChanged("contact_activity_parties");
 			}
 		}
 		
 		/// <summary>
-		/// N:1 system_user_activity_parties
+		/// N:1 letter_activity_parties
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("partyid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("system_user_activity_parties")]
-		public MyApp.DataModel.SystemUser system_user_activity_parties
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("activityid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("letter_activity_parties")]
+		public MyApp.DataModel.Letter letter_activity_parties
 		{
 			get
 			{
-				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("system_user_activity_parties", null);
+				return this.GetRelatedEntity<MyApp.DataModel.Letter>("letter_activity_parties", null);
 			}
 			set
 			{
-				this.OnPropertyChanging("system_user_activity_parties");
-				this.SetRelatedEntity<MyApp.DataModel.SystemUser>("system_user_activity_parties", null, value);
-				this.OnPropertyChanged("system_user_activity_parties");
+				this.OnPropertyChanging("letter_activity_parties");
+				this.SetRelatedEntity<MyApp.DataModel.Letter>("letter_activity_parties", null, value);
+				this.OnPropertyChanged("letter_activity_parties");
 			}
 		}
 	}

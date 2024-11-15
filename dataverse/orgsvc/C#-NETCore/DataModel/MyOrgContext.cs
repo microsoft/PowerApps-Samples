@@ -42,24 +42,24 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
-		/// Gets a binding to the set of all <see cref="MyApp.DataModel.Appointment"/> entities.
+		/// Gets a binding to the set of all <see cref="MyApp.DataModel.Contact"/> entities.
 		/// </summary>
-		public System.Linq.IQueryable<MyApp.DataModel.Appointment> AppointmentSet
+		public System.Linq.IQueryable<MyApp.DataModel.Contact> ContactSet
 		{
 			get
 			{
-				return this.CreateQuery<MyApp.DataModel.Appointment>();
+				return this.CreateQuery<MyApp.DataModel.Contact>();
 			}
 		}
 		
 		/// <summary>
-		/// Gets a binding to the set of all <see cref="MyApp.DataModel.SystemUser"/> entities.
+		/// Gets a binding to the set of all <see cref="MyApp.DataModel.Letter"/> entities.
 		/// </summary>
-		public System.Linq.IQueryable<MyApp.DataModel.SystemUser> SystemUserSet
+		public System.Linq.IQueryable<MyApp.DataModel.Letter> LetterSet
 		{
 			get
 			{
-				return this.CreateQuery<MyApp.DataModel.SystemUser>();
+				return this.CreateQuery<MyApp.DataModel.Letter>();
 			}
 		}
 	}
