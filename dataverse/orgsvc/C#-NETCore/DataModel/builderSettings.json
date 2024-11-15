@@ -1,0 +1,20 @@
+﻿{
+  "suppressINotifyPattern": false,
+  "suppressGeneratedCodeAttribute": false,
+  "language": "CS",
+  "namespace": "MyApp.DataModel",
+  "serviceContextName": "MyOrgContext",
+  "generateSdkMessages": false,
+  "generateGlobalOptionSets": false,
+  "emitFieldsClasses": false,
+  "entityTypesFolder": "Entities",
+  "messagesTypesFolder": "Messages",
+  "optionSetsTypesFolder": "OptionSets",
+  "entityNamesFilter": [
+    "activityparty",
+    "systemuser",
+    "appointment"
+  ],
+  "emitEntityETC": false,
+  "emitVirtualAttributes": false
+}
