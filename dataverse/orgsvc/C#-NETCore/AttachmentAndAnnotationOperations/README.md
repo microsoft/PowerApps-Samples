@@ -2,7 +2,7 @@
 
 This .NET 6.0 sample demonstrates how to perform operations using file data with `ActivityMimeAttachment` (Attachment) and `Annotation` (Note) tables using the Dataverse SDK for .NET.
 
-This sample uses the [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient Class](https://learn.microsoft.com/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient).
+This sample uses the [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient](https://learn.microsoft.com/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient) class.
 
 ## Prerequisites
 
@@ -16,18 +16,18 @@ This sample uses the [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient Cla
 
    This solution contains two projects that include samples:
 
-   - **ActivityMimeAttachmentOperations**: Demonstrates using Attachments.
-   - **AnnotationOperations**: Demonstrates using Annotations.
-   
+   - **ActivityMimeAttachmentOperations**: Demonstrates using attachments.
+   - **AnnotationOperations**: Demonstrates using annotations.
+
    In **Solution Explorer**, right-click the project you want to run and choose **Set as Startup Project**.
 
 1. In either project, edit the *appsettings.json* file. Set the connection string `Url` and `Username` parameters as appropriate for your test environment.
 
-   The environment Url can be found in the Power Platform admin center. It has the form https://\<environment-name>.crm.dynamics.com.
+   The environment URL can be found in the Power Platform admin center. It has the form `https://<environment-name>.crm.dynamics.com`.
 
 1. Build the solution, and then run the desired project.
 
-When the sample runs, you will be prompted in the default browser to select an environment user account and enter a password. To avoid having to do this every time you run a sample, insert a password parameter into the connection string in the appsettings.json file. For example:
+When the sample runs, you are prompted in a browser to select an environment user account and enter a password. To avoid doing this every time you run a sample, insert a password parameter into the connection string in the `appsettings.json` file. For example:
 
 ```json
 {
@@ -37,7 +37,8 @@ When the sample runs, you will be prompted in the default browser to select an e
 }
 ```
 
->**Tip**: You can set a user environment variable named DATAVERSE_APPSETTINGS to the file path of the appsettings.json file stored anywhere on your computer. The samples will use that appsettings file if the environment variable exists and is not null. Be sure to log out and back in again after you define the variable for it to take affect. To set an environment variable, go to **Settings > System > About**, select **Advanced system settings**, and then choose **Environment variables**.
+> [!Tip]
+> You can set a user environment variable named `DATAVERSE_APPSETTINGS` to the file path of the `appsettings.json` file stored anywhere on your computer. The samples use that appsettings file if the environment variable exists and isn't null. Be sure to log out and back in again after you define the variable for it to take affect.
 
 ## Demonstrates
 

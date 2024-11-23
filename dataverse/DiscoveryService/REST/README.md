@@ -13,19 +13,17 @@ This sample code shows how to use the discovery service using the OData service 
 
 ## How to run this sample
 
-This sample opens dialog in a browser to prompt you for connection information.
+This sample opens dialog in a browser to prompt you for connection information based on your operating system credentials.
 
 To use alternative credentials (not your operating system credentials), you can manually update the `username` and `password` fields of Program.cs in the `Program.Main` method before running this sample.
 
 ## What this sample does
 
-This sample uses the OData global discovery service with a user's credentials to determine your environment. This sample uses HttpClient and the Microsoft.Identity.Client libaries to authenticate.
+This sample uses the OData [global discovery service](https://learn.microsoft.com/power-apps/developer/data-platform/discovery-service#global-discovery-service) with a user's credentials to determine your environment. This sample uses `HttpClient` and the `Microsoft.Identity.Client` libaries to authenticate.
 
 If one or more environments are returned, the sample prompts the user to choose one, and then uses a `WhoAmIRequest` to return the `SystemUser.UserId` for that environment.
 
 ## How this sample works
-
-In order to simulate the scenario described in [What this sample does](#what-this-sample-does), the sample will do the following:
 
 ### Setup
 
