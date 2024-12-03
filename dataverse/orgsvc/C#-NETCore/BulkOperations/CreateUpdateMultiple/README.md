@@ -1,14 +1,14 @@
 ﻿# CreateUpdateMultiple README
 
-This project uses [CreateMultipleRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createmultiplerequest) and [UpdateMultipleRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.updatemultiplerequest) classes to perform bulk create and update operations.
+This project uses the [CreateMultipleRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createmultiplerequest) and [UpdateMultipleRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.updatemultiplerequest) classes to perform bulk create and update operations.
 
-It depends on the common structure for other projects in this solution that is described in [CreateUpdateMultiple/README.md](../README.md).
+The project depends on the common structure for other projects in this solution as described in [CreateUpdateMultiple/README.md](../README.md).
 
-**This project sends only two requests**, each attempting to complete operations for the total configured number of records.
+This project sends only *two requests*. Each request attempts to complete operations for the total configured number of records.
 
-The output of this project will look like this:
+You can expect this output for the project:
 
-```
+```cmd
 Creating sample_Example Standard table...
         sample_Example table created.
 Adding 'sample_Description' column to sample_Example table...

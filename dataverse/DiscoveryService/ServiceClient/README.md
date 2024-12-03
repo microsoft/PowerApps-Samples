@@ -17,13 +17,11 @@ You must first set the `username` and `password` variables in the `Program.Main`
 
 ## What this sample does
 
-This sample uses the [Microsoft.PowerPlatform.Dataverse.Client](https://www.nuget.org/packages/Microsoft.PowerPlatform.Dataverse.Client/) [ServiceClient Class](https://learn.microsoft.com/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient) to query the global discovery service with user credentials to determine which environments are their connected environments.
+This sample uses the [Microsoft.PowerPlatform.Dataverse.Client](https://www.nuget.org/packages/Microsoft.PowerPlatform.Dataverse.Client/) [ServiceClient Class](https://learn.microsoft.com/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient) to query the [global discovery service](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/discovery-service#global-discovery-service) with user credentials to determine which environments are their connected environments.
 
 If one or more environments are returned, the sample prompts the user to choose one, and then uses a `WhoAmIRequest` to return the `SystemUser.UserId` for that environment.
 
 ## How this sample works
-
-This sample simulates the scenario described in [What this sample does](#what-this-sample-does).
 
 ### Setup
 
