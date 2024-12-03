@@ -53,7 +53,7 @@ When the sample runs, you're prompted in a default browser to select an environm
 ```
 
 > **TIP**
-> You can set a user environment variable named `DATAVERSE_APPSETTINGS` to the file path of the `appsettings.json` file stored anywhere on your computer. The samples use that appsettings file if the environment variable exists and isn't null. Log out and back in again after you define the variable for it to take affect. You can manually set an environment variable by typing `env` in your system search bar, then choose **Environment variables** in **System properties** window.  or use [Environment.SetEnvironmentVariable Method](/dotnet/api/system.environment.setenvironmentvariable?view=net-8.0).
+> You can set a user environment variable named `DATAVERSE_APPSETTINGS` to the file path of the `appsettings.json` file stored anywhere on your computer. The samples use that appsettings file if the environment variable exists and isn't null. Log out and back in again after you define the variable for it to take affect. You can manually set an environment variable by typing `env` in your system search bar, then choose **Environment variables** in **System properties** window.
 
 ## What this sample does
 
