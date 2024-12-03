@@ -38,7 +38,7 @@ When the sample runs, you are prompted in a browser to select an environment use
 ```
 
 > [!Tip]
-> You can set a user environment variable named `DATAVERSE_APPSETTINGS` to the file path of the `appsettings.json` file stored anywhere on your computer. The samples use that appsettings file if the environment variable exists and isn't null. Be sure to log out and back in again after you define the variable for it to take affect.
+> You can set a user environment variable named `DATAVERSE_APPSETTINGS` to the file path of the `appsettings.json` file stored anywhere on your computer. The samples use that appsettings file if the environment variable exists and isn't null. Be sure to log out and back in again after you define the variable for it to take affect. You can manually set an environment variable by typing `env` in your system search bar, then choose **Environment variables** in **System properties** window.
 
 ## Demonstrates
 
