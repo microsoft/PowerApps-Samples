@@ -7,8 +7,36 @@ namespace PowerPlatform_Dataverse_CodeSamples
 {
     internal class Program
     {
-        // TODO Add your custom methods here for quick access
+        static void AssociateRecords(IOrganizationService service,
+            Dictionary<string, EntityReference> entityStore)
+        {
+            // Associate three accounts to a contact record.
 
+            // Create a collection of the entities that will be 
+            // associated to the contact.
+            var relatedEntities = new EntityReferenceCollection();
+            relatedEntities.Add(new EntityReference(Account.EntityLogicalName,
+                entityStore["account 1"].Id));
+            relatedEntities.Add(new EntityReference(Account.EntityLogicalName,
+                entityStore["account 2"].Id));
+            relatedEntities.Add(new EntityReference(Account.EntityLogicalName,
+                entityStore["account 3"].Id));
+
+            // Create an object that defines the relationship between the contact and account.
+            var relationship = new Relationship("account_primary_contact");
+
+            //Associate the contact with the 3 accounts.
+            service.Associate(Contact.EntityLogicalName, entityStore["John Doe"].Id,
+                relationship, relatedEntities);
+
+            Console.WriteLine("The entities have been associated.");
+
+            //Disassociate the records.
+            service.Disassociate(Contact.EntityLogicalName, entityStore["John Doe"].Id,
+                relationship, relatedEntities);
+
+            Console.WriteLine("The entities have been disassociated.");
+        }
 
         /// <summary>
         /// Contains the application's configuration settings. 
@@ -70,7 +98,8 @@ namespace PowerPlatform_Dataverse_CodeSamples
                 FirstName = "John",
                 LastName = "Doe"
             };
-            entityStore.Add("John Doe",new EntityReference("contact",service.Create(setupContact)));
+            entityStore.Add("John Doe",new EntityReference("contact",
+                service.Create(setupContact)));
             Console.WriteLine("Created {0} {1}", setupContact.FirstName,
                 setupContact.LastName);
 
@@ -79,21 +108,24 @@ namespace PowerPlatform_Dataverse_CodeSamples
             {
                 Name = "Example Account 1"
             };
-            entityStore.Add("account 1", new EntityReference("account", service.Create(setupAccount1)));
+            entityStore.Add("account 1", new EntityReference("account",
+                service.Create(setupAccount1)));
             Console.WriteLine("Created {0}", setupAccount1.Name);
 
             var setupAccount2 = new Account
             {
                 Name = "Example Account 2"
             };
-            entityStore.Add("account 2", new EntityReference("account", service.Create(setupAccount2)));
+            entityStore.Add("account 2", new EntityReference("account",
+                service.Create(setupAccount2)));
             Console.WriteLine("Created {0}", setupAccount2.Name);
 
             var setupAccount3 = new Account
             {
                 Name = "Example Account 3"
             };
-            entityStore.Add("account 3", new EntityReference("account", service.Create(setupAccount3)));
+            entityStore.Add("account 3", new EntityReference("account",
+                service.Create(setupAccount3)));
             Console.WriteLine("Created {0}", setupAccount3.Name);
         }
 
@@ -106,34 +138,9 @@ namespace PowerPlatform_Dataverse_CodeSamples
         static public bool Run(IOrganizationService service,
             Dictionary<string, EntityReference> entityStore)
         {
-            // Associate three accounts to a contact record.
+            AssociateRecords(service, entityStore);
 
-            // Create a collection of the entities that will be 
-            // associated to the contact.
-            var relatedEntities = new EntityReferenceCollection();
-            relatedEntities.Add(new EntityReference(Account.EntityLogicalName, 
-                entityStore["account 1"].Id));
-            relatedEntities.Add(new EntityReference(Account.EntityLogicalName,
-                entityStore["account 2"].Id));
-            relatedEntities.Add(new EntityReference(Account.EntityLogicalName,
-                entityStore["account 3"].Id));
-
-            // Create an object that defines the relationship between the contact and account.
-            var relationship = new Relationship("account_primary_contact");
-
-            //Associate the contact with the 3 accounts.
-            service.Associate(Contact.EntityLogicalName, entityStore["John Doe"].Id, 
-                relationship, relatedEntities);
-
-            Console.WriteLine("The entities have been associated.");
-
-            //Disassociate the records.
-            service.Disassociate(Contact.EntityLogicalName, entityStore["John Doe"].Id,
-                relationship, relatedEntities);
-
-            Console.WriteLine("The entities have been disassociated.");
-
-            return false;
+            return true;
         }
 
         /// <summary>
