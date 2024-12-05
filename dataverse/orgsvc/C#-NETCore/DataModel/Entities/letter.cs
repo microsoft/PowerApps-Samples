@@ -1042,6 +1042,25 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
+		/// N:1 Account_Letters
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Account_Letters")]
+		public MyApp.DataModel.Account Account_Letters
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.Account>("Account_Letters", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("Account_Letters");
+				this.SetRelatedEntity<MyApp.DataModel.Account>("Account_Letters", null, value);
+				this.OnPropertyChanged("Account_Letters");
+			}
+		}
+		
+		/// <summary>
 		/// N:1 Contact_Letters
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]

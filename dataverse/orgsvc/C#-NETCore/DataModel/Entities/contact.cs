@@ -4257,6 +4257,24 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
+		/// 1:N account_primary_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_primary_contact")]
+		public System.Collections.Generic.IEnumerable<MyApp.DataModel.Account> account_primary_contact
+		{
+			get
+			{
+				return this.GetRelatedEntities<MyApp.DataModel.Account>("account_primary_contact", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("account_primary_contact");
+				this.SetRelatedEntities<MyApp.DataModel.Account>("account_primary_contact", null, value);
+				this.OnPropertyChanged("account_primary_contact");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N contact_activity_parties
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_activity_parties")]
@@ -4329,6 +4347,25 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
+		/// N:1 contact_customer_accounts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentcustomerid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_customer_accounts")]
+		public MyApp.DataModel.Account contact_customer_accounts
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.Account>("contact_customer_accounts", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("contact_customer_accounts");
+				this.SetRelatedEntity<MyApp.DataModel.Account>("contact_customer_accounts", null, value);
+				this.OnPropertyChanged("contact_customer_accounts");
+			}
+		}
+		
+		/// <summary>
 		/// N:1 contact_customer_contacts
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentcustomerid")]
@@ -4357,6 +4394,25 @@ namespace MyApp.DataModel
 			get
 			{
 				return this.GetRelatedEntity<MyApp.DataModel.Contact>("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 msa_contact_managingpartner
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msa_managingpartnerid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("msa_contact_managingpartner")]
+		public MyApp.DataModel.Account msa_contact_managingpartner
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.Account>("msa_contact_managingpartner", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("msa_contact_managingpartner");
+				this.SetRelatedEntity<MyApp.DataModel.Account>("msa_contact_managingpartner", null, value);
+				this.OnPropertyChanged("msa_contact_managingpartner");
 			}
 		}
 	}

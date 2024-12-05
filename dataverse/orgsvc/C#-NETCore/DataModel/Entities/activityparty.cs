@@ -459,6 +459,25 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
+		/// N:1 account_activity_parties
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("partyid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_activity_parties")]
+		public MyApp.DataModel.Account account_activity_parties
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.Account>("account_activity_parties", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("account_activity_parties");
+				this.SetRelatedEntity<MyApp.DataModel.Account>("account_activity_parties", null, value);
+				this.OnPropertyChanged("account_activity_parties");
+			}
+		}
+		
+		/// <summary>
 		/// N:1 contact_activity_parties
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("partyid")]

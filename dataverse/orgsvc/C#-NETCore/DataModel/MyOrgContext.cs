@@ -31,6 +31,17 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="MyApp.DataModel.Account"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<MyApp.DataModel.Account> AccountSet
+		{
+			get
+			{
+				return this.CreateQuery<MyApp.DataModel.Account>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="MyApp.DataModel.ActivityParty"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<MyApp.DataModel.ActivityParty> ActivityPartySet
