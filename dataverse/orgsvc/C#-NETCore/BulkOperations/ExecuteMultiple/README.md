@@ -2,13 +2,13 @@
 
 This project uses the [ExecuteMultipleRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.executemultiplerequest) class to perform bulk create and update operations.
 
-It depends on the common structure for other projects in this solution that is described in [CreateUpdateMultiple/README.md](../README.md).
+The project depends on the common structure for other projects in this solution that is described in [CreateUpdateMultiple/README.md](../README.md).
 
-Because `ExecuteMultiple` is limited to 1000 requests and the sample may be configured to create more records than that, this project will chunk the total number of requests into groups of 1000 and will send as many requests as needed to perform the respective operations.
+Because `ExecuteMultiple` is limited to 1000 requests and the sample may be configured to create more records than that, this project chunks the total number of requests into groups of 1000 and sends as many requests as needed to perform the respective operations.
 
-The output of this project will look like this:
+You can expect this output for the project:
 
-```
+```cmd
 Creating sample_Example Standard table...
         sample_Example table created.
 Adding 'sample_Description' column to sample_Example table...

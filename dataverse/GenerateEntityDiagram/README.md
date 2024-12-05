@@ -16,7 +16,7 @@ The following entity diagram was generated using the compiled Metadata Diagram a
 ## Prerequisites
 
 1. Download and install Microsoft Visio. A trial installation should be sufficient.
-1. Launch the Visual Studio 2022 (or later) installer to verify that the **Visual Studio Tools for Office** component is installed or install it.
+1. Launch the Visual Studio 2022 (or later) installer to verify that the **Visual Studio Tools for Office** component is installed or install it. You can also download [Visual Studio 2010 Tools for Office Runtime](https://www.microsoft.com/en-us/download/details.aspx?id=105522.&msockid=0eb330f6bc236d9e21a425cabd0e6c09) manually.
 
 ## How to run this sample
 
@@ -26,7 +26,7 @@ You can run the sample in Visual Studio in two different ways with either the de
 
 1. In File Explorer, select the solution (*.sln) file to launch Visual Studio.
 1. Add logical entity names as command line arguments in one of two ways:
-   1. Add one or more entity names in the Project Properties form, for example you can use `account contact` to represent the entities named `account` and `contact`. Use entity names that exist in your test environment.
+   1. Add one or more entity names in the project properties form by going to **Project** > **Properties** > **Debug**. For example, you can add`account contact` to the **Command line arguments** field to represent the entities named `account` and `contact`. Use entity names that exist in your test environment.
    1. Alternatively, you can run the compiled program directly from the Command Prompt with a space-separated list of entites to diagram.
 
       ```cmd
@@ -34,9 +34,9 @@ You can run the sample in Visual Studio in two different ways with either the de
       GenerateEntityDiagram.exe account contact
       ```
 
-1. If you added entity names to Project Properties, you can now run the application by choosing `Start` in the Visual Studio toolbar.
+1. If you added entity names to project properties, run the application by choosing `Start` in the Visual Studio toolbar.
 
-1. You see a login popup. Select a deployment type of **Office 365** and check the **Show Advanced** box. Enter your account user name and password. Select **Login**.
+1. If you didn't add your own credentials to App.config, you might see a login popup. The popup might only flash open and close, but if it stays open, select a deployment type of **Office 365** and check the **Show Advanced** box. Enter your account user name and password. Select **Login**.
 
    :::image type="content" source="login-popup.png" alt-text="Screenshot that shows the right options selected or entered in the login popup.":::
 
@@ -57,8 +57,11 @@ You can run the sample in Visual Studio in two different ways with either the de
    1. Alternatively, in Visual Studio, you can add logical entity names to Project Properties by navigating to **Property Pages** > **Debug**. Under **Start options**, add the entity names in the **Command line arguments** field.
    1. Build and run the sample application.
 
-## Results - a generated relationship diagram
+## Results
 
 The first entity name is used to name the generated Visio file. For example, if the first entity name program argument is `account`, you find the generated diagram called `account.vsd` in your `bin/Debug` folder after running the application.
 
-For more information, see [Use metadata to generate entity diagram](https://learn.microsoft.com/dynamics365/customer-engagement/developer/use-metadata-generate-entity-diagrams) and [Use connection strings in XRM tooling to connect to Microsoft Dataverse](https://learn.microsoft.com/power-apps/developer/data-platform/xrm-tooling/use-connection-strings-xrm-tooling-connect).
+## Related information
+
+- [Use metadata to generate entity diagram](https://learn.microsoft.com/dynamics365/customer-engagement/developer/use-metadata-generate-entity-diagrams)
+- [Use connection strings in XRM tooling to connect to Microsoft Dataverse](https://learn.microsoft.com/power-apps/developer/data-platform/xrm-tooling/use-connection-strings-xrm-tooling-connect).
