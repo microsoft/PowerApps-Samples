@@ -7,11 +7,14 @@ namespace PowerPlatform_Dataverse_CodeSamples
 {
     internal class Program
     {
+        /// <summary>
+        /// Associate three accounts to a contact.
+        /// </summary>
+        /// <param name="service">Authenticated web service connection.</param>
+        /// <param name="entityStore">Keeps track of any entity records this program creates.</param>
         static void AssociateRecords(IOrganizationService service,
             Dictionary<string, EntityReference> entityStore)
         {
-            // Associate three accounts to a contact record.
-
             // Create a collection of the entities that will be 
             // associated to the contact.
             var relatedEntities = new EntityReferenceCollection();
@@ -25,13 +28,13 @@ namespace PowerPlatform_Dataverse_CodeSamples
             // Create an object that defines the relationship between the contact and account.
             var relationship = new Relationship("account_primary_contact");
 
-            //Associate the contact with the 3 accounts.
+            // Associate the contact with the 3 accounts.
             service.Associate(Contact.EntityLogicalName, entityStore["John Doe"].Id,
                 relationship, relatedEntities);
 
             Console.WriteLine("The entities have been associated.");
 
-            //Disassociate the records.
+            // Disassociate the records.
             service.Disassociate(Contact.EntityLogicalName, entityStore["John Doe"].Id,
                 relationship, relatedEntities);
 
