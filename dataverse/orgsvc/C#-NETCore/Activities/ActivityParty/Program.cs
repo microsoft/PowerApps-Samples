@@ -245,12 +245,13 @@ namespace PowerPlatform_Dataverse_CodeSamples
             // Output a list of entities that could not be deleted.
             if (entityStore.Count > 0)
             {
-                Console.WriteLine("Cleanup(): the following entities could not be deleted:");
+                Console.WriteLine("Cleanup(): the following entities (tablle rows) could not be deleted:");
                 foreach (var item in entityStore)
                 {
                     Console.WriteLine($"Cleanup(): name={item.Key}, " +
                         $"logical name={item.Value.LogicalName}, ID={item.Value.Id}");
                 }
+                Console.WriteLine("Cleanup(): consider deleting these rows manually.");
             }
         }
     }
