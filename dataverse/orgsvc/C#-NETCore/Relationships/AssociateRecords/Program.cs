@@ -1,46 +1,14 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Identity.Client;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
 using MyApp.DataModel;
+
 
 namespace PowerPlatform_Dataverse_CodeSamples
 {
     internal class Program
     {
-        /// <summary>
-        /// Associate three accounts to a contact.
-        /// </summary>
-        /// <param name="service">Authenticated web service connection.</param>
-        /// <param name="entityStore">Keeps track of any entity records this program creates.</param>
-        static void AssociateRecords(IOrganizationService service,
-            Dictionary<string, EntityReference> entityStore)
-        {
-            // Create a collection of the entities that will be 
-            // associated to the contact.
-            var relatedEntities = new EntityReferenceCollection();
-            relatedEntities.Add(new EntityReference(Account.EntityLogicalName,
-                entityStore["account 1"].Id));
-            relatedEntities.Add(new EntityReference(Account.EntityLogicalName,
-                entityStore["account 2"].Id));
-            relatedEntities.Add(new EntityReference(Account.EntityLogicalName,
-                entityStore["account 3"].Id));
-
-            // Create an object that defines the relationship between the contact and account.
-            var relationship = new Relationship("account_primary_contact");
-
-            // Associate the contact with the 3 accounts.
-            service.Associate(Contact.EntityLogicalName, entityStore["John Doe"].Id,
-                relationship, relatedEntities);
-
-            Console.WriteLine("The entities have been associated.");
-
-            // Disassociate the records.
-            service.Disassociate(Contact.EntityLogicalName, entityStore["John Doe"].Id,
-                relationship, relatedEntities);
-
-            Console.WriteLine("The entities have been disassociated.");
-        }
-
         /// <summary>
         /// Contains the application's configuration settings. 
         /// </summary>
@@ -81,7 +49,7 @@ namespace PowerPlatform_Dataverse_CodeSamples
             Console.WriteLine("Press any key to undo environment data changes.");
             Console.ReadKey();
 
-            // In Dataverse, delete any created table rows and then dispose the service connection.
+            // In Dataverse, delete any created table rows and dispose the service connection.
             Cleanup(serviceClient, entityStore);
             serviceClient.Dispose();
         }
@@ -96,52 +64,79 @@ namespace PowerPlatform_Dataverse_CodeSamples
         {
             entityStore = new Dictionary<string, EntityReference>();
 
-            var setupContact = new Contact
+            var contact = new Contact
             {
                 FirstName = "John",
                 LastName = "Doe"
             };
-            entityStore.Add("John Doe",new EntityReference("contact",
-                service.Create(setupContact)));
-            Console.WriteLine("Created {0} {1}", setupContact.FirstName,
-                setupContact.LastName);
+            entityStore.Add("John Doe",
+                new EntityReference("contact", service.Create(contact)));
+            Console.WriteLine("Created contact '{0} {1}'", contact.FirstName,
+                contact.LastName);
 
-            // Instantiate an account entity record and set its property values.
-            var setupAccount1 = new Account
+            var account1 = new Account
             {
                 Name = "Example Account 1"
             };
-            entityStore.Add("account 1", new EntityReference("account",
-                service.Create(setupAccount1)));
-            Console.WriteLine("Created {0}", setupAccount1.Name);
+            entityStore.Add("account 1",
+                new EntityReference("account", service.Create(account1)));
+            Console.WriteLine("Created account '{0}'", account1.Name);
 
-            var setupAccount2 = new Account
+            var account2 = new Account
             {
                 Name = "Example Account 2"
             };
-            entityStore.Add("account 2", new EntityReference("account",
-                service.Create(setupAccount2)));
-            Console.WriteLine("Created {0}", setupAccount2.Name);
+            entityStore.Add("account 2",
+                new EntityReference("account", service.Create(account2)));
+            Console.WriteLine("Created account '{0}'", account2.Name);
 
-            var setupAccount3 = new Account
+            var account3 = new Account
             {
                 Name = "Example Account 3"
             };
-            entityStore.Add("account 3", new EntityReference("account",
-                service.Create(setupAccount3)));
-            Console.WriteLine("Created {0}", setupAccount3.Name);
+            entityStore.Add("account 3",
+                new EntityReference("account", service.Create(account3)));
+            Console.WriteLine("Created account '{0}'", account3.Name);
         }
 
         /// <summary>
-        /// The main logic of this program being demonstrated.
+        /// Associate three accounts to a contact.
         /// </summary>
         /// <param name="service">Authenticated web service connection.</param>
-        /// <param name="entityStore">Entity name and reference collection.</param>
+        /// <param name="entityStore">Contains references for three accounts and
+        /// one contact that were created in Setup().</param>
         /// <returns>True if successful; otherwise false.</returns>
         static public bool Run(IOrganizationService service,
             Dictionary<string, EntityReference> entityStore)
         {
-            AssociateRecords(service, entityStore);
+            // Define a delegate that associates and disassociates entities.
+            Action<IOrganizationService, EntityReference, string, EntityReferenceCollection>
+                AssociateAndDisassociate = (service, primaryEntity, relationship, relatedEntities) =>
+                {
+                    // Create a relationship between a contact and an account.
+                    var relation = new Relationship(relationship);
+
+                    // Associate the "John Doe" contact with the three accounts
+                    service.Associate(primaryEntity.LogicalName, primaryEntity.Id,
+                        relation, relatedEntities);
+
+                    Console.WriteLine($"The entities have been associated.");
+
+                    // Disassociate the "John Doe" contact with the three accounts.
+                    service.Disassociate(primaryEntity.LogicalName, primaryEntity.Id,
+                        relation, relatedEntities);
+
+                    Console.WriteLine($"The entities have been disassociated.");
+                };
+
+            // Create a collection of account entities that will be associated to the contact.
+            var relatedEntities = new EntityReferenceCollection();
+            relatedEntities.Add(entityStore["account 1"]);
+            relatedEntities.Add(entityStore["account 2"]);
+            relatedEntities.Add(entityStore["account 3"]);
+
+            // Invoke the delegate.
+            AssociateAndDisassociate(service, entityStore["John Doe"], "account_primary_contact", relatedEntities);
 
             return true;
         }
@@ -157,14 +152,15 @@ namespace PowerPlatform_Dataverse_CodeSamples
             // Do some checking of the passed parameter values.
             if (service == null || service.IsReady == false)
             {
-                Console.WriteLine("Cleanup(): web service connection is not available, cleanup aborted.");
+                Console.WriteLine(
+                    $"Cleanup(): web service connection not available, cleanup aborted.");
                 return;
             }
 
             if (entityStore == null)
             {
-                Console.WriteLine("Cleanup(): entref store collection is null, cleanup aborted.");
-                Console.WriteLine("Cleanup(): be sure to run Setup() prior to Cleanup().");
+                Console.WriteLine($"Cleanup(): entityStore is null, cleanup aborted.");
+                Console.WriteLine($"Cleanup(): run Setup() prior to Cleanup().");
                 return;
             }
 
@@ -182,7 +178,8 @@ namespace PowerPlatform_Dataverse_CodeSamples
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Cleanup(): exception deleting {key}\n\t{ex.Message}");
+                    Console.WriteLine(
+                        $"Cleanup(): exception deleting {key}\n\t{ex.Message}");
                     continue;
                 }
             }
@@ -190,7 +187,9 @@ namespace PowerPlatform_Dataverse_CodeSamples
             // Output a list of entities that could not be deleted.
             if (entityStore.Count > 0)
             {
-                Console.WriteLine("Cleanup(): the following entities could not be deleted:");
+                Console.WriteLine(
+                    $"Cleanup(): the following entities could not be deleted:");
+
                 foreach (var item in entityStore)
                 {
                     Console.WriteLine($"Cleanup(): name={item.Key}, " +
