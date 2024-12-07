@@ -69,7 +69,7 @@ namespace PowerPlatform_Dataverse_CodeSamples
                 FirstName = "John",
                 LastName = "Doe"
             };
-            entityStore.Add("John Doe",
+            entityStore.Add("John Doe", 
                 new EntityReference("contact", service.Create(contact)));
             Console.WriteLine("Created contact '{0} {1}'", contact.FirstName,
                 contact.LastName);
@@ -104,7 +104,7 @@ namespace PowerPlatform_Dataverse_CodeSamples
         /// </summary>
         /// <param name="service">Authenticated web service connection.</param>
         /// <param name="entityStore">Contains references for three accounts and
-        /// one contact that were created in Setup().</param>
+        /// one contact named "John Doe" that were created in Setup().</param>
         /// <returns>True if successful; otherwise false.</returns>
         static public bool Run(IOrganizationService service,
             Dictionary<string, EntityReference> entityStore)
@@ -113,16 +113,16 @@ namespace PowerPlatform_Dataverse_CodeSamples
             Action<IOrganizationService, EntityReference, string, EntityReferenceCollection>
                 AssociateAndDisassociate = (service, primaryEntity, relationship, relatedEntities) =>
                 {
-                    // Create a relationship between a contact and an account.
+                    // Create a relationship.
                     var relation = new Relationship(relationship);
 
-                    // Associate the "John Doe" contact with the three accounts
+                    // Associate the primary entity with the related entities.
                     service.Associate(primaryEntity.LogicalName, primaryEntity.Id,
                         relation, relatedEntities);
 
                     Console.WriteLine($"The entities have been associated.");
 
-                    // Disassociate the "John Doe" contact with the three accounts.
+                    // Disassociate the primary entity with the related entities.
                     service.Disassociate(primaryEntity.LogicalName, primaryEntity.Id,
                         relation, relatedEntities);
 
