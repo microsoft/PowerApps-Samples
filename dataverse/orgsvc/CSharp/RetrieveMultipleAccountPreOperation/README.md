@@ -4,18 +4,18 @@ This sample shows how to write a plug-in that modifies a query defined within th
 
 Data filtering in a plug-in is commonly done in the `PostOperation` stage. The [EntityCollection.Entities](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.entitycollection.entities) data can be examined and entities that should not be returned are removed from the collection. But this pattern introduces issues where the number of records returned within a page may not match the expected paging sizes.
 
-The approach described by this sample is different. Rather than filter entities after they have been retrieved, this plug-in will apply changes to the query in the `PreOperation` stage before it is executed. 
+The approach described by this sample is different. Rather than filter entities after they have been retrieved, this plug-in will apply changes to the query in the `PreOperation` stage before it is executed.
 
 A key point demonstrated by this sample is that the [RetrieveMultipleRequest.Query](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.retrievemultiplerequest.query) can be one of three different types that are derived from the [QueryBase Class](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.query.querybase). To accommodate queries of any type, the plug-in code
 must detect the type of query and implement the appropriate type of filter.
 
-You can download the sample from [here](https://github.com/Microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/C%23/RetrieveMultipleAccountPreOperation).
+You can download the sample from [here](https://github.com/Microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/CSharp/RetrieveMultipleAccountPreOperation).
 
 ## How to run this sample
 
 1. Download or clone the [Samples](https://github.com/Microsoft/PowerApps-Samples) repo so that you have a local copy. This sample is located under PowerApps-Samples-master\cds\orgsvc\C#\RetrieveMultipleAccountPreOperation.
 1. Open the sample solution in Visual Studio, navigate to the project's properties, and verify the assembly will be signed during the build. Press F6 to build the sample's assembly (RetrieveMultipleAccountPreOperation.dll).
-1. Run the Plug-in Registration tool and register the assembly in Microsoft Dataverse server's sandbox and database for the `PreOperation` stage of the `RetrieveMultiple` message for the `Account` table. 
+1. Run the Plug-in Registration tool and register the assembly in Microsoft Dataverse server's sandbox and database for the `PreOperation` stage of the `RetrieveMultiple` message for the `Account` table.
 1. Using an app or write code to retrieve accounts to trigger the plug-in. See [Code to test this sample](#code-to-test-this-sample) below for an example.
 1. When you are done testing, unregister the assembly and step.
 
@@ -162,7 +162,7 @@ private void RemoveAttributeConditions(FilterExpression filter, string attribute
 
 ### QueryByAttribute
 
-Because QueryByAttribute doesn't support complex filters, only write a message to the plug-in trace log. 
+Because QueryByAttribute doesn't support complex filters, only write a message to the plug-in trace log.
 
 If you don't want this type of query to be used at all, you could throw an InvalidPluginExecutionException to prevent the operation, but this would be better applied during the `PreValidation` stage.
 
@@ -177,7 +177,7 @@ if (queryByAttributeQuery != null)
 
 ## Code to test this sample
 
-The following code demonstrates 5 different ways to perform the same query that will trigger the plug-in. 
+The following code demonstrates 5 different ways to perform the same query that will trigger the plug-in.
 
 By specifying a specific criteria, in this case the `address1_city` colum value, which only one active record will match, these queries will return just that record.
 

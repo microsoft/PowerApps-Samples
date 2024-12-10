@@ -27,7 +27,7 @@ The code samples demonstrates how to work with a relationship between entities. 
 1. Associate and then disassociate the entities.
 1. Use [early-bound](https://learn.microsoft.com/power-apps/developer/data-platform/org-service/early-bound-programming#early-bound) entity types
 
-Additional general information can be found in [README-code-design](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/C%23-NETCore/README-code-design.md) file.
+Additional general information can be found in [README-code-design](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/CSharp-NETCore/README-code-design.md) file.
 
 ## How to build and run the code sample(s)
 

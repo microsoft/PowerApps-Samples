@@ -2,7 +2,7 @@
 
 This .NET 6.0 sample demonstrates how to perform operations using file data with `Annotation` (Note) table using the Dataverse SDK for .NET.
 
-This project one of two projects included in the `AttachmentAndAnnotationOperations` solution, which provides shared resources to run either sample. See [SDK for .NET Attachment and Annotation Operations sample README](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/orgsvc/C%23-NETCore/AttachmentAndAnnotationOperations/README.md) for an overview and how to run this sample.
+This project one of two projects included in the `AttachmentAndAnnotationOperations` solution, which provides shared resources to run either sample. See [SDK for .NET Attachment and Annotation Operations sample README](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/orgsvc/CSharp-NETCore/AttachmentAndAnnotationOperations/README.md) for an overview and how to run this sample.
 
 This sample uses the [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient Class](https://learn.microsoft.com/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient).
 
@@ -15,14 +15,14 @@ The `AnnotationOperations` project demonstrates:
 - Retrieving the note and saving the file.
 - Updating the note to refer to a different file.
 - Using the following Dataverse SDK for .NET classes to work with notes, especially for large files.
-   
-   - [InitializeAnnotationBlocksUploadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeannotationblocksuploadrequest) and [InitializeAnnotationBlocksUploadResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeannotationblocksuploadresponse) classes.
-   - [UploadBlockRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.uploadblockrequest) and [UploadBlockResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.uploadblockresponse) classes.
-   - [CommitAnnotationBlocksUploadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.commitannotationblocksuploadrequest) and [CommitAnnotationBlocksUploadResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.commitannotationblocksuploadresponse) classes.
-   - [InitializeAnnotationBlocksDownloadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeannotationblocksdownloadrequest) and [InitializeAnnotationBlocksDownloadResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeannotationblocksdownloadresponse) classes.
-   - [DownloadBlockRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.downloadblockrequest) and [DownloadBlockResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.downloadblockresponse) classes.
 
-The code for this sample is in the [Program.cs](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/orgsvc/C%23-NETCore/AttachmentAndAnnotationOperations/AnnotationOperations/Program.cs) file.
+  - [InitializeAnnotationBlocksUploadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeannotationblocksuploadrequest) and [InitializeAnnotationBlocksUploadResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeannotationblocksuploadresponse) classes.
+  - [UploadBlockRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.uploadblockrequest) and [UploadBlockResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.uploadblockresponse) classes.
+  - [CommitAnnotationBlocksUploadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.commitannotationblocksuploadrequest) and [CommitAnnotationBlocksUploadResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.commitannotationblocksuploadresponse) classes.
+  - [InitializeAnnotationBlocksDownloadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeannotationblocksdownloadrequest) and [InitializeAnnotationBlocksDownloadResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeannotationblocksdownloadresponse) classes.
+  - [DownloadBlockRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.downloadblockrequest) and [DownloadBlockResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.downloadblockresponse) classes.
+
+The code for this sample is in the [Program.cs](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/orgsvc/CSharp-NETCore/AttachmentAndAnnotationOperations/AnnotationOperations/Program.cs) file.
 
 ## What does this sample do?
 
@@ -46,20 +46,20 @@ The sample performs the following operations:
 1. Retrieve the note and save the file again.
 1. Use `Utility.SetMaxUploadFileSize` to increase the maximum file size for the environment to 131,072,000 Bytes (125 MB).
 1. Use the static `UploadNote` method to update the note using the large `25mb.pdf` file and upload it in chunks.
-   
+
    The static `UploadNote` method encapsulates the use of these Dataverse SDK classes:
-   
-   - [InitializeAnnotationBlocksUploadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeannotationblocksuploadrequest) 
+
+   - [InitializeAnnotationBlocksUploadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeannotationblocksuploadrequest)
    - [UploadBlockRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.uploadblockrequest)
    - [CommitAnnotationBlocksUploadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.commitannotationblocksuploadrequest)
-   
+
 1. Download the note file using the static `DownloadNote` method.
-   
+
    The static `DownloadNote` method encapsulates the use of these Dataverse SDK classes:
-   
+
    - [InitializeAnnotationBlocksDownloadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeannotationblocksdownloadrequest)
    - [DownloadBlockRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.downloadblockrequest)
-   
+
 1. Delete the account record. All the notes associated with it are deleted as well.
 
 ## Clean up

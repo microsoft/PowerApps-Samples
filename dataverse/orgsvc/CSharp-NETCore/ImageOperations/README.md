@@ -82,9 +82,9 @@ Sample completed.
 
 ## Demonstrates
 
-The code for this sample is in the [Program.cs](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/orgsvc/C%23-NETCore/ImageOperations/Program.cs) file.
+The code for this sample is in the [Program.cs](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/orgsvc/CSharp-NETCore/ImageOperations/Program.cs) file.
 
-The project uses a `Utility` class to perform operations involving creating or retrieving schema data. This class is in the [Utility.cs](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/orgsvc/C%23-NETCore/ImageOperations/Utility.cs) file.
+The project uses a `Utility` class to perform operations involving creating or retrieving schema data. This class is in the [Utility.cs](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/orgsvc/CSharp-NETCore/ImageOperations/Utility.cs) file.
 
 This project performs these operations:
 
@@ -99,7 +99,6 @@ This sample needs to create a new image column that is the primary image for the
    > This image column `CanStoreFullImage` value is false.
 
 1. Use the `Utility.SetTablePrimaryImageName` method to make `sample_ImageColumn` the primary image.
-
 
 ### Create account records with image data
 

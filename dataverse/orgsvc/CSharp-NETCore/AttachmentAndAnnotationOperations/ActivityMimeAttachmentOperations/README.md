@@ -2,7 +2,7 @@
 
 This .NET 6.0 sample demonstrates how to perform operations using file data with `ActivityMimeAttachment` (Attachment) table using the Dataverse SDK for .NET.
 
-This project one of two projects included in the `AttachmentAndAnnotationOperations` solution, which provides shared resources to run either sample. See [SDK for .NET Attachment and Annotation Operations sample README](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/orgsvc/C%23-NETCore/AttachmentAndAnnotationOperations/README.md) for an overview and how to run this sample.
+This project one of two projects included in the `AttachmentAndAnnotationOperations` solution, which provides shared resources to run either sample. See [SDK for .NET Attachment and Annotation Operations sample README](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/orgsvc/CSharp-NETCore/AttachmentAndAnnotationOperations/README.md) for an overview and how to run this sample.
 
 This sample uses the [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient Class](https://learn.microsoft.com/dotnet/api/microsoft.powerplatform.dataverse.client.serviceclient).
 
@@ -14,14 +14,14 @@ The `ActivityMimeAttachmentOperations` project demonstrates:
 - Adding attachments to an email template, then associating the attachment to an email. These attachments will not be deleted when the email is deleted.
 - Setting the value of the `activitymimeattachment.body` property directly with a Base64 encoded string value. This is appropriate for small files.
 - Using the following Dataverse SDK classes when working with `activitymimeattachment`, especially for large files.
-   
-   - [InitializeAttachmentBlocksUploadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeattachmentblocksuploadrequest) and [InitializeAttachmentBlocksUploadResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeattachmentblocksuploadresponse) classes.
-   - [UploadBlockRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.uploadblockrequest) and [UploadBlockResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.uploadblockresponse) classes.
-   - [CommitAttachmentBlocksUploadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.commitattachmentblocksuploadrequest) and [CommitAttachmentBlocksUploadResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.commitattachmentblocksuploadresponse) classes.
-   - [InitializeAttachmentBlocksDownloadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeattachmentblocksdownloadrequest) and [InitializeAttachmentBlocksDownloadResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeattachmentblocksdownloadresponse) classes.
-   - [DownloadBlockRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.downloadblockrequest) and [DownloadBlockResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.downloadblockresponse) classes.
 
-The code for this sample is in the [Program.cs](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/orgsvc/C%23-NETCore/AttachmentAndAnnotationOperations/ActivityMimeAttachmentOperations/Program.cs) file.
+  - [InitializeAttachmentBlocksUploadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeattachmentblocksuploadrequest) and [InitializeAttachmentBlocksUploadResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeattachmentblocksuploadresponse) classes.
+  - [UploadBlockRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.uploadblockrequest) and [UploadBlockResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.uploadblockresponse) classes.
+  - [CommitAttachmentBlocksUploadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.commitattachmentblocksuploadrequest) and [CommitAttachmentBlocksUploadResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.commitattachmentblocksuploadresponse) classes.
+  - [InitializeAttachmentBlocksDownloadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeattachmentblocksdownloadrequest) and [InitializeAttachmentBlocksDownloadResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeattachmentblocksdownloadresponse) classes.
+  - [DownloadBlockRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.downloadblockrequest) and [DownloadBlockResponse](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.downloadblockresponse) classes.
+
+The code for this sample is in the [Program.cs](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/orgsvc/CSharp-NETCore/AttachmentAndAnnotationOperations/ActivityMimeAttachmentOperations/Program.cs) file.
 
 ## What does this sample do?
 
@@ -43,21 +43,21 @@ The sample is separated into two regions: **Create single-use attachments** and 
 1. Using only the small files, create two attachments associated to the email, setting the `activitymimeattachment.body` directly.
 1. Use `Utility.SetMaxUploadFileSize` to increase the maximum file size for the environment to 131,072,000 Bytes (125 MB).
 1. Use the static `UploadAttachment` method to create the attachment and upload the large file in chunks.
-   
+
    The static `UploadAttachment` method encapsulates the use of these Dataverse SDK classes:
-   
+
    - [InitializeAttachmentBlocksUploadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeattachmentblocksuploadrequest)
-   - [UploadBlockRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.uploadblockrequest) 
-   - [CommitAttachmentBlocksUploadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.commitattachmentblocksuploadrequest) 
-   
+   - [UploadBlockRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.uploadblockrequest)
+   - [CommitAttachmentBlocksUploadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.commitattachmentblocksuploadrequest)
+
 1. Retrieve the `activitymimeattachmentid` and `filename` of the attachment records associated with the email using the `email_activity_mime_attachment` relationship.
 1. Use that data to download each attachment using the static `DownloadAttachment` method.
-   
+
    The static `DownloadAttachment` method encapsulates the use of these Dataverse SDK classes:
-   
+
    - [InitializeAttachmentBlocksDownloadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializeattachmentblocksdownloadrequest)
    - [DownloadBlockRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.downloadblockrequest)
-      
+
 1. Delete the email activity. All the attachments are deleted with the email.
 
 ### Create re-usable attachments

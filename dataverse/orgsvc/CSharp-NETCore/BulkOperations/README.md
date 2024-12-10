@@ -20,14 +20,14 @@ Examples using elastic tables use the `DeleteMultiple` message without an SDK cl
 
 You can use the *standard* or *elastic* tables to compare the different performance characteristics.
 
-This sample is a prerequisite for the [CreateMultiple and UpdateMultiple plug-ins Sample](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/C%23/xMultiplePluginSamples)
+This sample is a prerequisite for the [CreateMultiple and UpdateMultiple plug-ins Sample](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/CSharp/xMultiplePluginSamples)
 
 This sample is a Visual Studio .NET 6.0 solution that contains five different projects that perform the same operations in different ways so that you can compare the performance of each method.
 
 > **NOTE**:
 > The **UpsertMultiple** project is a little different. See the [UpsertMultiple/README.md](UpsertMultiple/README.md) for details.
 
-You can access the full sample in the [BulkOperations](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/C%23-NETCore/BulkOperations) folder.
+You can access the full sample in the [BulkOperations](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/CSharp-NETCore/BulkOperations) folder.
 
 ## Prerequisites
 

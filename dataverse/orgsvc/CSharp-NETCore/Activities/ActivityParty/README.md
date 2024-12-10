@@ -32,7 +32,7 @@ The code being demonstrated can be found in the `Program.Run()` method.
 The early-bound entity files in the *DataModel* project were generated using the following PAC CLI command:
 `pac modelbuilder build`. More information: [pac modelbuilder](https://learn.microsoft.com/en-us/power-platform/developer/cli/reference/modelbuilder)
 
-Additional general information can be found in [README-code-design](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/C%23-NETCore/README-code-design.md) file.
+Additional general information can be found in [README-code-design](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/CSharp-NETCore/README-code-design.md) file.
 
 ## How to build and run the code sample(s)
 

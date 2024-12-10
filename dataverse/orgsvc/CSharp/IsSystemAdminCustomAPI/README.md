@@ -1,8 +1,8 @@
 # Sample: IsSystemAdmin Custom API
 
-This sample shows how to write a plug-in that supports a Custom API named `sample_IsSystemAdmin`. You can download the sample from [here](https://github.com/Microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/C%23/IsSystemAdminCustomAPI).
+This sample shows how to write a plug-in that supports a Custom API named `sample_IsSystemAdmin`. You can download the sample from [here](https://github.com/Microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/CSharp/IsSystemAdminCustomAPI).
 
-This sample creates a plug-in for the main operation of the `sample_IsSystemAdmin` Custom API. This Custom API will detect whether a user has the System Administrator security role. 
+This sample creates a plug-in for the main operation of the `sample_IsSystemAdmin` Custom API. This Custom API will detect whether a user has the System Administrator security role.
 
 Detecting whether a user has the System Administrator security role may require two separate queries depending on whether the user has been assigned the security role directly or whether they have it because of team that they belong to. This Custom API encapsulates these queries into a single API call which will return a boolean value. This makes it easier to use by delegating the operation to the Dataverse server.
 
@@ -18,7 +18,7 @@ After you are finished testing, delete the managed solution to remove the Custom
 
 ### Create the Custom API
 
-You can create the Custom API yourself and set the plug-in assembly created by this code. 
+You can create the Custom API yourself and set the plug-in assembly created by this code.
 There are several ways to create Custom API, and they are documented here: [Create and use Custom APIs](https://learn.microsoft.com/powerapps/developer/data-platform/custom-api)
 
 This Custom API is defined with the following data:
@@ -63,7 +63,6 @@ For information about the values passed see these topics:
 - [CustomAPIRequestParameter Table Columns](https://learn.microsoft.com/powerapps/developer/data-platform/customapirequestparameter-table-columns)
 - [CustomAPIResponseProperty Table Columns](https://learn.microsoft.com/powerapps/developer/data-platform/customapiresponseproperty-table-columns)
 
-
 This Custom API is a function bound to the `systemuser` table. It has a single boolean response property `HasRole` which will return `true` when the user has the System Administrator security role.
 
 After you create the create the Custom API as defined above, build this .NET Class Library project to generate a plug-in assembly named `IsSystemAdminCustomAPI.dll`. This assembly will have a single plug-in type named `PowerApps.Samples.IsSystemAdmin`.
@@ -73,7 +72,6 @@ You must register the plug-in assembly created by using the Plug-in registration
 After the plug-in is registered, you will be able to set it as the plug-in type for the Custom API.
 
 The `sample_IsSystemAdmin` Custom API you create will be part of the unmanaged customizations in your environment. To remove it you must delete the Custom API and the Plugin Assembly.
-
 
 ## What this sample does
 
@@ -88,7 +86,7 @@ To use the `sample_IsSystemAdmin` Custom API, you can use either the Web API or 
 The Web API is easiest to try because you don't need to write any code. You can test it using your browser.
 
 1. Get the Web API Url from the Developer Resources page. See [View developer resources](https://learn.microsoft.com/powerapps/developer/data-platform/view-download-developer-resources). The value will look something like this: `https://yourorgname.api.crm.dynamics.com/api/data/v9.2`.
-1. Copy the Web API URL and paste it into a browser address bar. You may be prompted to authenticate if you have not previously run a model-driven application before. 
+1. Copy the Web API URL and paste it into a browser address bar. You may be prompted to authenticate if you have not previously run a model-driven application before.
 1. Edit the Web API URL to return information about system users. Append the following to the Web API Url: `/systemusers?$select=fullname`. Your you should be able to see JSON data in your browser.
 1. Select a one of the `systemuserid` values for a user and open a different browser tab.
 1. In this browser tab, compose the following URL using your Web API Url and the `systemuserid` value: <br />
@@ -102,6 +100,7 @@ The Web API is easiest to try because you don't need to write any code. You can 
   "HasRole": false
 }
 ```
+
 The `HasRole` value indicates if the user has the System Administrator security role.
 
 ### Using Organization Service
@@ -146,6 +145,7 @@ The `HasRole` value indicates if the user has the System Administrator security 
        Console.WriteLine($"{user["fullname"]} is{(isAdmin? string.Empty: " not")} an administrator");                    
    }
    ```
+
   This code will retrieve 10 users and loop through each one, testing whether they are a system administrator or not, writing the results to the console.
 
 ### Demonstrate
