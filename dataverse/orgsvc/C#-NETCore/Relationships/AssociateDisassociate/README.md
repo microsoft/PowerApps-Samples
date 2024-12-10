@@ -25,6 +25,7 @@ The code samples demonstrates how to work with a relationship between entities. 
 1. Connect to Dataverse using a [connection string](https://learn.microsoft.com/power-apps/developer/data-platform/xrm-tooling/use-connection-strings-xrm-tooling-connect) that defines required connection information
 1. Create a relationship between a contact and several accounts.
 1. Associate and then disassociate the entities.
+1. Use [early-bound](https://learn.microsoft.com/power-apps/developer/data-platform/org-service/early-bound-programming#early-bound) entity types
 
 Additional general information can be found in [README-code-design](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/C%23-NETCore/README-code-design.md) file.
 

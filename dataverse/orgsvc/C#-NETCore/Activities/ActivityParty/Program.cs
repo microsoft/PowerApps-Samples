@@ -41,11 +41,11 @@ namespace PowerPlatform_Dataverse_CodeSamples
             ServiceClient serviceClient =
                 new(app.Configuration.GetConnectionString("default"));
 
-            // Pre-create any table rows that Run() requires.
+            // Pre-create any table rows that CreateLetter() requires.
             app.Setup(serviceClient, out entityStore);
 
             // Execute the main logic of this program
-            app.Run(serviceClient, entityStore);
+            app.CreateLetter(serviceClient, entityStore);
 
             // Pause program execution before resource cleanup.
             Console.WriteLine("Press any key to undo environment data changes.");
@@ -57,12 +57,13 @@ namespace PowerPlatform_Dataverse_CodeSamples
         }
 
         /// <summary>
-        /// The main logic of this program being demonstrated.
+        /// Create a letter activity from a contact and addressed to two other contacts.
         /// </summary>
         /// <param name="service">Authenticated web service connection.</param>
-        /// <param name="entityStore">Entity name and reference collection.</param>
+        /// <param name="entityStore">Collection containing references for three contacts 
+        /// to be referred to by the letter.</param>
         /// <returns>True if successful; otherwise false.</returns>
-        public bool Run(IOrganizationService service, 
+        public bool CreateLetter(IOrganizationService service, 
             Dictionary<string, EntityReference> entityStore)
         {
             // Use the OrganizationServiceContext class and create a LINQ query.
@@ -122,7 +123,7 @@ namespace PowerPlatform_Dataverse_CodeSamples
                 else
                 {
                     Console.WriteLine(
-                        "Run(): an error ocurred creating the letter activity: \n\t" + 
+                        "CreateLetter(): an error ocurred creating the letter activity: \n\t" + 
                         results[0].Error.Message);
                     return false;
                 }
@@ -130,13 +131,13 @@ namespace PowerPlatform_Dataverse_CodeSamples
             catch (Exception ex)
             {
                 Console.WriteLine(
-                    "Run(): an exception ocurred creating the Letter Activity: \n\t"+ex.Message);
+                    "CreateLetter(): an exception ocurred creating the Letter Activity: \n\t"+ex.Message);
                 return false;
             }
         }
 
         /// <summary>
-        /// Initializes any pre-existing data and resources required by the Run() method.
+        /// Create three contacts.
         /// </summary>
         /// <param name="service">Authenticated web service connection.</param>
         /// <param name="entityStore">Entity name and reference collection.</param>
