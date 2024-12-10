@@ -2,7 +2,7 @@
 
 This .NET 6.0 sample demonstrates how to perform operations using file data with `ActivityMimeAttachment` (Attachment) and `Annotation` (Note) tables using the Dataverse Web API.
 
-This sample uses the common helper code in the [WebAPIService](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/C%23-NETx/WebAPIService) class library project.
+This sample uses the common helper code in the [WebAPIService](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/CSharp-NETx/WebAPIService) class library project.
 
 ## Prerequisites
 
@@ -41,8 +41,8 @@ This sample uses the common helper code in the [WebAPIService](https://github.co
 
 This sample is a solution  with two projects. See the respective README files for details on each project.
 
-- [Web API Attachment (ActivityMimeAttachment) Operations sample README](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/AttachmentAndAnnotationOperations/ActivityMimeAttachmentOperations/README.md)
-- [Web API Annotation (Note) Operations sample README](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/AttachmentAndAnnotationOperations/AnnotationOperations/README.md)
+- [Web API Attachment (ActivityMimeAttachment) Operations sample README](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/CSharp-NETx/AttachmentAndAnnotationOperations/ActivityMimeAttachmentOperations/README.md)
+- [Web API Annotation (Note) Operations sample README](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/CSharp-NETx/AttachmentAndAnnotationOperations/AnnotationOperations/README.md)
 
 ## Utility class
 

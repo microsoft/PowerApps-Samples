@@ -2,9 +2,9 @@
 
 This .NET 6.0 sample demonstrates how to perform operations using file data with `ActivityMimeAttachment` (Attachment) table using the Dataverse Web API.
 
-This project one of two projects included in the `AttachmentAndAnnotationOperations` solution, which provides shared resources to run either sample. See [Web API Attachment and Annotation Operations sample README](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/AttachmentAndAnnotationOperations/README.md) for an overview and how to run this sample.
+This project one of two projects included in the `AttachmentAndAnnotationOperations` solution, which provides shared resources to run either sample. See [Web API Attachment and Annotation Operations sample README](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/CSharp-NETx/AttachmentAndAnnotationOperations/README.md) for an overview and how to run this sample.
 
-**Note**: This sample uses the common helper code in the [WebAPIService](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/C%23-NETx/WebAPIService) class library project.
+**Note**: This sample uses the common helper code in the [WebAPIService](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/CSharp-NETx/WebAPIService) class library project.
 
 ## Demonstrates
 
@@ -24,9 +24,9 @@ The `ActivityMimeAttachmentOperations` project demonstrates:
 - Downloading the `activitymimeattachment.body` value and saving the file.
 
 
-This sample uses classes defined for these actions within the [WebAPIService project Messages folder](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages) so that they can be re-used. These classes inherit from the .NET [HttpRequestMessage](https://learn.microsoft.com/dotnet/api/system.net.http.httprequestmessage?view=net-6.0) and [HttpResponseMessage](https://learn.microsoft.com/dotnet/api/system.net.http.httpresponsemessage?view=net-6.0) classes. These classes have constructors that accept the relevant variables to compose the requests to send, or to deserialize the responses into standard properties.
+This sample uses classes defined for these actions within the [WebAPIService project Messages folder](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/CSharp-NETx/WebAPIService/Messages) so that they can be re-used. These classes inherit from the .NET [HttpRequestMessage](https://learn.microsoft.com/dotnet/api/system.net.http.httprequestmessage?view=net-6.0) and [HttpResponseMessage](https://learn.microsoft.com/dotnet/api/system.net.http.httpresponsemessage?view=net-6.0) classes. These classes have constructors that accept the relevant variables to compose the requests to send, or to deserialize the responses into standard properties.
 
-The code for this sample is in the [Program.cs](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/AttachmentAndAnnotationOperations/ActivityMimeAttachmentOperations/Program.cs) file.
+The code for this sample is in the [Program.cs](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/CSharp-NETx/AttachmentAndAnnotationOperations/ActivityMimeAttachmentOperations/Program.cs) file.
 
 ## What does this sample do?
 
@@ -65,7 +65,7 @@ The sample is separated into two regions: **Create single-use attachments** and 
    
 1. Download the large `25mb.pdf` file individually using `GET /activitymimeattachments(<activitymimeattachmentid>)/body/$value`. This returns a Base64 encoded string value that can be converted into `byte[]` and saved. 
    
-   This is done using the [WebAPIService/Messages/DownloadAttachmentFileRequest](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/DownloadAttachmentFileRequest.cs) and [WebAPIService/Messages/DownloadAttachmentFileResponse](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/DownloadAttachmentFileResponse.cs) classes.
+   This is done using the [WebAPIService/Messages/DownloadAttachmentFileRequest](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/CSharp-NETx/WebAPIService/Messages/DownloadAttachmentFileRequest.cs) and [WebAPIService/Messages/DownloadAttachmentFileResponse](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/CSharp-NETx/WebAPIService/Messages/DownloadAttachmentFileResponse.cs) classes.
    
 1. Delete the email activity. All the attachments are deleted with the email.
 

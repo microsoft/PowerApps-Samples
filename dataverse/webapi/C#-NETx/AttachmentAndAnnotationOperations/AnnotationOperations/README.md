@@ -2,9 +2,9 @@
 
 This .NET 6.0 sample demonstrates how to perform operations using file data with `Annotation` (Note) table using the Dataverse Web API.
 
-This project one of two projects included in the `AttachmentAndAnnotationOperations` solution, which provides shared resources to run either sample. See [Web API Attachment and Annotation Operations sample README](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/AttachmentAndAnnotationOperations/README.md) for an overview and how to run this sample.
+This project one of two projects included in the `AttachmentAndAnnotationOperations` solution, which provides shared resources to run either sample. See [Web API Attachment and Annotation Operations sample README](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/CSharp-NETx/AttachmentAndAnnotationOperations/README.md) for an overview and how to run this sample.
 
-**Note**: This sample uses the common helper code in the [WebAPIService](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/C%23-NETx/WebAPIService) class library project.
+**Note**: This sample uses the common helper code in the [WebAPIService](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/CSharp-NETx/WebAPIService) class library project.
 
 ## Demonstrates
 
@@ -25,9 +25,9 @@ The `AnnotationOperations` project demonstrates:
 - Downloading the `annotation.documentbody` value and saving the file.
 
 
-This sample uses classes defined for these actions within the [WebAPIService project Messages folder](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages) so that they can be re-used. These classes inherit from the .NET [HttpRequestMessage](https://learn.microsoft.com/dotnet/api/system.net.http.httprequestmessage?view=net-6.0) and [HttpResponseMessage](https://learn.microsoft.com/dotnet/api/system.net.http.httpresponsemessage?view=net-6.0) classes. These classes have constructors that accept the relevant variables to compose the requests to send, or to deserialize the responses into standard properties.
+This sample uses classes defined for these actions within the [WebAPIService project Messages folder](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/CSharp-NETx/WebAPIService/Messages) so that they can be re-used. These classes inherit from the .NET [HttpRequestMessage](https://learn.microsoft.com/dotnet/api/system.net.http.httprequestmessage?view=net-6.0) and [HttpResponseMessage](https://learn.microsoft.com/dotnet/api/system.net.http.httpresponsemessage?view=net-6.0) classes. These classes have constructors that accept the relevant variables to compose the requests to send, or to deserialize the responses into standard properties.
 
-The code for this sample is in the [Program.cs](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C%23-NETx/AttachmentAndAnnotationOperations/AnnotationOperations/Program.cs) file.
+The code for this sample is in the [Program.cs](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/CSharp-NETx/AttachmentAndAnnotationOperations/AnnotationOperations/Program.cs) file.
 
 ## What does this sample do?
 
@@ -67,7 +67,7 @@ The sample performs the following operations:
    
 1. Download the large `25mb.pdf` file individually using `GET /annotations(<annotationid>)/documentbody/$value`. This returns a Base64 encoded string value that can be converted into `byte[]` and saved.
    
-   This is done using the [WebAPIService/Messages/DownloadAnnotationFileRequest](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/DownloadAnnotationFileRequest.cs) and [WebAPIService/Messages/DownloadAnnotationFileResponse](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/C%23-NETx/WebAPIService/Messages/DownloadAnnotationFileResponse.cs) classes.
+   This is done using the [WebAPIService/Messages/DownloadAnnotationFileRequest](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/CSharp-NETx/WebAPIService/Messages/DownloadAnnotationFileRequest.cs) and [WebAPIService/Messages/DownloadAnnotationFileResponse](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/CSharp-NETx/WebAPIService/Messages/DownloadAnnotationFileResponse.cs) classes.
    
 1. Delete the account record. All the notes associated with it are deleted as well.
 

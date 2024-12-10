@@ -4,10 +4,10 @@ This folder previously contained Web API samples written using .NET Framework ve
 
 New samples using .NET 6 and MSAL are available here:
 
- - [Basic Operations](../C%23-NETx/BasicOperations/)
- - [Conditional Operations](../C%23-NETx/ConditionalOperations/)
- - [Functions and Actions](../C%23-NETx/FunctionsAndActions/)
- - [Metadata Operations](../C%23-NETx/MetadataOperations/)
- - [Parallel Operations](../C%23-NETx/ParallelOperations/)
- - [Query Data](../C%23-NETx/QueryData/)
- - [TPL DataFlow Parallel Operations](../C%23-NETx/TPLDataFlowParallelOperations/)
+ - [Basic Operations](../CSharp-NETx/BasicOperations/)
+ - [Conditional Operations](../CSharp-NETx/ConditionalOperations/)
+ - [Functions and Actions](../CSharp-NETx/FunctionsAndActions/)
+ - [Metadata Operations](../CSharp-NETx/MetadataOperations/)
+ - [Parallel Operations](../CSharp-NETx/ParallelOperations/)
+ - [Query Data](../CSharp-NETx/QueryData/)
+ - [TPL DataFlow Parallel Operations](../CSharp-NETx/TPLDataFlowParallelOperations/)

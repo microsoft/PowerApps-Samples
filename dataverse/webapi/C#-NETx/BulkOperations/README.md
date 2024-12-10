@@ -17,14 +17,14 @@ actions. These messages are optimized to provide the most performant way to crea
 
 This sample provides the option to use *standard* or *elastic* tables so you can compare the different performance characteristics.
 
-This sample or the [SDK version](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/orgsvc/C%23-NETCore/BulkOperations/README.md) are prerequisites for the 
-[CreateMultiple and UpdateMultiple plug-ins Sample](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/C%23/xMultiplePluginSamples)
+This sample or the [SDK version](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/orgsvc/CSharp-NETCore/BulkOperations/README.md) are prerequisites for the 
+[CreateMultiple and UpdateMultiple plug-ins Sample](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/CSharp/xMultiplePluginSamples)
 
 This sample is a Visual Studio .NET 6.0 solution that contains 2 projects (**CreateUpdateMultiple** and **ParallelCreateUpdateMultiple**) that perform the same operations in different ways so that you can compare the performance of each method.
 
 The third **UpsertMultiple** project demonstrates bulk upsert of records and can use either standard or elastic tables.
 
-You can find the sample [here](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/C%23-NETx/BulkOperations).
+You can find the sample [here](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/CSharp-NETx/BulkOperations).
 
 ## Prerequisites
 
