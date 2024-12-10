@@ -11,8 +11,8 @@ using Microsoft.Xrm.Sdk;
 class Program
 {
     // TODO Enter your Dataverse environment's URL and logon info.
-    static string url = "https://yourorg.crm.dynamics.com";
-    static string userName = "you@yourorg.onmicrosoft.com";
+    static string url = "https://myorg.crm.dynamics.com";
+    static string userName = "someone@myorg.onmicrosoft.com";
     static string password = "password";
 
     // This service connection string uses the info provided above.

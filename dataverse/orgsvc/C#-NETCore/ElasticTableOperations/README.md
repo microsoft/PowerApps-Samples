@@ -8,7 +8,7 @@ page_type: sample
 description: "This sample demonstrates how to perform common data operations on elastic tables and query JSON columns using the Dataverse SDK for .NET."
 ---
 
-# SDK for .NET Elastic Table Operations Sample
+# SDK for .NET Elastic Table Operations sample
 
 This .NET 6.0 sample demonstrates how to perform operations with elastic tables and query JSON columns using the Dataverse SDK for .NET.
 
@@ -17,19 +17,19 @@ This sample uses the [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient Cla
 ## Prerequisites
 
 - Microsoft Visual Studio 2022
-- Access to Dataverse with system administrator or system customizer privileges.
+- Access to Dataverse with system administrator or system customizer privileges
 
 ## How to run the sample
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
 1. Open the `PowerApps-Samples\dataverse\orgsvc\C#-NETCore\ElasticTableOperations\ElasticTableOperations.sln` file using Visual Studio 2022.
-1. Edit the `appsettings.json` file. Set the connection string `Url` and `Username` parameters as appropriate for your test environment.
+1. Edit the `appsettings.json` file. Set the connection string `Url` and `Username` parameters for your test environment.
 
-   The environment Url can be found in the Power Platform admin center. It has the form https://\<environment-name>.crm.dynamics.com.
+   The environment URL can be found in the Power Platform admin center and has the form `https://<environment-name>.crm.dynamics.com`.
 
-1. Build the solution, and then run the desired project.
+1. Build the solution and run the project.
 
-When the sample runs, you will be prompted in the default browser to select an environment user account and enter a password. To avoid having to do this every time you run a sample, insert a password parameter into the connection string in the appsettings.json file. For example:
+When the sample runs, you are prompted in the default browser to select an environment user account and enter a password. To avoid repeated authentication every time you run a sample, insert a `Url` and `Password` parameter into the connection string in the `appsettings.json` file. For example:
 
 ```json
 {
@@ -39,13 +39,14 @@ When the sample runs, you will be prompted in the default browser to select an e
 }
 ```
 
->**Tip**: You can set a user environment variable named `DATAVERSE_APPSETTINGS` to the file path of the appsettings.json file stored anywhere on your computer. The samples will use that appsettings file if the environment variable exists and is not null. Be sure to log out and back in again after you define the variable for it to take affect. To set an environment variable, go to **Settings > System > About**, select **Advanced system settings**, and then choose **Environment variables**.
+> [!TIP]
+> You can set a user environment variable named `DATAVERSE_APPSETTINGS` to the file path of the `appsettings.json` file stored anywhere on your computer. The samples uses that file if the environment variable exists and isn't null. Log out and back in again after you define the variable for it to take affect. You can manually set an environment variable by typing `env` in your system search bar, then choose **Environment variables** in **System properties** window.
 
 ## Sample Output
 
-The output of the sample should look something like this:
+The output of the sample should look similar to:
 
-```
+```cmd
 Starting Elastic table operations sample.
 
 === Start Region 0: Creating contoso_SensorData table ===
@@ -135,7 +136,7 @@ Returned total of 951 results using ExecuteCosmosSqlQuery
 
 === Start Region 5: DeleteMultiple Example ===
 
-Deleteing 1000 records using DeleteMultiple
+Deleting 1000 records using DeleteMultiple
 In batches of 100
 Deleted 1000 records.
 
@@ -154,12 +155,12 @@ The code for this sample is in the `Program.cs` file.
 
 This project depends on data in the following classes:
 
-|Class|Description|
-|---|---|
-|`Utility.cs`|Contains the `CreateSensorDataEntity` and `DeleteSensorDataEntity` static methods to create the elastic table used by this sample. |
-|`Settings.cs`|Contains `NumberOfRecords` and `BatchSize` values you can change. Default values are: `NumberOfRecords` = 1000, `BatchSize` = 100.|
-|`EnergyConsumption.cs`|Describes the data stored as JSON in the `contoso_EnergyConsumption` column.|
-|`ExecuteCosmosSqlQueryResponse.cs`|A class that inherits from [Entity](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.entity) that provides access to the properties of the return value of the `ExecuteCosmosSqlQuery` message. More information: [Custom closed types](https://learn.microsoft.com/power-apps/developer/data-platform/use-open-types?tabs=sdk#custom-closed-types)|
+| Class | Description |
+|-------|-------------|
+| `Utility.cs` | Contains the `CreateSensorDataEntity` and `DeleteSensorDataEntity` static methods to create the elastic table used by this sample. |
+| `Settings.cs` | Contains `NumberOfRecords` and `BatchSize` values you can change. Default values are: `NumberOfRecords` = 1000, `BatchSize` = 100. |
+| `EnergyConsumption.cs` | Describes the data stored as JSON in the `contoso_EnergyConsumption` column. |
+| `ExecuteCosmosSqlQueryResponse.cs` | A class that inherits from [Entity](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.entity) that provides access to the properties of the return value of the `ExecuteCosmosSqlQuery` message. Learn more in [Custom closed types](https://learn.microsoft.com/power-apps/developer/data-platform/use-open-types?tabs=sdk#custom-closed-types). |
 
 The sample has the following sections:
 
@@ -175,81 +176,81 @@ The sample has the following sections:
 
 Uses `Utility.CreateSensorDataEntity` function to create an elastic table named `contoso_SensorData` with the following columns:
 
-|SchemaName|Type|Description|
-|---|---|---|
-|`contoso_SensorType`|String|The primary name field for the `contoso_SensorData` elastic table.|
-|`contoso_DeviceId`|String|Stores a valued for a device. This value is used as the `partitionid`.|
-|`contoso_Value`|Integer|Stores a sensor reading value.|
-|`contoso_TimeStamp`|DateTime|Stores a timestamp value for the sensor reading.|
-|`contoso_EnergyConsumption`|String|This column uses JSON format. It stores JSON data related to energy consumption.|
+| SchemaName | Type | Description |
+|------------|------|-------------|
+| `contoso_SensorType` | String | The primary name field for the elastic table is `contoso_SensorData` . |
+| `contoso_DeviceId` | String | Stores a valued for a device. This value is used as the `partitionid`. |
+| `contoso_Value` | Integer | Stores a sensor reading value. |
+| `contoso_TimeStamp` | DateTime | Stores a timestamp value for the sensor reading. |
+| `contoso_EnergyConsumption` | String | This column uses JSON format and stores JSON data related to energy consumption. |
 
 ### Region 1: Create, Retrieve, Update, Upsert, and Delete examples without partitionid
 
-If you do not choose to apply a partitioning strategy for your elastic table, you can perform operations much like you do for standard tables. There are two significant differences: [Managing the session token](#managing-the-session-token) and [Upsert replace behavior](#upsert-replace-behavior).
+If you don't partition your elastic table, you can perform operations similar to standard tables. There are two significant differences: [Managing the session token](#managing-the-session-token) and [Upsert replace behavior](#upsert-replace-behavior).
 
 #### Managing the session token
 
-To have strong consistency on retrieve operations you need to send the current session token. Each write operation returns the `x-ms-session-token`, so this value is refreshed on each request so it can be sent with any requests to retrieve data. More information: [Work with session token](https://learn.microsoft.com/power-apps/developer/data-platform/use-elastic-tables?tabs=sdk#work-with-session-token)
+To have strong consistency on retrieve operations you need to send the current session token. Each write operation returns the `x-ms-session-token` and is refreshed on each request, so it can be sent with any requests to retrieve data. Learn more in [Work with session token](https://learn.microsoft.com/power-apps/developer/data-platform/use-elastic-tables?tabs=sdk#work-with-session-token).
 
-**Note**: Because of the need to capture and send this session token value, you can only use the [IOrganizationService.Execute method](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.execute) to send requests. You cannot use the other [IOrganizationService methods](https://learn.microsoft.com/power-apps/developer/data-platform/org-service/use-messages?tabs=sdk#iorganizationservice-methods) because they don't currently enable managing the session token values.
+> [!NOTE]
+> Since you must send this session a token value, you can only use the [IOrganizationService.Execute method](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.execute) to send requests. You can't use the other [IOrganizationService methods](https://learn.microsoft.com/power-apps/developer/data-platform/org-service/use-messages?tabs=sdk#iorganizationservice-methods) because they don't currently enable managing the session token values.
 
 #### Upsert replace behavior
 
-When performing an upsert operation on an elastic table, you must include all properties for a record that may be updated. If a matching record is found, all the data for that record will be replace by the data you are sending with your Upsert. More information: [Upsert a record in an elastic table](https://learn.microsoft.com/power-apps/developer/data-platform/use-elastic-tables?tabs=sdk#upsert-a-record-in-an-elastic-table)
-
+When performing an upsert operation on an elastic table, you must include all properties for a record that might be updated. If a matching record is found, all the data for that record is replaced by the data you're sending with your Upsert. Learn more in [Upsert a record in an elastic table](https://learn.microsoft.com/power-apps/developer/data-platform/use-elastic-tables?tabs=sdk#upsert-a-record-in-an-elastic-table).
 
 ### Region 2: Create, Retrieve, Update, Upsert, and Delete examples with partitionid
 
-If you choose to apply a partitioning strategy on the elastic table you must always use the `partitionid` value together with the primary key to uniquely identify any record. In these examples using the `contoso_SensorData` table, the `contoso_DeviceId` value is being used for the `partitionid`. More information: [Partitioning and horizontal scaling](https://learn.microsoft.com/power-apps/developer/data-platform/elastic-tables#partitioning-and-horizontal-scaling)
+If you partition the elastic table you must always use the `partitionid` value together with the primary key to uniquely identify any record. In these examples using the `contoso_SensorData` table, the `contoso_DeviceId` value is being used for the `partitionid`. Learn more in [Partitioning and horizontal scaling](https://learn.microsoft.com/power-apps/developer/data-platform/elastic-tables#partitioning-and-horizontal-scaling).
 
-To include this `partitionid`, you have three options:
+To include `partitionid`, you have three options:
 
-1. **Use the alternate key style** with the values for the `KeyForNoSqlEntityWithPKPartitionId` alternate key created for all elastic tables. More information: [Using Alternate Key](https://learn.microsoft.com/power-apps/developer/data-platform/use-elastic-tables?tabs=sdk#using-alternate-key)
-1. **Use the `partitionId` parameter**. This [optional parameter](https://learn.microsoft.com/power-apps/developer/data-platform/optional-parameters?tabs=sdk) can be used with classes that are derived from [OrganizationRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.organizationrequest).  More information: [Using partitionId parameter](https://learn.microsoft.com/power-apps/developer/data-platform/use-elastic-tables?tabs=sdk#using-partitionid-parameter)
-1. **Using `partitionid` column directly**. When you create a record, you must explicitly set the value of the `partitionid` column. For Update and Upsert operations you can't currently use the `partitionId` parameter, so you must either use the alternate key style, or you can set the value of the `partitionid` column. More information [Using partitionid column directly](https://learn.microsoft.com/power-apps/developer/data-platform/use-elastic-tables?tabs=sdk#using-partitionid-column-directly)
+1. **Use the alternate key style**. This key style with the values for the `KeyForNoSqlEntityWithPKPartitionId` alternate key created for all elastic tables. Learn more in [Using Alternate Key](https://learn.microsoft.com/power-apps/developer/data-platform/use-elastic-tables?tabs=sdk#using-alternate-key).
+1. **Use the `partitionId` parameter**. This [optional parameter](https://learn.microsoft.com/power-apps/developer/data-platform/optional-parameters?tabs=sdk) can be used with classes that are derived from [OrganizationRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.organizationrequest). Learn more in [Using partitionId parameter](https://learn.microsoft.com/power-apps/developer/data-platform/use-elastic-tables?tabs=sdk#using-partitionid-parameter).
+1. **Using `partitionid` column directly**. When you create a record, you must explicitly set the value of the `partitionid` column. For update and upsert operations you can't use the `partitionId` parameter, so you must either use the alternate key style, or you can set the value of the `partitionid` column. Learn more in [Using partitionid column directly](https://learn.microsoft.com/power-apps/developer/data-platform/use-elastic-tables?tabs=sdk#using-partitionid-column-directly).
 
-**Note**: The examples in this section use static methods such as `CreateRecord`, `UpdateRecord`, and `UpdateRecordWithAlternateKey` to make the different patterns of working with `partitionid` clear for each operation.
+> [!NOTE]
+> The examples in this section use static methods such as `CreateRecord`, `UpdateRecord`, and `UpdateRecordWithAlternateKey` to make the different patterns of working with `partitionid` clear for each operation.
 
-### Region 3: CreateMultiple and UpdateMultiple Examples
+### Region 3: CreateMultiple and UpdateMultiple examples
 
 This section demonstrates the use of the SDK [CreateMultipleRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.createmultiplerequest) and [UpdateMultipleRequest](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.messages.updatemultiplerequest) classes.
 
-With elastic tables, we recommend sending requests in batches of 100. This is different from the recommended practice for standard tables described in [Use CreateMultiple and UpdateMultiple (preview)](https://learn.microsoft.com/power-apps/developer/data-platform/org-service/use-createmultiple-updatemultiple?tabs=sdk).
+With elastic tables, we recommend sending requests in batches of 100. This number is different from the recommended practice for standard tables described in [Use CreateMultiple and UpdateMultiple (preview)](https://learn.microsoft.com/power-apps/developer/data-platform/org-service/use-createmultiple-updatemultiple?tabs=sdk).
 
-**Note**: You can change the values in the `Settings.cs` file to adjust the number of records created and the batch size.
+> [!NOTE]
+> You can change the values in the `Settings.cs` file to adjust the number of records created and the batch size.
 
-### Region 4: ExecuteCosmosSqlQuery Example
+### Region 4: ExecuteCosmosSqlQuery example
 
-This section demonstrates composing a CosmosDB SQL query and sending it using the `ExecuteCosmosSqlQuery` message. There is currently no `ExecuteCosmosSqlQueryRequest` class in the SDK, so this example shows using the [OrganizationRequest Class](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.organizationrequest).
+This section demonstrates composing a CosmosDB SQL query and sending it using the `ExecuteCosmosSqlQuery` message. There is currently no `ExecuteCosmosSqlQueryRequest` class in the SDK, so this example uses the [OrganizationRequest Class](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.organizationrequest).
 
 The `ExecuteCosmosSqlQuery` message has the following parameters:
 
-|Name|Type|Description|
-|---------|---------|---------|
-|`QueryText`|string|(Required) Cosmos sql query.|
-|`EntityLogicalName`|string|(Required) The logical name of the table.|
-|`QueryParameters`|[ParameterCollection](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.parametercollection)|(Optional) Values for any parameters that are specified in the QueryText parameter.|
-|`PageSize`|Long|(Optional) Number of records returned in a single page.|
-|`PagingCookie`|string|(Optional) Paging cookie to be used.|
-|`PartitionId`|string|(Optional) Partitionid to set the scope of the query.|
+| Name | Type | Description |
+|------|------|-------------|
+| `QueryText` | string | (Required) Cosmos SQL query |
+| `EntityLogicalName` | string | (Required) The logical name of the table |
+| `QueryParameters` | [ParameterCollection](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.parametercollection) | (Optional) Values for any parameters specified in the QueryText parameter |
+| `PageSize` | Long | (Optional) Number of records returned in a single page |
+| `PagingCookie` | string | (Optional) Paging cookie to be used |
+| `PartitionId` | string | (Optional) Partitionid to set the scope of the query |
 
-The `ExecuteCosmosSqlQuery` message returns an [Entity](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.entity) that is an open type. To access the values returned, this sample uses a `ExecuteCosmosSqlQueryResponse` class that inherits from `Entity`. More information: [Custom closed types](https://learn.microsoft.com/power-apps/developer/data-platform/use-open-types?tabs=sdk#custom-closed-types)
+The `ExecuteCosmosSqlQuery` message returns an [Entity](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.entity) that's an open type. To access the values returned, this sample uses a `ExecuteCosmosSqlQueryResponse` class that inherits from `Entity`. More information: [Custom closed types](https://learn.microsoft.com/power-apps/developer/data-platform/use-open-types?tabs=sdk#custom-closed-types)
 
-The `ExecuteCosmosSqlQueryResponse` class includes the values that are returned:
+Return values for the `ExecuteCosmosSqlQueryResponse` class:
 
-|Name|Type|Description|
-|---------|---------|---------|
-|`PagingCookie`|string| A value to set for subsequent requests when there are more results.|
-|`HasMore`|bool|Whether there are more records in the results.|
-|`Result`|string|JSON with values with the results.|
+| Name | Type | Description |
+|------|------|-------------|
+| `PagingCookie` | string | A value to set for subsequent requests when there are more results |
+| `HasMore` | bool | Whether there are more records in the results |
+| `Result` | string | JSON values with the results |
 
 This example specifies the query and demonstrates how to manage retrieving paged results using the `HasMore` and `PagingCookie` values returned.
 
-### Region 5: DeleteMultiple Example
+### Region 5: DeleteMultiple example
 
-This section demonstrates using the `DeleteMultiple` message with the [OrganizationRequest Class](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.organizationrequest). The SDK doesn't currently have `DeleteMultipleRequest` class.
-
-As was done with `CreateMultiple` and `UpdateMultiple`, the records are deleted in batches of 100.
+This section demonstrates using the `DeleteMultiple` message with the [OrganizationRequest Class](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.organizationrequest). The SDK doesn't currently have a `DeleteMultipleRequest` class. The records are deleted in batches of 100.
 
 ### Region 6: Delete contoso_SensorData table
 
@@ -257,4 +258,4 @@ The `Utility.DeleteSensorDataEntity` deletes the `contoso_SensorData` table usin
 
 ### Clean up
 
-There is no data to clean up because the `contoso_SensorData` table is deleted.
+There's no data to clean up, because the `contoso_SensorData` table is deleted.

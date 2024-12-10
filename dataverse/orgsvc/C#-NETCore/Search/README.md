@@ -1,10 +1,13 @@
 ﻿---
 languages:
 - csharp
+
 products:
 - power-platform
 - power-apps
+
 page_type: sample
+
 description: "This sample demonstrates how to perform search operations using the Dataverse SDK for .NET."
 ---
 # SDK for .NET search operations sample
@@ -13,58 +16,64 @@ This .NET 6.0 sample demonstrates how to perform search operations using the Dat
 
 This sample uses:
 
-- Classes generated using the [pac modelbuilder build command](https://learn.microsoft.com/power-platform/developer/cli/reference/modelbuilder#pac-modelbuilder-build). [Learn more about using this command](https://learn.microsoft.com/power-apps/developer/data-platform/org-service/generate-early-bound-classes).
+- Classes generated using the [pac modelbuilder build](https://learn.microsoft.com/power-platform/developer/cli/reference/modelbuilder#pac-modelbuilder-build) command. Learn more about using this command in [Generate early-bound classes for the SDK for .NET](https://learn.microsoft.com/power-apps/developer/data-platform/org-service/generate-early-bound-classes).
 
    These classes are in the `model/Messages` folder.
 
-- Helper classes in the types folder.
+- Helper classes in the `types` folder.
 
-  These classes enable deserializing the string values returned by the search apis.
+  These classes deserialize the string values returned by the search APIs.
+
+> [!NOTE]
+> This sample might produce a null GUID error. Until the sample is fixed, refer to the web version, [Web API search operations sample](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/C%23-NETx/Search) that's fully operational.
 
 ## Prerequisites
 
 - Microsoft Visual Studio 2022
-- Access to Dataverse with privileges to perform data operations.
+- Access to Dataverse with privileges to perform data operations
 
 ## How to run the sample
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
-1. Open the [PowerApps-Samples/dataverse/orgsvc/C#-NETCore/Search/Search.sln](Search.sln) file using Visual Studio 2022.
-1. Edit the *appsettings.json* file. Set the connection string `Url` and `Username` parameters as appropriate for your test environment.
+1. Open the `PowerApps-Samples/dataverse/orgsvc/C#-NETCore/Search/Search.sln` file using Visual Studio 2022.
+1. Edit the `appsettings.json` file. Set the connection string `Url` and `Username` parameters for your test environment.
 
-   The environment Url can be found in the Power Platform admin center. It has the form `https://\<environment-name>.crm.dynamics.com`.
+   The environment URL can be found in the Power Platform admin center and has the form `https://<environment-name>.crm.dynamics.com`.
 
-1. Build the solution, and then run the **Search** project.
+1. Build the solution, then run the **Search** project.
 
-When the sample runs, you will be prompted in the default browser to select an environment user account and enter a password. To avoid having to do this every time you run a sample, insert a password parameter into the connection string in the appsettings.json file. For example:
+When the sample runs, you're prompted in a browser to select an environment user account and enter a password. To avoid repeated authentication every time you run a sample, insert a password parameter into the connection string of the `appsettings.json` file.
+
+For example:
 
 ```json
 {
 "ConnectionStrings": {
-    "default": "AuthType=OAuth;Url=https://myorg.crm.dynamics.com;Username=someone@myorg.onmicrosoft.com;Password=mypassword;RedirectUri=http://localhost;AppId=51f81489-12ee-4a9e-aaae-a2591f45987d;LoginPrompt=Auto"
+    "default": "AuthType=OAuth;Url=https://myorg.crm.dynamics.com;Username=someone@myorg.onmicrosoft.com;RedirectUri=http://localhost;AppId=51f81489-12ee-4a9e-aaae-a2591f45987d;LoginPrompt=Auto"
   }
 }
 ```
 
->**Tip**: You can set a user environment variable named DATAVERSE_APPSETTINGS to the file path of the appsettings.json file stored anywhere on your computer. The samples will use that appsettings file if the environment variable exists and is not null. Be sure to log out and back in again after you define the variable for it to take affect. To set an environment variable, go to **Settings > System > About**, select **Advanced system settings**, and then choose **Environment variables**.
+> **TIP**
+> You can set a user environment variable named `DATAVERSE_APPSETTINGS` to the file path of the `appsettings.json` file stored anywhere on your computer. The samples use that file if the environment variable exists and isn't null. Log out and back in again after you define the variable for it to take affect. You can manually set an environment variable by typing `env` in your system search bar, then choose **Environment variables** in the **System properties** window.
 
 ## Demonstrates
 
-This sample has 5 static methods that demonstrate the search API capabilities.
+This sample has five static methods that demonstrate the search API capabilities.
 
 Before using these methods, the program verifies that search is enabled for the environment using the `CheckSearchStatus` method.
 
-If search is not provisioned, the program offers the option to enable it using the `EnableSearch` method. 
-You can run the sample again to view the results.
+If search isn't provisioned, the program offers the option to enable it using the `EnableSearch` method. You can run the sample again to view the results.
 
-If search is provisioned for the environment, the following example methods are invoked:
+If search is provisioned for the environment, the following example methods are invoked: [OutputSearchQuery](#outputsearchquery), [OutputSearchSuggest](#outputsearchsuggest), [OutputAutoComplete](#outputautocomplete), [OutputSearchStatus](#outputsearchstatus), and [OutputSearchStatistics](#outputsearchstatistics).
 
 ### OutputSearchQuery
 
-This example method displays information from the `searchquery` message 
-using the search term 'Contoso'. The output may look something like this:
+This example method displays information from the `searchquery` message using the search term 'Contoso'.
 
-```
+You can expect a similar output:
+
+```cmd
 OutputSearchQuery START
 
         Count:1
@@ -85,29 +94,29 @@ OutputSearchQuery START
 OutputSearchQuery END
 ```
 
-#### Dependencies
+#### OutputSearchQuery - Dependencies
 
 The `OutputSearchQuery` method depends on the following helper classes:
 
-|Full Name|Description|
-|---|---|
-|`model/Messages/searchquery.cs`|Contains data to send the `searchquery` message and process the response.|
-|`types/SearchEntity.cs`|The entity schema to scope the search request. Used by the the `searchquery.Entities` property.|
-|`types/SearchQueryResults.cs`|Contains the response from the search query request.|
-|`types/ErrorDetail.cs`|Contains information about errors that may be returned with the request.|
-|`types/QueryResult.cs`|Contains data about a matching record found from the search query request.|
-|`types/FacetResult.cs`|A facet query result that reports the number of documents with a field falling within a particular range or having a particular value or interval.|
-|`types/FacetType.cs`|Specifies the type of a facet query result.|
-|`types/QueryContext.cs`|The query context returned as part of response.|
-
+| Full name | Description |
+|-----------|-------------|
+| `model/Messages/searchquery.cs` | Data to send the `searchquery` message and process the response. |
+| `types/SearchEntity.cs` | The entity schema to scope the search request. Used by the the `searchquery.Entities` property. |
+| `types/SearchQueryResults.cs` | Response from the search query request. |
+| `types/ErrorDetail.cs` | Errors that may be returned with the request. |
+| `types/QueryResult.cs` | A matching record found from the search query request. |
+| `types/FacetResult.cs` | A facet query result that reports the number of documents with a field falling within a range, value, or interval. |
+| `types/FacetType.cs` | Type of a facet query result. |
+| `types/QueryContext.cs` | The query context returned as part of response. |
 
 ### OutputSearchSuggest
 
-This example method displays information from the `searchsuggest` message 
-using the search term 'cont'. The output may look something like this:
+This example method displays information from the `searchsuggest` message
+using the search term 'cont'.
 
+You can expect a similar output:
 
-```
+```cmd
 OutputSearchSuggest START
 
         Text:{crmhit}cont{/crmhit}act
@@ -134,24 +143,25 @@ OutputSearchSuggest START
 OutputSearchSuggest END
 ```
 
-#### Dependencies
+#### OutputSearchSuggest - Dependencies
 
 The `OutputSearchSuggest` method depends on the following helper classes:
 
-|Full Name|Description|
-|---|---|
-|`model/Messages/searchsuggest.cs`|Contains data to send the `searchsuggest` message and process the response.|
-|`types/SearchSuggestResults.cs`|Contains the data from the searchsuggestResponse response property|
-|`types/SuggestResult.cs`|Result object for suggest results.|
-|`types/ErrorDetail.cs`|Contains information about errors that may be returned with the request.|
-|`types/QueryContext.cs`|The query context returned as part of response.|
+| Full name | Description |
+|-----------|-------------|
+| `model/Messages/searchsuggest.cs` | Data to send the `searchsuggest` message and process the response. |
+| `types/SearchSuggestResults.cs` | Data from the `searchsuggestResponse` response property. |
+| `types/SuggestResult.cs` | Result object for `suggest` results. |
+| `types/ErrorDetail.cs` | Errors that might be returned with the request. |
+| `types/QueryContext.cs` | The query context returned as part of response. |
 
 ### OutputAutoComplete
 
 This example method displays information from the `searchautocomplete message` using the search term 'Con'.
-The output may look something like this:
 
-```
+You can expect a similar output:
+
+```cmd
 OutputAutoComplete START
 
         Search: Con
@@ -160,23 +170,23 @@ OutputAutoComplete START
 OutputAutoComplete END
 ```
 
-#### Dependencies
+#### OutputAutoComplete - Dependencies
 
 The `OutputAutoComplete` method depends on the following helper classes:
 
-|Full Name|Description|
-|---|---|
-|`model/Messages/searchautocomplete.cs`|Contains data to send the `searchautocomplete` message and process the response.|
-|`types/SearchSuggestResults.cs`|Contains the data from the searchsuggestResponse response property|
-|`types/SearchEntity.cs`|The entity schema to scope the search request. Used by the the `searchautocompleteRequest.entities` property.|
-
+| Full name | Description |
+|-----------|-------------|
+| `model/Messages/searchautocomplete.cs` | Data to send the `searchautocomplete` message and process the response. |
+| `types/SearchSuggestResults.cs` | Data from the `searchsuggestResponse` response property. |
+| `types/SearchEntity.cs` | The entity schema to scope the search request. Used by the the `searchautocompleteRequest.entities` property. |
 
 ### OutputSearchStatus
 
 This example method displays information from the `searchstatus` message.
-The output may look something like this:
 
-```
+You can expect a similar output:
+
+```cmd
 OutputSearchStatus START
 
         Status: Provisioned
@@ -619,27 +629,28 @@ OutputSearchStatus START
 OutputSearchStatus END
 ```
 
-#### Dependencies
+#### OutputSearchStatus - Dependencies
 
 The `OutputSearchStatus` method depends on the following helper classes:
 
-|Full Name|Description|
-|---|---|
-|`model/Messages/searchstatus.cs`|Contains data to send the `searchstatus` message and process the response.|
-|`types/SearchStatusResult.cs`|Contains the data from the searchstatusResponse response property|
-|`types/SearchStatus.cs`|Contains the data from the SearchStatusResult.Status property|
-|`types/LockboxStatus.cs`|Contains the data from the SearchStatusResult.LockboxStatus property|
-|`types/CMKStatus.cs`|Contains the data from the SearchStatusResult.CMKStatus property|
-|`types/EntityStatusInfo.cs`|Contains the data from the SearchStatusResult.EntityStatusInfo property|
-|`types/ManyToManyRelationshipSyncStatus.cs`|Contains the data from the SearchStatusResult.ManyToManyRelationshipSyncStatus property|
-|`types/FieldStatusInfo.cs`|Contains the data from the EntityStatusInfo.SearchableIndexedFieldInfoMap property|
+| Full name | Description |
+|-----------|-------------|
+| `model/Messages/searchstatus.cs` | Data to send the `searchstatus` message and process the response. |
+| `types/SearchStatusResult.cs` | Data from the `searchstatusResponse` response property. |
+| `types/SearchStatus.cs` | Data from the `SearchStatusResult.Status` property. |
+| `types/LockboxStatus.cs` | Data from the `SearchStatusResult.LockboxStatus` property. |
+| `types/CMKStatus.cs` | Data from the `SearchStatusResult.CMKStatus` property. |
+| `types/EntityStatusInfo.cs` | Data from the `SearchStatusResult.EntityStatusInfo` property. |
+| `types/ManyToManyRelationshipSyncStatus.cs` | Data from the `SearchStatusResult.ManyToManyRelationshipSyncStatus` property. |
+| `types/FieldStatusInfo.cs` | Data from the `EntityStatusInfo.SearchableIndexedFieldInfoMap` property. |
 
-## OutputSearchStatistics
+### OutputSearchStatistics
 
 This example method displays information from the `searchstatistics` message.
-The output may look something like this:
 
-```
+You can expect a similar output:
+
+```cmd
 OutputSearchStatistics START
 
         StorageSizeInBytes: 1429925
@@ -649,17 +660,15 @@ OutputSearchStatistics START
 OutputSearchStatistics END
 ```
 
-#### Dependencies
+#### OutputSearchStatistics - Dependencies
 
 The `OutputSearchStatistics` method depends on the following helper classes:
 
-|Full Name|Description|
-|---|---|
-|`model/Messages/searchstatistics.cs`|Contains data to send the `searchstatistics` message and process the response.|
-|`types/SearchStatisticsResult.cs`|Contains the data from the searchstatisticsResponse response property|
-
+| Full name | Description |
+|-----------|-------------|
+| `model/Messages/searchstatistics.cs` | Data to send the `searchstatistics` message and process the response. |
+| `types/SearchStatisticsResult.cs` | Data from the `searchstatisticsResponse` response property. |
 
 ## Clean up
 
-This sample doesn't create any records, but it does allow you to provision search if it isn't already enabled. 
-It doesn't provide the option to de-provision search.
+This sample doesn't create any records, but it does allow you to provision search if it isn't already enabled. However, this sample doesn't provide the option to de-provision search.
