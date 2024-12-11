@@ -36,7 +36,7 @@ When the sample runs, you're prompted in your default browser to select an envir
 
 You can expect this output for the project:
 
-```cmd
+```output
 Creating file column named 'sample_FileColumn' on the account table ...
 Created file column named 'sample_FileColumn' in the account table.
 Created account record with accountid:5fb4f993-7c55-ed11-bba3-000d3a9933c9

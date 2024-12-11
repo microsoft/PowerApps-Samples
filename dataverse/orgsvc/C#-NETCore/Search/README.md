@@ -73,7 +73,7 @@ This example method displays information from the `searchquery` message using th
 
 You can expect a similar output:
 
-```cmd
+```output
 OutputSearchQuery START
 
         Count:1
@@ -116,7 +116,7 @@ using the search term 'cont'.
 
 You can expect a similar output:
 
-```cmd
+```output
 OutputSearchSuggest START
 
         Text:{crmhit}cont{/crmhit}act
@@ -161,7 +161,7 @@ This example method displays information from the `searchautocomplete message` u
 
 You can expect a similar output:
 
-```cmd
+```output
 OutputAutoComplete START
 
         Search: Con
@@ -186,7 +186,7 @@ This example method displays information from the `searchstatus` message.
 
 You can expect a similar output:
 
-```cmd
+```output
 OutputSearchStatus START
 
         Status: Provisioned
@@ -650,7 +650,7 @@ This example method displays information from the `searchstatistics` message.
 
 You can expect a similar output:
 
-```cmd
+```output
 OutputSearchStatistics START
 
         StorageSizeInBytes: 1429925

@@ -8,7 +8,7 @@ This project sends only *two requests*. Each request attempts to complete operat
 
 You can expect this output for the project:
 
-```cmd
+```output
 Creating sample_Example Standard table...
         sample_Example table created.
 Adding 'sample_Description' column to sample_Example table...
