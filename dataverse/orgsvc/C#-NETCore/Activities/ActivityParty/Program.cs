@@ -226,8 +226,10 @@ namespace PowerPlatform_Dataverse_CodeSamples
 
             // Collect the keys of entities to be deleted.
             var keysToDelete = new List<string>(entityStore.Keys);
+            keysToDelete.Reverse();
 
-            // Delete in Dataverse each entity in the entity store.
+            // Delete in Dataverse each entity in the entity store,
+            // in reverse order that they were added.
             foreach (var key in keysToDelete)
             {
                 var entref = entityStore[key];
