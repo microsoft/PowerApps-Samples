@@ -5,7 +5,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>PowerPlatform.Dataverse.CodeSamples</RootNamespace>
+    <RootNamespace>PowerPlatform_Dataverse_CodeSamples</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
