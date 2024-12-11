@@ -101,7 +101,7 @@ This sample needs to create a new image column that is the primary image for the
 1. Capture the original primary image name using the `Utility.GetTablePrimaryImageName` method.
 1. Use the `Utility.CreateImageColumn` method to create a new image column named `sample_ImageColumn` on the account table if it doesn't exist already.
 
-   > [!NOTE]]
+   > [!NOTE]
    > This image column `CanStoreFullImage` value is false.
 
 1. Use the `Utility.SetTablePrimaryImageName` method to make `sample_ImageColumn` the primary image.
@@ -120,7 +120,7 @@ In the following program, the value of the `CanStoreFullImage` property changes 
 1. The program retrieves the 10 account records created in the previous step, including the image data.
 1. For each account record, the image data is downloaded to the `DownloadedImages` folder with the name `{recordName}_retrieved.png`.
 
-   > [!NOTE]]
+   > [!NOTE]
    > All records are thumbnail-sized images.
 
 ### Download the account record images
@@ -129,7 +129,7 @@ The program uses the static `DownloadFile` method, which encapsulates the
 [InitializeFileBlocksDownloadRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.initializefileblocksdownloadrequest)
 and [DownloadBlockRequest](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.downloadblockrequest) classes to download the files.
 
-> [!NOTE]]
+> [!NOTE]
 > Five out of ten operations are expected to fail because no full-sized images were uploaded while `CanStoreFullImage` was false. Those records created while `CanStoreFullImage` was true succeed.
 
 ### Delete the image data

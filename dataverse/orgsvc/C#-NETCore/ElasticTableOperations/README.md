@@ -201,7 +201,7 @@ When performing an upsert operation on an elastic table, you must include all pr
 
 ### Region 2: Create, Retrieve, Update, Upsert, and Delete examples with partitionid
 
-If you partition the elastic table you must always use the `partitionid` value together with the primary key to uniquely identify any record. In these examples using the `contoso_SensorData` table, the `contoso_DeviceId` value is being used for the `partitionid`. Learn more in [Partitioning and horizontal scaling](https://learn.microsoft.com/power-apps/developer/data-platform/elastic-tables#partitioning-and-horizontal-scaling).
+If you apply an optional partitioning strategy on the elastic table you must always use the `partitionid` value together with the primary key to uniquely identify any record. In these examples using the `contoso_SensorData` table, the `contoso_DeviceId` value is being used for the `partitionid`. Learn more in [Partitioning and horizontal scaling](https://learn.microsoft.com/power-apps/developer/data-platform/elastic-tables#partitioning-and-horizontal-scaling).
 
 To include `partitionid`, you have three options:
 

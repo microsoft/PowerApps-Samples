@@ -25,7 +25,7 @@ This sample uses:
   These classes deserialize the string values returned by the search APIs.
 
 > [!NOTE]
-> This sample might produce a null GUID error. Until the sample is fixed, refer to the web version, [Web API search operations sample](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/C%23-NETx/Search) that's fully operational.
+> This sample might produce a null GUID error. Until the sample is fixed, refer to the web version, [Web API search operations sample](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/webapi/C%23-NETx/Search), that's fully operational.
 
 ## Prerequisites
 
