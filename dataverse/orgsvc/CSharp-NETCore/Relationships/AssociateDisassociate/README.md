@@ -27,6 +27,10 @@ The code samples demonstrates how to work with a relationship between entities. 
 1. Associate and then disassociate the entities.
 1. Use [early-bound](https://learn.microsoft.com/power-apps/developer/data-platform/org-service/early-bound-programming#early-bound) entity types
 
+The code being demonstrated can be found in the `Program.AssociateDisassociate()` method, which is invoked by `Program.Run()`.
+
+The code being demonstrated can be found in the `Program.AssociateDisassociate()` method, which is invoked by `Program.Run()`.
+
 Additional general information can be found in [README-code-design](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/CSharp-NETCore/README-code-design.md) file.
 
 ## How to build and run the code sample(s)
@@ -48,7 +52,7 @@ Created contact 'John Doe'
 Created account 'Example Account 1'
 Created account 'Example Account 2'
 Created account 'Example Account 3'
-The entities have been associated.
-The entities have been disassociated.
+AssociateDisassociate(): The entities have been associated.
+AssociateDisassociate(): The entities have been disassociated.
 Press any key to undo environment data changes.
 ```
