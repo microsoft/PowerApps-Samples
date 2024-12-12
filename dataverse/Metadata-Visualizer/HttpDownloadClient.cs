@@ -8,7 +8,7 @@ namespace MetaViz
 {
     // if ADAL is selected this client will be used to download metadata
     // if browser control is used this client will NOT be used. Download is done by the browser control on frmMain.
-    // source https://github.com/microsoft/PowerApps-Samples/tree/master/cds/webapi/C%23/ADALV3WhoAmI
+    // source https://github.com/microsoft/PowerApps-Samples/tree/master/cds/webapi/CSharp/ADALV3WhoAmI
 
     internal class HttpDownloadClient
     {
@@ -71,7 +71,7 @@ namespace MetaViz
 
     internal class HttpDownloadClientException : Exception
     {
-        internal HttpDownloadClientException(string message, Exception innerException):base(message, innerException)
+        internal HttpDownloadClientException(string message, Exception innerException) : base(message, innerException)
         {
 
         }
