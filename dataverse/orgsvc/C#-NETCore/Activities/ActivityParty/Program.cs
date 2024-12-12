@@ -10,14 +10,101 @@ namespace PowerPlatform_Dataverse_CodeSamples
     internal class Program
     {
         /// <summary>
+        /// Create a letter activity.
+        /// </summary>
+        /// <param name="service">Authenticated web service connection.</param>
+        /// <param name="entityStore">Entity name and reference collection.</param>
+        /// <param name="fromContacts">Contains contacts that the letter is being sent from.</param>
+        /// <param name="toContacts">Contains contacts that the letter is being sent to.</param>
+        /// <returns></returns>
+        static public bool CreateLetter(IOrganizationService service,
+            Dictionary<string, EntityReference> entityStore,
+            EntityReferenceCollection fromContacts,
+            EntityReferenceCollection toContacts)
+        {
+            // Use the OrganizationServiceContext to track and execute the entity operations.
+            var orgContext = new OrganizationServiceContext(service);
+
+            // Create an activity party for each From: contact.
+            var fromActivityPartys = new ActivityParty[fromContacts.Count];
+
+            foreach (var contact in fromContacts)
+            {
+                var activityParty = new ActivityParty
+                {
+                    PartyId = contact
+                };
+                fromActivityPartys.Append(activityParty);
+            }
+
+            // Create an activity party for each To: contact.
+            var toActivityPartys = new ActivityParty[toContacts.Count];
+            
+            foreach (var contact in toContacts)
+            {
+                var activityParty = new ActivityParty
+                {
+                    PartyId = contact
+                };
+                toActivityPartys.Append(activityParty);
+            }
+
+            // Create a letter activity.
+            var letter = new Letter
+            {
+                RegardingObjectId = toContacts[0],
+                Subject = "Sample Letter Activity",
+                ScheduledEnd = DateTime.Now + TimeSpan.FromDays(5),
+                Description = File.ReadAllText("letter.txt"),
+                From = fromActivityPartys,
+                To = toActivityPartys
+            };
+
+            // Add the letter activity to the context.
+            orgContext.AddObject(letter);
+
+            try
+            {
+                // Commit the context changes to Dataverse.
+                SaveChangesResultCollection results =
+                    orgContext.SaveChanges(SaveChangesOptions.None);
+
+                // Check for success and handle failure.
+                if (results.Count > 0 && results[0].Error == null)
+                {
+                    CreateResponse response = (CreateResponse)results[0].Response;
+
+                    entityStore.Add(letter.Subject,
+                        new EntityReference("letter", response.id));
+
+                    Console.WriteLine($"CreateLetter(): letter activity created with ID {response.id}");
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine(
+                        "CreateLetter(): an error ocurred creating the letter activity: \n\t" +
+                        results[0].Error.Message);
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(
+                    "CreateLetter(): an exception ocurred creating the letter activity: \n\t" + ex.Message);
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Contains the application's configuration settings. 
         /// </summary>
-        IConfiguration Configuration { get; }
+        static IConfiguration Configuration { get; }
 
         /// <summary>
         /// Constructor. Loads the application settings from a JSON configuration file.
         /// </summary>
-        Program()
+        static Program()
         {
             // Get the path to the appsettings file. If the environment variable is set,
             // use that file path. Otherwise, use the runtime folder's settings file.
@@ -35,115 +122,51 @@ namespace PowerPlatform_Dataverse_CodeSamples
             // Entity name and reference collection.
             Dictionary<string,EntityReference> entityStore;
 
-            Program app = new();
-
             // Create a Dataverse service client using the default connection string.
             ServiceClient serviceClient =
-                new(app.Configuration.GetConnectionString("default"));
+                new(Configuration.GetConnectionString("default"));
 
-            // Pre-create any table rows that CreateLetter() requires.
-            app.Setup(serviceClient, out entityStore);
+            // Pre-create any table rows that the Run() method requires.
+            Setup(serviceClient, out entityStore);
 
-            // Execute the main logic of this program
-            app.CreateLetter(serviceClient, entityStore);
+            // Execute the main logic of this program.
+            Run(serviceClient, entityStore);
 
             // Pause program execution before resource cleanup.
             Console.WriteLine("Press any key to undo environment data changes.");
             Console.ReadKey();
 
             // In Dataverse, delete any created table rows and then dispose the service connection.
-            app.Cleanup(serviceClient, entityStore);
+            Cleanup(serviceClient, entityStore);
             serviceClient.Dispose();
         }
 
         /// <summary>
-        /// Create a letter activity from a contact and addressed to two other contacts.
-        /// </summary>
-        /// <param name="service">Authenticated web service connection.</param>
-        /// <param name="entityStore">Collection containing references for three contacts 
-        /// to be referred to by the letter.</param>
-        /// <returns>True if successful; otherwise false.</returns>
-        public bool CreateLetter(IOrganizationService service, 
-            Dictionary<string, EntityReference> entityStore)
-        {
-            // Use the OrganizationServiceContext class and create a LINQ query.
-            var orgContext = new OrganizationServiceContext(service);
-
-            // Create an Activity Party (in-memory) object for each contact.
-            var activityParty1 = new ActivityParty
-            { 
-                PartyId = new EntityReference(
-                    Contact.EntityLogicalName, entityStore["contact1"].Id)
-            };
-
-            var activityParty2 = new ActivityParty
-            {
-                PartyId = new EntityReference(
-                    Contact.EntityLogicalName, entityStore["contact2"].Id)
-            };
-
-            var activityParty3 = new ActivityParty
-            {
-                PartyId = new EntityReference(
-                    Contact.EntityLogicalName, entityStore["contact3"].Id)
-            };
-
-            // Create a Letter activity and set From and To fields to the
-            // respective Activity Party rows.
-
-            var letter = new Letter
-            {
-                RegardingObjectId = new EntityReference(Contact.EntityLogicalName,
-                    entityStore["contact2"].Id),
-                Subject = "Sample Letter Activity",
-                ScheduledEnd = DateTime.Now + TimeSpan.FromDays(5),
-                Description = File.ReadAllText("letter.txt"),
-                From = new ActivityParty[] { activityParty1 },
-                To = new ActivityParty[] { activityParty3, activityParty2 }
-            };
-
-            // Add the letter activity to the context.
-            orgContext.AddObject(letter);
-
-            try
-            {
-                // Commit the context changes to Dataverse.
-                SaveChangesResultCollection results = 
-                    orgContext.SaveChanges(SaveChangesOptions.None);
-
-                // Check for success and handle failure.
-                if (results.Count > 0 && results[0].Error == null)
-                {
-                    CreateResponse response = (CreateResponse)results[0].Response;
-
-                    entityStore.Add(letter.Subject,
-                        new EntityReference("letter", response.id ));
-                    return true;
-                }
-                else
-                {
-                    Console.WriteLine(
-                        "CreateLetter(): an error ocurred creating the letter activity: \n\t" + 
-                        results[0].Error.Message);
-                    return false;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(
-                    "CreateLetter(): an exception ocurred creating the Letter Activity: \n\t"+ex.Message);
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Create three contacts.
+        /// Executes the code being demonstrated by this program.
         /// </summary>
         /// <param name="service">Authenticated web service connection.</param>
         /// <param name="entityStore">Entity name and reference collection.</param>
-        public void Setup(IOrganizationService service, out Dictionary<string, 
+        /// <returns>True if successful; otherwise false.</returns>
+        static public bool Run(IOrganizationService service, 
+            Dictionary<string, EntityReference> entityStore)
+        {
+            return CreateLetter(service, entityStore, 
+                new EntityReferenceCollection { entityStore["contact1"] },
+                new EntityReferenceCollection { entityStore["contact2"], entityStore["contact3"] });
+        }
+
+        /// <summary>
+        /// Creates any pre-existing entity records required by the Run() method.
+        /// </summary>
+        /// <param name="service">Authenticated web service connection.</param>
+        /// <param name="entityStore">Entity name and reference collection.</param>
+        static public void Setup(IOrganizationService service, out Dictionary<string, 
             EntityReference> entityStore)
         {
+            // Used to track any entities created by this program.
+            entityStore = new Dictionary<string, EntityReference>();
+
+            // Create three contacts to be used for the letter.
             var contact1 = new Entity("contact")    
             {
                 ["firstname"] = "Mary Kay",
@@ -180,8 +203,6 @@ namespace PowerPlatform_Dataverse_CodeSamples
                 ["emailaddress1"] = "denise@contoso.com"
             };
 
-            entityStore = new Dictionary<string, EntityReference>();
-
             try
             {
                 contact1.Id = service.Create(contact1);
@@ -203,24 +224,25 @@ namespace PowerPlatform_Dataverse_CodeSamples
         }
 
         /// <summary>
-        /// Dispose of any data and resources created by the this program.
+        /// Delete any entity records (table rows) created by this program.
         /// </summary>
         /// <param name="service">Authenticated web service connection.</param>
         /// <param name="entityStore">Entity name and reference collection.</param>
-        public void Cleanup(ServiceClient service, 
+        static public void Cleanup(ServiceClient service,
             Dictionary<string, EntityReference> entityStore)
         {
             // Do some checking of the passed parameter values.
             if (service == null || service.IsReady == false)
             {
-                Console.WriteLine("Cleanup(): web service connection is not available, cleanup aborted.");
+                Console.WriteLine(
+                    $"Cleanup(): web service connection not available, cleanup aborted.");
                 return;
             }
 
             if (entityStore == null)
             {
-                Console.WriteLine("Cleanup(): entref store collection is null, cleanup aborted.");
-                Console.WriteLine("Cleanup(): be sure to run Setup() prior to Cleanup().");
+                Console.WriteLine($"Cleanup(): entityStore is null, cleanup aborted.");
+                Console.WriteLine($"Cleanup(): run Setup() prior to Cleanup().");
                 return;
             }
 
@@ -228,8 +250,7 @@ namespace PowerPlatform_Dataverse_CodeSamples
             var keysToDelete = new List<string>(entityStore.Keys);
             keysToDelete.Reverse();
 
-            // Delete in Dataverse each entity in the entity store,
-            // in reverse order that they were added.
+            // Delete in Dataverse each entity in the entity store.
             foreach (var key in keysToDelete)
             {
                 var entref = entityStore[key];
@@ -240,7 +261,8 @@ namespace PowerPlatform_Dataverse_CodeSamples
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Cleanup(): exception deleting {key}\n\t{ex.Message}");
+                    Console.WriteLine(
+                        $"Cleanup(): exception deleting {key}\n\t{ex.Message}");
                     continue;
                 }
             }
@@ -248,13 +270,14 @@ namespace PowerPlatform_Dataverse_CodeSamples
             // Output a list of entities that could not be deleted.
             if (entityStore.Count > 0)
             {
-                Console.WriteLine("Cleanup(): the following entities (tablle rows) could not be deleted:");
+                Console.WriteLine(
+                    $"Cleanup(): the following entities could not be deleted:");
+
                 foreach (var item in entityStore)
                 {
                     Console.WriteLine($"Cleanup(): name={item.Key}, " +
                         $"logical name={item.Value.LogicalName}, ID={item.Value.Id}");
                 }
-                Console.WriteLine("Cleanup(): consider deleting these rows manually.");
             }
         }
     }
