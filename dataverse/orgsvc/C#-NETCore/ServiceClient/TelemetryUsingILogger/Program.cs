@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
-namespace PowerPlatform.Dataverse.CodeSamples
+namespace PowerPlatform_Dataverse_CodeSamplesPower
 {
     /// <summary>
     /// Demonstrates connecting to the Dataverse Organization service and executing
