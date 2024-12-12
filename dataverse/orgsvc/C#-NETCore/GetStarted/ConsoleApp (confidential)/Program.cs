@@ -11,13 +11,13 @@ using Microsoft.Xrm.Sdk;
 class Program
 {
     // TODO Enter your Dataverse environment's URL, ClientId, and Secret.
-    static string url = "https://yourorg.crm.dynamics.com";
+    static string url = "https://myorg.crm.dynamics.com";
 
     static string connectionString = $@"
     AuthType = ClientSecret;
     Url = {url};
-    ClientId = 345917f8-00d5-460e-bc1a-000000000000;
-    Secret = 98q8Q~000000000~L9uayrinXGaPnfvl.l2w.abT"; // Keep the ending quote after your secret
+    ClientId = 66667777-aaaa-8888-bbbb-9999cccc0000;
+    Secret = aaaaaaaa-6b6b-7c7c-8d8d-999999999999"; // Keep the ending quote after your secret
 
     static void Main()
     {

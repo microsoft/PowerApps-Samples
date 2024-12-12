@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageReadmeFile></PackageReadmeFile>
-    <RootNamespace>PowerPlatform.Dataverse.CodeSamples</RootNamespace>
+    <RootNamespace>PowerPlatform_Dataverse_CodeSamples</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
