@@ -29,8 +29,6 @@ The code samples demonstrates how to work with a relationship between entities. 
 
 The code being demonstrated can be found in the `Program.AssociateDisassociate()` method, which is invoked by `Program.Run()`.
 
-The code being demonstrated can be found in the `Program.AssociateDisassociate()` method, which is invoked by `Program.Run()`.
-
 Additional general information can be found in [README-code-design](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/CSharp-NETCore/README-code-design.md) file.
 
 ## How to build and run the code sample(s)
