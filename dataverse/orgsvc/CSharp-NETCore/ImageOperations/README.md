@@ -36,7 +36,7 @@ This sample uses the [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient](ht
 
 The output of the sample should look similar to:
 
-```output
+```
 Creating image column named 'sample_ImageColumn' on the account table ...
 Created image column named 'sample_ImageColumn' in the account table.
 Create 5 records while CanStoreFullImage is false.

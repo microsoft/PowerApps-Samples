@@ -46,7 +46,7 @@ When the sample runs, you are prompted in the default browser to select an envir
 
 The output of the sample should look similar to:
 
-```output
+```
 Starting Elastic table operations sample.
 
 === Start Region 0: Creating contoso_SensorData table ===

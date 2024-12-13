@@ -8,7 +8,7 @@ This sample represents the case where no effort is applied to maximize throughpu
 
 You can expect this output for the project:
 
-```output
+```
 Creating sample_Example Standard table...
         sample_Example table created.
 Adding 'sample_Description' column to sample_Example table...

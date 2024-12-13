@@ -41,6 +41,6 @@ Additional information can be found in [README-code-design](https://github.com/m
 For a successful run, the program's console output should look similar to the following example.
 Otherwise, any errors or exceptions will be displayed.
 
-```console
+```
 Press any key to undo environment data changes.
 ```

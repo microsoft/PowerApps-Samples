@@ -60,7 +60,7 @@ You can create a new app registration, secret, and app user if you don't have th
 
 You can expect a similar output for the project:
 
-```output
+```
 User ID is 8061643d-ebf7-e811-a974-000d3a1e1c9a.
 Press the <Enter> key to exit.
 ```

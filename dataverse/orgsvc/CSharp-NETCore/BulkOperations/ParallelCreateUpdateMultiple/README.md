@@ -13,7 +13,7 @@ The number of threads used depend on the [ServiceClient.RecommendedDegreesOfPara
 
 You can expect this output for the project:
 
-```output
+```
 RecommendedDegreesOfParallelism:4
 
 Creating sample_Example Standard table...

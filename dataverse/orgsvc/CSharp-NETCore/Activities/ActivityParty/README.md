@@ -48,7 +48,7 @@ Additional general information can be found in [README-code-design](https://gith
 For a successful run, the program's console output should look similar to the following example.
 Otherwise, any errors or exceptions will be displayed.
 
-```console
+```
 CreateLetter(): letter activity created with ID < >
 Press any key to undo environment data changes.
 ```

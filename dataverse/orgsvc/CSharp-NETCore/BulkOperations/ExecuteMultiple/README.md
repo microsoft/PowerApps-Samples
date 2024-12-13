@@ -8,7 +8,7 @@ Because `ExecuteMultiple` is limited to 1000 requests and the sample may be conf
 
 You can expect this output for the project:
 
-```output
+```
 Creating sample_Example Standard table...
         sample_Example table created.
 Adding 'sample_Description' column to sample_Example table...
