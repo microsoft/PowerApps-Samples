@@ -29,7 +29,7 @@ This sample uses:
 ## How to run the sample
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
-1. Open the [PowerApps-Samples/dataverse/orgsvc/C#-NETCore/Search/Search.sln](Search.sln) file using Visual Studio 2022.
+1. Open the [PowerApps-Samples/dataverse/orgsvc/CSharp-NETCore/Search/Search.sln](Search.sln) file using Visual Studio 2022.
 1. Edit the *appsettings.json* file. Set the connection string `Url` and `Username` parameters as appropriate for your test environment.
 
    The environment Url can be found in the Power Platform admin center. It has the form `https://\<environment-name>.crm.dynamics.com`.
@@ -54,14 +54,14 @@ This sample has 5 static methods that demonstrate the search API capabilities.
 
 Before using these methods, the program verifies that search is enabled for the environment using the `CheckSearchStatus` method.
 
-If search is not provisioned, the program offers the option to enable it using the `EnableSearch` method. 
+If search is not provisioned, the program offers the option to enable it using the `EnableSearch` method.
 You can run the sample again to view the results.
 
 If search is provisioned for the environment, the following example methods are invoked:
 
 ### OutputSearchQuery
 
-This example method displays information from the `searchquery` message 
+This example method displays information from the `searchquery` message
 using the search term 'Contoso'. The output may look something like this:
 
 ```
@@ -100,12 +100,10 @@ The `OutputSearchQuery` method depends on the following helper classes:
 |`types/FacetType.cs`|Specifies the type of a facet query result.|
 |`types/QueryContext.cs`|The query context returned as part of response.|
 
-
 ### OutputSearchSuggest
 
-This example method displays information from the `searchsuggest` message 
+This example method displays information from the `searchsuggest` message
 using the search term 'cont'. The output may look something like this:
-
 
 ```
 OutputSearchSuggest START
@@ -169,7 +167,6 @@ The `OutputAutoComplete` method depends on the following helper classes:
 |`model/Messages/searchautocomplete.cs`|Contains data to send the `searchautocomplete` message and process the response.|
 |`types/SearchSuggestResults.cs`|Contains the data from the searchsuggestResponse response property|
 |`types/SearchEntity.cs`|The entity schema to scope the search request. Used by the the `searchautocompleteRequest.entities` property.|
-
 
 ### OutputSearchStatus
 
@@ -658,8 +655,7 @@ The `OutputSearchStatistics` method depends on the following helper classes:
 |`model/Messages/searchstatistics.cs`|Contains data to send the `searchstatistics` message and process the response.|
 |`types/SearchStatisticsResult.cs`|Contains the data from the searchstatisticsResponse response property|
 
-
 ## Clean up
 
-This sample doesn't create any records, but it does allow you to provision search if it isn't already enabled. 
+This sample doesn't create any records, but it does allow you to provision search if it isn't already enabled.
 It doesn't provide the option to de-provision search.

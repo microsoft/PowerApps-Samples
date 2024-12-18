@@ -17,7 +17,7 @@ This sample depends on the [WebAPIService Class Library project](https://learn.m
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
 
-1. Locate the /dataverse/webapi/C#-NETx/RetrieveMetadataChanges/ folder.
+1. Locate the /dataverse/webapi/CSharp-NETx/RetrieveMetadataChanges/ folder.
 
 1. Open the *RetrieveMetadataChanges.sln* solution file in Visual Studio 2022.
 
@@ -34,7 +34,7 @@ This sample depends on the [WebAPIService Class Library project](https://learn.m
 
 ## Demonstrates
 
-This sample shows how to retrieve schema definitions for a specific set of column definitions and save them (in memory) to represent a cache. 
+This sample shows how to retrieve schema definitions for a specific set of column definitions and save them (in memory) to represent a cache.
 
 Then it creates a new column, retrieves the data for only that new column, which it adds to the cache.
 
@@ -84,4 +84,3 @@ Delete the choice column created earlier.
 ## Clean up
 
 No clean up is required because all data created by this sample was deleted.
-
