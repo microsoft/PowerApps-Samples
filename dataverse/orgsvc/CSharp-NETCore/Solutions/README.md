@@ -12,11 +12,11 @@ The provided code samples are listed below.
 
 1. Clone the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
 
-1. Open the *Solutions.sln* solution file in Visual Studio 2022 located under dataverse/orgsvc/C#-NETCore/Solutions/SolutionAttributeExport/.
+1. Open the *Solutions.sln* solution file in Visual Studio 2022 located under dataverse/orgsvc/CSharp-NETCore/Solutions/SolutionAttributeExport/.
 
 1. Edit the *appsettings.json* file in the **Solution Items** folder of Solution Explorer. Set the connection string `Url` and `Username` parameters as appropriate for your test environment.
 
-	The environment Url can be found in the Power Platform admin center. It has the form https://\<environment-name>.crm.dynamics.com.
+ The environment Url can be found in the Power Platform admin center. It has the form https://\<environment-name>.crm.dynamics.com.
 
 1. Build the solution, and then run the desired project.
 

@@ -12,7 +12,7 @@ This sample uses the [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient Cla
 ## How to run the sample
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
-1. Open the [PowerApps-Samples/dataverse/orgsvc/C#-NETCore/FileOperations/FileOperations.sln](FileOperations.sln) file using Visual Studio 2022.
+1. Open the [PowerApps-Samples/dataverse/orgsvc/CSharp-NETCore/FileOperations/FileOperations.sln](FileOperations.sln) file using Visual Studio 2022.
 1. Edit the *appsettings.json* file. Set the connection string `Url` and `Username` parameters as appropriate for your test environment.
 
    The environment Url can be found in the Power Platform admin center. It has the form https://\<environment-name>.crm.dynamics.com.
@@ -85,8 +85,6 @@ To upload a PDF file named `25MB.pdf` to the `sample_FileColumn` file column on 
 1. Split the file up into 4MB block and send each block using the [UploadBlockRequest class](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.uploadblockrequest). Each instance must include a base64 encoded string to uniquely identify the block. This request doesn't have any response value to process.
 1. After all the blocks are sent, use the [CommitFileBlocksUploadRequest class](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.CommitFileBlocksUploadRequest) with an array of the base64 encoded string values to finalize the operation.
 1. Process the response with the [CommitFileBlocksUploadResponse class](https://learn.microsoft.com/dotnet/api/microsoft.crm.sdk.messages.CommitFileBlocksUploadResponse) to get the `FileId` value that will be used to delete the file.
-
-
 
 ### Download the file
 
