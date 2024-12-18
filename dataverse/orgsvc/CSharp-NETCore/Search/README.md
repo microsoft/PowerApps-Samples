@@ -69,7 +69,7 @@ If search is provisioned for the environment, the following example methods are 
 
 ### OutputSearchQuery
 
-This example method displays information from the `searchquery` message using the search term 'Contoso'.
+This example method displays information from the `searchquery` message, using the search term 'Contoso'.
 
 You can expect a similar output:
 
@@ -111,8 +111,7 @@ The `OutputSearchQuery` method depends on the following helper classes:
 
 ### OutputSearchSuggest
 
-This example method displays information from the `searchsuggest` message
-using the search term 'cont'.
+This example method displays information from the `searchsuggest` message, using the search term 'cont'.
 
 You can expect a similar output:
 

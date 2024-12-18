@@ -9,6 +9,7 @@ namespace PowerPlatform_Dataverse_CodeSamples
 {
     internal class Program
     {
+        // <AssociateDisassociate>
         /// <summary>
         /// Associate a primary entity with one or more other entities,
         /// then remove the association.
@@ -50,6 +51,7 @@ namespace PowerPlatform_Dataverse_CodeSamples
                 return false;
             }
         }
+        // </AssociateDisassociate>
 
         /// <summary>
         /// Contains the application's configuration settings. 
@@ -113,7 +115,7 @@ namespace PowerPlatform_Dataverse_CodeSamples
                 FirstName = "John",
                 LastName = "Doe"
             };
-            entityStore.Add("John Doe", 
+            entityStore.Add("John Doe",
                 new EntityReference("contact", service.Create(contact)));
             Console.WriteLine("Created contact '{0} {1}'", contact.FirstName,
                 contact.LastName);

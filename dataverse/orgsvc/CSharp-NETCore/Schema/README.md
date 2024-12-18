@@ -13,9 +13,7 @@ Learn more in [Transition apps to Dataverse ServiceClient](https://learn.microso
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
 
 1. Locate the `/dataverse/orgsvc/C#-NETx/Schema/` folder.
-
 1. Open the `Schema.sln` solution file in Visual Studio 2022.
-
 1. Edit the `appsettings.json` file to set the connection string `Url` and `Username` parameters for your test environment.
 
    For example:
@@ -29,7 +27,6 @@ Learn more in [Transition apps to Dataverse ServiceClient](https://learn.microso
    ```
 
    Your environment URL can be found in the [Power Platform admin center](https://admin.powerplatform.microsoft.com/) and has the form `https://<environment-name>.crm.dynamics.com`.
-
 1. Build the solution, then run the project.
 
 > [!TIP]

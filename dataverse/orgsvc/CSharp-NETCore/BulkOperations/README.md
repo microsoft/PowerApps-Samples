@@ -37,7 +37,7 @@ You can access the full sample in the [BulkOperations](https://github.com/micros
 ## How to run this sample
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
-1. Open the `PowerApps-Samples/dataverse/orgsvc/C#-NETCore/CreateUpdateMultiple/CreateUpdateMultiple.sln` file using Visual Studio 2022.
+1. Open the `PowerApps-Samples/dataverse/orgsvc/CSharp-NETCore/CreateUpdateMultiple/CreateUpdateMultiple.sln` file using Visual Studio 2022.
 1. Edit the `appsettings.json` file. Set the connection string `Url` and `Username` parameters for your test environment.
 1. Your environment URL can be found in the Power Platform admin center and has the form `https://<environment-name>.crm.dynamics.com`.
 1. Build the solution, select the desired project as the startup project and press F5 to run the console application in debug mode.
