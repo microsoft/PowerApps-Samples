@@ -4,7 +4,7 @@ This sample shows how to write a plug-in that can access web (network) resources
 
 ## How to run this sample
 
-1. Download or clone the [Samples](https://github.com/Microsoft/PowerApps-Samples) repo so that you have a local copy. This sample is located under PowerApps-Samples-master\cds\orgsvc\C#\WebAccessPlugin.
+1. Download or clone the [Samples](https://github.com/Microsoft/PowerApps-Samples) repo so that you have a local copy. This sample is located under PowerApps-Samples-master\cds\orgsvc\CSharp\WebAccessPlugin.
 1. There are two different plug-in class examples:
     - WebClientPlugin uses [WebClient Class](https://learn.microsoft.com/dotnet/api/system.net.webclient)
     - HttpClientPlugin uses [HttpClient Class](https://learn.microsoft.com/dotnet/api/system.net.http.httpclient)

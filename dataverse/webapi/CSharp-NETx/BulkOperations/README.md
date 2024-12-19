@@ -10,14 +10,14 @@ description: "This sample demonstrates how to use the CreateMultiple, UpdateMult
 
 # Create, Update, and Upsert Multiple Web API Sample
 
-This sample shows how to perform bulk create, update and upsert operations using the 
-[CreateMultiple](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/createmultiple), 
-[UpdateMultiple](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/updatemultiple), and [UpsertMultiple](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/upsertmultiple) 
+This sample shows how to perform bulk create, update and upsert operations using the
+[CreateMultiple](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/createmultiple),
+[UpdateMultiple](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/updatemultiple), and [UpsertMultiple](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/upsertmultiple)
 actions. These messages are optimized to provide the most performant way to create or update records with Dataverse.
 
 This sample provides the option to use *standard* or *elastic* tables so you can compare the different performance characteristics.
 
-This sample or the [SDK version](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/orgsvc/CSharp-NETCore/BulkOperations/README.md) are prerequisites for the 
+This sample or the [SDK version](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/orgsvc/CSharp-NETCore/BulkOperations/README.md) are prerequisites for the
 [CreateMultiple and UpdateMultiple plug-ins Sample](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/CSharp/xMultiplePluginSamples)
 
 This sample is a Visual Studio .NET 6.0 solution that contains 2 projects (**CreateUpdateMultiple** and **ParallelCreateUpdateMultiple**) that perform the same operations in different ways so that you can compare the performance of each method.
@@ -34,16 +34,16 @@ You can find the sample [here](https://github.com/microsoft/PowerApps-Samples/tr
 ## How to run this sample
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
-1. Open the `PowerApps-Samples\dataverse\webapi\C#-NETx\xMultipleSamples.sln` file using Visual Studio 2022.
+1. Open the `PowerApps-Samples\dataverse\webapi\CSharp-NETx\xMultipleSamples.sln` file using Visual Studio 2022.
 
    This solution contains two projects that include samples:
 
    - **CreateUpdateMultiple**: Creates and updates a configurable number of records by sending two requests.
    - **ParallelCreateUpdateMultiple**: Creates and updates a configurable number of records by sending requests in parallel.
    - **UpsertMultiple**: Demonstrates *upserting* a configurable number of records.
-   
+
    **Note**: The **WebAPIService** project is included so that each of the other projects can depend on the common helper code provided by the service. The samples use several classes in the `WebAPIService/Messages` folder.
-   
+
    In **Solution Explorer**, right-click the project you want to run and choose **Set as Startup Project**.
 
 1. In any project, edit the `appsettings.json` file to set the following property values:
@@ -65,7 +65,7 @@ You can find the sample [here](https://github.com/microsoft/PowerApps-Samples/tr
 This sample is a .NET 6.0 Visual Studio 2022 solution that contains 2 projects (**CreateUpdateMultiple** and **ParallelCreateUpdateMultiple**) that perform the same operations:
 
 1. Create a new custom table named `sample_example` if it doesn't already exist.
-   
+
    The table will be created as a standard table by default. To create an elastic table, change the `UseElastic` property in `Settings.cs` to true.
 
 1. Prepare a configurable number of entity instances for the custom table representing records to create.
@@ -118,4 +118,3 @@ Details about each project and the default output are described in their respect
 - [CreateUpdateMultiple/README.md](CreateUpdateMultiple/README.md)
 - [ParallelCreateUpdateMultiple/README.md](ParallelCreateUpdateMultiple/README.md)
 - [UpsertMultiple/README.md](UpsertMultiple/README.md)
-

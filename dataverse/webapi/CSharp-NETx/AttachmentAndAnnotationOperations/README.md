@@ -12,15 +12,15 @@ This sample uses the common helper code in the [WebAPIService](https://github.co
 ## How to run the sample
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
-1. Open the `PowerApps-Samples\dataverse\webapi\C#-NETx\AttachmentAndAnnotationOperations\AttachmentAndAnnotationOperations.sln` file using Visual Studio 2022.
+1. Open the `PowerApps-Samples\dataverse\webapi\CSharp-NETx\AttachmentAndAnnotationOperations\AttachmentAndAnnotationOperations.sln` file using Visual Studio 2022.
 
    This solution contains two projects that include samples:
 
    - **ActivityMimeAttachmentOperations**: Demonstrates using Attachments.
    - **AnnotationOperations**: Demonstrates using Annotations.
-   
+
    **Note**: The **WebAPIService** project is included so that each of the other projects can depend on the common helper code provided by the service. The samples use several classes in the `WebAPIService/Messages` folder.
-   
+
    In **Solution Explorer**, right-click the project you want to run and choose **Set as Startup Project**.
 
 1. In either project, edit the `appsettings.json` file to set the following property values:
