@@ -109,6 +109,7 @@ export class AngularJSFlipControl implements ComponentFramework.StandardControl<
 			$scope.flipButtonModel = this._currentValue ? 0 : 1;
 
 			// Watch the click of the flip button
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 			$scope.$watchCollection("flipButtonModel", () => {
 				// Update the label text when Flip Button clicks
 				if ($scope.flipButtonModel) {
@@ -171,7 +172,7 @@ export class AngularJSFlipControl implements ComponentFramework.StandardControl<
 			this._currentValue = newValue;
 
 			// Angular Code. Update the 'flipButtonModel' value
-			const $scope = angular.element(document.getElementById(this._appDivId) as HTMLElement).scope();
+			const $scope = angular.element(document.getElementById(this._appDivId)!).scope();
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			$scope.$apply(($scope: any) => {

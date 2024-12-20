@@ -320,7 +320,7 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 			// Callback method - invoked after user has selected an item from the lookup dialog
 			// Data parameter is the item selected in the lookup dialog
 			(data: ComponentFramework.LookupValue[]) => {
-				if (data && data[0]) {
+				if (data?.[0]) {
 					// Get the ID and entityType of the record selected by the lookup
 					const id: string = data[0].id;
 					const entityType: string = data[0].entityType;
@@ -371,7 +371,7 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 		return this._context.webAPI.retrieveMultipleRecords(WebAPIControl._entityName, `?fetchXml=${fetchXML}`).then(
 			(response: ComponentFramework.WebApi.RetrieveMultipleResponse) => {
 				// Retrieve multiple completed successfully -- retrieve the averageValue
-				const averageVal: number = response.entities[0].average_val;
+				const averageVal: number = response.entities[0].average_val as number;
 
 				// Generate HTML to inject into the result div to showcase the result of the RetrieveMultiple Web API call
 				const resultHTML = `Average value of ${WebAPIControl._currencyAttributeNameFriendlyName} attribute for all ${WebAPIControl._entityName} records: ${averageVal}`;
@@ -405,7 +405,7 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 				// Loop through each returned record
 				for (const entity of response.entities) {
 					// Retrieve the value of _currencyAttributeName field
-					const value: number = entity[WebAPIControl._currencyAttributeName];
+					const value: number = entity[WebAPIControl._currencyAttributeName] as number;
 
 					// Check the value of _currencyAttributeName field and increment the correct counter
 					if (value == 100) {
@@ -457,13 +457,12 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 	 * Helper method to inject error string into result container div after failed Web API call
 	 * @param errorResponse : error object from rejected promise
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	private updateResultContainerTextWithErrorResponse(errorResponse: any): void {
+	private updateResultContainerTextWithErrorResponse(errorResponse: unknown): void {
 		if (this._resultContainerDiv) {
 			// Retrieve the error message from the errorResponse and inject into the result div
 			let errorHTML = "Error with Web API call:";
 			errorHTML += "<br />";
-			errorHTML += errorResponse.message;
+			errorHTML += (errorResponse as { message: string; }).message;
 			this._resultContainerDiv.innerHTML = errorHTML;
 		}
 	}

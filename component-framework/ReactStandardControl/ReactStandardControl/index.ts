@@ -44,7 +44,7 @@ export class ReactStandardControl implements ComponentFramework.StandardControl<
 		container: HTMLDivElement
 	): void {
 		this.notifyOutputChanged = notifyOutputChanged;
-		this.props.numberOfFaces = context.parameters.numberOfFaces.raw || 3;
+		this.props.numberOfFaces = context.parameters.numberOfFaces.raw ?? 3;
 		this.theContainer = container;
 	}
 
@@ -53,8 +53,9 @@ export class ReactStandardControl implements ComponentFramework.StandardControl<
 	 * @param context The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to names defined in the manifest, as well as utility functions
 	 */
 	public updateView(context: ComponentFramework.Context<IInputs>): void {
-		if (context.updatedProperties.includes("numberOfFaces"))
-			this.props.numberOfFaces = context.parameters.numberOfFaces.raw || 3;
+		if (context.updatedProperties.includes("numberOfFaces")) {
+			this.props.numberOfFaces = context.parameters.numberOfFaces.raw ?? 3;
+		}
 
 		ReactDOM.render(React.createElement(FacepileBasicExample, this.props), this.theContainer);
 	}

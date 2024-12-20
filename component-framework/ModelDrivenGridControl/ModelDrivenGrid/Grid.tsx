@@ -25,9 +25,9 @@ import { Text } from "@fluentui/react/lib/Text";
 type DataSet = ComponentFramework.PropertyHelper.DataSetApi.EntityRecord & IObjectWithKey;
 
 function stringFormat(template: string, ...args: string[]): string {
-	for (const k in args) {
-		template = template.replace("{" + k + "}", args[k]);
-	}
+	args?.forEach((arg, index) => {
+		template = template.replace("{" + index + "}", arg);
+	});
 	return template;
 }
 
@@ -77,7 +77,7 @@ const onRenderItemColumn = (
 	index?: number,
 	column?: IColumn
 ) => {
-	if (column && column.fieldName && item) {
+	if (column?.fieldName && item) {
 		return <>{item?.getFormattedValue(column.fieldName)}</>;
 	}
 	return <></>;
@@ -245,9 +245,9 @@ export const Grid = React.memo((props: GridProps) => {
 			.filter((col) => !col.isHidden && col.order >= 0)
 			.sort((a, b) => a.order - b.order)
 			.map((col) => {
-				const sortOn = sorting && sorting.find((s) => s.name === col.name);
+				const sortOn = sorting?.find((s) => s.name === col.name);
 				const filtered =
-					filtering && filtering.conditions && filtering.conditions.find((f) => f.attributeName == col.name);
+					filtering?.conditions?.find((f) => f.attributeName == col.name);
 				return {
 					key: col.name,
 					name: col.displayName,
@@ -274,10 +274,9 @@ export const Grid = React.memo((props: GridProps) => {
 	const onRenderRow: IDetailsListProps["onRenderRow"] = (props) => {
 		const customStyles: Partial<IDetailsRowStyles> = {};
 
-		if (props && props.item) {
-			const item = props.item;
-
-			if (highlightColor && highlightValue && item?.getValue("HighlightIndicator") == highlightValue) {
+		if (props?.item) {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+			if (highlightColor && highlightValue && props?.item?.getValue("HighlightIndicator") == highlightValue) {
 				customStyles.root = { backgroundColor: highlightColor };
 			}
 			return <DetailsRow {...props} styles={customStyles} />;

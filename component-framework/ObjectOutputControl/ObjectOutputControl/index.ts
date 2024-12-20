@@ -10,7 +10,9 @@ export class ObjectOutputControl implements ComponentFramework.ReactControl<IInp
 	/**
 	 * Empty constructor.
 	 */
-	constructor() {}
+	constructor() {
+		// Empty
+	}
 
 	/**
 	 * Used to initialize the control instance. Controls can kick off remote server calls and other initialization actions here.
@@ -70,7 +72,7 @@ export class ObjectOutputControl implements ComponentFramework.ReactControl<IInp
 	/**
 	 * Sets the output object and notifies the framework that the control has new outputs ready.
 	 */
-	private onLoadData = async () => {
+	private onLoadData = () => {
 		this._staticData = StaticData;
 		this._staticData.loadCounter = (this._staticData.loadCounter || 0) + 1;
 		this.notifyOutputChanged();

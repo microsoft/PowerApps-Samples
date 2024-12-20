@@ -77,7 +77,7 @@ export class MapControl implements ComponentFramework.StandardControl<IInputs, I
 	public buildMapUrl(addressString: string | undefined): string {
 		return addressString
 			? `https://www.google.com/maps/embed/v1/place?key=${
-					this._context.parameters.controlApiKey.raw || this.MAPS_API_KEY
+					this._context.parameters.controlApiKey.raw ?? this.MAPS_API_KEY
 				}&q=${encodeURIComponent(addressString)}`
 			: "";
 	}

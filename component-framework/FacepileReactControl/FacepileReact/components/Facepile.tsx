@@ -32,7 +32,7 @@ export class FacepileBasicExample extends React.Component<IFacepileBasicExampleP
 		super(props);
 
 		this.state = {
-			numberOfFaces: props.numberOfFaces || 3,
+			numberOfFaces: props.numberOfFaces ?? 3,
 			imagesFadeIn: true,
 			personaSize: PersonaSize.size32,
 		};
