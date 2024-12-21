@@ -17,7 +17,7 @@ class Program
     AuthType = ClientSecret;
     Url = {url};
     ClientId = 66667777-aaaa-8888-bbbb-9999cccc0000;
-    Secret = aaaaaaaa-6b6b-7c7c-8d8d-999999999999";
+    Secret = aaaaaaaa-6b6b-7c7c-8d8d-999999999999"; // Keep the ending quote after your secret
 
     static void Main()
     {

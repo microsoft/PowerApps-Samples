@@ -8,7 +8,7 @@ page_type: sample
 description: "This sample demonstrates how to use the CreateMultiple, UpdateMultiple, UpsertMultiple, and DeleteMultiple messages for standard and elastic tables using the Dataverse SDK for .NET."
 ---
 
-# Bulk Operations Sample
+# Bulk Operations sample
 
 This sample shows how to perform bulk create and update operations using several different approaches including the use of these classes:
 
@@ -42,7 +42,9 @@ You can access the full sample in the [BulkOperations](https://github.com/micros
 1. Your environment URL can be found in the Power Platform admin center and has the form `https://<environment-name>.crm.dynamics.com`.
 1. Build the solution, select the desired project as the startup project and press F5 to run the console application in debug mode.
 
-When the sample runs, you're prompted in a default browser to select an environment user account and enter a password. To avoid doing this every time you run a sample, insert a `Password` parameter into the connection string in the `appsettings.json` file. For example:
+When the sample runs, you're prompted in a default browser to select an environment user account and enter a password. To avoid repeated authentication every time you run a sample, insert a `Password` parameter into the connection string in the `appsettings.json` file.
+
+For example:
 
 ```json
 {
@@ -53,7 +55,7 @@ When the sample runs, you're prompted in a default browser to select an environm
 ```
 
 > **TIP**
-> You can set a user environment variable named `DATAVERSE_APPSETTINGS` to the file path of the `appsettings.json` file stored anywhere on your computer. The samples use that appsettings file if the environment variable exists and isn't null. Log out and back in again after you define the variable for it to take affect. You can manually set an environment variable by typing `env` in your system search bar, then choose **Environment variables** in **System properties** window.
+> You can set a user environment variable named `DATAVERSE_APPSETTINGS` to the file path of the `appsettings.json` file stored anywhere on your computer. The samples use that file if the environment variable exists and isn't null. Log out and back in again after you define the variable for it to take affect. You can manually set an environment variable by typing `env` in your system search bar, then choose **Environment variables** in the **System properties** window.
 
 ## What this sample does
 

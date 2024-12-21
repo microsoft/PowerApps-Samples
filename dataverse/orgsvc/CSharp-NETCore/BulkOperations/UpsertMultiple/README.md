@@ -45,7 +45,7 @@ When the `DeleteTable` property in Settings.cs is true, the table is deleted. Yo
 
 ## Sample output
 
-The full sample output should look like this:
+You can expect this output for the project:
 
 ```
 Creating sample_Example Standard table...

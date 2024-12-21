@@ -316,7 +316,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 #region DeleteMultiple
                 Console.WriteLine("=== Start Region 5: DeleteMultiple Example === \n");
 
-                Console.WriteLine($"Deleteing {Settings.NumberOfRecords} records using DeleteMultiple");
+                Console.WriteLine($"Deleting {Settings.NumberOfRecords} records using DeleteMultiple");
                 Console.WriteLine($"In batches of {Settings.BatchSize}");
                 DeleteMultipleRecords(serviceClient, deviceId, createdRecordIds, Settings.BatchSize);
                 Console.WriteLine($"Deleted {Settings.NumberOfRecords} records.\n");
