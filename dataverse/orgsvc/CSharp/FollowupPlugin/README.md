@@ -4,7 +4,7 @@ This sample shows how to write a simple plug-in that creates a follow-up activit
 
 ## How to run this sample
 
-1. Download or clone the [Samples](https://github.com/Microsoft/PowerApps-Samples) repo so that you have a local copy. This sample is located under PowerApps-Samples\dataverse\orgsvc\C#\FollowupPlugin.
+1. Download or clone the [Samples](https://github.com/Microsoft/PowerApps-Samples) repo so that you have a local copy. This sample is located under PowerApps-Samples\dataverse\orgsvc\CSharp\FollowupPlugin.
 2. Open the sample solution in Visual Studio, navigate to the project's properties, and verify the assembly will be signed during the build. Press F6 to build the sample's assembly (FollowupPluginXX.dll).
 3. Run the Plug-in Registration tool and register the sample's assembly in the Dataverse server's sandbox and database. When registering a step, specify the Create message, account table, and asynchronous mode.
 4. In Power Apps, navigate to the environment that you registered the plug-in with. Perform the appropriate data operation to invoke the message and table request that you registered the plug-in on (create an account).

@@ -111,7 +111,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 is the same as with standard tables. This is because WebAPIServiceClient manages the sessionToken for you,
                 demonstrating how this can be managed in your .NET code.
 
-                In PowerApps-Samples\dataverse\webapi\C#-NETx\WebAPIService\Service.cs
+                In PowerApps-Samples\dataverse\webapi\CSharp-NETx\WebAPIService\Service.cs
 
                 Within the WebAPIServiceClient.SendAsync method:
 

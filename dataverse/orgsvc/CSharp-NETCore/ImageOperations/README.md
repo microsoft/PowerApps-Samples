@@ -1,4 +1,4 @@
-﻿# Sample: Image Operations using Dataverse SDK for .NET
+# Sample: Image Operations using Dataverse SDK for .NET
 
 This .NET 6.0 sample demonstrates how to perform operations with image columns using the Dataverse SDK for .NET.
 

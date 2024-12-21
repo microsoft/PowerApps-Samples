@@ -166,13 +166,13 @@
     <Compile Include="..\..\..\LoginUX\ExampleLoginForm.xaml.cs">
       <Link>LoginUX\ExampleLoginForm.xaml.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\orgsvc\C#\MyOrganizationSdkTypes.cs">
+    <Compile Include="..\..\..\orgsvc\CSharp\MyOrganizationSdkTypes.cs">
       <Link>MyOrganizationSdkTypes.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\orgsvc\C#\OptionSets.cs">
+    <Compile Include="..\..\..\orgsvc\CSharp\OptionSets.cs">
       <Link>OptionSets.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\orgsvc\C#\SampleHelpers.cs">
+    <Compile Include="..\..\..\orgsvc\CSharp\SampleHelpers.cs">
       <Link>SampleHelpers.cs</Link>
     </Compile>
     <Compile Include="SampleMethods.cs" />

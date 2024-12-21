@@ -2,7 +2,7 @@
 
 This .NET 6.0 sample demonstrates how to perform operations with image columns using the Dataverse Web API.
 
-This sample uses the common helper code in the [WebAPIService class library (C#)](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/samples/webapiservice).
+This sample uses the common helper code in the [WebAPIService class library (CSharp)](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/samples/webapiservice).
 
 ## Prerequisites
 
@@ -12,7 +12,7 @@ This sample uses the common helper code in the [WebAPIService class library (C#)
 ## How to run the sample
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
-1. Open the `PowerApps-Samples\dataverse\webapi\C#-NETx\ImageOperations\ImageOperations.sln` file using Visual Studio 2022.
+1. Open the `PowerApps-Samples\dataverse\webapi\CSharp-NETx\ImageOperations\ImageOperations.sln` file using Visual Studio 2022.
 1. Edit the `appsettings.json` file to set the following property values:
 
    |Property|Instructions  |

@@ -163,7 +163,7 @@
     <Compile Include="..\..\LoginUX\ExampleLoginForm.xaml.cs">
       <Link>LoginUX\ExampleLoginForm.xaml.cs</Link>
     </Compile>
-    <Compile Include="..\..\orgsvc\C#\SampleHelpers.cs">
+    <Compile Include="..\..\orgsvc\CSharp\SampleHelpers.cs">
       <Link>SampleHelpers.cs</Link>
     </Compile>
     <Compile Include="SampleMethods.cs" />
