@@ -12,7 +12,7 @@ This sample uses the [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient](ht
 ## How to run the sample
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
-1. Open the `PowerApps-Samples\dataverse\orgsvc\C#-NETCore\AttachmentAndAnnotationOperations\AttachmentAndAnnotationOperations.sln` file using Visual Studio 2022.
+1. Open the `PowerApps-Samples\dataverse\orgsvc\CSharp-NETCore\AttachmentAndAnnotationOperations\AttachmentAndAnnotationOperations.sln` file using Visual Studio 2022.
 
    This solution contains two projects that include samples:
 

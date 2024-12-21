@@ -12,7 +12,7 @@ This sample uses the [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient](ht
 ## How to run the sample
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
-1. Open the `PowerApps-Samples\dataverse\orgsvc\C#-NETCore\ImageOperations\ImageOperations.sln` file using Visual Studio 2022.
+1. Open the `PowerApps-Samples\dataverse\orgsvc\CSharp-NETCore\ImageOperations\ImageOperations.sln` file using Visual Studio 2022.
 1. Edit the *appsettings.json* file. Set the connection string `Url` and `Username` parameters as appropriate for your test environment.
 
    The environment Url can be found in the Power Platform admin center. It has the form https://\<environment-name>.crm.dynamics.com.

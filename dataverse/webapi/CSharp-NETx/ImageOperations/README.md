@@ -1,8 +1,8 @@
-﻿# Sample: Image Operations using Dataverse Web API 
+﻿# Sample: Image Operations using Dataverse Web API
 
 This .NET 6.0 sample demonstrates how to perform operations with image columns using the Dataverse Web API.
 
-This sample uses the common helper code in the [WebAPIService class library (C#)](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/samples/webapiservice).
+This sample uses the common helper code in the [WebAPIService class library (CSharp)](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/samples/webapiservice).
 
 ## Prerequisites
 
@@ -12,7 +12,7 @@ This sample uses the common helper code in the [WebAPIService class library (C#)
 ## How to run the sample
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
-1. Open the `PowerApps-Samples\dataverse\webapi\C#-NETx\ImageOperations\ImageOperations.sln` file using Visual Studio 2022.
+1. Open the `PowerApps-Samples\dataverse\webapi\CSharp-NETx\ImageOperations\ImageOperations.sln` file using Visual Studio 2022.
 1. Edit the `appsettings.json` file to set the following property values:
 
    |Property|Instructions  |
@@ -108,9 +108,9 @@ Sample completed.
 
 ## Demonstrates
 
-The code for this sample is in the [Program.cs](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse//webapi/C#-NETx/ImageOperations/Program.cs) file.
+The code for this sample is in the [Program.cs](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse//webapi/CSharp-NETx/ImageOperations/Program.cs) file.
 
-The project uses a `Utility` class to perform operations involving creating or retrieving schema data. This class is in the [Utility.cs](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/C#-NETx/ImageOperations/Utility.cs) file.
+The project uses a `Utility` class to perform operations involving creating or retrieving schema data. This class is in the [Utility.cs](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/CSharp-NETx/ImageOperations/Utility.cs) file.
 
 This project performs these operations:
 
@@ -125,7 +125,6 @@ This sample needs to create a new image column that is the primary image for the
    > This image column `CanStoreFullImage` value is false.
 
 1. Use the `Utility.SetTablePrimaryImageName` method to make the new `sample_ImageColumn` the primary image column.
-
 
 ### Create account records with image data
 
@@ -153,9 +152,9 @@ This program uses three different methods to download image files.
 
 #### Download with Actions
 
-The code uses the static `DownloadImageWithActions` method, which encapsulates the use of the 
+The code uses the static `DownloadImageWithActions` method, which encapsulates the use of the
 [InitializeFileBlocksDownload](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/initializefileblocksdownload) and  
-[DownloadBlock](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/downloadblock) actions to download the images as described in 
+[DownloadBlock](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/downloadblock) actions to download the images as described in
 [Use Dataverse messages to download a file](https://learn.microsoft.com/power-apps/developer/data-platform/file-column-data?tabs=webapi#use-dataverse-messages-to-download-a-file).
 
 > **Note:**
@@ -163,7 +162,7 @@ The code uses the static `DownloadImageWithActions` method, which encapsulates t
 
 #### Download with Chunks
 
-The code uses the static `DownloadImageWithChunks` method, which demonstrates how to download images as described in 
+The code uses the static `DownloadImageWithChunks` method, which demonstrates how to download images as described in
 [Download the file in chunks using Web API](https://learn.microsoft.com/power-apps/developer/data-platform/file-column-data#download-the-file-in-chunks-using-web-api).
 
 > **Note:**
@@ -171,7 +170,7 @@ The code uses the static `DownloadImageWithChunks` method, which demonstrates ho
 
 #### Download with Stream
 
-The code uses the static `DownloadImageWithStream` method, which demonstrates how to download images as described in 
+The code uses the static `DownloadImageWithStream` method, which demonstrates how to download images as described in
 [Download a file in a single request using Web API](https://learn.microsoft.com/power-apps/developer/data-platform/file-column-data#download-a-file-in-a-single-request-using-web-api)
 
 > **Note:**

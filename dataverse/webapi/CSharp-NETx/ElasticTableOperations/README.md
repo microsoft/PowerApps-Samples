@@ -21,7 +21,7 @@ This sample uses the common helper code in the [WebAPIService](../WebAPIService)
 ## How to run the sample
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
-1. Open the `PowerApps-Samples\dataverse\webapi\C#-NETx\ElasticTableOperations\ElasticTableOperations.sln` file using Visual Studio 2022
+1. Open the `PowerApps-Samples\dataverse\webapi\CSharp-NETx\ElasticTableOperations\ElasticTableOperations.sln` file using Visual Studio 2022
 1. Edit the `appsettings.json` file to set the following property values:
 
    |Property|Instructions  |
@@ -176,7 +176,6 @@ In addition to the WebAPIService project classes, this project depends on data i
 |`WebAPIService\Messages\ExecuteCosmosSqlQueryRequest.cs`|Contains the data to send the `ExecuteCosmosSqlQuery` message|
 |`WebAPIService\Messages\ExecuteCosmosSqlQueryResponse.cs`|Contains the data from the ExecuteCosmosSqlQueryRequest|
 
-
 This sample has 10 regions:
 
 - [Create Elastic table](#create-elastic-table)
@@ -190,11 +189,9 @@ This sample has 10 regions:
 - [Demonstrate DeleteMultiple](#demonstrate-deletemultiple)
 - [Delete Table](#delete-table)
 
-
 ### Create Elastic table
 
 The code in this region sends this request to create a user-owned elastic table named `contoso_SensorData` with the following columns:
-
 
 |Schema Name  |Type  |Description  |
 |---------|---------|---------|
@@ -205,7 +202,6 @@ The code in this region sends this request to create a user-owned elastic table 
 |`contoso_EnergyConsumption`|String|A string column using JSON format to demonstrate setting and querying JSON data using `ExecuteCosmosSqlQuery` function.|
 
 The `TableType` property set to 'Elastic' makes this an elastic table.
-
 
 **Request**
 
@@ -578,7 +574,6 @@ OData-Version: 4.0
 }
 ```
 
-
 Then using alternate key:
 
 **Request**
@@ -827,15 +822,12 @@ HTTP/1.1 204 NoContent
 OData-Version: 4.0
 ```
 
-
-
 ### Demonstrate ExecuteCosmosSqlQuery
 
 This section has two parts:
 
 - [Execute the query to retrieve the first 50 records](#execute-the-query-to-retrieve-the-first-50-records)
 - [Retrieve the paged results as long as the response.HasMore value is true](#retrieve-the-paged-results-as-long-as-the-responsehasmore-value-is-true)
-
 
 #### Execute the query to retrieve the first 50 records
 
@@ -882,7 +874,6 @@ OData-Version: 4.0
 #### Retrieve the paged results as long as the response.HasMore value is true
 
 This time the `PagingCookie` parameter has the value returned from the previous response.
-
 
 **Request**
 
@@ -967,8 +958,6 @@ HTTP/1.1 204 NoContent
 OData-Version: 4.0
 ```
 
-
-
 ### Delete Table
 
 The code in this section sends this request to delete the `contoso_SensorData` table using the `LogicalName` alternate key.
@@ -989,8 +978,6 @@ Accept: application/json
 HTTP/1.1 204 NoContent
 OData-Version: 4.0
 ```
-
-
 
 ## Clean up
 

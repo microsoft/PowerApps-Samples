@@ -22,7 +22,7 @@ This sample uses the [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient Cla
 ## How to run the sample
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
-1. Open the `PowerApps-Samples\dataverse\orgsvc\C#-NETCore\ElasticTableOperations\ElasticTableOperations.sln` file using Visual Studio 2022.
+1. Open the `PowerApps-Samples\dataverse\orgsvc\CSharp-NETCore\ElasticTableOperations\ElasticTableOperations.sln` file using Visual Studio 2022.
 1. Edit the `appsettings.json` file. Set the connection string `Url` and `Username` parameters as appropriate for your test environment.
 
    The environment Url can be found in the Power Platform admin center. It has the form https://\<environment-name>.crm.dynamics.com.
@@ -196,7 +196,6 @@ To have strong consistency on retrieve operations you need to send the current s
 #### Upsert replace behavior
 
 When performing an upsert operation on an elastic table, you must include all properties for a record that may be updated. If a matching record is found, all the data for that record will be replace by the data you are sending with your Upsert. More information: [Upsert a record in an elastic table](https://learn.microsoft.com/power-apps/developer/data-platform/use-elastic-tables?tabs=sdk#upsert-a-record-in-an-elastic-table)
-
 
 ### Region 2: Create, Retrieve, Update, Upsert, and Delete examples with partitionid
 

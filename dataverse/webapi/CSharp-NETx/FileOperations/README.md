@@ -12,7 +12,7 @@ This sample uses the common helper code in the [WebAPIService](../WebAPIService)
 ## How to run the sample
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
-1. Open the [PowerApps-Samples/dataverse/webapi/C#-NETx/FileOperations/FileOperations.sln](FileOperations.sln) file using Visual Studio 2022.
+1. Open the [PowerApps-Samples/dataverse/webapi/CSharp-NETx/FileOperations/FileOperations.sln](FileOperations.sln) file using Visual Studio 2022.
 1. Edit the [appsettings.json](../appsettings.json) file to set the following property values:
 
    |Property|Instructions  |
@@ -36,7 +36,7 @@ Created account record with accountid:5fb4f993-7c55-ed11-bba3-000d3a9933c9
 Uploading file Files\25mb.pdf ...
 Uploaded file Files\25mb.pdf
 Downloading file from accounts(5fb4f993-7c55-ed11-bba3-000d3a9933c9)/sample_filecolumn ...
-Downloaded the file to E:\GitHub\PowerApps-Samples\dataverse\webapi\C#-NETx\FileOperations\FileOperationsWithActions\bin\Debug\net6.0//downloaded-25mb.pdf.
+Downloaded the file to E:\GitHub\PowerApps-Samples\dataverse\webapi\CSharp-NETx\FileOperations\FileOperationsWithActions\bin\Debug\net6.0//downloaded-25mb.pdf.
 Deleted the file using FileId.
 Deleted the account record.
 Deleting the file column named 'sample_filecolumn' on the account table ...
