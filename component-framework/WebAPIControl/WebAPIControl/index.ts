@@ -462,7 +462,7 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 			// Retrieve the error message from the errorResponse and inject into the result div
 			let errorHTML = "Error with Web API call:";
 			errorHTML += "<br />";
-			errorHTML += (errorResponse as { message: string; }).message;
+			errorHTML += (errorResponse as { message: string }).message;
 			this._resultContainerDiv.innerHTML = errorHTML;
 		}
 	}

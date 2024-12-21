@@ -246,8 +246,7 @@ export const Grid = React.memo((props: GridProps) => {
 			.sort((a, b) => a.order - b.order)
 			.map((col) => {
 				const sortOn = sorting?.find((s) => s.name === col.name);
-				const filtered =
-					filtering?.conditions?.find((f) => f.attributeName == col.name);
+				const filtered = filtering?.conditions?.find((f) => f.attributeName == col.name);
 				return {
 					key: col.name,
 					name: col.displayName,

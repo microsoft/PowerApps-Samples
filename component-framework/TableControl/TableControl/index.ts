@@ -139,7 +139,7 @@ export class TableControl implements ComponentFramework.StandardControl<IInputs,
 			// entityTypes: ["account", "contact"]
 
 			entityTypes: [entityName!],
-		}
+		};
 
 		const lookUpPromise = this._context.utils.lookupObjects(lookUpOptions);
 

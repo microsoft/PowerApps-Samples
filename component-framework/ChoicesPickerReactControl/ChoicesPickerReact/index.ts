@@ -61,7 +61,8 @@ export class ChoicesPickerReact implements ComponentFramework.ReactControl<IInpu
 				disabled: disabled,
 				masked: masked,
 				formFactor:
-					context.client.getFormFactor() == (FormFactors.Phone as number) || context.mode.allocatedWidth < SmallFormFactorMaxWidth
+					context.client.getFormFactor() == (FormFactors.Phone as number) ||
+					context.mode.allocatedWidth < SmallFormFactorMaxWidth
 						? "small"
 						: "large",
 			});

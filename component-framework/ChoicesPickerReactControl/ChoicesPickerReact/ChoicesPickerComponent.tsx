@@ -20,7 +20,12 @@ const onRenderOption = (option?: IDropdownOption): JSX.Element => {
 		return (
 			<div>
 				{option.data?.icon && (
-					<Icon style={iconStyles} iconName={option.data.icon as string} aria-hidden="true" title={option.data.icon as string} />
+					<Icon
+						style={iconStyles}
+						iconName={option.data.icon as string}
+						aria-hidden="true"
+						title={option.data.icon as string}
+					/>
 				)}
 				<span>{option.text}</span>
 			</div>

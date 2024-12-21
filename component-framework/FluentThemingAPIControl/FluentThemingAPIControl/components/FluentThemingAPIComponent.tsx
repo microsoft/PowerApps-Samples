@@ -33,7 +33,10 @@ export const FluentThemingAPIComponent: React.FC<IFluentThemingAPIComponentProps
 					<FluentV9ThemingAPIComponent theme={fluentDesignLanguage.tokenTheme as Theme} />
 				</div>
 				<div className={styles.child}>
-					<FluentV8ThemingAPIComponent theme={fluentDesignLanguage.tokenTheme as Theme} brand={fluentDesignLanguage.brand} />
+					<FluentV8ThemingAPIComponent
+						theme={fluentDesignLanguage.tokenTheme as Theme}
+						brand={fluentDesignLanguage.brand}
+					/>
 				</div>
 				<div className={styles.child}>
 					<NonFluentThemingAPIComponent theme={fluentDesignLanguage.tokenTheme as Theme} />

@@ -66,7 +66,8 @@ export class ChoicesPicker implements ComponentFramework.StandardControl<IInputs
 					disabled: disabled,
 					masked: masked,
 					formFactor:
-						context.client.getFormFactor() == FormFactors.Phone as number || context.mode.allocatedWidth < SmallFormFactorMaxWidth
+						context.client.getFormFactor() == (FormFactors.Phone as number) ||
+						context.mode.allocatedWidth < SmallFormFactorMaxWidth
 							? "small"
 							: "large",
 				}),
