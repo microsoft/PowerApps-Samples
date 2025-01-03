@@ -1,25 +1,38 @@
-﻿using Microsoft.Xrm.Sdk.Messages;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.PowerPlatform.Dataverse.Client;
+using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Metadata;
-using Microsoft.Xrm.Tooling.Connector;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VisioApi = Microsoft.Office.Interop.Visio;
 
 namespace PowerApps.Samples
 {
-  public partial class DiagramBuilder
+    public partial class DiagramBuilder
     {
-       
+        /// <summary>
+        /// Application configuration settings.
+        /// </summary>
+        static IConfiguration Configuration { get; }
 
-        [STAThread] // Added to support UX
+        static DiagramBuilder()
+        {
+            // Get the path to the appsettings file. If the environment variable is set,
+            // use that file path. Otherwise, use the runtime folder's settings file.
+            string path = Environment.GetEnvironmentVariable("DATAVERSE_APPSETTINGS");
+            if (path == null) path = "appsettings.json";
+
+            // Load the app's configuration settings from the JSON file.
+            Configuration = new ConfigurationBuilder()
+                .AddJsonFile(path, optional: false, reloadOnChange: true)
+                .Build();
+        }
+
+       [STAThread]
        public static void Main(string[] args)
         {
-            CrmServiceClient service = null;
+            ServiceClient service = null;
             String filename = String.Empty;
             VisioApi.Application application;
             VisioApi.Document document;
@@ -27,15 +40,11 @@ namespace PowerApps.Samples
 
             try
             {
-                service = SampleHelpers.Connect("Connect");
+                // Create a Dataverse service client using the default connection string.
+                service = new ServiceClient(Configuration.GetConnectionString("default"));
+
                 if (service.IsReady)
                 {
-                    #region Sample Code
-                    ////////////////////////////////////
-                    #region Set up
-                    SetUpSample(service);
-                    #endregion Set up
-                    #region Demonstrate
                     // Load Visio and create a new document.
                     application = new VisioApi.Application();
                     application.Visible = false; // Not showing the UI increases rendering speed  
@@ -88,18 +97,17 @@ namespace PowerApps.Samples
                     document.SaveAs(Directory.GetCurrentDirectory() + "\\" + filename);
                     application.Quit();
                 }
-#endregion Demonstrate
                 else
                 {
                     const string UNABLE_TO_LOGIN_ERROR = "Unable to Login to Microsoft Dataverse";
-                    if (service.LastCrmError.Equals(UNABLE_TO_LOGIN_ERROR))
+                    if (service.LastError.Equals(UNABLE_TO_LOGIN_ERROR))
                     {
                         Console.WriteLine("Check the connection string values in cds/App.config.");
-                        throw new Exception(service.LastCrmError);
+                        throw new Exception(service.LastError);
                     }
                     else
                     {
-                        throw service.LastCrmException;
+                        throw service.LastException;
                     }
                 }
             }
@@ -120,4 +128,3 @@ namespace PowerApps.Samples
     }
             
  }
-#endregion SampleCode
