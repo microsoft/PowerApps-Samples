@@ -35,8 +35,8 @@
 		"typescript-eslint": "^8.18.1"
 	},
 	"overrides": {
-		"@types/react": "$@types/react",
-		"react": "$react",
-		"react-dom": "$react-dom"
+		"@types/react": "^16.14.62",
+		"react": "^16.14.0",
+		"react-dom": "^16.14.0"
 	}
 }
