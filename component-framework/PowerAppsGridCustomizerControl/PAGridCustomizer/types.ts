@@ -18,6 +18,7 @@ export interface PAOneGridCustomizer {
 /**
  * Provide cell renderer overrides per column data type.
  */
+// eslint-disable-next-line @typescript-eslint/consistent-indexed-object-style
 export type CellRendererOverrides = {
 	[dataType in ColumnDataType]?: (
 		props: CellRendererProps,
@@ -28,6 +29,7 @@ export type CellRendererOverrides = {
 /**
  * Provide cell editor overrides per column data type.
  */
+// eslint-disable-next-line @typescript-eslint/consistent-indexed-object-style
 export type CellEditorOverrides = {
 	[dataType in ColumnDataType]?: (
 		defaultProps: CellEditorProps,
@@ -141,7 +143,7 @@ export interface NoRowsOverlayConfig {
 	/** Component to render when no rows are present */
 	component: React.ComponentClass | undefined;
 	/** Properties to pass to the no row component */
-	props: unknown | undefined;
+	props: unknown | undefined; // eslint-disable-line @typescript-eslint/no-redundant-type-constituents
 }
 
 export const RECID = "__rec_id";

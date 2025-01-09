@@ -81,8 +81,8 @@ export class ControlStateAPI implements ComponentFramework.StandardControl<IInpu
 			this._stateDictionary = state;
 
 			// Retrieve persisted state and set values into variables so state can be used during control rendering.
-			this._persistedSelectedColor = state[PERSISTED_SELECTED_COLOR_KEY_NAME];
-			this._persistedSelectedLabel = state[PERSISTED_SELECTED_LABEL_KEY_NAME];
+			this._persistedSelectedColor = state[PERSISTED_SELECTED_COLOR_KEY_NAME] as string;
+			this._persistedSelectedLabel = state[PERSISTED_SELECTED_LABEL_KEY_NAME] as string;
 		}
 
 		// State not perisited in control -- set variable to default values

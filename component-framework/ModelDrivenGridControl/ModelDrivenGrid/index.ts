@@ -14,9 +14,7 @@ export class ModelDrivenGrid implements ComponentFramework.StandardControl<IInpu
 	sortedRecordsIds: string[] = [];
 	resources: ComponentFramework.Resources;
 	isTestHarness: boolean;
-	records: {
-		[id: string]: ComponentFramework.PropertyHelper.DataSetApi.EntityRecord;
-	};
+	records: Record<string, ComponentFramework.PropertyHelper.DataSetApi.EntityRecord>;
 	currentPage = 1;
 	isFullScreen = false;
 
@@ -110,13 +108,13 @@ export class ModelDrivenGrid implements ComponentFramework.StandardControl<IInpu
 
 		// In MDAs, the initial population of the dataset does not provide updatedProperties
 		const initialLoad = !this.sortedRecordsIds && dataset.sortedRecordIds;
-		const datasetChanged = context.updatedProperties.indexOf("dataset") > -1 || initialLoad;
+		const datasetChanged = context.updatedProperties.includes("dataset") || initialLoad;
 		const resetPaging = datasetChanged && !dataset.loading && !dataset.paging.hasPreviousPage && this.currentPage !== 1;
 
-		if (context.updatedProperties.indexOf("fullscreen_close") > -1) {
+		if (context.updatedProperties.includes("fullscreen_close")) {
 			this.isFullScreen = false;
 		}
-		if (context.updatedProperties.indexOf("fullscreen_open") > -1) {
+		if (context.updatedProperties.includes("fullscreen_open")) {
 			this.isFullScreen = true;
 		}
 
@@ -150,7 +148,7 @@ export class ModelDrivenGrid implements ComponentFramework.StandardControl<IInpu
 				currentPage: this.currentPage,
 				totalResultCount: paging.totalResultCount,
 				sorting: dataset.sorting,
-				filtering: dataset.filtering && dataset.filtering.getFilter(),
+				filtering: dataset.filtering?.getFilter(),
 				resources: this.resources,
 				itemsLoading: dataset.loading,
 				highlightValue: this.context.parameters.HighlightValue.raw,

@@ -8,7 +8,9 @@ export class PAGridCustomizer implements ComponentFramework.ReactControl<IInputs
 	/**
 	 * Empty constructor.
 	 */
-	constructor() {}
+	constructor() {
+		// Empty
+	}
 
 	/**
 	 * Used to initialize the control instance. Controls can kick off remote server calls and other initialization actions here.
@@ -25,7 +27,7 @@ export class PAGridCustomizer implements ComponentFramework.ReactControl<IInputs
 		const eventName = context.parameters.EventName.raw;
 		if (eventName) {
 			const paOneGridCustomizer: PAOneGridCustomizer = { cellRendererOverrides, cellEditorOverrides };
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
 			(context as any).factory.fireEvent(eventName, paOneGridCustomizer);
 		}
 	}

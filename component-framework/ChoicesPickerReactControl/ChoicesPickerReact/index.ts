@@ -51,7 +51,7 @@ export class ChoicesPickerReact implements ComponentFramework.ReactControl<IInpu
 			masked = !value.security.readable;
 		}
 
-		if (value && value.attributes && configuration && configuration) {
+		if (value?.attributes && configuration && configuration) {
 			return React.createElement(ChoicesPickerComponent, {
 				label: value.attributes.DisplayName,
 				options: value.attributes.Options,
@@ -61,7 +61,8 @@ export class ChoicesPickerReact implements ComponentFramework.ReactControl<IInpu
 				disabled: disabled,
 				masked: masked,
 				formFactor:
-					context.client.getFormFactor() == FormFactors.Phone || context.mode.allocatedWidth < SmallFormFactorMaxWidth
+					context.client.getFormFactor() == (FormFactors.Phone as number) ||
+					context.mode.allocatedWidth < SmallFormFactorMaxWidth
 						? "small"
 						: "large",
 			});

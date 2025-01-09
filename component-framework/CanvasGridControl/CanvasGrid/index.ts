@@ -106,13 +106,13 @@ export class CanvasGrid implements ComponentFramework.StandardControl<IInputs, I
 	public updateView(context: ComponentFramework.Context<IInputs>): void {
 		const dataset = context.parameters.records;
 		const paging = context.parameters.records.paging;
-		const datasetChanged = context.updatedProperties.indexOf("dataset") > -1;
+		const datasetChanged = context.updatedProperties.includes("dataset");
 		const resetPaging = datasetChanged && !dataset.loading && !dataset.paging.hasPreviousPage && this.currentPage !== 1;
 
-		if (context.updatedProperties.indexOf("fullscreen_close") > -1) {
+		if (context.updatedProperties.includes("fullscreen_close")) {
 			this.isFullScreen = false;
 		}
-		if (context.updatedProperties.indexOf("fullscreen_open") > -1) {
+		if (context.updatedProperties.includes("fullscreen_open")) {
 			this.isFullScreen = true;
 		}
 
@@ -144,7 +144,7 @@ export class CanvasGrid implements ComponentFramework.StandardControl<IInputs, I
 				hasPreviousPage: paging.hasPreviousPage,
 				currentPage: this.currentPage,
 				sorting: dataset.sorting,
-				filtering: dataset.filtering && dataset.filtering.getFilter(),
+				filtering: dataset.filtering?.getFilter(),
 				resources: this.resources,
 				itemsLoading: dataset.loading,
 				highlightValue: this.context.parameters.HighlightValue.raw,

@@ -209,7 +209,7 @@ export class DataSetGrid implements ComponentFramework.StandardControl<IInputs, 
 				entityName: entityReference.name,
 				entityId: entityReference.id.guid,
 			};
-			this.contextObj.navigation.openForm(entityFormOptions);
+			void this.contextObj.navigation.openForm(entityFormOptions);
 		}
 	}
 
