@@ -24,7 +24,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */ /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
 /* Below CSS are based on Boostrap v3.3.7 */
-.SampleNamespace\.JSAngularJSFlipControl pre {
+.SampleNamespace\.AngularJSFlipControl pre {
 	display: block;
 	padding: 9.5px;
 	margin: 0 0 10px;
@@ -37,41 +37,41 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	border: 1px solid #ccc;
 	border-radius: 4px;
 }
-.SampleNamespace\.JSAngularJSFlipControl pre {
+.SampleNamespace\.AngularJSFlipControl pre {
 	font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
 }
-.SampleNamespace\.JSAngularJSFlipControl pre {
+.SampleNamespace\.AngularJSFlipControl pre {
 	overflow: auto;
 }
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary {
+.SampleNamespace\.AngularJSFlipControl .btn-primary {
 	color: #fff;
 	background-color: #337ab7;
 	border-color: #2e6da4;
 }
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary.focus,
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary:focus {
+.SampleNamespace\.AngularJSFlipControl .btn-primary.focus,
+.SampleNamespace\.AngularJSFlipControl .btn-primary:focus {
 	color: #fff;
 	background-color: #286090;
 	border-color: #122b40;
 }
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary:hover {
+.SampleNamespace\.AngularJSFlipControl .btn-primary:hover {
 	color: #fff;
 	background-color: #286090;
 	border-color: #204d74;
 }
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary.active,
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary:active,
+.SampleNamespace\.AngularJSFlipControl .btn-primary.active,
+.SampleNamespace\.AngularJSFlipControl .btn-primary:active,
 .open > .dropdown-toggle.btn-primary {
 	color: #fff;
 	background-color: #286090;
 	border-color: #204d74;
 }
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary.active.focus,
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary.active:focus,
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary.active:hover,
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary:active.focus,
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary:active:focus,
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary:active:hover,
+.SampleNamespace\.AngularJSFlipControl .btn-primary.active.focus,
+.SampleNamespace\.AngularJSFlipControl .btn-primary.active:focus,
+.SampleNamespace\.AngularJSFlipControl .btn-primary.active:hover,
+.SampleNamespace\.AngularJSFlipControl .btn-primary:active.focus,
+.SampleNamespace\.AngularJSFlipControl .btn-primary:active:focus,
+.SampleNamespace\.AngularJSFlipControl .btn-primary:active:hover,
 .open > .dropdown-toggle.btn-primary.focus,
 .open > .dropdown-toggle.btn-primary:focus,
 .open > .dropdown-toggle.btn-primary:hover {
@@ -79,28 +79,28 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	background-color: #204d74;
 	border-color: #122b40;
 }
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary.active,
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary:active,
+.SampleNamespace\.AngularJSFlipControl .btn-primary.active,
+.SampleNamespace\.AngularJSFlipControl .btn-primary:active,
 .open > .dropdown-toggle.btn-primary {
 	background-image: none;
 }
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary.disabled.focus,
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary.disabled:focus,
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary.disabled:hover,
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary[disabled].focus,
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary[disabled]:focus,
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary[disabled]:hover,
+.SampleNamespace\.AngularJSFlipControl .btn-primary.disabled.focus,
+.SampleNamespace\.AngularJSFlipControl .btn-primary.disabled:focus,
+.SampleNamespace\.AngularJSFlipControl .btn-primary.disabled:hover,
+.SampleNamespace\.AngularJSFlipControl .btn-primary[disabled].focus,
+.SampleNamespace\.AngularJSFlipControl .btn-primary[disabled]:focus,
+.SampleNamespace\.AngularJSFlipControl .btn-primary[disabled]:hover,
 fieldset[disabled].btn-primary.focus,
 fieldset[disabled].btn-primary:focus,
 fieldset[disabled].btn-primary:hover {
 	background-color: #337ab7;
 	border-color: #2e6da4;
 }
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary.badge {
+.SampleNamespace\.AngularJSFlipControl .btn-primary.badge {
 	color: #337ab7;
 	background-color: #fff;
 }
-.SampleNamespace\.JSAngularJSFlipControl .btn {
+.SampleNamespace\.AngularJSFlipControl .btn {
 	display: inline-block;
 	padding: 6px 12px;
 	margin-bottom: 0;
