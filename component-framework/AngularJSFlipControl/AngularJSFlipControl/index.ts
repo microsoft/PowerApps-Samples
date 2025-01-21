@@ -68,7 +68,7 @@ export class AngularJSFlipControl implements ComponentFramework.StandardControl<
 		const randomInt: number = Math.floor(Math.floor(100) * Math.random());
 
 		this._appDivId = this.createUniqueId(context, "angularflip_controlid", randomInt);
-		this._appId = this.createUniqueId(context, "JSAngularJSFlipControl", randomInt);
+		this._appId = this.createUniqueId(context, "AngularJSFlipControl", randomInt);
 		this._controllerId = this.createUniqueId(context, "powerApps.angularui.demo", randomInt);
 		this._notifyOutputChanged = notifyOutputChanged;
 
@@ -93,14 +93,7 @@ export class AngularJSFlipControl implements ComponentFramework.StandardControl<
 		container.appendChild(appDiv);
 
 		// Angular code. Angular module/controller initialization.
-		angular.module(this._controllerId, [
-			// eslint-disable-next-line @typescript-eslint/no-require-imports
-			require("angular-animate"),
-			// eslint-disable-next-line @typescript-eslint/no-require-imports
-			require("angular-sanitize"),
-			// eslint-disable-next-line @typescript-eslint/no-require-imports
-			require("angular-ui-bootstrap"),
-		]);
+		angular.module(this._controllerId, [ngAnimate, ngSanitize, uiBootstrap]);
 		angular.module(this._controllerId).controller(this._appId, ($scope) => {
 			// Intialize 'labelModel'. Assign initial option text to the Angular $scope labelModel. It will be revealed in '<pre>{{labelModel}}</pre>'
 			$scope.labelModel = this._currentValue ? this._optionTrueLabel : this._optionFalseLabel;
