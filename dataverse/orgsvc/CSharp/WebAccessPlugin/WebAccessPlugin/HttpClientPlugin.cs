@@ -71,23 +71,8 @@ namespace PowerApps.Samples
             tracingService.Trace("  Exception: {0}", ex.ToString());
           }
 
-
           throw new InvalidPluginExecutionException(string.Format(CultureInfo.InvariantCulture,
               "An exception occurred while attempting to issue the request.", aex));
-
-          /*
-         Expected in the Plugin Trace log when failed:
-
-        Downloading the target URI: http://www.bing.com
-        Inner Exceptions:
-          Exception: System.Threading.Tasks.TaskCanceledException: A task was canceled.
-        Exception: Microsoft.Xrm.Sdk.InvalidPluginExecutionException: An exception occurred while attempting to issue the request.
-           at PowerApps.Samples.HttpClientPlugin.Execute(IServiceProvider serviceProvider)
-
-
-        For a better experience detecting TimeOut errors explicitly, see
-        https://thomaslevesque.com/2018/02/25/better-timeout-handling-with-httpclient/
-          */
         }
       }
       catch (Exception e)
