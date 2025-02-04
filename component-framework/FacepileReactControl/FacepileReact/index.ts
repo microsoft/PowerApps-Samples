@@ -31,7 +31,8 @@ export class FacepileReact implements ComponentFramework.ReactControl<IInputs, I
 		state: ComponentFramework.Dictionary
 	): void {
 		this.notifyOutputChanged = notifyOutputChanged;
-		this.props.numberOfFaces = context.parameters.numberOfFaces.raw ?? DEFAULT_NUMBER_OF_FACES;
+		// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+		this.props.numberOfFaces = context.parameters.numberOfFaces.raw || DEFAULT_NUMBER_OF_FACES;
 	}
 
 	/**
@@ -40,7 +41,8 @@ export class FacepileReact implements ComponentFramework.ReactControl<IInputs, I
 	 */
 	public updateView(context: ComponentFramework.Context<IInputs>): React.ReactElement {
 		if (context.updatedProperties.includes("numberOfFaces")) {
-			this.props.numberOfFaces = context.parameters.numberOfFaces.raw ?? DEFAULT_NUMBER_OF_FACES;
+			// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+			this.props.numberOfFaces = context.parameters.numberOfFaces.raw || DEFAULT_NUMBER_OF_FACES;
 		}
 		return React.createElement(FacepileBasicExample, this.props);
 	}

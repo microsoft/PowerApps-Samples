@@ -44,7 +44,8 @@ export class ReactStandardControl implements ComponentFramework.StandardControl<
 		container: HTMLDivElement
 	): void {
 		this.notifyOutputChanged = notifyOutputChanged;
-		this.props.numberOfFaces = context.parameters.numberOfFaces.raw ?? 3;
+			// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+			this.props.numberOfFaces = context.parameters.numberOfFaces.raw || 3;
 		this.theContainer = container;
 	}
 
@@ -54,7 +55,8 @@ export class ReactStandardControl implements ComponentFramework.StandardControl<
 	 */
 	public updateView(context: ComponentFramework.Context<IInputs>): void {
 		if (context.updatedProperties.includes("numberOfFaces")) {
-			this.props.numberOfFaces = context.parameters.numberOfFaces.raw ?? 3;
+			// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+			this.props.numberOfFaces = context.parameters.numberOfFaces.raw || 3;
 		}
 
 		ReactDOM.render(React.createElement(FacepileBasicExample, this.props), this.theContainer);

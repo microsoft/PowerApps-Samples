@@ -32,7 +32,8 @@ export class FacepileBasicExample extends React.Component<IFacepileBasicExampleP
 		super(props);
 
 		this.state = {
-			numberOfFaces: props.numberOfFaces ?? 3,
+			// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+			numberOfFaces: props.numberOfFaces || 3,
 			imagesFadeIn: true,
 			personaSize: PersonaSize.size32,
 		};
