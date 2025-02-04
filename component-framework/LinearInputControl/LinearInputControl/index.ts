@@ -80,11 +80,11 @@ export class LinearInputControl implements ComponentFramework.StandardControl<II
 		this._value = context.parameters.controlValue.raw!;
 		this.inputElement.setAttribute(
 			"value",
-			context.parameters.controlValue.formatted ? context.parameters.controlValue.formatted : "0"
+			// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+			context.parameters.controlValue.formatted || "0"
 		);
-		this.labelElement.innerHTML = context.parameters.controlValue.formatted
-			? context.parameters.controlValue.formatted
-			: "0";
+		// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+		this.labelElement.innerHTML = context.parameters.controlValue.formatted || "0";
 
 		// appending the HTML elements to the control's HTML container element.
 		this._container.appendChild(this.inputElement);
@@ -110,12 +110,10 @@ export class LinearInputControl implements ComponentFramework.StandardControl<II
 		// storing the latest context from the control.
 		this._value = context.parameters.controlValue.raw!;
 		this._context = context;
-		this.inputElement.value = context.parameters.controlValue.formatted
-			? context.parameters.controlValue.formatted
-			: "";
-		this.labelElement.innerHTML = context.parameters.controlValue.formatted
-			? context.parameters.controlValue.formatted
-			: "";
+		// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+		this.inputElement.value = context.parameters.controlValue.formatted || "";
+		// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+		this.labelElement.innerHTML = context.parameters.controlValue.formatted || "";
 	}
 
 	/**
