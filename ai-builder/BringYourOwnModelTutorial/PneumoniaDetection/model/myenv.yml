@@ -1,5 +1,5 @@
 name: inference_environment
-dependencies:
+dependencies: none
 - python=3.6.8
 - pip
 - pip:
