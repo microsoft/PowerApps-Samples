@@ -13,6 +13,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
     internal class Program
     {
         const string TABLE_SCHEMA_NAME = "contoso_SensorData";
+        const string TABLE_SET_NAME = "contoso_sensordatas";
 
         static async Task Main()
         {
@@ -43,6 +44,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 var sensorDataTable = new EntityMetadata
                 {
                     SchemaName = TABLE_SCHEMA_NAME,
+                    EntitySetName = TABLE_SET_NAME,
                     DisplayName = new Label("Sensor Data", 1033),
                     DisplayCollectionName = new Label("Sensor Data", 1033),
                     Description = new Label("Stores IoT data emitted from devices", 1033),
@@ -97,7 +99,10 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
                 Console.WriteLine($"Creating the {TABLE_SCHEMA_NAME} table...");
 
-                var createEntityRequest = new CreateEntityRequest(sensorDataTable);
+                var createEntityRequest = new CreateEntityRequest(
+                    entityMetadata: sensorDataTable, 
+                    useStrongConsistency: true);
+
                 var createEntityResponse = await service.SendAsync<CreateEntityResponse>(createEntityRequest);
 
                 Console.WriteLine($"{TABLE_SCHEMA_NAME} table created.");
@@ -151,27 +156,14 @@ namespace PowerPlatform.Dataverse.CodeSamples
                             {"ttlinseconds", 86400 } // 86400  seconds in a day
                         };
 
-                // This sensorDataRef entity reference refers to the created record using regular style:
-                // /contoso_sensordatas(7fae9aa4-12f8-ed11-8849-000d3a993550)
+                // This sensorDataRef entity reference refers to the created record using using alternate key style:
+                // /contoso_sensordatas(contoso_sensordataid=7fae9aa4-12f8-ed11-8849-000d3a993550,partitionid='Device-ABC-1234')
                 EntityReference sensorDataRef = await service.Create(
                     entitySetName: "contoso_sensordatas",
                     record: sensorDataObjCreate);
 
-                // Define the alternate key to use
-                var keyAttributes = new Dictionary<string, string>()
-                    {
-                        { "contoso_sensordataid",sensorDataRef.Id.ToString() },
-                        { "partitionid",$"'{deviceId}'" }
-                    };
 
-                // This sensorDataAltKeyRef entity reference refers to the created record using alternate key style:
-                // /contoso_sensordatas(contoso_sensordataid=7fae9aa4-12f8-ed11-8849-000d3a993550,partitionid='Device-ABC-1234')
-
-                EntityReference sensorDataAltKeyRef = new(
-                    setName: "contoso_sensordatas",
-                    keyAttributes: keyAttributes);
-
-                Console.WriteLine($"Created sensor data record with id:{sensorDataRef.Id}");
+                Console.WriteLine($"Created sensor data record at:{sensorDataRef.Path}");
 
 
                 #endregion Create Record
@@ -197,9 +189,9 @@ namespace PowerPlatform.Dataverse.CodeSamples
                             {"contoso_value", 80 }
                         };
 
-                // Using alternatekey parameter
+                // Without partitionId parameter
                 await service.Update(
-                    entityReference: sensorDataAltKeyRef, //Alternate key, not partitionid
+                    entityReference: sensorDataRef, //Alternate key only
                     record: sensorDataObjUpdate2);
 
                 Console.WriteLine($"Updated sensor data record using alternate key style.");
@@ -220,7 +212,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
                 Console.WriteLine($"{retrievedSensorDataRecord}\n");
 
                 retrievedSensorDataRecord = await service.Retrieve(
-                    entityReference: sensorDataAltKeyRef, //With alternate key
+                    entityReference: sensorDataRef, //With alternate key only
                     query: "?$select=contoso_value");
 
                 Console.WriteLine($"Retrieved sensor data record using alternate key style:\n");
@@ -248,25 +240,13 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
                 // It isn't possible to set the partitionId parameter for upsert.
                 // The value must be included in the body.
-                EntityReference testReference1 = await service.Upsert(
+                EntityReference upsertReference = await service.Upsert(
                     entityReference: sensorDataRef,
                     record: sensorDataObjForUpsert,
                     upsertBehavior: UpsertBehavior.CreateOrUpdate);
 
-                Console.WriteLine($"Upsert sensor data record:\n");
-                // Verify that the ID values are the same
-                Console.WriteLine($"Same ID values?:{testReference1.Id == sensorDataRef.Id}");
-
-                // Using alternate key
-                EntityReference testReference2 = await service.Upsert(
-                    entityReference: sensorDataAltKeyRef,
-                    record: sensorDataObjForUpsert,
-                    upsertBehavior: UpsertBehavior.CreateOrUpdate);
-
-                Console.WriteLine($"Upsert sensor data record with alternate key:\n");
-                // Verify that the ID values are the same
-                Console.WriteLine($"Same ID values?:{testReference2.Id == sensorDataRef.Id}");
-
+                Console.WriteLine($"Upserted sensor data record at {upsertReference.Path}");
+  
                 #endregion Upsert Record
 
                 #region Delete Record
@@ -274,29 +254,7 @@ namespace PowerPlatform.Dataverse.CodeSamples
 
                 await service.Delete(entityReference: sensorDataRef, partitionId: deviceId);
                 Console.WriteLine($"Deleted sensor data record with partitionId.\n");
-
-                //You can also use the alternate key:
-
-                // Create another record to demonstrate delete with alternate key
-
-                EntityReference secondRecordToDeleteRef = await service.Create(
-                    entitySetName: "contoso_sensordatas",
-                    record: sensorDataObjCreate);
-
-                // Define the alternate key to use for the new record
-                var keys = new Dictionary<string, string>()
-                    {
-                        { "contoso_sensordataid",secondRecordToDeleteRef.Id.ToString() },
-                        { "partitionid",$"'{deviceId}'" }
-                    };
-
-                var secondRecordToDeleteAltKeyRef = new EntityReference(
-                    setName: "contoso_sensordatas",
-                    keyAttributes: keys);
-
-                await service.Delete(entityReference: secondRecordToDeleteAltKeyRef);
-                Console.WriteLine($"Deleted second sensor data record with alternate key.");
-
+             
                 #endregion Delete Record
 
                 #region CreateMultiple
