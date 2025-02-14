@@ -23,9 +23,9 @@ import { Link } from "@fluentui/react/lib/Link";
 type DataSet = ComponentFramework.PropertyHelper.DataSetApi.EntityRecord & IObjectWithKey;
 
 function stringFormat(template: string, ...args: string[]): string {
-	for (const k in args) {
-		template = template.replace("{" + k + "}", args[k]);
-	}
+	args?.forEach((arg, index) => {
+		template = template.replace("{" + index + "}", arg);
+	});
 	return template;
 }
 
@@ -74,7 +74,7 @@ const onRenderItemColumn = (
 	index?: number,
 	column?: IColumn
 ) => {
-	if (column && column.fieldName && item) {
+	if (column?.fieldName && item) {
 		return <>{item?.getFormattedValue(column.fieldName)}</>;
 	}
 	return <></>;
@@ -237,9 +237,8 @@ export const Grid = React.memo((props: GridProps) => {
 			.filter((col) => !col.isHidden && col.order >= 0)
 			.sort((a, b) => a.order - b.order)
 			.map((col) => {
-				const sortOn = sorting && sorting.find((s) => s.name === col.name);
-				const filtered =
-					filtering && filtering.conditions && filtering.conditions.find((f) => f.attributeName == col.name);
+				const sortOn = sorting?.find((s) => s.name === col.name);
+				const filtered = filtering?.conditions?.find((f) => f.attributeName == col.name);
 				return {
 					key: col.name,
 					name: col.displayName,
@@ -253,7 +252,7 @@ export const Grid = React.memo((props: GridProps) => {
 					onColumnClick: onColumnClick,
 				} as IColumn;
 			});
-	}, [columns, sorting, onColumnContextMenu, onColumnClick]);
+	}, [columns, sorting, onColumnContextMenu, onColumnClick, filtering?.conditions]);
 
 	const rootContainerStyle: React.CSSProperties = React.useMemo(() => {
 		return {
@@ -265,10 +264,10 @@ export const Grid = React.memo((props: GridProps) => {
 	const onRenderRow: IDetailsListProps["onRenderRow"] = (props) => {
 		const customStyles: Partial<IDetailsRowStyles> = {};
 
-		if (props && props.item) {
-			const item = props.item as DataSet | undefined;
+		if (props?.item) {
+			const item = props.item as DataSet;
 
-			if (highlightColor && highlightValue && item?.getValue("HighlightIndicator") == highlightValue) {
+			if (highlightColor && highlightValue && item.getValue("HighlightIndicator") == highlightValue) {
 				customStyles.root = { backgroundColor: highlightColor };
 			}
 			return <DetailsRow {...props} styles={customStyles} />;

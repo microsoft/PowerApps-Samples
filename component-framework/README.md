@@ -1,6 +1,6 @@
 # How to run the sample components?
 
-Follow the steps below to import and try the sample components in your model-driven or canvas app. 
+Follow the steps below to import and try the sample components in your model-driven or canvas app.
 
 > See [Example output](#example-output) for the full console output of the steps below.
 
@@ -22,7 +22,7 @@ Follow the steps below to import and try the sample components in your model-dri
    >
    > `[Download or Clone location]\component-framework\IncrementControl>msbuild /t:restore`.
 
-1. After the command has completed, create a new folder inside the sample component folder  using the `mkdir` command.
+1. After the command has completed, create a new folder inside the sample component folder using the `mkdir` command.
 
    > For example:
    >
@@ -45,15 +45,15 @@ Follow the steps below to import and try the sample components in your model-dri
 1. Run the [pac solution add-reference](https://learn.microsoft.com/power-platform/developer/cli/reference/solution#pac-solution-add-reference) command with the `path` set to the location of the `IncrementControl.pcfproj` file.
 
    > For example, in this case you can use a relative path like either of the following:
-   > 
+   >
    > `\IncrementControlSolution>pac solution add-reference --path ../../IncrementControl`
-   > 
+   >
    > `\IncrementControlSolution>pac solution add-reference --path ../../IncrementControl/IncrementControl.pcfproj`
-   > 
+   >
    > **Note**: The important thing is that you are referencing the folder that contains the `.pcfproj` file for the control you want to add.
-   > 
+   >
    > After you run this command, within the `IncrementControlSolution.cdsproj` you will find this reference.
-   > 
+   >
    > ```xml
    > <ItemGroup>
    >  <ProjectReference Include="..\IncrementControl.pcfproj" />
@@ -68,7 +68,6 @@ Follow the steps below to import and try the sample components in your model-dri
 
    `msbuild`
 
-
    The generated solution zip file will be available at `IncrementControlSolution\bin\debug` folder.
 
 1. Now that you have the zip file you need to import it. You have two options:
@@ -77,7 +76,6 @@ Follow the steps below to import and try the sample components in your model-dri
    - Alternatively, to import the solution using Power Apps CLI commands, see the [Connecting to your environment](https://learn.microsoft.com/powerapps/developer/component-framework/import-custom-controls#connecting-to-your-environment) and [Deployment](https://learn.microsoft.com/powerapps/developer/component-framework/import-custom-controls#deploying-code-components) sections.
 
 1. Finally, to add code components to your model-driven and canvas apps, see [Add components to model-driven apps](https://learn.microsoft.com/powerapps/developer/component-framework/add-custom-controls-to-a-field-or-entity) and [Add components to canvas apps](https://learn.microsoft.com/powerapps/developer/component-framework/component-framework-for-canvas-apps#add-components-to-a-canvas-app).
-
 
 ## Example output
 

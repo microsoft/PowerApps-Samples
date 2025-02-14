@@ -138,8 +138,8 @@ export class TableControl implements ComponentFramework.StandardControl<IInputs,
 			// Note: lookup can support multiple entity types with the below syntax
 			// entityTypes: ["account", "contact"]
 
-			entityTypes: [entityName],
-		} as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+			entityTypes: [entityName!],
+		};
 
 		const lookUpPromise = this._context.utils.lookupObjects(lookUpOptions);
 
@@ -176,6 +176,7 @@ export class TableControl implements ComponentFramework.StandardControl<IInputs,
 	private GenerateLookupObjectElements(entityName: string): void {
 		this._lookupObjectsButton = this.createHTMLButtonElement(
 			`${this.BUTTON_LABEL_CLICK_STRING} lookupObjects(${entityName})`,
+			// eslint-disable-next-line @typescript-eslint/no-misused-promises
 			this.onLookupObjectsButtonClick.bind(this),
 			entityName
 		);

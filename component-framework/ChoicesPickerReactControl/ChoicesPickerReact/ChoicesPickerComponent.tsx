@@ -16,14 +16,21 @@ const iconStyles = { marginRight: "8px" };
 
 const onRenderOption = (option?: IDropdownOption): JSX.Element => {
 	if (option) {
+		/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 		return (
 			<div>
-				{option.data && option.data.icon && (
-					<Icon style={iconStyles} iconName={option.data.icon} aria-hidden="true" title={option.data.icon} />
+				{option.data?.icon && (
+					<Icon
+						style={iconStyles}
+						iconName={option.data.icon as string}
+						aria-hidden="true"
+						title={option.data.icon as string}
+					/>
 				)}
 				<span>{option.text}</span>
 			</div>
 		);
+		/* eslint-enable @typescript-eslint/no-unsafe-member-access */
 	}
 	return <></>;
 };
@@ -79,6 +86,7 @@ export const ChoicesPickerComponent = React.memo((props: ChoicesPickerComponentP
 
 	const onChangeDropDown = React.useCallback(
 		(ev: unknown, option?: IDropdownOption): void => {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 			onChange(option ? (option.data.value as number) : undefined);
 		},
 		[onChange]

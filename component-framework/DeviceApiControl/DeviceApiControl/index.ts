@@ -101,7 +101,7 @@ export class DeviceApiControl implements ComponentFramework.StandardControl<IInp
 	}
 
 	public getImage(context: ComponentFramework.Context<IInputs>): Promise<void> | void {
-		const lbl: HTMLElement = this.container.querySelector("figcaption") as HTMLElement;
+		const lbl: HTMLElement = this.container.querySelector("figcaption")!;
 
 		if (context.device.captureImage) {
 			return context.device
@@ -111,12 +111,12 @@ export class DeviceApiControl implements ComponentFramework.StandardControl<IInp
 						this.processFile(file, context);
 					} else {
 						// if captureImage failed: device not capable, user cancel, etc.
-						this.pickFile(context, lbl);
+						return this.pickFile(context, lbl);
 					}
 					return;
 				});
 		} else {
-			this.pickFile(context, lbl);
+			return this.pickFile(context, lbl);
 		}
 	}
 
@@ -183,14 +183,15 @@ export class DeviceApiControl implements ComponentFramework.StandardControl<IInp
 				}
 				return;
 			})
-			.catch((error) => this.showError(error, context, "figcaption"));
+			.catch((error) => this.showError(error as Error, context, "figcaption"));
 	}
 
 	private processFile(file: ComponentFramework.FileObject, context: ComponentFramework.Context<IInputs>): void {
 		try {
-			const caption: HTMLElement = this.container.querySelector("figcaption") as HTMLElement;
+			const caption: HTMLElement = this.container.querySelector("figcaption")!;
 
 			if (file?.fileContent && file.mimeType?.length) {
+				// eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
 				(this.container.querySelector("img#imageResult") as HTMLImageElement).src =
 					`data:${file.mimeType};base64, ${file.fileContent}`;
 				caption.innerText = `✔ ${file.fileName}`;
@@ -204,7 +205,7 @@ export class DeviceApiControl implements ComponentFramework.StandardControl<IInp
 	}
 
 	private showError(error: Error, context: ComponentFramework.Context<IInputs>, selector: string): void {
-		const element: HTMLElement = this.container.querySelector(selector) as HTMLElement;
+		const element: HTMLElement = this.container.querySelector(selector)!;
 
 		element.setAttribute("class", "error");
 		element.innerText = `❌ Error: ${error.message}`;
@@ -215,13 +216,13 @@ export class DeviceApiControl implements ComponentFramework.StandardControl<IInp
 		notifyOutputChanged: () => void
 	): Promise<void> | void {
 		if (context.device.getCurrentPosition) {
-			const lbl: HTMLDivElement = this.container.querySelector("div#locationResult") as HTMLDivElement;
+			const lbl: HTMLDivElement = this.container.querySelector("div#locationResult")!;
 
 			try {
 				return context.device
 					.getCurrentPosition()
 					.then((location) => {
-						if (location && location.coords && location.coords.latitude && location.coords.longitude) {
+						if (location?.coords?.latitude && location?.coords?.longitude) {
 							lbl.setAttribute("class", "success");
 
 							this.result = {
@@ -252,9 +253,9 @@ export class DeviceApiControl implements ComponentFramework.StandardControl<IInp
 	 */
 	public updateView(context: ComponentFramework.Context<IInputs>): void {
 		if (context.updatedProperties.includes("Location")) {
-			this.result = this.getResultFromContext(context) || undefined;
+			this.result = this.getResultFromContext(context) ?? undefined;
 
-			const lbl: HTMLDivElement = this.container.querySelector("div#locationResult") as HTMLDivElement;
+			const lbl: HTMLDivElement = this.container.querySelector("div#locationResult")!;
 			lbl.innerText = `✔ Location: ${this.getResultString()}`;
 
 			if (this.result) {

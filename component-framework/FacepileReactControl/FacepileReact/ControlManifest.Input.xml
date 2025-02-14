@@ -4,8 +4,8 @@
     <property name="numberOfFaces" display-name-key="numberOfFaces_Display_Key" description-key="numberOfFaces_Desc_Key" of-type="Whole.None" usage="bound" required="false" />
     <resources>
       <code path="index.ts" order="1"/>
-      <platform-library name="React" version="16.8.6" />
-      <platform-library name="Fluent" version="8.29.0" />
+      <platform-library name="React" version="16.14.0" />
+      <platform-library name="Fluent" version="8.121.1" />
       <css path="css/FacepileReactControl.css" order="2" />
       <resx path="strings/FacepileReactControl.1033.resx" version="1.0.0" />
     </resources>

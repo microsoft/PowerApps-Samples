@@ -149,7 +149,7 @@ export class ImageUploadControl implements ComponentFramework.StandardControl<II
 			try {
 				let fileExtension: string | undefined;
 
-				if (file && file.fileName) {
+				if (file?.fileName) {
 					fileExtension = file.fileName.split(".").pop();
 				}
 

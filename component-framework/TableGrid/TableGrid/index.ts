@@ -265,7 +265,7 @@ export class TableGrid implements ComponentFramework.StandardControl<IInputs, IO
 				entityName: entityReference.etn!,
 				entityId: entityReference.id.guid,
 			};
-			this.contextObj.navigation.openForm(entityFormOptions);
+			void this.contextObj.navigation.openForm(entityFormOptions);
 		}
 	}
 
