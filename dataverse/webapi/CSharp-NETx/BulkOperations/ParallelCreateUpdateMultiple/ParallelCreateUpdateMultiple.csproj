@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Identity.Client" Version="4.59.1" />
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.68.0" />
   </ItemGroup>
 
   <ItemGroup>
