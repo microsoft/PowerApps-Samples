@@ -7,6 +7,7 @@ products:
 page_type: sample
 description: "This sample demonstrates how to use OData Functions and Actions using the Dataverse Web API."
 ---
+
 # Web API Functions and Actions sample
 
 This .NET 6.0 sample demonstrates how to use OData Functions and Actions using the Dataverse Web API.
@@ -22,20 +23,30 @@ This sample uses the common helper code in the [WebAPIService](../WebAPIService)
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
 1. Open the [FunctionsAndActions.sln](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/CSharp-NETx/FunctionsAndActions/FunctionsAndActions.sln) file using Visual Studio 2022.
-1. Edit the [appsettings.json](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/CSharp-NETx/appsettings.json) file to set the following property values:
+1. Edit the [appsettings.json](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/CSharp-NETx/appsettings.json) file to set the following property values.
 
-   |Property|Instructions  |
-   |---------|---------|
-   |`Url`|The Url for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. See [View developer resources](https://learn.microsoft.com/power-apps/developer/data-platform/view-download-developer-resources) to find this. |
-   |`UserPrincipalName`|Replace the placeholder `you@yourorg.onmicrosoft.com` value with the UPN value you use to access the environment.|
-   |`Password`|Replace the placeholder `yourPassword` value with the password you use.|
+   | Property | Instructions |
+   |----------|--------------|
+   | `Url` | The URL for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. See [View developer resources](https://learn.microsoft.com/power-apps/developer/data-platform/view-download-developer-resources) to learn where to find your URL. |
+   | `UserPrincipalName` | Replace the placeholder `you@yourorg.onmicrosoft.com` value with the UPN value you use to access the environment. |
+   | `Password` | Replace the placeholder `yourPassword` value with the password you use. |
 
 1. Save the `appsettings.json` file
-1. Press F5 to run the sample.
+1. Press `F5` to run the sample.
 
 ## Demonstrates
 
-This sample has 9 regions:
+This sample has nine sections:
+
+- [Unbound Functions: WhoAmI](#section-1-unbound-functions-whoami)
+- [Unbound Functions: FormatAddress](#section-2-unbound-functions-formataddress)
+- [Unbound Functions: InitializeFrom](#section-3-unbound-functions-initializefrom)
+- [InitializeFrom](#section-4-initializefrom)
+- [Unbound Functions: RetrieveTotalRecordCount](#section-5-unbound-functions-retrievetotalrecordcount)
+- [Bound Functions: IsSystemAdmin](#section-6-bound-functions-issystemadmin)
+- [Unbound Actions: GrantAccess](#section-7-unbound-actions-grantaccess)
+- [Bound Actions: AddPrivilegesRole](#section-8-bound-actions-addprivilegesrole)
+- [Delete sample records](#section-9-delete-sample-records)
 
 ### Section 1: Unbound Functions: WhoAmI
 
@@ -49,7 +60,7 @@ Operations: Use the [FormatAddress Function](https://learn.microsoft.com/power-a
 
 Operations: Use the [InitializeFrom Function](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/initializefrom) with the WebAPIService [InitializeFromRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/CSharp-NETx/WebAPIService/Messages/InitializeFromRequest.cs) and [InitializeFromResponse](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/CSharp-NETx/WebAPIService/Messages/InitializeFromResponse.cs) classes.
 
-### Section 4: Unbound Functions: RetrieveCurrentOrganization
+### Section 4: InitializeFrom
 
 Operations: Use the [RetrieveCurrentOrganization Function](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/retrievecurrentorganization) with the WebAPIService [RetrieveCurrentOrganizationRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/CSharp-NETx/WebAPIService/Messages/RetrieveCurrentOrganizationRequest.cs) and [RetrieveCurrentOrganizationResponse](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/CSharp-NETx/WebAPIService/Messages/RetrieveCurrentOrganizationResponse.cs) classes.
 
@@ -61,9 +72,9 @@ Operations: Use the [RetrieveTotalRecordCount Function](https://learn.microsoft.
 
 Operations: Use a custom `sample_IsSystemAdmin` operation created using Custom API as a function bound to the `systemuser` table.
 
-This code will install a managed solution containing the Custom API. Then it will use the [IsSystemAdminRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/CSharp-NETx/FunctionsAndActions/Messages/IsSystemAdminRequest.cs) and [IsSystemAdminResponse](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/CSharp-NETx/FunctionsAndActions/Messages/IsSystemAdminResponse.cs) classes defined within this sample application.
+This code installs a managed solution containing the Custom API. The code uses the [IsSystemAdminRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/CSharp-NETx/FunctionsAndActions/Messages/IsSystemAdminRequest.cs) and [IsSystemAdminResponse](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/CSharp-NETx/FunctionsAndActions/Messages/IsSystemAdminResponse.cs) classes defined within this sample application.
 
-This sample will retrieve a set of users and test each one to determine whether the System Administrator security role is associated with their `systemuser` record or a team they belong to.
+This sample retrieves a set of users and tests each one to determine whether the System Administrator security role is associated with their `systemuser` record or team.
 
 [Sample: IsSystemAdmin Custom API](../../../orgsvc/CSharp/IsSystemAdminCustomAPI/) describes the Custom API used by this sample.
 
@@ -77,10 +88,10 @@ Operations: Use the [AddPrivilegesRole Action](https://learn.microsoft.com/power
 
 ### Section 9: Delete sample records
 
-Operations: A reference to each record created in this sample was added to a list as it was created. In this sample the records are deleted using a `$batch` operation.
+Operations: A reference to each record created in this sample is added to a list as it's created. In this sample, the records are deleted using a `$batch` operation.
 
 ## Clean up
 
-By default this sample will delete all the records created in it.
+By default this sample deletes all the records created in it.
 
-If you want to view created records after the sample is completed, change the `deleteCreatedRecords` variable to `false` and you will be prompted to decide if you want to delete the records.
+If you want to view created records after the sample is completed, change the `deleteCreatedRecords` variable to `false` and you're be prompted to delete the records if desired.

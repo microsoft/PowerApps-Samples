@@ -53,14 +53,26 @@ To connect as a different user, run the [Disconnect-AzAccount command](https://l
 
 ## Demonstrates
 
-This sample has 11 regions:
+This sample has 11 sections:
+
+1. [Create Publisher and Solution](#section-0-create-publisher-and-solution)
+1. [Create, Retrieve and Update Table](#section-1-create-retrieve-and-update-table)
+1. [Create, Retrieve and Update Columns](#section-2-create-retrieve-and-update-columns)
+1. [Create and use Global OptionSet](#section-3-create-and-use-global-optionset)
+1. [Create Customer Relationship](#section-4-create-customer-relationship)
+1. [Create and retrieve a one-to-many relationship](#section-5-create-and-retrieve-a-one-to-many-relationship)
+1. [Create and retrieve a many-to-one relationship](#section-6-create-and-retrieve-a-many-to-one-relationship)
+1. [Create and retrieve a many-to-many relationship](#section-7-create-and-retrieve-a-many-to-many-relationship)
+1. [Export managed solution](#section-8-export-managed-solution)
+1. [Delete sample records](#section-9-delete-sample-records)
+1. [Import and Delete managed solution](#section-10-import-and-delete-managed-solution)
 
 ### Section 0: Create Publisher and Solution
 
 Operations: Create a solution record and an associated publisher record.
 
 - After first checking whether these records already exist using the [Get-Records function](../README.md#get-records-function), the script creates them if they don't exist using the [New-Record function](../README.md#new-record-function). These functions are in the [TableOperations.ps1](../TableOperations.ps1) file.
-- All solution components created in this sample will be associated to the solution so that they can be exported. This association is created using the `MSCRM.SolutionUniqueName` request header setting the solution unique name set as the value.
+- All solution components created in this sample get associated to the solution, so they can be exported. This association is created using the `MSCRM.SolutionUniqueName` request header setting the solution unique name set as the value.
 - All names of solution components are prefixed using the publisher customization prefix.
 - Details about these records are added to the `$recordsToDelete` array so that they can be deleted later.
 
@@ -88,9 +100,9 @@ Operations:
 - Query, create, and retrieve a new memo column for the `sample_BankAccount` table.
 - Query, create, and retrieve a new money column for the `sample_BankAccount` table.
 - Query, create, and retrieve a new choice (`Picklist`) column for the `sample_BankAccount` table.
-   - Add a new option to the choice column using the [New-OptionValue function](../README.md#new-optionvalue-function)
-   - Change the order of the options of the choice column using the [Update-OptionsOrder function](../README.md#update-optionsorder-function).
-   - Delete one of the options of the choice column using the [Remove-OptionValue function](../README.md#remove-optionvalue-function).
+  - Add a new option to the choice column using the [New-OptionValue function](../README.md#new-optionvalue-function)
+  - Change the order of the options of the choice column using the [Update-OptionsOrder function](../README.md#update-optionsorder-function).
+  - Delete one of the options of the choice column using the [Remove-OptionValue function](../README.md#remove-optionvalue-function).
 - Query, create, and retrieve a new choices (`MultiSelectPicklist`) column for the `sample_BankAccount` table.
 - Query, create, and retrieve a new big int column for the `sample_BankAccount` table.
 - Create a new Status option for the `sample_BankAccount` table using the [New-StatusOption function](../README.md#new-statusoption-function).
@@ -157,11 +169,12 @@ Operations:
 
 ## Clean up
 
-By default this sample will delete all the records created in it.
+By default, this sample deletes all the records it created.
 
-If you want to view created records after the sample is completed, change the `deleteCreatedRecords` variable to `false` and you will be prompted to decide if you want to delete the records.
+If you want to view created records, after the sample is completed, change the `deleteCreatedRecords` variable to `false` and you're prompted to delete the records if desired.
 
-**Note**: If you do not delete the un-managed solution components created by this sample, the code in [Section 10](#section-10-import-and-delete-managed-solution) will fail.
+> [!NOTE]
+> If you don't delete the unmanaged solution components created by this sample, the code in [Section 10](#section-10-import-and-delete-managed-solution) fails.
 
 ## Console Output
 

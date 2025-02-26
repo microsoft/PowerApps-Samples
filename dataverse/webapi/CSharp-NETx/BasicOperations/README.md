@@ -7,6 +7,7 @@ products:
 page_type: sample
 description: "This sample demonstrates how to perform common data operations using the Dataverse Web API."
 ---
+
 # Web API Basic Operations sample
 
 This .NET 6.0 sample demonstrates how to perform common data operations using the Dataverse Web API.
@@ -21,25 +22,26 @@ This sample uses the common helper code in the [WebAPIService](../WebAPIService)
 ## How to run the sample
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
-1. Open the [BasicOperations.sln](BasicOperations.sln) file using Visual Studio 2022
-1. Edit the [appsettings.json](../appsettings.json) file to set the following property values:
+1. Open the [BasicOperations.sln](BasicOperations.sln) file using Visual Studio 2022.
+1. Edit the [appsettings.json](../appsettings.json) file to set the following property values.
 
-   |Property|Instructions  |
-   |---------|---------|
-   |`Url`|The Url for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. See [View developer resources](https://learn.microsoft.com/power-apps/developer/data-platform/view-download-developer-resources) to find this. |
-   |`UserPrincipalName`|Replace the placeholder `you@yourorg.onmicrosoft.com` value with the UPN value you use to access the environment.|
-   |`Password`|Replace the placeholder `yourPassword` value with the password you use.|
+   | Property | Instructions |
+   |----------|--------------|
+   | `Url` | The Url for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. See [View developer resources](https://learn.microsoft.com/power-apps/developer/data-platform/view-download-developer-resources) to find this. |
+   | `UserPrincipalName` | Replace the placeholder `you@yourorg.onmicrosoft.com` value with the UPN value you use to access the environment. |
+   | `Password` | Replace the placeholder `yourPassword` value with the password you use. |
 
-1. Save the `appsettings.json` file
-1. Press F5 to run the sample.
+1. Save the `appsettings.json` file.
+1. Press `F5` to run the sample.
 
 ## Demonstrates
 
-This sample has 5 regions:
+This sample has five sections.
 
 ### Section 1: Basic Create and Update operations
 
 Operations:
+
 - Create a contact record.
 - Update the contact record.
 - Retrieve the contact record.
@@ -52,7 +54,9 @@ Operations: Associate a new record to an existing one.
 
 ### Section 3: Create related entities
 
-Operations: Create the following entries in one operation: an account, its associated primary contact, and open tasks for that contact.  These entity types have the following relationships:
+Operations: Create the following entries in one operation: an account, its associated primary contact, and open tasks for that contact.
+
+Entity types have the following relationships:
 
 ```
 Accounts
@@ -75,4 +79,4 @@ Operations: A reference to each record created in this sample was added to a lis
 
 ## Clean up
 
-By default this sample will delete all the records created in it. If you want to view created records after the sample is completed, change the `deleteCreatedRecords` variable to `false` and you will be prompted to decide if you want to delete the records.
+By default this sample deletes all the records created in it. To view created records after the sample is complete, change the `deleteCreatedRecords` variable to `false` and you're prompted to delete the records if desired.

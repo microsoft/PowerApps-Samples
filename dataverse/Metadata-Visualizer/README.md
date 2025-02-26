@@ -50,13 +50,13 @@ Here's a description of the files generated when you download an organization's 
 1. Select **Diagram** > **Draw Selected Entities** to view those entities and their relationships.
 1. Select **Diagram** > **Draw Related Entities** to view all other entities that have a relationship with the entities you chose in step #2.
 
-:::image type="content" source="images/er-viewer.PNG" alt-text="Screenshot of the ER Viewer showing an entity list on the left and the entity diagram on the right in Metadata Visualizer.":::
+!["Screenshot of the ER Viewer showing an entity list on the left and the entity diagram on the right in Metadata Visualizer."](images/er-viewer.PNG)
 
 ### View entity metadata
 
 1. In the ER Viewer, hover the cursor over an entity in the entity diagram to view a summary description.
 1. Select the entity in the diagram to display the Schema Viewer showing the entity's metadata (attributes and relationships).
-   :::image type="content" source="images/schema-viewer.PNG" alt-text="Screenshot that shows the Schema Viewer, a window that appears from running the application and selecting an entity in the ER Viewer.":::
+   !["Screenshot that shows the Schema Viewer, a window that appears from running the application and selecting an entity in the ER Viewer."](images/schema-viewer.PNG)
 1. Select another entity in the diagram to view its metadata in the Schema Viewer window.
 1. Sign in to your organization using your default internet browser.
 1. In the ER Viewer window, select an entity and choose **Selected Entity** > **Copy URL**.
@@ -64,7 +64,7 @@ Here's a description of the files generated when you download an organization's 
    > [!NOTE]
    > You might need to choose a different view in the browser page other than the default view to see the records for that entity.
 
-:::image type="content" source="images/schema-viewer.PNG" alt-text="Screenshot that shows the Schema Viewer account details such as attribute, type, description, entity, relationship (for example, one-to-many), and the entity that's related in Metadata Visualizer.":::
+!["Screenshot that shows the Schema Viewer account details such as attribute, type, description, entity, relationship (for example, one-to-many), and the entity that's related in Metadata Visualizer."](images/schema-viewer.PNG)
 
 ### Viewing plug-in and custom activity registrations
 
@@ -73,7 +73,7 @@ Here's a description of the files generated when you download an organization's 
 1. Select an entity blue link to jump to the plug-in/custom activity information for that entity.
 1. Select other links to see what kind of information is available from that browser page.
 
-:::image type="content" source="images/trigger-view.PNG" alt-text="Screenshot that shows the trigger information page that includes details like logical (entity set) name, description, OTC, primary, display names, and other details in Metadata Visualizer.":::
+!["Screenshot that shows the trigger information page that includes details like logical (entity set) name, description, OTC, primary, display names, and other details in Metadata Visualizer."](images/trigger-view.PNG)
 
 ## FAQs
 

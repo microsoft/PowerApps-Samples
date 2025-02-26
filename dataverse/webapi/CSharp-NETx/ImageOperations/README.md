@@ -121,7 +121,7 @@ This sample needs to create a new image column that is the primary image for the
 1. Capture the original primary image name using the `Utility.GetTablePrimaryImageName` method.
 1. Use the `Utility.CreateImageColumn` method to create a new image column named `sample_ImageColumn` on the account table if it doesn't exist already.
 
-   > **Note:**
+   > [!NOTE]
    > This image column `CanStoreFullImage` value is false.
 
 1. Use the `Utility.SetTablePrimaryImageName` method to make the new `sample_ImageColumn` the primary image column.
@@ -140,15 +140,15 @@ In the following code, we can see how the value of the `CanStoreFullImage` prope
 1. The code retrieves the 10 account records created in the previous step, including the image data.
 1. For each account record, the image data is downloaded to the `DownloadedImages` folder with the name `{recordName}_retrieved.png`.
 
-   > **Note:**
+   > [!NOTE]
    > All of these records are thumbnail-sized images.
 
 ### Download the account record images
 
 This program uses three different methods to download image files.
 
-> **Note:**
-> In each case, 5 of the 10 operations will fail because no full-sized images were uploaded while `CanStoreFullImage` was false. Those records created while `CanStoreFullImage` was true succeed.
+> [!NOTE]
+> In each case, five of the ten operations fail because no full-sized images are uploaded while `CanStoreFullImage` is false. Records created while `CanStoreFullImage` is true succeed.
 
 #### Download with Actions
 
@@ -157,7 +157,7 @@ The code uses the static `DownloadImageWithActions` method, which encapsulates t
 [DownloadBlock](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/downloadblock) actions to download the images as described in
 [Use Dataverse messages to download a file](https://learn.microsoft.com/power-apps/developer/data-platform/file-column-data?tabs=webapi#use-dataverse-messages-to-download-a-file).
 
-> **Note:**
+> [!NOTE]
 > These operations fail when there's no full-sized image to download. The error message is: `No FileAttachment records found for imagedescriptorId: <guid> for image attribute: sample_imagecolumn of account record with id <guid>`.
 
 #### Download with Chunks
@@ -165,7 +165,7 @@ The code uses the static `DownloadImageWithActions` method, which encapsulates t
 The code uses the static `DownloadImageWithChunks` method, which demonstrates how to download images as described in
 [Download the file in chunks using Web API](https://learn.microsoft.com/power-apps/developer/data-platform/file-column-data#download-the-file-in-chunks-using-web-api).
 
-> **Note:**
+> [!NOTE]
 > These operations don't fail when there's no full-sized image to download, they simply return `204 No Content`.
 
 #### Download with Stream
@@ -173,7 +173,7 @@ The code uses the static `DownloadImageWithChunks` method, which demonstrates ho
 The code uses the static `DownloadImageWithStream` method, which demonstrates how to download images as described in
 [Download a file in a single request using Web API](https://learn.microsoft.com/power-apps/developer/data-platform/file-column-data#download-a-file-in-a-single-request-using-web-api)
 
-> **Note:**
+> [!NOTE]
 > These operations don't fail when there's no full-sized image to download, they simply return `204 No Content`.
 
 ### Delete the image data
