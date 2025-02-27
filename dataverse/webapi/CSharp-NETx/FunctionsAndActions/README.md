@@ -60,7 +60,7 @@ Operations: Use the [FormatAddress Function](https://learn.microsoft.com/power-a
 
 Operations: Use the [InitializeFrom Function](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/initializefrom) with the WebAPIService [InitializeFromRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/CSharp-NETx/WebAPIService/Messages/InitializeFromRequest.cs) and [InitializeFromResponse](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/CSharp-NETx/WebAPIService/Messages/InitializeFromResponse.cs) classes.
 
-### Section 4: InitializeFrom
+### Section 4: Unbound Functions: RetrieveCurrentOrganization
 
 Operations: Use the [RetrieveCurrentOrganization Function](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/retrievecurrentorganization) with the WebAPIService [RetrieveCurrentOrganizationRequest](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/CSharp-NETx/WebAPIService/Messages/RetrieveCurrentOrganizationRequest.cs) and [RetrieveCurrentOrganizationResponse](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/CSharp-NETx/WebAPIService/Messages/RetrieveCurrentOrganizationResponse.cs) classes.
 
