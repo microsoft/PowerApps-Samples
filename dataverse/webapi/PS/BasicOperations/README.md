@@ -19,7 +19,7 @@ This sample uses the [Dataverse Web API PowerShell Helper functions](../README.m
 . $PSScriptRoot\..\CommonFunctions.ps1
 ```
 
-> **Note**:
+> [!NOTE]
 > This sample should work with Windows, Linux, and macOS, but has only been tested on Windows.
 
 ## Prerequisites
@@ -124,4 +124,4 @@ See [HTTP Web API Basic Operations Sample Section 5: Delete table rows](https://
 
 ## Clean up
 
-By default this sample will delete all the records created in it. If you want to view created records after the sample is completed, change the `$deleteCreatedRecords` variable to `false`.
+By default, this sample deletes all the records it created. If you want to view created records after the sample is complete, change the `$deleteCreatedRecords` variable to `false`.

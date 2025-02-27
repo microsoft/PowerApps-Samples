@@ -7,6 +7,7 @@ products:
 page_type: sample
 description: "This sample demonstrates how to perform common data operations on elastic tables and query JSON columns using the Dataverse Web API."
 ---
+
 # Web API Elastic Table Operations sample
 
 This .NET 6.0 sample demonstrates how to perform common data operations on elastic tables query JSON columns using the Dataverse Web API.
@@ -21,24 +22,24 @@ This sample uses the common helper code in the [WebAPIService](../WebAPIService)
 ## How to run the sample
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
-1. Open the `PowerApps-Samples\dataverse\webapi\CSharp-NETx\ElasticTableOperations\ElasticTableOperations.sln` file using Visual Studio 2022
-1. Edit the `appsettings.json` file to set the following property values:
+1. Open the `PowerApps-Samples\dataverse\webapi\CSharp-NETx\ElasticTableOperations\ElasticTableOperations.sln` file using Visual Studio 2022.
+1. Edit the `appsettings.json` file to set the following property values.
 
-   |Property|Instructions  |
-   |---------|---------|
-   |`Url`|The Url for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. See [View developer resources](https://learn.microsoft.com/power-apps/developer/data-platform/view-download-developer-resources) to find this. |
-   |`UserPrincipalName`|Replace the placeholder `you@yourorg.onmicrosoft.com` value with the UPN value you use to access the environment.|
-   |`Password`|Replace the placeholder `yourPassword` value with the password you use.|
+   | Property | Instructions |
+   |----------|--------------|
+   | `Url` | The URL for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. See [View developer resources](https://learn.microsoft.com/power-apps/developer/data-platform/view-download-developer-resources) to find this value. |
+   | `UserPrincipalName` | Replace the placeholder `you@yourorg.onmicrosoft.com` value with the UPN value you use to access the environment. |
+   | `Password` | Replace the placeholder `yourPassword` value with the password you use. |
 
 1. Save the `appsettings.json` file.
 1. Build the solution.
-1. Press F5 to run the sample.
+1. Press `F5` to run the sample.
 
 ## Sample Output
 
 The output of the sample should look something like this:
 
-```text
+```
 Starting Elastic table operations sample.
 
 === Start Region 0: Creating contoso_SensorData table ===
@@ -163,14 +164,14 @@ contoso_SensorData table deleted.
 
 The code for this sample is in the `Program.cs` file.
 
-In addition to the WebAPIService project classes, this project depends on data in the following classes:
+In addition to the WebAPIService project classes, this project depends on data in the following classes.
 
-|Class|Description|
-|---|---|
-|`Settings.cs`|Contains `NumberOfRecords` and `BatchSize` values you can change. Default values are: `NumberOfRecords` = 1000, `BatchSize` = 100.|
-|`EnergyConsumption.cs`|Describes the data stored as JSON in the `contoso_EnergyConsumption` column.|
-|`WebAPIService\Messages\ExecuteCosmosSqlQueryRequest.cs`|Contains the data to send the `ExecuteCosmosSqlQuery` message|
-|`WebAPIService\Messages\ExecuteCosmosSqlQueryResponse.cs`|Contains the data from the ExecuteCosmosSqlQueryRequest|
+| Class | Description |
+|-------|-------------|
+| `Settings.cs` | Contains `NumberOfRecords` and `BatchSize` values you can change. Default values are: `NumberOfRecords` = 1000, `BatchSize` = 100. |
+| `EnergyConsumption.cs` | Describes the data stored as JSON in the `contoso_EnergyConsumption` column. |
+| `WebAPIService\Messages\ExecuteCosmosSqlQueryRequest.cs` | Contains the data to send the `ExecuteCosmosSqlQuery` message |
+| `WebAPIService\Messages\ExecuteCosmosSqlQueryResponse.cs` | Contains the data from the ExecuteCosmosSqlQueryRequest |
 
 This sample has 10 regions:
 
@@ -189,17 +190,17 @@ This sample has 10 regions:
 
 The code in this region sends this request to create a user-owned elastic table named `contoso_SensorData` with the following columns:
 
-|Schema Name  |Type  |Description  |
-|---------|---------|---------|
-|`contoso_SensorType`|String|The primary name column for the `contoso_SensorData` table.|
-|`contoso_DeviceId`|String|The ID of the device. Also used as the partitionid value.|
-|`contoso_Value`|Integer|The value of the sensor data|
-|`contoso_TimeStamp`|DateTime|The time of the reading.|
-|`contoso_EnergyConsumption`|String|A string column using JSON format to demonstrate setting and querying JSON data using `ExecuteCosmosSqlQuery` function.|
+| Schema Name | Type | Description |
+|-------------|------|-------------|
+| `contoso_SensorType` | String | The primary name column for the `contoso_SensorData` table. |
+| `contoso_DeviceId` | String | The ID of the device. Also used as the partitionid value. |
+| `contoso_Value` | Integer | The value of the sensor data. |
+| `contoso_TimeStamp` | DateTime | The time of the reading. |
+| `contoso_EnergyConsumption` | String | A string column using JSON format to demonstrate setting and querying JSON data using `ExecuteCosmosSqlQuery` function. |
 
 The `TableType` property set to 'Elastic' makes this an elastic table.
 
-**Request**
+#### Elastic table - Request
 
 ```http
 POST [Organization Uri]/api/data/v9.2/EntityDefinitions
@@ -436,7 +437,7 @@ Content-Length: 6756
 }
 ```
 
-**Response**
+#### Elastic table - Response
 
 ```http
 HTTP/1.1 204 NoContent
@@ -444,13 +445,11 @@ OData-Version: 4.0
 OData-EntityId: [Organization Uri]/api/data/v9.2/EntityDefinitions(3352268a-02eb-ef11-8eea-6045bdec7ce6)
 ```
 
-
-
-### Create Record
+### Create record
 
 The code in this section creates an record setting the `partitionid`.
 
-**Request**
+#### Create record - Request
 
 ```http
 POST [Organization Uri]/api/data/v9.2/contoso_sensordatas
@@ -472,7 +471,7 @@ Content-Length: 225
 }
 ```
 
-**Response**
+#### Create record - Response
 
 ```http
 HTTP/1.1 204 NoContent
@@ -481,13 +480,11 @@ OData-EntityId: [Organization Uri]/api/data/v9.2/contoso_sensordatas(contoso_sen
 x-ms-session-token: 207:30#172462316#7=154204239
 ```
 
-
-
-### Update Record
+### Update record
 
 The code in this section updates the record created.
 
-**Request**
+#### Update record - Request
 
 With `partitionId` parameter.
 
@@ -507,7 +504,7 @@ Content-Length: 27
 }
 ```
 
-**Response**
+#### Update record - Response
 
 ```http
 HTTP/1.1 204 NoContent
@@ -516,9 +513,9 @@ OData-EntityId: [Organization Uri]/api/data/v9.2/contoso_sensordatas(contoso_sen
 x-ms-session-token: 207:30#172462318#7=154204239
 ```
 
-With only alternate key
+#### Alternative update record - Request
 
-**Request**
+A request with only an alternate key.
 
 ```http
 PATCH [Organization Uri]/api/data/v9.2/contoso_sensordatas(contoso_sensordataid=e7387f9c-02eb-ef11-8eea-6045bdec7ce6,partitionid='Device-ABC-1234')
@@ -536,7 +533,7 @@ Content-Length: 27
 }
 ```
 
-**Response**
+#### Alternative update record - Response
 
 ```http
 HTTP/1.1 204 NoContent
@@ -545,17 +542,13 @@ OData-EntityId: [Organization Uri]/api/data/v9.2/contoso_sensordatas(contoso_sen
 x-ms-session-token: 207:30#172462320#7=154204239
 ```
 
-
-
-
-
-### Retrieve Record
+### Retrieve record
 
 The code in this section retrieves the record using two different ways to identify the record.
 
 First, using the `partitionId` parameter:
 
-**Request**
+#### Retrieve record - Request
 
 ```http
 GET [Organization Uri]/api/data/v9.2/contoso_sensordatas(contoso_sensordataid=e7387f9c-02eb-ef11-8eea-6045bdec7ce6,partitionid='Device-ABC-1234')?partitionId=Device-ABC-1234&$select=contoso_value
@@ -567,7 +560,7 @@ Accept: application/json
 Authorization: Bearer <access token>
 ```
 
-**Response**
+#### Retrieve record - Response
 
 ```http
 HTTP/1.1 200 OK
@@ -586,9 +579,9 @@ OData-Version: 4.0
 }
 ```
 
-Then using alternate key:
+#### Alternative retrieve record - Request
 
-**Request**
+A request using an alternate key.
 
 ```http
 GET [Organization Uri]/api/data/v9.2/contoso_sensordatas(contoso_sensordataid=e7387f9c-02eb-ef11-8eea-6045bdec7ce6,partitionid='Device-ABC-1234')?$select=contoso_value
@@ -600,7 +593,7 @@ Accept: application/json
 Authorization: Bearer <access token>
 ```
 
-**Response**
+#### Alternative retrieve record - Response
 
 ```http
 HTTP/1.1 200 OK
@@ -619,13 +612,14 @@ OData-Version: 4.0
 }
 ```
 
-### Upsert Record
+### Upsert record
 
-**Note** : When Upserting a record you must update the entire record. The contents will be overwritten and any data not included in the upsert payload will be lost.
+> [!NOTE]
+> When Upserting a record you must update the entire record. The contents get overwritten and any data not included in the upsert payload are lost.
 
 The code in this section performs an upsert operation on the record that already exists and references it using an alternate key that includes the partitionid column value.
 
-**Request**
+#### Upsert record - Request
 
 ```http
 PATCH [Organization Uri]/api/data/v9.2/contoso_sensordatas(contoso_sensordataid=e7387f9c-02eb-ef11-8eea-6045bdec7ce6,partitionid='Device-ABC-1234')
@@ -647,7 +641,7 @@ Content-Length: 225
 }
 ```
 
-**Response**
+#### Upsert record - Response
 
 ```http
 HTTP/1.1 204 NoContent
@@ -656,11 +650,11 @@ OData-EntityId: [Organization Uri]/api/data/v9.2/contoso_sensordatas(contoso_sen
 x-ms-session-token: 207:30#172462322#7=154204239
 ```
 
-### Delete Record
+### Delete record
 
 The code in this section deletes the record.
 
-**Request**
+#### Delete record - Request
 
 ```http
 DELETE [Organization Uri]/api/data/v9.2/contoso_sensordatas(contoso_sensordataid=e7387f9c-02eb-ef11-8eea-6045bdec7ce6,partitionid='Device-ABC-1234')?partitionId=Device-ABC-1234
@@ -671,19 +665,18 @@ Accept: application/json
 Authorization: Bearer <access token>
 ```
 
-**Response**
+#### Delete record - Response
 
 ```http
 HTTP/1.1 204 NoContent
 OData-Version: 4.0
 ```
 
-
-### Demonstrate CreateMultiple
+### CreateMultiple
 
 This code performs 10 asynchronous parallel `CreateMultiple` operations of 100 records each to create 1000 records.
 
-**Request**
+#### CreateMultiple - Request
 
 ```http
 POST [Organization Uri]/api/data/v9.2/contoso_sensordatas/Microsoft.Dynamics.CRM.CreateMultiple
@@ -723,7 +716,7 @@ Content-Length: 23924
 }
 ```
 
-**Response**
+#### CreateMultiple - Response
 
 ```http
 HTTP/1.1 200 OK
@@ -740,11 +733,11 @@ OData-Version: 4.0
 }
 ```
 
-### Demonstrate UpdateMultiple
+### UpdateMultiple
 
 This code performs 10 asynchronous parallel `UpdateMultiple` operations of 100 records each to create 1000 records, setting the `contoso_energyconsumption` column to the serialized JSON value of the `EnergyConsumption` class.
 
-**Request**
+#### UpdateMultiple - Request
 
 ```http
 POST [Organization Uri]/api/data/v9.2/contoso_sensordatas/Microsoft.Dynamics.CRM.UpdateMultiple
@@ -781,25 +774,26 @@ Content-Length: 31424
 }
 ```
 
-**Response**
+#### UpdateMultiple - Response
 
 ```http
 HTTP/1.1 204 NoContent
 OData-Version: 4.0
 ```
 
-### Demonstrate ExecuteCosmosSqlQuery
+### ExecuteCosmosSqlQuery
 
 This section has two parts:
 
 - [Execute the query to retrieve the first 50 records](#execute-the-query-to-retrieve-the-first-50-records)
-- [Retrieve the paged results as long as the response.HasMore value is true](#retrieve-the-paged-results-as-long-as-the-responsehasmore-value-is-true)
+- [Retrieve the paged results if `response.HasMore` is true](#retrieve-the-paged-results)
 
 #### Execute the query to retrieve the first 50 records
 
-**Note**: The query parameters in this example have been URL decoded for readability. They should be URL encoded when sent.
+> [!NOTE]
+> The query parameters in this example have been URL decoded for readability. They should be URL encoded when sent.
 
-**Request**
+#### ExecuteCosmosSqlQuery - Request
 
 ```http
 GET [Organization Uri]/api/data/v9.2/ExecuteCosmosSqlQuery(QueryText=@p1,EntityLogicalName=@p2,QueryParameters=@p3,PageSize=@p4,PartitionId=@p5)?@p1='select c.props.contoso_deviceid as deviceId, c.props.contoso_timestamp as timestamp, c.props.contoso_energyconsumption.power as power from c where c.props.contoso_sensortype=@sensortype and c.props.contoso_energyconsumption.power > @power'
@@ -814,7 +808,7 @@ If-None-Match: null
 Accept: application/json
 ```
 
-**Response**
+#### ExecuteCosmosSqlQuery - Response
 
 ```http
 HTTP/1.1 200 OK
@@ -837,11 +831,13 @@ OData-Version: 4.0
 }
 ```
 
-#### Retrieve the paged results as long as the response.HasMore value is true
+#### Retrieve the paged results
+
+You can retrieve the paged results as long as the `response.HasMore` value is true.
 
 This time the `PagingCookie` parameter has the value returned from the previous response.
 
-**Request**
+#### Retrieve the paged results - Request
 
 ```http
 GET [Organization Uri]/api/data/v9.2/ExecuteCosmosSqlQuery(QueryText=@p1,EntityLogicalName=@p2,QueryParameters=@p3,PageSize=@p4,PagingCookie=@p5,PartitionId=@p6)?@p1='select c.props.contoso_deviceid as deviceId, c.props.contoso_timestamp as timestamp, c.props.contoso_energyconsumption.power as power from c where c.props.contoso_sensortype=@sensortype and c.props.contoso_energyconsumption.power > @power'
@@ -857,7 +853,7 @@ If-None-Match: null
 Accept: application/json
 ```
 
-**Response**
+#### Retrieve the paged results - Response
 
 ```http
 HTTP/1.1 200 OK
@@ -880,11 +876,11 @@ OData-Version: 4.0
 }
 ```
 
-### Demonstrate DeleteMultiple
+### DeleteMultiple
 
 This code performs 10 asynchronous parallel `DeleteMultiple` operations of 100 records each to delete 1000 records.
 
-**Request**
+#### DeleteMultiple - Request
 
 ```http
 POST [Organization Uri]/api/data/v9.2/contoso_sensordatas/Microsoft.Dynamics.CRM.DeleteMultiple
@@ -918,18 +914,18 @@ Content-Length: 19324
 }
 ```
 
-**Response**
+#### DeleteMultiple - Response
 
 ```http
 HTTP/1.1 204 NoContent
 OData-Version: 4.0
 ```
 
-### Delete Table
+### Delete table
 
 The code in this section sends this request to delete the `contoso_SensorData` table using the `LogicalName` alternate key.
 
-**Request**
+#### Delete table - Request
 
 ```http
 DELETE [Organization Uri]/api/data/v9.2/EntityDefinitions(LogicalName='contoso_sensordata')
@@ -940,14 +936,13 @@ Accept: application/json
 Authorization: Bearer <access token>
 ```
 
-**Response**
+#### Delete table - Response
 
 ```http
 HTTP/1.1 204 NoContent
 OData-Version: 4.0
 ```
 
-
 ## Clean up
 
-By default this sample will delete the `contoso_SensorData` table created at the beginning. It should leave no data in the system to clean up.
+By default this sample deletes the `contoso_SensorData` table created at the beginning. The clean up should leave no data in the system from this sample.

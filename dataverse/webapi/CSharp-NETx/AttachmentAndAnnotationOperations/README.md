@@ -19,21 +19,23 @@ This sample uses the common helper code in the [WebAPIService](https://github.co
    - **ActivityMimeAttachmentOperations**: Demonstrates using Attachments.
    - **AnnotationOperations**: Demonstrates using Annotations.
 
-   **Note**: The **WebAPIService** project is included so that each of the other projects can depend on the common helper code provided by the service. The samples use several classes in the `WebAPIService/Messages` folder.
+   > [!NOTE]
+   > The **WebAPIService** project is included so that each of the other projects can depend on the common helper code provided by the service. The samples use several classes in the `WebAPIService/Messages` folder.
 
    In **Solution Explorer**, right-click the project you want to run and choose **Set as Startup Project**.
 
 1. In either project, edit the `appsettings.json` file to set the following property values:
 
-   |Property|Instructions  |
-   |---------|---------|
-   |`Url`|The Url for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. See [View developer resources](https://learn.microsoft.com/power-apps/developer/data-platform/view-download-developer-resources) to find this. |
-   |`UserPrincipalName`|Replace the placeholder `you@yourorg.onmicrosoft.com` value with the UPN value you use to access the environment.|
-   |`Password`|Replace the placeholder `yourPassword` value with the password you use.|
+   | Property | Instructions |
+   |----------|--------------|
+   | `Url` | The Url for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. See [View developer resources](https://learn.microsoft.com/power-apps/developer/data-platform/view-download-developer-resources) to find this. |
+   | `UserPrincipalName` | Replace the placeholder `you@yourorg.onmicrosoft.com` value with the UPN value you use to access the environment. |
+   | `Password` | Replace the placeholder `yourPassword` value with the password you use. |
 
 1. Save the `appsettings.json` file.
 
-   **Note**: Both projects refer to the same `appsettings.json` file, so you only need to do this one time to run either project.
+   > [!NOTE]
+   > Both projects refer to the same `appsettings.json` file, so you only need to do this one time to run either project.
 
 1. Press **F5** to run the sample.
 
@@ -46,7 +48,7 @@ This sample is a solution  with two projects. See the respective README files fo
 
 ## Utility class
 
-Both projects use a shared `Utility` class to perform common operations. This class contains three static methods:
+Both projects use a shared `Utility` class to perform common operations. This class contains three static methods: `GetMimeType`, `GetMaxUploadFileSize`, and `SetMaxUploadFileSize`.
 
 ### GetMimeType
 

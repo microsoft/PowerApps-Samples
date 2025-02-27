@@ -1,4 +1,14 @@
-﻿# Web API File Operations sample
+﻿---
+languages:
+- csharp
+products:
+- power-platform
+- power-apps
+page_type: sample
+description: "This sample demonstrates how to perform operations with file columns using the Dataverse Web API."
+---
+
+# Web API File Operations sample
 
 This .NET 6.0 sample demonstrates how to perform operations with file columns using the Dataverse Web API.
 
@@ -13,21 +23,21 @@ This sample uses the common helper code in the [WebAPIService](../WebAPIService)
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
 1. Open the [PowerApps-Samples/dataverse/webapi/CSharp-NETx/FileOperations/FileOperations.sln](FileOperations.sln) file using Visual Studio 2022.
-1. Edit the [appsettings.json](../appsettings.json) file to set the following property values:
+1. Edit the [appsettings.json](../appsettings.json) file to set the following property values.
 
-   |Property|Instructions  |
-   |---------|---------|
-   |`Url`|The Url for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. See [View developer resources](https://learn.microsoft.com/power-apps/developer/data-platform/view-download-developer-resources) to find this. |
-   |`UserPrincipalName`|Replace the placeholder `you@yourorg.onmicrosoft.com` value with the UPN value you use to access the environment.|
-   |`Password`|Replace the placeholder `yourPassword` value with the password you use.|
+   | Property | Instructions |
+   |----------|--------------|
+   | `Url` | The URL for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. See [View developer resources](https://learn.microsoft.com/power-apps/developer/data-platform/view-download-developer-resources) to learn where to find your URL. |
+   | `UserPrincipalName` | Replace the placeholder `you@yourorg.onmicrosoft.com` value with the UPN value you use to access the environment. |
+   | `Password` | Replace the placeholder `yourPassword` value with the password you use. |
 
 1. Save the `appsettings.json` file
-1. Select which of the projects you want to run in solution explorer. Right click the project and choose **Set as Startup Project**.
-1. Press F5 to run the sample.
+1. Select which of the projects you want to run in solution explorer. Right-click the project and choose **Set as Startup Project**.
+1. Press `F5` to run the sample.
 
 ## Sample Output
 
-The output of the sample should look something like this:
+The output of the sample should look similar to this output:
 
 ```
 Creating file column named 'sample_FileColumn' on the account table ...
@@ -55,6 +65,15 @@ Each project uses a shared `Utility` class to perform common operations.
 
 At a high level, each project performs these operations:
 
+- Create a file column
+- Update a file column
+- Retrieve the file column MaxSizeInKb value
+- Create an account record
+- Upload a file
+- Download a file
+- Delete a file
+- Clean up
+
 ### Create a file column
 
 The `Utility.CreateFileColumn` function creates a file column named `sample_FileColumn` in the account table with a `MaxSizeInKb` value of 10MB.
@@ -77,17 +96,17 @@ Before a file can be uploaded to the file column, a record must exist.
 
 The function to upload the file accepts a parameter named `fileColumnMaxSizeInKb` and uses that value to test the size of the file. If the file is larger than the configured limit of the file column, it will throw an error.
 
-### Download the file
+### Download a file
 
 If the file upload succeeded, the function to download the file will save it to the current directory. You can try opening the file to confirm it was uploaded and downloaded correctly.
 
-### Delete the file
+### Delete a file
 
 If the file upload succeeded, the file is deleted.
 
 ### Clean up
 
-To leave the system in the state before the sample ran, it does the following:
+To leave the system in the state before the sample ran, this sample does the following:
 
 - Delete the account record
 - Delete the file column

@@ -7,6 +7,7 @@ products:
 page_type: sample
 description: "This sample demonstrates how to work with schema definitions using the Dataverse Web API."
 ---
+
 # Web API Metadata operations sample
 
 This .NET 6.0 sample demonstrates how to work with the following using the Dataverse Web API:
@@ -28,26 +29,38 @@ This sample uses the common helper code in the [WebAPIService](../WebAPIService)
 
 1. Clone or download the [PowerApps-Samples](../../../../../PowerApps-Samples) repository.
 1. Open the [MetadataOperations.sln](MetadataOperations.sln) file using Visual Studio 2022.
-1. Edit the [appsettings.json](../appsettings.json) file to set the following property values:
+1. Edit the [appsettings.json](../appsettings.json) file to set the following property values.
 
-   |Property|Instructions  |
-   |---------|---------|
-   |`Url`|The Url for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. See [View developer resources](https://learn.microsoft.com/power-apps/developer/data-platform/view-download-developer-resources) to find this. |
-   |`UserPrincipalName`|Replace the placeholder `you@yourorg.onmicrosoft.com` value with the UPN value you use to access the environment.|
-   |`Password`|Replace the placeholder `yourPassword` value with the password you use.|
+   | Property | Instructions |
+   |----------|--------------|
+   | `Url` | The URL for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. See [View developer resources](https://learn.microsoft.com/power-apps/developer/data-platform/view-download-developer-resources) to learn how to find your URL. |
+   | `UserPrincipalName` | Replace the placeholder `you@yourorg.onmicrosoft.com` value with the UPN value you use to access the environment. |
+   | `Password` | Replace the placeholder `yourPassword` value with the password you use. |
 
 1. Save the `appsettings.json` file
-1. Press F5 to run the sample.
+1. Press `F5` to run the sample.
 
 ## Demonstrates
 
-This sample has 11 regions:
+This sample has 11 sections:
+
+1. [Create Publisher and Solution](#section-0-create-publisher-and-solution)
+1. [Create, Retrieve and Update Table](#section-1-create-retrieve-and-update-table)
+1. [Create, Retrieve and Update Columns](#section-2-create-retrieve-and-update-columns)
+1. [Create and use Global OptionSet](#section-3-create-and-use-global-optionset)
+1. [Create Customer Relationship](#section-4-create-customer-relationship)
+1. [Create and retrieve a one-to-many relationship](#section-5-create-and-retrieve-a-one-to-many-relationship)
+1. [Create and retrieve a many-to-one relationship](#section-6-create-and-retrieve-a-many-to-one-relationship)
+1. [Create and retrieve a many-to-many relationship](#section-7-create-and-retrieve-a-many-to-many-relationship)
+1. [Export managed solution](#section-8-export-managed-solution)
+1. [Delete sample records](#section-9-delete-sample-records)
+1. [Import and Delete managed solution](#section-10-import-and-delete-managed-solution)
 
 ### Section 0: Create Publisher and Solution
 
 Operations: Create a solution record and an associated publisher record.
 
-- All solution components created in this sample will be associate to the solution so that they can be exported. This association is created using the `MSCRM.SolutionUniqueName` request header setting the solution unique name set as the value.
+- All solution components created in this sample are associated to the solution, so they can be exported. This association is created using the `MSCRM.SolutionUniqueName` request header setting the solution unique name set as the value.
 - All names of solution components are prefixed using the publisher customization prefix.
 
 ### Section 1: Create, Retrieve and Update Table
@@ -140,8 +153,9 @@ Operations:
 
 ## Clean up
 
-By default this sample will delete all the records created in it.
+By default this sample deletes all the records created in it.
 
-If you want to view created records after the sample is completed, change the `deleteCreatedRecords` variable to `false` and you will be prompted to decide if you want to delete the records.
+If you want to view created records, after the sample is completed, change the `deleteCreatedRecords` variable to `false` and you're prompted to delete the records if desired.
 
-**Note**: If you do not delete the un-managed solution components created by this sample, the code in [Section 10](#section-10-import-and-delete-managed-solution) will fail.
+> [!NOTE]
+> If you don't delete the unmanaged solution components created by this sample, the code in [Section 10](#section-10-import-and-delete-managed-solution) fails.
