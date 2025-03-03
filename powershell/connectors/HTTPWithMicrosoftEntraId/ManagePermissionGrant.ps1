@@ -14,7 +14,6 @@ function Get-FirstPartyAppList{
 		[App]@{IsCommonlyUsedApp=$false;ApplicationName='ASM Campaign Servicing';AppId='0cb7b9ec-5336-483b-bc31-b15b5788de71'},
 		[App]@{IsCommonlyUsedApp=$false;ApplicationName='Azure Advanced Threat Protection';AppId='7b7531ad-5926-4f2d-8a1d-38495ad33e17'},
 		[App]@{IsCommonlyUsedApp=$false;ApplicationName='Azure Data Lake';AppId='e9f49c6b-5ce5-44c8-925d-015017e9f7ad'},
-  		[App]@{IsCommonlyUsedApp=$false;ApplicationName='Azure DevOps';AppId='499b84ac-1321-427f-aa17-267ca6975798'},
 		[App]@{IsCommonlyUsedApp=$false;ApplicationName='Azure Lab Services Portal';AppId='835b2a73-6e10-4aa5-a979-21dfda45231c'},
 		[App]@{IsCommonlyUsedApp=$false;ApplicationName='Azure Portal';AppId='c44b4083-3bb0-49c1-b47d-974e53cbdf3c'},
 		[App]@{IsCommonlyUsedApp=$false;ApplicationName='AzureSupportCenter';AppId='37182072-3c9c-4f6a-a4b3-b3f91cacffce'},
@@ -122,6 +121,7 @@ function Get-FirstPartyAppList{
 		[App]@{IsCommonlyUsedApp=$false;ApplicationName='Windows Store for Business';AppId='45a330b1-b1ec-4cc1-9161-9f03992aa49f'},
 		[App]@{IsCommonlyUsedApp=$false;ApplicationName='Yammer Web';AppId='c1c74fed-04c9-4704-80dc-9f79a2e515cb'},
 		[App]@{IsCommonlyUsedApp=$false;ApplicationName='Yammer Web Embed';AppId='e1ef36fd-b883-4dbf-97f0-9ece4b576fc6'},
+  		[App]@{IsCommonlyUsedApp=$true;ApplicationName='Azure DevOps';AppId='499b84ac-1321-427f-aa17-267ca6975798'},
 		[App]@{IsCommonlyUsedApp=$true;ApplicationName='Azure Key Vault';AppId='cfa8b339-82a2-471a-a3c9-0fc0be7a4093'},
 		[App]@{IsCommonlyUsedApp=$true;ApplicationName='Azure Storage';AppId='e406a681-f3d4-42a8-90b6-c2b029497af1'}
 	) | Sort-Object -Property ApplicationName
