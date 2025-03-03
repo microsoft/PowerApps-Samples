@@ -121,6 +121,7 @@ function Get-FirstPartyAppList{
 		[App]@{IsCommonlyUsedApp=$false;ApplicationName='Windows Store for Business';AppId='45a330b1-b1ec-4cc1-9161-9f03992aa49f'},
 		[App]@{IsCommonlyUsedApp=$false;ApplicationName='Yammer Web';AppId='c1c74fed-04c9-4704-80dc-9f79a2e515cb'},
 		[App]@{IsCommonlyUsedApp=$false;ApplicationName='Yammer Web Embed';AppId='e1ef36fd-b883-4dbf-97f0-9ece4b576fc6'},
+  		[App]@{IsCommonlyUsedApp=$true;ApplicationName='Azure DevOps';AppId='499b84ac-1321-427f-aa17-267ca6975798'},
 		[App]@{IsCommonlyUsedApp=$true;ApplicationName='Azure Key Vault';AppId='cfa8b339-82a2-471a-a3c9-0fc0be7a4093'},
 		[App]@{IsCommonlyUsedApp=$true;ApplicationName='Azure Storage';AppId='e406a681-f3d4-42a8-90b6-c2b029497af1'}
 	) | Sort-Object -Property ApplicationName
