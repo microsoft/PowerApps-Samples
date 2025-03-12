@@ -14,7 +14,11 @@
     "activityparty",
     "contact",
     "account",
-    "letter"
+    "letter",
+    "team",
+    "role",
+    "privilege",
+    "businessunit"
   ],
   "emitEntityETC": false,
   "emitVirtualAttributes": false

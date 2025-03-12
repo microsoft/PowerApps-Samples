@@ -1061,6 +1061,19 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
+		/// N:1 business_unit_letter_activities
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningbusinessunit")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("business_unit_letter_activities")]
+		public MyApp.DataModel.BusinessUnit business_unit_letter_activities
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.BusinessUnit>("business_unit_letter_activities", null);
+			}
+		}
+		
+		/// <summary>
 		/// N:1 Contact_Letters
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
@@ -1076,6 +1089,19 @@ namespace MyApp.DataModel
 				this.OnPropertyChanging("Contact_Letters");
 				this.SetRelatedEntity<MyApp.DataModel.Contact>("Contact_Letters", null, value);
 				this.OnPropertyChanged("Contact_Letters");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_letter
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_letter")]
+		public MyApp.DataModel.Team team_letter
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.Team>("team_letter", null);
 			}
 		}
 	}

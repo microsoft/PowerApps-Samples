@@ -4347,6 +4347,19 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
+		/// N:1 business_unit_contacts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningbusinessunit")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("business_unit_contacts")]
+		public MyApp.DataModel.BusinessUnit business_unit_contacts
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.BusinessUnit>("business_unit_contacts", null);
+			}
+		}
+		
+		/// <summary>
 		/// N:1 contact_customer_accounts
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentcustomerid")]
@@ -4413,6 +4426,19 @@ namespace MyApp.DataModel
 				this.OnPropertyChanging("msa_contact_managingpartner");
 				this.SetRelatedEntity<MyApp.DataModel.Account>("msa_contact_managingpartner", null, value);
 				this.OnPropertyChanged("msa_contact_managingpartner");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_contacts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_contacts")]
+		public MyApp.DataModel.Team team_contacts
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.Team>("team_contacts", null);
 			}
 		}
 	}

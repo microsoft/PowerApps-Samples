@@ -3231,6 +3231,19 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
+		/// N:1 business_unit_accounts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningbusinessunit")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("business_unit_accounts")]
+		public MyApp.DataModel.BusinessUnit business_unit_accounts
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.BusinessUnit>("business_unit_accounts", null);
+			}
+		}
+		
+		/// <summary>
 		/// N:1 msa_account_managingpartner
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msa_managingpartnerid")]
@@ -3246,6 +3259,19 @@ namespace MyApp.DataModel
 				this.OnPropertyChanging("Referencingmsa_account_managingpartner");
 				this.SetRelatedEntity<MyApp.DataModel.Account>("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
 				this.OnPropertyChanged("Referencingmsa_account_managingpartner");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_accounts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_accounts")]
+		public MyApp.DataModel.Team team_accounts
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.Team>("team_accounts", null);
 			}
 		}
 	}
