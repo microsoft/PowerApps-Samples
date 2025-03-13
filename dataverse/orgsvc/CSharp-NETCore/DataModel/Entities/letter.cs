@@ -1093,6 +1093,58 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
+		/// N:1 lk_letter_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_letter_createdby")]
+		public MyApp.DataModel.SystemUser lk_letter_createdby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_letter_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_letter_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_letter_createdonbehalfby")]
+		public MyApp.DataModel.SystemUser lk_letter_createdonbehalfby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_letter_createdonbehalfby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_letter_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_letter_modifiedby")]
+		public MyApp.DataModel.SystemUser lk_letter_modifiedby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_letter_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_letter_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_letter_modifiedonbehalfby")]
+		public MyApp.DataModel.SystemUser lk_letter_modifiedonbehalfby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_letter_modifiedonbehalfby", null);
+			}
+		}
+		
+		/// <summary>
 		/// N:1 team_letter
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
@@ -1102,6 +1154,19 @@ namespace MyApp.DataModel
 			get
 			{
 				return this.GetRelatedEntity<MyApp.DataModel.Team>("team_letter", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 user_letter
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_letter")]
+		public MyApp.DataModel.SystemUser user_letter
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("user_letter", null);
 			}
 		}
 	}

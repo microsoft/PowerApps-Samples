@@ -4411,6 +4411,71 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
+		/// N:1 contact_owning_user
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_owning_user")]
+		public MyApp.DataModel.SystemUser contact_owning_user
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("contact_owning_user", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_contact_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_contact_createdonbehalfby")]
+		public MyApp.DataModel.SystemUser lk_contact_createdonbehalfby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_contact_createdonbehalfby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_contact_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_contact_modifiedonbehalfby")]
+		public MyApp.DataModel.SystemUser lk_contact_modifiedonbehalfby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_contact_modifiedonbehalfby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_contactbase_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_contactbase_createdby")]
+		public MyApp.DataModel.SystemUser lk_contactbase_createdby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_contactbase_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_contactbase_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_contactbase_modifiedby")]
+		public MyApp.DataModel.SystemUser lk_contactbase_modifiedby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_contactbase_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
 		/// N:1 msa_contact_managingpartner
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msa_managingpartnerid")]
@@ -4426,6 +4491,25 @@ namespace MyApp.DataModel
 				this.OnPropertyChanging("msa_contact_managingpartner");
 				this.SetRelatedEntity<MyApp.DataModel.Account>("msa_contact_managingpartner", null, value);
 				this.OnPropertyChanged("msa_contact_managingpartner");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 system_user_contacts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("preferredsystemuserid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("system_user_contacts")]
+		public MyApp.DataModel.SystemUser system_user_contacts
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("system_user_contacts", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("system_user_contacts");
+				this.SetRelatedEntity<MyApp.DataModel.SystemUser>("system_user_contacts", null, value);
+				this.OnPropertyChanged("system_user_contacts");
 			}
 		}
 		

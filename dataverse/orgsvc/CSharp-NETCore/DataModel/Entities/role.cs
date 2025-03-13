@@ -564,6 +564,24 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
+		/// N:N systemuserroles_association
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("systemuserroles_association")]
+		public System.Collections.Generic.IEnumerable<MyApp.DataModel.SystemUser> systemuserroles_association
+		{
+			get
+			{
+				return this.GetRelatedEntities<MyApp.DataModel.SystemUser>("systemuserroles_association", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("systemuserroles_association");
+				this.SetRelatedEntities<MyApp.DataModel.SystemUser>("systemuserroles_association", null, value);
+				this.OnPropertyChanged("systemuserroles_association");
+			}
+		}
+		
+		/// <summary>
 		/// N:N teamroles_association
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("teamroles_association")]
@@ -597,6 +615,58 @@ namespace MyApp.DataModel
 				this.OnPropertyChanging("business_unit_roles");
 				this.SetRelatedEntity<MyApp.DataModel.BusinessUnit>("business_unit_roles", null, value);
 				this.OnPropertyChanged("business_unit_roles");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_role_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_role_createdonbehalfby")]
+		public MyApp.DataModel.SystemUser lk_role_createdonbehalfby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_role_createdonbehalfby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_role_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_role_modifiedonbehalfby")]
+		public MyApp.DataModel.SystemUser lk_role_modifiedonbehalfby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_role_modifiedonbehalfby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_rolebase_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_rolebase_createdby")]
+		public MyApp.DataModel.SystemUser lk_rolebase_createdby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_rolebase_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_rolebase_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_rolebase_modifiedby")]
+		public MyApp.DataModel.SystemUser lk_rolebase_modifiedby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_rolebase_modifiedby", null);
 			}
 		}
 		

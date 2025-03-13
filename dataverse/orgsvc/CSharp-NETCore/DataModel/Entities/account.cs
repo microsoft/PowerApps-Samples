@@ -3244,6 +3244,58 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
+		/// N:1 lk_accountbase_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_accountbase_createdby")]
+		public MyApp.DataModel.SystemUser lk_accountbase_createdby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_accountbase_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_accountbase_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_accountbase_createdonbehalfby")]
+		public MyApp.DataModel.SystemUser lk_accountbase_createdonbehalfby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_accountbase_createdonbehalfby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_accountbase_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_accountbase_modifiedby")]
+		public MyApp.DataModel.SystemUser lk_accountbase_modifiedby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_accountbase_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_accountbase_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_accountbase_modifiedonbehalfby")]
+		public MyApp.DataModel.SystemUser lk_accountbase_modifiedonbehalfby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_accountbase_modifiedonbehalfby", null);
+			}
+		}
+		
+		/// <summary>
 		/// N:1 msa_account_managingpartner
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msa_managingpartnerid")]
@@ -3263,6 +3315,25 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
+		/// N:1 system_user_accounts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("preferredsystemuserid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("system_user_accounts")]
+		public MyApp.DataModel.SystemUser system_user_accounts
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("system_user_accounts", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("system_user_accounts");
+				this.SetRelatedEntity<MyApp.DataModel.SystemUser>("system_user_accounts", null, value);
+				this.OnPropertyChanged("system_user_accounts");
+			}
+		}
+		
+		/// <summary>
 		/// N:1 team_accounts
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
@@ -3272,6 +3343,19 @@ namespace MyApp.DataModel
 			get
 			{
 				return this.GetRelatedEntity<MyApp.DataModel.Team>("team_accounts", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 user_accounts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_accounts")]
+		public MyApp.DataModel.SystemUser user_accounts
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("user_accounts", null);
 			}
 		}
 	}

@@ -1488,6 +1488,24 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
+		/// 1:N business_unit_system_users
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("business_unit_system_users")]
+		public System.Collections.Generic.IEnumerable<MyApp.DataModel.SystemUser> business_unit_system_users
+		{
+			get
+			{
+				return this.GetRelatedEntities<MyApp.DataModel.SystemUser>("business_unit_system_users", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("business_unit_system_users");
+				this.SetRelatedEntities<MyApp.DataModel.SystemUser>("business_unit_system_users", null, value);
+				this.OnPropertyChanged("business_unit_system_users");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N business_unit_teams
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("business_unit_teams")]
@@ -1502,6 +1520,24 @@ namespace MyApp.DataModel
 				this.OnPropertyChanging("business_unit_teams");
 				this.SetRelatedEntities<MyApp.DataModel.Team>("business_unit_teams", null, value);
 				this.OnPropertyChanged("business_unit_teams");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N business_unit_userqueryvisualizations
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("business_unit_userqueryvisualizations")]
+		public System.Collections.Generic.IEnumerable<MyApp.DataModel.UserQueryVisualization> business_unit_userqueryvisualizations
+		{
+			get
+			{
+				return this.GetRelatedEntities<MyApp.DataModel.UserQueryVisualization>("business_unit_userqueryvisualizations", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("business_unit_userqueryvisualizations");
+				this.SetRelatedEntities<MyApp.DataModel.UserQueryVisualization>("business_unit_userqueryvisualizations", null, value);
+				this.OnPropertyChanged("business_unit_userqueryvisualizations");
 			}
 		}
 		
@@ -1521,6 +1557,58 @@ namespace MyApp.DataModel
 				this.OnPropertyChanging("Referencingbusiness_unit_parent_business_unit");
 				this.SetRelatedEntity<MyApp.DataModel.BusinessUnit>("business_unit_parent_business_unit", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
 				this.OnPropertyChanged("Referencingbusiness_unit_parent_business_unit");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_businessunit_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_businessunit_createdonbehalfby")]
+		public MyApp.DataModel.SystemUser lk_businessunit_createdonbehalfby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_businessunit_createdonbehalfby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_businessunit_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_businessunit_modifiedonbehalfby")]
+		public MyApp.DataModel.SystemUser lk_businessunit_modifiedonbehalfby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_businessunit_modifiedonbehalfby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_businessunitbase_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_businessunitbase_createdby")]
+		public MyApp.DataModel.SystemUser lk_businessunitbase_createdby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_businessunitbase_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_businessunitbase_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_businessunitbase_modifiedby")]
+		public MyApp.DataModel.SystemUser lk_businessunitbase_modifiedby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_businessunitbase_modifiedby", null);
 			}
 		}
 	}

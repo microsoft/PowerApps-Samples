@@ -108,6 +108,17 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="MyApp.DataModel.SystemUser"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<MyApp.DataModel.SystemUser> SystemUserSet
+		{
+			get
+			{
+				return this.CreateQuery<MyApp.DataModel.SystemUser>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="MyApp.DataModel.Team"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<MyApp.DataModel.Team> TeamSet
@@ -115,6 +126,17 @@ namespace MyApp.DataModel
 			get
 			{
 				return this.CreateQuery<MyApp.DataModel.Team>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="MyApp.DataModel.UserQueryVisualization"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<MyApp.DataModel.UserQueryVisualization> UserQueryVisualizationSet
+		{
+			get
+			{
+				return this.CreateQuery<MyApp.DataModel.UserQueryVisualization>();
 			}
 		}
 	}

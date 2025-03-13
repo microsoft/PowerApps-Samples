@@ -684,6 +684,42 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
+		/// 1:N team_userqueryvisualizations
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_userqueryvisualizations")]
+		public System.Collections.Generic.IEnumerable<MyApp.DataModel.UserQueryVisualization> team_userqueryvisualizations
+		{
+			get
+			{
+				return this.GetRelatedEntities<MyApp.DataModel.UserQueryVisualization>("team_userqueryvisualizations", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("team_userqueryvisualizations");
+				this.SetRelatedEntities<MyApp.DataModel.UserQueryVisualization>("team_userqueryvisualizations", null, value);
+				this.OnPropertyChanged("team_userqueryvisualizations");
+			}
+		}
+		
+		/// <summary>
+		/// N:N teammembership_association
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("teammembership_association")]
+		public System.Collections.Generic.IEnumerable<MyApp.DataModel.SystemUser> teammembership_association
+		{
+			get
+			{
+				return this.GetRelatedEntities<MyApp.DataModel.SystemUser>("teammembership_association", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("teammembership_association");
+				this.SetRelatedEntities<MyApp.DataModel.SystemUser>("teammembership_association", null, value);
+				this.OnPropertyChanged("teammembership_association");
+			}
+		}
+		
+		/// <summary>
 		/// N:N teamroles_association
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("teamroles_association")]
@@ -717,6 +753,77 @@ namespace MyApp.DataModel
 				this.OnPropertyChanging("business_unit_teams");
 				this.SetRelatedEntity<MyApp.DataModel.BusinessUnit>("business_unit_teams", null, value);
 				this.OnPropertyChanged("business_unit_teams");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_team_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_team_createdonbehalfby")]
+		public MyApp.DataModel.SystemUser lk_team_createdonbehalfby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_team_createdonbehalfby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_team_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_team_modifiedonbehalfby")]
+		public MyApp.DataModel.SystemUser lk_team_modifiedonbehalfby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_team_modifiedonbehalfby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_teambase_administratorid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("administratorid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_teambase_administratorid")]
+		public MyApp.DataModel.SystemUser lk_teambase_administratorid
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_teambase_administratorid", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("lk_teambase_administratorid");
+				this.SetRelatedEntity<MyApp.DataModel.SystemUser>("lk_teambase_administratorid", null, value);
+				this.OnPropertyChanged("lk_teambase_administratorid");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_teambase_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_teambase_createdby")]
+		public MyApp.DataModel.SystemUser lk_teambase_createdby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_teambase_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_teambase_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_teambase_modifiedby")]
+		public MyApp.DataModel.SystemUser lk_teambase_modifiedby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_teambase_modifiedby", null);
 			}
 		}
 	}

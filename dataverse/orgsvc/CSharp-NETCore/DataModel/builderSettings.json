@@ -18,7 +18,9 @@
     "team",
     "role",
     "privilege",
-    "businessunit"
+    "businessunit",
+    "systemuser",
+    "userqueryvisualization"
   ],
   "emitEntityETC": false,
   "emitVirtualAttributes": false
