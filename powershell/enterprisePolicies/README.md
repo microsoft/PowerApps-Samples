@@ -313,7 +313,7 @@ Input parameters :
 Sample Input :</br>
 ```powershell
 New-SubnetInjection.ps1 `
--environmentId "03ec85eb-f8f3-4f26-9d8e-683479431def"
+-environmentId "03ec85eb-f8f3-4f26-9d8e-683479431def" `
 -policyArmId "/subscriptions/98159998-fb68-44c3-b7d8-22b6539499a2/resourceGroups/enterprisePolicy-snet-delegation/Providers/Microsoft.PowerPlatform/enterprisePolicies/vnetEP1"
 ```
 
@@ -345,7 +345,7 @@ Input parameters :
 Sample Input :</br>
 ```powershell
 Remove-SubnetInjection.ps1 `
--environmentId "03ec85eb-f8f3-4f26-9d8e-683479431def"
+-environmentId "03ec85eb-f8f3-4f26-9d8e-683479431def" `
 -policyArmId "/subscriptions/98159998-fb68-44c3-b7d8-22b6539499a2/resourceGroups/enterprisePolicy-snet-delegation/Providers/Microsoft.PowerPlatform/enterprisePolicies/vnetEP1"
 ```
 
