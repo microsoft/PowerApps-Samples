@@ -178,92 +178,126 @@ The Subnet Injection scripts are present in folder SubnetInjection at current lo
 
 ### 1. **Setup virtual network for Subnet Injection**
 This script adds the subnet delegation for Microsoft.PowerPlatform/enterprisePolicies for a given virtual network and subnet </br>
-Script name : SetupVnetForSubnetDelegation.ps1</br>
+Script name : New-VnetForSubnetDelegation.ps1</br>
 Input parameters :
-    - virtualNetworkSubscriptionId : The subscriptionId of the virtual network
-    - virtualNetworkName : The name of the virtual network
-    - subnetName : The name of the virtual network subnet
+  - virtualNetworkSubscriptionId : The subscriptionId of the virtual network
+  - virtualNetworkName : The name of the virtual network
+  - subnetName : The name of the virtual network subnet
 
 Sample Input :</br>
-![alt text](./ReadMeImages/SetupVirtualNetwork1.png)</br>
+```powershell
+New-VnetForSubnetDelegation.ps1 `
+-virtualNetworkSubscriptionId "98159998-fb68-44c3-b7d8-22b6539499a2" `
+-virtualNetworkName "demoVirtualNetwork" `
+-subnetName "default"
+```
 
 Sample Output : </br>
 ![alt text](./ReadMeImages/SetupVirtualNetwork2.png)</br>
 
  ### 2. **Create Subnet Injection Enterprise Policy** 
 This script creates a Subnet Injection enterprise policy</br>
-Script name : CreateSubnetInjectionEnterprisePolicy.ps1</br>
+Script name : New-SubnetInjectionEnterprisePolicy.ps1</br>
 Input parameters :
-    - subscriptionId : The subscriptionId where Subnet Injection enterprise policy needs to be created
-    - resourceGroup : The resource group where Subnet Injection enterprise policy needs to be created
-    - enterprisePolicyName : The name of the Subnet Injection enterprise policy resource
-    - enterprisePolicyLocation : The Azure geo where Subnet Injection enterprise policy needs to be created. Example: unitedstates, europe, australia.</br>
-      To get the complete supported locations for enterprise policy, below command can be used:</br>
+  - subscriptionId : The subscriptionId where Subnet Injection enterprise policy needs to be created
+  - resourceGroup : The resource group where Subnet Injection enterprise policy needs to be created
+  - enterprisePolicyName : The name of the Subnet Injection enterprise policy resource
+  - enterprisePolicyLocation : The Azure geo where Subnet Injection enterprise policy needs to be created. Example: unitedstates, europe, australia.<br/>
+      >[NOTE] To get the complete supported locations for enterprise policy, use the command below:</br>
       ((Get-AzResourceProvider -ProviderNamespace Microsoft.PowerPlatform).ResourceTypes | Where-Object ResourceTypeName -eq enterprisePolicies).Locations
-    - primaryVnetId : The ARM resource ID of the primary virtual network used for Subnet Injection
-    - primarySubnetName : The name of the subnet in the primary virtual network that will be used for Subnet Injection
-    - secondaryVnetId : The ARM resource ID of the secondary virtual network used for Subnet Injection
-    - secondarySubnetName : The name of the subnet in the secondary virtual network that will be used for Subnet Injection
+  - vnetId1 : The ARM resource ID of the first virtual network used for Subnet Injection
+  - subnetName1 : The name of the subnet in the first virtual network that will be used for Subnet Injection
+  - vnetId2 : The ARM resource ID of the second virtual network used for Subnet Injection
+  - subnetName2 : The name of the subnet in the second virtual network that will be used for Subnet Injection
 
 Sample Input :</br>
-![alt text](./ReadMeImages/CreateSubnetInjectionEnterprisePolicy1.png)</br>
+```powershell
+New-SubnetInjectionEnterprisePolicy.ps1 `
+-subscriptionId "98159998-fb68-44c3-b7d8-22b6539499a2" `
+-resourceGroup "enterprisePolicy-snet-delegation" `
+-enterprisePolicyName "vnetEP1" `
+-enterprisePolicyLocation "unitedstates" `
+-vnetId1 "/subscriptions/98159998-fb68-44c3-b7d8-22b6539499a2/resourceGroups/enterprisePolicy-snet-delegation/Providers/Microsoft.Network/virtualNetworks/westus-vnet" `
+-subnetName1 "wus-delegated-snet" `
+-vnetId2 "/subscriptions/98159998-fb68-44c3-b7d8-22b6539499a2/resourceGroups/enterprisePolicy-snet-delegation/Providers/Microsoft.Network/virtualNetworks/eastus-vnet" `
+-subnetName "eus-delegated-snet" `
+```
 
 Sample Output : </br>
 ![alt text](./ReadMeImages/CreateSubnetInjectionEnterprisePolicy2.png)</br>
 
 ### 3. **Get Subnet Injection Enterprise Policy By ResourceId**
 The script gets a Subnet Injection enterprise policy by ARM resourceId</br>
-Script name : GetSubnetInjectionEnterprisePolicyByResourceId.ps1</br>
+Script name : Get-SubnetInjectionEnterprisePolicyByResourceId.ps1</br>
 Input parameter :
-    - enterprisePolicyArmId : The ARM resource ID of the Subnet Injection Enterprise Policy
+  - enterprisePolicyArmId : The ARM resource ID of the Subnet Injection Enterprise Policy
 
 Sample Input :</br>
-![alt text](./ReadMeImages/GetSubnetInjectionEnterprisePolicyByResourceId1.png)</br>
+```powershell
+Get-SubnetInjectionEnterprisePolicyByResourceId.ps1 `
+-enterprisePolicyArmId "/subscriptions/98159998-fb68-44c3-b7d8-22b6539499a2/resourceGroups/enterprisePolicy-snet-delegation/Providers/Microsoft.PowerPlatform/enterprisePolicies/vnetEP1"
+```
 
 Sample Output :</br>
 ![alt text](./ReadMeImages/GetSubnetInjectionEnterprisePolicyByResourceId2.png)</br>
 
 ### 4. **Get Subnet Injection Enterprise Policies in Subscription** 
 The script gets all Subnet Injection enterprise policies in an Azure subscription</br>
-Script name : GetSubnetInjectionEnterprisePoliciesInSubscription.ps1</br>
+Script name : Get-SubnetInjectionEnterprisePoliciesInSubscription.ps1</br>
 Input parameter :
-    - subscriptionId: : The Azure subscription Id
+  - subscriptionId: : The Azure subscription Id
 
 Sample Input :</br>
-![alt text](./ReadMeImages/GetSubnetInjectionEnterprisePoliciesInSubscription1.png)</br>
+```powershell
+Get-SubnetInjectionEnterprisePoliciesInSubscription.ps1 `
+-subscriptionId "98159998-fb68-44c3-b7d8-22b6539499a2"
+```
 
 Sample Output :</br>
 ![alt text](./ReadMeImages/GetSubnetInjectionEnterprisePoliciesInSubscription2.png)</br>
 
 ### 5. **Get Subnet Injection Enterprise Policies in Resource Group**
 The script gets all Subnet Injection enterprise policies in an Azure resource group</br>
-Script name : GetSubnetInjectionEnterprisePoliciesInResourceGroup.ps1</br>
+Script name : Get-SubnetInjectionEnterprisePoliciesInResourceGroup.ps1</br>
 Input parameters :
-    - subscriptionId : The Azure subscription Id
-    - resourceGroup : The Azure resource group
+  - subscriptionId : The Azure subscription Id
+  - resourceGroup : The Azure resource group
 
 Sample Input : </br>
-![alt text](./ReadMeImages/GetSubnetInjectionEnterprisePoliciesInResourceGroup1.png)</br>
+```powershell
+Get-SubnetInjectionEnterprisePoliciesInResourceGroup.ps1 `
+-subscriptionId "98159998-fb68-44c3-b7d8-22b6539499a2" `
+-resourceGroup "enterprisePolicy-snet-delegation"
+```
 
 Sample Output :</br>
 ![alt text](./ReadMeImages/GetSubnetInjectionEnterprisePoliciesInResourceGroup2.png)</br>
 
 ### 6. **Update Subnet Injection Enterprise Policy**
-This script updates a Subnet Injection Enterprise Policy. The updates allowed are for primary/secondary virtual network Id and/or primary/secondary subnet name.</br>
+This script updates a Subnet Injection Enterprise Policy. The updates allowed are for either of the virtual network Ids and subnet names.</br>
 If you are changing only some of the allowed parameter values, provide “N/A” when prompted for the parameters that you don’t want to change.</br>
  **If the enterprise policy is associated with one or more environments, the update operation will fail, and the script will return an error.**</br>
-Script name : UpdateSubnetInjectionEnterprisePolicy.ps1</br>
+Script name : Update-SubnetInjectionEnterprisePolicy.ps1</br>
 Input parameters :
-    - subscriptionId : The Azure subscription Id of the Subnet Injection Enterprise Policy
-    - resourceGroup : The Azure resource group of the Subnet Injection Enterprise Policy
-    - enterprisePolicyName : The name of the Subnet Injection enterprise policy that needs to be updated
-    - primaryVnetId : The ARM resource ID of the primary virtual network if it needs to be updated. Provide "N/A" if update is not required for the primary virtual network Id
-    - primarySubnetName: The name of the subnet in the primary virtual network if it needs to be updated. Provide "N/A" if update is not required for name of the subnet in the primary virtual network
-    - secondaryVnetId : The ARM resource ID of the secondary virtual network if it needs to be updated. Provide "N/A" if update is not required for the secondary virtual network Id
-    - secondarySubnetName: The name of the subnet in the secondary virtual network if it needs to be updated. Provide "N/A" if update is not required for name of the subnet in the secondary virtual network
+  - subscriptionId : The Azure subscription Id of the Subnet Injection Enterprise Policy
+  - resourceGroup : The Azure resource group of the Subnet Injection Enterprise Policy
+  - enterprisePolicyName : The name of the Subnet Injection enterprise policy that needs to be updated
+  - vnetId1 : The ARM resource ID of the first virtual network if it needs to be updated. Provide "N/A" if update is not required for the first virtual network Id
+  - subnetName1 : The name of the subnet in the first virtual network if it needs to be updated. Provide "N/A" if update is not required for name of the subnet in the first virtual network
+  - vnetId2 : The ARM resource ID of the second virtual network if it needs to be updated. Provide "N/A" if update is not required for the second virtual network Id
+  - subnetName2 : The name of the subnet in the second virtual network if it needs to be updated. Provide "N/A" if update is not required for name of the subnet in the second virtual network
 
 Sample Input : </br>
-![alt text](./ReadMeImages/UpdateSubnetInjectionEnterprisePolicy1.png)</br>
+```powershell
+Update-SubnetInjectionEnterprisePolicy.ps1 `
+-subscriptionId "98159998-fb68-44c3-b7d8-22b6539499a2" `
+-resourceGroup "enterprisePolicy-snet-delegation" `
+-enterprisePolicyName "vnetEP1" `
+-vnetId1 "N/A" `
+-subnetName1 "N/A" `
+-vnetId2 "/subscriptions/98159998-fb68-44c3-b7d8-22b6539499a2/resourceGroups/enterprisePolicy-snet-delegation/Providers/Microsoft.Network/virtualNetworks/eastus-vnet" `
+-subnetName2 "new-eus-delegated-snet"
+```
 
 Sample Output :</br>
 ![alt text](./ReadMeImages/UpdateSubnetInjectionEnterprisePolicy2.png)</br>
@@ -271,38 +305,49 @@ Sample Output :</br>
 ### 7. **Set Subnet Injection for an environment**
 This script applies a Subnet Injection enterprise policy to a given Power Platform environment.</br>
 The script adds the environment to the enterprise policy and optionally polls for the operation outcome.</br>
-Script name : NewSubnetInjection.ps1</br>
+Script name : New-SubnetInjection.ps1</br>
 Input parameters :
-    - environmentId : The Power Platform environment ID
-    - policyArmId : The ARM ID of the Subnet Injection Enterprise Policy
+  - environmentId : The Power Platform environment ID
+  - policyArmId : The ARM ID of the Subnet Injection Enterprise Policy
 
 Sample Input :</br>
-![alt text](./ReadMeImages/NewSubnetInjection1.png)</br>
+```powershell
+New-SubnetInjection.ps1 `
+-environmentId "03ec85eb-f8f3-4f26-9d8e-683479431def"
+-policyArmId "/subscriptions/98159998-fb68-44c3-b7d8-22b6539499a2/resourceGroups/enterprisePolicy-snet-delegation/Providers/Microsoft.PowerPlatform/enterprisePolicies/vnetEP1"
+```
 
 Sample Output :</br>
 ![alt text](./ReadMeImages/NewSubnetInjection2.png)</br>
 
 ### 8. **Get Subnet Injection for an environment**
 This script returns the Subnet Injection enterprise policy if applied to a given Power Platform environment.</br>
-Script name : GetSubnetInjectionEnterprisePolicyForEnvironment.ps1</br>
+Script name : Get-SubnetInjectionEnterprisePolicyForEnvironment.ps1</br>
 Input parameter :
-    - environmentId : The Power Platform environment ID
+  - environmentId : The Power Platform environment ID
 
 Sample Input :</br>
-![alt text](./ReadMeImages/GetSubnetInjectionEnterprisePolicyForEnvironment1.png)</br>
+```powershell
+Get-SubnetInjectionEnterprisePolicyForEnvironment.ps1 `
+-environmentId "03ec85eb-f8f3-4f26-9d8e-683479431def"
+```
 
 Sample Output :</br>
 ![alt text](./ReadMeImages/GetSubnetInjectionEnterprisePolicyForEnvironment2.png)</br>
 
 ### 9. **Remove Subnet Injection from an environment**
 The script removes the Subnet Injection enterprise policy from an environment, </br>
-Script name : RevertSubnetInjection.ps1</br>
+Script name : Remove-SubnetInjection.ps1</br>
 Input parameters :
-    - environmentId : The Power Platform environment ID
-    - policyArmId: The ARM ID of the Subnet Injection Enterprise Policy
+  - environmentId : The Power Platform environment ID
+  - policyArmId: The ARM ID of the Subnet Injection Enterprise Policy
 
 Sample Input :</br>
-![alt text](./ReadMeImages/RevertSubnetInjection1.png)</br>
+```powershell
+Remove-SubnetInjection.ps1 `
+-environmentId "03ec85eb-f8f3-4f26-9d8e-683479431def"
+-policyArmId "/subscriptions/98159998-fb68-44c3-b7d8-22b6539499a2/resourceGroups/enterprisePolicy-snet-delegation/Providers/Microsoft.PowerPlatform/enterprisePolicies/vnetEP1"
+```
 
 Sample Output :</br>
 ![alt text](./ReadMeImages/RevertSubnetInjection2.png)</br>
