@@ -1,5 +1,4 @@
-﻿# Load the environment script
-. "$PSScriptRoot\..\Common\EnterprisePolicyOperations.ps1"
+﻿Import-Module "$PSScriptRoot\..\Common\EnterprisePolicies" -Force
 
 function GetCMKEnterprisePolicyByResourceId
 {
@@ -11,14 +10,10 @@ function GetCMKEnterprisePolicyByResourceId
         [string]$enterprisePolicyArmId
     )
 
-    Write-Host "Logging In..." -ForegroundColor Green
-    $connect = AzureLogin
-    if ($false -eq $connect)
+    if (-not(Connect-Azure))
     {
         return
     }
-
-    Write-Host "Logged In..." -ForegroundColor Green
 
     $policy = GetEnterprisePolicy $enterprisePolicyArmId
     $policyString = $policy | ConvertTo-Json -Depth 7

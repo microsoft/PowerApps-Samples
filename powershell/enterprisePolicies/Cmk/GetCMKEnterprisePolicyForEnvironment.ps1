@@ -1,5 +1,4 @@
-﻿# Load thescript
-. "$PSScriptRoot\..\Common\EnvironmentEnterprisePolicyOperations.ps1"
+﻿Import-Module "$PSScriptRoot\..\Common\EnterprisePolicies" -Force
 
 function GetCMKEnterprisePolicyForEnvironment
 {
@@ -10,14 +9,15 @@ function GetCMKEnterprisePolicyForEnvironment
 
         [Parameter(Mandatory=$false)]
         [ValidateSet("tip1", "tip2", "prod")]
-        [String]$endpoint
+        [String]$endpoint = "prod"
 
     )
-
-    if (![bool]$endpoint) {
-        $endpoint = "prod"
-    }
     
+    if (-not(Connect-Azure))
+    {
+        return
+    }
+
     GetEnterprisePolicyForEnvironment -policyType cmk -environmentId $environmentId -endpoint $endpoint
 }
 GetCMKEnterprisePolicyForEnvironment

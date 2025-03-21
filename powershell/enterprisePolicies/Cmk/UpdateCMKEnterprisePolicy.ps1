@@ -1,5 +1,4 @@
-﻿# Load the environment script
-. "$PSScriptRoot\..\Common\EnterprisePolicyOperations.ps1"
+﻿Import-Module "$PSScriptRoot\..\Common\EnterprisePolicies" -Force
 
 function UpdateCMKEnterprisePolicy
 {
@@ -48,18 +47,14 @@ function UpdateCMKEnterprisePolicy
         return
     }
 
-    Write-Host "Logging In..." -ForegroundColor Green
-    $connect = AzureLogin
-    if ($false -eq $connect)
+    if (-not(Connect-Azure))
     {
         return
     }
 
-    Write-Host "Logged In..." -ForegroundColor Green
-
     $policyArmId = "/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.PowerPlatform/enterprisePolicies/$enterprisePolicyName"
     $policy = GetEnterprisePolicy $policyArmId
-    if ($policy -eq $null)
+    if ($null -eq $policy)
     {
          Write-Host "CMK Enterprise Policy not found for $policyArmId" -ForegroundColor Red 
          return
@@ -72,7 +67,7 @@ function UpdateCMKEnterprisePolicy
         return
     }
 
-    if ($policy.Identity -eq $null -or $policy.Identity.Type -ne "SystemAssigned")
+    if ($null -eq $policy.Identity -or $policy.Identity.Type -ne "SystemAssigned")
     {
         $identityString = $policy.Identity | ConvertTo-Json -Depth 7
         Write-Host "Enterprise found for $policyArmId is not having valid Identity property $identityString" -ForegroundColor Red 

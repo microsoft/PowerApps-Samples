@@ -1,5 +1,4 @@
-﻿# Load thescript
-. "$PSScriptRoot\..\Common\EnvironmentEnterprisePolicyOperations.ps1"
+﻿Import-Module "$PSScriptRoot\..\Common\EnterprisePolicies" -Force
 
 function AddCustomerManagedKeyToEnvironment
 {
@@ -14,12 +13,13 @@ function AddCustomerManagedKeyToEnvironment
 
         [Parameter(Mandatory=$false)]
         [ValidateSet("tip1", "tip2", "prod")]
-        [String]$endpoint
+        [String]$endpoint = "prod"
 
     )
     
-    if (![bool]$endpoint) {
-        $endpoint = "prod"
+    if (-not(Connect-Azure))
+    {
+        return
     }
 
     LinkPolicyToEnv -policyType cmk -environmentId $environmentId -policyArmId $policyArmId  -endpoint $endpoint  

@@ -1,5 +1,4 @@
-﻿# Load the environment script
-. "$PSScriptRoot\..\Common\EnterprisePolicyOperations.ps1"
+﻿Import-Module "$PSScriptRoot\..\Common\EnterprisePolicies" -Force
 
 function CreateCMKEnterprisePolicy
 {
@@ -48,14 +47,10 @@ function CreateCMKEnterprisePolicy
 
     )
 
-    Write-Host "Logging In..." -ForegroundColor Green
-    $connect = AzureLogin
-    if ($false -eq $connect)
+    if (-not(Connect-Azure))
     {
         return
     }
-
-    Write-Host "Logged In..." -ForegroundColor Green
 
     if ($keyVersion -eq "N/A")
     {

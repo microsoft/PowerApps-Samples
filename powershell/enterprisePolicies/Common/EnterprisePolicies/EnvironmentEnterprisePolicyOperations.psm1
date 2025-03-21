@@ -1,8 +1,11 @@
-﻿# Load the environment script
-. "$PSScriptRoot\EnvironmentOperations.ps1"
+﻿<#
+SAMPLE CODE NOTICE
 
-# Load the environment script
-. "$PSScriptRoot\EnterprisePolicyOperations.ps1"
+THIS SAMPLE CODE IS MADE AVAILABLE AS IS. MICROSOFT MAKES NO WARRANTIES, WHETHER EXPRESS OR IMPLIED,
+OF FITNESS FOR A PARTICULAR PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OR CONDITIONS OF MERCHANTABILITY.
+THE ENTIRE RISK OF THE USE OR THE RESULTS FROM THE USE OF THIS SAMPLE CODE REMAINS WITH THE USER.
+NO TECHNICAL SUPPORT IS PROVIDED. YOU MAY NOT DISTRIBUTE THIS CODE UNLESS YOU HAVE A LICENSE AGREEMENT WITH MICROSOFT THAT ALLOWS YOU TO DO SO.
+#>
 
 function Login($endpoint) {
 
@@ -27,14 +30,6 @@ function Login($endpoint) {
         $result = Add-PowerAppsAccount -Endpoint $endpoint
         echo $result
     }
-
-    $connect = Connect-AzAccount
-
-    if ($null -eq $connect)
-    {
-        Write-Host "Error connecting to Azure Account `n" -ForegroundColor Red
-        return $false
-    }
     return $true
 }
 
@@ -56,13 +51,9 @@ function LinkPolicyToEnv
 
         [Parameter(Mandatory=$false)]
         [ValidateSet("tip1", "tip2", "prod")]
-        [String]$endpoint
+        [String]$endpoint = "prod"
 
     )
-
-    if (![bool]$endpoint) {
-        $endpoint = "prod"
-    }
 
     Write-Host "Logging In..." -ForegroundColor Green
     $connect = Login $endpoint
@@ -80,7 +71,7 @@ function LinkPolicyToEnv
     {
         return
     }
-    Write-Host "Environment reterieved `n" -ForegroundColor Green
+    Write-Host "Environment retrieved `n" -ForegroundColor Green
 
     #Validate Enterprise Policy
     $policySystemId = GetEnterprisePolicySystemId $policyArmId
@@ -88,7 +79,7 @@ function LinkPolicyToEnv
     {
         return
     }
-    Write-Host "Enterprise Policy reterieved `n" -ForegroundColor Green
+    Write-Host "Enterprise Policy retrieved `n" -ForegroundColor Green
 
 
     $linkResult = LinkEnterprisePolicy $env $policyType $policySystemId
@@ -139,13 +130,9 @@ function UnLinkPolicyFromEnv
 
         [Parameter(Mandatory=$false)]
         [ValidateSet("tip1", "tip2", "prod")]
-        [String]$endpoint
+        [String]$endpoint ="prod"
 
     )
-
-    if (![bool]$endpoint) {
-        $endpoint = "prod"
-    }
 
     Write-Host "Logging In..." -ForegroundColor Green
     $connect = Login $endpoint
@@ -163,7 +150,7 @@ function UnLinkPolicyFromEnv
     {
         return
     }
-    Write-Host "Environment reterieved `n" -ForegroundColor Green
+    Write-Host "Environment retrieved `n" -ForegroundColor Green
 
     $epPropertyName = switch ( $policyType )
     {
@@ -183,15 +170,13 @@ function UnLinkPolicyFromEnv
         return 
     }
 
-
     #Validate Enterprise Policy
     $policySystemId = GetEnterprisePolicySystemId $policyArmId
     if ($null -eq $policySystemId)
     {
         return
     }
-    Write-Host "Enterprise Policy reterieved `n" -ForegroundColor Green
-
+    Write-Host "Enterprise Policy retrieved `n" -ForegroundColor Green
 
     $unLinkResult = UnLinkEnterprisePolicy $env $policyType $policySystemId
 
@@ -242,13 +227,9 @@ function SwapPolicyForEnv
 
         [Parameter(Mandatory=$false)]
         [ValidateSet("tip1", "tip2", "prod")]
-        [String]$endpoint
+        [String]$endpoint = "prod"
 
     )
-
-    if (![bool]$endpoint) {
-        $endpoint = "prod"
-    }
 
     Write-Host "Logging In..." -ForegroundColor Green
     $connect = Login $endpoint
@@ -266,7 +247,7 @@ function SwapPolicyForEnv
     {
         return
     }
-    Write-Host "Environment reterieved `n" -ForegroundColor Green
+    Write-Host "Environment retrieved `n" -ForegroundColor Green
 
     $epPropertyName = switch ( $policyType )
     {
@@ -286,7 +267,7 @@ function SwapPolicyForEnv
     {
         return
     }
-    Write-Host "Enterprise Policy reterieved `n" -ForegroundColor Green
+    Write-Host "Enterprise Policy retrieved `n" -ForegroundColor Green
 
 
     $swapResult = LinkEnterprisePolicy $env $policyType $policySystemId
@@ -335,13 +316,9 @@ function GetEnterprisePolicyForEnvironment
 
         [Parameter(Mandatory=$false)]
         [ValidateSet("tip1", "tip2", "prod")]
-        [String]$endpoint
+        [String]$endpoint = "prod"
 
     )
-
-    if (![bool]$endpoint) {
-        $endpoint = "prod"
-    }
 
     Write-Host "Logging In..." -ForegroundColor Green
     $connect = Login $endpoint
@@ -359,7 +336,7 @@ function GetEnterprisePolicyForEnvironment
     {
         return
     }
-    Write-Host "Environment reterieved `n" -ForegroundColor Green
+    Write-Host "Environment retrieved `n" -ForegroundColor Green
 
     $epPropertyName = switch ( $policyType )
     {
@@ -392,13 +369,9 @@ function LinkPolicyToPlatformAppsData
 
         [Parameter(Mandatory=$false)]
         [ValidateSet("tip1", "tip2", "prod")]
-        [String]$endpoint
+        [String]$endpoint = "prod"
 
     )
-
-    if (![bool]$endpoint) {
-        $endpoint = "prod"
-    }
 
     Write-Host "Logging In..." -ForegroundColor Green
     $connect = Login $endpoint
@@ -425,7 +398,7 @@ function LinkPolicyToPlatformAppsData
     {
         return
     }
-    Write-Host "Enterprise Policy reterieved `n" -ForegroundColor Green
+    Write-Host "Enterprise Policy retrieved `n" -ForegroundColor Green
 
 
     $linkResult = LinkEnterprisePolicyToPlatformAppsData $policyType $policySystemId
@@ -457,13 +430,9 @@ function UnLinkPolicyFromPlatformAppsData
 
         [Parameter(Mandatory=$false)]
         [ValidateSet("tip1", "tip2", "prod")]
-        [String]$endpoint
+        [String]$endpoint = "prod"
 
     )
-
-    if (![bool]$endpoint) {
-        $endpoint = "prod"
-    }
 
     Write-Host "Logging In..." -ForegroundColor Green
     $connect = Login $endpoint
@@ -509,7 +478,7 @@ function UnLinkPolicyFromPlatformAppsData
     {
         return
     }
-    Write-Host "Enterprise Policy reterieved `n" -ForegroundColor Green
+    Write-Host "Enterprise Policy retrieved `n" -ForegroundColor Green
 
 
     $unLinkResult = UnLinkEnterprisePolicyForPlatformAppsData $policyType $policySystemId

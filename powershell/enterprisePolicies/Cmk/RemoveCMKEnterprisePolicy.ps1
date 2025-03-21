@@ -1,5 +1,4 @@
-﻿# Load the environment script
-. "$PSScriptRoot\..\Common\EnterprisePolicyOperations.ps1"
+﻿Import-Module "$PSScriptRoot\..\Common\EnterprisePolicies" -Force
 
 function RemoveCMKEnterprisePolicy
 {
@@ -11,14 +10,10 @@ function RemoveCMKEnterprisePolicy
         [string]$policyArmId
     )
 
-    Write-Host "Logging In..." -ForegroundColor Green
-    $connect = AzureLogin
-    if ($false -eq $connect)
+    if (-not(Connect-Azure))
     {
         return
     }
-
-    Write-Host "Logged In..." -ForegroundColor Green
 
     $policy = RemoveEnterprisePolicy $policyArmId
     if ($policy -eq "true")

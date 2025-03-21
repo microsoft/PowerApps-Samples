@@ -1,5 +1,4 @@
-﻿# Load thescript
-. "$PSScriptRoot\..\Common\EnterprisePolicyOperations.ps1"
+﻿Import-Module "$PSScriptRoot\..\Common\EnterprisePolicies" -Force
 
 function GetAndValidateKeyVaultProperties($keyVaultName)
 {
@@ -181,26 +180,22 @@ function ValidateKeyVaultForCMK
 
     )
     
-    Write-Host "Logging In..." -ForegroundColor Green
-    $logged = AzureLogin
-    if ($logged -eq $false)
+    if (-not(Connect-Azure))
     {
-        Write-Host "Login failed" -ForegroundColor Red
-        return 
+        return
     }
-    Write-Host "Logged In" -ForegroundColor Green
-    $setSubscription = Set-AzContext -Subscription $subscriptionId
+    Set-AzContext -Subscription $subscriptionId | Out-Null
 
     #validate key vault
     $keyVault = GetAndValidateKeyVaultProperties -keyVaultName $keyVaultName
-    if ($keyVault -eq $null)
+    if ($null -eq $keyVault)
     {
         return
     }
 
     #validate enterprise policy
     $cmkPolicy = GetAndValidateEnterprisePolicyForKeyVault -enterprisePolicyArmId $enterprisePolicyArmId -keyVault $keyVault
-    if ($cmkPolicy -eq $null)
+    if ($null -eq $cmkPolicy)
     {
         return
     }

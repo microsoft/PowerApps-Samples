@@ -5,15 +5,14 @@
 
     [Parameter(Mandatory=$false)]
     [ValidateSet("tip1", "tip2", "prod")]
-    [String]$endpoint
-
+    [String]$endpoint = "prod"
 )
 
-# Load thescript
-. "$PSScriptRoot\..\Common\EnvironmentEnterprisePolicyOperations.ps1"
+Import-Module "$PSScriptRoot\..\Common\EnterprisePolicies" -Force
 
-if (![bool]$endpoint) {
-    $endpoint = "prod"
+if (-not(Connect-Azure))
+{
+    return
 }
 
 UnLinkPolicyFromPlatformAppsData -policyType cmk -policyArmId $policyArmId -endpoint $endpoint    

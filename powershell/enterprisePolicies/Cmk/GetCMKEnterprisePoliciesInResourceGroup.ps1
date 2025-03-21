@@ -1,5 +1,4 @@
-﻿# Load the environment script
-. "$PSScriptRoot\..\Common\EnterprisePolicyOperations.ps1"
+﻿Import-Module "$PSScriptRoot\..\Common\EnterprisePolicies" -Force
 
 function GetCMKEnterprisePoliciesInResourceGroup
 {
@@ -17,14 +16,11 @@ function GetCMKEnterprisePoliciesInResourceGroup
         [string]$resourceGroup
     )
 
-    Write-Host "Logging In..." -ForegroundColor Green
-    $connect = AzureLogin
-    if ($false -eq $connect)
+    if (-not(Connect-Azure))
     {
         return
     }
 
-    Write-Host "Logged In..." -ForegroundColor Green
     $cmkPolicies = GetEnterprisePoliciesInResourceGroup $subscriptionId "Encryption" $resourceGroup
     $cmkPolicies | Select-Object -Property ResourceId, Location, Name
 
