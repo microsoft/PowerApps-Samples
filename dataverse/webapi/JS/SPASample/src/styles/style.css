@@ -1,0 +1,76 @@
+.disabled {
+   pointer-events: none;
+   opacity: 0.5; /* Optional: to visually indicate the element is disabled */
+ }
+
+ .hidden {
+   display: none;
+ }
+
+ .error {
+   color: red;
+ }
+
+ .expectedError {
+   color: green;
+ }
+
+ body {
+   font-family: "Roboto", sans-serif;
+   font-size: 16px;
+   line-height: 1.6;
+   color: #333;
+   background-color: #f9f9f9;
+ }
+
+ h1,
+ h2,
+ h3 {
+   color: #2c3e50;
+ }
+
+ button {
+   background-color: #3498db;
+   color: #fff;
+   border: none;
+   padding: 10px 20px;
+   border-radius: 5px;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+   transition: background-color 0.3s ease;
+   margin: 5px; /* Adjust the value as needed */
+ }
+
+ button:hover {
+   background-color: #2980b9;
+ }
+
+ a {
+   color: #3498db;
+   text-decoration: none;
+   transition: color 0.3s ease;
+ }
+
+ a:hover {
+   color: #2980b9;
+ }
+
+ header {
+   padding-bottom: 10px; /* Adjust the value as needed */
+ }
+
+ table {
+   table-layout: auto; /* Allows columns to adjust based on content */
+   width: auto; /* Prevents the table from taking up the full width of the page */
+   border-collapse: collapse; /* Ensures that the borders are not doubled */
+ }
+
+ th,
+ td {
+   border: 1px solid #ddd; /* Adds a solid border to the table headers and cells */
+   padding: 8px; /* Adds padding inside the table cells */
+ }
+
+ th {
+   background-color: #f2f2f2; /* Optional: Adds a background color to the table headers */
+   text-align: left; /* Optional: Aligns the text to the left in the table headers */
+ }
