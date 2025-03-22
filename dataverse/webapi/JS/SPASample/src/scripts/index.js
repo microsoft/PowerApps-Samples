@@ -1,5 +1,5 @@
 import { PublicClientApplication } from "@azure/msal-browser";
-import 'dotenv/config'
+import "dotenv/config";
 import { DataverseWebAPI } from "./DataverseWebAPI.js";
 import { Util } from "./Util.js";
 import { TemplateSample } from "../samples/TemplateSample.js";
@@ -11,10 +11,10 @@ import { BatchSample } from "../samples/BatchSample.js";
 
 // Load the environment variables from the .env file
 const config = {
-   baseUrl: process.env.BASE_URL,
-   clientId: process.env.CLIENT_ID,
-   tenantId: process.env.TENANT_ID,
-   redirectUri: process.env.REDIRECT_URI,
+  baseUrl: process.env.BASE_URL,
+  clientId: process.env.CLIENT_ID,
+  tenantId: process.env.TENANT_ID,
+  redirectUri: process.env.REDIRECT_URI,
 };
 
 // Microsoft Authentication Library (MSAL) configuration
@@ -58,7 +58,7 @@ async function logIn() {
       document.getElementById("loginButton").style.display = "none";
 
       const logoutButton = document.getElementById("logoutButton");
-      logoutButton.innerHTML = "Logout " + response.account.name;      
+      logoutButton.innerHTML = "Logout " + response.account.name;
       logoutButton.style.display = "block";
       document.getElementsByTagName("nav")[0].classList.remove("disabled");
     } catch (error) {
@@ -146,39 +146,39 @@ async function runSample(sample) {
 //#region verify that configuration has been updated.
 
 if (config.baseUrl === "https://<your org>.api.crm.dynamics.com") {
-   console.error(`Placeholder baseUrl ${config.baseUrl} found.`);
-   util.showError(
-      "Update the BASE_URL in the .env file to your Dataverse instance URL."
-   );
+  console.error(`Placeholder baseUrl ${config.baseUrl} found.`);
+  util.showError(
+    "Update the BASE_URL in the .env file to your Dataverse instance URL."
+  );
 }
 
-if(config.clientId == "00001111-aaaa-2222-bbbb-3333cccc4444"){
-   console.error(`Placeholder clientId ${config.clientId} found.`);
-   util.showError(
-      "Update the CLIENT_ID in the .env file to your Azure AD application client ID."
-   );
+if (config.clientId == "00001111-aaaa-2222-bbbb-3333cccc4444") {
+  console.error(`Placeholder clientId ${config.clientId} found.`);
+  util.showError(
+    "Update the CLIENT_ID in the .env file to your Azure AD application client ID."
+  );
 }
 
-if(config.tenantId == "aaaabbbb-0000-cccc-1111-dddd2222eeee"){
-   console.error(`Placeholder tenantId ${config.tenantId} found.`);
-   util.showError(
-      "Update the TENANT_ID in the .env file to your Azure AD application client ID."
-   );
+if (config.tenantId == "aaaabbbb-0000-cccc-1111-dddd2222eeee") {
+  console.error(`Placeholder tenantId ${config.tenantId} found.`);
+  util.showError(
+    "Update the TENANT_ID in the .env file to your Azure AD application client ID."
+  );
 }
 
 const redirectUri = new URL(config.redirectUri);
 const baseUrl = `${redirectUri.protocol}//${redirectUri.host}/`;
 
-if(location.href.startsWith(baseUrl) === false){
-   console.error(`Placeholder redirectUri ${config.redirectUri} doesn't match ${location.href}.`);
-   util.showError(
-      "Update the REDIRECT_URI in the .env file to your Azure AD application redirect URI."
-   );
+if (location.href.startsWith(baseUrl) === false) {
+  console.error(
+    `Placeholder redirectUri ${config.redirectUri} doesn't match ${location.href}.`
+  );
+  util.showError(
+    "Update the REDIRECT_URI in the .env file to your Azure AD application redirect URI."
+  );
 }
 
 //#endregion verify that configuration has been updated.
-
-
 
 //#region Add Event Listeners
 
@@ -193,28 +193,28 @@ document.getElementById("templateButton").onclick = async function () {
   runSample(new TemplateSample(client, container));
 };
 
-
 // Add event listener to the basic operations button
 document.getElementById("basicOperationsButton").onclick = async function () {
-   runSample(new BasicOperationsSample(client, container));
+  runSample(new BasicOperationsSample(client, container));
 };
 
 // Add event listener to the query data button
 document.getElementById("queryDataButton").onclick = async function () {
-   runSample(new QueryDataSample(client, container));
+  runSample(new QueryDataSample(client, container));
 };
 
 // Add event listener to the conditional operations button
 document.getElementById("conditionalOperationsButton").onclick =
-   async function () {
-      runSample(new ConditionalOperationsSample(client, container));
-   };
+  async function () {
+    runSample(new ConditionalOperationsSample(client, container));
+  };
 
-document.getElementById("functionsAndActionsButton").onclick = async function () {
-   runSample(new FunctionsAndActions(client, container));
-};
+document.getElementById("functionsAndActionsButton").onclick =
+  async function () {
+    runSample(new FunctionsAndActions(client, container));
+  };
 
 // Add event listener to the batch button
 document.getElementById("batchButton").onclick = async function () {
-   runSample(new BatchSample(client, container));
+  runSample(new BatchSample(client, container));
 };

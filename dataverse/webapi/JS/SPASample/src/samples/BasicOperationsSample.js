@@ -23,7 +23,7 @@ export class BasicOperationsSample {
   async SetUp() {
     // Clear the container
     this.#container.replaceChildren();
-    this.#util.appendMessage(this.#name +" sample started");
+    this.#util.appendMessage(this.#name + " sample started");
     // Get the current user's information
     try {
       this.#whoIAm = await this.#client.WhoAmI();
@@ -35,7 +35,9 @@ export class BasicOperationsSample {
   async Run() {
     try {
       // Section 1: Basic create and update operations
-      this.#util.appendMessage("<h2>1: Basic create and update operations</h2>");
+      this.#util.appendMessage(
+        "<h2>1: Basic create and update operations</h2>"
+      );
       const rafelShilloId = await this.#createContact();
       await this.#updateContact(rafelShilloId);
       await this.#retrieveContact(rafelShilloId);
@@ -48,53 +50,29 @@ export class BasicOperationsSample {
       const contosoAccountId = await this.#createWithAssociation(rafelShilloId);
       await this.#retrievePrimaryContactFromAccount(contosoAccountId);
       // Section 3: Create related table rows (deep insert)
-      this.#util.appendMessage("<h2>3: Create related table rows (deep insert)</h2>");
+      this.#util.appendMessage(
+        "<h2>3: Create related table rows (deep insert)</h2>"
+      );
       const fourthCoffeeId = await this.#createRelatedTableRows();
       const susieCurtisId = await this.#retrieveFourthCoffeePrimaryContact(
         fourthCoffeeId
       );
       await this.#retrieveContactRelatedTasks(susieCurtisId);
       // Section 4: Associate and disassociate existing entities
-      this.#util.appendMessage("<h2>4: Associate and disassociate existing entities</h2>");
+      this.#util.appendMessage(
+        "<h2>4: Associate and disassociate existing entities</h2>"
+      );
       await this.#associateContactToAccount(fourthCoffeeId, rafelShilloId);
       await this.#showRelatedContacts(fourthCoffeeId);
       const roleId = await this.#createSecurityRole();
       await this.#associateRoleToUser(roleId);
       await this.#retrieveRelatedRole(roleId);
       await this.#disassociateRoleFromUser(roleId);
-
-      
     } catch (error) {
       this.#util.showError(error.message);
       // Try to clean up even if an error occurs
       await this.CleanUp();
     }
-  }
-  // Clean up the created records
-  async CleanUp() {
-    this.#util.appendMessage("Deleting the records created by this sample");
-
-    let deleteMessageList = document.createElement("ul");
-    this.#container.append(deleteMessageList);
-
-    for (const item of this.#entityStore) {
-      try {
-        await this.#client.Delete(item.entitySetName, item.id);
-        const message = document.createElement("li");
-        message.textContent = `Deleted ${item.entityName} ${item.name}`;
-        deleteMessageList.append(message);
-      } catch (e) {
-        const message = document.createElement("li");
-        message.textContent = `Failed to delete ${item.entityName} ${item.name}`;
-        message.className = "error";
-        deleteMessageList.append(message);
-      }
-    }
-
-    // Set the entity store to an empty array
-    this.#entityStore = [];
-    this.#util.appendMessage(this.#name +" sample completed.");
-    this.#util.appendMessage("<a href='#'>Go to top</a>");
   }
 
   //#region Section 1: Basic create and update operations
@@ -167,7 +145,9 @@ export class BasicOperationsSample {
     };
     try {
       await this.#client.Update("contacts", contactId, contact);
-      this.#util.appendMessage(`Updated contact setting new job title, annual income, and description.`);
+      this.#util.appendMessage(
+        `Updated contact setting new job title, annual income, and description.`
+      );
     } catch (e) {
       this.#util.showError("Failed to update contact.");
       throw e;
@@ -199,7 +179,9 @@ export class BasicOperationsSample {
         contactId,
         "telephone1"
       );
-      this.#util.appendMessage(`Contact's telephone number is: ${phoneNumber}.`);
+      this.#util.appendMessage(
+        `Contact's telephone number is: ${phoneNumber}.`
+      );
     } catch (e) {
       this.#util.showError("Failed to retrieve contact phone number.");
       throw e;
@@ -211,7 +193,7 @@ export class BasicOperationsSample {
 
   // Demonstrates creating a record with an association to another record
   async #createWithAssociation(contactId) {
-   // Use the @odata.bind notation to create an account associated with an existing primary contact
+    // Use the @odata.bind notation to create an account associated with an existing primary contact
     const contosoAccount = {
       name: "Contoso Ltd",
       telephone1: "555-5555",
@@ -499,4 +481,31 @@ export class BasicOperationsSample {
   }
 
   //#endregion Section 4: Associate and disassociate existing entities
+
+  // Clean up the created records
+  async CleanUp() {
+    this.#util.appendMessage("Deleting the records created by this sample");
+
+    let deleteMessageList = document.createElement("ul");
+    this.#container.append(deleteMessageList);
+
+    for (const item of this.#entityStore) {
+      try {
+        await this.#client.Delete(item.entitySetName, item.id);
+        const message = document.createElement("li");
+        message.textContent = `Deleted ${item.entityName} ${item.name}`;
+        deleteMessageList.append(message);
+      } catch (e) {
+        const message = document.createElement("li");
+        message.textContent = `Failed to delete ${item.entityName} ${item.name}`;
+        message.className = "error";
+        deleteMessageList.append(message);
+      }
+    }
+
+    // Set the entity store to an empty array
+    this.#entityStore = [];
+    this.#util.appendMessage(this.#name + " sample completed.");
+    this.#util.appendMessage("<a href='#'>Go to top</a>");
+  }
 }
