@@ -42,6 +42,7 @@ const container = document.getElementById("container");
 
 const util = new Util(container);
 
+// <logIn>
 // Event handler for login button
 async function logIn() {
   await msalInstance.initialize();
@@ -72,7 +73,9 @@ async function logIn() {
     this.click();
   }
 }
+// </logIn>
 
+// <logOut>
 // Event handler for logout button
 async function logOut() {
   const activeAccount = await msalInstance.getActiveAccount();
@@ -96,7 +99,9 @@ async function logOut() {
   // Clear the client instance
   client = null;
 }
+// </logOut>
 
+// <getToken>
 /**
  * Retrieves an access token using MSAL (Microsoft Authentication Library).
  * Set as the getToken function for the DataverseWebAPI client in the login function.
@@ -124,7 +129,9 @@ async function getToken() {
     }
   }
 }
+// </getToken>
 
+// <runSample>
 // Runs all samples in a consistent way
 async function runSample(sample) {
   // Disable the buttons to prevent multiple clicks
@@ -142,6 +149,7 @@ async function runSample(sample) {
   document.getElementsByTagName("nav")[0].classList.remove("disabled");
   logoutButton.classList.remove("disabled");
 }
+// </runSample>
 
 //#region verify that configuration has been updated.
 
