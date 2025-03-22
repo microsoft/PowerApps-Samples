@@ -9,7 +9,7 @@ description: "This project contains samples that demonstrates how to use client-
 ---
 # Web API Data operations Samples (Client-side JavaScript)
 
-This project provides a common [Single Page Application (SPA)](https://developer.mozilla.org/docs/Glossary/SPA) runtime experience for multiple client-side JavaScript samples. See the list of samples in [Demonstrates](#demonstrates) for details.
+This project provides a common [Single Page Application (SPA)](https://developer.mozilla.org/docs/Glossary/SPA) runtime experience for multiple client-side JavaScript samples that use the Dataverse Web API. See the table of samples in the [Demonstrates](#demonstrates) section for details.
 
 This sample requires a `.env` file that contains configurations to run the sample. The steps to get the values for this configuration are described in  [Quickstart: Web API with client-side JavaScript and Visual Studio Code](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/quick-start-js-spa). If you have trouble connecting with this sample, try connecting with the simpler quick start sample.
 
@@ -18,7 +18,7 @@ This sample requires a `.env` file that contains configurations to run the sampl
 
 | Prerequisite | Description |
 |--------------|-------------|
-| **Privileges to create an Entra App registration** | You can't run this application without a Microsoft Entra app registration to enable it.<br /><br /> Complete the steps in [Quickstart: Web API with client-side JavaScript and Visual Studio Code](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/quick-start-js-spa) to get an `.env` file you can use to run this application.|
+| **Privileges to create an Entra App registration** | You can't run this sample application without a Microsoft Entra app registration to enable it.<br /><br /> Complete the steps in [Quickstart: Web API with client-side JavaScript and Visual Studio Code](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/quick-start-js-spa) to get an `.env` file you can use to run this sample application.|
 | **Visual Studio Code** | If Visual Studio Code isn't installed on your computer, you must [download and install Visual Studio Code](https://code.visualstudio.com/download) to run this sample. |
 | **Node.js** | Node.js is a runtime environment that allows you to run JavaScript on the server side. This sample creates a SPA application that runs JavaScript on the client side in a browser rather than the Node.js runtime. But [Node Package Manager (npm)](https://www.npmjs.com/) is installed with Node.js, and you need npm to install Parcel and the MSAL.js library. See [Install Node.js](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/quick-start-js-spa#install-nodejs) for instructions.|
 | **Parcel** | Modern web applications typically have a lot of dependencies on open source libraries distributed using npm as well as scripts that need to be managed and optimized during the build process. These tools are usually called 'bundlers'. The most common one is [webpack](https://webpack.js.org/). This application uses [Parcel](https://parceljs.org/) because it offers a simplified experience.|
@@ -31,7 +31,7 @@ This sample requires a `.env` file that contains configurations to run the sampl
 1. Open the `dataverse/webapi/JS/SPASample` folder using Visual Studio Code.
 1. At the root of the `SPASample` folder, create a `.env` configuration file based on the `.env.example` file provided. Follow the steps in [Register a SPA application](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/quick-start-js-spa#register-a-spa-application) to get values to replace the `CLIENT_ID` and `TENANT_ID` placeholder values. Set the `BASE_URL` to the URL for the Dataverse environment you want to connect to. See [Create the .env file](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/quick-start-js-spa#create-the-env-file) for more details.
 1. Open a terminal window in Visual Studio Code.
-1. Type `npm install` and press <kbd>Enter</kbd> to install the `devDependencies` and `dependencies` items from the `package.json` file. These include `parcel` and the `@azure/msal-browser` library.
+1. Type `npm install` and press <kbd>Enter</kbd> to install the `devDependencies` and `dependencies` items from the `package.json` file. These include `[parcel](https://www.npmjs.com/package/parcel)`, `[dotenv](https://github.com/motdotla/dotenv#readme)`, the `[@azure/msal-browser](https://www.npmjs.com/package/@azure/msal-browser)` library and others.
 1. Type `npm start` and press <kbd>Enter</kbd> to start the local web server on port 1234.
 
  You should expect output to the terminal that looks like this:
@@ -79,20 +79,20 @@ This sample provides a shell where multiple samples can run in a common applicat
 
 ## Sample interface
 
-Each sample is defined as a JavaScript Class which has a constructor that requires a `DataverseWebAPI.Client` instance and a reference to a `container` element in the UI where it will write output. 
+Each sample is defined as a [JavaScript Class](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Classes) which has a constructor that requires a `DataverseWebAPI.Client` instance and a reference to a `container` element in the UI where it will write output. 
 
-Samples may import from other libraries and all of them import the `Util.js` library because it includes methods to write to the UI. The **Functions and Actions** sample also includes the `src\solutions\IsSystemAdminFunction_1_0_0_0_managed.js` library because it contains the base64 encoded contents of a solution that the sample needs to import.
+Samples may import from other libraries. All of them import the `Util.js` library because it includes methods to write to the UI. The **Functions and Actions** sample also includes the `src\solutions\IsSystemAdminFunction_1_0_0_0_managed.js` library because it contains the base64 encoded contents of a solution that the sample needs to import.
 
 Each sample has the following public methods:
 
 |Method|Description|
 |---|---|
 |`SetUp`|Responsible for creating any data necessary for the code that will be included in the `Run` method. Adds any new records created to the `#entityStore` array to be referenced in the `Run` method and deleted in the `CleanUp` method.|
-|`Run`|Contains the code demonstrating the data operations included in the sample.<br />Adds any new records created to the `#entityStore` array to be deleted in the `CleanUp` method.<br />Each operation is defined by a private asynchronous method so that this method can manage the operations within a try/catch block. If any errors occur, the CleanUp methods is called to delete any record created before the error.|
+|`Run`|Contains the code demonstrating the data operations included in the sample.<br />Adds any new records created to the `#entityStore` array to be deleted in the `CleanUp` method.<br />Each operation is defined by a private asynchronous method so that this method can manage the operations within a try/catch block. If any errors occur, the `CleanUp` method is called to delete any record created before the error.|
 |`CleanUp`|Responsible for deleting any records referenced by the `#entityStore` array items.|
 
 ## Clean up
 
-Each sample will make every effort to delete any records created by the sample.
+Each sample will make every effort to delete any records created by the sample. If an error occurs during the `Run` method, the `CleanuUp` method is used to delete any records up to that point.
 
 You should delete the Entra application registration if you aren't planning to use it anymore.

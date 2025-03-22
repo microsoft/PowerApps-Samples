@@ -29,7 +29,7 @@ This project represents the completed steps described in [Quickstart: Web API wi
 1. Open the `dataverse/webapi/JS/quickspa` folder using Visual Studio Code.
 1. At the root of the `quickspa` folder, create a `.env` configuration file based on the `.env.example` file provided. Follow the steps in [Register a SPA application](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/quick-start-js-spa#register-a-spa-application) to get values to replace the `CLIENT_ID` and `TENANT_ID` placeholder values. Set the `BASE_URL` to the URL for the Dataverse environment you want to connect to. See [Create the .env file](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/quick-start-js-spa#create-the-env-file) for more details.
 1. Open a terminal window in Visual Studio Code.
-1. Type `npm install` and press <kbd>Enter</kbd> to install the `devDependencies` and `dependencies` items from the `package.json` file. These include `parcel` and the `@azure/msal-browser` library.
+1. Type `npm install` and press <kbd>Enter</kbd> to install the `devDependencies` and `dependencies` items from the `package.json` file. These include `[parcel](https://www.npmjs.com/package/parcel)`, `[dotenv](https://github.com/motdotla/dotenv#readme)`, the `[@azure/msal-browser](https://www.npmjs.com/package/@azure/msal-browser)` library and others.
 1. Type `npm start` and press <kbd>Enter</kbd> to start the local web server on port 1234.
 
  You should expect output to the terminal that looks like this:
@@ -53,7 +53,7 @@ This project represents the completed steps described in [Quickstart: Web API wi
 1. Select **Accept** on the **Permissions requested** dialog.
 1. Select the **WhoAmI** button.
 
-   The message **Congratulations! You connected to Dataverse using the Web API.** is displayed with your `UserId` value from the [WhoAmIResponse complex type](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/whoamiresponse).
+   The message '**Congratulations! You connected to Dataverse using the Web API.**' is displayed with your `UserId` value from the [WhoAmIResponse complex type](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/whoamiresponse).
 
 ## Demonstrates
 
