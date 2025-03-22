@@ -33,7 +33,7 @@ function Connect {
 
    # Get an access token
    $secureToken = (Get-AzAccessToken `
-      -ResourceUrl $environmentUrl `
+      -ResourceUrl $uri `
       -AsSecureString).Token
 
    # Convert the secure token to a string
