@@ -126,38 +126,6 @@ export class FunctionsAndActions {
          );
       }
    }
-   // Run the sample
-   async Run() {
-      try {
-         this.#util.appendMessage("<h2>1: Unbound Function WhoAmI</h2>");
-         await this.#whoAmIExample();
-         this.#util.appendMessage("<h2>2: Unbound Function FormatAddress</h2>");
-         await this.#formatAddressExample();
-         this.#util.appendMessage("<h2>3: Unbound Function InitializeFrom</h2>");
-         await this.#initializeFromExample();
-         this.#util.appendMessage(
-            "<h2>4: Unbound Function RetrieveCurrentOrganization</h2>"
-         );
-         await this.#retrieveCurrentOrganizationExample();
-         this.#util.appendMessage(
-            "<h2>5: Unbound Function RetrieveTotalRecordCount</h2>"
-         );
-         await this.#retrieveTotalRecordCountExample();
-         this.#util.appendMessage(
-            "<h2>6: Bound Function IsSystemAdmin custom API</h2>"
-         );
-         await this.#isSystemAdminExample();
-         this.#util.appendMessage("<h2>7: Unbound Action GrantAccess</h2>");
-         await this.#grantAccessExample();
-         this.#util.appendMessage("<h2>8: Bound Action AddPrivilegesRole</h2>");
-         await this.#addPrivilegesRoleExample();
-      } catch (error) {
-         this.#util.showError(error.message);
-         // Try to clean up even if an error occurs
-         await this.CleanUp();
-      }
-   }
-
 
    //#region Section 0: Install Solution in Setup
 
@@ -214,6 +182,42 @@ export class FunctionsAndActions {
    }
 
    //#endregion Section 0: Install Solution in Setup
+
+
+   // Run the sample
+   async Run() {
+      try {
+         this.#util.appendMessage("<h2>1: Unbound Function WhoAmI</h2>");
+         await this.#whoAmIExample();
+         this.#util.appendMessage("<h2>2: Unbound Function FormatAddress</h2>");
+         await this.#formatAddressExample();
+         this.#util.appendMessage("<h2>3: Unbound Function InitializeFrom</h2>");
+         await this.#initializeFromExample();
+         this.#util.appendMessage(
+            "<h2>4: Unbound Function RetrieveCurrentOrganization</h2>"
+         );
+         await this.#retrieveCurrentOrganizationExample();
+         this.#util.appendMessage(
+            "<h2>5: Unbound Function RetrieveTotalRecordCount</h2>"
+         );
+         await this.#retrieveTotalRecordCountExample();
+         this.#util.appendMessage(
+            "<h2>6: Bound Function IsSystemAdmin custom API</h2>"
+         );
+         await this.#isSystemAdminExample();
+         this.#util.appendMessage("<h2>7: Unbound Action GrantAccess</h2>");
+         await this.#grantAccessExample();
+         this.#util.appendMessage("<h2>8: Bound Action AddPrivilegesRole</h2>");
+         await this.#addPrivilegesRoleExample();
+      } catch (error) {
+         this.#util.showError(error.message);
+         // Try to clean up even if an error occurs
+         await this.CleanUp();
+      }
+   }
+
+
+
 
    //#region Section 1: Unbound Function WhoAmI
    // Demonstrates calling the WhoAmI function
