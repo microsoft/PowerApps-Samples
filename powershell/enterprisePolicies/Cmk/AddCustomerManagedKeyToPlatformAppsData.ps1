@@ -1,7 +1,7 @@
 ﻿param(
     [Parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
-    [String]$policyArmId,
+    [String]$PolicyArmId,
 
     [Parameter(Mandatory=$false)]
     [BAPEndpoint]$Endpoint = "prod"
@@ -16,4 +16,4 @@ if (-not(Connect-Azure))
     return
 }
 
-LinkPolicyToPlatformAppsData -policyType cmk  -policyArmId $policyArmId  -endpoint $endpoint  
+New-PolicyToPlatformAppsDataLink -PolicyType [PolicyType]::Encryption -PolicyArmId $PolicyArmId -Endpoint $Endpoint

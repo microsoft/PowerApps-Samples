@@ -234,7 +234,7 @@ function Get-EnterprisePolicyForEnvironment
     Write-Host "Enterprise Policy Arm Id $policyArmId"
 }
 
-function LinkPolicyToPlatformAppsData 
+function New-PolicyToPlatformAppsDataLink
 {
     param(
         [Parameter(Mandatory)]
@@ -288,7 +288,7 @@ function LinkPolicyToPlatformAppsData
 }
 
 
-function UnLinkPolicyFromPlatformAppsData 
+function Remove-PolicyToPlatformAppsDataLink
 {
     param(
         [Parameter(Mandatory)]

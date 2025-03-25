@@ -10,11 +10,11 @@ NO TECHNICAL SUPPORT IS PROVIDED. YOU MAY NOT DISTRIBUTE THIS CODE UNLESS YOU HA
 param(
     [Parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
-    [String]$environmentId,
+    [String]$EnvironmentId,
 
     [Parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
-    [String]$policyArmId,
+    [String]$PolicyArmId,
 
     [Parameter(Mandatory=$false)]
     [BAPEndpoint]$Endpoint = "prod"

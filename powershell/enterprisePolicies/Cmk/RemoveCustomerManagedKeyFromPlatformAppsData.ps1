@@ -8,9 +8,9 @@ NO TECHNICAL SUPPORT IS PROVIDED. YOU MAY NOT DISTRIBUTE THIS CODE UNLESS YOU HA
 #>
 
 param(
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory)]
     [ValidateNotNullOrEmpty()]
-    [String]$policyArmId,
+    [String]$PolicyArmId,
 
     [Parameter(Mandatory=$false)]
     [BAPEndpoint]$Endpoint = "prod"
@@ -25,4 +25,4 @@ if (-not(Connect-Azure))
     return
 }
 
-UnLinkPolicyFromPlatformAppsData -policyType cmk -policyArmId $policyArmId -endpoint $endpoint    
+Remove-PolicyToPlatformAppsDataLink -PolicyType [PolicyType]::Encryption -PolicyArmId $PolicyArmId -Endpoint $Endpoint    

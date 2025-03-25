@@ -66,7 +66,7 @@ function New-EnterprisePolicyLink
     param(
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty]
-        [PSCustomObject] $Environment,
+        $Environment,
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty]
         [PolicyType] $PolicyType,
@@ -81,7 +81,7 @@ function New-EnterprisePolicyLink
         "SystemId" = $policySystemId
     }
 
-    $linkResult = Invoke-BAPLinkOrUnlink -Environment $Environment.Name -ApiVersion $ApiVersion -Method "Post" -Body $body -LinkOperation [LinkOperation]::Link -PolicyType $policyType
+    $linkResult = Invoke-BAPLinkOrUnlink -EnvironmentId $Environment.Name -ApiVersion $ApiVersion -Method "Post" -Body $body -LinkOperation [LinkOperation]::Link -PolicyType $policyType
  
     return $linkResult
 }
@@ -91,7 +91,7 @@ function Remove-EnterprisePolicyLink
     param(
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty]
-        [string] $Environment,
+        $Environment,
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty]
         [PolicyType] $PolicyType,
@@ -104,9 +104,9 @@ function Remove-EnterprisePolicyLink
 
     $body = [PSCustomObject]@{
         "SystemId" = $policySystemId
-        }
+    }
 
-    $unlinkResult = Invoke-BAPLinkOrUnlink -Environment $environment.Name $ApiVersion "Post" $body false $policyType $policyType
+    $unlinkResult = Invoke-BAPLinkOrUnlink -EnvironmentId $environment.Name $ApiVersion -Method "Post" -Body $body -LinkOperation [LinkOperation]::unlink -PolicyType $policyType
 
     return $unlinkResult
 }
@@ -186,11 +186,10 @@ function Remove-EnterprisePolicyForPlatformAppsData
 function Get-PlatformApps
 {
     $ApiVersion = "2024-05-01"
-    $method = "GET"
 
     $getPlatformAppsUri = "https://{bapEndpoint}/providers/Microsoft.BusinessAppPlatform/platformapps/status?&api-version={apiVersion}" `
 
-    $platformAppsResult = InvokeApi -Method $method -Route $getPlatformAppsUri -ApiVersion $ApiVersion -Body $body
+    $platformAppsResult = InvokeApi -Method "GET" -Route $getPlatformAppsUri -ApiVersion $ApiVersion -Body $body
 
     if ($null -eq $platformAppsResult) 
     {

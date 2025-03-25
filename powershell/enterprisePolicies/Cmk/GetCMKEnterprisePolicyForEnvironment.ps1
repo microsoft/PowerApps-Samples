@@ -10,7 +10,7 @@ NO TECHNICAL SUPPORT IS PROVIDED. YOU MAY NOT DISTRIBUTE THIS CODE UNLESS YOU HA
 param(
     [Parameter(Mandatory)]
     [ValidateNotNullOrEmpty()]
-    [String]$environmentId,
+    [String]$EnvironmentId,
 
     [Parameter(Mandatory=$false)]
     [BAPEndpoint]$Endpoint = "prod"
@@ -25,4 +25,4 @@ if (-not(Connect-Azure))
     return
 }
 
-Get-EnterprisePolicyForEnvironment -policyType cmk -environmentId $environmentId -endpoint $endpoint
+Get-EnterprisePolicyForEnvironment -PolicyType [PolicyType]::Encryption -EnvironmentId $EnvironmentId -Endpoint $Endpoint

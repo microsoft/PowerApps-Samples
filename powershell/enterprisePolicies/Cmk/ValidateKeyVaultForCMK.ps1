@@ -146,11 +146,11 @@ function GetAndValidateEnterprisePolicyKey($epKeyVaultConfig, $keyVaultName)
 
     #validate if key is valid
     [datetime]$current = Get-Date
-    $currentDateinUTC = $current.ToUniversalTime()
+    $currentDateInUTC = $current.ToUniversalTime()
     if($null -ne $key.NotBefore)
     {
         [datetime]$notBefore = Get-Date $key.NotBefore
-        if ($notBefore -ge $currentDateinUTC)
+        if ($notBefore -ge $currentDateInUTC)
         {
             Write-Host "Key $keyName is not activated. Activation Date $notBefore" -ForegroundColor Red
             return $null
@@ -160,7 +160,7 @@ function GetAndValidateEnterprisePolicyKey($epKeyVaultConfig, $keyVaultName)
     if($null -ne $key.Expires)
     {
         [datetime]$expires = Get-Date $key.Expires
-        if ($expires -le $currentDateinUTC)
+        if ($expires -le $currentDateInUTC)
         {
             Write-Host "Key $keyName is expired. Expiry Date $expires" -ForegroundColor Red
             return $null
