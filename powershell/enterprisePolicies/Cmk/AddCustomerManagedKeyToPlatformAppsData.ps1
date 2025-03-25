@@ -4,9 +4,10 @@
     [String]$policyArmId,
 
     [Parameter(Mandatory=$false)]
-    [ValidateSet("tip1", "tip2", "prod")]
-    [String]$endpoint = "prod"
+    [BAPEndpoint]$Endpoint = "prod"
 )
+
+$ErrorActionPreference = "Stop"
 
 Import-Module "$PSScriptRoot\..\Common\EnterprisePolicies" -Force
 

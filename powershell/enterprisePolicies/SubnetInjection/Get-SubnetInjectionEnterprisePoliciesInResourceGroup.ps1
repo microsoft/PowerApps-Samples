@@ -24,5 +24,5 @@ if (-not(Connect-Azure))
     return
 }
 
-$policies = Get-EnterprisePoliciesInResourceGroup -SubscriptionId $SubscriptionId -ResourceGroup $ResourceGroup -PolicyType "NetworkInjection"
+$policies = Get-EnterprisePoliciesInResourceGroup -SubscriptionId $SubscriptionId -ResourceGroup $ResourceGroup -PolicyType [PolicyType]::NetworkInjection
 $policies | Select-Object -Property ResourceId, Location, Name

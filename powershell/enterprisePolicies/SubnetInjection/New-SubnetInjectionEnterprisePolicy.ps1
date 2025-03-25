@@ -76,7 +76,7 @@ if((Get-SupportedVnetRegionsForPowerPlatformRegion -PowerPlatformRegion $Enterpr
     }
 }
 
-$body = New-EnterprisePolicyBody -PolicyType [PolicyType]::VNET -PolicyLocation $EnterprisePolicyLocation -PolicyName $EnterprisePolicyName -VnetInformation $vnetInformation
+$body = New-EnterprisePolicyBody -PolicyType [PolicyType]::NetworkInjection -PolicyLocation $EnterprisePolicyLocation -PolicyName $EnterprisePolicyName -VnetInformation $vnetInformation
 
 $result = Set-EnterprisePolicy -ResourceGroup $ResourceGroup -Body $body
 if (-not($result))

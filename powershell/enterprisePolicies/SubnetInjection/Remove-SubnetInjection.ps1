@@ -10,15 +10,14 @@ NO TECHNICAL SUPPORT IS PROVIDED. YOU MAY NOT DISTRIBUTE THIS CODE UNLESS YOU HA
 param(
     [Parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
-    [String]$environmentId,
+    [String]$EnvironmentId,
 
     [Parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
-    [String]$policyArmId,
+    [String]$PolicyArmId,
 
     [Parameter(Mandatory=$false)]
-    [ValidateSet("tip1", "tip2", "prod")]
-    [String]$endpoint = "prod"
+    [BAPEndpoint]$Endpoint = "prod"
 )
 
 $ErrorActionPreference = "Stop"
@@ -30,4 +29,4 @@ if (-not(Connect-Azure))
     return
 }
 
-UnLinkPolicyFromEnv -policyType vnet -environmentId $environmentId -policyArmId $policyArmId -endpoint $endpoint 
+Remove-PolicyToEnvLink -PolicyType [PolicyType]::NetworkInjection -EnvironmentId $EnvironmentId -PolicyArmId $PolicyArmId -Endpoint $Endpoint

@@ -7,37 +7,21 @@ THE ENTIRE RISK OF THE USE OR THE RESULTS FROM THE USE OF THIS SAMPLE CODE REMAI
 NO TECHNICAL SUPPORT IS PROVIDED. YOU MAY NOT DISTRIBUTE THIS CODE UNLESS YOU HAVE A LICENSE AGREEMENT WITH MICROSOFT THAT ALLOWS YOU TO DO SO.
 #>
 
-function BapLogin($endpoint) {
-
-    $logIn = $false
-
-    # Login - only needs to be run once per session
-    if ($null -eq $global:currentSession.userId) {
-        $logIn = $true
-    }
-
-    if (($null -eq $global:currentSession.expiresOn) -or (get-date $global:currentSession.expiresOn) -lt (Get-Date)) {
-        $logIn = $true
-    }
-
-    $envSearch = $env + "*"
-
-    if ($global:currentSession.bapEndpoint -notlike $envSearch) {
-        $logIn = $true
-    }
-
-    if ($logIn) {
-        $result = Add-PowerAppsAccount -Endpoint $endpoint
-        echo $result
-    }
-}
-
-function GetEnvironment ($environmentId) 
+function Get-Environment
 {
-    $ApiVersion = "2016-11-01"
-    $environmentResult = GetEnvironmentFromBAP $environmentId $ApiVersion "GET"
+    param (
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$EnvironmentId
+    )
 
-    if ($environmentResult.Id -eq $null) 
+    $ApiVersion = "2016-11-01"
+
+    $getEnvironmentUri = "https://{bapEndpoint}/providers/Microsoft.BusinessAppPlatform/environments/$EnvironmentId/?&api-version={apiVersion}" `
+
+    $environmentResult = InvokeApi -Method $method -Route $getEnvironmentUri -ApiVersion $ApiVersion -Body $body
+
+    if ($null -eq $environmentResult.Id) 
     {
         Write-Host "Error getting environment with $environmentId for endpoint $endpoint Error = $environmentResult `n" -ForegroundColor Red
         return $null
@@ -46,151 +30,160 @@ function GetEnvironment ($environmentId)
     return $environmentResult
 }
 
-function GetEnvironmentFromBAP ($environmentId, $ApiVersion, $method, $body)
+function Invoke-BAPLinkOrUnlink
 {
-    $getEnvironmentUri = "https://{bapEndpoint}/providers/Microsoft.BusinessAppPlatform/environments/{environmentId}/?&api-version={apiVersion}" `
-    | ReplaceMacro -Macro "{environmentId}" -Value $environmentId
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$EnvironmentId,
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$ApiVersion,
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Method,
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [PSCustomObject]$Body,
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [LinkOperation]$LinkOperation,
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [PolicyType]$PolicyType
+    )
 
-    $environmentResult = InvokeApi -Method $method -Route $getEnvironmentUri -ApiVersion $ApiVersion -Body $body
+    $linkEnterprisePolicyUri = "https://{bapEndpoint}/providers/Microsoft.BusinessAppPlatform/environments/$EnvironmentId/enterprisePolicies/$PolicyType/$LinkOperation?&api-version={apiVersion}" `
 
-    return $environmentResult
-}
-
-function CallBAPLinkOrUnlink ($environmentId, $ApiVersion, $method, $body, $isLink, $PolicyType)
-{
-    $operationName = switch ( $isLink )
-    {
-        true { "link" }
-        false { "unlink" }
-    }
-
-    $policyTypeInUrl = switch ($policyType)
-    {
-        "cmk" { "Encryption" }
-        "vnet" { "NetworkInjection" }
-    }
-
-    $linkEnterprisePolicyUri = "https://{bapEndpoint}/providers/Microsoft.BusinessAppPlatform/environments/{environmentId}/enterprisePolicies/{policyTypeInUrl}/{operationName}?&api-version={apiVersion}" `
-    | ReplaceMacro -Macro "{environmentId}" -Value $environmentId | ReplaceMacro -Macro "{operationName}" -Value $operationName | ReplaceMacro -Macro "{policyTypeInUrl}" -Value $policyTypeInUrl
-
-    $linkEnterprisePolicyResult = InvokeApi -Method $method -Route $linkEnterprisePolicyUri -ApiVersion $ApiVersion -Body $body
+    $linkEnterprisePolicyResult = InvokeApi -Method $Method -Route $linkEnterprisePolicyUri -ApiVersion $ApiVersion -Body $Body
 
     return $linkEnterprisePolicyResult
 }
 
-function LinkEnterprisePolicy ($environment, $policyType, $policySystemId)
+function New-EnterprisePolicyLink
 {
+    param(
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty]
+        [PSCustomObject] $Environment,
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty]
+        [PolicyType] $PolicyType,
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty]
+        [string] $PolicySystemId
+    )
+
     $ApiVersion = "2019-10-01"
     
-    $body = [pscustomobject]@{
+    $body = [PSCustomObject]@{
         "SystemId" = $policySystemId
-        }
+    }
 
-    $linkResult = CallBAPLinkOrUnlink $environment.Name $ApiVersion "Post" $body true $policyType $policyType
+    $linkResult = Invoke-BAPLinkOrUnlink -Environment $Environment.Name -ApiVersion $ApiVersion -Method "Post" -Body $body -LinkOperation [LinkOperation]::Link -PolicyType $policyType
  
     return $linkResult
 }
 
-function UnLinkEnterprisePolicy ($environment, $policyType, $policySystemId)
+function Remove-EnterprisePolicyLink
 {
+    param(
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty]
+        [string] $Environment,
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty]
+        [PolicyType] $PolicyType,
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty]
+        [string] $PolicySystemId
+    )
+
     $ApiVersion = "2019-10-01"
 
-    $body = [pscustomobject]@{
+    $body = [PSCustomObject]@{
         "SystemId" = $policySystemId
         }
 
-    $unlinkResult = CallBAPLinkOrUnlink $environment.Name $ApiVersion "Post" $body false $policyType $policyType
-
+    $unlinkResult = Invoke-BAPLinkOrUnlink -Environment $environment.Name $ApiVersion "Post" $body false $policyType $policyType
 
     return $unlinkResult
 }
 
-function PollLinkUnlinkOperation ($operationLink, $pollInterval)
+function New-EnterprisePolicyToPlatformAppsData
 {
+    param (
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [PolicyType] $PolicyType,
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string] $PolicySystemId
+    )
 
-    $run = $true
-    while ($run)
-    {
-        $pollResult = InvokeApi -Method GET -Route $operationLink
-
-        if ($null -eq $pollResult -or $null -eq $pollResult.id -or $null -eq $pollResult.state)
-        {
-            echo "Operation polling failed $pollResult"
-            $run = $false
-        }
-
-        $operationState = $pollResult.state.id 
-        if ($operationState.Equals("Failed") -or $operationState.Equals("Succeeded"))
-        {
-             echo "Operation finished with state $operationState"
-             $run = $false
-        }
-        elseif ($operationState.Equals("Running"))
-        {
-            echo "Operation still running. Poll after $pollInterval seconds"
-            start-sleep -seconds $pollInterval
-
-        }
-        else
-        {
-            echo "unknown operation state $operationState"
-            $run = $false
-        }
-    }
-}
-
-function LinkEnterprisePolicyToPlatformAppsData ($policyType, $policySystemId)
-{
     $ApiVersion = "2024-05-01"
     
-    $body = [pscustomobject]@{
-        "SystemId" = $policySystemId
-        }
+    $body = [PSCustomObject]@{
+        "SystemId" = $PolicySystemId
+    }
 
-    $linkResult = CallBAPLinkOrUnlinkForPlatformAppsData $ApiVersion "Post" $body true $policyType
+    $linkResult = Invoke-BAPLinkOrUnlinkForPlatformAppsData -ApiVersion $ApiVersion -Method "Post" -Body $body -LinkOperation [LinkOperation]::Link -PolicyType $PolicyType
  
     return $linkResult
 }
 
-function CallBAPLinkOrUnlinkForPlatformAppsData ($ApiVersion, $method, $body, $isLink, $PolicyType)
+function Invoke-BAPLinkOrUnlinkForPlatformAppsData
 {
-    $operationName = switch ( $isLink )
-    {
-        true { "link" }
-        false { "unlink" }
-    }
+    param (
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string] $ApiVersion,
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string] $Method,
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [PSCustomObject] $Body,
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [LinkOperation] $LinkOperation,
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [PolicyType] $PolicyType
+    )
 
-    $policyTypeInUrl = switch ($policyType)
-    {
-        "cmk" { "Encryption" }
-        "vnet" { "NetworkInjection" }
-        "identity" { "Identity" }
-    }
+    $linkEnterprisePolicyUri = "https://{bapEndpoint}/providers/Microsoft.BusinessAppPlatform/platformapps/enterprisePolicies/$PolicyType/$LinkOperation?&api-version={apiVersion}" `
 
-    $linkEnterprisePolicyUri = "https://{bapEndpoint}/providers/Microsoft.BusinessAppPlatform/platformapps/enterprisePolicies/{policyTypeInUrl}/{operationName}?&api-version={apiVersion}" `
-    | ReplaceMacro -Macro "{operationName}" -Value $operationName | ReplaceMacro -Macro "{policyTypeInUrl}" -Value $policyTypeInUrl
-
-    $linkEnterprisePolicyResult = InvokeApi -Method $method -Route $linkEnterprisePolicyUri -ApiVersion $ApiVersion -Body $body
+    $linkEnterprisePolicyResult = InvokeApi -Method $Method -Route $linkEnterprisePolicyUri -ApiVersion $ApiVersion -Body $Body
 
     return $linkEnterprisePolicyResult
 }
 
 
-function UnLinkEnterprisePolicyForPlatformAppsData ($policyType, $policySystemId)
+function Remove-EnterprisePolicyForPlatformAppsData
 {
+    param (
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [PolicyType] $PolicyType,
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string] $PolicySystemId
+    )
+
     $ApiVersion = "2024-05-01"
 
-    $body = [pscustomobject]@{
-        "SystemId" = $policySystemId
-        }
+    $body = [PSCustomObject]@{
+        "SystemId" = $PolicySystemId
+    }
 
-    $unlinkResult = CallBAPLinkOrUnlinkForPlatformAppsData $ApiVersion "Post" $body false $policyType $policyType
-
+    $unlinkResult = Invoke-BAPLinkOrUnlinkForPlatformAppsData -ApiVersion $ApiVersion -Method "Post" -Body $body -LinkOperation [LinkOperation]::unlink -PolicyType $policyType
 
     return $unlinkResult
 }
 
-function GetPlatformApps () 
+function Get-PlatformApps
 {
     $ApiVersion = "2024-05-01"
     $method = "GET"
@@ -199,7 +192,7 @@ function GetPlatformApps ()
 
     $platformAppsResult = InvokeApi -Method $method -Route $getPlatformAppsUri -ApiVersion $ApiVersion -Body $body
 
-    if ($platformAppsResult -eq $null) 
+    if ($null -eq $platformAppsResult) 
     {
         Write-Host "Error getting platformapps for endpoint $endpoint Error = $platformAppsResult `n" -ForegroundColor Red
         return $null

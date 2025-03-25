@@ -1,25 +1,34 @@
-﻿Import-Module "$PSScriptRoot\..\Common\EnterprisePolicies" -Force
+﻿<#
+SAMPLE CODE NOTICE
+
+THIS SAMPLE CODE IS MADE AVAILABLE AS IS. MICROSOFT MAKES NO WARRANTIES, WHETHER EXPRESS OR IMPLIED,
+OF FITNESS FOR A PARTICULAR PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OR CONDITIONS OF MERCHANTABILITY.
+THE ENTIRE RISK OF THE USE OR THE RESULTS FROM THE USE OF THIS SAMPLE CODE REMAINS WITH THE USER.
+NO TECHNICAL SUPPORT IS PROVIDED. YOU MAY NOT DISTRIBUTE THIS CODE UNLESS YOU HAVE A LICENSE AGREEMENT WITH MICROSOFT THAT ALLOWS YOU TO DO SO.
+#>
+
+Import-Module "$PSScriptRoot\..\Common\EnterprisePolicies" -Force
 
 function GetAndValidateKeyVaultProperties($keyVaultName)
 {
     Write-Host "Getting KeyVault $keyVaultName" -ForegroundColor Green `n
     $keyVault = Get-AzKeyVault -VaultName $keyVaultName
     $keyVaultString = $keyVault | ConvertTo-Json
-    if ($keyVault -eq $nul -or $keyVault.VaultName -eq $null)
+    if ($keyVault -eq $nul -or $null -eq $keyVault.VaultName)
     {
-        Write-Host "Could not reterieve vault $keyVaultName  $keyVaultString. Please check if key vault exists and accessible" -ForegroundColor Red 
+        Write-Host "Could not retrieve vault $keyVaultName  $keyVaultString. Please check if key vault exists and accessible" -ForegroundColor Red 
         return $null
     }
 
      #validate soft-delete
-    if ($keyVault.EnableSoftDelete -eq $null -or  $keyVault.EnableSoftDelete.Equals("False"))
+    if ($null -eq $keyVault.EnableSoftDelete -or  $keyVault.EnableSoftDelete.Equals("False"))
     {
        Write-Host "Soft delete not enabled for keyVault $keyVaultName. Please enable it as per the instruction at https://learn.microsoft.com/azure/key-vault/general/soft-delete-change " -ForegroundColor Red
        return $null
     }
 
     #validate purge-protection
-    if ($keyVault.EnablePurgeProtection -eq $null -or $keyVault.EnablePurgeProtection.Equals("False"))
+    if ($null -eq $keyVault.EnablePurgeProtection -or $keyVault.EnablePurgeProtection.Equals("False"))
     {
        Write-Host "Purge protection not enabled for keyVault $keyVaultName. Please enable it as per the instruction at https://learn.microsoft.com/azure/key-vault/general/soft-delete-overview#permitted-purge" -ForegroundColor Red
        return $null
@@ -32,9 +41,9 @@ function GetAndValidateKeyVaultProperties($keyVaultName)
 function GetAndValidateEnterprisePolicyForKeyVault($enterprisePolicyArmId, $keyVault)
 {
     Write-Host "Getting CMK enterprise policy" -ForegroundColor Green `n
-    $cmkPolicy = GetEnterprisePolicy $enterprisePolicyArmId
+    $cmkPolicy = Get-EnterprisePolicy -PolicyArmId $enterprisePolicyArmId
     $cmkPolicyString = $cmkPolicy | ConvertTo-Json
-    if ($cmkPolicy.ResourceId -eq $null)
+    if ($null -eq $cmkPolicy.ResourceId)
     {
        
         Write-Host "Could not reterieve CMK Policy $enterprisePolicyArmId  $cmkPolicyString" -ForegroundColor Red
@@ -45,15 +54,15 @@ function GetAndValidateEnterprisePolicyForKeyVault($enterprisePolicyArmId, $keyV
     if ($cmkPolicy.Kind -ne "Encryption")
     {
        
-        Write-Host "Enterprise Policy reterieved for $enterprisePolicyArmId  is not of Kind Encryption. Enterprise Policy = $cmkPolicyString" -ForegroundColor Red
+        Write-Host "Enterprise Policy retrieved for $enterprisePolicyArmId  is not of Kind Encryption. Enterprise Policy = $cmkPolicyString" -ForegroundColor Red
         return $null
     }
 
     #validate enterprise policy is having SystemAssigned identity
-    if ($cmkPolicy.Identity -eq $null -or $cmkPolicy.Identity.Type -ne "SystemAssigned")
+    if ($null -eq $cmkPolicy.Identity -or $cmkPolicy.Identity.Type -ne "SystemAssigned")
     {
        
-        Write-Host "Enterprise Policy reterieved for $enterprisePolicyArmId is not having SystemAssigned identity. Enterprise Policy = $cmkPolicyString" -ForegroundColor Red
+        Write-Host "Enterprise Policy retrieved for $enterprisePolicyArmId is not having SystemAssigned identity. Enterprise Policy = $cmkPolicyString" -ForegroundColor Red
         return $null
     }
 
@@ -62,12 +71,12 @@ function GetAndValidateEnterprisePolicyForKeyVault($enterprisePolicyArmId, $keyV
     if ($epKeyVaultConfig.Id -ne $keyVault.ResourceId)
     {
        
-        Write-Host "Enterprise Policy reterieved for $enterprisePolicyArmId is not having same key vault config as $keyVaultName. Enterprise Policy = $cmkPolicyString" -ForegroundColor Red
+        Write-Host "Enterprise Policy retrieved for $enterprisePolicyArmId is not having same key vault config as $keyVaultName. Enterprise Policy = $cmkPolicyString" -ForegroundColor Red
         return $null
     }
    
     #check if key vault has vault access policy
-    if ($keyVault.AccessPolicies -ne $null)
+    if ($null -ne $keyVault.AccessPolicies)
     {
         #validate CMK enterprise policy identity has Get, UnwrapKey and WrapKey access permission for key vault
         $accessPolicies = $keyVault.AccessPolicies
@@ -87,18 +96,18 @@ function GetAndValidateEnterprisePolicyForKeyVault($enterprisePolicyArmId, $keyV
             Write-Host "WrapKey access not present for Enterprise Policy $enterprisePolicyArmId in keyVault $keyVaultName" -ForegroundColor Red
             return $null
         }
-        Write-Host "Enterprise policy $enterprisePolicyArmId reterieved and is valid for $keyvaultName with Get, UnwrapKey and WrapKey access" -ForegroundColor Green `n
+        Write-Host "Enterprise policy $enterprisePolicyArmId retrieved and is valid for $keyvaultName with Get, UnwrapKey and WrapKey access" -ForegroundColor Green `n
     }
     else
     {
         #validate if CMK enterprise policy identity has "Key Vault Crypto Service Encryption User" role assignment
         $epRoleAssignment = Get-AzRoleAssignment -Scope $keyVault.ResourceId -ObjectId $cmkPolicy.Identity.PrincipalId -RoleDefinitionName "Key Vault Crypto Service Encryption User"
-        if ($epRoleAssignment -eq $null)
+        if ($null -eq $epRoleAssignment)
         {
             Write-Host "Enterprise policy $enterprisePolicyArmId identity is not assigned 'Key Vault Crypto Service Encryption User' role" -ForegroundColor Red
             return $null
         }
-        Write-Host "Enterprise policy $enterprisePolicyArmId reterieved and is valid for $keyvaultName with 'Key Vault Crypto Service Encryption User' role" -ForegroundColor Green `n
+        Write-Host "Enterprise policy $enterprisePolicyArmId retrieved and is valid for $keyvaultName with 'Key Vault Crypto Service Encryption User' role" -ForegroundColor Green `n
 
     }
 
@@ -114,7 +123,7 @@ function GetAndValidateEnterprisePolicyKey($epKeyVaultConfig, $keyVaultName)
     Write-Host "Validating enterprise policy $enterprisePolicyArmId key $keyName in $keyVaultName" -ForegroundColor Green `n
     $key = $null
     #get the specific key version if it is present in enterprise policy
-    if ($keyVersion -ne $null)
+    if ($null -ne $keyVersion)
     {
         $key = Get-AzKeyVaultKey -VaultName $keyVaultName -keyName $keyName -Version $keyVersion
     }
@@ -123,7 +132,7 @@ function GetAndValidateEnterprisePolicyKey($epKeyVaultConfig, $keyVaultName)
         $key = Get-AzKeyVaultKey -VaultName $keyVaultName -keyName $keyName
     }
     $keyString = $key | ConvertTo-Json
-    if ($key -eq $null -or $key.Id -eq $null)
+    if ($null -eq $key -or $null -eq $key.Id)
     {
         Write-Host "Key $keyName not reterieved from $keyVaultName  $keyString" -ForegroundColor Red
         return $null
@@ -138,7 +147,7 @@ function GetAndValidateEnterprisePolicyKey($epKeyVaultConfig, $keyVaultName)
     #validate if key is valid
     [datetime]$current = Get-Date
     $currentDateinUTC = $current.ToUniversalTime()
-    if($key.NotBefore -ne $null)
+    if($null -ne $key.NotBefore)
     {
         [datetime]$notBefore = Get-Date $key.NotBefore
         if ($notBefore -ge $currentDateinUTC)
@@ -148,7 +157,7 @@ function GetAndValidateEnterprisePolicyKey($epKeyVaultConfig, $keyVaultName)
         }
     }
 
-    if($key.Expires -ne $null)
+    if($null -ne $key.Expires)
     {
         [datetime]$expires = Get-Date $key.Expires
         if ($expires -le $currentDateinUTC)
@@ -202,6 +211,5 @@ function ValidateKeyVaultForCMK
 
     #validate key
     $key = GetAndValidateEnterprisePolicyKey -epKeyVaultConfig $cmkPolicy.Properties.Encryption.KeyVault -keyVaultName $keyVaultName
-        
 }
 ValidateKeyVaultForCMK

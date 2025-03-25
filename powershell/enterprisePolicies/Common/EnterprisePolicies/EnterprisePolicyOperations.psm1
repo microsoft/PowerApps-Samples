@@ -7,32 +7,6 @@ THE ENTIRE RISK OF THE USE OR THE RESULTS FROM THE USE OF THIS SAMPLE CODE REMAI
 NO TECHNICAL SUPPORT IS PROVIDED. YOU MAY NOT DISTRIBUTE THIS CODE UNLESS YOU HAVE A LICENSE AGREEMENT WITH MICROSOFT THAT ALLOWS YOU TO DO SO.
 #>
 
-class VnetInformation
-{
-    [string] $VnetId
-    [string] $SubnetName
-}
-
-enum PolicyType
-{
-    CMK
-    VNET
-}
-
-function Connect-Azure{
-
-    Write-Host "Logging In..." -ForegroundColor Green
-    $connect = Connect-AzAccount
-
-    if ($null -eq $connect)
-    {
-        Write-Error "Error connecting to Azure Account `n"
-        return $false
-    }
-    Write-Host "Logged In..." -ForegroundColor Green
-    return $true
-}
-
 function Get-EnterprisePolicySystemId {
     param (
         [Parameter(Mandatory)]
@@ -83,7 +57,6 @@ function Get-EnterprisePolicy {
 
     $policy = Get-AZResource -ResourceId $PolicyArmId -ExpandProperties
     return $policy
-
 }
 
 function Get-EnterprisePoliciesInSubscription {
@@ -182,7 +155,7 @@ function New-EnterprisePolicyBody {
     )
 
     switch($PolicyType){
-        [PolicyType]::CMK{
+        [PolicyType]::Encryption{
             $body = @{
                 "`$schema" = "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#"
                 "contentVersion" = "1.0.0.0"
@@ -216,7 +189,7 @@ function New-EnterprisePolicyBody {
                 )
             }
         }
-        [PolicyType]::VNET{
+        [PolicyType]::NetworkInjection{
             $body = @{
                 "`$schema" = "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#"
                 "contentVersion" = "1.0.0.0"
@@ -252,13 +225,3 @@ function New-EnterprisePolicyBody {
     }
     return $body
 }
-
-# exposing functions with legacy names in module for use by CMK scripts
-New-Alias -Name GetEnterprisePolicySystemId -Value Get-EnterprisePolicySystemId
-New-Alias -Name PutEnterprisePolicy -Value Set-EnterprisePolicy
-New-Alias -Name GetEnterprisePolicy -Value Get-EnterprisePolicy
-New-Alias -Name GetEnterprisePoliciesInSubscription -Value Get-EnterprisePoliciesInSubscription
-New-Alias -Name GetEnterprisePoliciesInResourceGroup -Value Get-EnterprisePoliciesInResourceGroup
-New-Alias -Name UpdateEnterprisePolicy -Value Update-EnterprisePolicy
-New-Alias -Name RemoveEnterprisePolicy -Value Remove-EnterprisePolicy
-New-Alias -Name GenerateEnterprisePolicyBody -Value New-EnterprisePolicyBody

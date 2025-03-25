@@ -13,8 +13,7 @@ param(
     [String]$EnvironmentId,
 
     [Parameter(Mandatory=$false)]
-    [ValidateSet("tip1", "tip2", "prod")]
-    [String]$Endpoint = "prod"
+    [BAPEndpoint]$Endpoint = "prod"
 )
 
 $ErrorActionPreference = "Stop"
@@ -26,4 +25,4 @@ if (-not(Connect-Azure))
     return
 }
 
-Get-EnterprisePolicyForEnvironment -PolicyType "vnet" -EnvironmentId $EnvironmentId -Endpoint $Endpoint
+Get-EnterprisePolicyForEnvironment -PolicyType [PolicyType]::NetworkInjection -EnvironmentId $EnvironmentId -Endpoint $Endpoint
