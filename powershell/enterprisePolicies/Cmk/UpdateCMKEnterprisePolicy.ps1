@@ -8,42 +8,23 @@ NO TECHNICAL SUPPORT IS PROVIDED. YOU MAY NOT DISTRIBUTE THIS CODE UNLESS YOU HA
 #>
 
 param(
-    [Parameter(
-        Mandatory=$true,
-        HelpMessage="The Policy subscription"
-    )]
+    [Parameter(Mandatory, HelpMessage="The Policy subscription")]
     [string]$subscriptionId,
 
-    [Parameter(
-        Mandatory=$true,
-        HelpMessage="The Policy resource group"
-    )]
+    [Parameter(Mandatory, HelpMessage="The Policy resource group")]
     [string]$resourceGroup,
 
-    [Parameter(
-        Mandatory=$true,
-        HelpMessage="The Policy name"
-    )]
+    [Parameter(Mandatory, HelpMessage="The Policy name")]
     [string]$enterprisePolicyName,
 
-    [Parameter(
-        Mandatory=$true,
-        HelpMessage="The updated KeyVault ARM Id, enter N/A if no update is required for this field"
-    )]
+    [Parameter(Mandatory, HelpMessage="The updated KeyVault ARM Id, enter N/A if no update is required for this field")]
     [string]$keyVaultId,
 
-    [Parameter(
-        Mandatory=$true,
-        HelpMessage="The Key name, enter N/A if no update is required for this field"
-    )]
+    [Parameter(Mandatory, HelpMessage="The Key name, enter N/A if no update is required for this field")]
     [string]$keyName,
 
-    [Parameter(
-        Mandatory=$true,
-        HelpMessage="The Key version, enter N/A if no update is required for this field"
-    )]
-    [string]$keyVersion     
-
+    [Parameter(Mandatory,HelpMessage="The Key version, enter N/A if no update is required for this field")]
+    [string]$keyVersion
 )
 
 $ErrorActionPreference = "Stop"
@@ -69,7 +50,7 @@ if ($null -eq $policy)
      return
 }
 
-if ($policy.Kind -ne "Encryption")
+if ($policy.Kind -ne [PolicyType]::Encryption)
 {
     $kindString = $policy.Kind | ConvertTo-Json
     Write-Host "Enterprise found for $policyArmId is not CMK Enterprise Policy. Policy is of type $kindString " -ForegroundColor Red 
