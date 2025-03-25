@@ -1,18 +1,19 @@
 ﻿param(
     [Parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
-    [String]$policyArmId,
+    [String]$PolicyArmId,
 
     [Parameter(Mandatory=$false)]
-    [ValidateSet("tip1", "tip2", "prod")]
-    [String]$endpoint
+    [BAPEndpoint]$Endpoint = "prod"
 )
 
-# Load thescript
-. "$PSScriptRoot\..\Common\EnvironmentEnterprisePolicyOperations.ps1"
+$ErrorActionPreference = "Stop"
 
-if (![bool]$endpoint) {
-    $endpoint = "prod"
+Import-Module "$PSScriptRoot\..\Common\EnterprisePolicies" -Force
+
+if (-not(Connect-Azure))
+{
+    return
 }
 
-LinkPolicyToPlatformAppsData -policyType cmk  -policyArmId $policyArmId  -endpoint $endpoint  
+New-PolicyToPlatformAppsDataLink -PolicyType [PolicyType]::Encryption -PolicyArmId $PolicyArmId -Endpoint $Endpoint
