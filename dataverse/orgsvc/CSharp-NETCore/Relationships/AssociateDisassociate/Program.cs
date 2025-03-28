@@ -9,7 +9,7 @@ namespace PowerPlatform_Dataverse_CodeSamples
 {
     internal class Program
     {
-        // <AssociateDisassociate>
+        // <snippetAssociateDisassociate>
         /// <summary>
         /// Associate a primary entity with one or more other entities,
         /// then remove the association.
@@ -51,7 +51,7 @@ namespace PowerPlatform_Dataverse_CodeSamples
                 return false;
             }
         }
-        // </AssociateDisassociate>
+        // </snippetAssociateDisassociate>
 
         /// <summary>
         /// Contains the application's configuration settings. 

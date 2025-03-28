@@ -53,6 +53,17 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="MyApp.DataModel.BusinessUnit"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<MyApp.DataModel.BusinessUnit> BusinessUnitSet
+		{
+			get
+			{
+				return this.CreateQuery<MyApp.DataModel.BusinessUnit>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="MyApp.DataModel.Contact"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<MyApp.DataModel.Contact> ContactSet
@@ -71,6 +82,61 @@ namespace MyApp.DataModel
 			get
 			{
 				return this.CreateQuery<MyApp.DataModel.Letter>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="MyApp.DataModel.Privilege"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<MyApp.DataModel.Privilege> PrivilegeSet
+		{
+			get
+			{
+				return this.CreateQuery<MyApp.DataModel.Privilege>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="MyApp.DataModel.Role"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<MyApp.DataModel.Role> RoleSet
+		{
+			get
+			{
+				return this.CreateQuery<MyApp.DataModel.Role>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="MyApp.DataModel.SystemUser"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<MyApp.DataModel.SystemUser> SystemUserSet
+		{
+			get
+			{
+				return this.CreateQuery<MyApp.DataModel.SystemUser>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="MyApp.DataModel.Team"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<MyApp.DataModel.Team> TeamSet
+		{
+			get
+			{
+				return this.CreateQuery<MyApp.DataModel.Team>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="MyApp.DataModel.UserQueryVisualization"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<MyApp.DataModel.UserQueryVisualization> UserQueryVisualizationSet
+		{
+			get
+			{
+				return this.CreateQuery<MyApp.DataModel.UserQueryVisualization>();
 			}
 		}
 	}

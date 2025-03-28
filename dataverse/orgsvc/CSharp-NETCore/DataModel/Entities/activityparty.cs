@@ -514,6 +514,25 @@ namespace MyApp.DataModel
 				this.OnPropertyChanged("letter_activity_parties");
 			}
 		}
+		
+		/// <summary>
+		/// N:1 system_user_activity_parties
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("partyid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("system_user_activity_parties")]
+		public MyApp.DataModel.SystemUser system_user_activity_parties
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("system_user_activity_parties", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("system_user_activity_parties");
+				this.SetRelatedEntity<MyApp.DataModel.SystemUser>("system_user_activity_parties", null, value);
+				this.OnPropertyChanged("system_user_activity_parties");
+			}
+		}
 	}
 }
 #pragma warning restore CS1591

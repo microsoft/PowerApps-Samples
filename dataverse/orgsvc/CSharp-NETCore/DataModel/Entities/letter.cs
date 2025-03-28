@@ -1061,6 +1061,19 @@ namespace MyApp.DataModel
 		}
 		
 		/// <summary>
+		/// N:1 business_unit_letter_activities
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningbusinessunit")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("business_unit_letter_activities")]
+		public MyApp.DataModel.BusinessUnit business_unit_letter_activities
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.BusinessUnit>("business_unit_letter_activities", null);
+			}
+		}
+		
+		/// <summary>
 		/// N:1 Contact_Letters
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
@@ -1076,6 +1089,84 @@ namespace MyApp.DataModel
 				this.OnPropertyChanging("Contact_Letters");
 				this.SetRelatedEntity<MyApp.DataModel.Contact>("Contact_Letters", null, value);
 				this.OnPropertyChanged("Contact_Letters");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_letter_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_letter_createdby")]
+		public MyApp.DataModel.SystemUser lk_letter_createdby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_letter_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_letter_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_letter_createdonbehalfby")]
+		public MyApp.DataModel.SystemUser lk_letter_createdonbehalfby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_letter_createdonbehalfby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_letter_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_letter_modifiedby")]
+		public MyApp.DataModel.SystemUser lk_letter_modifiedby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_letter_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_letter_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_letter_modifiedonbehalfby")]
+		public MyApp.DataModel.SystemUser lk_letter_modifiedonbehalfby
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("lk_letter_modifiedonbehalfby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_letter
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_letter")]
+		public MyApp.DataModel.Team team_letter
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.Team>("team_letter", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 user_letter
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_letter")]
+		public MyApp.DataModel.SystemUser user_letter
+		{
+			get
+			{
+				return this.GetRelatedEntity<MyApp.DataModel.SystemUser>("user_letter", null);
 			}
 		}
 	}

@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35828.75
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssignRecordToTeam", "AssignRecordToTeam.csproj", "{12CBC638-D7FC-46F7-8595-E9473F9F37B5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5C50A084-34C5-A2B8-6768-B0BCD7597BE5} = {5C50A084-34C5-A2B8-6768-B0BCD7597BE5}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataModel", "..\..\DataModel\DataModel.csproj", "{5C50A084-34C5-A2B8-6768-B0BCD7597BE5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{12CBC638-D7FC-46F7-8595-E9473F9F37B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12CBC638-D7FC-46F7-8595-E9473F9F37B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12CBC638-D7FC-46F7-8595-E9473F9F37B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12CBC638-D7FC-46F7-8595-E9473F9F37B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C50A084-34C5-A2B8-6768-B0BCD7597BE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C50A084-34C5-A2B8-6768-B0BCD7597BE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C50A084-34C5-A2B8-6768-B0BCD7597BE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C50A084-34C5-A2B8-6768-B0BCD7597BE5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {195E2F36-008D-4DF2-8CD4-D4AC362FE082}
+	EndGlobalSection
+EndGlobal

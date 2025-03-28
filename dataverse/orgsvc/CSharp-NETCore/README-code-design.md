@@ -31,4 +31,4 @@ Some code samples use [early-bound](https://learn.microsoft.com/power-apps/devel
 
 The code design described above is implemented in a Visual Studio project template that we use to create new code samples or migrate code from older samples. Feel free to use the template in your own projects.
 
-Place the a copy of the template's compressed (.zip) file, located in the *Templates* folder, in your %USERPROFILE%\Documents\"Visual Studio 2022"\Templates\ProjectTemplates\C# folder so Visual Studio can find it. The name of the template used when creating a new project is "Dataverse SDK Console App (CSharp)".
+If you would like to use the template, place the a copy of the template's compressed (.zip) file, located in the *Templates* folder, in your %USERPROFILE%\Documents\"Visual Studio 2022"\Templates\ProjectTemplates\C# folder so Visual Studio can find it. The name of the template used when creating a new project is "Dataverse SDK Console App (CSharp)".
