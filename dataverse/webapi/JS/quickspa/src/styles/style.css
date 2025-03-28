@@ -1,0 +1,52 @@
+.disabled {
+   pointer-events: none;
+   opacity: 0.5;
+   /* Optional: to visually indicate the element is disabled */
+}
+
+.hidden {
+   display: none;
+}
+
+.error {
+   color: red;
+}
+
+.expectedError {
+   color: green;
+}
+
+body {
+   font-family: 'Roboto', sans-serif;
+   font-size: 16px;
+   line-height: 1.6;
+   color: #333;
+   background-color: #f9f9f9;
+}
+
+h1,
+h2,
+h3 {
+   color: #2c3e50;
+}
+
+button {
+   background-color: #3498db;
+   color: #fff;
+   border: none;
+   padding: 10px 20px;
+   border-radius: 5px;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+   transition: background-color 0.3s ease;
+   margin: 5px;
+   /* Adjust the value as needed */
+}
+
+button:hover {
+   background-color: #2980b9;
+}
+
+header {
+   padding-bottom: 10px;
+   /* Adjust the value as needed */
+}

@@ -1326,7 +1326,7 @@ Invoke-DataverseCommands {
    # Get-GlobalOptionSet returns $null if not found
 
    $colorsGlobalOptionSet = Get-GlobalOptionSet `
-      -name $colorsGlobalOptionSetData.Name `
+      -name $colorsGlobalOptionSetData.Name.ToLower() `
       -type 'OptionSet' `
       -query "?`$select=Name,DisplayName,Options"
 
