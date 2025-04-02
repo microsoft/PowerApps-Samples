@@ -8,7 +8,7 @@ page_type: sample
 description: "This sample demonstrates how to ..."
 ---
 
-# How to
+# How to associate a user with a security role
 
 Learn how to associate a system user with a security role.
 
@@ -22,7 +22,7 @@ Related article(s):
 
 |Sample|Description|Build target|
 |---|---|---|
-|AssociateSecurityRole|Demonstrates associating a user with a role.|.NET 9|
+|[AssociateSecurityRoleToUser](https://github.com/microsoft/PowerApps-Samples/tree/master/dataverse/orgsvc/CSharp-NETCore/Security/AssociateSecurityRoleToUser) | Demonstrates associating a user with a security role.|.NET 9|
 
 The code samples demonstrates how to associate a system user with a security role. Specifically, the samples demonstrates how to:
 
@@ -54,3 +54,5 @@ Use the Power Platform admin center to see that you now have
 the 'Basic User' role. Afterwards, remove the role if desired.
 Press any key to undo environment data changes.
 ```
+
+If you get a "duplicate key" exception, it is probably because the Basic User role was already associated with your system user account. In that case, you can removed the Basic User role from your account using the Power Platfor admin center before running the program.

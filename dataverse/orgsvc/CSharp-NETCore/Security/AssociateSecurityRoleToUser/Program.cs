@@ -1,7 +1,6 @@
 ﻿using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Extensions.Configuration;
 using Microsoft.PowerPlatform.Dataverse.Client;
-using Microsoft.PowerPlatform.Dataverse.Client.Utils;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using MyApp.DataModel;
@@ -10,6 +9,8 @@ namespace PowerPlatform_Dataverse_CodeSamples
 {
     internal class Program
     {
+        private static Guid _userId;
+
         // <AssociateSecurityRole>
         /// <summary>
         /// Associate a user with a security role.
@@ -17,7 +18,58 @@ namespace PowerPlatform_Dataverse_CodeSamples
         /// <param name="service">Authenticated web service connection.</param>
         /// <param name="securityRole">Dataverse security role.</param>
         /// <param name="user">A system user.</param>
-        static public void AssociateSecurityRole(ServiceClient service, string securityRole, Guid user)
+        static public void AssociateSecurityRole(IOrganizationService service, string securityRole, Guid user)
+        {
+            Role targetRole = GetRoleByName(service, securityRole);
+
+            // Associate the user with the role.
+            if (targetRole.Id != Guid.Empty && user != Guid.Empty)
+            {
+                service.Associate("systemuser", user,
+                    new Relationship("systemuserroles_association"),
+                    new EntityReferenceCollection()
+                    {
+                        new EntityReference(Role.EntityLogicalName, targetRole.Id)
+                    }
+                );
+            }
+        }
+        // </AssociateSecurityRole>
+
+        // <DisassociateSecurityRole>
+        /// <summary>
+        /// Disassociate a user with a security role.
+        /// </summary>
+        /// <param name="service">Authenticated web service connection.</param>
+        /// <param name="securityRole">Dataverse security role.</param>
+        /// <param name="user">A system user.</param>
+        static public void DisassociateSecurityRole(IOrganizationService service, string securityRole, Guid user)
+        {
+            Role targetRole = GetRoleByName(service, securityRole);
+
+            // Disassociate the user with the role.
+            if (targetRole.Id != Guid.Empty && user != Guid.Empty)
+            {
+                service.Disassociate("systemuser", user,
+                    new Relationship("systemuserroles_association"),
+                    new EntityReferenceCollection()
+                    {
+                        new EntityReference(Role.EntityLogicalName, targetRole.Id)
+                    }
+                );
+            }
+        }
+        // </DisassociateSecurityRole>
+
+        // <GetRoleByName>
+        /// <summary>
+        /// Retrieve a security role using its name attribute.
+        /// </summary>
+        /// <param name="service">Authenticated web service connection.param>
+        /// <param name="securityRole">Dataverse security role name.</param>
+        /// <returns>Dataverse security role.</returns>
+        /// <exception cref="Exception">General exception when role name not found.</exception>
+        private static Role GetRoleByName(IOrganizationService service, string securityRole)
         {
             // Create a query to find the role by name.
             QueryExpression query = new QueryExpression
@@ -51,19 +103,9 @@ namespace PowerPlatform_Dataverse_CodeSamples
                 throw new Exception(String.Format("Role named '{0}' not found", securityRole));
             }
 
-            // Associate the user with the role.
-            if (targetRole.Id != Guid.Empty && user != Guid.Empty)
-            {
-                service.Associate("systemuser", user,
-                    new Relationship("systemuserroles_association"),
-                    new EntityReferenceCollection()
-                    {
-                        new EntityReference(Role.EntityLogicalName, targetRole.Id)
-                    }
-                );
-            }
+            return targetRole;
         }
-        // </AssociateSecurityRole>
+        // </GetRoleByName>
 
         /// <summary>
         /// Contains the application's configuration settings. 
@@ -114,13 +156,13 @@ namespace PowerPlatform_Dataverse_CodeSamples
         /// Initializes any pre-existing data and resources required by the Run() method.
         /// </summary>
         /// <param name="service">Authenticated web service connection.</param>
-        /// <param name="entityStore">Entity name and reference collection.</param>
+        /// <param name="entityStore">Not used.</param>
         static public void Setup(IOrganizationService service, out Dictionary<string,
             EntityReference> entityStore)
         {
             entityStore = new Dictionary<string, EntityReference>();
 
-            // This sample does not require any setup. It uses and existing
+            // This sample does not require any setup. It uses an existing
             // system user and role.
         }
 
@@ -128,7 +170,7 @@ namespace PowerPlatform_Dataverse_CodeSamples
         /// The main logic of this program being demonstrated.
         /// </summary>
         /// <param name="service">Authenticated web service connection.</param>
-        /// <param name="entityStore">Entity name and reference collection.</param>
+        /// <param name="entityStore">Not used.</param>
         /// <returns>True if successful; otherwise false.</returns>
         static public bool Run(IOrganizationService service,
             Dictionary<string, EntityReference> entityStore)
@@ -139,14 +181,15 @@ namespace PowerPlatform_Dataverse_CodeSamples
             WhoAmIResponse response = (WhoAmIResponse)service.Execute(request);
             Console.WriteLine("done.");
 
-            ServiceClient? clientService = service as ServiceClient;
-            if (clientService != null)
+            _userId = response.UserId;
+
+            if (service != null)
             {
                 Console.Write("Associating your system user record with role 'Basic User'..");
-                AssociateSecurityRole(clientService, "Basic User", response.UserId);
+                AssociateSecurityRole(service, "Basic User", _userId);
                 Console.WriteLine("done.");
-                Console.WriteLine("\nUse the Power Platform admin center to see that you now have");
-                Console.WriteLine("the 'Basic User' role. Afterwards, remove the role if desired.");
+                Console.WriteLine("\nUse the Power Platform admin center to verify that you now have");
+                Console.WriteLine("the 'Basic User' role before continuing this program's execution.");
                 return true;
             }
             else
@@ -159,7 +202,7 @@ namespace PowerPlatform_Dataverse_CodeSamples
         /// Dispose of any data and resources created by the this program.
         /// </summary>
         /// <param name="service">Authenticated web service connection.</param>
-        /// <param name="entityStore">Entity name and reference collection.</param>
+        /// <param name="entityStore">Not used.</param>
         static public void Cleanup(ServiceClient service,
             Dictionary<string, EntityReference> entityStore)
         {
@@ -170,42 +213,7 @@ namespace PowerPlatform_Dataverse_CodeSamples
                 return;
             }
 
-            if (entityStore == null)
-            {
-                Console.WriteLine("Cleanup(): entref store collection is null, cleanup aborted.");
-                Console.WriteLine("Cleanup(): be sure to run Setup() prior to Cleanup().");
-                return;
-            }
-
-            // Collect the keys of entities to be deleted.
-            var keysToDelete = new List<string>(entityStore.Keys);
-
-            // Delete in Dataverse each entity in the entity store.
-            foreach (var key in keysToDelete)
-            {
-                var entref = entityStore[key];
-                try
-                {
-                    service.Delete(entref.LogicalName, entref.Id);
-                    entityStore.Remove(key);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Cleanup(): exception deleting {key}\n\t{ex.Message}");
-                    continue;
-                }
-            }
-
-            // Output a list of entities that could not be deleted.
-            if (entityStore.Count > 0)
-            {
-                Console.WriteLine("Cleanup(): the following entities could not be deleted:");
-                foreach (var item in entityStore)
-                {
-                    Console.WriteLine($"Cleanup(): name={item.Key}, " +
-                        $"logical name={item.Value.LogicalName}, ID={item.Value.Id}");
-                }
-            }
-        }
+            DisassociateSecurityRole(service, "Basic User", _userId);
+        }   
     }
 }
