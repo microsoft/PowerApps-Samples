@@ -7,7 +7,7 @@ This sample uses the common helper code in the [WebAPIService class library (CSh
 ## Prerequisites
 
 - Microsoft Visual Studio 2022
-- Access to Dataverse with system administrator or system customizer privileges.
+- Access to Dataverse with system administrator or system customizer privileges
 
 ## How to run the sample
 
@@ -15,18 +15,18 @@ This sample uses the common helper code in the [WebAPIService class library (CSh
 1. Open the `PowerApps-Samples\dataverse\webapi\CSharp-NETx\ImageOperations\ImageOperations.sln` file using Visual Studio 2022.
 1. Edit the `appsettings.json` file to set the following property values:
 
-   |Property|Instructions  |
-   |---------|---------|
-   |`Url`|The Url for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. See [View developer resources](../../view-download-developer-resources.md) to find this. |
-   |`UserPrincipalName`|Replace the placeholder `you@yourorg.onmicrosoft.com` value with the UPN value you use to access the environment.|
-   |`Password`|Replace the placeholder `yourPassword` value with the password you use.|
+   | Property | Instructions |
+   |----------|--------------|
+   | `Url` | The URL for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` with the value for your environment. Learn how to find your URL in [View developer resources](../../view-download-developer-resources.md). |
+   | `UserPrincipalName` | Replace the placeholder `you@yourorg.onmicrosoft.com` with the UPN value you use to access your environment. |
+   | `Password` | Replace the placeholder `yourPassword` with the password you use. |
 
-1. Save the `appsettings.json` file
-1. Press F5 to run the sample.
+1. Save the `appsettings.json` file.
+1. Press `F5` to run the sample.
 
 ## Sample Output
 
-The output of the sample should look something like this:
+The output of the sample should look similar to this output:
 
 ```
 Creating image column named 'sample_ImageColumn' on the account table ...
@@ -110,13 +110,20 @@ Sample completed.
 
 The code for this sample is in the [Program.cs](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse//webapi/CSharp-NETx/ImageOperations/Program.cs) file.
 
-The project uses a `Utility` class to perform operations involving creating or retrieving schema data. This class is in the [Utility.cs](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/CSharp-NETx/ImageOperations/Utility.cs) file.
+The project uses a `Utility` class to perform operations like *creating* or *retrieving* schema data. This class is in the [Utility.cs](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/webapi/CSharp-NETx/ImageOperations/Utility.cs) file.
 
 This project performs these operations:
 
-### Create an image column
+- [Create an image column](#creates-an-image-column)
+- [Create account records with image data](#creates-account-records-with-image-data)
+- [Retrieve the account records](#retrieves-the-account-records)
+- [Download the account record images](#downloads-the-account-record-images)
+- [Delete the image data](#deletes-the-image-data)
+- [Clean up](#cleans-up)
 
-This sample needs to create a new image column that is the primary image for the account table. It must also return the system to the original state when it's finished. So the program does these things at the beginning:
+### Creates an image column
+
+This sample creates a new image column as the primary image for the account table. The original state is restored when the sample is finished. At the beginning, this sample performs:
 
 1. Capture the original primary image name using the `Utility.GetTablePrimaryImageName` method.
 1. Use the `Utility.CreateImageColumn` method to create a new image column named `sample_ImageColumn` on the account table if it doesn't exist already.
@@ -126,31 +133,29 @@ This sample needs to create a new image column that is the primary image for the
 
 1. Use the `Utility.SetTablePrimaryImageName` method to make the new `sample_ImageColumn` the primary image column.
 
-### Create account records with image data
+### Creates account records with image data
 
 1. The program loops through a list of five filenames that match the names of files in the `Images` folder.
 1. For each image, the program creates an account record with the `name` set to `CanStoreFullImage false {fileName}` and the file `byte[]` is set as the `sample_ImageColumn` value.
 1. The program then uses the `Utility.UpdateCanStoreFullImage` method to set the `sample_ImageColumn` column definition `CanStoreFullImage` value to true.
-1. Again, the program loops through the file names and creates five account records with the same image files set to the `sample_ImageColumn` value. This time the `name` is `CanStoreFullImage true {fileName}`
+1. The program loops through the file names again and creates five account records with the same image files set to the `sample_ImageColumn` value. This time the `name` is `CanStoreFullImage true {fileName}`.
 
-In the following code, we can see how the value of the `CanStoreFullImage` property changes what data is available.
-
-### Retrieve the account records
+### Retrieves the account records
 
 1. The code retrieves the 10 account records created in the previous step, including the image data.
 1. For each account record, the image data is downloaded to the `DownloadedImages` folder with the name `{recordName}_retrieved.png`.
 
    > [!NOTE]
-   > All of these records are thumbnail-sized images.
+   > All records are thumbnail-sized images.
 
-### Download the account record images
+### Downloads the account record images
 
 This program uses three different methods to download image files.
 
 > [!NOTE]
 > In each case, five of the ten operations fail because no full-sized images are uploaded while `CanStoreFullImage` is false. Records created while `CanStoreFullImage` is true succeed.
 
-#### Download with Actions
+#### Downloads with Actions
 
 The code uses the static `DownloadImageWithActions` method, which encapsulates the use of the
 [InitializeFileBlocksDownload](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/initializefileblocksdownload) and  
@@ -160,7 +165,7 @@ The code uses the static `DownloadImageWithActions` method, which encapsulates t
 > [!NOTE]
 > These operations fail when there's no full-sized image to download. The error message is: `No FileAttachment records found for imagedescriptorId: <guid> for image attribute: sample_imagecolumn of account record with id <guid>`.
 
-#### Download with Chunks
+#### Downloads with Chunks
 
 The code uses the static `DownloadImageWithChunks` method, which demonstrates how to download images as described in
 [Download the file in chunks using Web API](https://learn.microsoft.com/power-apps/developer/data-platform/file-column-data#download-the-file-in-chunks-using-web-api).
@@ -168,23 +173,23 @@ The code uses the static `DownloadImageWithChunks` method, which demonstrates ho
 > [!NOTE]
 > These operations don't fail when there's no full-sized image to download, they simply return `204 No Content`.
 
-#### Download with Stream
+#### Downloads with Stream
 
 The code uses the static `DownloadImageWithStream` method, which demonstrates how to download images as described in
-[Download a file in a single request using Web API](https://learn.microsoft.com/power-apps/developer/data-platform/file-column-data#download-a-file-in-a-single-request-using-web-api)
+[Download a file in a single request using Web API](https://learn.microsoft.com/power-apps/developer/data-platform/file-column-data#download-a-file-in-a-single-request-using-web-api).
 
 > [!NOTE]
 > These operations don't fail when there's no full-sized image to download, they simply return `204 No Content`.
 
-### Delete the image data
+### Deletes the image data
 
 1. The program uses three different methods to demonstrate deleting image values, using `PATCH`, `PUT`, and `DELETE`.
 1. The program verifies the records are deleted by retrieving the records again using the same criteria as before. The value for the image column is null.
 
-### Clean up
+### Cleans up
 
-To leave the system in the state before the sample ran, the program does the following:
+To return the sample to its previous state, the program does the following actions:
 
-- Delete the account records.
-- Set the account table primary image back to the original value.
-- Delete the image column.
+- Deletes the account records.
+- Sets the account table primary image back to the original value.
+- Deletes the image column.

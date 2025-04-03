@@ -16,8 +16,8 @@ This sample uses the common helper code in the [WebAPIService](../WebAPIService)
 
 ## Prerequisites
 
-- Microsoft Visual Studio 2022.
-- Access to Dataverse with privileges to perform data operations.
+- Microsoft Visual Studio 2022
+- Access to Dataverse with privileges to perform data operations
 
 ## How to run the sample
 
@@ -27,7 +27,7 @@ This sample uses the common helper code in the [WebAPIService](../WebAPIService)
 
    | Property | Instructions |
    |----------|--------------|
-   | `Url` |The URL for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. See [View developer resources](https://learn.microsoft.com/power-apps/developer/data-platform/view-download-developer-resources) to find this value. |
+   | `Url` |The URL for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. Learn how to find your URL in [View developer resources](https://learn.microsoft.com/power-apps/developer/data-platform/view-download-developer-resources). |
    | `UserPrincipalName` | Replace the placeholder `you@yourorg.onmicrosoft.com` value with the UPN value you use to access the environment. |
    | `Password` | Replace the placeholder `yourPassword` value with the password you use. |
 

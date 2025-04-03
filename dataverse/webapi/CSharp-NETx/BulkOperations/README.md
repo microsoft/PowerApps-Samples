@@ -29,7 +29,7 @@ You can find the sample [here](https://github.com/microsoft/PowerApps-Samples/tr
 ## Prerequisites
 
 - Microsoft Visual Studio 2022
-- Access to Dataverse with system administrator or system customizer privileges.
+- Access to Dataverse with system administrator or system customizer privileges
 
 ## How to run this sample
 
@@ -51,7 +51,7 @@ You can find the sample [here](https://github.com/microsoft/PowerApps-Samples/tr
 
    | Property | Instructions |
    |----------|--------------|
-   | `Url` | The URL for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. See [View developer resources](https://learn.microsoft.com/power-apps/developer/data-platform/view-download-developer-resources) to find your URL. |
+   | `Url` | The URL for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. Learn how to find your URL in [View developer resources](https://learn.microsoft.com/power-apps/developer/data-platform/view-download-developer-resources). |
    | `UserPrincipalName` | Replace the placeholder `you@yourorg.onmicrosoft.com` value with the UPN value you use to access the environment. |
    | `Password` | Replace the placeholder `yourPassword` value with the password you use. |
 

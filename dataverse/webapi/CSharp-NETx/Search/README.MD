@@ -7,6 +7,7 @@ products:
 page_type: sample
 description: "This sample demonstrates how to perform search operations using the Dataverse Web API."
 ---
+
 # Web API search operations sample
 
 This .NET 6.0 sample demonstrates how to perform search operations using the Dataverse Web API.
@@ -16,38 +17,38 @@ This sample uses the common helper code in the [WebAPIService](../WebAPIService)
 ## Prerequisites
 
 - Microsoft Visual Studio 2022
-- Access to Dataverse with privileges to perform data operations.
+- Access to Dataverse with privileges to perform data operations
 
 ## How to run the sample
 
 1. Clone or download the [PowerApps-Samples](https://github.com/microsoft/PowerApps-Samples) repository.
-1. Open the [Search.sln](Search.sln) file using Visual Studio 2022
+1. Open the [Search.sln](Search.sln) file using Visual Studio 2022.
 1. Edit the [appsettings.json](../appsettings.json) file to set the following property values:
 
-   |Property|Instructions  |
-   |---------|---------|
-   |`Url`|The Url for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. See [View developer resources](https://learn.microsoft.com/power-apps/developer/data-platform/view-download-developer-resources) to find this. |
-   |`UserPrincipalName`|Replace the placeholder `you@yourorg.onmicrosoft.com` value with the UPN value you use to access the environment.|
-   |`Password`|Replace the placeholder `yourPassword` value with the password you use.|
+   | Property | Instructions |
+   |----------|--------------|
+   | `Url` |The URL for your environment. Replace the placeholder `https://yourorg.api.crm.dynamics.com` value with the value for your environment. Learn how to find your URL in [View developer resources](https://learn.microsoft.com/power-apps/developer/data-platform/view-download-developer-resources). |
+   | `UserPrincipalName` | Replace the placeholder `you@yourorg.onmicrosoft.com` value with the UPN value you use to access the environment. |
+   | `Password` | Replace the placeholder `yourPassword` value with your password. |
 
-1. Save the `appsettings.json` file
-1. Press F5 to run the sample.
+1. Save the `appsettings.json` file.
+1. Press `F5` to run the sample.
 
 ## Demonstrates
 
-This sample has 5 static methods that demonstrate the search API capabilities.
+This sample has five static methods that demonstrate the search API capabilities.
 
 Before using these methods, the program verifies that search is enabled for the environment using the `CheckSearchStatus` method.
 
-If search is not provisioned, the program offers the option to enable it using the `EnableSearch` method. 
-You can run the sample again to view the results.
+If search isn't provisioned, the program offers the option to enable it using the `EnableSearch` method. You can run the sample again to view the results.
 
 If search is provisioned for the environment, the following example methods are invoked:
 
 ### OutputSearchQuery
 
-This example method displays information from the [Dataverse Search query](https://learn.microsoft.com/power-apps/developer/data-platform/search/query) API 
-using the search term 'Contoso'. The output may look something like this:
+This example method displays information from the [Dataverse Search query](https://learn.microsoft.com/power-apps/developer/data-platform/search/query) API, using the search term *Contoso*.
+
+The output might look similar to this output:
 
 ```
 OutputSearchQuery START
@@ -70,27 +71,26 @@ OutputSearchQuery START
 OutputSearchQuery END
 ```
 
-#### Dependencies
+#### OutputSearchQuery dependencies
 
 The `OutputSearchQuery` method depends on the following WebAPIService helper classes:
 
-|Full Name|Description|
-|---|---|
-|`PowerApps.Samples.Search.Types.QueryParameters`|Contains parameter data to initialize the `SearchQueryRequest` class|
-|`PowerApps.Samples.Search.Types.SearchEntity`|The entity schema to scope the search request. Used by the the `QueryParameters.Entities` property.|
-|`PowerApps.Samples.Search.Messages.SearchQueryRequest`|Contains the data to send a searchquery request.|
-|`PowerApps.Samples.Search.Messages.SearchQueryResponse`|Contains the response from the `SearchQueryRequest` class.|
-|`PowerApps.Samples.Search.Types.QueryResult`|Contains data about a matching record found from the query API. Used by the `SearchQueryResponse.Value` property.|
-|`PowerApps.Samples.Search.Types.ErrorDetail`|The error detail returned as part of response. Used by the `SearchQueryResponse.Error` property.|
-|`PowerApps.Samples.Search.Types.FacetResult`|A facet query result that reports the number of documents with a field falling within a particular range or having a particular value or interval. Used by the `SearchQueryResponse.Facets` property.|
-|`PowerApps.Samples.Search.Types.QueryContext`|The query context returned as part of response. Used by the `SearchQueryResponse.QueryContext` property.|
-
+| Full Name | Description |
+|-----------|-------------|
+| `PowerApps.Samples.Search.Types.QueryParameters` | Contains parameter data to initialize the `SearchQueryRequest` class. |
+| `PowerApps.Samples.Search.Types.SearchEntity` | The entity schema to scope the search request. Used by the the `QueryParameters.Entities` property. |
+| `PowerApps.Samples.Search.Messages.SearchQueryRequest` | Contains the data to send a searchquery request. |
+| `PowerApps.Samples.Search.Messages.SearchQueryResponse` | Contains the response from the `SearchQueryRequest` class. |
+| `PowerApps.Samples.Search.Types.QueryResult` | Contains data about a matching record found from the query API. Used by the `SearchQueryResponse.Value` property. |
+| `PowerApps.Samples.Search.Types.ErrorDetail` | The error detail returned as part of response. Used by the `SearchQueryResponse.Error` property. |
+| `PowerApps.Samples.Search.Types.FacetResult` | A facet query result that reports the number of documents with a field falling within a particular range or having a particular value or interval. Used by the `SearchQueryResponse.Facets` property. |
+| `PowerApps.Samples.Search.Types.QueryContext` | The query context returned as part of response. Used by the `SearchQueryResponse.QueryContext` property. |
 
 ### OutputSearchSuggest
 
-This example method displays information from the [Dataverse Search suggest](https://learn.microsoft.com/power-apps/developer/data-platform/search/suggest) API 
-using the search term 'cont'. The output may look something like this:
+This example method displays information from the [Dataverse Search suggest](https://learn.microsoft.com/power-apps/developer/data-platform/search/suggest) API, using the search term *cont*.
 
+The output might look similar to this output:
 
 ```
 OutputSearchSuggest START
@@ -119,24 +119,25 @@ OutputSearchSuggest START
 OutputSearchSuggest END
 ```
 
-#### Dependencies
+#### OutputSearchSuggest dependencies
 
 The `OutputSearchSuggest` method depends on the following WebAPIService helper classes:
 
-|Full Name|Description|
-|---|---|
-|`PowerApps.Samples.Search.Types.SuggestParameters`|Contains parameter data to initialize the `SearchSuggestRequest` class.|
-|`PowerApps.Samples.Search.Types.SearchEntity`|The entity schema to scope the search request. Used by the the `SuggestParameters.Entities` property.|
-|`PowerApps.Samples.Search.Messages.SearchSuggestRequest`|Contains the data to send a searchsuggest request.|
-|`PowerApps.Samples.Search.Messages.SearchSuggestResponse`|Contains the response from the `SearchSuggestRequest` class.|
-|`PowerApps.Samples.Search.Types.ErrorDetail`|The error detail returned as part of response. Used by the `SearchSuggestResponse.Error` property.|
-|`PowerApps.Samples.Search.Types.SuggestResult`|Result object for suggest results. Used by the `SearchSuggestResponse.Value` property.|
-|`PowerApps.Samples.Search.Types.QueryContext`|The query context returned as part of response. Used by the `SearchSuggestResponse.QueryContext` property.|
+| Full Name | Description |
+|-----------|-------------|
+| `PowerApps.Samples.Search.Types.SuggestParameters` | Contains parameter data to initialize the `SearchSuggestRequest` class. |
+| `PowerApps.Samples.Search.Types.SearchEntity` | The entity schema to scope the search request. Used by the the `SuggestParameters.Entities` property. |
+| `PowerApps.Samples.Search.Messages.SearchSuggestRequest` | Contains the data to send a searchsuggest request. |
+| `PowerApps.Samples.Search.Messages.SearchSuggestResponse` | Contains the response from the `SearchSuggestRequest` class. |
+| `PowerApps.Samples.Search.Types.ErrorDetail` | The error detail returned as part of response. Used by the `SearchSuggestResponse.Error` property. |
+| `PowerApps.Samples.Search.Types.SuggestResult` | Result object for suggest results. Used by the `SearchSuggestResponse.Value` property. |
+| `PowerApps.Samples.Search.Types.QueryContext` | The query context returned as part of response. Used by the `SearchSuggestResponse.QueryContext` property. |
 
 ### OutputAutoComplete
 
-This example method displays information from the [Dataverse Search autocomplete](https://learn.microsoft.com/power-apps/developer/data-platform/search/autocomplete) API using the search term 'Con'.
-The output may look something like this:
+This example method displays information from the [Dataverse Search autocomplete](https://learn.microsoft.com/power-apps/developer/data-platform/search/autocomplete) API using the search term *Con*.
+
+The output might look similar to this output:
 
 ```
 OutputAutoComplete START
@@ -147,24 +148,24 @@ OutputAutoComplete START
 OutputAutoComplete END
 ```
 
-#### Dependencies
+#### OutputAutoComplete dependencies
 
 The `OutputAutoComplete` method depends on the following WebAPIService helper classes:
 
-|Full Name|Description|
-|---|---|
-|`PowerApps.Samples.Search.Types.AutocompleteParameters`|Contains parameter data to initialize the `SearchAutoCompleteRequest` class.|
-|`PowerApps.Samples.Search.Types.SearchEntity`|The entity schema to scope the search request. Used by the the `AutocompleteParameters.Entities` property.|
-|`PowerApps.Samples.Search.Messages.SearchAutoCompleteRequest`|Contains the data to send a searchautocomplete request.|
-|`PowerApps.Samples.Search.Messages.SearchAutoCompleteResponse`|Contains the response from the `SearchAutoCompleteRequest` class.|
-|`PowerApps.Samples.Search.Types.ErrorDetail`|The error detail returned as part of response. Used by the `SearchAutoCompleteResponse.Error` property.|
-|`PowerApps.Samples.Search.Types.QueryContext`|The query context returned as part of response. Used by the `SearchAutoCompleteResponse.QueryContext` property.|
-
+| Full Name | Description |
+|-----------|-------------|
+| `PowerApps.Samples.Search.Types.AutocompleteParameters` | Contains parameter data to initialize the `SearchAutoCompleteRequest` class. |
+| `PowerApps.Samples.Search.Types.SearchEntity` | The entity schema to scope the search request. Used by the the `AutocompleteParameters.Entities` property. |
+| `PowerApps.Samples.Search.Messages.SearchAutoCompleteRequest` | Contains the data to send a searchautocomplete request. |
+| `PowerApps.Samples.Search.Messages.SearchAutoCompleteResponse` | Contains the response from the `SearchAutoCompleteRequest` class. |
+| `PowerApps.Samples.Search.Types.ErrorDetail` | The error detail returned as part of response. Used by the `SearchAutoCompleteResponse.Error` property. |
+| `PowerApps.Samples.Search.Types.QueryContext` | The query context returned as part of response. Used by the `SearchAutoCompleteResponse.QueryContext` property. |
 
 ### OutputSearchStatus
 
 This example method displays information from the [Dataverse Search status](https://learn.microsoft.com/power-apps/developer/data-platform/search/status) API.
-The output may look something like this:
+
+The output might look similar to this output:
 
 ```
 OutputSearchStatus START
@@ -609,24 +610,25 @@ OutputSearchStatus START
 OutputSearchStatus END
 ```
 
-#### Dependencies
+#### OutputSearchStatus dependencies
 
 The `OutputSearchStatus` method depends on the following WebAPIService helper classes:
 
-|Full Name|Description|
-|---|---|
-|`PowerApps.Samples.Search.Messages.SearchStatusRequest`|Contains the data to send a searchstatus request.|
-|`PowerApps.Samples.Search.Messages.SearchStatusResponse`|Contains the response from the `SearchStatusRequest` class.|
-|`PowerApps.Samples.Search.Types.SearchStatus`|Indicates the status of an entity type and/or the index as a whole. Used by the `SearchStatusResponse.Status` property.|
-|`PowerApps.Samples.Search.Types.LockboxStatus`|Indicates the status of the lockbox. Used by the `SearchStatusResponse.LockboxStatus` property.|
-|`PowerApps.Samples.Search.Types.CMKStatus`|Indicates the status of the customer managed key. Used by the `SearchStatusResponse.CMKStatus` property.|
-|`PowerApps.Samples.Search.Types.EntityStatusInfo`| Data contract for response parameters for index status api. Used by the `SearchStatusResponse.EntityStatusInfo` property.|
-|`PowerApps.Samples.Search.Types.ManyToManyRelationshipSyncStatus`|Data contract for response parameters for many to many relationship sync job status. Used by the `SearchStatusResponse.ManyToManyRelationshipSyncStatus` property.|
+| Full Name | Description |
+|-----------|-------------|
+| `PowerApps.Samples.Search.Messages.SearchStatusRequest` | Contains the data to send a searchstatus request. |
+| `PowerApps.Samples.Search.Messages.SearchStatusResponse` | Contains the response from the `SearchStatusRequest` class. |
+| `PowerApps.Samples.Search.Types.SearchStatus` | Indicates the status of an entity type or the index as a whole. Used by the `SearchStatusResponse.Status` property. |
+| `PowerApps.Samples.Search.Types.LockboxStatus` | Indicates the status of the lockbox. Used by the `SearchStatusResponse.LockboxStatus` property. |
+| `PowerApps.Samples.Search.Types.CMKStatus` | Indicates the status of the customer managed key. Used by the `SearchStatusResponse.CMKStatus` property. |
+| `PowerApps.Samples.Search.Types.EntityStatusInfo` | Data contract for response parameters for index status api. Used by the `SearchStatusResponse.EntityStatusInfo` property. |
+| `PowerApps.Samples.Search.Types.ManyToManyRelationshipSyncStatus` | Data contract for response parameters for many to many relationship sync job status. Used by the `SearchStatusResponse.ManyToManyRelationshipSyncStatus` property. |
 
-## OutputSearchStatistics
+### OutputSearchStatistics
 
 This example method displays information from the [Dataverse Search statistics](https://learn.microsoft.com/power-apps/developer/data-platform/search/statistics) API.
-The output may look something like this:
+
+The output might look similar to this output:
 
 ```
 OutputSearchStatistics START
@@ -638,17 +640,15 @@ OutputSearchStatistics START
 OutputSearchStatistics END
 ```
 
-#### Dependencies
+#### OutputSearchStatistics dependencies
 
 The `OutputSearchStatistics` method depends on the following WebAPIService helper classes:
 
-|Full Name|Description|
-|---|---|
-|`PowerApps.Samples.Search.Messages.SearchStatisticsRequest`|Contains the data to send a searchstatistics request.|
-|`PowerApps.Samples.Search.Messages.SearchStatisticsResponse`|Contains the response from the `SearchStatisticsRequest` class.|
-
+| Full Name | Description |
+|-----------|-------------|
+| `PowerApps.Samples.Search.Messages.SearchStatisticsRequest` | Contains the data to send a searchstatistics request. |
+| `PowerApps.Samples.Search.Messages.SearchStatisticsResponse` | Contains the response from the `SearchStatisticsRequest` class. |
 
 ## Clean up
 
-This sample doesn't create any records, but it does allow you to provision search if it isn't already enabled. 
-It doesn't provide the option to de-provision search.
+This sample doesn't create any records, but allows you to provision search if it isn't already enabled. However, the sample doesn't provide the option to de-provision search.
