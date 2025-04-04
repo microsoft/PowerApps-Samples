@@ -13,6 +13,7 @@ internal class Program
     /// <param name="service">Authenticated web service connection.</param>
     /// <param name="entity1">Entity record to assign.</param>
     /// <param name="entity2">Entity that is to own the record.</param>
+    /// <see cref="https://learn.microsoft.com/power-apps/developer/data-platform/security-sharing-assigning"/>
     static public void AssignRecord(IOrganizationService service,
         EntityReference entity1, EntityReference entity2)
     {
