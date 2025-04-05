@@ -8,9 +8,13 @@ NO TECHNICAL SUPPORT IS PROVIDED. YOU MAY NOT DISTRIBUTE THIS CODE UNLESS YOU HA
 #>
 
 param(
-    [Parameter(Mandatory)]
+    [Parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
     [String]$EnvironmentId,
+
+    [Parameter(Mandatory=$true)]
+    [ValidateNotNullOrEmpty()]
+    [String]$PolicyArmId,
 
     [Parameter(Mandatory=$false)]
     [BAPEndpoint]$Endpoint = "prod"
@@ -25,4 +29,4 @@ if (-not(Connect-Azure))
     return
 }
 
-Get-EnterprisePolicyForEnvironment -PolicyType [PolicyType]::Encryption -EnvironmentId $EnvironmentId -Endpoint $Endpoint
+Remove-PolicyToEnvLink -PolicyType [PolicyType]::NetworkInjection -EnvironmentId $EnvironmentId -PolicyArmId $PolicyArmId -Endpoint $Endpoint

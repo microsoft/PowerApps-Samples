@@ -8,12 +8,11 @@ NO TECHNICAL SUPPORT IS PROVIDED. YOU MAY NOT DISTRIBUTE THIS CODE UNLESS YOU HA
 #>
 
 param(
-    [Parameter(Mandatory)]
-    [ValidateNotNullOrEmpty()]
-    [String]$EnvironmentId,
+    [Parameter(Mandatory, HelpMessage="The subscriptionId")]
+    [string]$SubscriptionId,
 
-    [Parameter(Mandatory=$false)]
-    [BAPEndpoint]$Endpoint = "prod"
+    [Parameter(Mandatory, HelpMessage="The resource group")]
+    [string]$ResourceGroup
 )
 
 $ErrorActionPreference = "Stop"
@@ -25,4 +24,5 @@ if (-not(Connect-Azure))
     return
 }
 
-Get-EnterprisePolicyForEnvironment -PolicyType [PolicyType]::Encryption -EnvironmentId $EnvironmentId -Endpoint $Endpoint
+$policies = Get-EnterprisePoliciesInResourceGroup -SubscriptionId $SubscriptionId -ResourceGroup $ResourceGroup -PolicyType [PolicyType]::NetworkInjection
+$policies | Select-Object -Property ResourceId, Location, Name

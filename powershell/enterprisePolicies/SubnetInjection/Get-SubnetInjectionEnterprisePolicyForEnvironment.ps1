@@ -25,4 +25,4 @@ if (-not(Connect-Azure))
     return
 }
 
-Get-EnterprisePolicyForEnvironment -PolicyType [PolicyType]::Encryption -EnvironmentId $EnvironmentId -Endpoint $Endpoint
+Get-EnterprisePolicyForEnvironment -PolicyType [PolicyType]::NetworkInjection -EnvironmentId $EnvironmentId -Endpoint $Endpoint

@@ -1,4 +1,4 @@
-﻿<#
+<#
 SAMPLE CODE NOTICE
 
 THIS SAMPLE CODE IS MADE AVAILABLE AS IS. MICROSOFT MAKES NO WARRANTIES, WHETHER EXPRESS OR IMPLIED,
@@ -7,22 +7,9 @@ THE ENTIRE RISK OF THE USE OR THE RESULTS FROM THE USE OF THIS SAMPLE CODE REMAI
 NO TECHNICAL SUPPORT IS PROVIDED. YOU MAY NOT DISTRIBUTE THIS CODE UNLESS YOU HAVE A LICENSE AGREEMENT WITH MICROSOFT THAT ALLOWS YOU TO DO SO.
 #>
 
-param(
-    [Parameter(Mandatory)]
-    [ValidateNotNullOrEmpty()]
-    [String]$EnvironmentId,
-
-    [Parameter(Mandatory=$false)]
-    [BAPEndpoint]$Endpoint = "prod"
-)
-
-$ErrorActionPreference = "Stop"
-
-Import-Module "$PSScriptRoot\..\Common\EnterprisePolicies" -Force
-
-if (-not(Connect-Azure))
+if(-not(Get-InstalledModule Az) -and -not(Get-module -ListAvailable Az))
 {
-    return
+    throw "Az module not found. Ensure it is installed by running InstallPowerAppsCmdlets.ps1"
 }
 
-Get-EnterprisePolicyForEnvironment -PolicyType [PolicyType]::Encryption -EnvironmentId $EnvironmentId -Endpoint $Endpoint
+Import-Module @("Az.Accounts", "Az.Resources", "Az.KeyVault", "Az.Network")
