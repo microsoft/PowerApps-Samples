@@ -5,20 +5,22 @@ products:
 - power-platform
 - power-apps
 page_type: sample
-description: "This sample demonstrates how to ..."
+description: "This sample demonstrates how to assign an entity record to a team."
 ---
 
 # Assign an entity record to a team
 
 Learn how to assign an entity record to a team by using the [IOrganizationService.Update](https://learn.microsoft.com/dotnet/api/microsoft.xrm.sdk.iorganizationservice.update) message.
 
-Related article(s): [Sharing and assigning](https://learn.microsoft.com/power-apps/developer/data-platform/security-sharing-assigning?tabs=sdk)
+Related article(s):
+
+- [Sharing and assigning](https://learn.microsoft.com/power-apps/developer/data-platform/security-sharing-assigning&tabs=sdk#assigning-records)
 
 ## About the sample code
 
 |Sample|Description|Build target|
 |---|---|---|
-|AssignRecordToTeam|Assign an entity record to a team.|.NET 9|
+|[AssignRecordToTeam](https://github.com/microsoft/PowerApps-Samples/blob/master/dataverse/orgsvc/CSharp-NETCore/Ownership/AssignRecordToTeam)|Assign an entity record to a team.|.NET 9|
 
 The code samples demonstrates how to change the ownership of an entity record. Specifically, the samples demonstrates how to:
 
