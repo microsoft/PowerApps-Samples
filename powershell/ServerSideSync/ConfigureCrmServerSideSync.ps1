@@ -206,7 +206,7 @@ try
     $servicePrincipalCredentialsForPatch = [System.Collections.Generic.List[object]]::new()
 
     $servicePrincipalCredentialsWorkingCollection | ForEach-Object {
-        $obj = $_ | Select-Object * -ExcludeProperty "key"
+        $obj = $_ | Select-Object * -ExcludeProperty key, displayName
         # Add the modified object to the list
         $servicePrincipalCredentialsForPatch.Add([PSCustomObject]$obj)
     }
