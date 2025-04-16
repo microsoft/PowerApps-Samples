@@ -5,12 +5,10 @@ products:
   - power-platform
   - power-apps
 page_type: sample
-description: "This sample describes how to bind a code component to different columns on the form and use the value of these columns as input properties to the component."
+description: "This sample describes how to bind a code component to different columns on the form and use the value of these columns as input properties to the component in Microsoft Power Apps."
 ---
 
 # IFRAME Power Apps component framework sample
-
-## Summary
 
 This sample describes how to bind a code component to different columns on the form and use the value of these columns as input properties to the component.
 
@@ -24,7 +22,7 @@ This sample works for model-driven and canvas apps.
 
 [Power Apps component framework](https://learn.microsoft.com/power-apps/developer/component-framework/overview)
 
-Get your own free development tenant by subscribing to [Power Apps Developer Plan](https://learn.microsoft.com/power-platform/developer/plan)
+Get your own free development tenant by subscribing to [Power Apps Developer Plan](https://learn.microsoft.com/power-platform/developer/plan).
 
 ## Contributors
 
@@ -38,15 +36,15 @@ This sample was created by the Power Apps component framework team.
 
 ## Prerequisites
 
-[Install the Microsoft Power Platform CLI](https://learn.microsoft.com/power-platform/developer/cli/introduction)
+[Install the Microsoft Power Platform CLI](https://learn.microsoft.com/power-platform/developer/cli/introduction).
 
-## Try this sample component
+## Try this sample
 
 Follow the steps in the [README.md](../README.md) to generate solutions containing the controls so you can import and try the sample components in your model-driven or canvas app.
 
-## More information
+## Related information
 
-See [Implementing a IFRAME component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/iframe-control)
+[Implementing a IFRAME component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/iframe-control)
 
 ## Disclaimer
 

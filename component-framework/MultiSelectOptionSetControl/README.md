@@ -5,14 +5,12 @@ products:
   - power-platform
   - power-apps
 page_type: sample
-description: "This sample component demonstrates how to leverage the multi select option set type on properties of field components. By binding the code component's primary property to this type, users can create all new types of controls with choices column."
+description: "This sample demonstrates how to leverage the multi-select option set type on properties of field components in Microsoft Power Apps."
 ---
 
-# Choices (multi select option set) Power Apps component framework sample
+# Choices (multi-select option set) Power Apps component framework sample
 
-## Summary
-
-This sample component demonstrates how to leverage the multi select option set type on properties of field components. By binding the code component's primary property to this type, users can create all new types of controls with choices column.
+This sample demonstrates how to leverage the multi-select option set type on properties of field components. By binding the code component's primary property to this type, users can create all new types of controls with a choices column.
 
 ![Preview of the sample](https://learn.microsoft.com/power-apps/developer/component-framework/media/multi-select-option-set-control.png)
 
@@ -24,7 +22,7 @@ This sample works for model-driven apps.
 
 [Power Apps component framework](https://learn.microsoft.com/power-apps/developer/component-framework/overview)
 
-Get your own free development tenant by subscribing to [Power Apps Developer Plan](https://learn.microsoft.com/power-platform/developer/plan)
+Get your own free development tenant by subscribing to [Power Apps Developer Plan](https://learn.microsoft.com/power-platform/developer/plan).
 
 ## Contributors
 
@@ -40,24 +38,21 @@ This sample was created by the Power Apps component framework team.
 
 [Install the Microsoft Power Platform CLI](https://learn.microsoft.com/power-platform/developer/cli/introduction)
 
-## Try this sample component
+## Try this sample
 
 Follow the steps in the [README.md](../README.md) to generate solutions containing the controls so you can import and try the sample components in your model-driven or canvas app.
 
-**NOTE**
+> [!NOTE]
+> When you run this sample using the test harness, you get the following error:
+> ```
+>  Error occured during initilization of control: SampleNamespace.MultiSelectOptionSetControl;Message: Cannot read properties of undefined (reading 'forEach')
+>  TypeError: Cannot read properties of undefined (reading 'forEach') at multiSelectOptionSetControl.init
+>  ```
+> The option set control data can't be simulated or mocked in the test harness. This sample only runs correctly when you configure it for a field in a model-driven app.
 
-When you run try to run this sample using the test harness, you will get the following error:
+## Related information
 
-```
-Error occured during initilization of control: SampleNamespace.MultiSelectOptionSetControl;Message: Cannot read properties of undefined (reading 'forEach')
-TypeError: Cannot read properties of undefined (reading 'forEach') at multiSelectOptionSetControl.init
-```
-
-The reason is that the option set control data can't be simulated/mocked in the test harness. This sample will only run correctly when you configure it for a field in a model-driven app.
-
-## More information
-
-See [Implementing choices (multi select option set) component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/multi-select-option-set-control)
+[Implementing choices (multi select option set) component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/multi-select-option-set-control).
 
 ## Disclaimer
 

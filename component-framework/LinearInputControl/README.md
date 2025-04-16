@@ -5,14 +5,14 @@ products:
   - power-platform
   - power-apps
 page_type: sample
-description: "This sample component changes the user experience of interacting with numeric types on the form. Instead of typing in the numbers, the linear input component provides a linear slider using which the value of the attribute can be set on the form."
+description: "This sample changes the user experience of interacting with numeric types on a form in Microsoft Power Apps."
 ---
 
 # Linear Input Power Apps component framework sample
 
 ## Summary
 
-This sample component changes the user experience of interacting with numeric types on the form. Instead of typing in the numbers, the linear input component provides a linear slider using which the value of the attribute can be set on the form.
+This sample changes the user experience of interacting with numeric types on a form. Instead of typing in the numbers, the linear input component provides a linear slider , where the value of the attribute can be set on the form.
 
 ![Preview of the sample](https://learn.microsoft.com/power-apps/developer/component-framework/media/linear-input-control.png)
 
@@ -24,7 +24,7 @@ This sample works for model-driven and canvas apps.
 
 [Power Apps component framework](https://learn.microsoft.com/power-apps/developer/component-framework/overview)
 
-Get your own free development tenant by subscribing to [Power Apps Developer Plan](https://learn.microsoft.com/power-platform/developer/plan)
+Get your own free development tenant by subscribing to [Power Apps Developer Plan](https://learn.microsoft.com/power-platform/developer/plan).
 
 ## Contributors
 
@@ -38,15 +38,15 @@ This sample was created by the Power Apps component framework team.
 
 ## Prerequisites
 
-[Install the Microsoft Power Platform CLI](https://learn.microsoft.com/power-platform/developer/cli/introduction)
+[Install the Microsoft Power Platform CLI](https://learn.microsoft.com/power-platform/developer/cli/introduction).
 
-## Try this sample component
+## Try this sample
 
 Follow the steps in the [README.md](../README.md) to generate solutions containing the controls so you can import and try the sample components in your model-driven or canvas app.
 
-## More information
+## Related information
 
-See [Implementing linear input component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/linear-input-control)
+[Implementing linear input component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/linear-input-control)
 
 ## Disclaimer
 

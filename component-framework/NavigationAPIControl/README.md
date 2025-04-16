@@ -38,15 +38,15 @@ This sample was created by the Power Apps component framework team.
 
 ## Prerequisites
 
-[Install the Microsoft Power Platform CLI](https://learn.microsoft.com/power-platform/developer/cli/introduction)
+[Install the Microsoft Power Platform CLI](https://learn.microsoft.com/power-platform/developer/cli/introduction).
 
-## Try this sample component
+## Try this sample
 
 Follow the steps in the [README.md](../README.md) to generate solutions containing the controls so you can import and try the sample components in your model-driven or canvas app.
 
-## More information
+## Related information
 
-See [Implementing Navigation API component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/navigation-api-control)
+[Implementing Navigation API component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/navigation-api-control)
 
 ## Disclaimer
 

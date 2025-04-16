@@ -5,26 +5,27 @@ products:
   - power-platform
   - power-apps
 page_type: sample
-description: "This sample shows how to use third-party libraries to create components in Power Apps component framework. The flip sample component is implemented based on angular.js, angular-ui, angular-animate, angular-sanitize, bootstrap. The code may not reveal the best practices for the mentioned third-party libraries."
+description: "This sample shows how to use third-party libraries to create components in Power Apps component framework. The flip sample component is implemented based on angular.js, angular-ui, angular-animate, angular-sanitize, bootstrap."
 ---
 
 # Angular JavaScript Flip Control Power Apps component framework sample
 
-## Summary
+This sample shows how to use third-party libraries to create components in Power Apps component framework. The flip sample component is implemented based on angular.js, angular-ui, angular-animate, angular-sanitize, bootstrap.
 
-This sample shows how to use third-party libraries to create components in Power Apps component framework. The flip sample component is implemented based on angular.js, angular-ui, angular-animate, angular-sanitize, bootstrap. The code may not reveal the best practices for the mentioned third-party libraries.
+> [!NOTE]
+> The code may not reveal the best practices for the mentioned third-party libraries.
 
 ![Preview of the sample](https://learn.microsoft.com/power-apps/developer/component-framework/media/angular-flip.png)
 
 ## Compatibility
 
-This sample works for both Model-driven and canvas apps.
+This sample works for both model-driven and canvas apps.
 
 ## Applies to
 
 [Power Apps component framework](https://learn.microsoft.com/power-apps/developer/component-framework/overview)
 
-Get your own free development tenant by subscribing to [Power Apps Developer Plan](https://learn.microsoft.com/power-platform/developer/plan)
+Get your own free development tenant by subscribing to [Power Apps Developer Plan](https://learn.microsoft.com/power-platform/developer/plan).
 
 ## Contributors
 
@@ -38,15 +39,15 @@ This sample was created by the Power Apps component framework team.
 
 ## Prerequisites
 
-[Install the Microsoft Power Platform CLI](https://learn.microsoft.com/power-platform/developer/cli/introduction)
+[Install the Microsoft Power Platform CLI](https://learn.microsoft.com/power-platform/developer/cli/introduction).
 
-## Try this sample component
+## Try this sample
 
 Follow the steps in the [README.md](../README.md) to generate solutions containing the controls so you can import and try the sample components in your model-driven or canvas app.
 
-## More information
+## Related information
 
-See [Implementing Flip component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/angular-flip-control)
+[Implementing Flip component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/angular-flip-control)
 
 ## Disclaimer
 

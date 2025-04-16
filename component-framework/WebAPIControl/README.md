@@ -5,14 +5,12 @@ products:
   - power-platform
   - power-apps
 page_type: sample
-description: "The web API component is designed to perform create, retrieve, update and delete actions. The component renders four buttons, which can be clicked to invoke different web API actions. The result of the web API call is injected into a HTML div element at the bottom of the code component."
+description: "This sample uses the web API component that's designed to perform create, retrieve, update and delete actions in Microsoft Power Apps."
 ---
 
 # Web API Apps component framework sample
 
-## Summary
-
-The web API component is designed to perform create, retrieve, update and delete actions. The component renders four buttons, which can be clicked to invoke different web API actions. The result of the web API call is injected into a HTML div element at the bottom of the code component.
+The web API component is designed to perform create, retrieve, update and delete actions. The component renders four buttons, which can be clicked to invoke different web API actions. The result of the web API call is injected into a HTML `div` element at the bottom of the code component.
 
 ![Preview of the sample](https://learn.microsoft.com/power-apps/developer/component-framework/media/web-api-control.png)
 
@@ -24,7 +22,7 @@ This sample works for model-driven apps.
 
 [Power Apps component framework](https://learn.microsoft.com/power-apps/developer/component-framework/overview)
 
-Get your own free development tenant by subscribing to [Power Apps Developer Plan](https://learn.microsoft.com/power-platform/developer/plan)
+Get your own free development tenant by subscribing to [Power Apps Developer Plan](https://learn.microsoft.com/power-platform/developer/plan).
 
 ## Contributors
 
@@ -38,15 +36,15 @@ This sample was created by the Power Apps component framework team.
 
 ## Prerequisites
 
-[Install the Microsoft Power Platform CLI](https://learn.microsoft.com/power-platform/developer/cli/introduction)
+[Install the Microsoft Power Platform CLI](https://learn.microsoft.com/power-platform/developer/cli/introduction).
 
-## Try this sample component
+## Try this sample
 
-Follow the steps in the [README.md](../README.md) to generate solutions containing the controls so you can import and try the sample components in your model-driven or canvas app.
+Follow the steps in the [README.md](../README.md) to generate solutions containing the controls so you can import and try the sample components in your model-driven app.
 
-## More information
+## Related information
 
-See [Implementing Web API component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/webapi-control)
+[Implementing Web API component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/webapi-control)
 
 ## Disclaimer
 
