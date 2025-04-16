@@ -5,16 +5,14 @@ products:
   - power-platform
   - power-apps
 page_type: sample
-description: "This sample demonstrates how to customize the Power Apps editable grid control."
+description: "This sample demonstrates how to customize the Microsoft Power Apps editable grid control."
 ---
 
 # Customized editable grid Power Apps component framework sample
 
-## Summary
-
 This sample demonstrates how to customize the Power Apps editable grid control as described in [Customize the editable grid control](https://learn.microsoft.com/power-apps/developer/component-framework/customize-editable-grid-control).
 
-This sample changes the main grid page for a table that is configured to use this control. All text columns will use green text. Any values for the `creditlimit` column will display as blue if the value is greater than 100,000 and red otherwise.
+This sample changes the main grid page for a table that's configured to use this control, for example all text columns use green text. Any values for the `creditlimit` column displays as blue, if the value is greater than 100,000, or red otherwise.
 
 ![Preview of the sample](https://learn.microsoft.com/power-apps/developer/component-framework/media/editable-grid-control-sample-customized-account-main-grid.png)
 
@@ -26,7 +24,7 @@ This sample works for model-driven apps.
 
 [Power Apps component framework](https://learn.microsoft.com/power-apps/developer/component-framework/overview)
 
-Get your own free development tenant by subscribing to [Power Apps Developer Plan](https://learn.microsoft.com/power-platform/developer/plan)
+Get your own free development tenant by subscribing to [Power Apps Developer Plan](https://learn.microsoft.com/power-platform/developer/plan).
 
 ## Contributors
 
@@ -40,15 +38,15 @@ This sample was created by the Power Apps component framework team.
 
 ## Prerequisites
 
-[Install the Microsoft Power Platform CLI](https://learn.microsoft.com/power-platform/developer/cli/introduction)
+[Install the Microsoft Power Platform CLI](https://learn.microsoft.com/power-platform/developer/cli/introduction).
 
-## Try this sample component
+## Try this sample
 
 Follow the steps in the [README.md](../README.md) to generate solutions containing the controls so you can import and try the sample components in your model-driven or canvas app.
 
-## More information
+## Related information
 
-See [Customized editable grid](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/customized-editable-grid-control)
+[Customized editable grid](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/customized-editable-grid-control)
 
 ## Disclaimer
 

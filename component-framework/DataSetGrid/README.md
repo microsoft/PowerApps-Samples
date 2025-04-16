@@ -5,14 +5,12 @@ products:
   - power-platform
   - power-apps
 page_type: sample
-description: "This sample component shows how to change the user experience of interacting with the dataset. For example, you only see the home page grid on a table homepage as a table. You can build your code component that can display the data as per your choice. This sample shows the records as tiles instead of the regular tabular grid."
+description: "This sample shows how to change the user experience, interacting with a dataset in Microsoft Power Apps."
 ---
 
 # Implementing data-set Power Apps component framework sample
 
-## Summary
-
-This sample component shows how to change the user experience of interacting with the dataset. For example, you only see the home page grid on a table homepage as a table. You can build your code component that can display the data as per your choice. This sample shows the records as tiles instead of the regular tabular grid.
+This sample shows how to change the user experience, interacting with the dataset. For example, you only see the home page grid on a table. You can build your code component to display the data you choose. This sample shows the records as tiles instead of the regular tabular grid.
 
 ![Preview of the sample](https://learn.microsoft.com/power-apps/developer/component-framework/media/data-set-grid.png)
 
@@ -24,7 +22,7 @@ This sample works for model-driven apps.
 
 [Power Apps component framework](https://learn.microsoft.com/power-apps/developer/component-framework/overview)
 
-Get your own free development tenant by subscribing to [Power Apps Developer Plan](https://learn.microsoft.com/power-platform/developer/plan)
+Get your own free development tenant by subscribing to [Power Apps Developer Plan](https://learn.microsoft.com/power-platform/developer/plan).
 
 ## Contributors
 
@@ -38,15 +36,15 @@ This sample was created by the Power Apps component framework team.
 
 ## Prerequisites
 
-[Install the Microsoft Power Platform CLI](https://learn.microsoft.com/power-platform/developer/cli/introduction)
+[Install the Microsoft Power Platform CLI](https://learn.microsoft.com/power-platform/developer/cli/introduction).
 
-## Try this sample component
+## Try this sample
 
 Follow the steps in the [README.md](../README.md) to generate solutions containing the controls so you can import and try the sample components in your model-driven or canvas app.
 
-## More information
+## Related information
 
-See [Implementing data-set component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/data-set-grid-control)
+[Implementing data-set component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/data-set-grid-control)
 
 ## Disclaimer
 
