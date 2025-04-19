@@ -8,12 +8,8 @@ NO TECHNICAL SUPPORT IS PROVIDED. YOU MAY NOT DISTRIBUTE THIS CODE UNLESS YOU HA
 #>
 
 param(
-    [Parameter(Mandatory)]
-    [ValidateNotNullOrEmpty()]
-    [String]$EnvironmentId,
-
-    [Parameter(Mandatory=$false)]
-    [BAPEndpoint]$Endpoint = "prod"
+    [Parameter(Mandatory, HelpMessage="The Policy Id")]
+    [string]$enterprisePolicyArmId
 )
 
 $ErrorActionPreference = "Stop"
@@ -25,4 +21,6 @@ if (-not(Connect-Azure))
     return
 }
 
-Get-EnterprisePolicyForEnvironment -PolicyType [PolicyType]::Encryption -EnvironmentId $EnvironmentId -Endpoint $Endpoint
+$policy = Get-EnterprisePolicy -PolicyArmId $enterprisePolicyArmId
+$policyString = $policy | ConvertTo-Json -Depth 7
+Write-Host $policyString

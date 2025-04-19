@@ -12,6 +12,10 @@ param(
     [ValidateNotNullOrEmpty()]
     [String]$EnvironmentId,
 
+    [Parameter(Mandatory)]
+    [ValidateNotNullOrEmpty()]
+    [String]$PolicyArmId,
+
     [Parameter(Mandatory=$false)]
     [BAPEndpoint]$Endpoint = "prod"
 )
@@ -25,4 +29,4 @@ if (-not(Connect-Azure))
     return
 }
 
-Get-EnterprisePolicyForEnvironment -PolicyType [PolicyType]::Encryption -EnvironmentId $EnvironmentId -Endpoint $Endpoint
+New-PolicyToEnvLink -PolicyType [PolicyType]::NetworkInjection -EnvironmentId $EnvironmentId -PolicyArmId $PolicyArmId -Endpoint $Endpoint 
