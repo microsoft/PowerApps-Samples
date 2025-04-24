@@ -44,13 +44,13 @@ function CreateSubnetInjectionEnterprisePolicy
 
         [Parameter(
             Mandatory=$true,
-            HelpMessage="Secondary virtual network Id"
+            HelpMessage="Secondary virtual network Id (put N/A if not used)"
         )]
         [string]$secondaryVnetId,
 
         [Parameter(
             Mandatory=$true,
-            HelpMessage="Secondary subnet name"
+            HelpMessage="Secondary subnet name (put N/A if not used)"
         )]
         [string]$secondarySubnetName  
 
@@ -68,20 +68,28 @@ function CreateSubnetInjectionEnterprisePolicy
     Write-Host "Creating Enterprise policy..." -ForegroundColor Green
 
     $primaryVnet = ValidateAndGetVnet -vnetId $primaryVnetId -enterprisePolicylocation $enterprisePolicylocation
-    if ($primaryVnet -eq $null)
+    if ($null -eq $primaryVnet)
     {
        Write-Host "Subnet Injection Enterprise policy not created" -ForegroundColor Red
        return
     }
 
-    $secondaryVnet = ValidateAndGetVnet -vnetId $secondaryVnetId -enterprisePolicylocation $enterprisePolicylocation
-    if ($secondaryVnet -eq $null)
+    $body = $null
+    if ($secondaryVnetId -ieq "N/A")
     {
-       Write-Host "Subnet Injection Enterprise policy not created" -ForegroundColor Red
-       return
-    }
+        Write-Host "Secondary virtual network not provided" -ForegroundColor Green
 
-    $body = GenerateEnterprisePolicyBody -policyType "vnet" -policyLocation $enterprisePolicyLocation -policyName $enterprisePolicyName -primaryVnetId $primaryVnetId -primarySubnetName $primarySubnetName -secondaryVnetId $secondaryVnetId -secondarySubnetName $secondarySubnetName
+        $body = GenerateEnterprisePolicyBody -policyType "vnet" -policyLocation $enterprisePolicyLocation -policyName $enterprisePolicyName -primaryVnetId $primaryVnetId -primarySubnetName $primarySubnetName
+    } else {
+        $secondaryVnet = ValidateAndGetVnet -vnetId $secondaryVnetId -enterprisePolicylocation $enterprisePolicylocation
+        if ($null -eq $secondaryVnet)
+        {
+            Write-Host "Subnet Injection Enterprise policy not created" -ForegroundColor Red
+            return
+        }
+
+        $body = GenerateEnterprisePolicyBody -policyType "vnet" -policyLocation $enterprisePolicyLocation -policyName $enterprisePolicyName -primaryVnetId $primaryVnetId -primarySubnetName $primarySubnetName -secondaryVnetId $secondaryVnetId -secondarySubnetName $secondarySubnetName
+    }
 
     $result = PutEnterprisePolicy $resourceGroup $body
     if ($result -eq $false)
