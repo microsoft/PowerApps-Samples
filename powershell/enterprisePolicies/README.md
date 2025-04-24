@@ -7,21 +7,21 @@ Please note that these scripts are provided under MIT license and its usage is t
 ## How to run setup scripts
 
 1. **Install modules script** : This script installs the required modules to run Enterprise Policies scripts.</br>
-Script name: *InstallPowerAppsCmdlets.ps1*</br>
+Script name: [InstallPowerAppsCmdlets.ps1](./InstallPowerAppsCmdlets.ps1)</br>
     * Run the script to import required PowerShell modules.
 
 2. **Setup Azure subscription for Microsoft.PowerPlatform** : This script registers the Azure subscription for Microsoft.PowerPlatform resource provider
 and also allow lists the subscription for enterprisePoliciesPreview feature.</br>
-Script name: *SetupSubscriptionForPowerPlatform.ps1*</br>
+Script name: [SetupSubscriptionForPowerPlatform.ps1](./SetupSubscriptionForPowerPlatform.ps1)</br>
     * Run the script to setup Azure subscription for Microsoft.PowerPlatform resources
 
 ## How to run CMK scripts
 
-The CMK scripts are present in folder Cmk at current location
+The CMK scripts are present in folder [Cmk](./Cmk/) at current location
 
 ### Create CMK Enterprise policy
 1. **Create CMK Enterprise Policy** : This script creates a CMK enterprise policy</br>
-Script name : CreateCMKEnterprisePolicy.ps1</br>
+Script name : [CreateCMKEnterprisePolicy.ps1](./Cmk/CreateCMKEnterprisePolicy.ps1)</br>
 Input parameters :
     - subscriptionId : The subscriptionId where CMK enterprise policy needs to be created
     - resourceGroup : The resource group where CMK enterprise policy needs to be created
@@ -41,7 +41,7 @@ Sample Output : </br>
 
 ### Get CMK Enterprise Policy By ResourceId
 2. **Get CMK Enterprise Policy By ResourceId** : The script gets a CMK enterprise policy by ARM resourceId</br>
-Script name : GetCMKEnterprisePolicyByResourceId.ps1</br>
+Script name : [GetCMKEnterprisePolicyByResourceId.ps1](./Cmk/GetCMKEnterprisePolicyByResourceId.ps1)</br>
 Input parameter :
     - enterprisePolicyArmId : The ARM resource ID of the CMK Enterprise Policy
 
@@ -53,7 +53,7 @@ Sample Output :</br>
 
 ### Get CMK Enterprise Policies in Subscription
 3. **Get CMK Enterprise Policies in Subscription** : The script gets all CMK enterprise policies in an Azure subscription</br>
-Script name : GetCMKEnterprisePoliciesInSubscription.ps1</br>
+Script name : [GetCMKEnterprisePoliciesInSubscription.ps1](./Cmk/GetCMKEnterprisePoliciesInSubscription.ps1)</br>
 Input parameter :
     - subscriptionId: : The Azure subscription Id
 
@@ -65,7 +65,7 @@ Sample Output :</br>
 
 ### Get CMK Enterprise Policies in Resource Group
 4. **Get CMK Enterprise Policies in Resource Group** : The script gets all CMK enterprise policies in an Azure resource group</br>
-Script name : GetCMKEnterprisePoliciesInResourceGroup.ps1</br>
+Script name : [GetCMKEnterprisePoliciesInResourceGroup.ps1](./Cmk/GetCMKEnterprisePoliciesInResourceGroup.ps1)</br>
 Input parameters :
     - subscriptionId : The Azure subscription Id
     - resourceGroup : The Azure resource group
@@ -88,7 +88,7 @@ Sample Output :</br>
 	- Key configured for the given enterprise policy is present, enabled, activated and not expired.</br>
 	 
 
-Script name : ValidateKeyVaultForCMK.ps1</br>
+Script name : [ValidateKeyVaultForCMK.ps1](./Cmk/ValidateKeyVaultForCMK.ps1)</br>
 Input parameters:
 - subscriptionId : The Azure subscription Id of the Key Vault
 - keyVaultName : The name of the key Vault
@@ -104,7 +104,7 @@ Sample Output :</br>
 6. **Update CMK Enterprise Policy** : This script updates a CMK Enterprise Policy. The updates allowed are for keyVaultId, keyName, keyVersion.</br>
 If you are changing only some of the allowed parameter values, provide “N/A” when prompted for the parameters that you don’t want to change.</br>
  **If the enterprise policy is associated with one or more environments, the update operation will fail, and the script will return an error.**</br>
-Script name : UpdateCMKEnterprisePolicy.ps1</br>
+Script name : [UpdateCMKEnterprisePolicy.ps1](./Cmk/UpdateCMKEnterprisePolicy.ps1)</br>
 Input parameters :
     - subscriptionId : The Azure subscription Id of the CMK Enterprise Policy
     - resourceGroup : The Azure resource group of the CMK Enterprise Policy
@@ -122,7 +122,7 @@ Sample Output :</br>
 ### Delete CMK Enterprise Policy
 7. **Delete CMK Enterprise Policy** : This script deletes the CMK Enterprise Policy for a given policy Id. </br>
 **If the CMK enterprise policy is associated with one or more environments, the delete operation will fail, and the script will return an error.**</br>
-Script name : RemoveCMKEnterprisePolicy.ps1</br>
+Script name : [RemoveCMKEnterprisePolicy.ps1](./Cmk/RemoveCMKEnterprisePolicy.ps1)</br>
 Input parameter :
     - policyArmId : The ARM ID of the CMK enterprise policy to be deleted
 
@@ -135,7 +135,7 @@ Sample Output :</br>
 ### Set CMK for an environment
 8. **Set CMK for an environment** : This script applies a CMK enterprise policy to a given Power Platform environment.</br>
 The script adds the environment to the enterprise policy and optionally polls for the operation outcome.</br>
-Script name : AddCustomerManagedKeyToEnvironment.ps1</br>
+Script name : [AddCustomerManagedKeyToEnvironment.ps1](./Cmk/AddCustomerManagedKeyToEnvironment.ps1)</br>
 Input parameters :
     - environmentId : The Power Platform environment ID
     - policyArmId : The ARM ID of the CMK Enterprise Policy
@@ -148,7 +148,7 @@ Sample Output :</br>
 
 ### Get CMK for an environment
 9. **Get CMK for an environment** : This script returns the CMK enterprise policy if applied to a given Power Platform environment.</br>
-Script name : GetCMKEnterprisePolicyForEnvironment.ps1</br>
+Script name : [GetCMKEnterprisePolicyForEnvironment.ps1](./Cmk/GetCMKEnterprisePolicyForEnvironment.ps1)</br>
 Input parameter :
     - environmentId : The Power Platform environment ID
 
@@ -161,7 +161,7 @@ Sample Output :</br>
 ### Remove CMK from an environment
 10. **Remove CMK from an environment** : The script removes the CMK enterprise policy from an environment, </br>
 which results on data to be encrypted with a Microsoft managed encryption key.</br>
-Script name : RemoveCustomerManagedKeyFromEnvironment.ps1</br>
+Script name : [RemoveCustomerManagedKeyFromEnvironment.ps1](./Cmk/RemoveCustomerManagedKeyFromEnvironment.ps1)</br>
 Input parameters :
     - environmentId : The Power Platform environment ID
     - policyArmId: The ARM ID of the CMK Enterprise Policy
@@ -177,12 +177,12 @@ Sample Output :</br>
 The Subnet Injection scripts are present in folder [SubnetInjection](./SubnetInjection/) at current location
 
 ### 1. **Setup virtual network for Subnet Injection**
-This script adds the subnet delegation for `Microsoft.PowerPlatform/enterprisePolicies` for a given virtual network and subnet </br>
+This script adds the subnet delegation for `Microsoft.PowerPlatform/enterprisePolicies` Azure service to a given virtual network and subnet </br>
 Script name : [SetupVnetForSubnetDelegation.ps1](./SubnetInjection/SetupVnetForSubnetDelegation.ps1)</br>
 Input parameters :
 - virtualNetworkSubscriptionId : The subscriptionId of the virtual network
 - virtualNetworkName : The name of the virtual network
-- subnetName : The name of the virtual network subnet
+- subnetName : The name of the virtual network's subnet
 
 **NOTE**: this can also be achieved through Azure portal, more documentation on subnet delegation [here](https://learn.microsoft.com/en-us/azure/virtual-network/manage-subnet-delegation?tabs=manage-subnet-delegation-portal#delegate-a-subnet-to-an-azure-service)
 
@@ -193,28 +193,30 @@ Sample Output : </br>
 ![alt text](./ReadMeImages/SetupVirtualNetwork2.png)</br>
 
  ### 2. **Create Subnet Injection Enterprise Policy** 
-This script creates a Subnet Injection enterprise policy (Azure resource)</br>
+This script creates a Subnet Injection enterprise policy</br>
 Script name : [CreateSubnetInjectionEnterprisePolicy.ps1](./SubnetInjection/CreateSubnetInjectionEnterprisePolicy.ps1)</br>
 Input parameters :
 - subscriptionId : The subscriptionId where Subnet Injection enterprise policy needs to be created
 - resourceGroup : The resource group where Subnet Injection enterprise policy needs to be created
-- enterprisePolicyName : The name for the Subnet Injection enterprise policy resource
+- enterprisePolicyName : Designate a name for the Subnet Injection enterprise policy
 - enterprisePolicyLocation : The Azure geo where Subnet Injection enterprise policy needs to be created.
     * Example: unitedstates, europe, australia, uk</br>
-    * To get the complete supported locations for enterprise policy, below command can be used:</br>
+    * To get the complete list of supported geos for enterprise policy, use the following command:</br>
     ```powershell
     ((Get-AzResourceProvider -ProviderNamespace Microsoft.PowerPlatform).ResourceTypes | Where-Object ResourceTypeName -eq enterprisePolicies).Locations
     ```
-- primaryVnetId : The ARM resource ID of the primary virtual network used for Subnet Injection
-- primarySubnetName : The name of the subnet in the primary virtual network that will be used for Subnet Injection
-- secondaryVnetId : The ARM resource ID of the secondary virtual network used for Subnet Injection
-- secondarySubnetName : The name of the subnet in the secondary virtual network that will be used for Subnet Injection
+- primaryVnetId : The ARM resource ID of the primary virtual network to be used for Subnet Injection
+- primarySubnetName : The name of the subnet in the primary virtual network to be used for Subnet Injection
+- secondaryVnetId : The ARM resource ID of the secondary virtual network to be used for Subnet Injection
+    * put `N/A` for geo's with only 1 supported region
+- secondarySubnetName : The name of the subnet in the secondary virtual network to be used for Subnet Injection
+    * put `N/A` for geo's with only 1 supported region
 
 **NOTE**:
-* If there are more than 1 supported regions for the geo outlined in the [list of supported regions](https://learn.microsoft.com/en-us/power-platform/admin/vnet-support-overview#supported-regions), the primary and secondary VNet must be created in *different* regions
-* :warning::warning: To delete a Subnet Injection enterprise policy:
-    * [Remove subnet injection from all associated environments](#9-remove-subnet-injection-from-an-environment)
-    * Run the following command:
+* :exclamation: If there are more than 1 supported regions for the geo outlined in the [list of supported regions](https://learn.microsoft.com/en-us/power-platform/admin/vnet-support-overview#supported-regions), the primary and secondary VNet must have been created in ***different*** regions in the geo
+* :exclamation: To delete a Subnet Injection enterprise policy:
+    * [Remove Subnet Injection from **ALL** associated environments](#9-remove-subnet-injection-from-an-environment), the following remove command should error and call out if there are environments still associated
+    * Run the following command (see the "Get Subnet Injection Enterprise Policy" scripts if needed to find the ARM Resource ID):
     ```powershell
     Remove-AzResource -ResourceId $policyArmId -Force
     ```
@@ -226,7 +228,7 @@ Sample Output : </br>
 ![alt text](./ReadMeImages/CreateSubnetInjectionEnterprisePolicy2.png)</br>
 
 ### 3. **Get Subnet Injection Enterprise Policy By ResourceId**
-The script gets a Subnet Injection enterprise policy by ARM resourceId</br>
+This script gets a Subnet Injection enterprise policy by ARM resourceId</br>
 Script name : [GetSubnetInjectionEnterprisePolicyByResourceId.ps1](./SubnetInjection/GetSubnetInjectionEnterprisePolicyByResourceId.ps1)</br>
 Input parameter :
 - enterprisePolicyArmId : The ARM resource ID of the Subnet Injection Enterprise Policy
@@ -238,7 +240,7 @@ Sample Output :</br>
 ![alt text](./ReadMeImages/GetSubnetInjectionEnterprisePolicyByResourceId2.png)</br>
 
 ### 4. **Get Subnet Injection Enterprise Policies in Subscription** 
-The script gets all Subnet Injection enterprise policies in an Azure subscription</br>
+This script gets all Subnet Injection enterprise policies in an Azure subscription</br>
 Script name : [GetSubnetInjectionEnterprisePoliciesInSubscription.ps1](./SubnetInjection/GetSubnetInjectionEnterprisePoliciesInSubscription.ps1)</br>
 Input parameter :
 - subscriptionId: : The Azure subscription Id
@@ -250,7 +252,7 @@ Sample Output :</br>
 ![alt text](./ReadMeImages/GetSubnetInjectionEnterprisePoliciesInSubscription2.png)</br>
 
 ### 5. **Get Subnet Injection Enterprise Policies in Resource Group**
-The script gets all Subnet Injection enterprise policies in an Azure resource group</br>
+This script gets all Subnet Injection enterprise policies in an Azure resource group</br>
 Script name : [GetSubnetInjectionEnterprisePoliciesInResourceGroup.ps1](./SubnetInjection/GetSubnetInjectionEnterprisePoliciesInResourceGroup.ps1)</br>
 Input parameters :
 - subscriptionId : The Azure subscription Id
@@ -309,7 +311,7 @@ Sample Output :</br>
 ![alt text](./ReadMeImages/GetSubnetInjectionEnterprisePolicyForEnvironment2.png)</br>
 
 ### 9. **Remove Subnet Injection from an environment**
-The script removes the Subnet Injection enterprise policy from an environment, </br>
+This script removes the Subnet Injection enterprise policy from an environment, </br>
 Script name : [RevertSubnetInjection.ps1](./SubnetInjection/RevertSubnetInjection.ps1)</br>
 Input parameters :
 - environmentId : The Power Platform environment ID
@@ -326,6 +328,6 @@ Sample Output :</br>
 ### Subnet Injection FAQ
 
 #### Unable to delete VNet / Unable to modify subnet
-* ErrorCode: *InUseSubnetCannotBeDeleted* or *SubnetMissingRequiredDelegation*
-* ErrorMessage: *.../serviceAssociationLinks/PowerPlatformServiceLink...*
-* **Solution**: delete the enterprise policy azure resource first, see the notes section in ["Create subnet injection enterprise policy"](#2-create-subnet-injection-enterprise-policy)
+* ErrorCode: `InUseSubnetCannotBeDeleted` or `SubnetMissingRequiredDelegation`
+* ErrorMessage contains: *.../serviceAssociationLinks/PowerPlatformServiceLink...*
+* **Solution**: delete the Subnet Injection enterprise policy first, see the notes section in ["Create subnet injection enterprise policy"](#2-create-subnet-injection-enterprise-policy)
