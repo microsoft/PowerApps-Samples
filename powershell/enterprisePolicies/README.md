@@ -208,9 +208,9 @@ Input parameters :
 - primaryVnetId : The ARM resource ID of the primary virtual network to be used for Subnet Injection
 - primarySubnetName : The name of the subnet in the primary virtual network to be used for Subnet Injection
 - secondaryVnetId : The ARM resource ID of the secondary virtual network to be used for Subnet Injection
-    * put `N/A` for geo's with only 1 supported region
+    * can put `N/A` for geo's with only 1 supported region, must be provided for geos with 2+ supported regions
 - secondarySubnetName : The name of the subnet in the secondary virtual network to be used for Subnet Injection
-    * put `N/A` for geo's with only 1 supported region
+    * can put `N/A` for geo's with only 1 supported region, must be provided for geos with 2+ supported regions
 
 **NOTE**:
 * :exclamation: If there are more than 1 supported regions for the geo outlined in the [list of supported regions](https://learn.microsoft.com/en-us/power-platform/admin/vnet-support-overview#supported-regions), the primary and secondary VNet must have been created in ***different*** regions in the geo
