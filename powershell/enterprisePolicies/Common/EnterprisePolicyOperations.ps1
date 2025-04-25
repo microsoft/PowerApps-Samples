@@ -141,6 +141,25 @@ function GenerateEnterprisePolicyBody ($policyType, $policyLocation, $policyName
     
     elseif ("vnet" -eq $policyType)
     {
+        $virtualNetworks = @(
+            @{
+                "id" = $primaryVnetId
+                "subnet" = @{
+                    "name" = $primarySubnetName
+                }
+            }
+        )
+
+        if ($null -ne $secondaryVnetId)
+        {
+            $virtualNetworks += @{
+                "id" = $secondaryVnetId
+                "subnet" = @{
+                    "name" = $secondarySubnetName
+                }
+            }
+        }
+
         $body = @{
             "`$schema" = "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#"
             "contentVersion" = "1.0.0.0"
@@ -155,20 +174,7 @@ function GenerateEnterprisePolicyBody ($policyType, $policyLocation, $policyName
                                
                     "properties" = @{
                         "networkInjection" = @{
-                            "virtualNetworks" = @(
-                                @{
-                                    "id" = $primaryVnetId
-                                    "subnet" = @{
-                                        "name" = $primarySubnetName
-                                    }
-                                },
-                                 @{
-                                    "id" = $secondaryVnetId
-                                    "subnet" = @{
-                                        "name" = $secondarySubnetName
-                                    }
-                                }
-                            )
+                            "virtualNetworks" = $virtualNetworks
                         }
                     }
                 }
@@ -179,8 +185,3 @@ function GenerateEnterprisePolicyBody ($policyType, $policyLocation, $policyName
 
    return $body
 }
-
-
-
-
-
