@@ -202,11 +202,9 @@ Input parameters :
 - enterprisePolicyLocation : The Azure geo where Subnet Injection enterprise policy needs to be created.
     * Example: unitedstates, europe, australia, uk</br>
     * To get the complete list of supported geos for enterprise policy, use the following command:</br>
-
-    ```powershell
-    ((Get-AzResourceProvider -ProviderNamespace Microsoft.PowerPlatform).ResourceTypes | Where-Object ResourceTypeName -eq enterprisePolicies).Locations
-    ```
-
+        ```powershell
+        ((Get-AzResourceProvider -ProviderNamespace Microsoft.PowerPlatform).ResourceTypes | Where-Object ResourceTypeName -eq enterprisePolicies).Locations
+        ```
 - primaryVnetId : The ARM resource ID of the primary virtual network to be used for Subnet Injection
 - primarySubnetName : The name of the subnet in the primary virtual network to be used for Subnet Injection
 - secondaryVnetId : The ARM resource ID of the secondary virtual network to be used for Subnet Injection
@@ -219,10 +217,9 @@ Input parameters :
 * :exclamation: To delete a Subnet Injection enterprise policy:
     * [Remove Subnet Injection from **ALL** associated environments](#9-remove-subnet-injection-from-an-environment), the following remove command should error and call out if there are environments still associated
     * Run the following command (see the "Get Subnet Injection Enterprise Policy" scripts if needed to find the ARM Resource ID):
-
-    ```powershell
-    Remove-AzResource -ResourceId $policyArmId -Force
-    ```
+        ```powershell
+        Remove-AzResource -ResourceId $policyArmId -Force
+        ```
 
 Sample Input :</br>
 ![alt text](./ReadMeImages/CreateSubnetInjectionEnterprisePolicy1.png)</br>
