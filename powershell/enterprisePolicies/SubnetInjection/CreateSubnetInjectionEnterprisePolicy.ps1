@@ -44,13 +44,13 @@ function CreateSubnetInjectionEnterprisePolicy
 
         [Parameter(
             Mandatory=$true,
-            HelpMessage="Secondary virtual network Id (put N/A if not used)"
+            HelpMessage="Secondary virtual network Id (put N/A if not used, but vnet is required if geo supports 2+ regions)"
         )]
         [string]$secondaryVnetId,
 
         [Parameter(
             Mandatory=$true,
-            HelpMessage="Secondary subnet name (put N/A if not used)"
+            HelpMessage="Secondary subnet name (put N/A if not used, but subnet is required if geo supports 2+ regions)"
         )]
         [string]$secondarySubnetName  
 
