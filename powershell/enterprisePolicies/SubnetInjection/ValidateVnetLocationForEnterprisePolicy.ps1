@@ -12,14 +12,15 @@ $supportedVnetLocations.Add("europe", "westeurope|northeurope")
 $supportedVnetLocations.Add("germany", "germanynorth|germanywestcentral")
 $supportedVnetLocations.Add("switzerland", "switzerlandnorth|switzerlandwest")
 $supportedVnetLocations.Add("canada", "canadacentral|canadaeast")
-$supportedVnetLocations.Add("brazil", "brazilsouth|southcentralus")
+$supportedVnetLocations.Add("brazil", "brazilsouth")
 $supportedVnetLocations.Add("australia", "australiasoutheast|australiaeast")
 $supportedVnetLocations.Add("asia", "eastasia|southeastasia")
-$supportedVnetLocations.Add("uae", "uaecentral|uaenorth")
+$supportedVnetLocations.Add("uae", "uaenorth")
 $supportedVnetLocations.Add("korea", "koreasouth|koreacentral")
 $supportedVnetLocations.Add("norway", "norwaywest|norwayeast")
 $supportedVnetLocations.Add("singapore", "southeastasia")
 $supportedVnetLocations.Add("sweden", "swedencentral")
+$supportedVnetLocations.Add("italy", "italynorth")
 
 function ValidateAndGetVnet($vnetId, $enterprisePolicylocation) {
 

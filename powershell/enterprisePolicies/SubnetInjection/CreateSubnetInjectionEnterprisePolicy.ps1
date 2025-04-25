@@ -77,7 +77,7 @@ function CreateSubnetInjectionEnterprisePolicy
     $body = $null
     if ($secondaryVnetId -ieq "N/A")
     {
-        Write-Host "Secondary virtual network not provided" -ForegroundColor Green
+        Write-Host "Secondary virtual network not provided" -ForegroundColor Yellow
 
         $body = GenerateEnterprisePolicyBody -policyType "vnet" -policyLocation $enterprisePolicyLocation -policyName $enterprisePolicyName -primaryVnetId $primaryVnetId -primarySubnetName $primarySubnetName
     } else {

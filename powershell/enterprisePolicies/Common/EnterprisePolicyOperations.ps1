@@ -99,7 +99,7 @@ function RemoveEnterprisePolicy($policyArmId)
 
 }
 
-function GenerateEnterprisePolicyBody ($policyType, $policyLocation, $policyName, $keyVaultId, $keyName, $keyVersion, $primaryVnetId, $primarySubnetName, $secondaryVnetId = $null, $secondarySubnetName = $null)
+function GenerateEnterprisePolicyBody ($policyType, $policyLocation, $policyName, $keyVaultId, $keyName, $keyVersion, $primaryVnetId, $primarySubnetName, $secondaryVnetId, $secondarySubnetName)
 {   
     if ("cmk" -eq $policyType)
     {
@@ -185,8 +185,3 @@ function GenerateEnterprisePolicyBody ($policyType, $policyLocation, $policyName
 
    return $body
 }
-
-
-
-
-
