@@ -215,7 +215,8 @@ Input parameters :
 **NOTE**:
 * :exclamation: If there are more than 1 supported regions for the geo outlined in the [list of supported regions](https://learn.microsoft.com/en-us/power-platform/admin/vnet-support-overview#supported-regions), the primary and secondary VNet must have been created in ***different*** regions in the geo
 * :exclamation: To delete a Subnet Injection enterprise policy:
-    * [Remove Subnet Injection from **ALL** associated environments](#9-remove-subnet-injection-from-an-environment), the following remove command should error and call out if there are environments still associated
+This script removes the Subnet Injection enterprise policy from an environment, </br>
+    * ["Remove Subnet Injection from an environment"](#9-remove-subnet-injection-from-an-environment) for **ALL** associated environments, the following remove command should error and call out if there are environments still associated
     * Run the following command (see the "Get Subnet Injection Enterprise Policy" scripts if needed to find the ARM Resource ID):
         ```powershell
         Remove-AzResource -ResourceId $policyArmId -Force
