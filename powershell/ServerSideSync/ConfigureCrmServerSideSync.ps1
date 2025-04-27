@@ -1,16 +1,10 @@
-﻿# CRM on-premises with Exchange Online server-side synchronization setup  
+# CRM on-premises with Exchange Online server-side synchronization setup  
 # PowerShell script to upload private key to Azure.  
 # This script has to be invoked from the server that has the deployment tool feature installed
 
 Param(
-    [Parameter(Mandatory=$True, HelpMessage="Enter password for Certificate private key.")]
-    [SecureString]$privateKeyPassword,
-
-    [Parameter(Mandatory=$True, HelpMessage="Enter path of Personal Information Exchange file.")]
-    [string]$pfxFilePath,
-
-    [Parameter(Mandatory=$true, HelpMessage="Enter organization name.")]
-    [string]$organizationName,
+    [Parameter(Mandatory=$True, HelpMessage="Enter path of Certificate File.")]
+    [string]$cerFilePath,
 
     [Parameter(Mandatory=$true, HelpMessage="Enter Microsoft Entra ID TenantId Or Domain Name.")]
     [string]$microsoftEntraIdTenantIdOrDomainName,
@@ -70,23 +64,18 @@ function ExitWithError([string] $errorMessage)
 
 try
 {
-    if(!(Get-Pssnapin | Where-Object {$_.name -like "Microsoft.Crm.PowerShell"} ))
-    {
-        Add-Pssnapin microsoft.crm.powershell
-        Write-Host "Added CRM powershell Pssnapin." -foreground "Green"
-    }
 
-    if(!(Test-Path -Path $pfxFilePath -PathType Leaf))
+    if(!(Test-Path -Path $cerFilePath -PathType Leaf))
     {
-       ExitWithError("The specified value of the pfxFilePath parameter isn't valid. Please enter the correct path of the Personal Information Exchange file.")
+       ExitWithError("The specified value of the cerFilePath parameter isn't valid. Please enter the correct path of the Personal Information Exchange file.")
     }
     else
     {
 
-      $extentionPfx = (Get-Item $pfxFilePath ).Extension 
-      if($extentionPfx -ne ".pfx")
+      $extentionPfx = (Get-Item $cerFilePath ).Extension 
+      if($extentionPfx -ne ".cer")
       {
-           ExitWithError("The specified value of the pfxFilePath parameter isn't valid. Please enter the path of the .pfx file.")
+           ExitWithError("The specified value of the cerFilePath parameter isn't valid. Please enter the path of the .cer file.")
       }
     }
 
@@ -119,9 +108,8 @@ try
     #endregion AcquireMsGraphToken 
 
     #region SetCertificateInfo
-    $securePassword = $privateKeyPassword
-    $PfxData = Get-PfxData -FilePath $pfxFilePath -Password $securePassword
-    $certificateInfo = $PfxData.EndEntityCertificates[0]
+    $certificateInfo =  New-Object System.Security.Cryptography.X509Certificates.X509Certificate2
+	$certificateInfo.Import("$cerFilePath")
     $certificateBin = $certificateInfo.GetRawCertData() 
     $credentialValue = [System.Convert]::ToBase64String($certificateBin)
 
@@ -206,7 +194,7 @@ try
     $servicePrincipalCredentialsForPatch = [System.Collections.Generic.List[object]]::new()
 
     $servicePrincipalCredentialsWorkingCollection | ForEach-Object {
-        $obj = $_ | Select-Object * -ExcludeProperty key, displayName
+        $obj = $_ | Select-Object * -ExcludeProperty "key"
         # Add the modified object to the list
         $servicePrincipalCredentialsForPatch.Add([PSCustomObject]$obj)
     }
@@ -242,34 +230,7 @@ try
     }
     #endregion ServicePrincipalOperations
 
-    #Configure CRM server for server-based authentication with Online Exchange
-       
-    $setting = New-Object "Microsoft.Xrm.Sdk.Deployment.ConfigurationEntity" 
-    $setting.LogicalName = "ServerSettings" 
-    $setting.Attributes = New-Object "Microsoft.Xrm.Sdk.Deployment.AttributeCollection" 
-    $attribute1 = New-Object "System.Collections.Generic.KeyValuePair[String, Object]" ("S2SDefaultAuthorizationServerPrincipalId", "00000001-0000-0000-c000-000000000000") 
-    $setting.Attributes.Add($attribute1) 
-    $attribute2 = New-Object "System.Collections.Generic.KeyValuePair[String, Object]" ("S2SDefaultAuthorizationServerMetadataUrl","https://accounts.accesscontrol.windows.net/metadata/json/1") 
-    $setting.Attributes.Add($attribute2) 
-    Set-CrmAdvancedSetting -Entity $setting 
-
-    Write-Host "Done with configuration of CRM server for server-based authentication with Online Exchange."
-
-    try
-    {
-        $orgInfo = Get-CrmOrganization  -Name $organizationName
-        $ID =  $orgInfo.id 
-    }Catch
-    {
-        ExitWithError("The specified organization "+$organizationName+" is not a valid CRM organization.")
-    }
-    if($ID)
-    {
-         Set-CrmAdvancedSetting -ID $orgInfo.ID -configurationEntityName "Organization" -setting "S2STenantId" -value $TenantID
-    }
-
-    Write-Host "S2S Exchange Online Tenant ID is populated in configDB: " $TenantID
-    Write-Host "Process succeeded."  -foreground "green"
+ 
 }
 Catch 
 {
