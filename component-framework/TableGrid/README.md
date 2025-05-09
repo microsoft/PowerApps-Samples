@@ -5,12 +5,10 @@ products:
   - power-platform
   - power-apps
 page_type: sample
-description: "This sample showcases how to create a simple dataset component, view's column metadata binding, record binding, more records from paging and record navigation to form. The component header columns and internal record values are bound to the existing views."
+description: "This sample shows how to create a simple dataset component, view's column metadata binding, record binding, more records from paging, and record navigation to form in Microsoft Power Apps."
 ---
 
 # Table Power Apps component framework sample
-
-## Summary
 
 This sample showcases how to create a simple dataset component, view's column metadata binding, record binding, more records from paging and record navigation to form. The component header columns and internal record values are bound to the existing views.
 
@@ -24,7 +22,7 @@ This sample works for model-driven apps.
 
 [Power Apps component framework](https://learn.microsoft.com/power-apps/developer/component-framework/overview)
 
-Get your own free development tenant by subscribing to [Power Apps Developer Plan](https://learn.microsoft.com/power-platform/developer/plan)
+Get your own free development tenant by subscribing to [Power Apps Developer Plan](https://learn.microsoft.com/power-platform/developer/plan).
 
 ## Contributors
 
@@ -38,15 +36,15 @@ This sample was created by the Power Apps component framework team.
 
 ## Prerequisites
 
-[Install the Microsoft Power Platform CLI](https://learn.microsoft.com/power-platform/developer/cli/introduction)
+[Install the Microsoft Power Platform CLI](https://learn.microsoft.com/power-platform/developer/cli/introduction).
 
-## Try this sample component
+## Try this sample
 
 Follow the steps in the [README.md](../README.md) to generate solutions containing the controls so you can import and try the sample components in your model-driven or canvas app.
 
-## More information
+## Related information
 
-See [Implementing table grid component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/table-grid-control)
+[Implementing table grid component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/table-grid-control)
 
 ## Disclaimer
 

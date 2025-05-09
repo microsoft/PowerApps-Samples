@@ -5,14 +5,14 @@ products:
   - power-platform
   - power-apps
 page_type: sample
-description: "This sample shows how to use React to create components using Power Apps component framework. The facepile sample component is implemented based on React and the Office UI Fabric React components. The code may not reveal the best practices for the mentioned third-party libraries. "
+description: "This sample shows how to use React to create components using the Micrsoft Power Apps component framework."
 ---
 
 # Implementing the FacePile component Power Apps component framework sample
 
 ## Summary
 
-This sample shows how to use React to create components using Power Apps component framework. The facepile sample component is implemented based on React and the Office UI Fabric React components. The code may not reveal the best practices for the mentioned third-party libraries.
+This sample shows how to use React to create components using the Power Apps component framework. The facepile sample component is implemented based on React and the Office UI Fabric React components. The code might not reveal the best practices for the mentioned third-party libraries.
 
 ![Preview of the sample](https://learn.microsoft.com/power-apps/developer/component-framework/media/react-facepile.png)
 
@@ -24,7 +24,7 @@ This sample works for model-driven and canvas apps.
 
 [Power Apps component framework](https://learn.microsoft.com/power-apps/developer/component-framework/overview)
 
-Get your own free development tenant by subscribing to [Power Apps Developer Plan](https://learn.microsoft.com/power-platform/developer/plan)
+Get your own free development tenant by subscribing to [Power Apps Developer Plan](https://learn.microsoft.com/power-platform/developer/plan).
 
 ## Contributors
 
@@ -38,15 +38,15 @@ This sample was created by the Power Apps component framework team.
 
 ## Prerequisites
 
-[Install the Microsoft Power Platform CLI](https://learn.microsoft.com/power-platform/developer/cli/introduction)
+[Install the Microsoft Power Platform CLI](https://learn.microsoft.com/power-platform/developer/cli/introduction).
 
-## Try this sample component
+## Try this sample
 
 Follow the steps in the [README.md](../README.md) to generate solutions containing the controls so you can import and try the sample components in your model-driven or canvas app.
 
-## More information
+## Related information
 
-See [Implementing the FacePile component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/react-facepile-control)
+[Implementing the FacePile component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/react-facepile-control)
 
 ## Disclaimer
 

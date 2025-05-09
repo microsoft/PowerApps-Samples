@@ -5,14 +5,12 @@ products:
   - power-platform
   - power-apps
 page_type: sample
-description: "This sample component demonstrates how to leverage the Lookup.Simple type on properties of the field components. It allows the code component bound to two different simple lookup columns, and for the user to change the currently selected record through the lookupObjects API."
+description: "This sample demonstrates how to leverage the Lookup.Simple type on properties of the field components in Microsoft Power Apps."
 ---
 
 # Simple lookup component Power Apps component framework sample
 
-## Summary
-
-This sample component demonstrates how to leverage the `Lookup.Simple` type on properties of the field components. It allows the code component bound to two different simple lookup columns, and for the user to change the currently selected record through the lookupObjects API.
+This sample demonstrates how to leverage the `Lookup.Simple` type on properties of the field components. The code component is bound to two different simple lookup columns, and the user can change the currently selected record through the `lookupObjects` API.
 
 ![Preview of the sample](https://learn.microsoft.com/power-apps/developer/component-framework/media/lookup-control.png)
 
@@ -24,7 +22,7 @@ This sample works for model-driven apps.
 
 [Power Apps component framework](https://learn.microsoft.com/power-apps/developer/component-framework/overview)
 
-Get your own free development tenant by subscribing to [Power Apps Developer Plan](https://learn.microsoft.com/power-platform/developer/plan)
+Get your own free development tenant by subscribing to [Power Apps Developer Plan](https://learn.microsoft.com/power-platform/developer/plan).
 
 ## Contributors
 
@@ -38,15 +36,15 @@ This sample was created by the Power Apps component framework team.
 
 ## Prerequisites
 
-[Install the Microsoft Power Platform CLI](https://learn.microsoft.com/power-platform/developer/cli/introduction)
+[Install the Microsoft Power Platform CLI](https://learn.microsoft.com/power-platform/developer/cli/introduction).
 
-## Try this sample component
+## Try this sample
 
 Follow the steps in the [README.md](../README.md) to generate solutions containing the controls so you can import and try the sample components in your model-driven or canvas app.
 
-## More information
+## Related information
 
-See [Implementing simple lookup component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/lookup-control)
+[Implementing simple lookup component](https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/lookup-control)
 
 ## Disclaimer
 
