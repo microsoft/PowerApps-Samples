@@ -2,9 +2,9 @@
 
 Task Parallel Library (TPL) makes developers more productive by simplifying the process of adding parallelism and concurrency to applications.
 
-Adding parallelism and concurrency can significantly improve the total throughput for applications that need to perform a large number of Central Diagnostic System (CDS) operations in a short period of time.
+Adding parallelism and concurrency can significantly improve the total throughput for applications that need to perform a large number of Dataverse operations in a short period of time.
 
-Because the [Microsoft.Xrm.Tooling.Connector.CrmServiceClient Class](https://learn.microsoft.com/dotnet/api/microsoft.xrm.tooling.connector.crmserviceclient) includes handling for the transient errors thrown by the CDS service protection limits, the combination of TPL and CrmServiceClient is valuable to create applications that can optimize throughput while being resilient to the service protection limit errors by retrying requests that are rejected due to these limits.
+Because the [Microsoft.Xrm.Tooling.Connector.CrmServiceClient Class](https://learn.microsoft.com/dotnet/api/microsoft.xrm.tooling.connector.crmserviceclient) includes handling for the transient errors thrown by the Dataverse service protection limits, the combination of TPL and CrmServiceClient is valuable to create applications that can optimize throughput while being resilient to the service protection limit errors by retrying requests that are rejected due to these limits.
 
 The [CrmServiceClient.Clone Method](https://learn.microsoft.com/dotnet/api/microsoft.xrm.tooling.connector.crmserviceclient.clone) enables TPL to use the client with multiple threads.
 
