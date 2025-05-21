@@ -81,7 +81,7 @@ Below steps will help you run this app in Power Pages.
 1. Go to Power Pages home and click on `Inactive Sites`.
 1. You should see `Car Sales Management` site listed there. Click on `Reactivate` to proceed.
 1. Once the site is activated, click on `Preview` to see it running on Power Pages.
-1. Additionally, install [Power Platform Tools VS Code extension](https://aka.ms/power-platform-vscode) for to easily upload with a single click.
+1. Additionally, install [Power Platform Tools VS Code extension](https://aka.ms/power-platform-vscode) to easily upload the site in future iterations with a single click.
 
 
 ## Project Structure
