@@ -52,7 +52,7 @@ The built files will be in the `dist` directory.
 
 ## Running on Power Pages
 
-Below steps will help your prepare and run your this app in Power Pages.
+Below steps will help you run this app in Power Pages.
 
 ### Setup
 
