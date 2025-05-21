@@ -8,7 +8,7 @@ This is a modern web application for managing car sales, inventory, and customer
 
 - Authentication using Microsoft Entra Id (see [AuthButton.tsx](src/components/AuthButton.tsx) for implementation)
 - Authorization using Power Pages web roles (see [Layout.tsx:45-49](src/components/Layout.tsx#L45-L49) for implementation)
-- Fetching data from external data sources through virtual tables and web apis (see [SalesLeads.tsx](src/pages/SalesLeads.tsx#L30-L63) for implementation)
+- Fetching data from external data sources through [virtual tables](https://learn.microsoft.com/en-us/power-pages/configure/virtual-tables) and web apis (see [SalesLeads.tsx](src/pages/SalesLeads.tsx#L30-L63) for implementation)
 
 ## Prerequisites
 
