@@ -58,13 +58,14 @@ Below steps will help your prepare and run your this app in Power Pages.
 
 1. Install [Microsoft Power Platform CLI](https://learn.microsoft.com/en-us/power-platform/developer/cli/introduction?tabs=windows#install-microsoft-power-platform-cli). (Version should be >= 1.43.6)
 1. Allow `*.js` files by removing it from `Blocked Attachments` in `Privacy + Security` settings for your environment from Power Pages Admin Center.
-1. Create a new table called `SalesLead` with below columns and add some dummy data.
+1. Create a new web role called `Sales Person`. See [Create and assign web roles](https://learn.microsoft.com/en-us/power-pages/security/create-web-roles).
+1. Create a new table called `SalesLead` with below columns, add some dummy data and create table permissions. See [Configuring table permissions](https://learn.microsoft.com/en-us/power-pages/security/table-permissions).
     1. Account Id
     1. Name
     1. Type
     1. Description
     1. Amount
-1. Enable web api for the above table. See [How to: Use portal Web API](https://learn.microsoft.com/en-us/power-pages/configure/webapi-how-to)
+1. Enable web api for the above table. See [How to: Use portal Web API](https://learn.microsoft.com/en-us/power-pages/configure/webapi-how-to).
 
 ### Code changes
 
