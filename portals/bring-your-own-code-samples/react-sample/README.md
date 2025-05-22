@@ -87,20 +87,24 @@ react-sample/
 │   └── car.svg
 ├── src/
 │   ├── components/
-│   │   └── Layout.tsx
-│   │   ├── pages/
-│   │   │   ├── Customers.tsx
-│   │   │   ├── Dashboard.tsx
-│   │   │   ├── Inventory.tsx
-│   │   │   ├── Sales.tsx
-│   │   │   └── SalesLeads.tsx
-│   │   ├── App.tsx
-│   │   ├── main.tsx
-│   │   └── index.css
-│   ├── index.html
-│   ├── package.json
-│   ├── tsconfig.json
-│   └── vite.config.ts
+│   │   ├── AuthButton.tsx
+│   │   ├── Layout.tsx
+│   │   └── ThemeToggle.tsx
+|   ├── context/
+│   │   ├── ThemeContext.tsx
+│   ├── pages/
+│   │   ├── Customers.tsx
+│   │   ├── Dashboard.tsx
+│   │   ├── Inventory.tsx
+│   │   ├── Sales.tsx
+│   │   └── SalesLeads.tsx
+│   ├── App.tsx
+│   ├── main.tsx
+│   └── index.css
+├── index.html
+├── package.json
+├── tsconfig.json
+└── vite.config.ts
 ```
 
 ## Technologies Used
