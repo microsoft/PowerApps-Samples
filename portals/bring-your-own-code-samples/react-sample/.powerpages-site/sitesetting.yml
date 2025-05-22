@@ -144,6 +144,10 @@
   adx_name: KnowledgeManagement/NotesFilter
   adx_sitesettingid: aa53620d-5260-423d-9cd2-31c41ab2058c
   adx_value: '*WEB*'
+- adx_name: Authentication/Registration/ProfileRedirectEnabled
+  adx_sitesettingid: aca28f51-da36-f011-8c4e-7c1e520c8613
+  adx_source: 0
+  adx_value: False
 - adx_name: Authentication/OpenAuth/Facebook/AppSecret
   adx_sitesettingid: ad44f5aa-45d8-410c-994f-228856655f5a
 - adx_name: Authentication/Registration/ExternalLoginEnabled
