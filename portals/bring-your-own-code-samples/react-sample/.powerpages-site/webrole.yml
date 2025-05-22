@@ -1,0 +1,17 @@
+- adx_anonymoususersrole: false
+  adx_authenticatedusersrole: true
+  adx_name: Authenticated Users
+  adx_webroleid: 29f5c8f7-fc1d-4562-a65f-5859413ec837
+- adx_anonymoususersrole: true
+  adx_authenticatedusersrole: false
+  adx_name: Anonymous Users
+  adx_webroleid: 64cec488-7655-4895-ad8b-c179c7db4f96
+- adx_anonymoususersrole: false
+  adx_authenticatedusersrole: false
+  adx_name: Administrators
+  adx_webroleid: 79c6c6b5-2242-4193-b914-99c6597d60c4
+- adx_anonymoususersrole: false
+  adx_authenticatedusersrole: false
+  adx_description: Sales Person
+  adx_name: Sales Person
+  adx_webroleid: f851f9aa-cf36-f011-8c4e-7c1e520c8613

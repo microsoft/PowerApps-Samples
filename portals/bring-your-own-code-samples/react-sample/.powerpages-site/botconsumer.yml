@@ -1,0 +1,8 @@
+- adx_botconsumerid: 0636f2e3-cf36-f011-8c4e-7c1e520c8613
+  adx_botschemaname: cr2de_dbe13372-d151-408c-942e-2aab9410356c
+  adx_configjson: '{"skillConfigViewName":"Car Sales Management bot Answers"}'
+  adx_name: Bot Consumer
+- adx_botconsumerid: 16f6c737-54a7-4054-b04a-56ac7370c483
+  adx_botschemaname: crdb4_a551ef17-3f85-44f6-a1c7-95d23bf17748
+  adx_configjson: '{"skillConfigViewName":"ggrSalesOrder bot Answers"}'
+  adx_name: Bot Consumer

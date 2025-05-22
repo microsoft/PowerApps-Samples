@@ -1,0 +1,39 @@
+<!-- Power virtual agents web template V2.0 -->
+{% assign botconsumer = entities.adx_botconsumer[bot_consumer_id] %}
+{% assign env = environment %}
+{% assign languageCode = website.selected_language.code %}
+{% assign botConfig = botconsumer.adx_configjson %}
+<div class='pva-floating-style'>
+    <div name='webChat'></div>
+    <script type='text/javascript' id='pvaChatInlineScript'>
+        var script = document.createElement('script');
+        script.onload = function() {
+            var botConfig = {{botConfig}};
+
+        // Learn more about advanced configuration: https://go.microsoft.com/fwlink/?linkid=2147420
+        const webChatHeaderStyleOptions = botConfig?.webChatHeaderStyleOptions;
+        const webChatCanvasStyleOptions = botConfig?.webChatCanvasStyleOptions;
+        const webChatWidgetStyleOptions = botConfig?.webChatWidgetStyleOptions;
+        const botTitle = botConfig?.headerText;
+        let chatWidth = "320px";
+        let chatHeight =  "480px";
+        window.PvaEmbeddedWebChat.renderWebChat(
+            {
+                "container": document.getElementsByName('webChat')[0],
+                "botSchemaName": "{{ botconsumer.adx_botschemaname }}",
+                "environmentId": "{{ env.Id }}",
+                "width": chatWidth,
+                "height": chatHeight,
+                "client": "msportals", // client and version is needed for the ease of future breaking changes
+                "version": "v1",
+                "headerText": botTitle,
+                "webChatCanvasStyleOptions": webChatCanvasStyleOptions,
+                "webChatHeaderStyleOptions": webChatHeaderStyleOptions,
+                "webChatWidgetStyleOptions": webChatWidgetStyleOptions,
+                "accessibilityLanguage": "{{languageCode}}"
+            });
+            }
+        script.src = "https://embed.powerva.microsoft.com/webchat/embedded.js?client=msportals&version=v1";
+        document.getElementsByTagName('head')[0].appendChild(script);
+    </script>
+</div>
