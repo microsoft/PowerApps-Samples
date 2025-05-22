@@ -1,0 +1,17 @@
+adx_accountrelationship: 
+adx_append: false
+adx_appendto: false
+adx_childTablePermissions: []
+adx_contactrelationship: 
+adx_create: false
+adx_delete: false
+adx_entitylogicalname: sample_saleslead
+adx_entityname: sample_salesleads_permission
+adx_entitypermission_webrole:
+- f851f9aa-cf36-f011-8c4e-7c1e520c8613
+adx_entitypermissionid: 2f693c55-f4c9-4935-b1ff-821f49fe12b4
+adx_parententitypermission: 
+adx_parentrelationship: 
+adx_read: true
+adx_scope: 756150000
+adx_write: false
