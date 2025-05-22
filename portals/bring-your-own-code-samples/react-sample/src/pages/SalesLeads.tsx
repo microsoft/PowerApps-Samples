@@ -43,10 +43,9 @@ const SalesLeads: React.FC = () => {
       const leads = data.value;
       const returnData: Lead[] = [];
 
-      //loop through the cards and get the name and id of each card
       for (let i = 0; i < leads.length; i++) {
         const lead = leads[i];
-        const accountId = lead.sample_accountId;
+        const accountId = lead.sample_accountid;
         const name = lead.sample_name;
         const type = lead.sample_type;
         const description = lead.sample_description;

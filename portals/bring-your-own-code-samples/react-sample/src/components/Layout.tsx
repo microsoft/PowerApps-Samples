@@ -42,9 +42,9 @@ const menuItems = [
   { text: 'Customers', icon: <CustomersIcon />, path: '/customers' },
 ];
 
-const isSalesPerson = (window as any)["Microsoft"]?.Dynamic365?.Portal?.User?.userRoles?.includes("Sales Person") ?? false;
+const isAuthenticated = (window as any)["Microsoft"]?.Dynamic365?.Portal?.User?.userRoles?.includes("Authenticated Users") ?? false;
 
-if (isSalesPerson) {
+if (isAuthenticated) {
   menuItems.push({ text: 'Sales Leads', icon: <PersonAddIcon />, path: '/leads' });
 }
 
