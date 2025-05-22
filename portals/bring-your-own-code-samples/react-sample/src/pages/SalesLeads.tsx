@@ -26,10 +26,9 @@ const SalesLeads: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isUnauthorized, setIsUnauthorized] = useState(false);
 
-  //Create FetchXML query to get all cards from Dataverse
   const fetchLeads = async () => {
     try {
-      const response = await fetch("/_api/<Entity Set Name>");
+      const response = await fetch("/_api/sample_salesleads?$select=sample_accountid,sample_name,sample_type,sample_description,sample_amount");
 
       if (response.status === 403) {
         setIsUnauthorized(true);
@@ -47,11 +46,11 @@ const SalesLeads: React.FC = () => {
       //loop through the cards and get the name and id of each card
       for (let i = 0; i < leads.length; i++) {
         const lead = leads[i];
-        const accountId = lead.accountId;
-        const name = lead.name;
-        const type = lead.type;
-        const description = lead.description;
-        const amount = lead.amount;
+        const accountId = lead.sample_accountId;
+        const name = lead.sample_name;
+        const type = lead.sample_type;
+        const description = lead.sample_description;
+        const amount = lead.sample_amount;
         returnData.push({ accountId, name, type, description, amount });
       }
 

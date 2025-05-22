@@ -10,6 +10,9 @@ export const AuthButton = () => {
     const lastName = (window as any)["Microsoft"]?.Dynamic365?.Portal?.User?.lastName ?? "";
     const isAuthenticated = username !== "";
     const [token, setToken] = React.useState<string>("");
+    
+    // @ts-ignore
+    const tenantId = import.meta.env.VITE_TENANT_ID;
 
     React.useEffect(() => {
         const getToken = async () => {
@@ -38,7 +41,7 @@ export const AuthButton = () => {
                 <form action="/Account/Login/ExternalLogin" method="post">
                     <input name="__RequestVerificationToken" type="hidden" value={token} />
                     <Tooltip title="Login">
-                        <IconButton name="provider" type="submit" color="primary" value="https://login.windows.net/<Your Tenant Id>/">
+                        <IconButton name="provider" type="submit" color="primary" value={`https://login.windows.net/${tenantId}/`}>
                             <Login />
                         </IconButton>
                     </Tooltip>
