@@ -12,10 +12,6 @@
 - adx_name: Header/ShowAllProfileNavigationLinks
   adx_sitesettingid: 0e487c45-b18d-44cf-8ad0-c67b3efeb55d
   adx_value: false
-- adx_description: Sets whether or not the portal can redirect the user to the profile page after successful sign-in. By default, it is set to true.
-  adx_name: Authentication/Registration/ProfileRedirectEnabled
-  adx_sitesettingid: 19ed4e97-ab98-4c9e-9ee5-4372c672860b
-  adx_value: true
 - adx_name: Profile/Enabled
   adx_sitesettingid: 1df5a09e-1468-42e2-8c06-ab1776f20ac8
   adx_value: true
