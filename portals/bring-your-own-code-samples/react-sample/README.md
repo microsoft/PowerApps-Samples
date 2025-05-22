@@ -58,11 +58,14 @@ Below steps will help you run this app in Power Pages.
 
 1. Install [Microsoft Power Platform CLI](https://learn.microsoft.com/power-platform/developer/cli/introduction?tabs=windows#install-microsoft-power-platform-cli). (Version should be >= 1.43.6)
 1. Allow `*.js` files by removing it from `Blocked Attachments` in `Privacy + Security` settings for your environment from Power Pages Admin Center.
-1. Import the sample solution
+1. Open a terminal and cd into `react-sample` folder.
+1. Run `pac auth create --environment <Environment URL>` to login to your environment.
+1. Run `pac solution import --path .\solutions\CodeSiteSample_1_0_0_1_managed.zip` to import the sample managed solution in your environment.
+1. A **SalesLead** table will be created after the solution is imported. Please add some sample data to this table.
 
 ### Code changes
 
-Update your tenant id in [.env:1](.env#L1).
+Update the value of `VITE_TENANT_ID` in [.env:1](.env#L1) with your tenant id.
 
 ### Uploading site to Power Pages
 
@@ -72,7 +75,9 @@ Update your tenant id in [.env:1](.env#L1).
 1. Go to Power Pages home and click on **Inactive sites**.
 1. You should see **Car Sales Management** site listed there. Click on **Reactivate** to proceed.
 1. Once the site is activated, click on **Preview** to see it running on Power Pages.
-1. Additionally, install [Power Platform Tools VS Code extension](https://aka.ms/power-platform-vscode) to easily upload the site in future iterations with a single click.
+1. Additionally, install [Power Platform Tools VS Code extension](https://aka.ms/power-platform-vscode) to easily upload the site in future iterations with a single click from within VS Code.
+
+**Note:** Please login to the site to see **Sales Leads** page.
 
 ## Project Structure
 

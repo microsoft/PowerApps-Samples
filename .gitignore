@@ -308,7 +308,6 @@ dist/
 *.tsbuildinfo
 
 # Environment variables
-.env
 .env.*
 
 # IDE files
