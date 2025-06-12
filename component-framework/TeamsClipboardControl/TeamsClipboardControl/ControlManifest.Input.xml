@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="SampleNamespace" constructor="TeamsClipboardControl" version="1.1.0" display-name-key="TeamsClipboardControl_Display_Key" description-key="TeamsClipboardControl_Desc_Key" control-type="standard">
+    <property name="textToCopy" display-name-key="textToCopy_Display_Key" description-key="textToCopy_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
+    <property name="buttonLabel" display-name-key="buttonLabel_Display_Key" description-key="buttonLabel_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" />
+    <resources>
+      <code path="index.ts" order="1" />
+      <css path="css/TeamsClipboardControl.css" order="2" />
+      <resx path="strings/TeamsClipboardControl.1033.resx" version="1.0.0" />
+    </resources>
+  </control>
+</manifest>
