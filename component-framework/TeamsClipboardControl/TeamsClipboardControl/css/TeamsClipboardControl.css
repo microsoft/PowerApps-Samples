@@ -1,0 +1,99 @@
+.teams-clipboard-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+}
+
+.teams-clipboard-text {
+  flex: 1;
+  padding: 4px 8px;
+  font-size: 14px;
+  color: #333;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-family: 'Courier New', monospace;
+  word-break: break-all;
+}
+
+.teams-clipboard-button {
+  padding: 6px 12px;
+  font-size: 14px;
+  background-color: #0078d4;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  min-width: 80px;
+  font-weight: 500;
+}
+
+.teams-clipboard-button:hover {
+  background-color: #106ebe;
+}
+
+.teams-clipboard-button:active {
+  background-color: #005a9e;
+}
+
+.teams-clipboard-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.teams-clipboard-feedback {
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 3px;
+  min-width: 100px;
+  text-align: center;
+  font-weight: 500;
+  transition: opacity 0.3s ease;
+}
+
+.teams-clipboard-feedback.success {
+  background-color: #dff6dd;
+  color: #0e5814;
+  border: 1px solid #0e5814;
+}
+
+.teams-clipboard-feedback.error {
+  background-color: #fde7e9;
+  color: #a80e27;
+  border: 1px solid #a80e27;
+}
+
+.teams-clipboard-feedback.hidden {
+  opacity: 0;
+}
+
+.teams-clipboard-fallback {
+  margin-top: 8px;
+  padding: 8px;
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #856404;
+}
+
+.teams-clipboard-fallback-text {
+  font-family: 'Courier New', monospace;
+  background-color: white;
+  padding: 4px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  margin: 4px 0;
+  word-break: break-all;
+}
+
+.teams-clipboard-hidden-input {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+}
