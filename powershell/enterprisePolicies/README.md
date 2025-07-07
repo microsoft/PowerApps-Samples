@@ -325,6 +325,13 @@ Sample Output :</br>
 
 ## FAQ
 
+### General FAQ
+
+#### Unable to add/remove EP to/from environment due to "Error getting environment"
+* StatusCode: 404 
+* ErrorMessage contains: *The environment '\<guid\>' could not be found in the tenant...*
+* **Solution**: Ensure the user has the `Power Platform Administrator` (or equivalent) role
+
 ### Subnet Injection FAQ
 
 #### Unable to delete VNet / Unable to modify subnet

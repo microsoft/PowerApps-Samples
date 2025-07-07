@@ -177,7 +177,7 @@ function UnLinkPolicyFromEnv
         return
     }
 
-    if (!$policyArmId.Equals($env.properties.enterprisePolicies.$epPropertyName.id))
+    if ($policyArmId -ine $env.properties.enterprisePolicies.$epPropertyName.id)
     {
         Write-Host "Given policyArmId $policyArmId not matching with $policyType policy ArmId for environement $environmentId"
         return 
@@ -497,9 +497,9 @@ function UnLinkPolicyFromPlatformAppsData
         return
     }
 
-    if (!$policyArmId.Equals($platformAppsStatus.enterprisePolicies.$epPropertyName.id))
+    if ($policyArmId -ine $platformAppsStatus.enterprisePolicies.$epPropertyName.id)
     {
-        Write-Host "Given policyArmId $policyArmId not matching with $policyType policy ArmId for Platformapps"
+        Write-Host "Given policyArmId $policyArmId not matching with $policyType policy ArmId for PlatformApps"
         return 
     }
     
@@ -518,15 +518,11 @@ function UnLinkPolicyFromPlatformAppsData
 
     if ($null -eq $unLinkResult -or $unLinkResult.StatusCode -ne "202")
     {
-        Write-Host "Unlinking of $policyType policy did not start for platformapps"
+        Write-Host "Unlinking of $policyType policy did not start for PlatformApps"
         Write-Host "Error: $unLinkResultString"
         return 
     }
 
-    Write-Host "Unlinking of $policyType policy started for platformapps"
+    Write-Host "Unlinking of $policyType policy started for PlatformApps"
     
 }
-
-
-
-
