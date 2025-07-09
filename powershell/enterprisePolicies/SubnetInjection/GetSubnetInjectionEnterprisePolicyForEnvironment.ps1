@@ -9,7 +9,7 @@ function GetSubnetInjectionEnterprisePolicyForEnvironment
         [String]$environmentId,
 
         [Parameter(Mandatory=$false)]
-        [ValidateSet("tip1", "tip2", "prod")]
+        [ValidateSet("tip1", "tip2", "prod", "usgovhigh", "dod", "china")]
         [String]$endpoint
 
     )

@@ -4,7 +4,7 @@
     [String]$policyArmId,
 
     [Parameter(Mandatory=$false)]
-    [ValidateSet("tip1", "tip2", "prod")]
+	[ValidateSet("tip1", "tip2", "prod", "usgovhigh", "dod", "china")]
     [String]$endpoint
 )
 
@@ -12,7 +12,7 @@
 . "$PSScriptRoot\..\Common\EnvironmentEnterprisePolicyOperations.ps1"
 
 if (![bool]$endpoint) {
-    $endpoint = "prod"
+    $endpoint = "tip1"
 }
 
 LinkPolicyToPlatformAppsData -policyType cmk  -policyArmId $policyArmId  -endpoint $endpoint  

@@ -1,6 +1,18 @@
-﻿function AzureLogin() {
+﻿function AzureLogin {
+    param(
+        [Parameter(Mandatory=$false)]
+        [ValidateSet("tip1", "tip2", "prod", "usgovhigh", "dod", "china")]
+        [String]$endpoint
+    )    
 
-    $connect = Connect-AzAccount
+    $environment = "AzureCloud"
+    if (($endpoint -eq "usgovhigh") -or ($endpoint -eq "dod")) {
+        $environment = "AzureUSGovernment"
+    }
+    elseif ($endpoint -eq "china") {
+        $environment = "AzureChinaCloud"
+    }
+    $connect = Connect-AzAccount -Environment $environment
 
     if ($null -eq $connect)
     {
@@ -177,6 +189,30 @@ function GenerateEnterprisePolicyBody ($policyType, $policyLocation, $policyName
                             "virtualNetworks" = $virtualNetworks
                         }
                     }
+                }
+            )
+            
+        }
+    }
+
+    elseif ("identity" -eq $policyType)
+    {
+        $body = @{
+            "`$schema" = "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#"
+            "contentVersion" = "1.0.0.0"
+            "parameters"= @{}
+            "resources" = @(
+                @{
+                    "type" = "Microsoft.PowerPlatform/enterprisePolicies"
+                    "apiVersion" = "2020-10-30"
+                    "name" = $policyName
+                    "location"= $policyLocation
+                    "kind" = "Identity"
+                
+                    "identity" = @{
+                        "type"= "SystemAssigned"
+                    }               
+                   
                 }
             )
             
