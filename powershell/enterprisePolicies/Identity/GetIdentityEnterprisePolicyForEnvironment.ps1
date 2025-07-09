@@ -1,7 +1,7 @@
 ﻿# Load thescript
 . "$PSScriptRoot\..\Common\EnvironmentEnterprisePolicyOperations.ps1"
 
-function GetCMKEnterprisePolicyForEnvironment
+function GetIdentityEnterprisePolicyForEnvironment
 {
     param(
         [Parameter(Mandatory=$true)]
@@ -18,6 +18,6 @@ function GetCMKEnterprisePolicyForEnvironment
         $endpoint = "prod"
     }
     
-    GetEnterprisePolicyForEnvironment -policyType cmk -environmentId $environmentId -endpoint $endpoint
+    GetEnterprisePolicyForEnvironment -policyType identity -environmentId $environmentId -endpoint $endpoint
 }
-GetCMKEnterprisePolicyForEnvironment
+GetIdentityEnterprisePolicyForEnvironment
