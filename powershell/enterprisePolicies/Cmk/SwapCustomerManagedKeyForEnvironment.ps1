@@ -5,7 +5,7 @@
 
 	[Parameter(Mandatory=$true)]
 	[ValidateNotNullOrEmpty()]
-	[String]$policyArmId,
+	[String]$newPolicyArmId,
 
 	[Parameter(Mandatory=$false)]
 	[ValidateSet("tip1", "tip2", "prod", "usgovhigh", "dod", "china")]
@@ -20,4 +20,4 @@ if (![bool]$endpoint) {
 	$endpoint = "prod"
 }
 
-UnLinkPolicyFromEnv -policyType cmk -environmentId $environmentId -policyArmId $policyArmId -endpoint $endpoint    
+SwapPolicyForEnv -policyType cmk -environmentId $environmentId -policyArmId $newPolicyArmId -endpoint $endpoint    

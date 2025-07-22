@@ -59,6 +59,7 @@ function CallBAPLinkOrUnlink ($environmentId, $ApiVersion, $method, $body, $isLi
     {
         "cmk" { "Encryption" }
         "vnet" { "NetworkInjection" }
+        "identity" { "Identity" }
     }
 
     $linkEnterprisePolicyUri = "https://{bapEndpoint}/providers/Microsoft.BusinessAppPlatform/environments/{environmentId}/enterprisePolicies/{policyTypeInUrl}/{operationName}?&api-version={apiVersion}" `
