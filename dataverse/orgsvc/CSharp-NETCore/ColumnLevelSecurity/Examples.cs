@@ -11,7 +11,7 @@ namespace PowerPlatform_Dataverse_CodeSamples
 {
     internal static class Examples
     {
-        /// <GetSecuredColumns>
+        /// <snippetGetSecuredColumns>
         /// <summary>
         /// Generates a CSV file containing the names of secured columns for all tables in the organization.
         /// </summary>
@@ -87,8 +87,8 @@ namespace PowerPlatform_Dataverse_CodeSamples
                 Path.Combine(filepath, filename),
                 csvContent.ToString());
         }
-        /// </GetSecuredColumns>
-        /// <DumpColumnSecurityInfo>
+        /// </snippetGetSecuredColumns>
+        /// <snippetDumpColumnSecurityInfo>
         /// <summary>
         /// Exports column security information for all entities in the organization to a CSV file.
         /// </summary>
@@ -186,8 +186,8 @@ namespace PowerPlatform_Dataverse_CodeSamples
                 Path.Combine(filepath, filename),
                 csvContent.ToString());
         }
-       /// </DumpColumnSecurityInfo>
-       /// <GetSecuredColumnList>
+       /// </snippetDumpColumnSecurityInfo>
+       /// <snippetGetSecuredColumnList>
        /// <summary>
        /// Retrieves a list of secured columns managed by the specified field security profile.
        /// </summary>
@@ -254,9 +254,8 @@ namespace PowerPlatform_Dataverse_CodeSamples
             values.Sort();
             return values;
         }
-        /// </GetSecuredColumnList>
-
-        /// <SetColumnIsSecured>
+        /// </snippetGetSecuredColumnList>
+        /// <snippetSetColumnIsSecured>
         /// <summary>
         /// Updates the security status of a column in a Dataverse table.
         /// </summary>
@@ -327,9 +326,8 @@ namespace PowerPlatform_Dataverse_CodeSamples
                 //Don't send a request to set the value to what it already is.
             }
         }
-        /// </SetColumnIsSecured>
-
-        /// </RetrieveColumnId>
+        /// </snippetSetColumnIsSecured>
+        /// <snippetRetrieveColumnId>
         /// <summary>
         /// Retrieves the unique identifier (MetadataId) of a column in a specified Dataverse table.
         /// </summary>
@@ -409,8 +407,8 @@ namespace PowerPlatform_Dataverse_CodeSamples
             }
             return columnId;
         }
-        /// </RetrieveColumnId>
-        /// <GrantColumnAccess>
+        /// </snippetRetrieveColumnId>
+        /// <snippetGrantColumnAccess>
         /// <summary>
         /// Grants access to a secured column for a specified principal in Dataverse.
         /// </summary>
@@ -473,8 +471,8 @@ namespace PowerPlatform_Dataverse_CodeSamples
                 throw new Exception($"Error in GrantColumnAccess: {ex.Message}");
             }
         }
-        /// </GrantColumnAccess>
-        /// <ModifyColumnAccess>
+        /// </snippetGrantColumnAccess>
+        /// <snippetModifyColumnAccess>
         /// <summary>
         /// Modifies access permissions for a secure column in a table for a specified principal.
         /// </summary>
@@ -580,8 +578,8 @@ namespace PowerPlatform_Dataverse_CodeSamples
                 throw new Exception("No matching PrincipalObjectAttributeAccess record found.");
             }
         }
-        /// </ModifyColumnAccess>
-        /// <RevokeColumnAccess>
+        /// </snippetModifyColumnAccess>
+        /// <snippetRevokeColumnAccess>
         /// <summary>
         /// Revokes access to a secure column for a specified principal in a given record.
         /// </summary>
@@ -655,8 +653,8 @@ namespace PowerPlatform_Dataverse_CodeSamples
                 throw new Exception("No matching PrincipalObjectAttributeAccess record found.");
             }
         }
-        /// </RevokeColumnAccess>
-        /// <GetUnmaskedExampleRows>
+        /// </snippetRevokeColumnAccess>
+        /// <snippetGetUnmaskedExampleRows>
         /// <summary>
         /// Retrieves a collection of example entities with unmasked data.
         /// </summary>
@@ -702,8 +700,8 @@ namespace PowerPlatform_Dataverse_CodeSamples
 
             return response.EntityCollection;
         }
-        /// </GetUnmaskedExampleRows>
-        /// <AddPrivilegesToRole>
+        /// </snippetGetUnmaskedExampleRows>
+        /// <snippetAddPrivilegesToRole>
         /// <summary>
         /// Adds the specified privileges to a role in the organization.
         /// </summary>
@@ -765,6 +763,6 @@ namespace PowerPlatform_Dataverse_CodeSamples
                 throw new Exception($"Error adding privileges to role: {ex.Message}", ex);
             }
         }
-         /// </AddPrivilegesToRole>
+        /// </snippetAddPrivilegesToRole>
     }
 }
