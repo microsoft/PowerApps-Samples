@@ -1,7 +1,7 @@
 . $PSScriptRoot\..\Core.ps1
 . $PSScriptRoot\..\CommonFunctions.ps1
 
-# <snippetSet-ColumnIsSecured-Example>
+# <SetColumnIsSecuredExample>
 <#
 .SYNOPSIS
     Sets the IsSecured property of a specified column in a Dataverse table.
@@ -88,7 +88,7 @@ function Set-ColumnIsSecured-Example {
       }
    }
 }
-# </snippetSet-ColumnIsSecured-Example>
+# </SetColumnIsSecuredExample>
 # <snippetAdd-RoleToUserByName-Example>
 <#
 .SYNOPSIS
