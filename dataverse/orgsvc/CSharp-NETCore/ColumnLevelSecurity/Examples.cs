@@ -13,16 +13,22 @@ namespace PowerPlatform_Dataverse_CodeSamples
     {
         // <snippetGetSecuredColumns>
         /// <summary>
-        /// Generates a CSV file containing the names of secured columns for all tables in the organization.
+        /// Generates a CSV file containing the names of secured columns for all tables 
+        /// in the organization.
         /// </summary>
-        /// <remarks>This method queries the organization's metadata to identify columns marked as secured
-        /// (i.e., columns with the <c>IsSecured</c> property set to <see langword="true"/>).  The resulting CSV file
-        /// contains two columns: "Table" and "Column", representing the schema names  of the tables and their secured
-        /// columns, respectively. <para> Ensure that the provided <paramref name="filepath"/> is writable and that the
-        /// user has  appropriate permissions to access the specified directory. </para></remarks>
-        /// <param name="service">The <see cref="IOrganizationService"/> instance used to retrieve metadata from the organization.</param>
-        /// <param name="filepath">The directory path where the CSV file will be saved. Must be a valid and accessible file path.</param>
-        /// <param name="filename">The name of the CSV file to be created. Defaults to "SecuredColumns.csv" if not specified.</param>
+        /// <remarks>This method queries the organization's metadata to identify columns 
+        /// marked as secured (i.e., columns with the <c>IsSecured</c> property set to 
+        /// <see langword="true"/>). The resulting CSV file contains two columns: "Table" 
+        /// and "Column", representing the schema names of the tables and their secured 
+        /// columns, respectively. <para> Ensure that the provided 
+        /// <paramref name="filepath"/> is writable and that the user has appropriate 
+        /// permissions to access the specified directory. </para></remarks>
+        /// <param name="service">The <see cref="IOrganizationService"/> instance used to 
+        /// retrieve metadata from the organization.</param>
+        /// <param name="filepath">The directory path where the CSV file will be saved. 
+        /// Must be a valid and accessible file path.</param>
+        /// <param name="filename">The name of the CSV file to be created. Defaults to 
+        /// "SecuredColumns.csv" if not specified.</param>
         static internal void GetSecuredColumns(IOrganizationService service,
             string filepath, string filename = "SecuredColumns.csv")
         {
@@ -90,15 +96,19 @@ namespace PowerPlatform_Dataverse_CodeSamples
         // </snippetGetSecuredColumns>
         // <snippetDumpColumnSecurityInfo>
         /// <summary>
-        /// Exports column security information for all entities in the organization to a CSV file.
+        /// Exports column security information for all entities in the organization to a 
+        /// CSV file.
         /// </summary>
-        /// <remarks>This method retrieves metadata about entity attributes, including security-related
-        /// properties,  and writes the information to a CSV file. The output file contains details such as whether 
-        /// columns are secured, can be secured for create, update, or read operations, and other relevant 
-        /// metadata.</remarks>
-        /// <param name="service">The <see cref="IOrganizationService"/> instance used to retrieve metadata from the organization.</param>
-        /// <param name="filepath">The directory path where the CSV file will be saved. This must be a valid, writable directory.</param>
-        /// <param name="filename">The name of the CSV file to create. Defaults to "ColumnSecurityInfo.csv" if not specified.</param>
+        /// <remarks>This method retrieves metadata about entity attributes, including 
+        /// security-related properties, and writes the information to a CSV file. The output 
+        /// file contains details such as whether columns are secured, can be secured for 
+        /// create, update, or read operations, and other relevant metadata.</remarks>
+        /// <param name="service">The <see cref="IOrganizationService"/> instance used to 
+        /// retrieve metadata from the organization.</param>
+        /// <param name="filepath">The directory path where the CSV file will be saved. This 
+        /// must be a valid, writable directory.</param>
+        /// <param name="filename">The name of the CSV file to create. Defaults to 
+        /// "ColumnSecurityInfo.csv" if not specified.</param>
         static internal void DumpColumnSecurityInfo(IOrganizationService service,
             string filepath, string filename = "ColumnSecurityInfo.csv")
         {
@@ -189,16 +199,21 @@ namespace PowerPlatform_Dataverse_CodeSamples
        // </snippetDumpColumnSecurityInfo>
        // <snippetGetSecuredColumnList>
        /// <summary>
-       /// Retrieves a list of secured columns managed by the specified field security profile.
+       /// Retrieves a list of secured columns managed by the specified field security 
+       /// profile.
        /// </summary>
-       /// <remarks>This method queries the Dataverse field permission table to identify columns that are
-       /// secured by the field security profile with ID <c>572329c1-a042-4e22-be47-367c6374ea45</c>. The returned list
-       /// contains fully qualified column names in the format <c>TableName.ColumnName</c>, sorted
+       /// <remarks>This method queries the Dataverse field permission table to identify 
+       /// columns that are secured by the field security profile with ID 
+       /// <c>572329c1-a042-4e22-be47-367c6374ea45</c>. The returned list contains fully 
+       /// qualified column names in the format <c>TableName.ColumnName</c>, sorted 
        /// alphabetically.</remarks>
-       /// <param name="service">The <see cref="IOrganizationService"/> instance used to interact with the Dataverse service.</param>
-       /// <returns>A sorted list of strings representing the fully qualified names of secured columns.</returns>
-       /// <exception cref="Exception">Thrown if the calling user does not have read access to the field permission table or if an error occurs
-       /// while retrieving field permissions.</exception>
+       /// <param name="service">The <see cref="IOrganizationService"/> instance used to 
+       /// interact with the Dataverse service.</param>
+       /// <returns>A sorted list of strings representing the fully qualified names of 
+       /// secured columns.</returns>
+       /// <exception cref="Exception">Thrown if the calling user does not have read 
+       /// access to the field permission table or if an error occurs while retrieving 
+       /// field permissions.</exception>
         static internal List<string> GetSecuredColumnList(IOrganizationService service)
         {
             QueryExpression query = new("fieldpermission")
@@ -259,16 +274,22 @@ namespace PowerPlatform_Dataverse_CodeSamples
         /// <summary>
         /// Updates the security status of a column in a Dataverse table.
         /// </summary>
-        /// <remarks>This method retrieves the current definition of the specified column and updates its
-        /// security status only if the provided value differs from the current value. If the column is already set to
-        /// the specified security status, no update request is sent.</remarks>
-        /// <param name="service">The <see cref="IOrganizationService"/> instance used to interact with the Dataverse service.</param>
-        /// <param name="tableLogicalName">The logical name of the table containing the column to be updated. Cannot be null or empty.</param>
-        /// <param name="columnLogicalName">The logical name of the column whose security status is to be updated. Cannot be null or empty.</param>
-        /// <param name="value">A <see langword="true"/> value indicates that the column should be secured; otherwise, <see
-        /// langword="false"/>.</param>
-        /// <param name="solutionUniqueName">The unique name of the solution in which the column update should be applied. Cannot be null or empty.</param>
-        /// <exception cref="Exception">Thrown if an error occurs while retrieving or updating the column definition.</exception>
+        /// <remarks>This method retrieves the current definition of the specified column 
+        /// and updates its security status only if the provided value differs from the 
+        /// current value. If the column is already set to the specified security status, 
+        /// no update request is sent.</remarks>
+        /// <param name="service">The <see cref="IOrganizationService"/> instance used to 
+        /// interact with the Dataverse service.</param>
+        /// <param name="tableLogicalName">The logical name of the table containing the 
+        /// column to be updated. Cannot be null or empty.</param>
+        /// <param name="columnLogicalName">The logical name of the column whose security 
+        /// status is to be updated. Cannot be null or empty.</param>
+        /// <param name="value">A <see langword="true"/> value indicates that the column 
+        /// should be secured; otherwise, <see langword="false"/>.</param>
+        /// <param name="solutionUniqueName">The unique name of the solution in which the 
+        /// column update should be applied. Cannot be null or empty.</param>
+        /// <exception cref="Exception">Thrown if an error occurs while retrieving or 
+        /// updating the column definition.</exception>
         static internal void SetColumnIsSecured(
             IOrganizationService service,
             string tableLogicalName,
@@ -329,17 +350,24 @@ namespace PowerPlatform_Dataverse_CodeSamples
         // </snippetSetColumnIsSecured>
         // <snippetRetrieveColumnId>
         /// <summary>
-        /// Retrieves the unique identifier (MetadataId) of a column in a specified Dataverse table.
+        /// Retrieves the unique identifier (MetadataId) of a column in a specified 
+        /// Dataverse table.
         /// </summary>
         /// <remarks>
-        /// This method queries the organization's metadata to locate the specified column within the given table
-        /// and returns its MetadataId. If the table or column is not found, an exception is thrown.
+        /// This method queries the organization's metadata to locate the specified column 
+        /// within the given table and returns its MetadataId. If the table or column is 
+        /// not found, an exception is thrown.
         /// </remarks>
-        /// <param name="service">The <see cref="IOrganizationService"/> instance used to retrieve metadata from the organization.</param>
-        /// <param name="tableLogicalName">The logical name of the table containing the column. Must not be null or empty.</param>
-        /// <param name="columnLogicalName">The logical name of the column whose MetadataId is to be retrieved. Must not be null or empty.</param>
-        /// <returns>The <see cref="Guid"/> representing the MetadataId of the specified column.</returns>
-        /// <exception cref="Exception">Thrown if the table or column is not found in the metadata.</exception>
+        /// <param name="service">The <see cref="IOrganizationService"/> instance used to 
+        /// retrieve metadata from the organization.</param>
+        /// <param name="tableLogicalName">The logical name of the table containing the 
+        /// column. Must not be null or empty.</param>
+        /// <param name="columnLogicalName">The logical name of the column whose MetadataId 
+        /// is to be retrieved. Must not be null or empty.</param>
+        /// <returns>The <see cref="Guid"/> representing the MetadataId of the specified 
+        /// column.</returns>
+        /// <exception cref="Exception">Thrown if the table or column is not found in the 
+        /// metadata.</exception>
         private static Guid RetrieveColumnId(
             IOrganizationService service,
             string tableLogicalName,
@@ -412,16 +440,23 @@ namespace PowerPlatform_Dataverse_CodeSamples
         /// <summary>
         /// Grants access to a secured column for a specified principal in Dataverse.
         /// </summary>
-        /// <remarks>This method allows you to share read and/or update permissions for a secured column
-        /// in a Dataverse table with a specific principal (user or team). The column must be configured as a secured
-        /// field in Dataverse.</remarks>
-        /// <param name="service">The <see cref="IOrganizationService"/> instance used to interact with Dataverse.</param>
-        /// <param name="record">A reference to the record (entity instance) containing the secured column.</param>
-        /// <param name="columnLogicalName">The logical name of the secured column to grant access to.</param>
-        /// <param name="principal">A reference to the principal (user or team) to whom access is being granted.</param>
-        /// <param name="readAccess"><see langword="true"/> to grant read access to the secured column; otherwise, <see langword="false"/>.</param>
-        /// <param name="updateAccess"><see langword="true"/> to grant update access to the secured column; otherwise, <see langword="false"/>.</param>
-        /// <exception cref="Exception">Thrown if the column has already been shared or if an error occurs during the operation.</exception>
+        /// <remarks>This method allows you to share read and/or update permissions for a 
+        /// secured column in a Dataverse table with a specific principal (user or team). 
+        /// The column must be configured as a secured field in Dataverse.</remarks>
+        /// <param name="service">The <see cref="IOrganizationService"/> instance used to 
+        /// interact with Dataverse.</param>
+        /// <param name="record">A reference to the record (entity instance) containing the 
+        /// secured column.</param>
+        /// <param name="columnLogicalName">The logical name of the secured column to grant 
+        /// access to.</param>
+        /// <param name="principal">A reference to the principal (user or team) to whom 
+        /// access is being granted.</param>
+        /// <param name="readAccess"><see langword="true"/> to grant read access to the 
+        /// secured column; otherwise, <see langword="false"/>.</param>
+        /// <param name="updateAccess"><see langword="true"/> to grant update access to the 
+        /// secured column; otherwise, <see langword="false"/>.</param>
+        /// <exception cref="Exception">Thrown if the column has already been shared or if 
+        /// an error occurs during the operation.</exception>
         static internal void GrantColumnAccess(
             IOrganizationService service,
             EntityReference record,
@@ -474,22 +509,30 @@ namespace PowerPlatform_Dataverse_CodeSamples
         // </snippetGrantColumnAccess>
         // <snippetModifyColumnAccess>
         /// <summary>
-        /// Modifies access permissions for a secure column in a table for a specified principal.
+        /// Modifies access permissions for a secure column in a table for a specified 
+        /// principal.
         /// </summary>
-        /// <remarks>This method updates or creates a record in the PrincipalObjectAttributeAccess table
-        /// to reflect the specified access permissions. If no matching record is found, an exception is
-        /// thrown.</remarks>
-        /// <param name="service">The <see cref="IOrganizationService"/> instance used to interact with the organization service.</param>
-        /// <param name="record">An <see cref="EntityReference"/> representing the record containing the secure column.</param>
-        /// <param name="columnLogicalName">The logical name of the secure column whose access permissions are being modified.</param>
-        /// <param name="principal">An <see cref="EntityReference"/> representing the principal (user or team) for whom access permissions are
-        /// being modified.</param>
-        /// <param name="readAccess">A <see langword="bool"/> indicating whether read access to the secure column should be granted (<see
-        /// langword="true"/>) or revoked (<see langword="false"/>).</param>
-        /// <param name="updateAccess">A <see langword="bool"/> indicating whether update access to the secure column should be granted (<see
-        /// langword="true"/>) or revoked (<see langword="false"/>).</param>
-        /// <exception cref="Exception">Thrown if no matching PrincipalObjectAttributeAccess record is found for the specified column, record, and
-        /// principal.</exception>
+        /// <remarks>This method updates or creates a record in the 
+        /// PrincipalObjectAttributeAccess table to reflect the specified access 
+        /// permissions. If no matching record is found, an exception is thrown.</remarks>
+        /// <param name="service">The <see cref="IOrganizationService"/> instance used to 
+        /// interact with the organization service.</param>
+        /// <param name="record">An <see cref="EntityReference"/> representing the record 
+        /// containing the secure column.</param>
+        /// <param name="columnLogicalName">The logical name of the secure column whose 
+        /// access permissions are being modified.</param>
+        /// <param name="principal">An <see cref="EntityReference"/> representing the 
+        /// principal (user or team) for whom access permissions are being 
+        /// modified.</param>
+        /// <param name="readAccess">A <see langword="bool"/> indicating whether read 
+        /// access to the secure column should be granted (<see langword="true"/>) or 
+        /// revoked (<see langword="false"/>).</param>
+        /// <param name="updateAccess">A <see langword="bool"/> indicating whether update 
+        /// access to the secure column should be granted (<see langword="true"/>) or 
+        /// revoked (<see langword="false"/>).</param>
+        /// <exception cref="Exception">Thrown if no matching 
+        /// PrincipalObjectAttributeAccess record is found for the specified column, 
+        /// record, and principal.</exception>
         static internal void ModifyColumnAccess(
             IOrganizationService service,
             EntityReference record,
@@ -583,15 +626,21 @@ namespace PowerPlatform_Dataverse_CodeSamples
         /// <summary>
         /// Revokes access to a secure column for a specified principal in a given record.
         /// </summary>
-        /// <remarks>This method removes the access granted to a secure column for the specified
-        /// principal. If no matching access record is found, an exception is thrown.</remarks>
-        /// <param name="service">The <see cref="IOrganizationService"/> instance used to interact with the Dataverse service.</param>
-        /// <param name="record">An <see cref="EntityReference"/> representing the record containing the secure column.</param>
-        /// <param name="columnLogicalName">The logical name of the secure column for which access is being revoked.</param>
-        /// <param name="principal">An <see cref="EntityReference"/> representing the principal (user or team) whose access to the secure column
-        /// is being revoked.</param>
-        /// <exception cref="Exception">Thrown if no matching PrincipalObjectAttributeAccess record is found for the specified column, record, and
-        /// principal.</exception>
+        /// <remarks>This method removes the access granted to a secure column for the 
+        /// specified principal. If no matching access record is found, an exception is 
+        /// thrown.</remarks>
+        /// <param name="service">The <see cref="IOrganizationService"/> instance used to 
+        /// interact with the Dataverse service.</param>
+        /// <param name="record">An <see cref="EntityReference"/> representing the record 
+        /// containing the secure column.</param>
+        /// <param name="columnLogicalName">The logical name of the secure column for which 
+        /// access is being revoked.</param>
+        /// <param name="principal">An <see cref="EntityReference"/> representing the 
+        /// principal (user or team) whose access to the secure column is being 
+        /// revoked.</param>
+        /// <exception cref="Exception">Thrown if no matching 
+        /// PrincipalObjectAttributeAccess record is found for the specified column, 
+        /// record, and principal.</exception>
         internal static void RevokeColumnAccess(IOrganizationService service,
             EntityReference record,
             string columnLogicalName,
@@ -658,15 +707,17 @@ namespace PowerPlatform_Dataverse_CodeSamples
         /// <summary>
         /// Retrieves a collection of example entities with unmasked data.
         /// </summary>
-        /// <remarks>This method queries the "sample_example" entity and retrieves specific columns,
-        /// including sensitive data such as government ID and date of birth. The query results are ordered by the
-        /// "sample_name" column in descending order.  The method uses the "UnMaskedData" optional parameter to ensure
-        /// that sensitive data is returned unmasked. For more information on optional parameters, see  <see
-        /// href="https://learn.microsoft.com/power-apps/developer/data-platform/optional-parameters">Optional
+        /// <remarks>This method queries the "sample_example" entity and retrieves specific 
+        /// columns, including sensitive data such as government ID and date of birth. The 
+        /// query results are ordered by the "sample_name" column in descending order. The 
+        /// method uses the "UnMaskedData" optional parameter to ensure that sensitive data 
+        /// is returned unmasked. For more information on optional parameters, see <see 
+        /// href="https://learn.microsoft.com/power-apps/developer/data-platform/optional-parameters">Optional 
         /// Parameters in Dataverse</see>.</remarks>
-        /// <param name="service">The <see cref="IOrganizationService"/> instance used to execute the query.</param>
-        /// <returns>An <see cref="EntityCollection"/> containing the retrieved entities. The collection includes unmasked data
-        /// for the specified columns.</returns>
+        /// <param name="service">The <see cref="IOrganizationService"/> instance used to 
+        /// execute the query.</param>
+        /// <returns>An <see cref="EntityCollection"/> containing the retrieved entities. 
+        /// The collection includes unmasked data for the specified columns.</returns>
         internal static EntityCollection GetUnmaskedExampleRows(IOrganizationService service)
         {
             QueryExpression query = new("sample_example")
@@ -705,14 +756,20 @@ namespace PowerPlatform_Dataverse_CodeSamples
         /// <summary>
         /// Adds the specified privileges to a role in the organization.
         /// </summary>
-        /// <remarks>This method retrieves the specified privileges by name and associates them with the
-        /// given role. The privileges must already exist in the organization, and the role must be valid.</remarks>
-        /// <param name="service">The <see cref="IOrganizationService"/> instance used to interact with the organization service.</param>
-        /// <param name="roleId">The unique identifier of the role to which the privileges will be added.</param>
-        /// <param name="depth">The <see cref="PrivilegeDepth"/> level that specifies the scope of the privileges being added.</param>
-        /// <param name="privilegeNames">An array of privilege names to be added to the role. Each name must correspond to an existing privilege in
-        /// the organization.</param>
-        /// <exception cref="Exception">Thrown if an unexpected error occurs while adding privileges to the role.</exception>
+        /// <remarks>This method retrieves the specified privileges by name and associates 
+        /// them with the given role. The privileges must already exist in the organization, 
+        /// and the role must be valid.</remarks>
+        /// <param name="service">The <see cref="IOrganizationService"/> instance used to 
+        /// interact with the organization service.</param>
+        /// <param name="roleId">The unique identifier of the role to which the privileges 
+        /// will be added.</param>
+        /// <param name="depth">The <see cref="PrivilegeDepth"/> level that specifies the 
+        /// scope of the privileges being added.</param>
+        /// <param name="privilegeNames">An array of privilege names to be added to the 
+        /// role. Each name must correspond to an existing privilege in the 
+        /// organization.</param>
+        /// <exception cref="Exception">Thrown if an unexpected error occurs while adding 
+        /// privileges to the role.</exception>
         internal static void AddPrivilegesToRole(IOrganizationService service,
             Guid roleId,
             PrivilegeDepth depth,
