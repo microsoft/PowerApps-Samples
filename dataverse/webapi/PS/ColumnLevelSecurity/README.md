@@ -50,7 +50,7 @@ This sample requires:
 
    [To update an existing installation to the latest version](https://learn.microsoft.com/powershell/module/powershellget/update-module), use `Update-Module -Name Az -Force`
 
-- Access to Dataverse with privileges to perform data operations.
+- Access to Dataverse with system administrator privileges.
 - An application user account with **Basic User** access. See [Configure users](#configure-users) for instructions about how to create this user.
 
 ## How to run the sample
