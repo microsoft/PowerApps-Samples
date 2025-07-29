@@ -7,7 +7,8 @@
     Sets the IsSecured property of a specified column in a Dataverse table.
 
 .DESCRIPTION
-    This function retrieves a column definition from a Dataverse table and updates its IsSecured property.
+    This function retrieves a column definition from a Dataverse table and updates its IsSecured 
+    property.
     If the column is already set to the desired value, no action is taken.
 
 .PARAMETER tableLogicalName
@@ -26,8 +27,16 @@
     The unique name of the solution where the column update should be tracked.
 
 .EXAMPLE
-    Set-ColumnIsSecured-Example -tableLogicalName "account" -logicalName "revenue" -type "Money" -value $true -solutionUniqueName "MySolution"
-    
+    $setColumnParams = @{
+        tableLogicalName = "account"
+        logicalName      = "revenue"
+        type             = "Money"
+        value            = $true
+        solutionUniqueName = "MySolution"
+    }
+
+    Set-ColumnIsSecured-Example @setColumnParams
+
     Sets the revenue column in the account table to be secured.
 
 .NOTES
@@ -89,7 +98,7 @@ function Set-ColumnIsSecured-Example {
    }
 }
 # </SetColumnIsSecuredExample>
-# <snippetAdd-RoleToUserByName-Example>
+# <AddRoleToUserByNameExample>
 <#
 .SYNOPSIS
     Adds a security role to a user by role name.
@@ -153,8 +162,8 @@ function Add-RoleToUserByName-Example {
    }
 
 }
-# </snippetAdd-RoleToUserByName-Example>
-# <snippetGet-UserHasRole-Example>
+# </AddRoleToUserByNameExample>
+# <GetUserHasRoleExample>
 <#
 .SYNOPSIS
     Checks if a user has a specific security role.
@@ -200,8 +209,8 @@ function Get-UserHasRole-Example {
 
    return $results.value.length -eq 1
 }
-# </snippetGet-UserHasRole-Example>
-# <snippetPrivilegeDepth>
+# </GetUserHasRoleExample>
+# <PrivilegeDepth>
 <#
 .DESCRIPTION
     Enum defining the privilege depth levels for security roles in Dataverse.
@@ -219,8 +228,8 @@ enum PrivilegeDepth {
    Global = 3
    RecordFilter = 4
 }
-# </snippetPrivilegeDepth>
-# <snippetAdd-PrivilegesToRole-Example>
+# </PrivilegeDepth>
+# <AddPrivilegesToRoleExample>
 <#
 .SYNOPSIS
     Adds specified privileges to a security role with a defined depth level.
@@ -319,8 +328,8 @@ function Add-PrivilegesToRole-Example {
    }
   
 }
-# </snippetAdd-PrivilegesToRole-Example>
-# <snippetDump-ColumnSecurityInfo-Example>
+# </AddPrivilegesToRoleExample>
+# <DumpColumnSecurityInfoExample>
 <#
 .SYNOPSIS
     Exports column security information for all tables to a CSV file.
@@ -436,8 +445,8 @@ function Dump-ColumnSecurityInfo-Example {
    }
 
 }
-# </snippetDump-ColumnSecurityInfo-Example>
-# <snippetNew-FieldSecurityProfile-Example>
+# </DumpColumnSecurityInfoExample>
+# <NewFieldSecurityProfileExample>
 <#
 .SYNOPSIS
     Creates a new field security profile in Dataverse.
@@ -524,8 +533,8 @@ function New-FieldSecurityProfile-Example {
 
    return [guid]$newId
 }
-# </snippetNew-FieldSecurityProfile-Example>
-# <snippetGet-SecuredColumnList-Example>
+# </NewFieldSecurityProfileExample>
+# <GetSecuredColumnListExample>
 <#
 .SYNOPSIS
     Retrieves a list of all secured columns in the Dataverse environment.
@@ -623,8 +632,8 @@ function Get-SecuredColumnList-Example {
       throw "Failed retrieve table and column information: $_.Exception.Message"
    }
 }
-# </snippetGet-SecuredColumnList-Example>
-# <snippetGet-SecuredColumnList-AdminOnly-Example>
+# </GetSecuredColumnListExample>
+# <GetSecuredColumnListAdminOnlyExample>
 function Get-SecuredColumnList-AdminOnly-Example {
 
    # Field security profile with ID '572329c1-a042-4e22-be47-367c6374ea45' 
@@ -658,8 +667,8 @@ function Get-SecuredColumnList-AdminOnly-Example {
    return $sortedValues
 
 }
-# </snippetGet-SecuredColumnList-AdminOnly-Example>
-# <snippetGrant-ColumnAccess-Example>
+# </GetSecuredColumnListAdminOnlyExample>
+# <GrantColumnAccessExample>
 <#
 .SYNOPSIS
     Grants column-level access permissions to a user or team for a specific record.
@@ -785,8 +794,8 @@ function Grant-ColumnAccess-Example {
    }
 
 }
-# </snippetGrant-ColumnAccess-Example>
-# <snippetModify-ColumnAccess-Example>
+# </GrantColumnAccessExample>
+# <ModifyColumnAccessExample>
 <#
 .SYNOPSIS
     Modifies existing column-level access permissions for a user or team on a specific record.
@@ -928,8 +937,8 @@ function Modify-ColumnAccess-Example {
       throw "Failed to update PrincipalObjectAttributeAccess record: $_.Exception.Message"
    }
 }
-# </snippetModify-ColumnAccess-Example>
-# <snippetRevoke-ColumnAccess-Example>
+# </ModifyColumnAccessExample>
+# <RevokeColumnAccessExample>
 <#
 .SYNOPSIS
     Revokes column-level access permissions for a user or team on a specific record.
@@ -1055,8 +1064,8 @@ function Revoke-ColumnAccess-Example {
       throw "Failed to delete PrincipalObjectAttributeAccess record: $_.Exception.Message"
    }
 }
-# </snippetRevoke-ColumnAccess-Example>
-# <snippetGet-TableSetNameAndColumnId-Example>
+# </RevokeColumnAccessExample>
+# <GetTableSetNameAndColumnIdExample>
 <#
 .SYNOPSIS
     Retrieves table entity set name and column metadata ID for a specified table and column.
@@ -1171,4 +1180,4 @@ function Get-TableSetNameAndColumnId-Example {
       throw "Failed retrieve table and column information: $_.Exception.Message"
    }
 }
-# </snippetGet-TableSetNameAndColumnId-Example>
+# </GetTableSetNameAndColumnIdExample>
