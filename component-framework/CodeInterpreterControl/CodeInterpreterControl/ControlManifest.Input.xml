@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="CodeInterpreterSample" constructor="CodeInterpreterControl" version="0.0.1" display-name-key="CodeInterpreterControl_Display_Key" description-key="CodeInterpreterControl_Desc_Key" control-type="standard" >
+    <property name="modelId" display-name-key="ModelId_Display_Key" description-key="ModelId_Desc_Key" of-type="SingleLine.Text" usage="input" required="true" />
+    <property name="entityId" display-name-key="EntityId_Display_Key" description-key="EntityId_Desc_Key" of-type="SingleLine.Text" usage="input" required="true" />
+    <property name="Unused" display-name-key="Unused_Display_Key" description-key="Unused_Desc_Key" of-type="SingleLine.Text" usage="bound" required="false" />
+
+    <external-service-usage enabled="false">
+    </external-service-usage>
+
+    <resources>
+      <code path="index.ts" order="1"/>
+      <resx path="strings/CodeInterpreterControl.1033.resx" version="1.0.0" />
+    </resources>
+  </control>
+</manifest>

@@ -1,0 +1,23 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+
+# generated directory
+**/generated
+
+# output directory
+/out
+
+# msbuild output directories
+/bin
+/obj
+
+# MSBuild Binary and Structured Log
+*.binlog
+
+# Visual Studio cache/options directory
+/.vs
+
+# macos
+.DS_Store
