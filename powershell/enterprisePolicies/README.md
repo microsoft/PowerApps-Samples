@@ -4,7 +4,7 @@ The Enterprise Policies scripts have moved to a different repository on github.
 
 ## Where
 
-You can find it here: https://github.com/microsoft/PowerPlatform-EnteprisePolicies
+You can find it here: https://github.com/microsoft/PowerPlatform-EnterprisePolicies
 
 ## What changes?
 
