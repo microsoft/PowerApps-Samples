@@ -43,7 +43,7 @@ You can try this sample without building it or writing any code. In the `solutio
 
 |Solution|Description|
 |---|---|
-|[solutions/CodeInterpreterControlSolution.zip](CodeInterpreterControlSolution.zip)|Contains the PCF control for the code in this sample.|
+|[solutions/CodeInterpreterControlSolution.zip](solutions/CodeInterpreterControlSolution.zip)|Contains the PCF control for the code in this sample.|
 |[CodeInterpreterSample_1_0_0_0_managed.zip](solutions/CodeInterpreterSample_1_0_0_0_managed.zip)|Contains items to enable demonstrating the control without depending on existing tables:<br />- A custom table named `sample_example`.<br /><br />- A model-driven application that includes data from the `sample_example` table.<br /><br />- Three code interpreter enabled AI models (prompts) that reference columns from the `sample_example` table.|
 
 1. [Import](https://learn.microsoft.com/power-apps/maker/data-platform/import-update-export-solutions) the `CodeInterpreterSample_1_0_0_0_managed.zip` and `CodeInterpreterControlSolution.zip` into your environment.
