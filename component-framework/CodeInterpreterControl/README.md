@@ -60,8 +60,8 @@ You can try this sample without building it or writing any code. In the `solutio
 1. Click the pencil icon to edit the app.
 1. In the app, locate the **Examples form** and click the pencil icon to edit the form.
 1. Select the section of the form with the title **Add PCF components here**.
-1. Select **Component** > expand **More components** and drag **Code Interpreter Control** to the **Add PCF components here** section.
-1. In the **Model ID** field, enter  either `6ed18606-78da-4903-a868-73c7b462b336` for the **Example Sales Proposal document** AI model or `b412c9a3-1b4f-45c4-956d-33bd4412be33` for the **Example Interactive Row Summary Chart** AI model.
+1. Select **Component** > expand **More components** and drag **Code Interpreter Control** to the **Add PCF components here** section. If the **Code Interpreter Control** is not visible, select **Get more compponents** and locate and add the control. 
+1. In the **Model ID** field, enter  either `b412c9a3-1b4f-45c4-956d-33bd4412be33` for the **Example Sales Proposal document** AI model or `6ed18606-78da-4903-a868-73c7b462b336` for the **Example Interactive Row Summary Chart** AI model.
 
    **Note**: These ID values are known because they are set in the **Code Interpreter Sample** solution you installed in the first step. If you use a different ai model, you will need to query the [AI Model (msdyn_AIModel) table](https://learn.microsoft.com/power-apps/developer/data-platform/reference/entities/msdyn_aimodel) to get the `msdyn_aimodelid` value to use instead.
 
@@ -71,7 +71,7 @@ You can try this sample without building it or writing any code. In the `solutio
 
 1. Click **Save and publish** then **Back**
 1. Click the play button in the upper right corner.
-1. Select one of the **Active Example** records and observe code interpreter display either an interactive chart or document preview + download based on the **Model ID** chosen above.
+1. Select one of the **Active Example** records and observe code interpreter display either an interactive chart or document preview + download based on the **Model ID** chosen above. If you see the message *"Access denied. You don't have permission to use this model"*, you may be lacking [AI Builder capacity](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/code-interpreter?tabs=sdk#insufficient-capacity).
 
 ## Build this sample
 
