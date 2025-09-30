@@ -60,7 +60,10 @@ You can try this sample without building it or writing any code. In the `solutio
 1. Click the pencil icon to edit the app.
 1. In the app, locate the **Examples form** and click the pencil icon to edit the form.
 1. Select the section of the form with the title **Add PCF components here**.
-1. Select **Component** > expand **More components** and drag **Code Interpreter Control** to the **Add PCF components here** section.
+1. Select **Component** from the menu and select **Get More components** at the bottom of the screen.
+1. In the **Get More components** fly out, search for 'Code Interpreter Control'.
+1. Select the control and select **Add**. You will now see the **More components** section with the **Code Interpreter Control** in the **Components** pane.
+1. Drag **Code Interpreter Control** to the **Add PCF components here** section.
 1. In the **Model ID** field, enter either `b412c9a3-1b4f-45c4-956d-33bd4412be33` for the **Example Sales Proposal document** AI model or `6ed18606-78da-4903-a868-73c7b462b336` for the **Example Interactive Row Summary Chart** AI model.
 
    **Note**: These ID values are known because they are set in the **Code Interpreter Sample** solution you installed in the first step. If you use a different ai model, you will need to query the [AI Model (msdyn_AIModel) table](https://learn.microsoft.com/power-apps/developer/data-platform/reference/entities/msdyn_aimodel) to get the `msdyn_aimodelid` value to use instead.
