@@ -1663,6 +1663,44 @@ function New-Table {
       -AllMatches | % { $_.Matches }
    return [System.Guid]::New($selectedString.Value.ToString())
 }
+
+<#
+.SYNOPSIS
+   A function to remove a table from Dataverse.
+
+.DESCRIPTION
+   This function sends a DELETE request to a specified URI to remove a table from Dataverse. 
+   It uses resilient REST method to handle potential network issues.
+
+.PARAMETER tableLogicalName
+   The logical name of the table to be removed.
+
+.EXAMPLE
+   Remove-Table -tableLogicalName "new_bankaccount"
+
+.NOTES
+   The function requires a global variable $baseURI and $baseHeaders to be set before it is called.
+   The function also calls another function Invoke-ResilientRestMethod which is not defined in this snippet.
+   The function does not return any value.
+   WARNING: This operation is irreversible. Once a table is deleted, all data and metadata associated with it will be permanently lost.
+#>
+function Remove-Table {
+   param (
+      [Parameter(Mandatory)] 
+      [String] 
+      $tableLogicalName
+   )
+
+   $deleteHeaders = $baseHeaders.Clone()
+   $deleteHeaders.Add('Consistency', 'Strong')
+
+   $DeleteRequest = @{
+      Uri     = $baseURI + "EntityDefinitions(LogicalName='$tableLogicalName')"
+      Method  = 'Delete'
+      Headers = $deleteHeaders
+   }
+   Invoke-ResilientRestMethod -request $DeleteRequest | Out-Null
+}
 <#
 .SYNOPSIS
    A function to remove an option value from a column in a Datverse table.

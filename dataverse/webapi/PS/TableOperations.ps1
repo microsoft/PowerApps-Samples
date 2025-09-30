@@ -15,6 +15,9 @@ The name of the entity set to retrieve records from. This parameter is mandatory
 .PARAMETER query
 The query parameters to filter, sort, or select the records. This parameter is mandatory.
 
+.PARAMETER strongConsistency
+When true, requests Strong Consistency for the query. This parameter is optional. Default is false.
+
 .EXAMPLE
 (Get-Records -setName accounts -query '?$select=name&$top=10').value
 This example gets the name of the first 10 accounts from Dataverse.
@@ -36,13 +39,18 @@ function Get-Records {
       $setName,
       [Parameter(Mandatory)] 
       [String] 
-      $query
+      $query,
+      [bool] 
+      $strongConsistency = $false
    )
    $uri = $baseURI + $setName + $query
    # Header for GET operations that have annotations
    $getHeaders = $baseHeaders.Clone()
    $getHeaders.Add('If-None-Match', $null)
    $getHeaders.Add('Prefer', 'odata.include-annotations="*"')
+   if ($strongConsistency) {
+      $getHeaders.Add('Consistency', 'Strong')
+   }
    $RetrieveMultipleRequest = @{
       Uri     = $uri
       Method  = 'Get'
@@ -66,6 +74,12 @@ The name of the entity set to create a record in. This parameter is mandatory.
 .PARAMETER body
 A hashtable of attributes and values for the new record. This parameter is mandatory.
 
+.PARAMETER solutionUniqueName
+A string representing the unique name of the solution that a new solution component is created in. This parameter is optional.
+
+.PARAMETER strongConsistency
+When true, requests Strong Consistency for the operation. This parameter is optional. Default is false.
+
 .EXAMPLE
 $contactRafelShillo = @{
    'firstname' = 'Rafel'
@@ -86,11 +100,22 @@ function New-Record {
       $setName,
       [Parameter(Mandatory)] 
       [hashtable]
-      $body
+      $body,
+      [string]
+      $solutionUniqueName = $null,
+      [bool]
+      $strongConsistency = $false
    )
 
    $postHeaders = $baseHeaders.Clone()
    $postHeaders.Add('Content-Type', 'application/json')
+   if($strongConsistency) {
+      $postHeaders.Add('Consistency', 'Strong')
+   }
+
+   if($solutionUniqueName) {
+      $postHeaders.Add('MSCRM.SolutionUniqueName', $solutionUniqueName)
+   } 
    
    $CreateRequest = @{
       Uri     = $baseURI + $setName
@@ -227,6 +252,12 @@ The GUID of the record to update. This parameter is mandatory.
 .PARAMETER body
 A hashtable of attributes and values for the updated record. This parameter is mandatory.
 
+.PARAMETER solutionUniqueName
+A string representing the unique name of the solution that a new solution component is created in. This parameter is optional.
+
+.PARAMETER strongConsistency
+When true, requests Strong Consistency for the operation. This parameter is optional. Default is false.
+
 .EXAMPLE
 $body = @{
    'annualincome' = 80000
@@ -253,13 +284,22 @@ function Update-Record {
       $id,
       [Parameter(Mandatory)] 
       [hashtable]
-      $body
+      $body,
+      [string]
+      $solutionUniqueName = $null,
+      [bool]
+      $strongConsistency = $false
+
    )
    $uri = $baseURI + $setName
    $uri = $uri + '(' + $id.Guid + ')'
    # Header for Update operations
    $updateHeaders = $baseHeaders.Clone()
    $updateHeaders.Add('Content-Type', 'application/json')
+   if($strongConsistency) {
+      $updateHeaders.Add('Consistency', 'Strong')
+   }
+
    $updateHeaders.Add('If-Match', '*') # Prevent Create
    $UpdateRequest = @{
       Uri     = $uri
@@ -358,6 +398,9 @@ The name of the entity set that contains the record to be added to the collectio
 .PARAMETER id
 The GUID of the record to be added to the collection. This parameter is mandatory.
 
+.PARAMETER strongConsistency
+When true, requests Strong Consistency for the operation. This parameter is optional. Default is false.
+
 .EXAMPLE
 Add-ToCollection `
    -targetSetName 'accounts' `
@@ -386,13 +429,18 @@ function Add-ToCollection {
       $setName,
       [Parameter(Mandatory)] 
       [Guid] 
-      $id
+      $id,
+      [bool] 
+      $strongConsistency = $false
    )
    $uri = '{0}{1}({2})/{3}/$ref' `
       -f $baseURI, $targetSetName, $targetId, $collectionName
 
    $headers = $baseHeaders.Clone()
    $headers.Add('Content-Type', 'application/json')
+   if ($strongConsistency) {
+      $headers.Add('Consistency', 'Strong')
+   }
 
    # Must use absolute URI
    $recordUri = '{0}{1}({2})' `
@@ -482,6 +530,9 @@ The name of the entity set to delete the record from. This parameter is mandator
 .PARAMETER id
 The GUID of the record to delete. This parameter is mandatory.
 
+.PARAMETER strongConsistency
+When true, requests Strong Consistency for the operation. This parameter is optional. Default is false.
+
 .EXAMPLE
 Remove-Record `
    -setName accounts `
@@ -513,4 +564,76 @@ function Remove-Record {
       Headers = $deleteHeaders
    }
    Invoke-ResilientRestMethod $DeleteRequest
+}
+
+<#
+.SYNOPSIS
+Creates multiple records in a Dataverse table.
+
+.DESCRIPTION
+The Create-MultipleRecords function uses the Invoke-ResilientRestMethod function to send a POST request to the Dataverse API.
+It constructs the request URI by appending the entity set name and the CreateMultiple action to the base URI.
+It also adds the necessary headers and converts the body hashtable array to JSON format. It creates multiple records 
+in a single request and returns the GUID IDs of the created records.
+
+.PARAMETER setName
+The name of the entity set to create records in. This parameter is mandatory.
+
+.PARAMETER targets
+An array of hashtables, each representing attributes and values for a new record. This parameter is mandatory.
+
+.PARAMETER strongConsistency
+When true, requests Strong Consistency for the operation. This parameter is optional. Default is false.
+
+.EXAMPLE
+$contacts = @(
+   @{ 
+      '@odata.type'   = 'Microsoft.Dynamics.CRM.contact'
+      firstname = 'John'
+      lastname = 'Doe' 
+   },
+   @{ 
+      '@odata.type'   = 'Microsoft.Dynamics.CRM.contact'
+      firstname = 'Jane'
+      lastname = 'Smith' 
+    }
+)
+
+$ids = Create-MultipleRecords `
+   -setName 'contacts' `
+   -targets $contacts
+
+This example creates two new contact records with the specified attributes.
+#>
+
+function Create-MultipleRecords {
+   param (
+      [Parameter(Mandatory)] 
+      [String] 
+      $setName,
+      [Parameter(Mandatory)] 
+      [hashtable[]] 
+      $targets,
+      [bool] 
+      $strongConsistency = $false
+   )
+   $body = @{
+      'Targets' = $targets
+   }
+
+   $uri = $baseURI + $setName + '/Microsoft.Dynamics.CRM.CreateMultiple'
+   $postHeaders = $baseHeaders.Clone()
+   $postHeaders.Add('Content-Type', 'application/json')
+   if($strongConsistency) {
+      $postHeaders.Add('Consistency', 'Strong')
+   }
+
+   $CreateMultipleRequest = @{
+      Uri     = $uri
+      Method  = 'Post'
+      Headers = $postHeaders
+      Body    = ConvertTo-Json $body -Depth 5 # 5 should be enough for most cases, the default is 2.
+   }
+   $response = Invoke-ResilientRestMethod -request $CreateMultipleRequest
+   return $response.Ids
 }
