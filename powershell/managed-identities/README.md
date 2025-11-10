@@ -1,5 +1,7 @@
 # Managed identities for Azure PowerShell scripts to use for Azure Synapse Link for Dataverse
 
+The scripts are moved to https://github.com/microsoft/PowerPlatform-EnterprisePolicies/tree/main/Source/Identity
+
 These scripts are used to configure Azure Synapse Link for Dataverse to use managed identities for Azure.
 </br>
 Please note that these scripts are provided under MIT license and its usage is the sole responsibility of the user.
