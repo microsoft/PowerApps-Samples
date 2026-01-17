@@ -31,70 +31,7 @@ namespace PowerPlatform_Dataverse_CodeSamples
         private static int? _localeId;
         private static int? _timeZoneCode;
 
-        /// <summary>
-        /// Contains the application's configuration settings.
-        /// </summary>
-        IConfiguration Configuration { get; }
-
-        /// <summary>
-        /// Constructor. Loads the application configuration settings from a JSON file.
-        /// </summary>
-        Program()
-        {
-            // Get the path to the appsettings file. If the environment variable is set,
-            // use that file path. Otherwise, use the runtime folder's settings file.
-            string? path = Environment.GetEnvironmentVariable("DATAVERSE_APPSETTINGS");
-            if (path == null) path = "appsettings.json";
-
-            // Load the app's configuration settings from the JSON file.
-            Configuration = new ConfigurationBuilder()
-                .AddJsonFile(path, optional: false, reloadOnChange: true)
-                .Build();
-        }
-
-        static void Main(string[] args)
-        {
-            Program app = new();
-
-            // Create a Dataverse service client using the default connection string.
-            ServiceClient serviceClient =
-                new(app.Configuration.GetConnectionString("default"));
-
-            if (!serviceClient.IsReady)
-            {
-                Console.WriteLine("Failed to connect to Dataverse.");
-                Console.WriteLine("Error: {0}", serviceClient.LastError);
-                return;
-            }
-
-            Console.WriteLine("Connected to Dataverse.");
-            Console.WriteLine();
-
-            try
-            {
-                // Run all time zone demonstrations
-                RetrieveCurrentUsersSettings(serviceClient);
-                RetrieveAllTimeZonesForLocale(serviceClient);
-                GetTimeZoneCodeByLocaleAndName(serviceClient);
-                RetrieveTimeZoneById(serviceClient);
-                RetrieveTimeZonesLessThan50(serviceClient);
-                RetrieveLocalTimeFromUTCTime(serviceClient, new DateTime(1981, 6, 6, 9, 5, 0));
-                RetrieveUTCTimeFromLocalTime(serviceClient, new DateTime(2012, 1, 1, 0, 0, 0));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("An error occurred:");
-                Console.WriteLine(ex.Message);
-            }
-            finally
-            {
-                // Pause program execution before resource cleanup.
-                Console.WriteLine();
-                Console.WriteLine("Press any key to exit.");
-                Console.ReadKey();
-                serviceClient.Dispose();
-            }
-        }
+        #region Sample demonstration methods
 
         /// <summary>
         /// Retrieves the current user's time zone code and locale ID
@@ -300,5 +237,76 @@ namespace PowerPlatform_Dataverse_CodeSamples
             Console.WriteLine($"Time zone code: {_timeZoneCode.Value}");
             Console.WriteLine();
         }
+
+        #endregion
+
+        #region Application setup and Main method
+
+        /// <summary>
+        /// Contains the application's configuration settings.
+        /// </summary>
+        IConfiguration Configuration { get; }
+
+        /// <summary>
+        /// Constructor. Loads the application configuration settings from a JSON file.
+        /// </summary>
+        Program()
+        {
+            // Get the path to the appsettings file. If the environment variable is set,
+            // use that file path. Otherwise, use the runtime folder's settings file.
+            string? path = Environment.GetEnvironmentVariable("DATAVERSE_APPSETTINGS");
+            if (path == null) path = "appsettings.json";
+
+            // Load the app's configuration settings from the JSON file.
+            Configuration = new ConfigurationBuilder()
+                .AddJsonFile(path, optional: false, reloadOnChange: true)
+                .Build();
+        }
+
+        static void Main(string[] args)
+        {
+            Program app = new();
+
+            // Create a Dataverse service client using the default connection string.
+            ServiceClient serviceClient =
+                new(app.Configuration.GetConnectionString("default"));
+
+            if (!serviceClient.IsReady)
+            {
+                Console.WriteLine("Failed to connect to Dataverse.");
+                Console.WriteLine("Error: {0}", serviceClient.LastError);
+                return;
+            }
+
+            Console.WriteLine("Connected to Dataverse.");
+            Console.WriteLine();
+
+            try
+            {
+                // Run all time zone demonstrations
+                RetrieveCurrentUsersSettings(serviceClient);
+                RetrieveAllTimeZonesForLocale(serviceClient);
+                GetTimeZoneCodeByLocaleAndName(serviceClient);
+                RetrieveTimeZoneById(serviceClient);
+                RetrieveTimeZonesLessThan50(serviceClient);
+                RetrieveLocalTimeFromUTCTime(serviceClient, new DateTime(1981, 6, 6, 9, 5, 0));
+                RetrieveUTCTimeFromLocalTime(serviceClient, new DateTime(2012, 1, 1, 0, 0, 0));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred:");
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                // Pause program execution before resource cleanup.
+                Console.WriteLine();
+                Console.WriteLine("Press any key to exit.");
+                Console.ReadKey();
+                serviceClient.Dispose();
+            }
+        }
+
+        #endregion
     }
 }
