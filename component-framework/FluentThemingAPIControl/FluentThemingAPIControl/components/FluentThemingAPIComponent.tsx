@@ -1,6 +1,6 @@
 import * as React from "react";
 import { IInputs } from "../generated/ManifestTypes";
-import { makeStyles, shorthands } from "@fluentui/react-components";
+import { makeStyles, shorthands, type Theme } from "@fluentui/react-components";
 import { FluentV9InheritanceFromPlatformComponent } from "./FluentV9InheritanceFromPlatformComponent";
 import { FluentV9ThemingAPIComponent } from "./FluentV9ThemingAPIComponent";
 import { FluentV8ThemingAPIComponent } from "./FluentV8ThemingAPIComponent";
@@ -27,16 +27,19 @@ export const FluentThemingAPIComponent: React.FC<IFluentThemingAPIComponentProps
 		return (
 			<div className={styles.root}>
 				<div className={styles.child}>
-					<FluentV9InheritanceFromPlatformComponent theme={fluentDesignLanguage.tokenTheme} />
+					<FluentV9InheritanceFromPlatformComponent theme={fluentDesignLanguage.tokenTheme as Theme} />
 				</div>
 				<div className={styles.child}>
-					<FluentV9ThemingAPIComponent theme={fluentDesignLanguage.tokenTheme} />
+					<FluentV9ThemingAPIComponent theme={fluentDesignLanguage.tokenTheme as Theme} />
 				</div>
 				<div className={styles.child}>
-					<FluentV8ThemingAPIComponent theme={fluentDesignLanguage.tokenTheme} brand={fluentDesignLanguage.brand} />
+					<FluentV8ThemingAPIComponent
+						theme={fluentDesignLanguage.tokenTheme as Theme}
+						brand={fluentDesignLanguage.brand}
+					/>
 				</div>
 				<div className={styles.child}>
-					<NonFluentThemingAPIComponent theme={fluentDesignLanguage.tokenTheme} />
+					<NonFluentThemingAPIComponent theme={fluentDesignLanguage.tokenTheme as Theme} />
 				</div>
 			</div>
 		);

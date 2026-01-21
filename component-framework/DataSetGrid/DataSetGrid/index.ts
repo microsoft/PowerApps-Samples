@@ -1,13 +1,13 @@
 ﻿/*
-	This file is part of the Microsoft PowerApps code samples. 
-	Copyright (C) Microsoft Corporation.  All rights reserved. 
-	This source code is intended only as a supplement to Microsoft Development Tools and/or  
-	on-line documentation.  See these other materials for detailed information regarding  
-	Microsoft code samples. 
+	This file is part of the Microsoft PowerApps code samples.
+	Copyright (C) Microsoft Corporation.  All rights reserved.
+	This source code is intended only as a supplement to Microsoft Development Tools and/or
+	on-line documentation.  See these other materials for detailed information regarding
+	Microsoft code samples.
 
-	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER  
-	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF  
-	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. 
+	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
@@ -49,18 +49,23 @@ export class DataSetGrid implements ComponentFramework.StandardControl<IInputs, 
 	 * @param state A piece of data that persists in one session for a single user. Can be set at any point in a controls life cycle by calling 'setControlState' in the Mode interface.
 	 * @param container If a control is marked control-type='standard', it will receive an empty div element within which it can render its content.
 	 */
-	public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container: HTMLDivElement): void {
+	public init(
+		context: ComponentFramework.Context<IInputs>,
+		notifyOutputChanged: () => void,
+		state: ComponentFramework.Dictionary,
+		container: HTMLDivElement
+	): void {
 		// Need to track container resize so that control could get the available width. The available height won't be provided even this is true
 		context.mode.trackContainerResize(true);
 
-		// Create main table container div. 
+		// Create main table container div.
 		this.mainContainer = document.createElement("div");
 
-		// Create data table container div. 
+		// Create data table container div.
 		this.gridContainer = document.createElement("div");
 		this.gridContainer.classList.add("DataSetControl_grid-container");
 
-		// Create data table container div. 
+		// Create data table container div.
 		this.loadPageButton = document.createElement("button");
 		this.loadPageButton.setAttribute("type", "button");
 		this.loadPageButton.innerText = context.resources.getString("PCF_DataSetControl_LoadMore_ButtonLabel");
@@ -74,7 +79,6 @@ export class DataSetGrid implements ComponentFramework.StandardControl<IInputs, 
 		this.mainContainer.classList.add("DataSetControl_main-container");
 		container.appendChild(this.mainContainer);
 	}
-
 
 	/**
 	 * Called when any value in the property bag has changed. This includes field values, data-sets, global values such as container height and width, offline status, control metadata values such as label, visible, etc.
@@ -102,15 +106,15 @@ export class DataSetGrid implements ComponentFramework.StandardControl<IInputs, 
 		this.mainContainer.style.maxHeight = `${window.innerHeight - this.gridContainer.offsetTop - 75}px`;
 	}
 
-	/** 
-	 * It is called by the framework prior to a control receiving new data. 
+	/**
+	 * It is called by the framework prior to a control receiving new data.
 	 * @returns an object based on nomenclature defined in manifest, expecting object[s] for property marked as "bound" or "output"
 	 */
 	public getOutputs(): IOutputs {
 		return {};
 	}
 
-	/** 
+	/**
 	 * Called when the control is to be removed from the DOM tree. Controls should use this call for cleanup.
 	 * i.e. cancelling any pending remote calls, removing listeners, etc.
 	 */
@@ -120,7 +124,7 @@ export class DataSetGrid implements ComponentFramework.StandardControl<IInputs, 
 
 	/**
 	 * Get sorted columns on view
-	 * @param context 
+	 * @param context
 	 * @return sorted columns object on View
 	 */
 	private getSortedColumnsOnView(context: ComponentFramework.Context<IInputs>): DataSetInterfaces.Column[] {
@@ -128,11 +132,10 @@ export class DataSetGrid implements ComponentFramework.StandardControl<IInputs, 
 			return [];
 		}
 
-		const columns = context.parameters.dataSetGrid.columns
-			.filter((columnItem: DataSetInterfaces.Column) => {
-				// some column are supplementary and their order is not > 0
-				return columnItem.order >= 0;
-			});
+		const columns = context.parameters.dataSetGrid.columns.filter((columnItem: DataSetInterfaces.Column) => {
+			// some column are supplementary and their order is not > 0
+			return columnItem.order >= 0;
+		});
 
 		// Sort those columns so that they will be rendered in order
 		columns.sort((a: DataSetInterfaces.Column, b: DataSetInterfaces.Column) => {
@@ -168,21 +171,21 @@ export class DataSetGrid implements ComponentFramework.StandardControl<IInputs, 
 
 					labelPara.textContent = `${columnItem.displayName} : `;
 					gridRecord.appendChild(labelPara);
-					if (gridParam.records[currentRecordId].getFormattedValue(columnItem.name) != null && gridParam.records[currentRecordId].getFormattedValue(columnItem.name) != "") {
+					if (
+						gridParam.records[currentRecordId].getFormattedValue(columnItem.name) != null &&
+						gridParam.records[currentRecordId].getFormattedValue(columnItem.name) != ""
+					) {
 						valuePara.textContent = gridParam.records[currentRecordId].getFormattedValue(columnItem.name);
 						gridRecord.appendChild(valuePara);
-					}
-					else {
+					} else {
 						valuePara.textContent = "-";
 						gridRecord.appendChild(valuePara);
 					}
-
 				});
 
 				gridBody.appendChild(gridRecord);
 			}
-		}
-		else {
+		} else {
 			const noRecordLabel: HTMLDivElement = document.createElement("div");
 			noRecordLabel.classList.add("DataSetControl_grid-norecords");
 			noRecordLabel.style.width = `${this.contextObj.mode.allocatedWidth - 25}px`;
@@ -192,7 +195,6 @@ export class DataSetGrid implements ComponentFramework.StandardControl<IInputs, 
 
 		return gridBody;
 	}
-
 
 	/**
 	 * Row Click Event handler for the associated row when being clicked
@@ -207,7 +209,7 @@ export class DataSetGrid implements ComponentFramework.StandardControl<IInputs, 
 				entityName: entityReference.name,
 				entityId: entityReference.id.guid,
 			};
-			this.contextObj.navigation.openForm(entityFormOptions);
+			void this.contextObj.navigation.openForm(entityFormOptions);
 		}
 	}
 
@@ -215,13 +217,17 @@ export class DataSetGrid implements ComponentFramework.StandardControl<IInputs, 
 	 * Toggle 'LoadMore' button when needed
 	 */
 	private toggleLoadMoreButtonWhenNeeded(gridParam: DataSet): void {
-		if (gridParam.paging.hasNextPage && this.loadPageButton.classList.contains(DataSetControl_LoadMoreButton_Hidden_Style)) {
+		if (
+			gridParam.paging.hasNextPage &&
+			this.loadPageButton.classList.contains(DataSetControl_LoadMoreButton_Hidden_Style)
+		) {
 			this.loadPageButton.classList.remove(DataSetControl_LoadMoreButton_Hidden_Style);
-		}
-		else if (!gridParam.paging.hasNextPage && !this.loadPageButton.classList.contains(DataSetControl_LoadMoreButton_Hidden_Style)) {
+		} else if (
+			!gridParam.paging.hasNextPage &&
+			!this.loadPageButton.classList.contains(DataSetControl_LoadMoreButton_Hidden_Style)
+		) {
 			this.loadPageButton.classList.add(DataSetControl_LoadMoreButton_Hidden_Style);
 		}
-
 	}
 
 	/**

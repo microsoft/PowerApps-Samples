@@ -13,7 +13,9 @@ export class FacepileReact implements ComponentFramework.ReactControl<IInputs, I
 	/**
 	 * Empty constructor.
 	 */
-	constructor() {}
+	constructor() {
+		// Empty
+	}
 
 	/**
 	 * Used to initialize the control instance. Controls can kick off remote server calls and other initialization actions here.
@@ -29,6 +31,7 @@ export class FacepileReact implements ComponentFramework.ReactControl<IInputs, I
 		state: ComponentFramework.Dictionary
 	): void {
 		this.notifyOutputChanged = notifyOutputChanged;
+		// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
 		this.props.numberOfFaces = context.parameters.numberOfFaces.raw || DEFAULT_NUMBER_OF_FACES;
 	}
 
@@ -37,7 +40,8 @@ export class FacepileReact implements ComponentFramework.ReactControl<IInputs, I
 	 * @param context The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to names defined in the manifest, as well as utility functions
 	 */
 	public updateView(context: ComponentFramework.Context<IInputs>): React.ReactElement {
-		if (context.updatedProperties.indexOf("numberOfFaces") > -1) {
+		if (context.updatedProperties.includes("numberOfFaces")) {
+			// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
 			this.props.numberOfFaces = context.parameters.numberOfFaces.raw || DEFAULT_NUMBER_OF_FACES;
 		}
 		return React.createElement(FacepileBasicExample, this.props);

@@ -270,7 +270,7 @@
             this.Controls.Add(this.panelM);
             this.Controls.Add(this.panelL);
             this.Name = "frmGraphViewer";
-            this.Text = "ER Viwer";
+            this.Text = "ER Viewer";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmGraphViewer_FormClosing);
             this.Load += new System.EventHandler(this.frmGraphViewer_Load);
             this.panelL.ResumeLayout(false);

@@ -1,46 +1,45 @@
 /*
-	This file is part of the Microsoft PowerApps code samples. 
-	Copyright (C) Microsoft Corporation.  All rights reserved. 
-	This source code is intended only as a supplement to Microsoft Development Tools and/or  
-	on-line documentation.  See these other materials for detailed information regarding  
-	Microsoft code samples. 
+	This file is part of the Microsoft PowerApps code samples.
+	Copyright (C) Microsoft Corporation.  All rights reserved.
+	This source code is intended only as a supplement to Microsoft Development Tools and/or
+	on-line documentation.  See these other materials for detailed information regarding
+	Microsoft code samples.
 
-	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER  
-	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF  
-	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. 
+	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
- 
-.SampleNamespace\.ImageUploadControl button{
+
+.SampleNamespace\.ImageUploadControl button {
 	text-decoration: none;
-    display: block;
-    font-size: 14px;
-    margin: 4px 6px;
-    cursor: pointer;
+	display: block;
+	font-size: 14px;
+	margin: 4px 6px;
+	cursor: pointer;
 	color: white;
-    border-radius: 0px;
+	border-radius: 0px;
 	background-color: rgb(59, 121, 183);
-    border: none;
-    padding: 5px;
-    text-align: center;
+	border: none;
+	padding: 5px;
+	text-align: center;
 }
 
-.SampleNamespace\.ImageUploadControl img{
-    display: block;
-    box-shadow: 0 5px 10px 0 rgba(30, 30, 30, 0.3);
-    width: 100px;
-    height: 100px;
+.SampleNamespace\.ImageUploadControl img {
+	display: block;
+	box-shadow: 0 5px 10px 0 rgba(30, 30, 30, 0.3);
+	width: 100px;
+	height: 100px;
 }
 
-.SampleNamespace\.ImageUploadControl .NoImage>.RemoveButton {
-    display: none;
+.SampleNamespace\.ImageUploadControl .NoImage > .RemoveButton {
+	display: none;
 }
 
-
-.SampleNamespace\.ImageUploadControl label{
-    display: none;
+.SampleNamespace\.ImageUploadControl label {
+	display: none;
 }
 
-.SampleNamespace\.ImageUploadControl .ShowError>label{
-    display: block;
-    color: red;
+.SampleNamespace\.ImageUploadControl .ShowError > label {
+	display: block;
+	color: red;
 }

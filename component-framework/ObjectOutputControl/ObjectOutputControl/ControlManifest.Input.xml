@@ -2,7 +2,7 @@
 <manifest>
   <control namespace="SampleNamespace" constructor="ObjectOutputControl" version="0.0.1" display-name-key="ObjectOutputControl" description-key="ObjectOutputControl description" control-type="virtual" >
     <property name="sampleProperty" display-name-key="Property_Display_Key" description-key="Property_Desc_Key" of-type="SingleLine.Text" usage="bound" required="false" />
-    
+
     <!-- A hidden property used by Canvas to get the output object schema -->
     <property name="DataSchema" display-name-key="DataSchema" description-key="DataSchema" of-type="SingleLine.Text" usage="input" hidden="true"/>
     <!-- The object type output property -->
@@ -15,8 +15,8 @@
 
     <resources>
       <code path="index.ts" order="1"/>
-      <platform-library name="React" version="16.8.6" />
-      <platform-library name="Fluent" version="8.29.0" />
+      <platform-library name="React" version="16.14.0" />
+      <platform-library name="Fluent" version="8.121.1" />
     </resources>
   </control>
 </manifest>

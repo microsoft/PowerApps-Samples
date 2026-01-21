@@ -1,25 +1,24 @@
 /*
-	This file is part of the Microsoft PowerApps code samples. 
-	Copyright (C) Microsoft Corporation.  All rights reserved. 
-	This source code is intended only as a supplement to Microsoft Development Tools and/or  
-	on-line documentation.  See these other materials for detailed information regarding  
-	Microsoft code samples. 
+	This file is part of the Microsoft PowerApps code samples.
+	Copyright (C) Microsoft Corporation.  All rights reserved.
+	This source code is intended only as a supplement to Microsoft Development Tools and/or
+	on-line documentation.  See these other materials for detailed information regarding
+	Microsoft code samples.
 
-	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER  
-	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF  
-	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. 
+	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 
-// Key used to store the selected color into the context object to persist across navigations 
+// Key used to store the selected color into the context object to persist across navigations
 const PERSISTED_SELECTED_COLOR_KEY_NAME = "selectedColor";
 
-// Key used to store the selected color into the context object to persist across navigations 
+// Key used to store the selected color into the context object to persist across navigations
 const PERSISTED_SELECTED_LABEL_KEY_NAME = "selectedLabel";
 
-export class ControlStateAPI implements ComponentFramework.StandardControl<IInputs, IOutputs>
-{
+export class ControlStateAPI implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 	// Flag if control view has been rendered
 	private _controlViewRendered: boolean;
 
@@ -48,8 +47,8 @@ export class ControlStateAPI implements ComponentFramework.StandardControl<IInpu
 	private _buttonGreen: HTMLButtonElement;
 
 	/**
-	* Empty constructor.
-	*/
+	 * Empty constructor.
+	 */
 	constructor() {
 		// no-op: method not leveraged by this example custom control
 	}
@@ -62,7 +61,12 @@ export class ControlStateAPI implements ComponentFramework.StandardControl<IInpu
 	 * @param state A piece of data that persists in one session for a single user. Can be set at any point in a controls life cycle by calling 'setControlState' in the Mode interface.
 	 * @param container If a control is marked control-type='standard', it will receive an empty div element within which it can render its content.
 	 */
-	public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container: HTMLDivElement): void {
+	public init(
+		context: ComponentFramework.Context<IInputs>,
+		notifyOutputChanged: () => void,
+		state: ComponentFramework.Dictionary,
+		container: HTMLDivElement
+	): void {
 		this._controlViewRendered = false;
 		this._container = document.createElement("div");
 		this._context = context;
@@ -70,16 +74,15 @@ export class ControlStateAPI implements ComponentFramework.StandardControl<IInpu
 		this._container.classList.add("ControlState_Container");
 		container.appendChild(this._container);
 
-
 		// Check if state was persisted from the last time the control was loaded.
 		if (state) {
-			// If you are storing a collection of key value pairs as part of the state object, maintain a local copy of it so that it can be used to 
+			// If you are storing a collection of key value pairs as part of the state object, maintain a local copy of it so that it can be used to
 			// add, update or remove keys during the control life cycle.
 			this._stateDictionary = state;
 
 			// Retrieve persisted state and set values into variables so state can be used during control rendering.
-			this._persistedSelectedColor = state[PERSISTED_SELECTED_COLOR_KEY_NAME];
-			this._persistedSelectedLabel = state[PERSISTED_SELECTED_LABEL_KEY_NAME];
+			this._persistedSelectedColor = state[PERSISTED_SELECTED_COLOR_KEY_NAME] as string;
+			this._persistedSelectedLabel = state[PERSISTED_SELECTED_LABEL_KEY_NAME] as string;
 		}
 
 		// State not perisited in control -- set variable to default values
@@ -119,7 +122,11 @@ export class ControlStateAPI implements ComponentFramework.StandardControl<IInpu
 
 			// Render 'selected color' display area
 			this.renderSelectedColorElement();
-			this.updateSelectedColorElement(this._selectedColorElement, this._persistedSelectedLabel, this._persistedSelectedColor);
+			this.updateSelectedColorElement(
+				this._selectedColorElement,
+				this._persistedSelectedLabel,
+				this._persistedSelectedColor
+			);
 
 			// Mark the control view as rendered so we do not re-render next time this method is invoked
 			this._controlViewRendered = true;
@@ -128,8 +135,8 @@ export class ControlStateAPI implements ComponentFramework.StandardControl<IInpu
 
 	/**
 	 * Creates an HTML Div Element with the provided label
-	 * 
-	 * @param labelText : label for the div 
+	 *
+	 * @param labelText : label for the div
 	 */
 	private renderLabelDivElement(labelText: string): HTMLDivElement {
 		const div: HTMLDivElement = document.createElement("div");
@@ -140,7 +147,7 @@ export class ControlStateAPI implements ComponentFramework.StandardControl<IInpu
 
 	/**
 	 * Renders a button element that the user can click to select a color
-	 * 
+	 *
 	 * @param label : label for the button (color name)
 	 * @param color : Hex code for the color
 	 */
@@ -150,7 +157,7 @@ export class ControlStateAPI implements ComponentFramework.StandardControl<IInpu
 		button.setAttribute("value", label);
 		button.setAttribute("buttonColor", color);
 		button.classList.add("ControlState_ButtonClass");
-		button.addEventListener("click", event => this.onButtonClick(event, this._selectedColorElement));
+		button.addEventListener("click", (event) => this.onButtonClick(event, this._selectedColorElement));
 
 		return button;
 	}
@@ -158,8 +165,8 @@ export class ControlStateAPI implements ComponentFramework.StandardControl<IInpu
 	/**
 	 * This method updates the selected color element to reflect the last color the user selected.
 	 * The label and background color will be updated to reflect the selected color.
-	 * 
-	 * @param selectedColorElement element to make the changes to 
+	 *
+	 * @param selectedColorElement element to make the changes to
 	 * @param label new label for the selectedColorElement
 	 * @param backgroundColor new background color for the selectedColorElement
 	 */
@@ -168,7 +175,7 @@ export class ControlStateAPI implements ComponentFramework.StandardControl<IInpu
 		this._selectedColorElement.style.backgroundColor = backgroundColor;
 	}
 
-	/** 
+	/**
 	 * Renders a div Element that will contain information regarding the last color the user selected
 	 */
 	private renderSelectedColorElement() {
@@ -181,9 +188,9 @@ export class ControlStateAPI implements ComponentFramework.StandardControl<IInpu
 	 * Onclick event handler for click of a color button
 	 * This method checks the button that was clicked (red / blue / green) and updates the selected color element
 	 * with the selected color as the element label and background
-	 * 
+	 *
 	 * @param event Click Event
-	 * @param selectedColorElement The HTML Div Element that the results should be injected into 
+	 * @param selectedColorElement The HTML Div Element that the results should be injected into
 	 */
 	private onButtonClick(event: Event, selectedColorElement: HTMLDivElement) {
 		const eventTarget: Element = event.target as Element;
@@ -200,22 +207,22 @@ export class ControlStateAPI implements ComponentFramework.StandardControl<IInpu
 			this._stateDictionary[PERSISTED_SELECTED_LABEL_KEY_NAME] = label;
 			this._stateDictionary[PERSISTED_SELECTED_COLOR_KEY_NAME] = selectedColor;
 
-			// Store the state dictionary object into the setControlState interface method to allow the 
+			// Store the state dictionary object into the setControlState interface method to allow the
 			// selected data to persist within the user session
 			// In scenarios where you don't need a collection of key value pairs but just one key value pair to be stored, just pass that object to the setControlState method.
 			this._context.mode.setControlState(this._stateDictionary);
 		}
 	}
 
-	/** 
-	 * It is called by the framework prior to a control receiving new data. 
+	/**
+	 * It is called by the framework prior to a control receiving new data.
 	 * @returns an object based on nomenclature defined in manifest, expecting object[s] for property marked as "bound" or "output"
 	 */
 	public getOutputs(): IOutputs {
 		return {};
 	}
 
-	/** 
+	/**
 	 * Called when the control is to be removed from the DOM tree. Controls should use this call for cleanup.
 	 * i.e. cancelling any pending remote calls, removing listeners, etc.
 	 */

@@ -1,19 +1,18 @@
 /*
-	This file is part of the Microsoft PowerApps code samples. 
-	Copyright (C) Microsoft Corporation.  All rights reserved. 
-	This source code is intended only as a supplement to Microsoft Development Tools and/or  
-	on-line documentation.  See these other materials for detailed information regarding  
-	Microsoft code samples. 
+	This file is part of the Microsoft PowerApps code samples.
+	Copyright (C) Microsoft Corporation.  All rights reserved.
+	This source code is intended only as a supplement to Microsoft Development Tools and/or
+	on-line documentation.  See these other materials for detailed information regarding
+	Microsoft code samples.
 
-	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER  
-	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF  
-	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. 
+	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 
-export class WebAPIControl implements ComponentFramework.StandardControl<IInputs, IOutputs>
-{
+export class WebAPIControl implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 	// Reference to the control container HTMLDivElement
 	// This element contains all elements of our custom control example
 	private _container: HTMLDivElement;
@@ -61,7 +60,12 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 	 * @param state A piece of data that persists in one session for a single user. Can be set at any point in a controls life cycle by calling 'setControlState' in the Mode interface.
 	 * @param container If a control is marked control-type='standard', it will receive an empty div element within which it can render its content.
 	 */
-	public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container: HTMLDivElement): void {
+	public init(
+		context: ComponentFramework.Context<IInputs>,
+		notifyOutputChanged: () => void,
+		state: ComponentFramework.Dictionary,
+		container: HTMLDivElement
+	): void {
 		this._context = context;
 		this._controlViewRendered = false;
 		this._container = document.createElement("div");
@@ -89,8 +93,8 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 		}
 	}
 
-	/** 
-	 * It is called by the framework prior to a control receiving new data. 
+	/**
+	 * It is called by the framework prior to a control receiving new data.
 	 * @returns an object based on nomenclature defined in manifest, expecting object[s] for property marked as "bound" or "output"
 	 */
 	public getOutputs(): IOutputs {
@@ -98,7 +102,7 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 		return {};
 	}
 
-	/** 
+	/**
 	 * Called when the control is to be removed from the DOM tree. Controls should use this call for cleanup.
 	 * i.e. cancelling any pending remote calls, removing listeners, etc.
 	 */
@@ -106,12 +110,16 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 		// no-op: method not leveraged by this example custom control
 	}
 
-	/** 
+	/**
 	 * Renders example use of CreateRecord Web API
 	 */
 	private renderCreateExample() {
 		// Create header label for Web API sample
-		const headerDiv: HTMLDivElement = this.createHTMLDivElement("create_container", true, `Click to create ${WebAPIControl._entityName} record`);
+		const headerDiv: HTMLDivElement = this.createHTMLDivElement(
+			"create_container",
+			true,
+			`Click to create ${WebAPIControl._entityName} record`
+		);
 		this._container.appendChild(headerDiv);
 
 		// Create button 1 to create record with revenue field set to 100
@@ -120,7 +128,8 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 			this.getCreateRecordButtonLabel(value1),
 			this.getCreateButtonId(value1),
 			value1,
-			this.createButtonOnClickHandler.bind(this));
+			this.createButtonOnClickHandler.bind(this)
+		);
 
 		// Create button 2 to create record with revenue field set to 200
 		const value2 = "200";
@@ -128,7 +137,8 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 			this.getCreateRecordButtonLabel(value2),
 			this.getCreateButtonId(value2),
 			value2,
-			this.createButtonOnClickHandler.bind(this));
+			this.createButtonOnClickHandler.bind(this)
+		);
 
 		// Create button 3 to create record with revenue field set to 300
 		const value3 = "300";
@@ -136,7 +146,8 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 			this.getCreateRecordButtonLabel(value3),
 			this.getCreateButtonId(value3),
 			value3,
-			this.createButtonOnClickHandler.bind(this));
+			this.createButtonOnClickHandler.bind(this)
+		);
 
 		// Append all button HTML elements to custom control container div
 		this._container.appendChild(this._createEntity1Button);
@@ -144,33 +155,42 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 		this._container.appendChild(this._createEntity3Button);
 	}
 
-	/** 
+	/**
 	 * Renders example use of DeleteRecord Web API
 	 */
 	private renderDeleteExample(): void {
 		// Create header label for Web API sample
-		const headerDiv: HTMLDivElement = this.createHTMLDivElement("delete_container", true, `Click to delete ${WebAPIControl._entityName} record`);
+		const headerDiv: HTMLDivElement = this.createHTMLDivElement(
+			"delete_container",
+			true,
+			`Click to delete ${WebAPIControl._entityName} record`
+		);
 
 		// Render button to invoke DeleteRecord Web API call
 		this._deleteRecordButton = this.createHTMLButtonElement(
 			"Select record to delete",
 			"delete_button",
 			null,
-			this.deleteButtonOnClickHandler.bind(this));
+			this.deleteButtonOnClickHandler.bind(this)
+		);
 
 		// Append elements to custom control container div
 		this._container.appendChild(headerDiv);
 		this._container.appendChild(this._deleteRecordButton);
 	}
 
-	/** 
+	/**
 	 * Renders example use of RetrieveMultiple Web API with OData
 	 */
 	private renderODataRetrieveMultipleExample(): void {
 		const containerClassName = "odata_status_container";
 
 		// Create header label for Web API sample
-		const statusDivHeader: HTMLDivElement = this.createHTMLDivElement(containerClassName, true, "Click to refresh record count");
+		const statusDivHeader: HTMLDivElement = this.createHTMLDivElement(
+			containerClassName,
+			true,
+			"Click to refresh record count"
+		);
 		this._odataStatusContainerDiv = this.createHTMLDivElement(containerClassName, false, undefined);
 
 		// Create button to invoke OData RetrieveMultiple Example
@@ -178,7 +198,8 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 			"Refresh record count",
 			"odata_refresh",
 			null,
-			this.refreshRecordCountButtonOnClickHandler.bind(this));
+			this.refreshRecordCountButtonOnClickHandler.bind(this)
+		);
 
 		// Append HTML elements to custom control container div
 		this._container.appendChild(statusDivHeader);
@@ -186,15 +207,18 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 		this._container.appendChild(this._fetchXmlRefreshButton);
 	}
 
-	/** 
+	/**
 	 * Renders example use of RetrieveMultiple Web API with Fetch XML
 	 */
 	private renderFetchXmlRetrieveMultipleExample(): void {
 		const containerName = "fetchxml_status_container";
 
 		// Create header label for Web API sample
-		const statusDivHeader: HTMLDivElement = this.createHTMLDivElement(containerName, true,
-			`Click to calculate average value of ${WebAPIControl._currencyAttributeNameFriendlyName}`);
+		const statusDivHeader: HTMLDivElement = this.createHTMLDivElement(
+			containerName,
+			true,
+			`Click to calculate average value of ${WebAPIControl._currencyAttributeNameFriendlyName}`
+		);
 		const statusDiv: HTMLDivElement = this.createHTMLDivElement(containerName, false, undefined);
 
 		// Create button to invoke Fetch XML RetrieveMultiple Web API example
@@ -202,7 +226,8 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 			`Calculate average value of ${WebAPIControl._currencyAttributeNameFriendlyName}`,
 			"odata_refresh",
 			null,
-			this.calculateAverageButtonOnClickHandler.bind(this));
+			this.calculateAverageButtonOnClickHandler.bind(this)
+		);
 
 		// Append HTML Elements to custom control container div
 		this._container.appendChild(statusDivHeader);
@@ -210,13 +235,16 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 		this._container.appendChild(this._oDataRefreshButton);
 	}
 
-	/** 
-	 * Renders a 'result container' div element to inject the status of the example Web API calls 
+	/**
+	 * Renders a 'result container' div element to inject the status of the example Web API calls
 	 */
 	private renderResultsDiv() {
 		// Render header label for result container
-		const resultDivHeader: HTMLDivElement = this.createHTMLDivElement("result_container", true,
-			"Result of last action");
+		const resultDivHeader: HTMLDivElement = this.createHTMLDivElement(
+			"result_container",
+			true,
+			"Result of last action"
+		);
 		this._container.appendChild(resultDivHeader);
 
 		// Div elements to populate with the result text
@@ -231,7 +259,7 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 	 * Event Handler for onClick of create record button
 	 * @param event : click event
 	 */
-	private createButtonOnClickHandler(event: Event): void {
+	private createButtonOnClickHandler(event: Event): Promise<void> {
 		// Retrieve the value to set the currency field to from the button's attribute
 		const currencyAttributeValue: number = parseInt(
 			(event.target as Element)?.attributes?.getNamedItem("buttonvalue")?.value ?? "0"
@@ -247,7 +275,7 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 		data[WebAPIControl._currencyAttributeName] = currencyAttributeValue;
 
 		// Invoke the Web API to creat the new record
-		this._context.webAPI.createRecord(WebAPIControl._entityName, data).then(
+		return this._context.webAPI.createRecord(WebAPIControl._entityName, data).then(
 			(response: ComponentFramework.LookupValue) => {
 				// Callback method for successful creation of new record
 
@@ -255,7 +283,7 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 				const id: string = response.id;
 
 				// Generate HTML to inject into the result div to showcase the fields and values of the new record created
-				let resultHtml = `Created new ${  WebAPIControl._entityName  } record with below values:`;
+				let resultHtml = `Created new ${WebAPIControl._entityName} record with below values:`;
 				resultHtml += "<br />";
 				resultHtml += "<br />";
 				resultHtml += `id: ${id}`;
@@ -267,6 +295,7 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 				resultHtml += `${WebAPIControl._currencyAttributeName}: ${currencyAttributeValue}`;
 
 				this.updateResultContainerText(resultHtml);
+				return;
 			},
 			(errorResponse) => {
 				// Error handling code here - record failed to be created
@@ -279,33 +308,33 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 	 * Event Handler for onClick of delete record button
 	 * @param event : click event
 	 */
-	private deleteButtonOnClickHandler(): void {
+	private deleteButtonOnClickHandler(): Promise<void> {
 		// Invoke a lookup dialog to allow the user to select an existing record of type _entityName to delete
-		const lookUpOptions: any =
-		{
-			entityTypes: [WebAPIControl._entityName]
+		const lookUpOptions = {
+			entityTypes: [WebAPIControl._entityName],
 		};
 
 		const lookUpPromise = this._context.utils.lookupObjects(lookUpOptions);
 
-		lookUpPromise.then(
+		return lookUpPromise.then(
 			// Callback method - invoked after user has selected an item from the lookup dialog
 			// Data parameter is the item selected in the lookup dialog
 			(data: ComponentFramework.LookupValue[]) => {
-				if (data && data[0]) {
+				if (data?.[0]) {
 					// Get the ID and entityType of the record selected by the lookup
 					const id: string = data[0].id;
 					const entityType: string = data[0].entityType;
 
 					// Invoke the deleteRecord method of the WebAPI to delete the selected record
-					this._context.webAPI.deleteRecord(entityType, id).then(
+					return this._context.webAPI.deleteRecord(entityType, id).then(
 						(response: ComponentFramework.LookupValue) => {
 							// Record was deleted successfully
 							const responseId: string = response.id;
 							const responseEntityType: string = response.entityType;
 
-							// Generate HTML to inject into the result div to showcase the deleted record 
+							// Generate HTML to inject into the result div to showcase the deleted record
 							this.updateResultContainerText(`Deleted ${responseEntityType} record with ID: ${responseId}`);
+							return;
 						},
 						(errorResponse) => {
 							// Error handling code here
@@ -313,6 +342,7 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 						}
 					);
 				}
+				return;
 			},
 			(error) => {
 				// Error handling code here
@@ -325,7 +355,7 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 	 * Event Handler for onClick of calculate average value button
 	 * @param event : click event
 	 */
-	private calculateAverageButtonOnClickHandler(): void {
+	private calculateAverageButtonOnClickHandler(): Promise<void> {
 		// Build FetchXML to retrieve the average value of _currencyAttributeName field for all _entityName records
 		// Add a filter to only aggregate on records that have _currencyAttributeName not set to null
 		let fetchXML = "<fetch distinct='false' mapping='logical' aggregate='true'>";
@@ -338,14 +368,15 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 		fetchXML += "</fetch>";
 
 		// Invoke the Web API RetrieveMultipleRecords method to calculate the aggregate value
-		this._context.webAPI.retrieveMultipleRecords(WebAPIControl._entityName, `?fetchXml=${  fetchXML}`).then(
+		return this._context.webAPI.retrieveMultipleRecords(WebAPIControl._entityName, `?fetchXml=${fetchXML}`).then(
 			(response: ComponentFramework.WebApi.RetrieveMultipleResponse) => {
-				// Retrieve multiple completed successfully -- retrieve the averageValue 
-				const averageVal: number = response.entities[0].average_val;
+				// Retrieve multiple completed successfully -- retrieve the averageValue
+				const averageVal: number = response.entities[0].average_val as number;
 
 				// Generate HTML to inject into the result div to showcase the result of the RetrieveMultiple Web API call
 				const resultHTML = `Average value of ${WebAPIControl._currencyAttributeNameFriendlyName} attribute for all ${WebAPIControl._entityName} records: ${averageVal}`;
 				this.updateResultContainerText(resultHTML);
+				return;
 			},
 			(errorResponse) => {
 				// Error handling code here
@@ -358,13 +389,13 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 	 * Event Handler for onClick of calculate record count button
 	 * @param event : click event
 	 */
-	private refreshRecordCountButtonOnClickHandler(): void {
+	private refreshRecordCountButtonOnClickHandler(): Promise<void> {
 		// Generate OData query string to retrieve the _currencyAttributeName field for all _entityName records
 		// Add a filter to only retrieve records with _requiredAttributeName field which contains _requiredAttributeValue
-		const queryString = `?$select=${WebAPIControl._currencyAttributeName  }&$filter=contains(${WebAPIControl._requiredAttributeName},'${WebAPIControl._requiredAttributeValue}')`;
+		const queryString = `?$select=${WebAPIControl._currencyAttributeName}&$filter=contains(${WebAPIControl._requiredAttributeName},'${WebAPIControl._requiredAttributeValue}')`;
 
 		// Invoke the Web API Retrieve Multiple call
-		this._context.webAPI.retrieveMultipleRecords(WebAPIControl._entityName, queryString).then(
+		return this._context.webAPI.retrieveMultipleRecords(WebAPIControl._entityName, queryString).then(
 			(response: ComponentFramework.WebApi.RetrieveMultipleResponse) => {
 				// Retrieve Multiple Web API call completed successfully
 				let count1 = 0;
@@ -374,16 +405,14 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 				// Loop through each returned record
 				for (const entity of response.entities) {
 					// Retrieve the value of _currencyAttributeName field
-					const value: number = entity[WebAPIControl._currencyAttributeName];
+					const value: number = entity[WebAPIControl._currencyAttributeName] as number;
 
 					// Check the value of _currencyAttributeName field and increment the correct counter
 					if (value == 100) {
 						count1++;
-					}
-					else if (value == 200) {
+					} else if (value == 200) {
 						count2++;
-					}
-					else if (value == 300) {
+					} else if (value == 300) {
 						count3++;
 					}
 				}
@@ -405,6 +434,7 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 
 				// Inject a success message into the result div
 				this.updateResultContainerText("Record count refreshed");
+				return;
 			},
 			(errorResponse) => {
 				// Error handling code here
@@ -427,12 +457,12 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 	 * Helper method to inject error string into result container div after failed Web API call
 	 * @param errorResponse : error object from rejected promise
 	 */
-	private updateResultContainerTextWithErrorResponse(errorResponse: any): void {
+	private updateResultContainerTextWithErrorResponse(errorResponse: unknown): void {
 		if (this._resultContainerDiv) {
 			// Retrieve the error message from the errorResponse and inject into the result div
 			let errorHTML = "Error with Web API call:";
 			errorHTML += "<br />";
-			errorHTML += errorResponse.message;
+			errorHTML += (errorResponse as { message: string }).message;
 			this._resultContainerDiv.innerHTML = errorHTML;
 		}
 	}
@@ -460,7 +490,12 @@ export class WebAPIControl implements ComponentFramework.StandardControl<IInputs
 	 * @param buttonValue : value of button (attribute of button)
 	 * @param onClickHandler : onClick event handler to invoke for the button
 	 */
-	private createHTMLButtonElement(buttonLabel: string, buttonId: string, buttonValue: string | null, onClickHandler: (event?: any) => void): HTMLButtonElement {
+	private createHTMLButtonElement(
+		buttonLabel: string,
+		buttonId: string,
+		buttonValue: string | null,
+		onClickHandler: (event: Event) => void
+	): HTMLButtonElement {
 		const button: HTMLButtonElement = document.createElement("button");
 		button.innerHTML = buttonLabel;
 

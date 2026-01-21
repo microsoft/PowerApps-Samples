@@ -15,7 +15,7 @@
       <uses-feature name="Device.captureAudio" required="true" />
       <uses-feature name="Device.captureVideo" required="true" />
       <uses-feature name="Device.getBarcodeValue" required="true" />
-	  <!--
+      <!--
       <uses-feature name="Utility" required="true" />
       <uses-feature name="WebAPI" required="true" />
       -->

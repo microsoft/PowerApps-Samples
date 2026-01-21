@@ -1,0 +1,8 @@
+﻿Greetings, Mr. Andreshak,
+
+This is a sample letter activity as part of the SDK Samples.
+
+Sincerely,
+Mary Kay Andersen
+
+cc: Denise Smith

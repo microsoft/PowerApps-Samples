@@ -1,6 +1,6 @@
 # Power Platform Data Loss Prevention (DLP) SDK 
 
-This topic introduces the capabilities of the DLP SDKs and shows you how DLP can help you manage your tenant and environment policy with experiences ranging from creating, reading, updating to removing DLP policy. More information : [https://docs.microsoft.com/power-platform/admin/wp-data-loss-prevention]([https://docs.microsoft.com/power-platform/admin/wp-data-loss-prevention).
+This topic introduces the capabilities of the DLP SDKs and shows you how DLP can help you manage your tenant and environment policy with experiences ranging from creating, reading, updating to removing DLP policy. More information : [https://learn.microsoft.com/power-platform/admin/wp-data-loss-prevention]([https://learn.microsoft.com/power-platform/admin/wp-data-loss-prevention).
 
 ## What this sample does
 

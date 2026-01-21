@@ -5,14 +5,14 @@ This file is based on or incorporates material from the projects listed below (T
 Bootstrap v3.3.7 - Copyright (c) 2011-2016 Twitter, Inc.
 
 Provided for Informational Purposes Only
-MIT License 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the Software), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: 
+MIT License
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the Software), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF 
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND 
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE 
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION 
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 */
@@ -21,86 +21,103 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * Bootstrap v3.3.7 (http://getbootstrap.com)
  * Copyright 2011-2016 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- *//*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+ */ /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
- /* Below CSS are based on Boostrap v3.3.7 */
-.SampleNamespace\.JSAngularJSFlipControl pre {
-	display : block;
-	padding : 9.5px;
-	margin : 0 0 10px;
-	font-size : 13px;
-	line-height : 1.42857143;
-	color :  #333;
-	word-break : break-all;
-	word-wrap : break-word;
-	background-color :  #f5f5f5;
-	border : 1px solid #ccc;
-	border-radius : 4px
+/* Below CSS are based on Boostrap v3.3.7 */
+.SampleNamespace\.AngularJSFlipControl pre {
+	display: block;
+	padding: 9.5px;
+	margin: 0 0 10px;
+	font-size: 13px;
+	line-height: 1.42857143;
+	color: #333;
+	word-break: break-all;
+	word-wrap: break-word;
+	background-color: #f5f5f5;
+	border: 1px solid #ccc;
+	border-radius: 4px;
 }
-.SampleNamespace\.JSAngularJSFlipControl pre {
-	font-family : Menlo,
-	Monaco,
-	Consolas,
-	"Courier New",
-	monospace
+.SampleNamespace\.AngularJSFlipControl pre {
+	font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
 }
-.SampleNamespace\.JSAngularJSFlipControl pre {
-	overflow : auto
+.SampleNamespace\.AngularJSFlipControl pre {
+	overflow: auto;
 }
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary {
-	color :  #fff;
-	background-color :  #337ab7;
-	border-color :  #2e6da4
+.SampleNamespace\.AngularJSFlipControl .btn-primary {
+	color: #fff;
+	background-color: #337ab7;
+	border-color: #2e6da4;
 }
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary.focus, .SampleNamespace\.JSAngularJSFlipControl .btn-primary:focus {
-	color :  #fff;
-	background-color :  #286090;
-	border-color :  #122b40
+.SampleNamespace\.AngularJSFlipControl .btn-primary.focus,
+.SampleNamespace\.AngularJSFlipControl .btn-primary:focus {
+	color: #fff;
+	background-color: #286090;
+	border-color: #122b40;
 }
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary:hover {
-	color :  #fff;
-	background-color :  #286090;
-	border-color :  #204d74
+.SampleNamespace\.AngularJSFlipControl .btn-primary:hover {
+	color: #fff;
+	background-color: #286090;
+	border-color: #204d74;
 }
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary.active, .SampleNamespace\.JSAngularJSFlipControl .btn-primary:active, .open > .dropdown-toggle.btn-primary {
-	color :  #fff;
-	background-color :  #286090;
-	border-color :  #204d74
+.SampleNamespace\.AngularJSFlipControl .btn-primary.active,
+.SampleNamespace\.AngularJSFlipControl .btn-primary:active,
+.open > .dropdown-toggle.btn-primary {
+	color: #fff;
+	background-color: #286090;
+	border-color: #204d74;
 }
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary.active.focus, .SampleNamespace\.JSAngularJSFlipControl .btn-primary.active:focus, .SampleNamespace\.JSAngularJSFlipControl .btn-primary.active:hover, .SampleNamespace\.JSAngularJSFlipControl .btn-primary:active.focus, .SampleNamespace\.JSAngularJSFlipControl .btn-primary:active:focus, .SampleNamespace\.JSAngularJSFlipControl .btn-primary:active:hover, .open > .dropdown-toggle.btn-primary.focus, .open > .dropdown-toggle.btn-primary:focus, .open > .dropdown-toggle.btn-primary:hover {
-	color :  #fff;
-	background-color :  #204d74;
-	border-color :  #122b40
+.SampleNamespace\.AngularJSFlipControl .btn-primary.active.focus,
+.SampleNamespace\.AngularJSFlipControl .btn-primary.active:focus,
+.SampleNamespace\.AngularJSFlipControl .btn-primary.active:hover,
+.SampleNamespace\.AngularJSFlipControl .btn-primary:active.focus,
+.SampleNamespace\.AngularJSFlipControl .btn-primary:active:focus,
+.SampleNamespace\.AngularJSFlipControl .btn-primary:active:hover,
+.open > .dropdown-toggle.btn-primary.focus,
+.open > .dropdown-toggle.btn-primary:focus,
+.open > .dropdown-toggle.btn-primary:hover {
+	color: #fff;
+	background-color: #204d74;
+	border-color: #122b40;
 }
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary.active, .SampleNamespace\.JSAngularJSFlipControl .btn-primary:active, .open > .dropdown-toggle.btn-primary {
-	background-image : none
+.SampleNamespace\.AngularJSFlipControl .btn-primary.active,
+.SampleNamespace\.AngularJSFlipControl .btn-primary:active,
+.open > .dropdown-toggle.btn-primary {
+	background-image: none;
 }
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary.disabled.focus, .SampleNamespace\.JSAngularJSFlipControl .btn-primary.disabled:focus, .SampleNamespace\.JSAngularJSFlipControl .btn-primary.disabled:hover, .SampleNamespace\.JSAngularJSFlipControl .btn-primary[disabled].focus, .SampleNamespace\.JSAngularJSFlipControl .btn-primary[disabled]:focus, .SampleNamespace\.JSAngularJSFlipControl .btn-primary[disabled]:hover, fieldset[disabled].btn-primary.focus, fieldset[disabled].btn-primary:focus, fieldset[disabled].btn-primary:hover {
-	background-color :  #337ab7;
-	border-color :  #2e6da4
+.SampleNamespace\.AngularJSFlipControl .btn-primary.disabled.focus,
+.SampleNamespace\.AngularJSFlipControl .btn-primary.disabled:focus,
+.SampleNamespace\.AngularJSFlipControl .btn-primary.disabled:hover,
+.SampleNamespace\.AngularJSFlipControl .btn-primary[disabled].focus,
+.SampleNamespace\.AngularJSFlipControl .btn-primary[disabled]:focus,
+.SampleNamespace\.AngularJSFlipControl .btn-primary[disabled]:hover,
+fieldset[disabled].btn-primary.focus,
+fieldset[disabled].btn-primary:focus,
+fieldset[disabled].btn-primary:hover {
+	background-color: #337ab7;
+	border-color: #2e6da4;
 }
-.SampleNamespace\.JSAngularJSFlipControl .btn-primary.badge {
-	color :  #337ab7;
-	background-color :  #fff
+.SampleNamespace\.AngularJSFlipControl .btn-primary.badge {
+	color: #337ab7;
+	background-color: #fff;
 }
-.SampleNamespace\.JSAngularJSFlipControl .btn {
-	display : inline-block;
-	padding : 6px 12px;
-	margin-bottom : 0;
-	font-size : 14px;
-	font-weight : 400;
-	line-height : 1.42857143;
-	text-align : center;
-	white-space : nowrap;
-	vertical-align : middle;
-	-ms-touch-action : manipulation;
-	touch-action : manipulation;
-	cursor : pointer;
-	-webkit-user-select : none;
-	-moz-user-select : none;
-	-ms-user-select : none;
-	user-select : none;
-	background-image : none;
-	border : 1px solid transparent;
-	border-radius : 4px
+.SampleNamespace\.AngularJSFlipControl .btn {
+	display: inline-block;
+	padding: 6px 12px;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
 }

@@ -73,7 +73,9 @@ export const facepilePersonas: IFacepilePersona[] = [
 		initialsColor: PersonaInitialsColor.magenta,
 		data: "Emp1234",
 		onClick: (ev?: React.MouseEvent<HTMLElement>, persona?: IFacepilePersona): void => {
-			persona && alert(`You clicked on ${persona.personaName}. Extra data: ${persona.data}`);
+			if (persona) {
+				alert(`You clicked on ${persona.personaName}. Extra data: ${persona.data}`);
+			}
 		},
 	},
 	{

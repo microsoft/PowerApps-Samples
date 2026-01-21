@@ -2,10 +2,10 @@
 <manifest>
   <control namespace="SampleNamespace" constructor="DataSetGrid" version="1.1.0" display-name-key="DataSetGrid_Display_Key" description-key="DataSetGrid_Desc_Key" control-type="standard">
     <data-set name="dataSetGrid" display-name-key="DataSetGridProperty_Display_Key">
-	  </data-set>
+    </data-set>
     <resources>
       <code path="index.ts" order="1" />
-	  <css path="css/DataSetGrid.css" order="2" />
+      <css path="css/DataSetGrid.css" order="2" />
       <resx path="strings/DataSetGrid.1033.resx" version="1.0.0" />
     </resources>
   </control>

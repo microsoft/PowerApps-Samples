@@ -1,11 +1,17 @@
 import * as React from "react";
-import { Checkbox } from "office-ui-fabric-react/lib/Checkbox";
-import { Dropdown, IDropdownOption } from "office-ui-fabric-react/lib/Dropdown";
-import { Facepile, IFacepilePersona, IFacepileProps, OverflowButtonType } from "office-ui-fabric-react/lib/Facepile";
-import { PersonaSize } from "office-ui-fabric-react/lib/Persona";
-import { Slider } from "office-ui-fabric-react/lib/Slider";
+import {
+	setIconOptions,
+	PersonaSize,
+	IFacepileProps,
+	OverflowButtonType,
+	IFacepilePersona,
+	IDropdownOption,
+	Facepile,
+	Checkbox,
+	Dropdown,
+	Slider,
+} from "@fluentui/react";
 import { facepilePersonas } from "./FacepileExampleData";
-import { setIconOptions } from "office-ui-fabric-react/lib/Styling";
 
 // Suppress office UI fabric icon warnings.
 setIconOptions({
@@ -27,9 +33,10 @@ export class FacepileBasicExample extends React.Component<IFacepileBasicExampleP
 		super(props);
 
 		this.state = {
+			// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
 			numberOfFaces: props.numberOfFaces || 3,
 			imagesFadeIn: true,
-			personaSize: PersonaSize.size32
+			personaSize: PersonaSize.size32,
 		};
 	}
 
@@ -86,32 +93,26 @@ export class FacepileBasicExample extends React.Component<IFacepileBasicExampleP
 		ev: React.FormEvent<HTMLElement | HTMLInputElement> | undefined,
 		checked?: boolean
 	): void => {
-		this.setState(
-			(prevState: IFacepileBasicExampleState): IFacepileBasicExampleState => {
-				prevState.imagesFadeIn = !!checked;
-				return prevState;
-			}
-		);
+		this.setState((prevState: IFacepileBasicExampleState): IFacepileBasicExampleState => {
+			prevState.imagesFadeIn = !!checked;
+			return prevState;
+		});
 	};
 
 	private onChangePersonaNumber = (value: number): void => {
-		this.setState(
-			(prevState: IFacepileBasicExampleState): IFacepileBasicExampleState => {
-				prevState.numberOfFaces = value;
-				return prevState;
-			}
-		);
+		this.setState((prevState: IFacepileBasicExampleState): IFacepileBasicExampleState => {
+			prevState.numberOfFaces = value;
+			return prevState;
+		});
 		if (this.props.numberFacesChanged) {
 			this.props.numberFacesChanged(value);
 		}
 	};
 
 	private onChangePersonaSize = (event: React.FormEvent<HTMLDivElement>, value?: IDropdownOption): void => {
-		this.setState(
-			(prevState: IFacepileBasicExampleState): IFacepileBasicExampleState => {
-				prevState.personaSize = value ? (value.key as PersonaSize) : PersonaSize.size32;
-				return prevState;
-			}
-		);
+		this.setState((prevState: IFacepileBasicExampleState): IFacepileBasicExampleState => {
+			prevState.personaSize = value ? (value.key as PersonaSize) : PersonaSize.size32;
+			return prevState;
+		});
 	};
 }

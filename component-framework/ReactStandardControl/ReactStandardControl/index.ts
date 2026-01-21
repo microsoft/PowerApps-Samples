@@ -37,9 +37,15 @@ export class ReactStandardControl implements ComponentFramework.StandardControl<
 	 * @param state A piece of data that persists in one session for a single user. Can be set at any point in a controls life cycle by calling 'setControlState' in the Mode interface.
 	 * @param container If a control is marked control-type='standard', it will receive an empty div element within which it can render its content.
 	 */
-	public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container: HTMLDivElement): void {
+	public init(
+		context: ComponentFramework.Context<IInputs>,
+		notifyOutputChanged: () => void,
+		state: ComponentFramework.Dictionary,
+		container: HTMLDivElement
+	): void {
 		this.notifyOutputChanged = notifyOutputChanged;
-		this.props.numberOfFaces = context.parameters.numberOfFaces.raw || 3;
+			// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+			this.props.numberOfFaces = context.parameters.numberOfFaces.raw || 3;
 		this.theContainer = container;
 	}
 
@@ -48,15 +54,12 @@ export class ReactStandardControl implements ComponentFramework.StandardControl<
 	 * @param context The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to names defined in the manifest, as well as utility functions
 	 */
 	public updateView(context: ComponentFramework.Context<IInputs>): void {
-		if (context.updatedProperties.includes("numberOfFaces")) this.props.numberOfFaces = context.parameters.numberOfFaces.raw || 3;
+		if (context.updatedProperties.includes("numberOfFaces")) {
+			// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+			this.props.numberOfFaces = context.parameters.numberOfFaces.raw || 3;
+		}
 
-		ReactDOM.render(
-			React.createElement(
-				FacepileBasicExample,
-				this.props
-			),
-			this.theContainer
-		);
+		ReactDOM.render(React.createElement(FacepileBasicExample, this.props), this.theContainer);
 	}
 
 	private numberFacesChanged(newValue: number) {
@@ -72,7 +75,7 @@ export class ReactStandardControl implements ComponentFramework.StandardControl<
 	 */
 	public getOutputs(): IOutputs {
 		return {
-			numberOfFaces: this.props.numberOfFaces
+			numberOfFaces: this.props.numberOfFaces,
 		};
 	}
 

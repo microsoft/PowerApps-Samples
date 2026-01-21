@@ -1,17 +1,17 @@
 /*
-	This file is part of the Microsoft PowerApps code samples. 
-	Copyright (C) Microsoft Corporation.  All rights reserved. 
-	This source code is intended only as a supplement to Microsoft Development Tools and/or  
-	on-line documentation.  See these other materials for detailed information regarding  
-	Microsoft code samples. 
+	This file is part of the Microsoft PowerApps code samples.
+	Copyright (C) Microsoft Corporation.  All rights reserved.
+	This source code is intended only as a supplement to Microsoft Development Tools and/or
+	on-line documentation.  See these other materials for detailed information regarding
+	Microsoft code samples.
 
-	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER  
-	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF  
-	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. 
+	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 /**
- * This JS shows how to use a 3rd party libary to create a control in PowerApps Control Framework
+ * This JS shows how to use a 3rd party library to create a control in PowerApps Control Framework
  * Sample is based on angular.js, angular-ui, angular-animate, angular-sanitize, bootstrap for sampling purpose only
  * The code may not reveal the best practices for the mentioned 3rd party libraries
  */
@@ -58,12 +58,17 @@ export class AngularJSFlipControl implements ComponentFramework.StandardControl<
 	 * @param state A piece of data that persists in one session for a single user. Can be set at any point in a controls life cycle by calling 'setControlState' in the Mode interface.
 	 * @param container If a control is marked control-type='standard', it will receive an empty div element within which it can render its content.
 	 */
-	public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container: HTMLDivElement): void {
+	public init(
+		context: ComponentFramework.Context<IInputs>,
+		notifyOutputChanged: () => void,
+		state: ComponentFramework.Dictionary,
+		container: HTMLDivElement
+	): void {
 		// We need a random integer from 1-100, so that for a form of multiple fields bind to same attribute, we could differentiate
 		const randomInt: number = Math.floor(Math.floor(100) * Math.random());
 
 		this._appDivId = this.createUniqueId(context, "angularflip_controlid", randomInt);
-		this._appId = this.createUniqueId(context, "JSAngularJSFlipControl", randomInt);
+		this._appId = this.createUniqueId(context, "AngularJSFlipControl", randomInt);
 		this._controllerId = this.createUniqueId(context, "powerApps.angularui.demo", randomInt);
 		this._notifyOutputChanged = notifyOutputChanged;
 
@@ -81,40 +86,42 @@ export class AngularJSFlipControl implements ComponentFramework.StandardControl<
 
 		// Below sample html are from Angular-UI single toggle sample code
 		// https://angular-ui.github.io/bootstrap/
-		appDiv.innerHTML = "<pre>{{labelModel}}</pre><button type='button' class='btn btn-primary' ng-model='flipButtonModel' uib-btn-checkbox btn-checkbox-true='1' btn-checkbox-false='0'>Flip</button>";
+		appDiv.innerHTML =
+			"<pre>{{labelModel}}</pre><button type='button' class='btn btn-primary' ng-model='flipButtonModel' uib-btn-checkbox btn-checkbox-true='1' btn-checkbox-false='0'>Flip</button>";
 
 		// Container appends the HTML structure
 		container.appendChild(appDiv);
 
 		// Angular code. Angular module/controller initialization.
-		angular.module(this._controllerId, [require("angular-animate"), require("angular-sanitize"), require("angular-ui-bootstrap")]);
+		angular.module(this._controllerId, [ngAnimate, ngSanitize, uiBootstrap]);
 		angular.module(this._controllerId).controller(this._appId, ($scope) => {
 			// Intialize 'labelModel'. Assign initial option text to the Angular $scope labelModel. It will be revealed in '<pre>{{labelModel}}</pre>'
 			$scope.labelModel = this._currentValue ? this._optionTrueLabel : this._optionFalseLabel;
 
 			// Intialize 'flipButtonModel'. Assign bind attribute value to Angular $scope flipButtonModel. The Flip button also bind to this 'flipButtonModel', so when we click, it will flip
-			$scope.flipButtonModel = this._currentValue ? 1 : 0;
+			$scope.flipButtonModel = this._currentValue ? 0 : 1;
 
 			// Watch the click of the flip button
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 			$scope.$watchCollection("flipButtonModel", () => {
 				// Update the label text when Flip Button clicks
 				if ($scope.flipButtonModel) {
-					$scope.labelModel = this._optionTrueLabel;
-				}
-				else {
 					$scope.labelModel = this._optionFalseLabel;
+				} else {
+					$scope.labelModel = this._optionTrueLabel;
 				}
 
 				// Call updateOutputIfNeeded and inform PCF framework that bind attribute value need update
-				this.updateOutputIfNeeded($scope.flipButtonModel);
-
+				this.updateOutputIfNeeded(!$scope.flipButtonModel);
 			});
 		});
 
 		// Angular code. Create an App based on the new appDivId
 		angular.element(document).ready(() => {
 			const divId = document.getElementById(this._appDivId);
-			divId && angular.bootstrap(divId, [this._controllerId]);
+			if (divId) {
+				angular.bootstrap(divId, [this._controllerId]);
+			}
 		});
 	}
 
@@ -124,8 +131,12 @@ export class AngularJSFlipControl implements ComponentFramework.StandardControl<
 	 * @param passInString input string as suffix
 	 * @param randomInt random integer
 	 * @returns a string of uniqueId includes attribute logicalname + passIn specialized string + random Integer
-	*/
-	private createUniqueId(context: ComponentFramework.Context<IInputs>, passInString: string, randomInt: number): string {
+	 */
+	private createUniqueId(
+		context: ComponentFramework.Context<IInputs>,
+		passInString: string,
+		randomInt: number
+	): string {
 		return `${context.parameters?.flipModel.attributes?.LogicalName}-${passInString}${randomInt}`;
 	}
 
@@ -138,10 +149,9 @@ export class AngularJSFlipControl implements ComponentFramework.StandardControl<
 		const optionsMetadata = context.parameters.flipModel.attributes?.Options;
 		optionsMetadata?.forEach((option: ComponentFramework.PropertyHelper.OptionMetadata) => {
 			if (option.Value) {
-				this._optionTrueLabel = option.Label;
-			}
-			else {
 				this._optionFalseLabel = option.Label;
+			} else {
+				this._optionTrueLabel = option.Label;
 			}
 		});
 	}
@@ -155,11 +165,12 @@ export class AngularJSFlipControl implements ComponentFramework.StandardControl<
 			this._currentValue = newValue;
 
 			// Angular Code. Update the 'flipButtonModel' value
-			const $scope = angular.element(document.getElementById(this._appDivId) as HTMLElement).scope();
+			const $scope = angular.element(document.getElementById(this._appDivId)!).scope();
 
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			$scope.$apply(($scope: any) => {
 				// 'flipButtonModel' value is either 1 or 0
-				$scope.flipButtonModel = newValue ? 1 : 0;
+				$scope.flipButtonModel = newValue ? 0 : 1;
 			});
 		}
 	}
@@ -184,9 +195,8 @@ export class AngularJSFlipControl implements ComponentFramework.StandardControl<
 		this.updateFlipButtonModelIfNeeded(context.parameters.flipModel.raw);
 	}
 
-
-	/** 
-	 * It is called by the framework prior to a control receiving new data. 
+	/**
+	 * It is called by the framework prior to a control receiving new data.
 	 * @returns an object based on nomenclature defined in manifest, expecting object[s] for property marked as "bound" or "output"
 	 */
 	public getOutputs(): IOutputs {
@@ -194,7 +204,7 @@ export class AngularJSFlipControl implements ComponentFramework.StandardControl<
 		return { flipModel: returnValue };
 	}
 
-	/** 
+	/**
 	 * Called when the control is to be removed from the DOM tree. Controls should use this call for cleanup.
 	 * i.e. cancelling any pending remote calls, removing listeners, etc.
 	 */

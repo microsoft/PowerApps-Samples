@@ -1,13 +1,9 @@
-﻿using Microsoft.Xrm.Sdk.Messages;
+﻿using Microsoft.PowerPlatform.Dataverse.Client;
+using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Metadata;
-using Microsoft.Xrm.Tooling.Connector;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VisioApi = Microsoft.Office.Interop.Visio;
 
 namespace PowerApps.Samples
@@ -16,7 +12,7 @@ namespace PowerApps.Samples
     {
         // Specify which language code to use in the sample. If you are using a language
         // other than US English, you will need to modify this value accordingly.
-        // See http://msdn.microsoft.com/en-us/library/0h88fahh.aspx
+        // See https://learn.microsoft.com/previous-versions/windows/embedded/ms912047(v=winembedded.10)
         public const int _languageCode = 1033;
 
 
@@ -74,7 +70,7 @@ namespace PowerApps.Samples
         static string[] _excludedRelations = new string[] { "owningteam", "organizationid" };
 
 
-        public DiagramBuilder(CrmServiceClient service)
+        public DiagramBuilder(ServiceClient service)
         {
             // Build a hashtable from the array of excluded entities. This will
             // allow for faster lookups when determining if an entity is to be excluded.
@@ -90,24 +86,14 @@ namespace PowerApps.Samples
             }
             _processedRelationships = new ArrayList(128);
         }
-        private static void SetUpSample(CrmServiceClient service)
-        {
-            // Check that the current version is greater than the minimum version
-            if (!SampleHelpers.CheckVersion(service, new Version("7.1.0.0")))
-            {
-                //The environment version is lower than version 7.1.0.0
-                return;
-            }
-        }
 
-          
-            /// <summary>
-            /// Create a new page in a Visio file showing all the direct entity relationships participated in
-            /// by the passed-in array of entities.
-            /// </summary>
-            /// <param name="entities">Core entities for the diagram</param>
-            /// <param name="pageTitle">Page title</param>
-       private void BuildDiagram(CrmServiceClient service, string[] entities, string pageTitle)
+       /// <summary>
+        /// Create a new page in a Visio file showing all the direct entity relationships participated in
+        /// by the passed-in array of entities.
+        /// </summary>
+        /// <param name="entities">Core entities for the diagram</param>
+        /// <param name="pageTitle">Page title</param>
+       private void BuildDiagram(ServiceClient service, string[] entities, string pageTitle)
         {
             // Get the default page of our new document
             VisioApi.Page page = _document.Pages[1];
@@ -157,7 +143,7 @@ namespace PowerApps.Samples
         /// <param name="rect">Shape representing the core entity</param>
         /// <param name="relationshipCollection">Collection of entity relationships to draw</param>
         /// <param name="areReferencingRelationships">Whether or not the core entity is the referencing entity in the relationship</param>
-        private void DrawRelationships(CrmServiceClient service, EntityMetadata entity, VisioApi.Shape rect, RelationshipMetadataBase[] relationshipCollection, bool areReferencingRelationships)
+        private void DrawRelationships(ServiceClient service, EntityMetadata entity, VisioApi.Shape rect, RelationshipMetadataBase[] relationshipCollection, bool areReferencingRelationships)
         {
             ManyToManyRelationshipMetadata currentManyToManyRelationship = null;
             OneToManyRelationshipMetadata currentOneToManyRelationship = null;
@@ -325,7 +311,7 @@ namespace PowerApps.Samples
         /// <param name="entityName">The name of the entity</param>
         /// <param name="ownership">The ownership type of the entity</param>
         /// <returns>The newly drawn rectangle</returns>
-        private VisioApi.Shape DrawEntityRectangle(CrmServiceClient service, VisioApi.Page page, string entityName, OwnershipTypes ownership)
+        private VisioApi.Shape DrawEntityRectangle(ServiceClient service, VisioApi.Page page, string entityName, OwnershipTypes ownership)
         {
             VisioApi.Shape rect = page.DrawRectangle(X_POS1, Y_POS1, X_POS2, Y_POS2);
             rect.Name = entityName;
@@ -376,7 +362,7 @@ namespace PowerApps.Samples
         /// <param name="shapeFrom">Shape initiating the relationship</param>
         /// <param name="shapeTo">Shape referenced by the relationship</param>
         /// <param name="isManyToMany">Whether or not it is a many-to-many entity relationship</param>
-        private void DrawDirectionalDynamicConnector(CrmServiceClient service, VisioApi.Shape shapeFrom, VisioApi.Shape shapeTo, bool isManyToMany)
+        private void DrawDirectionalDynamicConnector(ServiceClient service, VisioApi.Shape shapeFrom, VisioApi.Shape shapeTo, bool isManyToMany)
         {
             // Add a dynamic connector to the page.
             VisioApi.Shape connectorShape = shapeFrom.ContainingPage.Drop(_application.ConnectorToolDataObject, 0.0, 0.0);
@@ -403,7 +389,7 @@ namespace PowerApps.Samples
         /// </summary>
         /// <param name="entityName">The name of the entity to find</param>
         /// <returns>NULL if the entity was not found, otherwise the entity's metadata</returns>
-        private EntityMetadata GetEntityMetadata(CrmServiceClient service, string entityName)
+        private EntityMetadata GetEntityMetadata(ServiceClient service, string entityName)
         {
             foreach (EntityMetadata md in _metadataResponse.EntityMetadata)
             {
@@ -422,7 +408,7 @@ namespace PowerApps.Samples
         /// <param name="entity">The entity metadata that contains the attribute</param>
         /// <param name="attributeName">The name of the attribute to find</param>
         /// <returns>NULL if the attribute was not found, otherwise the attribute's metadata</returns>
-        private AttributeMetadata GetAttributeMetadata(CrmServiceClient service, EntityMetadata entity, string attributeName)
+        private AttributeMetadata GetAttributeMetadata(ServiceClient service, EntityMetadata entity, string attributeName)
         {
             foreach (AttributeMetadata attrib in entity.Attributes)
             {

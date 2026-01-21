@@ -1,45 +1,40 @@
 /*
-	This file is part of the Microsoft PowerApps code samples. 
-	Copyright (C) Microsoft Corporation.  All rights reserved. 
-	This source code is intended only as a supplement to Microsoft Development Tools and/or  
-	on-line documentation.  See these other materials for detailed information regarding  
-	Microsoft code samples. 
+	This file is part of the Microsoft PowerApps code samples.
+	Copyright (C) Microsoft Corporation.  All rights reserved.
+	This source code is intended only as a supplement to Microsoft Development Tools and/or
+	on-line documentation.  See these other materials for detailed information regarding
+	Microsoft code samples.
 
-	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER  
-	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF  
-	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. 
+	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-.SampleNamespace\.WebAPIControl
-{
-	font-family: 'SegoeUI-Semibold', 'Segoe UI Semibold', 'Segoe UI Regular', 'Segoe UI';
-	color: #1160B7;
+.SampleNamespace\.WebAPIControl {
+	font-family: "SegoeUI-Semibold", "Segoe UI Semibold", "Segoe UI Regular", "Segoe UI";
+	color: #1160b7;
 }
 
-.SampleNamespace\.WebAPIControl .WebAPIControl_Container
-{
+.SampleNamespace\.WebAPIControl .WebAPIControl_Container {
 	overflow-x: auto;
 }
 
-.SampleNamespace\.WebAPIControl .SampleControl_WebAPIControl_Header
-{
+.SampleNamespace\.WebAPIControl .SampleControl_WebAPIControl_Header {
 	color: rgb(51, 51, 51);
 	font-size: 1rem;
 	padding-top: 20px;
 }
 
-.SampleNamespace\.WebAPIControl .result_container
-{
+.SampleNamespace\.WebAPIControl .result_container {
 	padding-bottom: 20px;
 }
 
-.SampleNamespace\.WebAPIControl .SampleControl_WebAPIControl_ButtonClass
-{
+.SampleNamespace\.WebAPIControl .SampleControl_WebAPIControl_ButtonClass {
 	text-decoration: none;
 	display: inline-block;
 	font-size: 14px;
 	cursor: pointer;
-	color: #1160B7;
-	background-color: #FFFFFF;
+	color: #1160b7;
+	background-color: #ffffff;
 	border: 1px solid black;
 	padding: 5px;
 	text-align: center;

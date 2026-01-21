@@ -1,0 +1,63 @@
+[
+	{
+		"name": "powerapps-pcf-increment-control",
+		"source": "PowerAppsDev",
+		"title": "Increment Power Apps component framework sample",
+		"shortDescription": "This sample component shows how to bind data with Power Apps component framework and error handling.",
+		"url": "https://github.com/microsoft/PowerApps-Samples/tree/master/component-framework/IncrementControl",
+		"downloadUrl": "https://github.com/microsoft/PowerApps-Samples/tree/master/component-framework/IncrementControl",
+		"longDescription": [
+			"This sample component shows how to bind data with Power Apps component framework and error handling. This component renders as a textbox with an **Increment** button in the runtime. The text box shows the current value and the **Increment** button is clickable. Whenever you click on the button, the value within the textbox is increased by 1. The increment value can be changed to any number you wish."
+		],
+		"creationDateTime": "2021-06-09",
+		"updateDateTime": "2023-08-01",
+		"products": ["PowerApps"],
+		"metadata": [
+			{
+				"key": "PowerApps-PCF-SAMPLE-SOURCE",
+				"value": "PowerAppsDev"
+			},
+			{
+				"key": "PowerApps-PCF-SAMPLE-LANGUAGE",
+				"value": "typescript"
+			},
+			{
+				"key": "PowerApps-PCF-SAMPLE-FEATURES",
+				"value": "increment control"
+			}
+		],
+		"thumbnails": [
+			{
+				"type": "image",
+				"order": 100,
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/media/increment-control.png",
+				"alt": "Preview of the sample"
+			}
+		],
+		"authors": [
+			{
+				"gitHubAccount": "JimDaly",
+				"pictureUrl": "https://avatars.githubusercontent.com/u/6353736?v=4",
+				"name": "Jim Daly"
+			}
+		],
+		"references": [
+			{
+				"name": "Power Apps component framework overview",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/overview"
+			},
+			{
+				"name": "Create and build a code component",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/create-custom-controls-using-pcf"
+			},
+			{
+				"name": "Best practices and guidance for code components created using Power Apps component framework",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/code-components-best-practices"
+			},
+			{
+				"name": "Implementing increment component",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/increment-control"
+			}
+		]
+	}
+]

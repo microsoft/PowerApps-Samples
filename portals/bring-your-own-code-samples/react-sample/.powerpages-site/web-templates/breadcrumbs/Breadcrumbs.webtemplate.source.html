@@ -1,0 +1,10 @@
+{% assign title = title | default: page.title %}
+
+<ul class="breadcrumb">
+  {% for crumb in page.breadcrumbs -%}
+    <li class="breadcrumb-item">
+      <a href="{{ crumb.url | h }}" title="{{ crumb.title | h }}">{{ crumb.title | truncate: 24 | h }}</a>
+    </li>
+  {% endfor -%}
+    <li class=" breadcrumb-item active">{% block activebreadcrumb %}{{ title | h }}{% endblock %}</li>
+</ul>

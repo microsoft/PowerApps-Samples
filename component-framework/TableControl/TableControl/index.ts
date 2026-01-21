@@ -1,19 +1,18 @@
 /*
-	This file is part of the Microsoft PowerApps code samples. 
-	Copyright (C) Microsoft Corporation.  All rights reserved. 
-	This source code is intended only as a supplement to Microsoft Development Tools and/or  
-	on-line documentation.  See these other materials for detailed information regarding  
-	Microsoft code samples. 
+	This file is part of the Microsoft PowerApps code samples.
+	Copyright (C) Microsoft Corporation.  All rights reserved.
+	This source code is intended only as a supplement to Microsoft Development Tools and/or
+	on-line documentation.  See these other materials for detailed information regarding
+	Microsoft code samples.
 
-	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER  
-	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF  
-	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. 
+	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 
-export class TableControl implements ComponentFramework.StandardControl<IInputs, IOutputs>
-{
+export class TableControl implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 	// Flag to track if control is in full screen mode or not
 	private _isFullScreen: boolean;
 
@@ -44,7 +43,7 @@ export class TableControl implements ComponentFramework.StandardControl<IInputs,
 	// NOTE: See localization sample control for information on how to localize strings into multiple languages
 	private LOOKUP_OBJECRESULT_DIV_STRING = "Item selected by lookupObjects method:";
 
-	// Prefix for label displayed 
+	// Prefix for label displayed
 	// NOTE: See localization sample control for information on how to localize strings into multiple languages
 	private BUTTON_LABEL_CLICK_STRING = "Click to invoke:";
 
@@ -59,7 +58,12 @@ export class TableControl implements ComponentFramework.StandardControl<IInputs,
 	 * @param state A piece of data that persists in one session for a single user. Can be set at any point in a controls life cycle by calling 'setControlState' in the Mode interface.
 	 * @param container If a control is marked control-type='standard', it will receive an empty div element within which it can render its content.
 	 */
-	public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container: HTMLDivElement): void {
+	public init(
+		context: ComponentFramework.Context<IInputs>,
+		notifyOutputChanged: () => void,
+		state: ComponentFramework.Dictionary,
+		container: HTMLDivElement
+	): void {
 		this._isFullScreen = false;
 		this._controlViewRendered = false;
 		this._context = context;
@@ -75,10 +79,16 @@ export class TableControl implements ComponentFramework.StandardControl<IInputs,
 	 * @param onClickHandler : event handler to attach to button's "onclick" event
 	 * @param entityName : entityName to store in the button's attribute
 	 */
-	private createHTMLButtonElement(buttonLabel: string, onClickHandler: (event: Event) => void, entityName: string | null): HTMLButtonElement {
+	private createHTMLButtonElement(
+		buttonLabel: string,
+		onClickHandler: (event: Event) => void,
+		entityName: string | null
+	): HTMLButtonElement {
 		const button: HTMLButtonElement = document.createElement("button");
 		button.innerHTML = buttonLabel;
-		entityName && button.setAttribute("entityName", entityName);
+		if (entityName) {
+			button.setAttribute("entityName", entityName);
+		}
 
 		button.classList.add("SampleControlHtmlTable_ButtonClass");
 		button.addEventListener("click", onClickHandler);
@@ -95,46 +105,45 @@ export class TableControl implements ComponentFramework.StandardControl<IInputs,
 
 	/**
 	 * Event handler for 'Set Full Screen' button
-	 * 
+	 *
 	 * This method will transition the control to full screen state if it is currently in non-full screen state, or transition
 	 * the control out of full screen state if it is currently in full screen state
-	 * 
-	 * It will also update the label on the 'Set Full Screen' button, and update the interal _isFullScreen state variable 
+	 *
+	 * It will also update the label on the 'Set Full Screen' button, and update the interal _isFullScreen state variable
 	 * to maintain the control's updated state
-	 * 
+	 *
 	 * @param event : OnClick Event
 	 */
 	private onSetFullScreenButtonClick(event: Event): void {
 		this._context.mode.setFullScreen(!this._isFullScreen);
-		this._setFullScreenButton.innerHTML = this.getSetFullScreenButtonLabel((this._isFullScreen));
+		this._setFullScreenButton.innerHTML = this.getSetFullScreenButtonLabel(this._isFullScreen);
 		this._isFullScreen = !this._isFullScreen;
 	}
 
 	/**
 	 * Event handler for 'lookup objects' button
-	 * 
+	 *
 	 * This method invokes the lookup dialog for the entity name specified by the buttons attribute
 	 * Once the user selects an item in the lookup, the selected item is passed back to our callback method.
 	 * Our callback method retrieves the id, name, entity type fields from the selected item and injects the
 	 * values into a resultDiv on the control to showcase the selected values.
-	 * 
+	 *
 	 * @param event : OnClick Event
 	 */
-	private onLookupObjectsButtonClick(event: Event): void {
+	private onLookupObjectsButtonClick(event: Event): Promise<void> {
 		// Get the entity name for the button
 		const entityName: string | null = (event.target as Element)?.getAttribute("entityName");
 
-		const lookUpOptions: ComponentFramework.UtilityApi.LookupOptions =
-		{
+		const lookUpOptions: ComponentFramework.UtilityApi.LookupOptions = {
 			// Note: lookup can support multiple entity types with the below syntax
 			// entityTypes: ["account", "contact"]
 
-			entityTypes: [entityName]
-		} as any;
+			entityTypes: [entityName!],
+		};
 
 		const lookUpPromise = this._context.utils.lookupObjects(lookUpOptions);
 
-		lookUpPromise.then(
+		return lookUpPromise.then(
 			// Callback method - invoked after user has selected an item from the lookup dialog
 			// Data parameter is the item selected in the lookup dialog
 			(data: ComponentFramework.LookupValue[]) => {
@@ -151,6 +160,7 @@ export class TableControl implements ComponentFramework.StandardControl<IInputs,
 
 					this._lookupObjectsResultDiv.innerHTML = resultHTML;
 				}
+				return;
 			},
 			(error) => {
 				// Error handling code here
@@ -166,8 +176,10 @@ export class TableControl implements ComponentFramework.StandardControl<IInputs,
 	private GenerateLookupObjectElements(entityName: string): void {
 		this._lookupObjectsButton = this.createHTMLButtonElement(
 			`${this.BUTTON_LABEL_CLICK_STRING} lookupObjects(${entityName})`,
+			// eslint-disable-next-line @typescript-eslint/no-misused-promises
 			this.onLookupObjectsButtonClick.bind(this),
-			entityName);
+			entityName
+		);
 
 		this._container.appendChild(this._lookupObjectsButton);
 
@@ -182,11 +194,11 @@ export class TableControl implements ComponentFramework.StandardControl<IInputs,
 		this._container.appendChild(this._lookupObjectsResultDiv);
 	}
 
-	/** 
-	* Creates an HTML Table that showcases examples of basic methods available to the custom control
-	* The left column of the table shows the method name or property that is being used
-	* The right column of the table shows the result of that method name or property
-	*/
+	/**
+	 * Creates an HTML Table that showcases examples of basic methods available to the custom control
+	 * The left column of the table shows the method name or property that is being used
+	 * The right column of the table shows the result of that method name or property
+	 */
 	private createHTMLTableElement(): HTMLTableElement {
 		// Create HTML Table Element
 		const tableElement: HTMLTableElement = document.createElement("table");
@@ -197,13 +209,13 @@ export class TableControl implements ComponentFramework.StandardControl<IInputs,
 		let value = "Result";
 		tableElement.appendChild(this.createHTMLTableRowElement(key, value, true));
 
-		// Example use of getFormFactor() method 
+		// Example use of getFormFactor() method
 		// Open the control on different form factors to see the value change
 		key = "getFormFactor()";
 		value = String(this._context.client.getFormFactor());
 		tableElement.appendChild(this.createHTMLTableRowElement(key, value, false));
 
-		// Example use of getClient() method 
+		// Example use of getClient() method
 		// Open the control on different clients (phone / tablet/ web) to see the value change
 		key = "getClient()";
 		value = String(this._context.client.getClient());
@@ -222,7 +234,7 @@ export class TableControl implements ComponentFramework.StandardControl<IInputs,
 		tableElement.appendChild(this.createHTMLTableRowElement(key, value, false));
 
 		// Example of numberFormattingInfo and formatCurrency
-		// Retrieve the currencyDecimalDigits and currencySymbol from the numberFormattingInfo object to retrieve the 
+		// Retrieve the currencyDecimalDigits and currencySymbol from the numberFormattingInfo object to retrieve the
 		// preferences set in the current users 'User Settings'
 		// Pass these values as parameters into the formatting.formatCurrency utility method to format the number per the users preferences
 		key = "formatting formatCurrency";
@@ -241,14 +253,15 @@ export class TableControl implements ComponentFramework.StandardControl<IInputs,
 		tableElement.appendChild(this.createHTMLTableRowElement(key, value, false));
 
 		// Example of getEntityMetadata
-		// Retrieve the Entity Metadata for the entityName parameter. In the callback method, retrieve the primaryNameAttribute, logicalName, 
+		// Retrieve the Entity Metadata for the entityName parameter. In the callback method, retrieve the primaryNameAttribute, logicalName,
 		// and isCustomEntity attributes and inject the results into the Example HTML Table
-		this._context.utils.getEntityMetadata(this.ENTITY_LOGICAL_NAME_FOR_METADATA_EXAMPLE).then(
-			entityMetadata => {
+		const metadataPromise = this._context.utils.getEntityMetadata(this.ENTITY_LOGICAL_NAME_FOR_METADATA_EXAMPLE).then(
+			(entityMetadata) => {
 				// Generate the HTML Elements used for the lookup control example
 				this.GenerateLookupObjectElements(this.ENTITY_LOGICAL_NAME_FOR_METADATA_EXAMPLE);
+				return;
 			},
-			error => {
+			(error) => {
 				// Error handling code here
 			}
 		);
@@ -258,14 +271,22 @@ export class TableControl implements ComponentFramework.StandardControl<IInputs,
 
 	/**
 	 * Helper method to create an HTML Table Row Element
-	 * 
+	 *
 	 * @param key : string value to show in left column cell
 	 * @param value : string value to show in right column cell
 	 * @param isHeaderRow : true if method should generate a header row
 	 */
 	private createHTMLTableRowElement(key: string, value: string, isHeaderRow: boolean): HTMLTableRowElement {
-		const keyCell: HTMLTableCellElement = this.createHTMLTableCellElement(key, "SampleControlHtmlTable_HtmlCell_Key", isHeaderRow);
-		const valueCell: HTMLTableCellElement = this.createHTMLTableCellElement(value, "SampleControlHtmlTable_HtmlCell_Value", isHeaderRow);
+		const keyCell: HTMLTableCellElement = this.createHTMLTableCellElement(
+			key,
+			"SampleControlHtmlTable_HtmlCell_Key",
+			isHeaderRow
+		);
+		const valueCell: HTMLTableCellElement = this.createHTMLTableCellElement(
+			value,
+			"SampleControlHtmlTable_HtmlCell_Value",
+			isHeaderRow
+		);
 
 		const rowElement: HTMLTableRowElement = document.createElement("tr");
 		rowElement.setAttribute("class", "SampleControlHtmlTable_HtmlRow");
@@ -277,7 +298,7 @@ export class TableControl implements ComponentFramework.StandardControl<IInputs,
 
 	/**
 	 * Helper method to create an HTML Table Cell Element
-	 * 
+	 *
 	 * @param cellValue : string value to inject in the cell
 	 * @param className : class name for the cell
 	 * @param isHeaderRow : true if method should generate a header row cell
@@ -287,8 +308,7 @@ export class TableControl implements ComponentFramework.StandardControl<IInputs,
 		if (isHeaderRow) {
 			cellElement = document.createElement("th");
 			cellElement.setAttribute("class", `SampleControlHtmlTable_HtmlHeaderCell ${className}`);
-		}
-		else {
+		} else {
 			cellElement = document.createElement("td");
 			cellElement.setAttribute("class", `SampleControlHtmlTable_HtmlCell ${className}`);
 		}
@@ -313,7 +333,8 @@ export class TableControl implements ComponentFramework.StandardControl<IInputs,
 			this._setFullScreenButton = this.createHTMLButtonElement(
 				this.getSetFullScreenButtonLabel(!this._isFullScreen),
 				this.onSetFullScreenButtonClick.bind(this),
-				null);
+				null
+			);
 
 			this._container.appendChild(this._setFullScreenButton);
 
@@ -321,8 +342,8 @@ export class TableControl implements ComponentFramework.StandardControl<IInputs,
 		}
 	}
 
-	/** 
-	 * It is called by the framework prior to a control receiving new data. 
+	/**
+	 * It is called by the framework prior to a control receiving new data.
 	 * @returns an object based on nomenclature defined in manifest, expecting object[s] for property marked as "bound" or "output"
 	 */
 	public getOutputs(): IOutputs {
@@ -330,7 +351,7 @@ export class TableControl implements ComponentFramework.StandardControl<IInputs,
 		return {};
 	}
 
-	/** 
+	/**
 	 * Called when the control is to be removed from the DOM tree. Controls should use this call for cleanup.
 	 * i.e. cancelling any pending remote calls, removing listeners, etc.
 	 */

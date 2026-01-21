@@ -1,13 +1,13 @@
 /*
-	This file is part of the Microsoft PowerApps code samples. 
-	Copyright (C) Microsoft Corporation.  All rights reserved. 
-	This source code is intended only as a supplement to Microsoft Development Tools and/or  
-	on-line documentation.  See these other materials for detailed information regarding  
-	Microsoft code samples. 
+	This file is part of the Microsoft PowerApps code samples.
+	Copyright (C) Microsoft Corporation.  All rights reserved.
+	This source code is intended only as a supplement to Microsoft Development Tools and/or
+	on-line documentation.  See these other materials for detailed information regarding
+	Microsoft code samples.
 
-	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER  
-	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF  
-	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. 
+	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
@@ -16,7 +16,7 @@ export class MapControl implements ComponentFramework.StandardControl<IInputs, I
 	// HTML IFrame element that will be used to render the map
 	private _iFrameElement: HTMLIFrameElement;
 
-	// PCF framework delegate which will be assigned to this object which would be called whenever any update happens. 
+	// PCF framework delegate which will be assigned to this object which would be called whenever any update happens.
 	private _notifyOutputChanged: () => void;
 
 	// Reference to ComponentFramework Context object
@@ -41,7 +41,12 @@ export class MapControl implements ComponentFramework.StandardControl<IInputs, I
 	 * @param state A piece of data that persists in one session for a single user. Can be set at any point in a controls life cycle by calling 'setControlState' in the Mode interface.
 	 * @param container If a control is marked control-type='standard', it will receive an empty div element within which it can render its content.
 	 */
-	public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container: HTMLDivElement): void {
+	public init(
+		context: ComponentFramework.Context<IInputs>,
+		notifyOutputChanged: () => void,
+		state: ComponentFramework.Dictionary,
+		container: HTMLDivElement
+	): void {
 		this._notifyOutputChanged = notifyOutputChanged;
 		this._context = context;
 		this._iFrameElement = document.createElement("iframe");
@@ -58,8 +63,7 @@ export class MapControl implements ComponentFramework.StandardControl<IInputs, I
 		if (mapUrl) {
 			this._iFrameElement.setAttribute("src", mapUrl);
 			this._iFrameElement.setAttribute("class", "mapVisibleStyle");
-		}
-		else {
+		} else {
 			this._iFrameElement.setAttribute("class", "mapHiddenStyle");
 		}
 		this._notifyOutputChanged();
@@ -71,7 +75,11 @@ export class MapControl implements ComponentFramework.StandardControl<IInputs, I
 	 * @returns the HTML encoded url that can be used to load the map if the addressString is non empty string
 	 */
 	public buildMapUrl(addressString: string | undefined): string {
-		return addressString ? `https://www.google.com/maps/embed/v1/place?key=${this._context.parameters.controlApiKey.raw || this.MAPS_API_KEY}&q=${encodeURIComponent(addressString)}` : "";
+		return addressString
+			? `https://www.google.com/maps/embed/v1/place?key=${
+					this._context.parameters.controlApiKey.raw ?? this.MAPS_API_KEY
+				}&q=${encodeURIComponent(addressString)}`
+			: "";
 	}
 
 	/**
@@ -83,8 +91,8 @@ export class MapControl implements ComponentFramework.StandardControl<IInputs, I
 		this.renderMap(this.buildMapUrl(context.parameters.controlValue.formatted));
 	}
 
-	/** 
-	 * It is called by the framework prior to a control receiving new data. 
+	/**
+	 * It is called by the framework prior to a control receiving new data.
 	 * @returns an object based on nomenclature defined in manifest, expecting object[s] for property marked as "bound" or "output"
 	 */
 	public getOutputs(): IOutputs {
@@ -92,7 +100,7 @@ export class MapControl implements ComponentFramework.StandardControl<IInputs, I
 		return {};
 	}
 
-	/** 
+	/**
 	 * Called when the control is to be removed from the DOM tree. Controls should use this call for cleanup.
 	 * i.e. cancelling any pending remote calls, removing listeners, etc.
 	 */

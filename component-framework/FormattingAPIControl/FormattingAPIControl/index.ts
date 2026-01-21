@@ -1,19 +1,19 @@
 /*
-	This file is part of the Microsoft PowerApps code samples. 
-	Copyright (C) Microsoft Corporation.  All rights reserved. 
-	This source code is intended only as a supplement to Microsoft Development Tools and/or  
-	on-line documentation.  See these other materials for detailed information regarding  
-	Microsoft code samples. 
+	This file is part of the Microsoft PowerApps code samples.
+	Copyright (C) Microsoft Corporation.  All rights reserved.
+	This source code is intended only as a supplement to Microsoft Development Tools and/or
+	on-line documentation.  See these other materials for detailed information regarding
+	Microsoft code samples.
 
-	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER  
-	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF  
-	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. 
+	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 
 export class FormattingAPIControl implements ComponentFramework.StandardControl<IInputs, IOutputs> {
-	// PCF framework delegate which will be assigned to this object which would be called whenever any update happens. 
+	// PCF framework delegate which will be assigned to this object which would be called whenever any update happens.
 	private _notifyOutputChanged: () => void;
 
 	// Reference to the control container HTMLDivElement
@@ -36,7 +36,12 @@ export class FormattingAPIControl implements ComponentFramework.StandardControl<
 	 * @param state A piece of data that persists in one session for a single user. Can be set at any point in a controls life cycle by calling 'setControlState' in the Mode interface.
 	 * @param container If a control is marked control-type='standard', it will receive an empty div element within which it can render its content.
 	 */
-	public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container: HTMLDivElement): void {
+	public init(
+		context: ComponentFramework.Context<IInputs>,
+		notifyOutputChanged: () => void,
+		state: ComponentFramework.Dictionary,
+		container: HTMLDivElement
+	): void {
 		this._notifyOutputChanged = notifyOutputChanged;
 		this._controlViewRendered = false;
 		this._context = context;
@@ -53,8 +58,16 @@ export class FormattingAPIControl implements ComponentFramework.StandardControl<
 	 * @param isHeaderRow : true if method should generate a header row
 	 */
 	private createHTMLTableRowElement(key: string, value: string, isHeaderRow: boolean): HTMLTableRowElement {
-		const keyCell: HTMLTableCellElement = this.createHTMLTableCellElement(key, "FormattingControlSampleHtmlTable_HtmlCell_Key", isHeaderRow);
-		const valueCell: HTMLTableCellElement = this.createHTMLTableCellElement(value, "FormattingControlSampleHtmlTable_HtmlCell_Value", isHeaderRow);
+		const keyCell: HTMLTableCellElement = this.createHTMLTableCellElement(
+			key,
+			"FormattingControlSampleHtmlTable_HtmlCell_Key",
+			isHeaderRow
+		);
+		const valueCell: HTMLTableCellElement = this.createHTMLTableCellElement(
+			value,
+			"FormattingControlSampleHtmlTable_HtmlCell_Value",
+			isHeaderRow
+		);
 
 		const rowElement: HTMLTableRowElement = document.createElement("tr");
 		rowElement.setAttribute("class", "FormattingControlSampleHtmlTable_HtmlRow");
@@ -78,8 +91,7 @@ export class FormattingAPIControl implements ComponentFramework.StandardControl<
 			cellElement.setAttribute("class", `FormattingControlSampleHtmlTable_HtmlHeaderCell ${className}`);
 			const textElement: Text = document.createTextNode(cellValue);
 			cellElement.appendChild(textElement);
-		}
-		else {
+		} else {
 			cellElement = document.createElement("td");
 			cellElement.setAttribute("class", `FormattingControlSampleHtmlTable_HtmlCell ${className}`);
 			const textElement: Text = document.createTextNode(cellValue);
@@ -88,7 +100,7 @@ export class FormattingAPIControl implements ComponentFramework.StandardControl<
 		return cellElement;
 	}
 
-	/** 
+	/**
 	 * Creates an HTML Table that showcases examples of basic methods available to the custom control
 	 * The left column of the table shows the method name or property that is being used
 	 * The right column of the table shows the result of that method name or property
@@ -103,22 +115,22 @@ export class FormattingAPIControl implements ComponentFramework.StandardControl<
 		let value = "Result";
 		tableElement.appendChild(this.createHTMLTableRowElement(key, value, true));
 
-		// Example use of formatCurrency() method 
+		// Example use of formatCurrency() method
 		// Change the default currency and the precision or pass in the precision and currency as additional parameters.
 		key = "formatCurrency()";
-		value = this._context.formatting.formatCurrency(this._values.currencyInput || 0.0);
+		value = this._context.formatting.formatCurrency(this._values.currencyInput ?? 0.0);
 		tableElement.appendChild(this.createHTMLTableRowElement(key, value, false));
 
-		// Example use of formatDecimal() method 
+		// Example use of formatDecimal() method
 		// Change the settings from user settings to see the output change its format accordingly
 		key = "formatDecimal()";
-		value = this._context.formatting.formatDecimal(this._values.decimalInput || 0.0);
+		value = this._context.formatting.formatDecimal(this._values.decimalInput ?? 0.0);
 		tableElement.appendChild(this.createHTMLTableRowElement(key, value, false));
 
 		// Example use of formatInteger() method
 		// change the settings from user settings to see the output change its format accordingly.
 		key = "formatInteger()";
-		value = this._context.formatting.formatInteger(this._values.integerInput || 0);
+		value = this._context.formatting.formatInteger(this._values.integerInput ?? 0);
 		tableElement.appendChild(this.createHTMLTableRowElement(key, value, false));
 
 		// Example use of formatLanguage() method
@@ -131,13 +143,13 @@ export class FormattingAPIControl implements ComponentFramework.StandardControl<
 		// Pass a JavaScript Data object set to the current time into formatDateYearMonth method to format the data
 		// and get the return in Year, Month format
 		key = "formatDateYearMonth()";
-		value = this._context.formatting.formatDateYearMonth(this._values.dateInput || new Date());
+		value = this._context.formatting.formatDateYearMonth(this._values.dateInput ?? new Date());
 		tableElement.appendChild(this.createHTMLTableRowElement(key, value, false));
 
 		// Example of getWeekOfYear() method
 		// Pass a JavaScript Data object set to the current time into getWeekOfYear method to get the value for week of the year
 		key = "getWeekOfYear()";
-		value = this._context.formatting.getWeekOfYear(this._values.dateInput || new Date()).toString();
+		value = this._context.formatting.getWeekOfYear(this._values.dateInput ?? new Date()).toString();
 		tableElement.appendChild(this.createHTMLTableRowElement(key, value, false));
 
 		return tableElement;
@@ -150,22 +162,21 @@ export class FormattingAPIControl implements ComponentFramework.StandardControl<
 	public updateView(context: ComponentFramework.Context<IInputs>): void {
 		this._container.innerHTML = "";
 		this._values = {
-			currencyInput: context.parameters.currencyInput.raw || 0.0,
-			dateInput: context.parameters.dateInput.raw || new Date(),
-			decimalInput: context.parameters.decimalInput.raw || 0.0,
-			integerInput: context.parameters.integerInput.raw || 0
-		}
+			currencyInput: context.parameters.currencyInput.raw ?? 0.0,
+			dateInput: context.parameters.dateInput.raw ?? new Date(),
+			decimalInput: context.parameters.decimalInput.raw ?? 0.0,
+			integerInput: context.parameters.integerInput.raw ?? 0,
+		};
 
 		// Render and add HTMLTable to the custom control container element
 		const tableElement: HTMLTableElement = this.createHTMLTableElement();
 		this._container.appendChild(tableElement);
 
 		this._controlViewRendered = true;
-
 	}
 
-	/** 
-	 * It is called by the framework prior to a control receiving new data. 
+	/**
+	 * It is called by the framework prior to a control receiving new data.
 	 * @returns an object based on nomenclature defined in manifest, expecting object[s] for property marked as "bound" or "output"
 	 */
 	public getOutputs(): IOutputs {
@@ -173,7 +184,7 @@ export class FormattingAPIControl implements ComponentFramework.StandardControl<
 		return {};
 	}
 
-	/** 
+	/**
 	 * Called when the control is to be removed from the DOM tree. Controls should use this call for cleanup.
 	 * i.e. cancelling any pending remote calls, removing listeners, etc.
 	 */

@@ -1,8 +1,8 @@
 .SampleNamespace\.ModelDrivenGrid div.noRecords {
-    /* Make the div appear on top of the grid */
-    position: absolute;
-    width: 100%;
-    top: 80px;
-    /* Large Icon */
-    font-size: 300%; 
+	/* Make the div appear on top of the grid */
+	position: absolute;
+	width: 100%;
+	top: 80px;
+	/* Large Icon */
+	font-size: 300%;
 }

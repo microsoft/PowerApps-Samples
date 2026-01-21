@@ -58,15 +58,20 @@ export class LookupSimpleControl implements ComponentFramework.StandardControl<I
 	 * @param state A piece of data that persists in one session for a single user. Can be set at any point in a controls life cycle by calling 'setControlState' in the Mode interface.
 	 * @param container If a control is marked control-type='standard', it will receive an empty div element within which it can render its content.
 	 */
-	public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container: HTMLDivElement): void {
+	public init(
+		context: ComponentFramework.Context<IInputs>,
+		notifyOutputChanged: () => void,
+		state: ComponentFramework.Dictionary,
+		container: HTMLDivElement
+	): void {
 		this._container = container;
 		this._notifyOutputChanged = notifyOutputChanged;
 
 		// Cache information necessary for lookupObjects API based on control context
-		this._entityType1 = context.parameters.controlValue.getTargetEntityType();
-		this._defaultViewId1 = context.parameters.controlValue.getViewId();
-		this._entityType2 = context.parameters.controlValue1.getTargetEntityType();
-		this._defaultViewId2 = context.parameters.controlValue1.getViewId();
+		this._entityType1 = context.parameters.controlValue.getTargetEntityType?.();
+		this._defaultViewId1 = context.parameters.controlValue.getViewId?.();
+		this._entityType2 = context.parameters.controlValue1.getTargetEntityType?.();
+		this._defaultViewId2 = context.parameters.controlValue1.getViewId?.();
 
 		const contentContainer = document.createElement("div");
 
@@ -91,10 +96,15 @@ export class LookupSimpleControl implements ComponentFramework.StandardControl<I
 		// Add button to trigger lookupObjects API for the primary lookup property
 		const lookupObjectsButton1 = document.createElement("button");
 		lookupObjectsButton1.innerText = "Lookup Objects";
-		lookupObjectsButton1.onclick = this.performLookupObjects.bind(this, this._entityType1, this._defaultViewId1, (value, update = true) => {
-			this._selectedItem1 = value;
-			this._updateSelected1 = update;
-		});
+		lookupObjectsButton1.onclick = this.performLookupObjects.bind(
+			this,
+			this._entityType1,
+			this._defaultViewId1,
+			(value, update = true) => {
+				this._selectedItem1 = value;
+				this._updateSelected1 = update;
+			}
+		);
 		contentContainer.appendChild(lookupObjectsButton1);
 
 		contentContainer.append(document.createElement("br"));
@@ -112,10 +122,15 @@ export class LookupSimpleControl implements ComponentFramework.StandardControl<I
 		// Add button to trigger lookupObjects API for the secondary lookup property
 		const lookupObjectsButton2 = document.createElement("button");
 		lookupObjectsButton2.innerText = "Lookup Objects";
-		lookupObjectsButton2.onclick = this.performLookupObjects.bind(this, this._entityType2, this._defaultViewId2, (value) => {
-			this._selectedItem2 = value;
-			this._updateSelected1 = false;
-		});
+		lookupObjectsButton2.onclick = this.performLookupObjects.bind(
+			this,
+			this._entityType2,
+			this._defaultViewId2,
+			(value) => {
+				this._selectedItem2 = value;
+				this._updateSelected1 = false;
+			}
+		);
 		contentContainer.appendChild(lookupObjectsButton2);
 
 		contentContainer.append(document.createElement("br"));
@@ -131,37 +146,45 @@ export class LookupSimpleControl implements ComponentFramework.StandardControl<I
 	 * @param viewId The viewId bound to the target lookup property
 	 * @param setSelected Specified function to set the selected lookup value
 	 */
-	private performLookupObjects(entityType: string, viewId: string, setSelected: (value: ComponentFramework.LookupValue, update?: boolean) => void): void {
+	private performLookupObjects(
+		entityType: string,
+		viewId: string,
+		setSelected: (value: ComponentFramework.LookupValue, update?: boolean) => void
+	): Promise<void> {
 		// Used cached values from lookup parameter to set options for lookupObjects API
 		const lookupOptions = {
 			defaultEntityType: entityType,
 			defaultViewId: viewId,
 			allowMultiSelect: false,
 			entityTypes: [entityType],
-			viewIds: [viewId]
+			viewIds: [viewId],
 		};
 
-		this._context.utils.lookupObjects(lookupOptions).then((success) => {
-			if (success && success.length > 0) {
-				// Cache the necessary information for the newly selected entity lookup
-				const selectedReference = success[0];
-				const selectedLookupValue: ComponentFramework.LookupValue = {
-					id: selectedReference.id,
-					name: selectedReference.name,
-					entityType: selectedReference.entityType
-				};
+		return this._context.utils.lookupObjects(lookupOptions).then(
+			(success) => {
+				if (success && success.length > 0) {
+					// Cache the necessary information for the newly selected entity lookup
+					const selectedReference = success[0];
+					const selectedLookupValue: ComponentFramework.LookupValue = {
+						id: selectedReference.id,
+						name: selectedReference.name,
+						entityType: selectedReference.entityType,
+					};
 
-				// Update the primary or secondary lookup property
-				setSelected(selectedLookupValue);
+					// Update the primary or secondary lookup property
+					setSelected(selectedLookupValue);
 
-				// Trigger a control update
-				this._notifyOutputChanged();
-			} else {
-				setSelected({} as ComponentFramework.LookupValue);
+					// Trigger a control update
+					this._notifyOutputChanged();
+				} else {
+					setSelected({} as ComponentFramework.LookupValue);
+				}
+				return;
+			},
+			(error) => {
+				console.log(error);
 			}
-		}, (error) => {
-			console.log(error);
-		});
+		);
 	}
 
 	/**
@@ -180,8 +203,8 @@ export class LookupSimpleControl implements ComponentFramework.StandardControl<I
 		this._inputData2.textContent = propertyValue;
 	}
 
-	/** 
-	 * It is called by the framework prior to a control receiving new data. 
+	/**
+	 * It is called by the framework prior to a control receiving new data.
 	 * @returns an object based on nomenclature defined in manifest, expecting object[s] for property marked as "bound" or "output"
 	 */
 	public getOutputs(): IOutputs {
@@ -189,7 +212,7 @@ export class LookupSimpleControl implements ComponentFramework.StandardControl<I
 		return this._updateSelected1 ? { controlValue: [this._selectedItem1] } : { controlValue1: [this._selectedItem2] };
 	}
 
-	/** 
+	/**
 	 * Called when the control is to be removed from the DOM tree. Controls should use this call for cleanup.
 	 * i.e. cancelling any pending remote calls, removing listeners, etc.
 	 */

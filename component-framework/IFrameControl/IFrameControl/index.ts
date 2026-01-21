@@ -1,19 +1,18 @@
 /*
-	This file is part of the Microsoft PowerApps code samples. 
-	Copyright (C) Microsoft Corporation.  All rights reserved. 
-	This source code is intended only as a supplement to Microsoft Development Tools and/or  
-	on-line documentation.  See these other materials for detailed information regarding  
-	Microsoft code samples. 
+	This file is part of the Microsoft PowerApps code samples.
+	Copyright (C) Microsoft Corporation.  All rights reserved.
+	This source code is intended only as a supplement to Microsoft Development Tools and/or
+	on-line documentation.  See these other materials for detailed information regarding
+	Microsoft code samples.
 
-	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER  
-	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF  
-	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. 
+	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 
-export class IFrameControl implements ComponentFramework.StandardControl<IInputs, IOutputs>
-{
+export class IFrameControl implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 	// Reference to Bing Map IFrame HTMLElement
 	private _bingMapIFrame: HTMLElement;
 
@@ -32,7 +31,12 @@ export class IFrameControl implements ComponentFramework.StandardControl<IInputs
 	 * @param state A piece of data that persists in one session for a single user. Can be set at any point in a controls life cycle by calling 'setControlState' in the Mode interface.
 	 * @param container If a control is marked control-type='standard', it will receive an empty div element within which it can render its content.
 	 */
-	public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container: HTMLDivElement): void {
+	public init(
+		context: ComponentFramework.Context<IInputs>,
+		notifyOutputChanged: () => void,
+		state: ComponentFramework.Dictionary,
+		container: HTMLDivElement
+	): void {
 		this._container = container;
 		this._controlViewRendered = false;
 	}
@@ -49,11 +53,13 @@ export class IFrameControl implements ComponentFramework.StandardControl<IInputs
 
 		const latitude = context.parameters.latitudeValue.raw;
 		const longitude = context.parameters.longitudeValue.raw;
-		latitude && longitude && this.updateBingMapURL(latitude, longitude);
+		if (latitude && longitude) {
+			this.updateBingMapURL(latitude, longitude);
+		}
 	}
 
-	/** 
-	 * Render IFrame HTML Element that hosts the Bing Map and appends the IFrame to the control container 
+	/**
+	 * Render IFrame HTML Element that hosts the Bing Map and appends the IFrame to the control container
 	 */
 	private renderBingMapIFrame(): void {
 		this._bingMapIFrame = this.createIFrameElement();
@@ -67,7 +73,7 @@ export class IFrameControl implements ComponentFramework.StandardControl<IInputs
 	 */
 	private updateBingMapURL(latitude: number, longitude: number): void {
 		// Bing Map API:
-		// https://msdn.microsoft.com/en-us/library/dn217138.aspx
+		// https://learn.microsoft.com/bingmaps/articles/create-a-custom-map-url
 
 		// Provide bing map query string parameters to format and style map view
 		const bingMapUrlPrefix = "https://www.bing.com/maps/embed?h=400&w=300&cp=";
@@ -80,7 +86,7 @@ export class IFrameControl implements ComponentFramework.StandardControl<IInputs
 		this._bingMapIFrame.setAttribute("src", iFrameSrc);
 	}
 
-	/** 
+	/**
 	 * Helper method to create an IFrame HTML Element
 	 */
 	private createIFrameElement(): HTMLElement {
@@ -89,8 +95,8 @@ export class IFrameControl implements ComponentFramework.StandardControl<IInputs
 		return iFrameElement;
 	}
 
-	/** 
-	 * It is called by the framework prior to a control receiving new data. 
+	/**
+	 * It is called by the framework prior to a control receiving new data.
 	 * @returns an object based on nomenclature defined in manifest, expecting object[s] for property marked as "bound" or "output"
 	 */
 	public getOutputs(): IOutputs {
@@ -98,7 +104,7 @@ export class IFrameControl implements ComponentFramework.StandardControl<IInputs
 		return {};
 	}
 
-	/** 
+	/**
 	 * Called when the control is to be removed from the DOM tree. Controls should use this call for cleanup.
 	 * i.e. cancelling any pending remote calls, removing listeners, etc.
 	 */

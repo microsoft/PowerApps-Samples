@@ -1,13 +1,13 @@
 ﻿/*
-	This file is part of the Microsoft PowerApps code samples. 
-	Copyright (C) Microsoft Corporation.  All rights reserved. 
-	This source code is intended only as a supplement to Microsoft Development Tools and/or  
-	on-line documentation.  See these other materials for detailed information regarding  
-	Microsoft code samples. 
+	This file is part of the Microsoft PowerApps code samples.
+	Copyright (C) Microsoft Corporation.  All rights reserved.
+	This source code is intended only as a supplement to Microsoft Development Tools and/or
+	on-line documentation.  See these other materials for detailed information regarding
+	Microsoft code samples.
 
-	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER  
-	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF  
-	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. 
+	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
@@ -26,15 +26,14 @@ const NoImageClassName = "NoImage";
 // 'RemoveButton' css class name
 const RemoveButtonClassName = "RemoveButton";
 
-export class ImageUploadControl implements ComponentFramework.StandardControl<IInputs, IOutputs>
-{
-	// Value of the field is stored and used inside the control 
+export class ImageUploadControl implements ComponentFramework.StandardControl<IInputs, IOutputs> {
+	// Value of the field is stored and used inside the control
 	private _value: string | null;
 
 	// PCF framework context, "Input Properties" containing the parameters, control metadata and interface functions.
 	private _context: ComponentFramework.Context<IInputs>;
 
-	// PCF framework delegate which will be assigned to this object which would be called whenever any update happens. 
+	// PCF framework delegate which will be assigned to this object which would be called whenever any update happens.
 	private _notifyOutputChanged: () => void;
 
 	// Control's container
@@ -67,14 +66,19 @@ export class ImageUploadControl implements ComponentFramework.StandardControl<II
 	 * @param state A piece of data that persists in one session for a single user. Can be set at any point in a controls life cycle by calling 'setControlState' in the Mode interface.
 	 * @param container If a control is marked control-type='standard', it will receive an empty div element within which it can render its content.
 	 */
-	public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container: HTMLDivElement): void {
+	public init(
+		context: ComponentFramework.Context<IInputs>,
+		notifyOutputChanged: () => void,
+		state: ComponentFramework.Dictionary,
+		container: HTMLDivElement
+	): void {
 		this._context = context;
 		this._notifyOutputChanged = notifyOutputChanged;
 		this.controlContainer = document.createElement("div");
 
 		//Create an upload button to upload the image
 		this.uploadButton = document.createElement("button");
-		// Get the localized string from localized string 
+		// Get the localized string from localized string
 		this.uploadButton.innerHTML = context.resources.getString("PCF_ImageUploadControl_Upload_ButtonLabel");
 		this.uploadButton.addEventListener("click", this.onUploadButtonClick.bind(this));
 
@@ -84,7 +88,7 @@ export class ImageUploadControl implements ComponentFramework.StandardControl<II
 		//Create a remove button to reset the image
 		this.removeButton = document.createElement("button");
 		this.removeButton.classList.add(RemoveButtonClassName);
-		// Get the localized string from localized string 
+		// Get the localized string from localized string
 		this.removeButton.innerHTML = context.resources.getString("PCF_ImageUploadControl_Remove_ButtonLabel");
 		this.removeButton.addEventListener("click", this.onRemoveButtonClick.bind(this));
 
@@ -94,8 +98,7 @@ export class ImageUploadControl implements ComponentFramework.StandardControl<II
 		// If there is a raw value bound means there already have an image
 		if (this._context.parameters.value.raw) {
 			this.imgElement.src = this._context.parameters.value.raw;
-		}
-		else {
+		} else {
 			this.setDefaultImage();
 		}
 
@@ -120,11 +123,11 @@ export class ImageUploadControl implements ComponentFramework.StandardControl<II
 	 * Button Event handler for the button created as part of this control
 	 * @param event
 	 */
-	private onUploadButtonClick(): void {
+	private onUploadButtonClick(): Promise<void> {
 		// context.device.pickFile(successCallback, errorCallback) is used to initiate the File Explorer
 		// successCallback will be triggered if there successfully pick a file
 		// errorCallback will be triggered if there is an error
-		this._context.device.pickFile().then(this.processFile.bind(this), this.showError.bind(this));
+		return this._context.device.pickFile().then(this.processFile.bind(this), this.showError.bind(this));
 	}
 
 	/**
@@ -136,8 +139,8 @@ export class ImageUploadControl implements ComponentFramework.StandardControl<II
 	}
 
 	/**
-	 * 
-	 * @param files 
+	 *
+	 * @param files
 	 */
 	private processFile(files: ComponentFramework.FileObject[]): void {
 		if (files.length) {
@@ -146,19 +149,17 @@ export class ImageUploadControl implements ComponentFramework.StandardControl<II
 			try {
 				let fileExtension: string | undefined;
 
-				if (file && file.fileName) {
+				if (file?.fileName) {
 					fileExtension = file.fileName.split(".").pop();
 				}
 
 				if (fileExtension) {
 					this.setImage(true, fileExtension, file.fileContent);
 					this.controlContainer.classList.remove(NoImageClassName);
-				}
-				else {
+				} else {
 					this.showError();
 				}
-			}
-			catch (err) {
+			} catch (err) {
 				this.showError();
 			}
 		}
@@ -168,7 +169,11 @@ export class ImageUploadControl implements ComponentFramework.StandardControl<II
 	 * Set Default Image
 	 */
 	private setDefaultImage(): void {
-		this._context.resources.getResource(DefaultImageFileName, this.setImage.bind(this, false, "png"), this.showError.bind(this));
+		this._context.resources.getResource(
+			DefaultImageFileName,
+			this.setImage.bind(this, false, "png"),
+			this.showError.bind(this)
+		);
 		this.controlContainer.classList.add(NoImageClassName);
 
 		// If it already has value, we need to update the output
@@ -204,7 +209,7 @@ export class ImageUploadControl implements ComponentFramework.StandardControl<II
 		return `data:image/${fileType};base64, ${fileContent}`;
 	}
 
-	/** 
+	/**
 	 *  Show Error Message
 	 */
 	private showError(): void {
@@ -212,21 +217,20 @@ export class ImageUploadControl implements ComponentFramework.StandardControl<II
 		this.controlContainer.classList.add(ShowErrorClassName);
 	}
 
-	/** 
-	 * It is called by the framework prior to a control receiving new data. 
+	/**
+	 * It is called by the framework prior to a control receiving new data.
 	 * @returns an object based on nomenclature defined in manifest, expecting object[s] for property marked as "bound" or "output"
 	 */
 	public getOutputs(): IOutputs {
 		// return outputs
-		const result: IOutputs =
-		{
-			value: this._value ?? undefined
+		const result: IOutputs = {
+			value: this._value ?? undefined,
 		};
 
 		return result;
 	}
 
-	/** 
+	/**
 	 * Called when the control is to be removed from the DOM tree. Controls should use this call for cleanup.
 	 * i.e. cancelling any pending remote calls, removing listeners, etc.
 	 */

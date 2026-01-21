@@ -13,35 +13,36 @@ This sample code shows how to use the discovery service using the OData service 
 
 ## How to run this sample
 
-This sample will not open dialog to prompt you for connection information.
+This sample opens a form in your default browser to prompt you for connection information based on your operating system credentials.
 
-You must first set the `username` and `password` variables in the `Program.Main` method before running this sample.
+To use alternative credentials (not your operating system credentials), you can manually update the `username` and `password` fields of Program.cs in the `Program.Main` method before running this sample.
 
 ## What this sample does
 
-This sample uses the OData global discovery service with a user's credentials to determine which environments they can connect with. This sample uses HttpClient and the Microsoft.Identity.Client libaries to authenticate.
+This sample uses the OData [global discovery service](https://learn.microsoft.com/power-apps/developer/data-platform/discovery-service#global-discovery-service) with a user's credentials to determine your environment. This sample uses `HttpClient` class and the `Microsoft.Identity.Client` library to authenticate.
 
-If one or more environments are returned, the sample will prompt the user to choose one, and then use a `WhoAmIRequest` to return the `SystemUser.UserId` for that environment.
+If one or more environments are returned, the sample prompts the user to choose one, and then uses a `WhoAmIRequest` to return the `SystemUser.UserId` for that environment.
 
 ## How this sample works
 
-In order to simulate the scenario described in [What this sample does](#what-this-sample-does), the sample will do the following:
-
 ### Setup
 
-This sample requires no special setup except that there are valid user credential `username` and `password` to use.
+- This sample requires no special setup except for the optional custom user credentials.
+- You may need to update your project to the current .NET version with the [.NET Upgrade Assistant](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.upgradeassistant) extension. Once the extension is installed, right-click your project and select **Upgrade**.
 
-In Cloud.cs there is a `Cloud` enumeration for each of the known discovery region. Each enumeration member is decorated with a `Description` notation. All of these members have the URL for the global discovery service for that cloud set as the description.
+In Cloud.cs there's a `Cloud` enumeration for each of the known discovery regions. Each enumeration member is decorated with a `Description` notation. All members have the URL for the global discovery service for that cloud set as the description.
 
 Instance.cs contains an `Instance` class that describes the data returned by the discovery service.
 
 ### Demonstrate
 
+This sample performs the following steps.
+
 1. Using the user credentials and the `cloud` value, the program uses the `GetInstances` static method to retrieve all known environments for the user.
-1. The `GetInstances` method extracts the data center global discovery service Url from the member `Description` decoration and uses it together with the user credentials to instantiate an HttpClient. 
-1. The `GetToken` static method uses the Microsoft.Identity.Client methods to return an access token with the user's credentials. If MFA is required for the tenant, a dialog will open for the user to add their username and password.
-1. The data is deserialized into a  `List<Instance>` and returned.
-1. If any environments are returned by the `GetInstances` method, they will be listed in the console and you will be prompted to choose one by typing a number. If your choice is valid, the static `ShowUserId` method uses the  instance data and the user's credentials to execute a `WhoAmIRequest` and return the `SystemUser.UserId` for the user in that environment.
+1. The `GetInstances` method extracts the data center global discovery service URL from the member `Description` decoration and uses it together with the user credentials to instantiate an HttpClient. 
+1. The `GetToken` static method uses Microsoft.Identity.Client methods to return an access token with the user's credentials. If MFA is required for the tenant, a dialog opens for the user to add their username and password.
+1. The data is deserialized into a `List<Instance>` and returned.
+1. If any environments are returned by the `GetInstances` method, they're listed in the console and you're prompted to choose one by typing a number. If your choice is valid, the static `ShowUserId` method uses the instance data and the user's credentials to execute a `WhoAmIRequest` and return the `SystemUser.UserId` for the user in that environment.
 
 ### Clean up
 

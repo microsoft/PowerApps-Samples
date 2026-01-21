@@ -1,13 +1,13 @@
 ﻿/*
-	This file is part of the Microsoft PowerApps code samples. 
-	Copyright (C) Microsoft Corporation.  All rights reserved. 
-	This source code is intended only as a supplement to Microsoft Development Tools and/or  
-	on-line documentation.  See these other materials for detailed information regarding  
-	Microsoft code samples. 
+	This file is part of the Microsoft PowerApps code samples.
+	Copyright (C) Microsoft Corporation.  All rights reserved.
+	This source code is intended only as a supplement to Microsoft Development Tools and/or
+	on-line documentation.  See these other materials for detailed information regarding
+	Microsoft code samples.
 
-	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER  
-	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF  
-	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. 
+	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
@@ -49,19 +49,24 @@ export class TableGrid implements ComponentFramework.StandardControl<IInputs, IO
 	 * @param state A piece of data that persists in one session for a single user. Can be set at any point in a controls life cycle by calling 'setControlState' in the Mode interface.
 	 * @param container If a control is marked control-type='standard', it will receive an empty div element within which it can render its content.
 	 */
-	public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container: HTMLDivElement): void {
+	public init(
+		context: ComponentFramework.Context<IInputs>,
+		notifyOutputChanged: () => void,
+		state: ComponentFramework.Dictionary,
+		container: HTMLDivElement
+	): void {
 		// Need to track container resize so that control could get the available width. The available height won't be provided even this is true
 		context.mode.trackContainerResize(true);
 
-		// Create main table container div. 
+		// Create main table container div.
 		this.mainContainer = document.createElement("div");
 		this.mainContainer.classList.add("SimpleTable_MainContainer_Style");
 
-		// Create data table container div. 
+		// Create data table container div.
 		this.dataTable = document.createElement("table");
 		this.dataTable.classList.add("SimpleTable_Table_Style");
 
-		// Create data table container div. 
+		// Create data table container div.
 		this.loadPageButton = document.createElement("button");
 		this.loadPageButton.setAttribute("type", "button");
 		this.loadPageButton.innerText = context.resources.getString("PCF_TableGrid_LoadMore_ButtonLabel");
@@ -74,7 +79,6 @@ export class TableGrid implements ComponentFramework.StandardControl<IInputs, IO
 		this.mainContainer.appendChild(this.loadPageButton);
 		container.appendChild(this.mainContainer);
 	}
-
 
 	/**
 	 * Called when any value in the property bag has changed. This includes field values, data-sets, global values such as container height and width, offline status, control metadata values such as label, visible, etc.
@@ -94,27 +98,28 @@ export class TableGrid implements ComponentFramework.StandardControl<IInputs, IO
 
 			const columnWidthDistribution = this.getColumnWidthDistribution(context, columnsOnView);
 
-
 			while (this.dataTable.lastChild) {
 				this.dataTable.removeChild(this.dataTable.lastChild);
 			}
 
 			this.dataTable.appendChild(this.createTableHeader(columnsOnView, columnWidthDistribution));
-			this.dataTable.appendChild(this.createTableBody(columnsOnView, columnWidthDistribution, context.parameters.simpleTableGrid));
+			this.dataTable.appendChild(
+				this.createTableBody(columnsOnView, columnWidthDistribution, context.parameters.simpleTableGrid)
+			);
 
 			this.dataTable.parentElement!.style.height = `${window.innerHeight - this.dataTable.offsetTop - 70}px`;
 		}
 	}
 
-	/** 
-	 * It is called by the framework prior to a control receiving new data. 
+	/**
+	 * It is called by the framework prior to a control receiving new data.
 	 * @returns an object based on nomenclature defined in manifest, expecting object[s] for property marked as "bound" or "output"
 	 */
 	public getOutputs(): IOutputs {
 		return {};
 	}
 
-	/** 
+	/**
 	 * Called when the control is to be removed from the DOM tree. Controls should use this call for cleanup.
 	 * i.e. cancelling any pending remote calls, removing listeners, etc.
 	 */
@@ -124,7 +129,7 @@ export class TableGrid implements ComponentFramework.StandardControl<IInputs, IO
 
 	/**
 	 * Get sorted columns on view
-	 * @param context 
+	 * @param context
 	 * @return sorted columns object on View
 	 */
 	private getSortedColumnsOnView(context: ComponentFramework.Context<IInputs>): DataSetInterfaces.Column[] {
@@ -132,11 +137,10 @@ export class TableGrid implements ComponentFramework.StandardControl<IInputs, IO
 			return [];
 		}
 
-		const columns = context.parameters.simpleTableGrid.columns
-			.filter((columnItem: DataSetInterfaces.Column) => {
-				// some column are supplementary and their order is not > 0
-				return columnItem.order >= 0;
-			});
+		const columns = context.parameters.simpleTableGrid.columns.filter((columnItem: DataSetInterfaces.Column) => {
+			// some column are supplementary and their order is not > 0
+			return columnItem.order >= 0;
+		});
 
 		// Sort those columns so that they will be rendered in order
 		columns.sort((a: DataSetInterfaces.Column, b: DataSetInterfaces.Column) => {
@@ -152,7 +156,10 @@ export class TableGrid implements ComponentFramework.StandardControl<IInputs, IO
 	 * @param columnsOnView columns array on the configured view
 	 * @returns column width distribution
 	 */
-	private getColumnWidthDistribution(context: ComponentFramework.Context<IInputs>, columnsOnView: DataSetInterfaces.Column[]): string[] {
+	private getColumnWidthDistribution(
+		context: ComponentFramework.Context<IInputs>,
+		columnsOnView: DataSetInterfaces.Column[]
+	): string[] {
 		const widthDistribution: string[] = [];
 
 		// Considering need to remove border & padding length
@@ -171,19 +178,19 @@ export class TableGrid implements ComponentFramework.StandardControl<IInputs, IO
 				const cellWidth = Math.round((item.visualSizeFactor / widthSum) * totalWidth);
 				remainWidth = remainWidth - cellWidth;
 				widthPerCell = `${cellWidth}px`;
-			}
-			else {
+			} else {
 				widthPerCell = `${remainWidth}px`;
 			}
 			widthDistribution.push(widthPerCell);
 		});
 
 		return widthDistribution;
-
 	}
 
-
-	private createTableHeader(columnsOnView: DataSetInterfaces.Column[], widthDistribution: string[]): HTMLTableSectionElement {
+	private createTableHeader(
+		columnsOnView: DataSetInterfaces.Column[],
+		widthDistribution: string[]
+	): HTMLTableSectionElement {
 		const tableHeader: HTMLTableSectionElement = document.createElement("thead");
 		const tableHeaderRow: HTMLTableRowElement = document.createElement("tr");
 		tableHeaderRow.classList.add("SimpleTable_TableRow_Style");
@@ -203,8 +210,11 @@ export class TableGrid implements ComponentFramework.StandardControl<IInputs, IO
 		return tableHeader;
 	}
 
-
-	private createTableBody(columnsOnView: DataSetInterfaces.Column[], widthDistribution: string[], gridParam: DataSet): HTMLTableSectionElement {
+	private createTableBody(
+		columnsOnView: DataSetInterfaces.Column[],
+		widthDistribution: string[],
+		gridParam: DataSet
+	): HTMLTableSectionElement {
 		const tableBody: HTMLTableSectionElement = document.createElement("tbody");
 
 		if (gridParam.sortedRecordIds.length > 0) {
@@ -215,7 +225,6 @@ export class TableGrid implements ComponentFramework.StandardControl<IInputs, IO
 
 				// Set the recordId on the row dom
 				tableRecordRow.setAttribute(RowRecordId, gridParam.records[currentRecordId].getRecordId());
-
 
 				columnsOnView.forEach((columnItem, index) => {
 					const tableRecordCell = document.createElement("td");
@@ -230,8 +239,7 @@ export class TableGrid implements ComponentFramework.StandardControl<IInputs, IO
 
 				tableBody.appendChild(tableRecordRow);
 			}
-		}
-		else {
+		} else {
 			const tableRecordRow: HTMLTableRowElement = document.createElement("tr");
 			const tableRecordCell: HTMLTableCellElement = document.createElement("td");
 			tableRecordCell.classList.add("No_Record_Style");
@@ -243,7 +251,6 @@ export class TableGrid implements ComponentFramework.StandardControl<IInputs, IO
 
 		return tableBody;
 	}
-
 
 	/**
 	 * Row Click Event handler for the associated row when being clicked
@@ -258,7 +265,7 @@ export class TableGrid implements ComponentFramework.StandardControl<IInputs, IO
 				entityName: entityReference.etn!,
 				entityId: entityReference.id.guid,
 			};
-			this.contextObj.navigation.openForm(entityFormOptions);
+			void this.contextObj.navigation.openForm(entityFormOptions);
 		}
 	}
 
@@ -268,11 +275,9 @@ export class TableGrid implements ComponentFramework.StandardControl<IInputs, IO
 	private toggleLoadMoreButtonWhenNeeded(gridParam: DataSet): void {
 		if (gridParam.paging.hasNextPage && this.loadPageButton.classList.contains(LoadMoreButton_Hidden_Style)) {
 			this.loadPageButton.classList.remove(LoadMoreButton_Hidden_Style);
-		}
-		else if (!gridParam.paging.hasNextPage && !this.loadPageButton.classList.contains(LoadMoreButton_Hidden_Style)) {
+		} else if (!gridParam.paging.hasNextPage && !this.loadPageButton.classList.contains(LoadMoreButton_Hidden_Style)) {
 			this.loadPageButton.classList.add(LoadMoreButton_Hidden_Style);
 		}
-
 	}
 
 	/**

@@ -105,7 +105,7 @@ namespace Microsoft.PowerPlatform.Administration.Helpers
             var reassignObjectsOwnerRequest = new ReassignObjectsOwnerRequest { FromPrincipal = new EntityReference("systemuser", sourceSystemUserId), ToPrincipal = new EntityReference("systemuser", targetSystemUserId) };
             service.Execute(reassignObjectsOwnerRequest);
 
-            _logger.LogToFile(filePath, $"Roles from user with system user id {sourceSystemUserId} are reassigned to user with system user id {targetSystemUserId} in org {service.CrmConnectOrgUriActual}.");
+            _logger.LogToFile(filePath, $"Records from user with system user id {sourceSystemUserId} are reassigned to user with system user id {targetSystemUserId} in org {service.CrmConnectOrgUriActual}.");
         }
 
         private void LogRoleAssignment(string filepath, Entity user)

@@ -1,39 +1,39 @@
 {
-  "name": "pcf-project",
-  "version": "1.0.0",
-  "description": "Project containing your PowerApps Component Framework (PCF) control.",
-  "scripts": {
-    "build": "pcf-scripts build",
-    "clean": "pcf-scripts clean",
-    "lint": "pcf-scripts lint",
-    "lint:fix": "pcf-scripts lint fix",
-    "rebuild": "pcf-scripts rebuild",
-    "start": "pcf-scripts start",
-    "refreshTypes": "pcf-scripts refreshTypes"
-  },
-  "dependencies": {
-    "angular": "1.8.0",
-    "angular-animate": "1.8.0",
-    "angular-sanitize": "1.8.0",
-    "angular-ui-bootstrap": "2.5.6"
-  },
-  "devDependencies": {
-    "@types/angular": "1.6.45",
-    "@types/angular-animate": "1.5.9",
-    "@types/angular-sanitize": "1.3.7",
-    "@types/angular-ui-bootstrap": "0.13.46",
-    "@microsoft/eslint-plugin-power-apps": "^0.2.6",
-    "@types/node": "^18.8.2",
-    "@types/powerapps-component-framework": "^1.3.4",
-    "@types/react": "^16.8",
-    "@typescript-eslint/eslint-plugin": "^5.39.0",
-    "@typescript-eslint/parser": "^5.39.0",
-    "eslint": "^8.24.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.0.1",
-    "pcf-scripts": "^1",
-    "pcf-start": "^1",
-    "typescript": "^4.8.4"
-  }
+	"name": "pcf-project",
+	"version": "1.0.0",
+	"description": "Project containing your PowerApps Component Framework (PCF) control.",
+	"engines": {
+		"node": ">=18"
+	},
+	"scripts": {
+		"build": "pcf-scripts build",
+		"clean": "pcf-scripts clean",
+		"lint": "pcf-scripts lint",
+		"lint:fix": "pcf-scripts lint fix",
+		"rebuild": "pcf-scripts rebuild",
+		"start": "pcf-scripts start",
+		"start:watch": "pcf-scripts start watch",
+		"refreshTypes": "pcf-scripts refreshTypes"
+	},
+	"dependencies": {
+		"angular": "1.8.3",
+		"angular-animate": "1.8.3",
+		"angular-sanitize": "1.8.3",
+		"angular-ui-bootstrap": "2.5.6"
+	},
+	"devDependencies": {
+		"@microsoft/eslint-plugin-power-apps": "^0.2.51",
+		"@types/angular": "1.8.9",
+		"@types/angular-animate": "1.5.14",
+		"@types/angular-sanitize": "1.8.4",
+		"@types/angular-ui-bootstrap": "1.0.7",
+		"@types/node": "^18.19.55",
+		"@types/powerapps-component-framework": "^1.3.15",
+		"eslint": "^9.17.0",
+		"eslint-plugin-promise": "^7.2.1",
+		"pcf-scripts": "^1",
+		"pcf-start": "^1",
+		"typescript": "^4.9.5",
+		"typescript-eslint": "^8.18.1"
+	}
 }
