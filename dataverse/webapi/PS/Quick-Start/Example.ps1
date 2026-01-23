@@ -29,7 +29,8 @@ Write-Host "Account with ID $newAccountID created"
 Write-Host 'Retrieve the created record:'
 Get-Record `
 -setName  accounts `
--id $newAccountID.Guid '?$select=name,accountcategorycode' |
+-id $newAccountID.Guid `
+-query '?$select=name,accountcategorycode' |
 Format-List -Property name,
 accountid,
 accountcategorycode,
