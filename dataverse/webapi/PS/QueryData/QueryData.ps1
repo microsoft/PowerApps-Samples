@@ -1074,7 +1074,7 @@ Invoke-DataverseCommands {
          foreach ($record in $recordsToDelete) {
             try {
                Write-Host "`tDeleting $($record.description)"
-               Remove-Record -setName $record.SetName -id $record.Id
+               Remove-Record -setName $record.setName -id $record.id
             }
             catch {
                Write-Host "`tFailed to delete $($record.description): $_" -ForegroundColor Yellow
