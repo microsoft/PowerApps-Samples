@@ -99,7 +99,7 @@ Invoke-DataverseCommands {
                   description           = 'Task 3 for Nancy Anderson description'
                   actualdurationminutes = 4
                }
-            )  
+            )
          },
          @{
             firstname     = 'Maria'
