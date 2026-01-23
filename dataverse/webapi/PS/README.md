@@ -30,6 +30,7 @@ Samples that use these common functions reference them using [dot sourcing](http
 | Metadata | [Get-CanManyToMany](#get-canmanytomany-function) | Check if a table can have many-to-many relationships in Dataverse. |
 | Metadata | [Get-Column](#get-column-function) | Retrieve a column from a Dataverse table. |
 | TableOperations | [Get-ColumnValue](#get-columnvalue-function) | Gets the value of a single property from a Dataverse record. |
+| TableOperations | [Get-NextLink](#get-nextlink-function) | Retrieves the next page of records using the @odata.nextLink value. |
 | TableOperations | [Get-Record](#get-record-function) | Gets a single record from a Dataverse table by its primary key value. |
 | TableOperations | [Get-Records](#get-records-function) | Gets a set of records from a Dataverse table. |
 | Metadata | [Get-GlobalOptionSet](#get-globaloptionset-function) | Retrieve a global option set from Dataverse. |
@@ -47,6 +48,7 @@ Samples that use these common functions reference them using [dot sourcing](http
 | Metadata | [New-OptionValue](#new-optionvalue-function) | Create a new option value in a column in a Dataverse table. |
 | TableOperations | [New-Record](#new-record-function) | Creates a new record in a Dataverse table. |
 | Metadata | [New-Relationship](#new-relationship-function) | Create a new relationship in Dataverse. |
+| TableOperations | [Create-MultipleRecords](#create-multiplerecords-function) | Creates multiple records in a Dataverse table in a single request. |
 | Metadata | [New-StatusOption](#new-statusoption-function) | Create a new status option in a Dataverse table column. |
 | Metadata | [New-Table](#new-table-function) | Create a new Dataverse table. |
 | TableOperations | [Remove-FromCollection](#remove-fromcollection-function) | Removes a record from a collection-valued navigation property of another record. |
@@ -281,10 +283,12 @@ The `Get-Records` function uses the [Invoke-ResilientRestMethod function](#invok
 |-----------|------|-------------|
 | `setName` | string | **Required**. The name of the entity set to retrieve records from. |
 | `query` | string | **Required**. The query parameters to filter, sort, or select the records. |
+| `maxPageSize` | int | The maximum number of records to retrieve per page. If not specified, the server default page size is used. |
+| `strongConsistency` | bool | When true, requests Strong Consistency for the operation. Default is false. |
 
 #### Get-Records returns
 
-Returns the response that contains properties about the collection of records returned. These properties are useful when paging requests. The array of records matching the request is in the `value` property.
+Returns the response that contains properties about the collection of records returned. These properties are useful when paging requests. The array of records matching the request is in the `value` property. If there are more records, the response includes an `@odata.nextLink` property with the URL to retrieve the next page.
 
 #### Get-Records example
 
@@ -303,6 +307,43 @@ $accountContacts = (Get-Records `
       -f $accountId)).value
 ```
 
+### Get-NextLink function
+
+Retrieves the next page of records using the @odata.nextLink value.
+
+The `Get-NextLink` function uses the [Invoke-ResilientRestMethod function](#invoke-resilientrestmethod-function) to send a `GET` request to the next page URL. It accepts the `@odata.nextLink` value from a previous response and optional parameters to control page size and annotations. This function is designed to work with paginated results from the Dataverse Web API.
+
+[Learn about paging results](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/query-data-web-api#page-results)
+
+#### Get-NextLink parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `nextLink` | string | **Required**. The @odata.nextLink value from the previous response. |
+| `maxPageSize` | int | The maximum number of records to retrieve per page. If not specified, the server default page size is used. |
+| `includeAnnotations` | bool | Whether to include OData annotations in the response. Default is true. |
+
+#### Get-NextLink returns
+
+Returns the response that contains the next page of records with the same structure as Get-Records.
+
+#### Get-NextLink example
+
+This example retrieves the first page of contacts and then uses Get-NextLink to retrieve the second page.
+
+```powershell
+$firstPage = Get-Records `
+   -setName 'contacts' `
+   -query '?$select=fullname' `
+   -maxPageSize 50
+
+if ($firstPage.'@odata.nextLink') {
+   $secondPage = Get-NextLink `
+      -nextLink $firstPage.'@odata.nextLink' `
+      -maxPageSize 50
+}
+```
+
 ### New-Record function
 
 Creates a new record in a Dataverse table.
@@ -317,6 +358,8 @@ The `New-Record` function uses the [Invoke-ResilientRestMethod function](#invoke
 |-----------|------|-------------|
 | `setName` | string | **Required**. The name of the entity set to create a record in. |
 | `body` | hashtable | **Required**. A hashtable of attributes and values for the new record. |
+| `solutionUniqueName` | string | The unique name of the solution that a new solution component is created in. If not specified, the record is created in the default solution. |
+| `strongConsistency` | bool | When true, requests Strong Consistency for the operation. Default is false. |
 
 #### New-Record returns
 
@@ -335,6 +378,54 @@ $contactRafelShillo = @{
 $rafelShilloId = New-Record `
    -setName 'contacts' `
    -body $contactRafelShillo
+```
+
+### Create-MultipleRecords function
+
+Creates multiple records in a Dataverse table in a single request.
+
+The `Create-MultipleRecords` function uses the [Invoke-ResilientRestMethod function](#invoke-resilientrestmethod-function) to send a `POST` request to the Dataverse Web API using the `CreateMultiple` action. This function constructs the request URI by appending the entity set name and the action name to the base URI. This function is more efficient than creating records individually when you need to create multiple records.
+
+[Learn about using CreateMultiple and UpdateMultiple](https://learn.microsoft.com/power-apps/developer/data-platform/bulk-operations)
+
+#### Create-MultipleRecords parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `setName` | string | **Required**. The name of the entity set to create records in. |
+| `targets` | hashtable[] | **Required**. An array of hashtables, each containing attributes and values for a new record. |
+| `strongConsistency` | bool | When true, requests Strong Consistency for the operation. Default is false. |
+
+#### Create-MultipleRecords returns
+
+This function returns an array of GUID values for the created records.
+
+#### Create-MultipleRecords example
+
+This example creates three contact records in a single request.
+
+```powershell
+$contacts = @(
+   @{
+      '@odata.type'   = 'Microsoft.Dynamics.CRM.contact'
+      'firstname' = 'John'
+      'lastname'  = 'Doe'
+   },
+   @{
+      '@odata.type'   = 'Microsoft.Dynamics.CRM.contact'
+      'firstname' = 'Jane'
+      'lastname'  = 'Smith'
+   },
+   @{
+      '@odata.type'   = 'Microsoft.Dynamics.CRM.contact'
+      'firstname' = 'Bob'
+      'lastname'  = 'Johnson'
+   }
+)
+
+$contactIds = Create-MultipleRecords `
+   -setName 'contacts' `
+   -targets $contacts
 ```
 
 ### Remove-FromCollection function

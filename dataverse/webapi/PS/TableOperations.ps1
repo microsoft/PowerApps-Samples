@@ -5,8 +5,8 @@
 Gets a set of records from a Dataverse table.
 
 .DESCRIPTION
-The Get-Records function uses the Invoke-ResilientRestMethod function to send a GET request to the Dataverse API. 
-It constructs the request URI by appending the entity set name and the query parameters to the base URI. 
+The Get-Records function uses the Invoke-ResilientRestMethod function to send a GET request to the Dataverse API.
+It constructs the request URI by appending the entity set name and the query parameters to the base URI.
 It also adds the necessary headers to include annotations in the response.
 
 .PARAMETER setName
@@ -14,6 +14,9 @@ The name of the entity set to retrieve records from. This parameter is mandatory
 
 .PARAMETER query
 The query parameters to filter, sort, or select the records. This parameter is mandatory.
+
+.PARAMETER maxPageSize
+The maximum number of records to retrieve per page. This parameter is optional. If not specified, the server default page size is used.
 
 .PARAMETER strongConsistency
 When true, requests Strong Consistency for the query. This parameter is optional. Default is false.
@@ -30,24 +33,37 @@ $accountContacts = (Get-Records `
 
 This example uses the query parameter to return a collection of contact records related to an account using the contact_customer_accounts relationship.
 
+.EXAMPLE
+$firstPage = Get-Records -setName 'contacts' -query '?$select=fullname' -maxPageSize 50
+
+This example retrieves the first page of contacts with a maximum of 50 records per page.
+
 #>
 
 function Get-Records {
    param (
-      [Parameter(Mandatory)] 
-      [String] 
+      [Parameter(Mandatory)]
+      [String]
       $setName,
-      [Parameter(Mandatory)] 
-      [String] 
+      [Parameter(Mandatory)]
+      [String]
       $query,
-      [bool] 
+      [Nullable[int]]
+      $maxPageSize,
+      [bool]
       $strongConsistency = $false
    )
    $uri = $baseURI + $setName + $query
    # Header for GET operations that have annotations
    $getHeaders = $baseHeaders.Clone()
    $getHeaders.Add('If-None-Match', $null)
-   $getHeaders.Add('Prefer', 'odata.include-annotations="*"')
+
+   $preferHeaders = @('odata.include-annotations="*"')
+   if ($PSBoundParameters.ContainsKey('maxPageSize')) {
+      $preferHeaders = @("odata.maxpagesize=$maxPageSize") + $preferHeaders
+   }
+   $getHeaders.Add('Prefer', ($preferHeaders -join ','))
+
    if ($strongConsistency) {
       $getHeaders.Add('Consistency', 'Strong')
    }
@@ -57,6 +73,74 @@ function Get-Records {
       Headers = $getHeaders
    }
    Invoke-ResilientRestMethod $RetrieveMultipleRequest
+}
+
+<#
+.SYNOPSIS
+Retrieves the next page of records using the @odata.nextLink value.
+
+.DESCRIPTION
+The Get-NextLink function uses the Invoke-ResilientRestMethod function to send a GET request to the next page URL.
+It accepts the @odata.nextLink value from a previous response and optional parameters to control page size and annotations.
+This function is designed to work with paginated results from the Dataverse Web API.
+
+.PARAMETER nextLink
+The @odata.nextLink value from the previous response. This parameter is mandatory.
+
+.PARAMETER maxPageSize
+The maximum number of records to retrieve per page. This parameter is optional. If not specified, the server default page size is used.
+
+.PARAMETER includeAnnotations
+Whether to include OData annotations in the response. This parameter is optional. Default is true.
+
+.EXAMPLE
+$firstPage = Get-Records -setName 'contacts' -query '?$select=fullname'
+if ($firstPage.'@odata.nextLink') {
+   $secondPage = Get-NextLink -nextLink $firstPage.'@odata.nextLink' -maxPageSize 50
+}
+
+This example retrieves the first page of contacts and then uses Get-NextLink to retrieve the second page with a max page size of 50.
+
+.EXAMPLE
+$nextPage = Get-NextLink -nextLink $response.'@odata.nextLink'
+
+This example retrieves the next page using the server's default page size and includes annotations.
+
+#>
+
+function Get-NextLink {
+   param (
+      [Parameter(Mandatory)]
+      [String]
+      $nextLink,
+      [Nullable[int]]
+      $maxPageSize,
+      [bool]
+      $includeAnnotations = $true
+   )
+
+   $getHeaders = $baseHeaders.Clone()
+   $getHeaders.Add('If-None-Match', $null)
+
+   $preferHeaders = @()
+   if ($PSBoundParameters.ContainsKey('maxPageSize')) {
+      $preferHeaders += "odata.maxpagesize=$maxPageSize"
+   }
+   if ($includeAnnotations) {
+      $preferHeaders += 'odata.include-annotations="*"'
+   }
+
+   if ($preferHeaders.Count -gt 0) {
+      $getHeaders.Add('Prefer', ($preferHeaders -join ','))
+   }
+
+   $RetrieveNextPageRequest = @{
+      Uri     = $nextLink
+      Method  = 'Get'
+      Headers = $getHeaders
+   }
+
+   Invoke-ResilientRestMethod $RetrieveNextPageRequest
 }
 
 <#
