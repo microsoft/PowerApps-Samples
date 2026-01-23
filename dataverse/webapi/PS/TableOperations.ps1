@@ -130,7 +130,9 @@ function Get-NextLink {
       $preferHeaders += 'odata.include-annotations="*"'
    }
 
-   $getHeaders.Add('Prefer', ($preferHeaders -join ','))
+   if ($preferHeaders.Count -gt 0) {
+      $getHeaders.Add('Prefer', ($preferHeaders -join ','))
+   }
 
    $RetrieveNextPageRequest = @{
       Uri     = $nextLink
