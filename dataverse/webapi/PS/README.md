@@ -407,14 +407,17 @@ This example creates three contact records in a single request.
 ```powershell
 $contacts = @(
    @{
+      '@odata.type'   = 'Microsoft.Dynamics.CRM.contact'
       'firstname' = 'John'
       'lastname'  = 'Doe'
    },
    @{
+      '@odata.type'   = 'Microsoft.Dynamics.CRM.contact'
       'firstname' = 'Jane'
       'lastname'  = 'Smith'
    },
    @{
+      '@odata.type'   = 'Microsoft.Dynamics.CRM.contact'
       'firstname' = 'Bob'
       'lastname'  = 'Johnson'
    }
