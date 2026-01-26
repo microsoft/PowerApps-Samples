@@ -841,7 +841,7 @@ function Remove-Record {
       [String]
       $eTagValue,
       [bool]
-      $strongConsistency
+      $strongConsistency = $false
    )
    $uri = $baseURI + $setName
    $uri = $uri + '(' + $id.Guid + ')'
