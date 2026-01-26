@@ -254,7 +254,7 @@ Invoke-DataverseCommands {
 
          try {
             # Load base64-encoded managed solution content from local file
-            . ($PSScriptRoot + "\\IsSystemAdminFunction_1_0_0_0_managed.ps1")
+            . (Join-Path $PSScriptRoot 'IsSystemAdminFunction_1_0_0_0_managed.ps1')
 
             if (-not $customizationFile) {
                throw "Customization file base64 data not found in " +
