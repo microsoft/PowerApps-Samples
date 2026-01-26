@@ -182,7 +182,7 @@ function Get-CurrentOrganization {
    )
 
    $RetrieveCurrentOrganizationRequest = @{
-      Uri     = $baseURI + "RetrieveCurrentOrganization(AccessType=@p1)?@p1=Microsoft.Dynamics.CRM.EndpointAccessType'$AccessType'"
+      Uri     = $baseURI + "RetrieveCurrentOrganization(AccessType=@p1)?@p1='Microsoft.Dynamics.CRM.EndpointAccessType''$AccessType'"
       Method  = 'Get'
       Headers = $baseHeaders
    }
