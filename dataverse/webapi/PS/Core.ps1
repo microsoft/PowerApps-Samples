@@ -1,5 +1,5 @@
 # Set to $true only while debugging with Fiddler
-$debug = $false
+$debug = $true
 # Set this value to the Fiddler proxy URL configured on your computer
 $proxyUrl = 'http://127.0.0.1:8888'
 
