@@ -3,7 +3,7 @@
 . $PSScriptRoot\..\CommonFunctions.ps1
 . $PSScriptRoot\..\MetadataOperations.ps1
 
-Connect 'https://crmue.crm.dynamics.com/' # change this
+Connect 'https://yourorg.crm.dynamics.com/' # change this
 $deleteCreatedRecords = $true # Set to false to keep sample records after execution
 
 $recordsToDelete = [PsObject[]]@()
