@@ -141,7 +141,7 @@ function Initialize-From {
    )
 
    $aliases = "EntityMoniker=@p1,TargetEntityName=@p2,TargetFieldType=@p3"
-   $values = "&@p1={'@odata.id':'$SourceSetName($SourceId)'}&@p2='$TargetEntityName'&@p3='Microsoft.Dynamics.CRM.TargetFieldType''$TargetFieldType'''"
+   $values = "&@p1={'@odata.id':'$SourceSetName($SourceId)'}&@p2='$TargetEntityName'&@p3=Microsoft.Dynamics.CRM.TargetFieldType'$TargetFieldType'"
 
    $InitializeFromRequest = @{
       Uri     = $baseURI + "InitializeFrom($aliases)?$values"
@@ -182,7 +182,7 @@ function Get-CurrentOrganization {
    )
 
    $RetrieveCurrentOrganizationRequest = @{
-      Uri     = $baseURI + "RetrieveCurrentOrganization(AccessType=@p1)?@p1='Microsoft.Dynamics.CRM.EndpointAccessType''$AccessType'"
+      Uri     = $baseURI + "RetrieveCurrentOrganization(AccessType=@p1)?@p1=Microsoft.Dynamics.CRM.EndpointAccessType'$AccessType'"
       Method  = 'Get'
       Headers = $baseHeaders
    }
