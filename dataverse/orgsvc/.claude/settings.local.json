@@ -6,7 +6,11 @@
       "Bash(findstr:*)",
       "Bash(ls:*)",
       "Bash(git checkout:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(pwsh:*)",
+      "Bash(dotnet sln:*)",
+      "Bash(dotnet new:*)"
     ]
   }
 }
