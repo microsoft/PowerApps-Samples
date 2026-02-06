@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir:*)",
+      "Bash(dir /s /b \"C:\\\\GitHub\\\\microsoft\\\\PowerApps-Samples\\\\dataverse\\\\orgsvc\\\\CSharp-NETCore\")",
+      "Bash(findstr:*)",
+      "Bash(ls:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}
