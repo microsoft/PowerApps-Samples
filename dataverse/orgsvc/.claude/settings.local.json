@@ -10,7 +10,8 @@
       "Bash(git commit:*)",
       "Bash(pwsh:*)",
       "Bash(dotnet sln:*)",
-      "Bash(dotnet new:*)"
+      "Bash(dotnet new:*)",
+      "Bash(dotnet build:*)"
     ]
   }
 }

@@ -19,7 +19,8 @@ This folder contains the following samples:
 
 |Sample folder|Description|Build target|
 |---|---|---|
-| | |.NET 6|
+|[AuditEntityData](AuditEntityData)|Demonstrates how to enable auditing on an entity and retrieve the change history of records and attributes|.NET 6|
+|[AuditUserAccess](AuditUserAccess)|Demonstrates how to enable user access auditing and retrieve audit records that track when users access Dataverse|.NET 6|
 
 ## Prerequisites
 
