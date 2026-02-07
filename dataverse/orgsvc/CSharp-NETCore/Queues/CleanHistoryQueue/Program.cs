@@ -1,57 +1,77 @@
+using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Extensions.Configuration;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Query;
+using Microsoft.Xrm.Sdk.Messages;
 
 namespace PowerPlatform.Dataverse.CodeSamples
 {
     /// <summary>
-    /// Queue sample
+    /// Demonstrates removing completed items from queues
     /// </summary>
     /// <remarks>
-    /// TODO: Add detailed description and prerequisites
-    ///
+    /// This sample shows how to remove completed/inactive items from queues using RemoveFromQueueRequest.
     /// Set the appropriate Url and Username values for your test
     /// environment in the appsettings.json file before running this program.
     /// </remarks>
     class Program
     {
         private static readonly List<EntityReference> entityStore = new();
+        private static Guid queueItemId;
 
         #region Sample Methods
 
-        /// <summary>
-        /// Sets up sample data required for the demonstration
-        /// </summary>
         private static void Setup(ServiceClient service)
         {
-            Console.WriteLine("Setting up sample data...");
-            // TODO: Create any entities or data needed for the Run() method
-            // Add created entities to entityStore for cleanup
+            Console.WriteLine("Creating queue and phone call activity...");
+
+            var queue = new Entity("queue") { ["name"] = "Example Queue", ["queueviewtype"] = new OptionSetValue(1) };
+            Guid queueId = service.Create(queue);
+            entityStore.Add(new EntityReference("queue", queueId));
+
+            var phoneCall = new Entity("phonecall") { ["description"] = "Example Phone Call" };
+            Guid phoneCallId = service.Create(phoneCall);
+            entityStore.Add(new EntityReference("phonecall", phoneCallId));
+
+            var queueItem = new Entity("queueitem")
+            {
+                ["queueid"] = new EntityReference("queue", queueId),
+                ["objectid"] = new EntityReference("phonecall", phoneCallId)
+            };
+            queueItemId = service.Create(queueItem);
+
+            // Mark phone call as completed
+            service.Execute(new SetStateRequest
+            {
+                EntityMoniker = new EntityReference("phonecall", phoneCallId),
+                State = new OptionSetValue(1), // Completed
+                Status = new OptionSetValue(2) // Made
+            });
+
+            Console.WriteLine("Setup complete - phone call added to queue and marked as completed.");
+            Console.WriteLine();
         }
 
-        /// <summary>
-        /// Demonstrates the main sample functionality
-        /// </summary>
         private static void Run(ServiceClient service)
         {
-            Console.WriteLine("Running sample...");
-            // TODO: Add primary demonstration code here
+            Console.WriteLine("Removing completed phone call from queue...");
+
+            service.Execute(new RemoveFromQueueRequest { QueueItemId = queueItemId });
+
+            Console.WriteLine("Completed item removed from queue.");
         }
 
-        /// <summary>
-        /// Cleans up sample data created during execution
-        /// </summary>
         private static void Cleanup(ServiceClient service, bool deleteCreatedRecords)
         {
             Console.WriteLine("Cleaning up...");
             if (deleteCreatedRecords && entityStore.Count > 0)
             {
-                Console.WriteLine($"Deleting {entityStore.Count} created records...");
+                Console.WriteLine($"Deleting {entityStore.Count} created record(s)...");
                 foreach (var entityRef in entityStore)
                 {
                     service.Delete(entityRef.LogicalName, entityRef.Id);
                 }
+                Console.WriteLine("Records deleted.");
             }
         }
 

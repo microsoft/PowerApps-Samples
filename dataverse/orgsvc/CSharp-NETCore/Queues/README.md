@@ -17,7 +17,14 @@ This folder contains the following samples:
 
 |Sample folder|Description|Build target|
 |---|---|---|
-| | |.NET 6|
+|[CreateQueue](CreateQueue)|Demonstrates creating a queue with configuration options|.NET 6|
+|[DeleteQueue](DeleteQueue)|Demonstrates creating and deleting a queue|.NET 6|
+|[AddRecordToQueue](AddRecordToQueue)|Demonstrates adding records to queues and moving between queues|.NET 6|
+|[ReleaseQueueItems](ReleaseQueueItems)|Demonstrates releasing queue items from workers|.NET 6|
+|[SpecifyQueueItem](SpecifyQueueItem)|Demonstrates assigning queue items to specific workers|.NET 6|
+|[CleanHistoryQueue](CleanHistoryQueue)|Demonstrates removing completed items from queues|.NET 6|
+|[ShareQueue](ShareQueue)|Demonstrates sharing queue access with teams|.NET 6|
+|[AddSecurityPrincipalToQueue](AddSecurityPrincipalToQueue)|Demonstrates adding security principals to queues|.NET 6|
 
 ## Prerequisites
 

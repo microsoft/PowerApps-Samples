@@ -1,3 +1,4 @@
+using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Extensions.Configuration;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
@@ -6,52 +7,73 @@ using Microsoft.Xrm.Sdk.Query;
 namespace PowerPlatform.Dataverse.CodeSamples
 {
     /// <summary>
-    /// Queue sample
+    /// Demonstrates releasing queue items from workers
     /// </summary>
     /// <remarks>
-    /// TODO: Add detailed description and prerequisites
-    ///
+    /// This sample shows how to release a queue item from a worker using ReleaseToQueueRequest.
     /// Set the appropriate Url and Username values for your test
     /// environment in the appsettings.json file before running this program.
     /// </remarks>
     class Program
     {
         private static readonly List<EntityReference> entityStore = new();
+        private static Guid queueItemId;
 
         #region Sample Methods
 
-        /// <summary>
-        /// Sets up sample data required for the demonstration
-        /// </summary>
         private static void Setup(ServiceClient service)
         {
-            Console.WriteLine("Setting up sample data...");
-            // TODO: Create any entities or data needed for the Run() method
-            // Add created entities to entityStore for cleanup
+            Console.WriteLine("Creating queue, letter, and queue item...");
+
+            var queue = new Entity("queue") { ["name"] = "Example Queue", ["queueviewtype"] = new OptionSetValue(1) };
+            Guid queueId = service.Create(queue);
+            entityStore.Add(new EntityReference("queue", queueId));
+
+            var letter = new Entity("letter") { ["description"] = "Example Letter" };
+            Guid letterId = service.Create(letter);
+            entityStore.Add(new EntityReference("letter", letterId));
+
+            var queueItem = new Entity("queueitem")
+            {
+                ["queueid"] = new EntityReference("queue", queueId),
+                ["objectid"] = new EntityReference("letter", letterId)
+            };
+            queueItemId = service.Create(queueItem);
+            entityStore.Add(new EntityReference("queueitem", queueItemId));
+
+            // Get current user and assign as worker
+            var whoAmI = (WhoAmIResponse)service.Execute(new WhoAmIRequest());
+            var updateItem = new Entity("queueitem")
+            {
+                Id = queueItemId,
+                ["workerid"] = new EntityReference("systemuser", whoAmI.UserId)
+            };
+            service.Update(updateItem);
+
+            Console.WriteLine("Setup complete - queue item assigned to worker.");
+            Console.WriteLine();
         }
 
-        /// <summary>
-        /// Demonstrates the main sample functionality
-        /// </summary>
         private static void Run(ServiceClient service)
         {
-            Console.WriteLine("Running sample...");
-            // TODO: Add primary demonstration code here
+            Console.WriteLine("Releasing queue item from worker...");
+
+            service.Execute(new ReleaseToQueueRequest { QueueItemId = queueItemId });
+
+            Console.WriteLine("Queue item released from worker.");
         }
 
-        /// <summary>
-        /// Cleans up sample data created during execution
-        /// </summary>
         private static void Cleanup(ServiceClient service, bool deleteCreatedRecords)
         {
             Console.WriteLine("Cleaning up...");
             if (deleteCreatedRecords && entityStore.Count > 0)
             {
-                Console.WriteLine($"Deleting {entityStore.Count} created records...");
+                Console.WriteLine($"Deleting {entityStore.Count} created record(s)...");
                 foreach (var entityRef in entityStore)
                 {
                     service.Delete(entityRef.LogicalName, entityRef.Id);
                 }
+                Console.WriteLine("Records deleted.");
             }
         }
 

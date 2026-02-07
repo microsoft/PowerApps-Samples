@@ -1,3 +1,4 @@
+using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Extensions.Configuration;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
@@ -6,52 +7,76 @@ using Microsoft.Xrm.Sdk.Query;
 namespace PowerPlatform.Dataverse.CodeSamples
 {
     /// <summary>
-    /// Queue sample
+    /// Demonstrates adding security principals to queues
     /// </summary>
     /// <remarks>
-    /// TODO: Add detailed description and prerequisites
-    ///
+    /// This sample shows how to add a team to a queue using AddPrincipalToQueueRequest.
     /// Set the appropriate Url and Username values for your test
     /// environment in the appsettings.json file before running this program.
     /// </remarks>
     class Program
     {
         private static readonly List<EntityReference> entityStore = new();
+        private static Guid queueId;
+        private static Guid teamId;
 
         #region Sample Methods
 
-        /// <summary>
-        /// Sets up sample data required for the demonstration
-        /// </summary>
         private static void Setup(ServiceClient service)
         {
-            Console.WriteLine("Setting up sample data...");
-            // TODO: Create any entities or data needed for the Run() method
-            // Add created entities to entityStore for cleanup
+            Console.WriteLine("Creating queue and team...");
+
+            var queue = new Entity("queue") { ["name"] = "Example Queue" };
+            queueId = service.Create(queue);
+            entityStore.Add(new EntityReference("queue", queueId));
+
+            // Get default business unit
+            var query = new QueryExpression("businessunit")
+            {
+                ColumnSet = new ColumnSet("businessunitid"),
+                Criteria = new FilterExpression()
+            };
+            query.Criteria.AddCondition("parentbusinessunitid", ConditionOperator.Null);
+            var defaultBU = service.RetrieveMultiple(query).Entities[0];
+
+            var team = new Entity("team")
+            {
+                ["name"] = "Example Team",
+                ["businessunitid"] = new EntityReference("businessunit", defaultBU.Id)
+            };
+            teamId = service.Create(team);
+            entityStore.Add(new EntityReference("team", teamId));
+
+            Console.WriteLine("Setup complete.");
+            Console.WriteLine();
         }
 
-        /// <summary>
-        /// Demonstrates the main sample functionality
-        /// </summary>
         private static void Run(ServiceClient service)
         {
-            Console.WriteLine("Running sample...");
-            // TODO: Add primary demonstration code here
+            Console.WriteLine("Adding team to queue...");
+
+            var teamEntity = service.Retrieve("team", teamId, new ColumnSet("name"));
+
+            service.Execute(new AddPrincipalToQueueRequest
+            {
+                Principal = teamEntity,
+                QueueId = queueId
+            });
+
+            Console.WriteLine("Team added to queue.");
         }
 
-        /// <summary>
-        /// Cleans up sample data created during execution
-        /// </summary>
         private static void Cleanup(ServiceClient service, bool deleteCreatedRecords)
         {
             Console.WriteLine("Cleaning up...");
             if (deleteCreatedRecords && entityStore.Count > 0)
             {
-                Console.WriteLine($"Deleting {entityStore.Count} created records...");
-                foreach (var entityRef in entityStore)
+                Console.WriteLine($"Deleting {entityStore.Count} created record(s)...");
+                for (int i = entityStore.Count - 1; i >= 0; i--)
                 {
-                    service.Delete(entityRef.LogicalName, entityRef.Id);
+                    service.Delete(entityStore[i].LogicalName, entityStore[i].Id);
                 }
+                Console.WriteLine("Records deleted.");
             }
         }
 
