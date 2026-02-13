@@ -10,6 +10,10 @@ Welcome to the samples repo for Power Apps. The repo contains sample code for Po
 - [Power Apps component framework docs](https://learn.microsoft.com/power-apps/developer/component-framework/overview)
 - [Power Platform developer docs](https://learn.microsoft.com/power-platform/developer)
 
+## Repository Policies
+
+For information about the policies applied to this repository, including security, licensing, code of conduct, and contribution guidelines, see [POLICIES.md](POLICIES.md).
+
 ## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
