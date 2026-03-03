@@ -118,10 +118,10 @@ Invoke-DataverseCommands {
       OwnershipType         = 'UserOwned'
       PrimaryNameAttribute  = "$($publisherData.customizationprefix)_name"
       Attributes            = @(
-         New-PrimaryNameAttribute `
+         (New-PrimaryNameAttribute `
             -prefix $publisherData.customizationprefix `
             -description 'The name (title) of the book' `
-            -languageCode $languageCode,
+            -languageCode $languageCode),
          @{
             '@odata.type' = 'Microsoft.Dynamics.CRM.StringAttributeMetadata'
             SchemaName    = "$($publisherData.customizationprefix)_CallNumber"
@@ -164,10 +164,10 @@ Invoke-DataverseCommands {
       OwnershipType         = 'UserOwned'
       PrimaryNameAttribute  = "$($publisherData.customizationprefix)_name"
       Attributes            = @(
-         New-PrimaryNameAttribute `
+         (New-PrimaryNameAttribute `
             -prefix $publisherData.customizationprefix `
             -description 'The name (title) of the audio recording' `
-            -languageCode $languageCode,
+            -languageCode $languageCode),
          @{
             '@odata.type' = 'Microsoft.Dynamics.CRM.StringAttributeMetadata'
             SchemaName    = "$($publisherData.customizationprefix)_AudioFormat"
@@ -210,10 +210,10 @@ Invoke-DataverseCommands {
       OwnershipType         = 'UserOwned'
       PrimaryNameAttribute  = "$($publisherData.customizationprefix)_name"
       Attributes            = @(
-         New-PrimaryNameAttribute `
+         (New-PrimaryNameAttribute `
             -prefix $publisherData.customizationprefix `
             -description 'The name (title) of the video' `
-            -languageCode $languageCode,
+            -languageCode $languageCode),
          @{
             '@odata.type' = 'Microsoft.Dynamics.CRM.StringAttributeMetadata'
             SchemaName    = "$($publisherData.customizationprefix)_VideoFormat"
@@ -298,15 +298,11 @@ Invoke-DataverseCommands {
    $relAudioSchemaName = "$($publisherData.customizationprefix)_media_$($publisherData.customizationprefix)_audio"
    $relVideoSchemaName = "$($publisherData.customizationprefix)_media_$($publisherData.customizationprefix)_video"
 
-   # Check if the polymorphic lookup attribute already exists on sample_Media
-   $lookupAttrQuery = "?`$filter=SchemaName eq '$polymorphicLookupSchemaName'"
-   $lookupAttrQuery += "&`$select=MetadataId,SchemaName"
+   # Check if the relationship already exists to determine whether the polymorphic lookup was already created
+   $relExistsQuery = "?`$filter=SchemaName eq '$relBookSchemaName'&`$select=SchemaName,MetadataId"
+   $relExistsResults = (Get-Relationships -query $relExistsQuery -isManyToMany $false).value
 
-   $lookupAttrResults = Get-TableColumns `
-      -tableLogicalName ($mediaTableData.SchemaName.ToLower()) `
-      -query $lookupAttrQuery
-
-   if ($lookupAttrResults.Length -eq 0) {
+   if ($relExistsResults.Length -eq 0) {
 
       $relationships = @(
          @{
@@ -363,11 +359,29 @@ Invoke-DataverseCommands {
       Write-Host "  Relationship IDs: $($polymorphicResult.RelationshipIds -join ', ')"
    }
    else {
-      Write-Host "Polymorphic lookup attribute '$polymorphicLookupSchemaName' already exists"
+      Write-Host "Polymorphic lookup '$polymorphicLookupSchemaName' already exists"
    }
 
    # Note: The polymorphic lookup attribute and its relationships are on sample_Media.
-   # They will be deleted automatically when the sample_Media table is deleted in Section 5.
+   # They will be deleted automatically when the sample_Media table is deleted in Section 7.
+
+   # Retrieve the ReferencingEntityNavigationPropertyName for each relationship.
+   # This is the name to use when setting the polymorphic lookup value via @odata.bind.
+   # See: https://learn.microsoft.com/power-apps/developer/data-platform/webapi/web-api-navigation-properties
+   $bookNavProp = (Get-Relationships `
+      -query "?`$filter=SchemaName eq '$relBookSchemaName'&`$select=ReferencingEntityNavigationPropertyName" `
+      -isManyToMany $false).value[0].ReferencingEntityNavigationPropertyName
+   $audioNavProp = (Get-Relationships `
+      -query "?`$filter=SchemaName eq '$relAudioSchemaName'&`$select=ReferencingEntityNavigationPropertyName" `
+      -isManyToMany $false).value[0].ReferencingEntityNavigationPropertyName
+   $videoNavProp = (Get-Relationships `
+      -query "?`$filter=SchemaName eq '$relVideoSchemaName'&`$select=ReferencingEntityNavigationPropertyName" `
+      -isManyToMany $false).value[0].ReferencingEntityNavigationPropertyName
+
+   Write-Host "Navigation property names:"
+   Write-Host "  Book:  $bookNavProp"
+   Write-Host "  Audio: $audioNavProp"
+   Write-Host "  Video: $videoNavProp"
 
    #endregion Section 3: Create Polymorphic Lookup Attribute
 
@@ -450,35 +464,36 @@ Invoke-DataverseCommands {
    $recordsToDelete += @{ setName = $videoSetName; id = $video2Id }
 
    # Create Media records using the polymorphic lookup.
-   # The navigation property name for setting the lookup is:
-   #   {LookupAttributeSchemaName}_{ReferencedEntityLogicalName}@odata.bind
+   # The @odata.bind key uses the ReferencingEntityNavigationPropertyName retrieved
+   # from each relationship definition — not a derived or assumed name.
+   # See: https://learn.microsoft.com/power-apps/developer/data-platform/webapi/web-api-navigation-properties
    #
    # Each Media record references exactly one record from one of the three tables.
 
    $media1Id = New-Record -setName $mediaSetName -body @{
-      "$($publisherData.customizationprefix)_name"                                            = 'Media Object One'
-      "${polymorphicLookupSchemaName}_$($bookTableData.SchemaName.ToLower())@odata.bind"      = "/$bookSetName($book1Id)"
+      "$($publisherData.customizationprefix)_name" = 'Media Object One'
+      "${bookNavProp}@odata.bind"                  = "/$bookSetName($book1Id)"
    }
    Write-Host "Created Media record: MediaObjectOne -> Book:First Book - ID: $media1Id"
    $recordsToDelete += @{ setName = $mediaSetName; id = $media1Id }
 
    $media2Id = New-Record -setName $mediaSetName -body @{
-      "$($publisherData.customizationprefix)_name"                                            = 'Media Object Two'
-      "${polymorphicLookupSchemaName}_$($audioTableData.SchemaName.ToLower())@odata.bind"     = "/$audioSetName($audio1Id)"
+      "$($publisherData.customizationprefix)_name" = 'Media Object Two'
+      "${audioNavProp}@odata.bind"                 = "/$audioSetName($audio1Id)"
    }
    Write-Host "Created Media record: MediaObjectTwo -> Audio:First Audio - ID: $media2Id"
    $recordsToDelete += @{ setName = $mediaSetName; id = $media2Id }
 
    $media3Id = New-Record -setName $mediaSetName -body @{
-      "$($publisherData.customizationprefix)_name"                                            = 'Media Object Three'
-      "${polymorphicLookupSchemaName}_$($videoTableData.SchemaName.ToLower())@odata.bind"     = "/$videoSetName($video1Id)"
+      "$($publisherData.customizationprefix)_name" = 'Media Object Three'
+      "${videoNavProp}@odata.bind"                 = "/$videoSetName($video1Id)"
    }
    Write-Host "Created Media record: MediaObjectThree -> Video:First Video - ID: $media3Id"
    $recordsToDelete += @{ setName = $mediaSetName; id = $media3Id }
 
    $media4Id = New-Record -setName $mediaSetName -body @{
-      "$($publisherData.customizationprefix)_name"                                            = 'Media Object Four'
-      "${polymorphicLookupSchemaName}_$($audioTableData.SchemaName.ToLower())@odata.bind"     = "/$audioSetName($audio2Id)"
+      "$($publisherData.customizationprefix)_name" = 'Media Object Four'
+      "${audioNavProp}@odata.bind"                 = "/$audioSetName($audio2Id)"
    }
    Write-Host "Created Media record: MediaObjectFour -> Audio:Second Audio - ID: $media4Id"
    $recordsToDelete += @{ setName = $mediaSetName; id = $media4Id }
