@@ -15,6 +15,8 @@ $publisherId = $null
 $languageCode = 1033
 $managedSolutionExported = $false
 
+$sampleStartTime = Get-Date
+
 Invoke-DataverseCommands {
 
    #region Section 0: Create Publisher and Solution
@@ -37,15 +39,19 @@ Invoke-DataverseCommands {
    $publisherQuery += "$($publisherData.customizationoptionvalueprefix)"
    $publisherQuery += "&`$select=friendlyname"
 
-   $publisherQueryResults = (Get-Records `
-         -setName 'publishers' `
-         -query $publisherQuery).value
+   $getPublishersParams = @{
+      setName = 'publishers'
+      query   = $publisherQuery
+   }
+   $publisherQueryResults = (Get-Records @getPublishersParams).value
 
    if ($publisherQueryResults.Length -eq 0) {
       # Create the publisher if it doesn't exist
-      $publisherId = New-Record `
-         -setName 'publishers' `
-         -body $publisherData
+      $newPublisherParams = @{
+         setName = 'publishers'
+         body    = $publisherData
+      }
+      $publisherId = New-Record @newPublisherParams
 
       Write-Host 'Example Publisher created successfully'
       $recordsToDelete += @{
@@ -72,14 +78,18 @@ Invoke-DataverseCommands {
    $solutionQuery += "and _publisherid_value eq $publisherId"
    $solutionQuery += "&`$select=friendlyname"
 
-   $solutionQueryResults = (Get-Records `
-         -setName 'solutions' `
-         -query $solutionQuery).value
+   $getSolutionsParams = @{
+      setName = 'solutions'
+      query   = $solutionQuery
+   }
+   $solutionQueryResults = (Get-Records @getSolutionsParams).value
 
    if ($solutionQueryResults.Length -eq 0) {
-      $solutionId = New-Record `
-         -setName 'solutions' `
-         -body $solutionData
+      $newSolutionParams = @{
+         setName = 'solutions'
+         body    = $solutionData
+      }
+      $solutionId = New-Record @newSolutionParams
 
       Write-Host "$($solutionData.friendlyname) created successfully"
       $recordsToDelete += @{
@@ -98,7 +108,8 @@ Invoke-DataverseCommands {
    # The polymorphic lookup attribute will be on sample_Media.
    # It can reference records in sample_Book, sample_Audio, or sample_Video.
    #
-   # Data model (from https://learn.microsoft.com/power-apps/developer/data-platform/webapi/multitable-lookup):
+   # Data model (from:
+   # https://learn.microsoft.com/power-apps/developer/data-platform/webapi/multitable-lookup):
    #
    #  sample_Book:  sample_name (PK name), sample_callnumber
    #  sample_Audio: sample_name (PK name), sample_audioformat
@@ -107,39 +118,53 @@ Invoke-DataverseCommands {
 
    #region Create sample_Book table
 
+   $bookDescParams = @{
+      label        = 'A table to store books in the media library'
+      languageCode = $languageCode
+   }
+   $bookNameAttrParams = @{
+      prefix       = $publisherData.customizationprefix
+      description  = 'The name (title) of the book'
+      languageCode = $languageCode
+   }
+   $callNumDescParams = @{
+      label        = 'The library call number for the book'
+      languageCode = $languageCode
+   }
    $bookTableData = @{
       '@odata.type'         = 'Microsoft.Dynamics.CRM.EntityMetadata'
       SchemaName            = "$($publisherData.customizationprefix)_Book"
       DisplayName           = New-Label -label 'Book' -languageCode $languageCode
       DisplayCollectionName = New-Label -label 'Books' -languageCode $languageCode
-      Description           = New-Label -label 'A table to store books in the media library' -languageCode $languageCode
+      Description           = New-Label @bookDescParams
       HasActivities         = $false
       HasNotes              = $false
       OwnershipType         = 'UserOwned'
       PrimaryNameAttribute  = "$($publisherData.customizationprefix)_name"
       Attributes            = @(
-         (New-PrimaryNameAttribute `
-            -prefix $publisherData.customizationprefix `
-            -description 'The name (title) of the book' `
-            -languageCode $languageCode),
+         (New-PrimaryNameAttribute @bookNameAttrParams),
          @{
             '@odata.type' = 'Microsoft.Dynamics.CRM.StringAttributeMetadata'
             SchemaName    = "$($publisherData.customizationprefix)_CallNumber"
             RequiredLevel = @{ Value = 'None' }
             DisplayName   = New-Label -label 'Call Number' -languageCode $languageCode
-            Description   = New-Label -label 'The library call number for the book' -languageCode $languageCode
+            Description   = New-Label @callNumDescParams
             MaxLength     = 50
          }
       )
    }
 
-   $tableQuery = "?`$filter=SchemaName eq '$($bookTableData.SchemaName)'&`$select=SchemaName,MetadataId"
+   $tableQuery  = "?`$filter=SchemaName eq "
+   $tableQuery += "'$($bookTableData.SchemaName)'"
+   $tableQuery += "&`$select=SchemaName,MetadataId"
    $tableQueryResults = (Get-Tables -query $tableQuery).value
 
    if ($tableQueryResults.Length -eq 0) {
-      $bookTableId = New-Table `
-         -body $bookTableData `
-         -solutionUniqueName $solutionData.uniquename
+      $newBookTableParams = @{
+         body               = $bookTableData
+         solutionUniqueName = $solutionData.uniquename
+      }
+      $bookTableId = New-Table @newBookTableParams
 
       Write-Host "Book table created successfully"
       $recordsToDelete += @{ setName = 'EntityDefinitions'; id = $bookTableId }
@@ -153,39 +178,53 @@ Invoke-DataverseCommands {
 
    #region Create sample_Audio table
 
+   $audioDescParams = @{
+      label        = 'A table to store audio recordings in the media library'
+      languageCode = $languageCode
+   }
+   $audioNameAttrParams = @{
+      prefix       = $publisherData.customizationprefix
+      description  = 'The name (title) of the audio recording'
+      languageCode = $languageCode
+   }
+   $audioFormatDescParams = @{
+      label        = 'The format of the audio recording (e.g. mp3, wma)'
+      languageCode = $languageCode
+   }
    $audioTableData = @{
       '@odata.type'         = 'Microsoft.Dynamics.CRM.EntityMetadata'
       SchemaName            = "$($publisherData.customizationprefix)_Audio"
       DisplayName           = New-Label -label 'Audio' -languageCode $languageCode
       DisplayCollectionName = New-Label -label 'Audio' -languageCode $languageCode
-      Description           = New-Label -label 'A table to store audio recordings in the media library' -languageCode $languageCode
+      Description           = New-Label @audioDescParams
       HasActivities         = $false
       HasNotes              = $false
       OwnershipType         = 'UserOwned'
       PrimaryNameAttribute  = "$($publisherData.customizationprefix)_name"
       Attributes            = @(
-         (New-PrimaryNameAttribute `
-            -prefix $publisherData.customizationprefix `
-            -description 'The name (title) of the audio recording' `
-            -languageCode $languageCode),
+         (New-PrimaryNameAttribute @audioNameAttrParams),
          @{
             '@odata.type' = 'Microsoft.Dynamics.CRM.StringAttributeMetadata'
             SchemaName    = "$($publisherData.customizationprefix)_AudioFormat"
             RequiredLevel = @{ Value = 'None' }
             DisplayName   = New-Label -label 'Audio Format' -languageCode $languageCode
-            Description   = New-Label -label 'The format of the audio recording (e.g. mp3, wma)' -languageCode $languageCode
+            Description   = New-Label @audioFormatDescParams
             MaxLength     = 20
          }
       )
    }
 
-   $tableQuery = "?`$filter=SchemaName eq '$($audioTableData.SchemaName)'&`$select=SchemaName,MetadataId"
+   $tableQuery  = "?`$filter=SchemaName eq "
+   $tableQuery += "'$($audioTableData.SchemaName)'"
+   $tableQuery += "&`$select=SchemaName,MetadataId"
    $tableQueryResults = (Get-Tables -query $tableQuery).value
 
    if ($tableQueryResults.Length -eq 0) {
-      $audioTableId = New-Table `
-         -body $audioTableData `
-         -solutionUniqueName $solutionData.uniquename
+      $newAudioTableParams = @{
+         body               = $audioTableData
+         solutionUniqueName = $solutionData.uniquename
+      }
+      $audioTableId = New-Table @newAudioTableParams
 
       Write-Host "Audio table created successfully"
       $recordsToDelete += @{ setName = 'EntityDefinitions'; id = $audioTableId }
@@ -199,39 +238,53 @@ Invoke-DataverseCommands {
 
    #region Create sample_Video table
 
+   $videoDescParams = @{
+      label        = 'A table to store videos in the media library'
+      languageCode = $languageCode
+   }
+   $videoNameAttrParams = @{
+      prefix       = $publisherData.customizationprefix
+      description  = 'The name (title) of the video'
+      languageCode = $languageCode
+   }
+   $videoFormatDescParams = @{
+      label        = 'The format of the video (e.g. wmv, avi)'
+      languageCode = $languageCode
+   }
    $videoTableData = @{
       '@odata.type'         = 'Microsoft.Dynamics.CRM.EntityMetadata'
       SchemaName            = "$($publisherData.customizationprefix)_Video"
       DisplayName           = New-Label -label 'Video' -languageCode $languageCode
       DisplayCollectionName = New-Label -label 'Videos' -languageCode $languageCode
-      Description           = New-Label -label 'A table to store videos in the media library' -languageCode $languageCode
+      Description           = New-Label @videoDescParams
       HasActivities         = $false
       HasNotes              = $false
       OwnershipType         = 'UserOwned'
       PrimaryNameAttribute  = "$($publisherData.customizationprefix)_name"
       Attributes            = @(
-         (New-PrimaryNameAttribute `
-            -prefix $publisherData.customizationprefix `
-            -description 'The name (title) of the video' `
-            -languageCode $languageCode),
+         (New-PrimaryNameAttribute @videoNameAttrParams),
          @{
             '@odata.type' = 'Microsoft.Dynamics.CRM.StringAttributeMetadata'
             SchemaName    = "$($publisherData.customizationprefix)_VideoFormat"
             RequiredLevel = @{ Value = 'None' }
             DisplayName   = New-Label -label 'Video Format' -languageCode $languageCode
-            Description   = New-Label -label 'The format of the video (e.g. wmv, avi)' -languageCode $languageCode
+            Description   = New-Label @videoFormatDescParams
             MaxLength     = 20
          }
       )
    }
 
-   $tableQuery = "?`$filter=SchemaName eq '$($videoTableData.SchemaName)'&`$select=SchemaName,MetadataId"
+   $tableQuery  = "?`$filter=SchemaName eq "
+   $tableQuery += "'$($videoTableData.SchemaName)'"
+   $tableQuery += "&`$select=SchemaName,MetadataId"
    $tableQueryResults = (Get-Tables -query $tableQuery).value
 
    if ($tableQueryResults.Length -eq 0) {
-      $videoTableId = New-Table `
-         -body $videoTableData `
-         -solutionUniqueName $solutionData.uniquename
+      $newVideoTableParams = @{
+         body               = $videoTableData
+         solutionUniqueName = $solutionData.uniquename
+      }
+      $videoTableId = New-Table @newVideoTableParams
 
       Write-Host "Video table created successfully"
       $recordsToDelete += @{ setName = 'EntityDefinitions'; id = $videoTableId }
@@ -249,31 +302,41 @@ Invoke-DataverseCommands {
    # This table will hold the polymorphic lookup attribute that can point to
    # a record in sample_Book, sample_Audio, or sample_Video.
 
+   $mediaDescParams = @{
+      label        = 'A catalog table that references media items via a polymorphic lookup'
+      languageCode = $languageCode
+   }
+   $mediaNameAttrParams = @{
+      prefix       = $publisherData.customizationprefix
+      description  = 'The name of the media catalog entry'
+      languageCode = $languageCode
+   }
    $mediaTableData = @{
       '@odata.type'         = 'Microsoft.Dynamics.CRM.EntityMetadata'
       SchemaName            = "$($publisherData.customizationprefix)_Media"
       DisplayName           = New-Label -label 'Media' -languageCode $languageCode
       DisplayCollectionName = New-Label -label 'Media' -languageCode $languageCode
-      Description           = New-Label -label 'A catalog table that references media items via a polymorphic lookup' -languageCode $languageCode
+      Description           = New-Label @mediaDescParams
       HasActivities         = $false
       HasNotes              = $false
       OwnershipType         = 'UserOwned'
       PrimaryNameAttribute  = "$($publisherData.customizationprefix)_name"
       Attributes            = @(
-         New-PrimaryNameAttribute `
-            -prefix $publisherData.customizationprefix `
-            -description 'The name of the media catalog entry' `
-            -languageCode $languageCode
+         New-PrimaryNameAttribute @mediaNameAttrParams
       )
    }
 
-   $tableQuery = "?`$filter=SchemaName eq '$($mediaTableData.SchemaName)'&`$select=SchemaName,MetadataId"
+   $tableQuery  = "?`$filter=SchemaName eq "
+   $tableQuery += "'$($mediaTableData.SchemaName)'"
+   $tableQuery += "&`$select=SchemaName,MetadataId"
    $tableQueryResults = (Get-Tables -query $tableQuery).value
 
    if ($tableQueryResults.Length -eq 0) {
-      $mediaTableId = New-Table `
-         -body $mediaTableData `
-         -solutionUniqueName $solutionData.uniquename
+      $newMediaTableParams = @{
+         body               = $mediaTableData
+         solutionUniqueName = $solutionData.uniquename
+      }
+      $mediaTableId = New-Table @newMediaTableParams
 
       Write-Host "Media table created successfully"
       $recordsToDelete += @{ setName = 'EntityDefinitions'; id = $mediaTableId }
@@ -294,11 +357,13 @@ Invoke-DataverseCommands {
 
    # The relationship schema names follow the convention:
    # {ReferencingEntity}_{ReferencedEntity}
-   $relBookSchemaName  = "$($publisherData.customizationprefix)_media_$($publisherData.customizationprefix)_book"
-   $relAudioSchemaName = "$($publisherData.customizationprefix)_media_$($publisherData.customizationprefix)_audio"
-   $relVideoSchemaName = "$($publisherData.customizationprefix)_media_$($publisherData.customizationprefix)_video"
+   $pfx = $publisherData.customizationprefix
+   $relBookSchemaName  = "${pfx}_media_${pfx}_book"
+   $relAudioSchemaName = "${pfx}_media_${pfx}_audio"
+   $relVideoSchemaName = "${pfx}_media_${pfx}_video"
 
-   # Check if the relationship already exists to determine whether the polymorphic lookup was already created
+   # Check if the relationship already exists to determine whether
+   # the polymorphic lookup was already created
    $relExistsQuery = "?`$filter=SchemaName eq '$relBookSchemaName'&`$select=SchemaName,MetadataId"
    $relExistsResults = (Get-Relationships -query $relExistsQuery -isManyToMany $false).value
 
@@ -338,21 +403,25 @@ Invoke-DataverseCommands {
          }
       )
 
+      $lookupDescParams = @{
+         label        = 'Polymorphic lookup that can reference a Book, Audio, or Video record'
+         languageCode = $languageCode
+      }
       $lookup = @{
          '@odata.type'     = 'Microsoft.Dynamics.CRM.ComplexLookupAttributeMetadata'
          AttributeType     = 'Lookup'
          AttributeTypeName = @{ Value = 'LookupType' }
          SchemaName        = $polymorphicLookupSchemaName
          DisplayName       = New-Label -label 'Media' -languageCode $languageCode
-         Description       = New-Label `
-            -label       'Polymorphic lookup that can reference a Book, Audio, or Video record' `
-            -languageCode $languageCode
+         Description       = New-Label @lookupDescParams
       }
 
-      $polymorphicResult = New-PolymorphicLookupColumn `
-         -oneToManyRelationships $relationships `
-         -lookup $lookup `
-         -solutionUniqueName $solutionData.uniquename
+      $newPolymorphicLookupParams = @{
+         oneToManyRelationships = $relationships
+         lookup                 = $lookup
+         solutionUniqueName     = $solutionData.uniquename
+      }
+      $polymorphicResult = New-PolymorphicLookupColumn @newPolymorphicLookupParams
 
       Write-Host "Polymorphic lookup attribute '$polymorphicLookupSchemaName' created successfully"
       Write-Host "  Attribute ID: $($polymorphicResult.AttributeId)"
@@ -367,16 +436,32 @@ Invoke-DataverseCommands {
 
    # Retrieve the ReferencingEntityNavigationPropertyName for each relationship.
    # This is the name to use when setting the polymorphic lookup value via @odata.bind.
-   # See: https://learn.microsoft.com/power-apps/developer/data-platform/webapi/web-api-navigation-properties
-   $bookNavProp = (Get-Relationships `
-      -query "?`$filter=SchemaName eq '$relBookSchemaName'&`$select=ReferencingEntityNavigationPropertyName" `
-      -isManyToMany $false).value[0].ReferencingEntityNavigationPropertyName
-   $audioNavProp = (Get-Relationships `
-      -query "?`$filter=SchemaName eq '$relAudioSchemaName'&`$select=ReferencingEntityNavigationPropertyName" `
-      -isManyToMany $false).value[0].ReferencingEntityNavigationPropertyName
-   $videoNavProp = (Get-Relationships `
-      -query "?`$filter=SchemaName eq '$relVideoSchemaName'&`$select=ReferencingEntityNavigationPropertyName" `
-      -isManyToMany $false).value[0].ReferencingEntityNavigationPropertyName
+   # See: https://learn.microsoft.com/power-apps/developer/data-platform/
+   #   webapi/web-api-navigation-properties
+   $navPropSelect    = "&`$select=ReferencingEntityNavigationPropertyName"
+   $bookNavQuery     = "?`$filter=SchemaName eq '$relBookSchemaName'$navPropSelect"
+   $getBookRelParams = @{
+      query        = $bookNavQuery
+      isManyToMany = $false
+   }
+   $bookRelResult = (Get-Relationships @getBookRelParams).value[0]
+   $bookNavProp   = $bookRelResult.ReferencingEntityNavigationPropertyName
+
+   $audioNavQuery     = "?`$filter=SchemaName eq '$relAudioSchemaName'$navPropSelect"
+   $getAudioRelParams = @{
+      query        = $audioNavQuery
+      isManyToMany = $false
+   }
+   $audioRelResult = (Get-Relationships @getAudioRelParams).value[0]
+   $audioNavProp   = $audioRelResult.ReferencingEntityNavigationPropertyName
+
+   $videoNavQuery     = "?`$filter=SchemaName eq '$relVideoSchemaName'$navPropSelect"
+   $getVideoRelParams = @{
+      query        = $videoNavQuery
+      isManyToMany = $false
+   }
+   $videoRelResult = (Get-Relationships @getVideoRelParams).value[0]
+   $videoNavProp   = $videoRelResult.ReferencingEntityNavigationPropertyName
 
    Write-Host "Navigation property names:"
    Write-Host "  Book:  $bookNavProp"
@@ -402,10 +487,29 @@ Invoke-DataverseCommands {
 
    # Retrieve entity set names so we can use them for data operations.
    # By default Dataverse generates entity set names as the plural of the logical name.
-   $bookTable  = Get-Table -logicalName ($bookTableData.SchemaName.ToLower())  -query '?$select=EntitySetName'
-   $audioTable = Get-Table -logicalName ($audioTableData.SchemaName.ToLower()) -query '?$select=EntitySetName'
-   $videoTable = Get-Table -logicalName ($videoTableData.SchemaName.ToLower()) -query '?$select=EntitySetName'
-   $mediaTable = Get-Table -logicalName ($mediaTableData.SchemaName.ToLower()) -query '?$select=EntitySetName'
+   $getBookTableParams = @{
+      logicalName = $bookTableData.SchemaName.ToLower()
+      query       = '?$select=EntitySetName'
+   }
+   $bookTable  = Get-Table @getBookTableParams
+
+   $getAudioTableParams = @{
+      logicalName = $audioTableData.SchemaName.ToLower()
+      query       = '?$select=EntitySetName'
+   }
+   $audioTable = Get-Table @getAudioTableParams
+
+   $getVideoTableParams = @{
+      logicalName = $videoTableData.SchemaName.ToLower()
+      query       = '?$select=EntitySetName'
+   }
+   $videoTable = Get-Table @getVideoTableParams
+
+   $getMediaTableParams = @{
+      logicalName = $mediaTableData.SchemaName.ToLower()
+      query       = '?$select=EntitySetName'
+   }
+   $mediaTable = Get-Table @getMediaTableParams
 
    $bookSetName  = $bookTable.EntitySetName
    $audioSetName = $audioTable.EntitySetName
@@ -466,7 +570,8 @@ Invoke-DataverseCommands {
    # Create Media records using the polymorphic lookup.
    # The @odata.bind key uses the ReferencingEntityNavigationPropertyName retrieved
    # from each relationship definition — not a derived or assumed name.
-   # See: https://learn.microsoft.com/power-apps/developer/data-platform/webapi/web-api-navigation-properties
+   # See: https://learn.microsoft.com/power-apps/developer/data-platform/
+   #   webapi/web-api-navigation-properties
    #
    # Each Media record references exactly one record from one of the three tables.
 
@@ -511,23 +616,27 @@ Invoke-DataverseCommands {
    $mediaQuery += "&`$filter=$($publisherData.customizationprefix)_name ne null"
    $mediaQuery += "&`$top=10"
 
-   $mediaResults = (Get-Records `
-         -setName $mediaSetName `
-         -query $mediaQuery).value
+   $getMediaRecordsParams = @{
+      setName = $mediaSetName
+      query   = $mediaQuery
+   }
+   $mediaResults = (Get-Records @getMediaRecordsParams).value
 
    Write-Host "`nMedia catalog entries:"
    foreach ($media in $mediaResults) {
       $mediaName     = $media."$($publisherData.customizationprefix)_name"
-      $lookupId      = $media."_$($polymorphicLookupSchemaName.ToLower())_value"
-      $lookupName    = $media."_$($polymorphicLookupSchemaName.ToLower())_value@OData.Community.Display.V1.FormattedValue"
-      $lookupType    = $media."_$($polymorphicLookupSchemaName.ToLower())_value@Microsoft.Dynamics.CRM.lookuplogicalname"
+      $lookupProp    = "_$($polymorphicLookupSchemaName.ToLower())_value"
+      $lookupId      = $media.$lookupProp
+      $lookupName    = $media."${lookupProp}@OData.Community.Display.V1.FormattedValue"
+      $lookupType    = $media."${lookupProp}@Microsoft.Dynamics.CRM.lookuplogicalname"
 
       Write-Host "  $mediaName -> [$lookupType] $lookupName (ID: $lookupId)"
    }
 
    # Demonstrate that a lookup on Media with name 'Content1' retrieves records
    # from both Book and Audio tables.
-   Write-Host "`nDemonstrating cross-table lookup: querying Media records where the referenced item is named 'Content1'"
+   Write-Host "`nDemonstrating cross-table lookup: querying Media records"
+   Write-Host "  where the referenced item is named 'Content1'"
 
    $content1BookQuery = "?`$select=$($publisherData.customizationprefix)_name"
    $content1BookQuery += "&`$filter=_$($polymorphicLookupSchemaName.ToLower())_value eq $book1Id"
@@ -553,42 +662,71 @@ Invoke-DataverseCommands {
    #region Section 6: Export Managed Solution
 
    $solutionFile = Export-Solution -solutionName $solutionData.uniquename -managed $true
-   $saveSolutionFilePath = "$(Get-location)\PolymorphicLookup\$($solutionData.uniquename).zip"
+   $saveSolutionFilePath = "$PSScriptRoot\$($solutionData.uniquename).zip"
    [IO.File]::WriteAllBytes($saveSolutionFilePath, $solutionFile)
    Write-Host "Managed solution exported to $saveSolutionFilePath"
    $managedSolutionExported = $true
 
    #endregion Section 6: Export Managed Solution
 
-   #region Section 7: Delete Sample Records
-   # Records are deleted in the reverse order they were created.
-   # Deleting the sample_Media table will also delete the polymorphic lookup
-   # attribute (sample_MediaPolymorphicLookup) and its relationships.
-   # Deleting the referenced tables removes all book, audio, and video records.
+   #region Section 7: Delete Sample Tables and Solution
 
-   if ($deleteCreatedRecords -and ($recordsToDelete.Length -gt 0)) {
-      Write-Host "`nDeleting sample records..."
+   if ($deleteCreatedRecords) {
+      Write-Host "`nDeleting sample tables and solution..."
 
-      for ($i = $recordsToDelete.Length - 1; $i -ge 0; $i--) {
-         $recordToDelete = $recordsToDelete[$i]
-         Remove-Record `
-            -setName $recordToDelete.setName `
-            -id $recordToDelete.id `
-            -strongConsistency $true | Out-Null
-         Write-Host "$($recordToDelete.setName) record with ID: $($recordToDelete.id) deleted."
+      # Delete sample_Media first; this cascades to delete the polymorphic lookup
+      # attribute and its relationships, as well as all Media data records.
+      $checkQuery = "?`$filter=SchemaName eq '$($mediaTableData.SchemaName)'&`$select=MetadataId"
+      $checkResults = (Get-Tables -query $checkQuery).value
+      if ($checkResults.Length -eq 1) {
+         $removeMediaTableParams = @{
+            setName           = 'EntityDefinitions'
+            id                = $checkResults[0].MetadataId
+            strongConsistency = $true
+         }
+         Remove-Record @removeMediaTableParams | Out-Null
+         Write-Host "$($mediaTableData.SchemaName) table deleted."
+      }
+
+      # Delete the referenced tables. Deleting each table also removes all its data records.
+      foreach ($tableData in @($bookTableData, $audioTableData, $videoTableData)) {
+         $checkQuery = "?`$filter=SchemaName eq '$($tableData.SchemaName)'&`$select=MetadataId"
+         $checkResults = (Get-Tables -query $checkQuery).value
+         if ($checkResults.Length -eq 1) {
+            $removeTableParams = @{
+               setName           = 'EntityDefinitions'
+               id                = $checkResults[0].MetadataId
+               strongConsistency = $true
+            }
+            Remove-Record @removeTableParams | Out-Null
+            Write-Host "$($tableData.SchemaName) table deleted."
+         }
+      }
+
+      # Delete the unmanaged solution.
+      $unmanagedSolQuery  = "?`$filter=uniquename eq "
+      $unmanagedSolQuery += "'$($solutionData.uniquename)'"
+      $unmanagedSolQuery += " and ismanaged eq false"
+      $unmanagedSolQuery += "&`$select=solutionid"
+      $unmanagedSolResults = (Get-Records -setName 'solutions' -query $unmanagedSolQuery).value
+      if ($unmanagedSolResults.Length -eq 1) {
+         Remove-Record -setName 'solutions' -id $unmanagedSolResults[0].solutionid | Out-Null
+         Write-Host "Unmanaged solution '$($solutionData.uniquename)' deleted."
       }
    }
 
-   #endregion Section 7: Delete Sample Records
+   #endregion Section 7: Delete Sample Tables and Solution
 
    #region Section 8: Import and Delete Managed Solution
 
    if ($deleteCreatedRecords -and $managedSolutionExported) {
       $importJobId = New-Guid
-      Import-Solution `
-         -customizationFile ([System.IO.File]::ReadAllBytes($saveSolutionFilePath)) `
-         -overwriteUnmanagedCustomizations $false `
-         -importJobId $importJobId
+      $importSolutionParams = @{
+         customizationFile                = [System.IO.File]::ReadAllBytes($saveSolutionFilePath)
+         overwriteUnmanagedCustomizations = $false
+         importJobId                      = $importJobId
+      }
+      Import-Solution @importSolutionParams
       Write-Host "Managed solution imported."
 
       $solutionQuery = "?`$filter=uniquename eq '$($solutionData.uniquename)'&`$select=solutionid"
@@ -603,3 +741,6 @@ Invoke-DataverseCommands {
 
    #endregion Section 8: Import and Delete Managed Solution
 }
+
+$duration = (Get-Date) - $sampleStartTime
+Write-Host "`nSample completed in $($duration.ToString('hh\:mm\:ss'))"
