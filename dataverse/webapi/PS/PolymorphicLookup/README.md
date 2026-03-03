@@ -159,36 +159,36 @@ Audio table created successfully
 Video table created successfully
 Media table created successfully
 Polymorphic lookup attribute 'sample_MediaPolymorphicLookup' created successfully
-  Attribute ID: b2c6e1d4-8f3a-ef11-a729-000d3a5c3e1f
-  Relationship IDs: c3d7f2e5-9a4b-ef11-a729-000d3a5c3e1f, d4e8a3f6-ab5c-ef11-a729-000d3a5c3e1f, e5f9b4a7-bc6d-ef11-a729-000d3a5c3e1f
+  Attribute ID: 611d231d-938a-46ec-ab95-ee8a2bf178fc
+  Relationship IDs: ec8e9781-5117-f111-8342-0022482aa3a2, f48e9781-5117-f111-8342-0022482aa3a2, fc8e9781-5117-f111-8342-0022482aa3a2
 Navigation property names:
-  Book:  sample_mediapol_sample_book
-  Audio: sample_mediapol_sample_audio
-  Video: sample_mediapol_sample_video
+  Book:  sample_MediaPolymorphicLookup_sample_book
+  Audio: sample_MediaPolymorphicLookup_sample_audio
+  Video: sample_MediaPolymorphicLookup_sample_video
 
 Entity set names:
   Book:  sample_books
   Audio: sample_audios
   Video: sample_videos
   Media: sample_medias
-Created Book record: Content1 (1ww-3452) - ID: f6a0c5b8-cd7e-ef11-a729-000d3a5c3e1f
-Created Book record: Content2 (a4e-87hw) - ID: a7b1d6c9-de8f-ef11-a729-000d3a5c3e1f
-Created Audio record: Content1 (mp4) - ID: b8c2e7da-ef90-ef11-a729-000d3a5c3e1f
-Created Audio record: Content2 (wma) - ID: c9d3f8eb-f0a1-ef11-a729-000d3a5c3e1f
-Created Video record: Content3 (wmv) - ID: dae4a9fc-01b2-ef11-a729-000d3a5c3e1f
-Created Video record: Content2 (avi) - ID: ebf5ba0d-12c3-ef11-a729-000d3a5c3e1f
-Created Media record: MediaObjectOne -> Book:First Book - ID: fc06cb1e-23d4-ef11-a729-000d3a5c3e1f
-Created Media record: MediaObjectTwo -> Audio:First Audio - ID: 0d17dc2f-34e5-ef11-a729-000d3a5c3e1f
-Created Media record: MediaObjectThree -> Video:First Video - ID: 1e28ed40-45f6-ef11-a729-000d3a5c3e1f
-Created Media record: MediaObjectFour -> Audio:Second Audio - ID: 2f39fe51-5607-ef11-a729-000d3a5c3e1f
+Created Book record: Content1 (1ww-3452) - ID: 8b98de92-5117-f111-8341-7ced8d1dd398
+Created Book record: Content2 (a4e-87hw) - ID: 145dfa93-5117-f111-8341-7ced8d21aac6
+Created Audio record: Content1 (mp4) - ID: 8f4c5a95-5117-f111-8342-0022482aa3a2
+Created Audio record: Content2 (wma) - ID: c5712b97-5117-f111-8341-0022482aa957
+Created Video record: Content3 (wmv) - ID: 4b227d95-5117-f111-8341-0022482aa60e
+Created Video record: Content2 (avi) - ID: 974c5a95-5117-f111-8342-0022482aa3a2
+Created Media record: Media Object One -> Book:First Book - ID: e47bd998-5117-f111-8341-7ced8d1dd398
+Created Media record: Media Object Two -> Audio:First Audio - ID: d1712b97-5117-f111-8341-0022482aa957
+Created Media record: Media Object Three -> Video:First Video - ID: d3712b97-5117-f111-8341-0022482aa957
+Created Media record: Media Object Four -> Audio:Second Audio - ID: 59227d95-5117-f111-8341-0022482aa60e
 
 -- Retrieving Media records with polymorphic lookup values --
 
 Media catalog entries:
-  Media Object One -> [sample_book] Content1 (ID: f6a0c5b8-cd7e-ef11-a729-000d3a5c3e1f)
-  Media Object Two -> [sample_audio] Content1 (ID: b8c2e7da-ef90-ef11-a729-000d3a5c3e1f)
-  Media Object Three -> [sample_video] Content3 (ID: dae4a9fc-01b2-ef11-a729-000d3a5c3e1f)
-  Media Object Four -> [sample_audio] Content2 (ID: c9d3f8eb-f0a1-ef11-a729-000d3a5c3e1f)
+  Media Object Four -> [sample_audio] Content2 (ID: c5712b97-5117-f111-8341-0022482aa957)
+  Media Object Two -> [sample_audio] Content1 (ID: 8f4c5a95-5117-f111-8342-0022482aa3a2)
+  Media Object Three -> [sample_video] Content3 (ID: 4b227d95-5117-f111-8341-0022482aa60e)
+  Media Object One -> [sample_book] Content1 (ID: 8b98de92-5117-f111-8341-7ced8d1dd398)
 
 Demonstrating cross-table lookup: querying Media records
   where the referenced item is named 'Content1'
@@ -204,11 +204,9 @@ sample_Book table deleted.
 sample_Audio table deleted.
 sample_Video table deleted.
 Unmanaged solution 'polymorphiclookupexamplesolution' deleted.
-Importing managed solution...
 
 Managed solution imported.
 Managed solution deleted.
 
-Sample completed in 00:02:47
-PS C:\GitHub\PowerApps-Samples\dataverse\webapi\PS>
+Sample completed in 00:19:36
 ```

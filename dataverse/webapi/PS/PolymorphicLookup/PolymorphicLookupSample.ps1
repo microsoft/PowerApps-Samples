@@ -480,10 +480,10 @@ Invoke-DataverseCommands {
    #  sample_Audio: Content1 (mp4), Content3 (wma)
    #  sample_Video: Content3 (wmv), Content2 (avi)
    #
-   #  sample_Media: MediaObjectOne  -> Book:Content1
-   #                MediaObjectTwo  -> Audio:Content1
-   #                MediaObjectThree -> Video:Content3
-   #                MediaObjectFour  -> Audio:Content3
+   #  sample_Media: Media Object One  -> Book:Content1
+   #                Media Object Two  -> Audio:Content1
+   #                Media Object Three -> Video:Content3
+   #                Media Object Four  -> Audio:Content3
 
    # Retrieve entity set names so we can use them for data operations.
    # By default Dataverse generates entity set names as the plural of the logical name.
@@ -579,28 +579,28 @@ Invoke-DataverseCommands {
       "$($publisherData.customizationprefix)_name" = 'Media Object One'
       "${bookNavProp}@odata.bind"                  = "/$bookSetName($book1Id)"
    }
-   Write-Host "Created Media record: MediaObjectOne -> Book:First Book - ID: $media1Id"
+   Write-Host "Created Media record: Media Object One -> Book:First Book - ID: $media1Id"
    $recordsToDelete += @{ setName = $mediaSetName; id = $media1Id }
 
    $media2Id = New-Record -setName $mediaSetName -body @{
       "$($publisherData.customizationprefix)_name" = 'Media Object Two'
       "${audioNavProp}@odata.bind"                 = "/$audioSetName($audio1Id)"
    }
-   Write-Host "Created Media record: MediaObjectTwo -> Audio:First Audio - ID: $media2Id"
+   Write-Host "Created Media record: Media Object Two -> Audio:First Audio - ID: $media2Id"
    $recordsToDelete += @{ setName = $mediaSetName; id = $media2Id }
 
    $media3Id = New-Record -setName $mediaSetName -body @{
       "$($publisherData.customizationprefix)_name" = 'Media Object Three'
       "${videoNavProp}@odata.bind"                 = "/$videoSetName($video1Id)"
    }
-   Write-Host "Created Media record: MediaObjectThree -> Video:First Video - ID: $media3Id"
+   Write-Host "Created Media record: Media Object Three -> Video:First Video - ID: $media3Id"
    $recordsToDelete += @{ setName = $mediaSetName; id = $media3Id }
 
    $media4Id = New-Record -setName $mediaSetName -body @{
       "$($publisherData.customizationprefix)_name" = 'Media Object Four'
       "${audioNavProp}@odata.bind"                 = "/$audioSetName($audio2Id)"
    }
-   Write-Host "Created Media record: MediaObjectFour -> Audio:Second Audio - ID: $media4Id"
+   Write-Host "Created Media record: Media Object Four -> Audio:Second Audio - ID: $media4Id"
    $recordsToDelete += @{ setName = $mediaSetName; id = $media4Id }
 
    #endregion Section 4: Create Sample Data Records
