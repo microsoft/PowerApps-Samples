@@ -2352,13 +2352,14 @@ function New-PolymorphicLookupColumn {
    $postHeaders = $baseHeaders.Clone()
    $postHeaders.Add('Content-Type', 'application/json')
    $postHeaders.Add('Consistency', 'Strong')
-   if ($solutionUniqueName) {
-      $postHeaders.Add('MSCRM.SolutionUniqueName', $solutionUniqueName)
-   }
 
    $body = @{
       OneToManyRelationships = $oneToManyRelationships
       Lookup                 = $lookup
+   }
+
+   if ($solutionUniqueName) {
+      $body.SolutionUniqueName = $solutionUniqueName
    }
 
    $CreateRequest = @{
