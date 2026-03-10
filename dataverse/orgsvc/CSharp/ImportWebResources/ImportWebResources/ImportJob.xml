@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<job>
+ <webResource>
+  <path>FilesToImport\CSS\Styles.css</path>
+  <displayName>Web Resource Import Sample Styles.css file</displayName>
+  <description>Provides CSS styles for the sample_/ImportWebResources/ShowData.htm Web resource.</description>
+  <name>_/ImportWebResources/CSS/Styles.css</name>
+  <type name="Css">2</type>
+ </webResource>
+ <webResource>
+  <path>FilesToImport\Data\Data.xml</path>
+  <displayName>Web Resource Import Sample Data.xml file</displayName>
+  <description>Provides data for the sample_/ImportWebResources/ShowData.htm Web resource.</description>
+  <name>_/ImportWebResources/Data/Data.xml</name>
+  <type name="Xml">4</type>
+ </webResource>
+ <webResource>
+  <path>FilesToImport\Script\Script.js</path>
+  <displayName>Web Resource Import Sample Script.js file</displayName>
+  <description>Provides the SDK.ImportWebResources JScript library for the sample_/ImportWebResources/ShowData.htm Web resource.</description>
+  <name>_/ImportWebResources/Script/Script.js</name>
+  <type name="JScript">3</type>
+ </webResource>
+ <webResource>
+  <path>FilesToImport\XSL\Transform.xsl</path>
+  <displayName>Web Resource Import Sample Transform.xsl file</displayName>
+  <description>Provides a transform for the sample_/ImportWebResources/ShowData.htm Web resource.</description>
+  <name>_/ImportWebResources/XSL/Transform.xsl</name>
+  <type name="Stylesheet_XSL">9</type>
+ </webResource>
+ <webResource>
+  <path>FilesToImport\ShowData.htm</path>
+  <displayName>Web Resource Import Sample ShowData.htm file</displayName>
+  <description>The HTML Web resource for the sample.</description>
+  <name>_/ImportWebResources/ShowData.htm</name>
+  <type name="Html">1</type>
+ </webResource>
+</job>

@@ -1,0 +1,18 @@
+﻿body
+{
+    font-family: Calibri;
+}
+table
+{
+    border: 1px solid gray;
+    border-collapse: collapse;
+}
+th
+{
+    text-align: left;
+    border: 1px solid gray;
+}
+td
+{
+    border: 1px solid gray;
+}

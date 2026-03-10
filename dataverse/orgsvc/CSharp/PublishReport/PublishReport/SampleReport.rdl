@@ -1,0 +1,666 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2005/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <TopMargin>0.5in</TopMargin>
+  <BottomMargin>0.5in</BottomMargin>
+  <LeftMargin>0.5in</LeftMargin>
+  <RightMargin>0.5in</RightMargin>
+  <PageHeight>8.25in</PageHeight>
+  <PageWidth>11.0in</PageWidth>
+  <Width>10.0in</Width>
+  <Body>
+    <Height>7.25in</Height>
+    <Style>
+      <TextAlign>Left</TextAlign>
+    </Style>
+    <ReportItems>
+      <Rectangle Name="rectHeader">
+        <Width>10.0in</Width>
+        <Height>0.625in</Height>
+        <Left>0.0in</Left>
+        <Top>0.0in</Top>
+        <Style>
+          <BackgroundColor>#e3efff</BackgroundColor>
+        </Style>
+        <ReportItems>
+          <Textbox Name="txtHeader">
+            <CanGrow>true</CanGrow>
+            <Width>9.875in</Width>
+            <Height>0.375in</Height>
+            <Left>0.125in</Left>
+            <Top>0.125in</Top>
+            <Value>Sample Account Summary</Value>
+            <Style>
+              <FontFamily>Tahoma</FontFamily>
+              <FontSize>14pt</FontSize>
+              <FontWeight>700</FontWeight>
+              <Language>en-US</Language>
+              <PaddingBottom>2pt</PaddingBottom>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <TextAlign>Left</TextAlign>
+              <VerticalAlign>Middle</VerticalAlign>
+            </Style>
+          </Textbox>
+        </ReportItems>
+      </Rectangle>
+      <Rectangle Name="rectFilterSummary">
+        <Width>10.0in</Width>
+        <Height>0.5in</Height>
+        <Left>0.0in</Left>
+        <Top>0.625in</Top>
+        <Style>
+          <BackgroundColor>#e3efff</BackgroundColor>
+        </Style>
+        <Visibility>
+          <Hidden>=IsNothing(Parameters!CRM_FilterText.Value) OrElse (Parameters!CRM_FilterText.Value.Trim().Length = 0)</Hidden>
+        </Visibility>
+        <ReportItems>
+          <Textbox Name="txtFilterSummary">
+            <CanGrow>true</CanGrow>
+            <Width>9.875in</Width>
+            <Height>0.25in</Height>
+            <Left>0.125in</Left>
+            <Top>0.0in</Top>
+            <Value>="Filter Summary"</Value>
+            <Style>
+              <FontFamily>Tahoma</FontFamily>
+              <FontSize>12pt</FontSize>
+              <FontWeight>700</FontWeight>
+              <Language>en-US</Language>
+              <PaddingBottom>2pt</PaddingBottom>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Textbox>
+          <Textbox Name="txtFilterSummaryValue">
+            <CanGrow>true</CanGrow>
+            <Width>9.75in</Width>
+            <Height>0.25in</Height>
+            <Left>0.25in</Left>
+            <Top>0.25in</Top>
+            <Value>=Parameters!CRM_FilterText.Value</Value>
+            <Style>
+              <FontFamily>Tahoma</FontFamily>
+              <FontSize>8pt</FontSize>
+              <FontWeight>700</FontWeight>
+              <Language>=Microsoft.Crm.Reporting.RdlHelper.ReportCultureInfo.GetCultureName(Parameters!CRM_UILanguageId.Value)</Language>
+              <PaddingBottom>2pt</PaddingBottom>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <TextAlign>Left</TextAlign>
+            </Style>
+            <Visibility>
+              <Hidden>true</Hidden>
+              <ToggleItem>txtFilterSummary</ToggleItem>
+            </Visibility>
+          </Textbox>
+        </ReportItems>
+      </Rectangle>
+      <Table Name="Table0">
+        <DataSetName>DSMain</DataSetName>
+        <DataElementOutput>Output</DataElementOutput>
+        <NoRows>="No Data"</NoRows>
+        <Left>3.438in</Left>
+        <Top>1.25in</Top>
+        <Style>
+          <TextAlign>Left</TextAlign>
+        </Style>
+        <TableColumns>
+          <TableColumn>
+            <Width>1.042in</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>1.042in</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>1.042in</Width>
+          </TableColumn>
+        </TableColumns>
+        <Header>
+          <RepeatOnNewPage>true</RepeatOnNewPage>
+          <TableRows>
+            <TableRow>
+              <Height>.25in</Height>
+              <TableCells>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="Table0_Header0">
+                      <CanGrow>true</CanGrow>
+                      <Value>="Account Name"</Value>
+                      <Style>
+                        <BackgroundColor>#4f81bd</BackgroundColor>
+                        <Color>#ffffff</Color>
+                        <FontFamily>Tahoma</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>700</FontWeight>
+                        <Language>en-US</Language>
+                        <PaddingBottom>2pt</PaddingBottom>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <TextAlign>Center</TextAlign>
+                      </Style>
+                      <UserSort>
+                        <SortExpression>=Fields!name.Value</SortExpression>
+                      </UserSort>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="Table0_Header1">
+                      <CanGrow>true</CanGrow>
+                      <Value>="Account Number"</Value>
+                      <Style>
+                        <BackgroundColor>#4f81bd</BackgroundColor>
+                        <Color>#ffffff</Color>
+                        <FontFamily>Tahoma</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>700</FontWeight>
+                        <Language>en-US</Language>
+                        <PaddingBottom>2pt</PaddingBottom>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <TextAlign>Center</TextAlign>
+                      </Style>
+                      <UserSort>
+                        <SortExpression>=Fields!accountnumber.Value</SortExpression>
+                      </UserSort>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="Table0_Header2">
+                      <CanGrow>true</CanGrow>
+                      <Value>="Address 1"&amp;chrw(58)&amp;" ZIP"&amp;chrw(47)&amp;"Postal Code"</Value>
+                      <Style>
+                        <BackgroundColor>#4f81bd</BackgroundColor>
+                        <Color>#ffffff</Color>
+                        <FontFamily>Tahoma</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>700</FontWeight>
+                        <Language>en-US</Language>
+                        <PaddingBottom>2pt</PaddingBottom>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <TextAlign>Center</TextAlign>
+                      </Style>
+                      <UserSort>
+                        <SortExpression>=Fields!address1_postalcode.Value</SortExpression>
+                      </UserSort>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+              </TableCells>
+            </TableRow>
+          </TableRows>
+        </Header>
+        <Details>
+          <TableRows>
+            <TableRow>
+              <Height>.25in</Height>
+              <TableCells>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="Table0_Details0">
+                      <CanGrow>true</CanGrow>
+                      <Value>=Fields!name.Value</Value>
+                      <Action>
+                        <Hyperlink>=IIf(IsNothing(Fields!accountid.Value), Nothing, String.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}?ID={1}&amp;LogicalName={2}", Parameters!CRM_URL.Value, Fields!accountid.Value, "account"))</Hyperlink>
+                      </Action>
+                      <Style>
+                        <Language>=Microsoft.Crm.Reporting.RdlHelper.ReportCultureInfo.GetCultureName(Parameters!CRM_UILanguageId.Value)</Language>
+                        <TextAlign>Left</TextAlign>
+                        <FontFamily>Tahoma</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <PaddingBottom>2pt</PaddingBottom>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                      </Style>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="Table0_Details1">
+                      <CanGrow>true</CanGrow>
+                      <Value>=Fields!accountnumber.Value</Value>
+                      <Action>
+                        <Hyperlink>=Nothing</Hyperlink>
+                      </Action>
+                      <Style>
+                        <Language>=Microsoft.Crm.Reporting.RdlHelper.ReportCultureInfo.GetCultureName(Parameters!CRM_UILanguageId.Value)</Language>
+                        <TextAlign>Left</TextAlign>
+                        <FontFamily>Tahoma</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <PaddingBottom>2pt</PaddingBottom>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                      </Style>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="Table0_Details2">
+                      <CanGrow>true</CanGrow>
+                      <Value>=Fields!address1_postalcode.Value</Value>
+                      <Action>
+                        <Hyperlink>=Nothing</Hyperlink>
+                      </Action>
+                      <Style>
+                        <Language>=Microsoft.Crm.Reporting.RdlHelper.ReportCultureInfo.GetCultureName(Parameters!CRM_UILanguageId.Value)</Language>
+                        <TextAlign>Left</TextAlign>
+                        <FontFamily>Tahoma</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <PaddingBottom>2pt</PaddingBottom>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                      </Style>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+              </TableCells>
+            </TableRow>
+          </TableRows>
+        </Details>
+      </Table>
+    </ReportItems>
+  </Body>
+  <PageFooter>
+    <ReportItems>
+      <Textbox Name="txtExecutionDateTimeLabel">
+        <CanGrow>true</CanGrow>
+        <Width>3.125in</Width>
+        <Height>0.225in</Height>
+        <Left>0.125in</Left>
+        <Top>0.075in</Top>
+        <Style>
+          <Color>#666666</Color>
+          <FontFamily>Tahoma</FontFamily>
+          <FontSize>8pt</FontSize>
+          <FontWeight>700</FontWeight>
+          <PaddingBottom>2pt</PaddingBottom>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <TextAlign>Left</TextAlign>
+        </Style>
+        <Value>=CDate(Microsoft.Crm.Reporting.RdlHelper.DateTimeUtility.ConvertUtcToLocalTime(DateTime.UtcNow, Parameters!CRM_UserTimeZoneName.Value)).ToString("g", Microsoft.Crm.Reporting.RdlHelper.ReportCultureInfo.GetCultureInfo(Parameters))</Value>
+      </Textbox>
+      <Textbox Name="txtUserIDLabel">
+        <CanGrow>true</CanGrow>
+        <Height>0.225in</Height>
+        <Width>3.25in</Width>
+        <Left>3.375in</Left>
+        <Top>0.075in</Top>
+        <Style>
+          <Color>#666666</Color>
+          <FontFamily>Tahoma</FontFamily>
+          <FontSize>8pt</FontSize>
+          <FontWeight>700</FontWeight>
+          <Language>en-US</Language>
+          <PaddingBottom>2pt</PaddingBottom>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <TextAlign>Center</TextAlign>
+          <VerticalAlign>Middle</VerticalAlign>
+        </Style>
+        <Value>=String.Format(New System.Globalization.CultureInfo(1033), "Prepared by "&amp;chrw(123)&amp;"0"&amp;chrw(125), Parameters!CRM_FullName.Value)</Value>
+      </Textbox>
+      <Textbox Name="txtPageCount">
+        <CanGrow>true</CanGrow>
+        <Width>3.125in</Width>
+        <Height>0.225in</Height>
+        <Left>6.75in</Left>
+        <Top>0.075in</Top>
+        <Style>
+          <Color>#666666</Color>
+          <FontFamily>Tahoma</FontFamily>
+          <FontSize>8pt</FontSize>
+          <FontWeight>700</FontWeight>
+          <Language>en-US</Language>
+          <PaddingBottom>2pt</PaddingBottom>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <TextAlign>Right</TextAlign>
+          <VerticalAlign>Middle</VerticalAlign>
+        </Style>
+        <Value>=String.Format(New System.Globalization.CultureInfo(1033), "Page "&amp;chrw(123)&amp;"0"&amp;chrw(125)&amp;" of "&amp;chrw(123)&amp;"1"&amp;chrw(125), Format(Globals!PageNumber, "#,##0"), Format(Globals!TotalPages, "#,##0"))</Value>
+      </Textbox>
+    </ReportItems>
+    <PrintOnLastPage>true</PrintOnLastPage>
+    <PrintOnFirstPage>true</PrintOnFirstPage>
+    <Style>
+      <BackgroundColor>#e3efff</BackgroundColor>
+    </Style>
+    <Height>0.375in</Height>
+  </PageFooter>
+  <ReportParameters>
+    <ReportParameter Name="CRM_FullName">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>CRM_FullName</Prompt>
+      <Hidden>true</Hidden>
+      <DefaultValue>
+        <Values>
+          <Value>Satish Kadam</Value>
+        </Values>
+      </DefaultValue>
+    </ReportParameter>
+    <ReportParameter Name="CRM_UserTimeZoneName">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>Pacific Standard Time</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>CRM_UserTimeZoneName</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CRM_UILanguageId">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>1033</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CRM_UILanguageId</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CRM_CurrencyDecimalPrecision">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>2</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CRM_CurrencyDecimalPrecision</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CRM_CurrencySymbol">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>$</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>CRM_CurrencySymbol</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CRM_CurrencyPositivePattern">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>0</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CRM_CurrencyPositivePattern</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CRM_CurrencyNegativePattern">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>0</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CRM_CurrencyNegativePattern</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CRM_NumberDecimalDigits">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>2</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CRM_NumberDecimalDigits</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CRM_NumberDecimalSeparator">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>.</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CRM_NumberDecimalSeparator</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CRM_NumberNegativePattern">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>1</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CRM_NumberNegativePattern</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CRM_NumberGroupSizes">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>3</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CRM_NumberGroupSizes</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CRM_NumberGroupSeparator">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>,</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CRM_NumberGroupSeparator</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CRM_CalendarTypeCode">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>0</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CRM_CalendarTypeCode</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CRM_DateSeparator">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>/</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CRM_DateSeparator</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CRM_TimeSeparator">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>:</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CRM_TimeSeparator</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CRM_AMDesignator">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <DefaultValue>
+        <Values>
+          <Value>AM</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CRM_AMDesignator</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CRM_PMDesignator">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <DefaultValue>
+        <Values>
+          <Value>PM</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CRM_PMDesignator</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CRM_ShortDatePattern">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>M/d/yyyy</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CRM_ShortDatePattern</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CRM_LongDatePattern">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>dddd, MMMM dd, yyyy</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CRM_LongDatePattern</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CRM_ShortTimePattern">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>h:mm tt</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CRM_ShortTimePattern</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CRM_MonthDayPattern">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>MMMM dd</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CRM_MonthDayPattern</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CRM_YearStartWeekCode">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>0</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CRM_YearStartWeekCode</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CRM_WeekStartDayCode">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>0</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CRM_WeekStartDayCode</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CRM_FilterText">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>CRM_FilterText</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CRM_FilteredAccount">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>&lt;fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"&gt;&lt;entity name="account"&gt;&lt;all-attributes /&gt;&lt;filter type="and"&gt;&lt;condition attribute="modifiedon" operator="last-x-days" value="30" /&gt;&lt;/filter&gt;&lt;/entity&gt;&lt;/fetch&gt;</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CRM_FilteredAccount</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CRM_URL">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>CRM_URL</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+  </ReportParameters>
+  <DataSources>
+    <DataSource Name="CRM">
+      <ConnectionProperties>
+        <DataProvider>MSCRMFETCH</DataProvider>
+        <ConnectString>https://dev.crm.dynamics.com/;engineering</ConnectString>
+        <IntegratedSecurity>true</IntegratedSecurity>
+      </ConnectionProperties>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DSMain">
+      <Query>
+        <CommandText>&lt;fetch distinct="false" no-lock="false" mapping="logical"&gt;&lt;entity name="account" enableprefiltering="1" prefilterparametername="CRM_FilteredAccount"&gt;&lt;attribute name="name" alias="name" /&gt;&lt;attribute name="accountnumber" alias="accountnumber" /&gt;&lt;attribute name="address1_postalcode" alias="address1_postalcode" /&gt;&lt;attribute name="accountid" /&gt;&lt;link-entity name="account" to="accountid" from="parentaccountid" link-type="outer" alias="account1" enableprefiltering="1" prefilterparametername="CRM_FilteredAccount"&gt;&lt;attribute name="accountid" /&gt;&lt;attribute name="name" /&gt;&lt;/link-entity&gt;&lt;/entity&gt;&lt;/fetch&gt;</CommandText>
+        <DataSourceName>CRM</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="CRM_FilteredAccount">
+            <Value>=Parameters!CRM_FilteredAccount.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+      </Query>
+      <Fields>
+        <Field Name="name">
+          <DataField>name</DataField>
+        </Field>
+        <Field Name="accountnumber">
+          <DataField>accountnumber</DataField>
+        </Field>
+        <Field Name="address1_postalcode">
+          <DataField>address1_postalcode</DataField>
+        </Field>
+        <Field Name="accountid">
+          <DataField>accountid</DataField>
+        </Field>
+        <Field Name="account1_accountid">
+          <DataField>account1_accountid</DataField>
+        </Field>
+        <Field Name="account1_name">
+          <DataField>account1_name</DataField>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <CodeModules>
+    <CodeModule>Microsoft.Crm.Reporting.RdlHelper, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</CodeModule>
+  </CodeModules>
+  <CustomProperties>
+    <CustomProperty>
+      <Name>Custom</Name>
+      <Value>&lt;MSCRM xmlns="mscrm"&gt;&amp;lt;ReportFilter&amp;gt;&amp;lt;ReportEntity paramname="CRM_FilteredAccount" donotconvert="1"&amp;gt;&amp;lt;fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"&amp;gt;&amp;lt;entity name="account"&amp;gt;&amp;lt;all-attributes /&amp;gt;&amp;lt;filter type="and"&amp;gt;&amp;lt;condition attribute="modifiedon" operator="last-x-days" value="30" /&amp;gt;&amp;lt;/filter&amp;gt;&amp;lt;/entity&amp;gt;&amp;lt;/fetch&amp;gt;&amp;lt;/ReportEntity&amp;gt;&amp;lt;/ReportFilter&amp;gt;&lt;/MSCRM&gt;</Value>
+    </CustomProperty>
+  </CustomProperties>
+</Report>

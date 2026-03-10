@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnhancedQuickStart", "EnhancedQuickStart.csproj", "{B46126EE-0033-4C0C-B22B-89AB57F8CCC7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B46126EE-0033-4C0C-B22B-89AB57F8CCC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B46126EE-0033-4C0C-B22B-89AB57F8CCC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B46126EE-0033-4C0C-B22B-89AB57F8CCC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B46126EE-0033-4C0C-B22B-89AB57F8CCC7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E2A4B8F1-FFA0-479D-9D83-609CB99080C1}
+	EndGlobalSection
+EndGlobal

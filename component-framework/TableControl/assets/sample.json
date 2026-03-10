@@ -1,0 +1,63 @@
+[
+	{
+		"name": "powerapps-pcf-table-control",
+		"source": "PowerAppsDev",
+		"title": "Table Power Apps component framework sample",
+		"shortDescription": "This sample component renders a table with two columns.",
+		"url": "https://github.com/microsoft/PowerApps-Samples/tree/master/component-framework/TableControl",
+		"downloadUrl": "https://github.com/microsoft/PowerApps-Samples/tree/master/component-framework/TableControl",
+		"longDescription": [
+			"This sample component renders a table with two columns. The left column shows the name of the API method or property, and the right column shows the value returned by the API. You can open this component on the different type of devices or modify your language or user settings to see the values adjust correctly in the table."
+		],
+		"creationDateTime": "2021-06-09",
+		"updateDateTime": "2023-08-01",
+		"products": ["PowerApps"],
+		"metadata": [
+			{
+				"key": "PowerApps-PCF-SAMPLE-SOURCE",
+				"value": "PowerAppsDev"
+			},
+			{
+				"key": "PowerApps-PCF-SAMPLE-LANGUAGE",
+				"value": "typescript"
+			},
+			{
+				"key": "PowerApps-PCF-SAMPLE-FEATURES",
+				"value": "table control"
+			}
+		],
+		"thumbnails": [
+			{
+				"type": "image",
+				"order": 100,
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/media/table-control.png",
+				"alt": "Preview of the sample"
+			}
+		],
+		"authors": [
+			{
+				"gitHubAccount": "JimDaly",
+				"pictureUrl": "https://avatars.githubusercontent.com/u/6353736?v=4",
+				"name": "Jim Daly"
+			}
+		],
+		"references": [
+			{
+				"name": "Power Apps component framework overview",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/overview"
+			},
+			{
+				"name": "Create and build a code component",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/create-custom-controls-using-pcf"
+			},
+			{
+				"name": "Best practices and guidance for code components created using Power Apps component framework",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/code-components-best-practices"
+			},
+			{
+				"name": "Implementing table component",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/table-control"
+			}
+		]
+	}
+]

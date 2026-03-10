@@ -1,0 +1,6 @@
+﻿Related Party,Id,name,Proposal,referredType,role
+e7c28ebd-839e-ee11-a568-6045bd017837,1,John,3e959dfc-849e-ee11-a568-00224802dbb1,Type 1,Role 1
+e8c28ebd-839e-ee11-a568-6045bd017837,2,Mary,3e959dfc-849e-ee11-a568-00224802dbb1,Type 2,Role 2
+e25be2c5-839e-ee11-a568-6045bd017837,3,Ada,32c45d30-859e-ee11-a568-6045bd017837,Type 3,Role 3
+7416efc8-839e-ee11-a568-00224802dbb1,4,Bob,82f7ca36-859e-ee11-a568-6045bd017837,Type 4,Role 4
+935ce2c5-839e-ee11-a568-6045bd017837,5,Emma,82f7ca36-859e-ee11-a568-6045bd017837,Type 5,Role 5

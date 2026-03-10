@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  
+  <!-- Control Display Names and Descriptions -->
+  <data name="CodeInterpreterControl_Display_Key" xml:space="preserve">
+    <value>Code Interpreter Control</value>
+  </data>
+  <data name="CodeInterpreterControl_Desc_Key" xml:space="preserve">
+    <value>A control that executes AI prompts and displays file or text output with preview capabilities</value>
+  </data>
+  
+  <!-- Property Display Names and Descriptions -->
+  <data name="ModelId_Display_Key" xml:space="preserve">
+    <value>Model ID</value>
+  </data>
+  <data name="ModelId_Desc_Key" xml:space="preserve">
+    <value>The GUID of the Code Interpreter enabled AI model</value>
+  </data>
+  <data name="EntityId_Display_Key" xml:space="preserve">
+    <value>Record ID</value>
+  </data>
+  <data name="EntityId_Desc_Key" xml:space="preserve">
+    <value>The GUID of the current record to process</value>
+  </data>
+  <data name="Unused_Display_Key" xml:space="preserve">
+    <value>Unused Property</value>
+  </data>
+  <data name="Unused_Desc_Key" xml:space="preserve">
+    <value>Unused bound property for PCF compliance</value>
+  </data>
+  
+  <!-- Error Messages -->
+  <data name="Error_Preview_Required" xml:space="preserve">
+    <value>App cannot run in preview.&lt;br/&gt;Publish and deploy on a Dynamics organization to proceed.</value>
+  </data>
+  <data name="Error_ModelId_Required" xml:space="preserve">
+    <value>Provide a Code Interpreter enabled prompt Model Id.</value>
+  </data>
+  <data name="Error_RecordId_Required" xml:space="preserve">
+    <value>Awaiting a Record Id.</value>
+  </data>
+  <data name="Error_Auth_Failed" xml:space="preserve">
+    <value>Authentication failed. Please check your credentials or contact administrator.</value>
+  </data>
+  <data name="Error_Model_NotFound" xml:space="preserve">
+    <value>Model not found. Please check the Model ID is correct and the model exists.</value>
+  </data>
+  <data name="Error_Access_Denied" xml:space="preserve">
+    <value>Access denied. You don't have permission to use this model.</value>
+  </data>
+  <data name="Error_Bad_Request" xml:space="preserve">
+    <value>Bad request. Please check your input parameters.</value>
+  </data>
+  <data name="Error_Server_Error" xml:space="preserve">
+    <value>Server error. Please try again later or contact administrator.</value>
+  </data>
+  <data name="Error_Network_Failed" xml:space="preserve">
+    <value>Network connection failed. Please check your internet connection and try again.</value>
+  </data>
+  <data name="Error_Server_Generic" xml:space="preserve">
+    <value>Server error occurred. Please try again later.</value>
+  </data>
+  <data name="Error_Client_Generic" xml:space="preserve">
+    <value>Client error ({0}). Please check your request and try again.</value>
+  </data>
+  <data name="Error_Unexpected" xml:space="preserve">
+    <value>Unexpected error: {0}</value>
+  </data>
+  <data name="Error_Empty_Output" xml:space="preserve">
+    <value>Empty output returned.</value>
+  </data>
+  
+  <!-- File Preview Messages -->
+  <data name="Preview_Word_Failed" xml:space="preserve">
+    <value>Word preview failed: {0}</value>
+  </data>
+  <data name="Preview_Excel_Failed" xml:space="preserve">
+    <value>Excel preview failed: {0}</value>
+  </data>
+  <data name="Preview_PowerPoint_NotSupported" xml:space="preserve">
+    <value>PowerPoint preview not supported.</value>
+  </data>
+  <data name="Preview_FileType_NotAvailable" xml:space="preserve">
+    <value>Preview not available for this file type.</value>
+  </data>
+  
+  <!-- UI Labels -->
+  <data name="Label_Loading" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="Label_Download" xml:space="preserve">
+    <value>Download {0}</value>
+  </data>
+  <data name="Label_Sheet" xml:space="preserve">
+    <value>Sheet:</value>
+  </data>
+  <data name="Label_Range" xml:space="preserve">
+    <value>Range:</value>
+  </data>
+  <data name="Label_Cells" xml:space="preserve">
+    <value>Cells:</value>
+  </data>
+  <data name="Label_Available_Sheets" xml:space="preserve">
+    <value>Available sheets:</value>
+  </data>
+</root>

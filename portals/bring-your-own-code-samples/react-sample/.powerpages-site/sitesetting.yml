@@ -1,0 +1,188 @@
+- adx_name: Webapi/crdb4_opportunities/enabled
+  adx_sitesettingid: 029777bf-78a2-44b1-84cb-96b77ad61728
+  adx_source: 0
+  adx_value: true
+- adx_name: Authentication/Registration/Enabled
+  adx_sitesettingid: 0c7d8598-c09c-4e89-b72b-d0be8725a692
+  adx_value: true
+- adx_description: Set whether the header web template is output cached.
+  adx_name: Header/OutputCache/Enabled
+  adx_sitesettingid: 0ca0df71-f60e-4cba-856d-4a7bdcd1ed79
+  adx_value: True
+- adx_name: Header/ShowAllProfileNavigationLinks
+  adx_sitesettingid: 0e487c45-b18d-44cf-8ad0-c67b3efeb55d
+  adx_value: false
+- adx_name: Profile/Enabled
+  adx_sitesettingid: 1df5a09e-1468-42e2-8c06-ab1776f20ac8
+  adx_value: true
+- adx_description: Denies use of the portal to minors. By default, it is set to false.
+  adx_name: Authentication/Registration/DenyMinors
+  adx_sitesettingid: 222c53c9-200a-4c6f-8c4f-2c53764200e0
+  adx_value: false
+- adx_name: Site/BootstrapV5Enabled
+  adx_sitesettingid: 2ca4a5a0-377b-4851-af91-0c29a0590158
+  adx_value: true
+- adx_name: Authentication/OpenAuth/Facebook/AppId
+  adx_sitesettingid: 2d2bc878-af6a-42c2-ac67-6d3e18982861
+- adx_name: Search/EnableGenerativeAI
+  adx_sitesettingid: 2e79911d-a90d-469f-a323-b8ac033b1827
+  adx_value: True
+- adx_description: 'The amount of time the IP address will have to wait if Authentication/LoginThrottling/MaxInvaildAttemptsFromIPAddress occur within Authentication/LoginThrottling/MaxAttemptsTimeLimitTimeSpan amount of time. Default: 00:10:00 (10 mins)'
+  adx_name: Authentication/LoginThrottling/IpAddressTimeoutTimeSpan
+  adx_sitesettingid: 2ea33972-4a9b-4f5a-a409-3dfe094f37ee
+  adx_value: 00:10:00
+- adx_name: Authentication/OpenIdConnect/AzureAD/RebrandDisclaimerEnabled
+  adx_sitesettingid: 30ac5c53-b9f6-450e-9d06-b70960fa3d5f
+  adx_value: false
+- adx_name: Authentication/OpenAuth/Twitter/ConsumerSecret
+  adx_sitesettingid: 366e5365-3e72-4b9a-a889-aa64d8ba7589
+- adx_name: Authentication/Registration/InvitationEnabled
+  adx_sitesettingid: 391e646a-2cb5-489c-90aa-38b74afcd76d
+  adx_value: true
+- adx_description: Setting controls whether attachments will be displayed on Knowledge articles
+  adx_name: KnowledgeManagement/DisplayNotes
+  adx_sitesettingid: 3b7dcc09-49d0-4932-a062-fa3eb2f2434a
+  adx_value: false
+- adx_name: Authentication/Registration/LoginButtonAuthenticationType
+  adx_sitesettingid: 3d2103a3-a126-4dee-b3fc-e123397caf38
+- adx_description: 'The amount of time the Authentication/LoginThrottling/MaxInvaildAttemptsFromIPAddress are to be within before the IP address has to wait Authentication/LoginThrottling/IpAddressTimeoutTimeSpan. Default: 00:03:00 (3 mins)'
+  adx_name: Authentication/LoginThrottling/MaxAttemptsTimeLimitTimeSpan
+  adx_sitesettingid: 4591028b-e50c-4e39-a0ff-c140d86cdb6e
+  adx_value: 00:03:00
+- adx_description: Denies use of the portal to minors without parental consent. By default, it is set to false.
+  adx_name: Authentication/Registration/DenyMinorsWithoutParentalConsent
+  adx_sitesettingid: 4d4991c8-0353-4001-9c7b-6c7b81cbd91d
+  adx_value: false
+- adx_description: 'The default number of unauthenticated login attempts from an IP address before the IP address is blocked for Authentication/LoginThrottling/IpAddressTimeoutTimeSpan if the attempts occur within Authentication/LoginThrottling/MaxAttemptsTimeLimitTimeSpan amount of time. Default: 1000'
+  adx_name: Authentication/LoginThrottling/MaxInvaildAttemptsFromIPAddress
+  adx_sitesettingid: 5615e280-a68f-47dd-afbd-22bdc8d9587d
+  adx_value: 1000
+- adx_description: Site setting that controls the depth of the webpage hierarchy that’s cloned in a newly-added supported language. Web link sets and content snippets are cloned in the newly-added language when webpages are cloned.
+  adx_name: MultiLanguage/MaximumDepthToClone
+  adx_sitesettingid: 590cf586-e0e5-4c35-b1a6-3f0cb4b40614
+  adx_value: 3
+- adx_description: Site setting that determines if the language code is included in the portal URL.
+  adx_name: MultiLanguage/DisplayLanguageCodeInURL
+  adx_sitesettingid: 590de2f6-0378-4459-a269-e2320e0da487
+  adx_value: False
+- adx_name: Authentication/OpenAuth/Microsoft/ClientId
+  adx_sitesettingid: 597002a2-0cdc-42fd-a1b6-a319ebf8528f
+- adx_description: >-
+    A collection of search logical name filter options. Defining a value here will add dropdown filter options to site-wide search.
+
+
+    This value should be in the form of name/value pairs, with name and value separated by a colon, and pairs separated by a semicolon. For example: "Forums:adx_communityforum,adx_communityforumthread,adx_communityforumpost;Blogs:adx_blog,adx_blogpost,adx_blogpostcomment".
+  adx_name: search/filters
+  adx_sitesettingid: 6016efda-6816-48c2-90e6-645fb85c8860
+- adx_name: Webapi/sample_saleslead/enabled
+  adx_sitesettingid: 61861fec-cf36-f011-8c4e-7c1e520c8613
+  adx_source: 0
+  adx_value: True
+- adx_name: OnlineDomains
+  adx_sitesettingid: 61a924bc-d41b-47ac-9bc5-f09d173170b8
+  adx_value: sharepoint.com;microsoftonline.com
+- adx_name: Webapi/crdb4_opportunities/fields
+  adx_sitesettingid: 621b5119-9626-4f42-b1cb-998ea2247410
+  adx_source: 0
+  adx_value: '*'
+- adx_name: Authentication/Registration/OpenRegistrationEnabled
+  adx_sitesettingid: 63dbc899-2daa-44ae-980a-ec8f13854cc4
+  adx_value: true
+- adx_name: Search/Enabled
+  adx_sitesettingid: 6a9b75c9-2e22-4aac-8b40-ba9d38b32bf0
+  adx_value: true
+- adx_name: Authentication/OpenAuth/Microsoft/ClientSecret
+  adx_sitesettingid: 6c1babde-69aa-4447-a661-fef1ba021aee
+- adx_description: Site created from code
+  adx_name: CodeSite/Enabled
+  adx_sitesettingid: 6cb8f3b4-5283-4a38-85b2-9d7ee85ce9d7
+  adx_value: true
+- adx_name: Authentication/Registration/LocalLoginEnabled
+  adx_sitesettingid: 6f1f97c9-92c9-49c8-88f3-2a854c63df81
+  adx_value: true
+- adx_name: ThemeFeature
+  adx_sitesettingid: 70f71760-1d64-4088-a93a-1391965afba5
+  adx_value: '{"status":"enable","selectedThemeId":"f21551a1-7244-432f-ad88-220609e070d3","version":"V2"}'
+- adx_name: Authentication/OpenAuth/LinkedIn/ConsumerSecret
+  adx_sitesettingid: 7e052bf9-4e6e-42cc-8126-7c0c32f0fd9d
+- adx_description: Determines if faceted search is used for this portal.
+  adx_name: Search/FacetedView
+  adx_sitesettingid: 80e183d2-f6e3-4730-af0d-6f338748e446
+  adx_value: True
+- adx_name: Search/IndexQueryName
+  adx_sitesettingid: 8104de80-fa57-4fdd-9d05-e95177a49c87
+  adx_value: Portal Search
+- adx_name: Authentication/OpenIdConnect/AzureAD/Caption
+  adx_sitesettingid: 829916e4-330c-4e06-8d1f-9fd8fe7afd68
+  adx_value: Microsoft Entra ID
+- adx_description: A true or false value. If set to true, the Last Successful Login field on the portal user’s contact will be updated with the date and time when they successfully signed in.
+  adx_name: Authentication/LoginTrackingEnabled
+  adx_sitesettingid: 8b97fd2e-c9bd-47c6-b1e8-a68a74e79842
+  adx_value: False
+- adx_description: A true or false value. If set to true, the portal will display the terms and conditions of the site. Users must agree to the terms and conditions before they are considered authenticated and can use the site.
+  adx_name: Authentication/Registration/TermsAgreementEnabled
+  adx_sitesettingid: 94a7d45d-f58d-42f3-b5b5-1bba67262749
+  adx_value: false
+- adx_name: Authentication/Registration/EmailConfirmationEnabled
+  adx_sitesettingid: 9d932848-cf3c-4ad8-82e3-56e2d2ca463e
+  adx_value: true
+- adx_description: Used to group a set of entities under an entry in the record type facet view.
+  adx_name: Search/RecordTypeFacetsEntities
+  adx_sitesettingid: a09efa1f-edbc-4561-9f3a-82414b49a24f
+  adx_value: Downloads:annotation,adx_webfile
+- adx_name: Search/IndexNotesAttachments
+  adx_sitesettingid: a0c4400d-0a71-46c0-897c-e00908d410a9
+  adx_value: false
+- adx_name: Profile/ShowMarketingOptionsPanel
+  adx_sitesettingid: a42b1d55-226b-4733-98a8-cf8b094bb485
+  adx_value: True
+- adx_description: 'The Prefix entered here will be used to filter Notes Text, allowing you to control notes exposed on the Portal ex: *WEB*'
+  adx_name: KnowledgeManagement/NotesFilter
+  adx_sitesettingid: aa53620d-5260-423d-9cd2-31c41ab2058c
+  adx_value: '*WEB*'
+- adx_name: Authentication/Registration/ProfileRedirectEnabled
+  adx_sitesettingid: aca28f51-da36-f011-8c4e-7c1e520c8613
+  adx_source: 0
+  adx_value: False
+- adx_name: Authentication/OpenAuth/Facebook/AppSecret
+  adx_sitesettingid: ad44f5aa-45d8-410c-994f-228856655f5a
+- adx_name: Authentication/Registration/ExternalLoginEnabled
+  adx_sitesettingid: b269b202-0a4b-4d58-8b2c-c9657b00fa3e
+  adx_value: true
+- adx_name: Webapi/sample_saleslead/fields
+  adx_sitesettingid: b722d306-d036-f011-8c4e-7c1e520c8613
+  adx_source: 0
+  adx_value: '*'
+- adx_name: Authentication/OpenAuth/LinkedIn/ConsumerKey
+  adx_sitesettingid: bc633596-7f53-4278-b363-60c62c5aaaca
+- adx_description: Set whether the footer web template is output cached.
+  adx_name: Footer/OutputCache/Enabled
+  adx_sitesettingid: bf01a02d-9cc0-4fe2-ae28-031e6b6472be
+  adx_value: True
+- adx_name: HTTP/X-Frame-Options
+  adx_sitesettingid: c5c1ec7b-cc4c-427e-93e5-b7ccc35035e7
+  adx_value: SAMEORIGIN
+- adx_name: Authentication/OpenAuth/Twitter/ConsumerKey
+  adx_sitesettingid: c98b36a6-0a5c-4477-9137-b26c83eb1c6d
+- adx_description: Enables or disables Azure AD as an external identity provider. By default, it is set to true.
+  adx_name: Authentication/Registration/AzureADLoginEnabled
+  adx_sitesettingid: d26fb911-f967-454c-aa28-705d27cb1ee5
+  adx_value: true
+- adx_description: A true or false value. If set to true, the local account will be marked as deprecated. The portal user will be required to migrate to a non-deprecated account.
+  adx_name: Authentication/Registration/LocalLoginDeprecated
+  adx_sitesettingid: d47e2698-36aa-46a9-95dd-e3e4430ab0f5
+  adx_value: False
+- adx_name: Profile/ForceSignUp
+  adx_sitesettingid: d8dee36e-2435-41af-ab55-e422b9a9f778
+  adx_value: False
+- adx_description: 'Override query for site search, to apply additional weights and filters. @Query is the query text entered by a user. Lucene query syntax reference: http://lucene.apache.org/core/old_versioned_docs/versions/2_9_1/queryparsersyntax.html'
+  adx_name: search/query
+  adx_sitesettingid: db535fe9-07bc-42cc-8001-b3e3e4d5cc92
+  adx_value: +(@Query) _title:(@Query) _logicalname:knowledgearticle~0.9^0.3 _logicalname:annotation~0.9^0.25 _logicalname:adx_webpage~0.9^0.2 -_logicalname:adx_webfile~0.9 adx_partialurl:(@Query) _logicalname:adx_blogpost~0.9^0.1 -_logicalname:adx_communityforumthread~0.9
+- adx_description: A date/time value in GMT format to represent the effective date of the current published terms and conditions. If the terms agreement is enabled, portal users that have not accepted the terms after this date will be asked to accept them the next time they sign in. If the date is not provided, and the terms agreement is enabled, the terms will be presented every time portal users sign in.
+  adx_name: Authentication/Registration/TermsPublicationDate
+  adx_sitesettingid: f361dc24-685a-43ed-9c4f-fd2d10a945a1
+- adx_description: Enabling this setting will show all customer activity on the portal timeline.
+  adx_name: CustomerSupport/DisplayAllUserActivitiesOnTimeline
+  adx_sitesettingid: ff0c194c-75b1-40f6-a761-bcabe85b2db5
+  adx_value: false

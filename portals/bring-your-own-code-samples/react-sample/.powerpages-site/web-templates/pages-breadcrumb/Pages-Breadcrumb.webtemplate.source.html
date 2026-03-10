@@ -1,0 +1,64 @@
+<!-- The breadcrumb web template file should not be modified or deleted. This template is used by the standard,
+out-of-box breadcrumb component and it will not work if this file is changed. -->
+
+{% assign title = title | default: page.title %}
+{% assign textTag = config.breadcrumb.tag | default: 'span' %}
+{% assign separator = config.breadcrumb.separator | default: '>' %}
+{% assign homeAs = config.breadcrumb.home_as | default: 'text' %}
+{% assign textClass = config.breadcrumb.textClass | default: '' %}
+
+<nav style="--bs-breadcrumb-divider: '{{separator}}';" aria-label="breadcrumb">
+{% raw %}
+<style>
+  .pagesBreadcrumb>li+li:before { content:var(--bs-breadcrumb-divider)}
+</style>
+{% endraw %}
+<ol class="breadcrumb pagesBreadcrumb" style="display: flex; padding: 0px 15px;">
+{% for crumb in page.breadcrumbs -%}
+{% if forloop.index == 1 %}
+  {% if homeAs == "hidden" %}
+  {% continue %}
+{% endif %}
+<li class="breadcrumb-item">
+  {% if homeAs == "icon+text" %}
+  <{{textTag}} class="{{textClass}}" style="display: inline-block; margin: 0px;">
+    <a href="{{ crumb.url | h }}" title="{{ crumb.title | h }}" class="anchor-inherit-styles" style="color: inherit"><span class="fa fa-home" aria-hidden="true" style="margin-right: 4px"></span>{{crumb.title | truncate:24 | h }}</a>
+  </{{textTag}}>
+  {% elsif homeAs == "icon" %}
+  <{{textTag}} class="{{textClass}}" style="display: inline-block; margin: 0px;">
+    <a href="{{ crumb.url | h }}" title="{{ crumb.title | h }}" class="anchor-inherit-styles" style="color: inherit"><span class="fa fa-home" aria-hidden="true"></span></a>
+  </{{textTag}}>
+  {% else %}
+  <{{textTag}} class="{{textClass}}" style="display: inline-block; margin: 0px;">
+    <a href="{{ crumb.url | h }}" title="{{ crumb.title | h }}" class="anchor-inherit-styles" style="color: inherit">{{ crumb.title | truncate: 24 | h }}</a>
+  </{{textTag}}>
+  {% endif %}
+</li>
+{% else %}
+<li class="breadcrumb-item" style="display: flex; align-items: center;">
+  <{{textTag}} class="{{textClass}}" style="display: inline-block; margin: 0px;">
+    <a href="{{ crumb.url | h }}" title="{{ crumb.title | h }}" class="anchor-inherit-styles" style="color: inherit">{{ crumb.title | truncate: 24 | h }} </a>
+  </{{textTag}}>
+</li>
+{% endif %}
+{% endfor -%}
+
+<!-- For last node in the breadcrumb (active page) -->
+<li class="breadcrumb-item active" style="display: flex; align-items: center;" aria-current="{{title | h}}">
+  <{{textTag}} class="{{textClass}}" style="display: inline-block; margin: 0px;">
+    {% if page.breadcrumbs.size == 0 %}
+    <!-- Home page -->
+        {% if homeAs == "icon+text" %}
+        <span class="fa fa-home" aria-hidden="true" style="margin-right: 4px"></span>{{title | h }}
+        {% elsif homeAs == "icon" %}
+        <span class="fa fa-home" aria-hidden="true"></span>
+        {% elsif homeAs != "hidden" %}
+        {{ title | h }}
+        {% endif %}
+    {% else %}
+        {% block activebreadcrumb %}{{ title | h }}{% endblock %}
+    {% endif %}
+  </{{textTag}}>
+</li>
+</ol>
+</nav>

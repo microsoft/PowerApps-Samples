@@ -1,0 +1,27 @@
+﻿{
+  "suppressINotifyPattern": false,
+  "suppressGeneratedCodeAttribute": false,
+  "language": "CS",
+  "namespace": "MyApp.DataModel",
+  "serviceContextName": "MyOrgContext",
+  "generateSdkMessages": false,
+  "generateGlobalOptionSets": false,
+  "emitFieldsClasses": false,
+  "entityTypesFolder": "Entities",
+  "messagesTypesFolder": "Messages",
+  "optionSetsTypesFolder": "OptionSets",
+  "entityNamesFilter": [
+    "activityparty",
+    "contact",
+    "account",
+    "letter",
+    "team",
+    "role",
+    "privilege",
+    "businessunit",
+    "systemuser",
+    "userqueryvisualization"
+  ],
+  "emitEntityETC": false,
+  "emitVirtualAttributes": false
+}

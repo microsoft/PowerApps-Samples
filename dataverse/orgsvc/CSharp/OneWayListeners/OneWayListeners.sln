@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2043
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneWayListeners", "OneWayListeners\OneWayListeners.csproj", "{97591C99-D88A-45C4-9EFA-258DB1D37898}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{97591C99-D88A-45C4-9EFA-258DB1D37898}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97591C99-D88A-45C4-9EFA-258DB1D37898}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97591C99-D88A-45C4-9EFA-258DB1D37898}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97591C99-D88A-45C4-9EFA-258DB1D37898}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7A8711BC-8544-4E71-9026-172D6FA062D6}
+	EndGlobalSection
+EndGlobal

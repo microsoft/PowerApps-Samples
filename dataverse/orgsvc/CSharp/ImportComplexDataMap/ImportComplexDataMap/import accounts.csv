@@ -1,0 +1,6 @@
+src_name,src_parent,src_addresstype
+A. Datum Corporation,Adventure Works,bill
+Adventure Works,,ship
+Blue Yonder Airlines,,bill
+City Power & Light,A. Datum Corporation,bill
+"Fabrikam, Inc.",Adventure Works,ship

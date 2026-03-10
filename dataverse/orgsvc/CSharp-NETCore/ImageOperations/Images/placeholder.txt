@@ -1,0 +1,2 @@
+﻿This file exists so that the Images folder will exist after the project is checked in.
+The other files are linked files and do not exist in this folder.

@@ -1,0 +1,63 @@
+[
+	{
+		"name": "powerapps-pcf-data-set-grid",
+		"source": "PowerAppsDev",
+		"title": "Implementing data-set Power Apps component framework sample",
+		"shortDescription": "This sample component shows how to change the user experience of interacting with the dataset.",
+		"url": "https://github.com/microsoft/PowerApps-Samples/tree/master/component-framework/DataSetGrid",
+		"downloadUrl": "https://github.com/microsoft/PowerApps-Samples/tree/master/component-framework/DataSetGrid",
+		"longDescription": [
+			"This sample component shows how to change the user experience of interacting with the dataset. For example, you only see the home page grid on a table homepage as a table. You can build your code component that can display the data as per your choice. This sample shows the records as tiles instead of the regular tabular grid."
+		],
+		"creationDateTime": "2021-06-09",
+		"updateDateTime": "2023-08-01",
+		"products": ["PowerApps"],
+		"metadata": [
+			{
+				"key": "PowerApps-PCF-SAMPLE-SOURCE",
+				"value": "PowerAppsDev"
+			},
+			{
+				"key": "PowerApps-PCF-SAMPLE-LANGUAGE",
+				"value": "typescript"
+			},
+			{
+				"key": "PowerApps-PCF-SAMPLE-FEATURES",
+				"value": "data set grid"
+			}
+		],
+		"thumbnails": [
+			{
+				"type": "image",
+				"order": 100,
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/media/data-set-grid.png",
+				"alt": "Preview of the sample"
+			}
+		],
+		"authors": [
+			{
+				"gitHubAccount": "JimDaly",
+				"pictureUrl": "https://avatars.githubusercontent.com/u/6353736?v=4",
+				"name": "Jim Daly"
+			}
+		],
+		"references": [
+			{
+				"name": "Power Apps component framework overview",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/overview"
+			},
+			{
+				"name": "Create and build a code component",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/create-custom-controls-using-pcf"
+			},
+			{
+				"name": "Best practices and guidance for code components created using Power Apps component framework",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/code-components-best-practices"
+			},
+			{
+				"name": "Implementing data-set component",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/data-set-grid-control"
+			}
+		]
+	}
+]

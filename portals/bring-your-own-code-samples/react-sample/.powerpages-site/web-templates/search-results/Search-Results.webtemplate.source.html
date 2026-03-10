@@ -1,0 +1,35 @@
+{% extends 'Layout 2 Column Wide Left' %}
+
+{% block title %}
+  {% assign rt = snippets["Search/ResultsTitle"] %}
+  {% if rt %}
+    {% assign title = rt | liquid %}
+  {% else %}
+    {% assign title = rt %}
+  {% endif %}
+  {% assign title = title | truncate: 115 %}
+  {% include 'Page Header' title: title %}
+{% endblock %}
+
+{% block main %}
+  {% assign page_size = 10 %}
+  {% assign current_page = request.params.page | default: 1 %}
+  {% searchindex query: request.params.q, page: request.params.page, page_size: page_size %}
+    {% if searchindex.results.size > 0 %}
+      <p class="result-count">{% assign rc = snippets["Search/ResultsCount"] %}{% if rc %}{{ rc | liquid }}{% else %}{{ current_page }} - {{ page_size }} of {{ searchindex.approximate_total_hits }} Results test{% endif %}</p>
+      <ul class="search-results">
+        {% for result in searchindex.results %}
+        <li>
+          <h4>
+            <a title="{{ result.title | escape }}" href="{{ result.url | escape }}">{{ result.title | escape }}</a>
+          </h4>
+          <p class="fragment">{{ result.fragment }}</p>
+        </li>
+        {% endfor %}
+      </ul>
+      {% include 'Pagination' current_page: searchindex.page, page_size: page_size, total: searchindex.approximate_total_hits %}
+    {% else %}
+      {{ snippets["Search/NoResults"] }}
+    {% endif %}
+  {% endsearchindex %}
+{% endblock %}

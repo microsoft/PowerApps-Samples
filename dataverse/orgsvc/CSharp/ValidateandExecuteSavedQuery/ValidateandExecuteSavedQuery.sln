@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2043
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValidateandExecuteSavedQuery", "ValidateandExecuteSavedQuery\ValidateandExecuteSavedQuery.csproj", "{75730336-FC9F-4C11-8C5B-22ABE67AA1AA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{75730336-FC9F-4C11-8C5B-22ABE67AA1AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75730336-FC9F-4C11-8C5B-22ABE67AA1AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75730336-FC9F-4C11-8C5B-22ABE67AA1AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75730336-FC9F-4C11-8C5B-22ABE67AA1AA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ED87F2B6-9360-4F38-BE6D-4251AD060ADE}
+	EndGlobalSection
+EndGlobal

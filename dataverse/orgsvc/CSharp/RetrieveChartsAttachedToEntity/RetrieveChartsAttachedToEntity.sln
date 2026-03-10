@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetrieveChartsAttachedToEntity", "RetrieveChartsAttachedToEntity\RetrieveChartsAttachedToEntity.csproj", "{B96B2150-F214-4492-BA6A-B693318BF917}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B96B2150-F214-4492-BA6A-B693318BF917}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B96B2150-F214-4492-BA6A-B693318BF917}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B96B2150-F214-4492-BA6A-B693318BF917}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B96B2150-F214-4492-BA6A-B693318BF917}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AD80DBB5-5987-41CE-8307-4185B3972005}
+	EndGlobalSection
+EndGlobal

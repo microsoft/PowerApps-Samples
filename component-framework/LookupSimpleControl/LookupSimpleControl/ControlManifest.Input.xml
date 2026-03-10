@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="SampleNamespace" constructor="LookupSimpleControl" version="0.0.1" display-name-key="LookupSimpleControl" description-key="LookupSimpleControl description" control-type="standard">
+    <property name="controlValue" display-name-key="controlValue_Display_Key" description-key="controlValue_Desc_Key" of-type="Lookup.Simple" usage="bound" required="true" />
+    <property name="controlValue1" display-name-key="controlValue_Display_Key1" description-key="controlValue_Desc_Key1" of-type="Lookup.Simple" usage="bound" required="true" />
+    <resources>
+      <code path="index.ts" order="1"/>
+    </resources>
+    <feature-usage>
+      <uses-feature name="Utility" required="true" />
+    </feature-usage>
+  </control>
+</manifest>

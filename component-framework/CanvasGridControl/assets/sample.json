@@ -1,0 +1,63 @@
+[
+	{
+		"name": "powerapps-pcf-canvas-grid-control",
+		"source": "PowerAppsDev",
+		"title": "Canvas app dataset Power Apps component framework sample",
+		"shortDescription": "The code component displays a paged, scrollable dataset grid that provides sortable and filterable columns.",
+		"url": "https://github.com/microsoft/PowerApps-Samples/tree/master/component-framework/CanvasGridControl",
+		"downloadUrl": "https://github.com/microsoft/PowerApps-Samples/tree/master/component-framework/CanvasGridControl",
+		"longDescription": [
+			"The code component displays a paged, scrollable dataset grid that provides sortable and filterable columns. It also allows the highlighting of specific rows by configuring an indicator column. This is a common request from app makers and can be complex to implement using native canvas app components. Code components can be written to work on both canvas and model-driven apps. However, this component is written to specifically target use within canvas apps."
+		],
+		"creationDateTime": "2021-06-09",
+		"updateDateTime": "2023-08-01",
+		"products": ["PowerApps"],
+		"metadata": [
+			{
+				"key": "PowerApps-PCF-SAMPLE-SOURCE",
+				"value": "PowerAppsDev"
+			},
+			{
+				"key": "PowerApps-PCF-SAMPLE-LANGUAGE",
+				"value": "typescript"
+			},
+			{
+				"key": "PowerApps-PCF-SAMPLE-FEATURES",
+				"value": "canvas grid control"
+			}
+		],
+		"thumbnails": [
+			{
+				"type": "image",
+				"order": 100,
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/media/canvas-datagrid-demo.gif",
+				"alt": "Preview of the sample"
+			}
+		],
+		"authors": [
+			{
+				"gitHubAccount": "JimDaly",
+				"pictureUrl": "https://avatars.githubusercontent.com/u/6353736?v=4",
+				"name": "Jim Daly"
+			}
+		],
+		"references": [
+			{
+				"name": "Power Apps component framework overview",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/overview"
+			},
+			{
+				"name": "Create and build a code component",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/create-custom-controls-using-pcf"
+			},
+			{
+				"name": "Best practices and guidance for code components created using Power Apps component framework",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/code-components-best-practices"
+			},
+			{
+				"name": "Tutorial: Creating a canvas app dataset component",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/tutorial-create-canvas-dataset-component"
+			}
+		]
+	}
+]

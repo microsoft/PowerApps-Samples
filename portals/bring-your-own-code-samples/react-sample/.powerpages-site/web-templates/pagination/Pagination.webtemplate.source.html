@@ -1,0 +1,47 @@
+{% assign current_page = current_page | default: 1 %}
+{% assign page_size = page_size | default: 10 %}
+{% assign total = total | default: 0 %}
+{% assign limit = 5 %}
+
+{% assign total_pages_remainder = total | modulo: page_size %}
+{% if total_pages_remainder > 0 %}
+  {% assign total_pages = total | divided_by: page_size | plus: 1 %}
+{% else %}
+  {% assign total_pages = total | divided_by: page_size %}
+{% endif %}
+
+{% if total_pages > 1 %}
+  {% assign prev_page = current_page | minus: 1 %}
+  {% assign next_page = current_page | plus: 1 %}
+
+  {% assign start_page = 0 %}
+  {% assign offset = limit | divided_by: 2 %}
+  {% assign page_offset = current_page | minus: 1 %}
+  {% if page_offset > offset %}
+    {% assign start_page = current_page | minus: offset | minus: 1 %}
+  {% endif %}
+
+<ul class="pagination">
+    {% if current_page == 1 %}
+    <li class="page-item disabled"><a class="page-link" href="{{ request.url | add_query: 'page', '1' | path_and_query | escape }}">&laquo;</a></li>
+    <li class="page-item disabled"><a class="page-link" href="{{ request.url | add_query: 'page', prev_page | path_and_query | escape }}">&lsaquo;</a></li>
+    {% else %}
+    <li class="page-item"><a class="page-link" href="{{ request.url | add_query: 'page', '1' | path_and_query | escape }}">&laquo;</a></li>
+    <li class="page-item"><a class="page-link" href="{{ request.url | add_query: 'page', prev_page | path_and_query | escape }}">&lsaquo;</a></li>
+    {% endif %}
+
+    {% for page in (1..total_pages) offset: start_page limit: limit %}
+    <li{% if page == current_page %} class="active"{% endif %}>
+        <a class="page-link" href="{{ request.url | add_query:'page', page | path_and_query | escape }}"> {{ page }}</a>
+        </li>
+        {% endfor -%}
+
+        {% if current_page == total_pages %}
+        <li class="page-item disabled"><a class="page-link" href="#" aria-label="Next">&rsaquo;</a></li>
+        <li class="page-item disabled"><a class="page-link" href="#" aria-label="Last">&raquo;</a></li>
+        {% else %}
+        <li class="page-item"><a class="page-link" href="{{ request.url | add_query: 'page', next_page | path_and_query | escape }}">&rsaquo;</a></li>
+        <li class="page-item"><a class="page-link" href="{{ request.url | add_query: 'page', total_pages | path_and_query | escape }}">&raquo;</a></li>
+        {% endif %}
+</ul>
+{% endif %}

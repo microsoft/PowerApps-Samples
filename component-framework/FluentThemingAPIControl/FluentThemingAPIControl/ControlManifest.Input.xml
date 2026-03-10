@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="SampleNamespace" constructor="FluentThemingAPIControl" version="0.0.1" display-name-key="FluentThemingAPIControl" description-key="FluentThemingAPIControl description" control-type="virtual" >
+    <external-service-usage enabled="false">
+    </external-service-usage>
+    <property name="sampleProperty" display-name-key="Property_Display_Key" description-key="Property_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
+    <resources>
+      <code path="index.ts" order="1"/>
+      <!-- Dependency on React controls & platform libraries -->
+      <platform-library name="React" version="16.14.0" />
+      <platform-library name="Fluent" version="9.4.0" />
+      <resx path="strings/FluentThemingAPIControl.1033.resx" version="1.0.0" />
+    </resources>
+  </control>
+</manifest>

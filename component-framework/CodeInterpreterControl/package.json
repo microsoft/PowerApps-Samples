@@ -1,0 +1,31 @@
+{
+	"name": "pcf-project",
+	"version": "1.0.0",
+	"description": "Project containing your PowerApps Component Framework (PCF) control.",
+	"scripts": {
+		"build": "pcf-scripts build",
+		"clean": "pcf-scripts clean",
+		"lint": "pcf-scripts lint",
+		"lint:fix": "pcf-scripts lint fix",
+		"rebuild": "pcf-scripts rebuild",
+		"start": "pcf-scripts start",
+		"start:watch": "pcf-scripts start watch",
+		"refreshTypes": "pcf-scripts refreshTypes"
+	},
+	"dependencies": {
+		"mammoth": "^1.9.1",
+		"xlsx": "^0.18.5"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.25.1",
+		"@microsoft/eslint-plugin-power-apps": "^0.2.51",
+		"@types/node": "^18.19.86",
+		"@types/powerapps-component-framework": "^1.3.16",
+		"eslint-plugin-promise": "^7.1.0",
+		"globals": "^15.15.0",
+		"pcf-scripts": "^1",
+		"pcf-start": "^1",
+		"typescript": "^5.8.3",
+		"typescript-eslint": "^8.31.0"
+	}
+}

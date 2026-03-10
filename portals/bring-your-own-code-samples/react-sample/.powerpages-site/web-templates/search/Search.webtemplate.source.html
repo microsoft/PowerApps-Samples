@@ -1,0 +1,62 @@
+{% assign search_enabled = settings['search/enabled'] | boolean | default:true %}
+{% assign search_page = sitemarkers['Search'] %}
+{% if search_enabled and search_page %}
+
+{% assign search_filters = settings['search/filters'] | search_filter_options %}
+
+<form method="GET" action="{{ search_page.url | h }}" role="search" class="form-search">
+    <div class="input-group" style="display:table;">
+
+        {% if search_filters %}
+        {% assign defaultSearchFilterText = snippets["Search/Default/FilterText"] | default: resx["All"] | h %}
+        {% assign searchFilterLabel = snippets["Header/Search/FilterLabel"] | default: resx["Search_Filter"] | h %}
+        {% assign formId = uniqueid.new_guid %}
+        <div class="btn-group btn-select input-group-btn" data-bs-target="#filter-{{ formId }}" data-focus="#{{search_id}}">
+            <li class="dropdown-submenu dropdown nav-item">
+                <button id="search-filter" type="button" class="btn btn-default dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        aria-haspopup="true" aria-label="{{ searchFilterLabel }}" aria-expanded="false">
+
+                    <span class="selected">{{ defaultSearchFilterText }}</span>
+                    <span class="   "></span>
+                </button>
+                <ul class="dropdown-menu" role="listbox" aria-label="{{ searchFilterLabel }}">
+                    <li role="presentation">
+                        <a class="dropdown-item"  href="#" role="option" data-value=""
+                           aria-label="{{ defaultSearchFilterText }}" aria-selected="false" tabIndex="-1">{{ defaultSearchFilterText }}</a>
+                    </li>
+                    {% for search_filter_option in search_filters %}
+                    <li role="presentation">
+                        <a class="dropdown-item"  href="#" role="option" data-value="{{ search_filter_option.value | h }}"
+                           aria-label="{{ search_filter_option.display_name | h }}" aria-selected="false" tabIndex="-1">{{ search_filter_option.display_name | h }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        </div>
+        <label for="filter-{{ formId }}" class="visually-hidden">{{ searchFilterLabel }}</label>
+        <select id="filter-{{ formId }}" name="logicalNames" class="btn-select" aria-hidden="true" data-query="logicalNames">
+            <option value="" selected="selected">{{ defaultSearchFilterText }}</option>
+            {% for search_filter_option in search_filters %}
+            <option value="{{ search_filter_option.value | h }}">{{ search_filter_option.display_name | h }}</option>
+            {% endfor %}
+        </select>
+        {% endif %}
+
+        <label for="{{search_id}}" class="visually-hidden">
+            {{ snippets["Header/Search/Label"] | default: resx["Search_DefaultText"] | h }}
+        </label>
+        <input type="text" class="form-control" id="{{search_id}}" name="q"
+               placeholder="{{ snippets["Header/Search/Label"] | default: resx["Search_DefaultText"] | h }}"
+               value="{{ params.q | escape }}"
+               title="{{ snippets["Header/Search/Label"] | default: resx["Search_DefaultText"] | h }}">
+        <div class="input-group-btn">
+            <button type="submit" class="btn btn-primary"
+                    title="{{ snippets["Header/Search/ToolTip"] | default: resx["Search_DefaultText"] | h }}"
+                    aria-label="{{ snippets["Header/Search/ToolTip"] | default: resx["Search_DefaultText"] | h }}">
+                <span class="fa fa-search" aria-hidden="true"></span>
+            </button>
+        </div>
+    </div>
+</form>
+{% endif %}

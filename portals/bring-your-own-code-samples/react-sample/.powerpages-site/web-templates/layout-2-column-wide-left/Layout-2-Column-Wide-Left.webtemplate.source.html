@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="page-heading">
+        {% block breadcrumbs %}
+        {% include 'Breadcrumbs' %}
+        {% endblock %}
+        {% block title %}
+        {% include 'Page Header' %}
+        {% endblock %}
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-xl-8 start-column">
+            {% block main %}
+            {% include 'Page Copy' %}
+            {% endblock %}
+        </div>
+        <div class="col-md-4 col-xl-4 end-column">
+            {% block aside %}{% endblock %}
+        </div>
+    </div>
+</div>

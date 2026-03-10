@@ -1,0 +1,67 @@
+[
+	{
+		"name": "powerapps-pcf-facepile-react-control",
+		"source": "PowerAppsDev",
+		"title": "Implementing the FacePile component Power Apps component framework React sample",
+		"shortDescription": "This sample shows how to use React to create components using Power Apps component framework.",
+		"url": "https://github.com/microsoft/PowerApps-Samples/tree/master/component-framework/FacepileReactControl",
+		"downloadUrl": "https://github.com/microsoft/PowerApps-Samples/tree/master/component-framework/FacepileReactControl",
+		"longDescription": [
+			"This sample shows how to use React to create components using Power Apps component framework. The facepile sample component is implemented based on React and the Office UI Fabric React components. The code may not reveal the best practices for the mentioned third-party libraries."
+		],
+		"creationDateTime": "2021-06-09",
+		"updateDateTime": "2023-08-01",
+		"products": ["PowerApps"],
+		"metadata": [
+			{
+				"key": "PowerApps-PCF-SAMPLE-SOURCE",
+				"value": "PowerAppsDev"
+			},
+			{
+				"key": "PowerApps-PCF-SAMPLE-LANGUAGE",
+				"value": "typescript"
+			},
+			{
+				"key": "PowerApps-PCF-SAMPLE-FEATURES",
+				"value": "facepile react control"
+			}
+		],
+		"thumbnails": [
+			{
+				"type": "image",
+				"order": 100,
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/media/react-facepile.png",
+				"alt": "Preview of the sample"
+			}
+		],
+		"authors": [
+			{
+				"gitHubAccount": "JimDaly",
+				"pictureUrl": "https://avatars.githubusercontent.com/u/6353736?v=4",
+				"name": "Jim Daly"
+			}
+		],
+		"references": [
+			{
+				"name": "Power Apps component framework overview",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/overview"
+			},
+			{
+				"name": "Create and build a code component",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/create-custom-controls-using-pcf"
+			},
+			{
+				"name": "Best practices and guidance for code components created using Power Apps component framework",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/code-components-best-practices"
+			},
+			{
+				"name": "React controls & platform libraries (preview)",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/react-controls-platform-libraries"
+			},
+			{
+				"name": "Implementing the FacePile component",
+				"url": "https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/react-facepile-control"
+			}
+		]
+	}
+]
