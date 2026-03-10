@@ -1,3 +1,0 @@
-# Ignore .env files but not .env.example files
-.env
-!.env.example
