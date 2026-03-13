@@ -17,7 +17,7 @@ Learn more in [Quick Start: Web API sample (C#)](https://learn.microsoft.com/pow
 ## How to run this sample
 
 1. Download or clone the repo so that you have a local copy.
-1. Open the solution (.sln) file in Visual Studio 2019.
+1. Open the solution (.sln) file in Visual Studio 2022 or later (requires .NET 10 SDK).
 1. Edit line 19 of Program.cs to set the URL for your Dataverse test environment.<br/>
     `string resource = "https://<env-name>.api.<region>.dynamics.com";`
 1. Press `F5` to run the sample.
