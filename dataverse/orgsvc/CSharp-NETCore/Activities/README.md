@@ -13,7 +13,6 @@ More information: [Activity entities](https://learn.microsoft.com/power-apps/dev
 |BookAppointment|Book or schedule an appointment|.NET 6|
 |BulkEmail|Send bulk email messages|.NET 6|
 |CollaborateWithActivityFeeds|Use activity feeds for collaboration|.NET 6|
-|ConvertFaxToTask|Convert a fax activity to a task|.NET 6|
 |ConvertToRecurring|Convert an appointment to a recurring appointment|.NET 6|
 |CreateEmailUsingTemplate|Create email from a template|.NET 6|
 |CRUDEmailAttachments|Create, retrieve, update, delete email attachments|.NET 6|
@@ -40,6 +39,7 @@ More information: [Activity entities](https://learn.microsoft.com/power-apps/dev
 2. Navigate to `dataverse/orgsvc/CSharp-NETCore/Activities/`
 3. Open the desired sample folder
 4. Edit the `appsettings.json` file (located in the Activities folder) with your environment connection details:
+
    ```json
    {
      "ConnectionStrings": {
@@ -47,7 +47,9 @@ More information: [Activity entities](https://learn.microsoft.com/power-apps/dev
      }
    }
    ```
+
 5. Build and run the sample:
+
    ```bash
    cd SampleFolder
    dotnet run
