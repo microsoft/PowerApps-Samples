@@ -1419,7 +1419,7 @@ function New-Relationship {
    $url = $rh['OData-EntityId']
    $selectedString = $url | Select-String `
       -Pattern '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' `
-      -AllMatches | % { $_.Matches }
+      -AllMatches | ForEach-Object { $_.Matches }
    return [System.Guid]::New($selectedString.Value.ToString())
 }
 <#
@@ -1660,7 +1660,7 @@ function New-Table {
    $url = $rh['OData-EntityId']
    $selectedString = $url | Select-String `
       -Pattern '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' `
-      -AllMatches | % { $_.Matches }
+      -AllMatches | ForEach-Object { $_.Matches }
    return [System.Guid]::New($selectedString.Value.ToString())
 }
 
@@ -2186,10 +2186,191 @@ function Update-Table {
    }
    Invoke-ResilientRestMethod $UpdateRequest | Out-Null
 }
+<#
+.SYNOPSIS
+   Builds a Dataverse Label structure containing a single localized label.
 
+.DESCRIPTION
+   Returns a hashtable representing a Microsoft.Dynamics.CRM.Label with one
+   LocalizedLabel entry. Use this helper to supply DisplayName, Description,
+   and similar Label-typed properties when creating or updating table and
+   column metadata.
 
+.PARAMETER label
+   The display text for the label.
 
+.PARAMETER languageCode
+   The LCID of the language for the label (e.g. 1033 for English).
 
+.EXAMPLE
+   $displayName = New-Label -label 'Bank Account' -languageCode 1033
+
+.NOTES
+   The function does not call the Dataverse API; it only constructs a hashtable.
+#>
+function New-Label {
+   param (
+      [Parameter(Mandatory)]
+      [string]
+      $label,
+      [Parameter(Mandatory)]
+      [int]
+      $languageCode
+   )
+   return @{
+      '@odata.type'   = 'Microsoft.Dynamics.CRM.Label'
+      LocalizedLabels = @(
+         @{
+            '@odata.type' = 'Microsoft.Dynamics.CRM.LocalizedLabel'
+            Label         = $label
+            LanguageCode  = $languageCode
+         }
+      )
+   }
+}
+<#
+.SYNOPSIS
+   Builds a primary-name StringAttributeMetadata hashtable for use when
+   creating a Dataverse table.
+
+.DESCRIPTION
+   Returns a hashtable representing a Microsoft.Dynamics.CRM.StringAttributeMetadata
+   with IsPrimaryName set to $true. The SchemaName is formed as
+   "{prefix}_Name" and the DisplayName is always "Name". Pass this object in
+   the Attributes array of the table-creation body.
+
+.PARAMETER prefix
+   The customization prefix of the publisher (e.g. 'sample').
+
+.PARAMETER description
+   The description text for the attribute.
+
+.PARAMETER languageCode
+   The LCID of the language for the labels (e.g. 1033 for English).
+
+.EXAMPLE
+   $primaryAttr = New-PrimaryNameAttribute `
+      -prefix       'sample' `
+      -description  'The name of the bank account' `
+      -languageCode 1033
+
+.NOTES
+   The function does not call the Dataverse API; it only constructs a hashtable.
+   It depends on New-Label, which must be available in the same scope.
+#>
+function New-PrimaryNameAttribute {
+   param (
+      [Parameter(Mandatory)]
+      [string]
+      $prefix,
+      [Parameter(Mandatory)]
+      [string]
+      $description,
+      [Parameter(Mandatory)]
+      [int]
+      $languageCode
+   )
+   return @{
+      '@odata.type' = 'Microsoft.Dynamics.CRM.StringAttributeMetadata'
+      IsPrimaryName = $true
+      SchemaName    = "${prefix}_Name"
+      RequiredLevel = @{ Value = 'ApplicationRequired' }
+      DisplayName   = New-Label -label 'Name' -languageCode $languageCode
+      Description   = New-Label -label $description -languageCode $languageCode
+      MaxLength     = 100
+   }
+}
+<#
+.SYNOPSIS
+   Creates a polymorphic lookup column on a Dataverse table by calling the
+   CreatePolymorphicLookupAttribute action.
+
+.DESCRIPTION
+   Sends a POST request to the CreatePolymorphicLookupAttribute action, which
+   creates a single lookup attribute together with the one-to-many relationships
+   that allow it to reference multiple target tables.
+
+   Returns a CreatePolymorphicLookupAttributeResponse object containing:
+     - AttributeId    : GUID of the new lookup attribute
+     - RelationshipIds: array of GUIDs for each relationship created
+
+   See: https://learn.microsoft.com/power-apps/developer/data-platform/webapi/multitable-lookup
+
+.PARAMETER oneToManyRelationships
+   An array of hashtables, each describing one OneToManyRelationshipMetadata entry.
+   Required keys per entry: SchemaName, ReferencedEntity, ReferencingEntity.
+   Optional key: CascadeConfiguration.
+
+.PARAMETER lookup
+   A hashtable describing the ComplexLookupAttributeMetadata for the new column.
+   Must include at minimum: SchemaName, AttributeType, AttributeTypeName,
+   DisplayName, and '@odata.type' = 'Microsoft.Dynamics.CRM.ComplexLookupAttributeMetadata'.
+
+.PARAMETER solutionUniqueName
+   The unique name of the solution to add the attribute and relationships to.
+   If not provided, the default solution is used.
+
+.EXAMPLE
+   $relationships = @(
+      @{ SchemaName = 'sample_media_sample_book';  ReferencedEntity = 'sample_book';  ReferencingEntity = 'sample_media' },
+      @{ SchemaName = 'sample_media_sample_audio'; ReferencedEntity = 'sample_audio'; ReferencingEntity = 'sample_media' }
+   )
+
+   $lookup = @{
+      '@odata.type'     = 'Microsoft.Dynamics.CRM.ComplexLookupAttributeMetadata'
+      AttributeType     = 'Lookup'
+      AttributeTypeName = @{ Value = 'LookupType' }
+      SchemaName        = 'sample_MediaPolymorphicLookup'
+      DisplayName       = New-Label -label 'Media' -languageCode 1033
+      Description       = New-Label -label 'Polymorphic lookup to a media item' -languageCode 1033
+   }
+
+   $result = New-PolymorphicLookupColumn `
+      -oneToManyRelationships $relationships `
+      -lookup $lookup `
+      -solutionUniqueName 'MySolution'
+
+   $result.AttributeId       # GUID of the new attribute
+   $result.RelationshipIds   # array of relationship GUIDs
+
+.NOTES
+   The function requires global variables $baseURI and $baseHeaders to be set
+   before it is called (via the Connect function in Core.ps1).
+#>
+function New-PolymorphicLookupColumn {
+   param (
+      [Parameter(Mandatory)]
+      [hashtable[]]
+      $oneToManyRelationships,
+      [Parameter(Mandatory)]
+      [hashtable]
+      $lookup,
+      [string]
+      $solutionUniqueName
+   )
+
+   $postHeaders = $baseHeaders.Clone()
+   $postHeaders.Add('Content-Type', 'application/json')
+   $postHeaders.Add('Consistency', 'Strong')
+
+   $body = @{
+      OneToManyRelationships = $oneToManyRelationships
+      Lookup                 = $lookup
+   }
+
+   if ($solutionUniqueName) {
+      $body.SolutionUniqueName = $solutionUniqueName
+   }
+
+   $CreateRequest = @{
+      Uri     = $baseURI + 'CreatePolymorphicLookupAttribute'
+      Method  = 'Post'
+      Headers = $postHeaders
+      Body    = ConvertTo-Json $body -Depth 10
+   }
+
+   Invoke-ResilientRestMethod -request $CreateRequest
+}
 
 
 

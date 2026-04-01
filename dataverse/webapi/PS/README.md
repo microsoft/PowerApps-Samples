@@ -45,7 +45,10 @@ Samples that use these common functions reference them using [dot sourcing](http
 | Metadata | [New-Column](#new-column-function) | Create a new column in a Dataverse table. |
 | Metadata | [New-CustomerRelationship](#new-customerrelationship-function) | Create a new customer relationship in Dataverse. |
 | Metadata | [New-GlobalOptionSet](#new-globaloptionset-function) | Create a new global option set in Dataverse. |
+| Metadata | [New-Label](#new-label-function) | Builds a Dataverse Label structure containing a single localized label. |
 | Metadata | [New-OptionValue](#new-optionvalue-function) | Create a new option value in a column in a Dataverse table. |
+| Metadata | [New-PolymorphicLookupColumn](#new-polymorphiclookupcolumn-function) | Creates a polymorphic lookup column on a Dataverse table. |
+| Metadata | [New-PrimaryNameAttribute](#new-primarynameattribute-function) | Builds a primary-name StringAttributeMetadata hashtable for use when creating a table. |
 | TableOperations | [New-Record](#new-record-function) | Creates a new record in a Dataverse table. |
 | Metadata | [New-Relationship](#new-relationship-function) | Create a new relationship in Dataverse. |
 | TableOperations | [Create-MultipleRecords](#create-multiplerecords-function) | Creates multiple records in a Dataverse table in a single request. |
@@ -1572,4 +1575,109 @@ Update-Table `
    -table $bankAccountTable `
    -solutionUniqueName 'mysolution' `
    -mergeLabels $true
+```
+
+### New-Label function
+
+A function to build a Dataverse Label structure containing a single localized label.
+
+The `New-Label` function does not call the Dataverse API. It constructs a hashtable representing a `Microsoft.Dynamics.CRM.Label` with one `LocalizedLabel` entry. Use this helper to supply `DisplayName`, `Description`, and similar Label-typed properties when creating or updating table and column metadata.
+
+#### New-Label parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `label` | string | **Required**. The display text for the label. |
+| `languageCode` | int | **Required**. The LCID of the language for the label (for example, `1033` for English). |
+
+#### New-Label returns
+
+A hashtable representing a `Microsoft.Dynamics.CRM.Label` containing a single `Microsoft.Dynamics.CRM.LocalizedLabel`.
+
+#### New-Label example
+
+```powershell
+$displayName = New-Label -label 'Bank Account' -languageCode 1033
+```
+
+### New-PolymorphicLookupColumn function
+
+A function to create a polymorphic lookup column on a Dataverse table by calling the `CreatePolymorphicLookupAttribute` action.
+
+The `New-PolymorphicLookupColumn` function sends a POST request to the `CreatePolymorphicLookupAttribute` action, which creates a single lookup attribute together with the one-to-many relationships that allow it to reference multiple target tables.
+
+#### New-PolymorphicLookupColumn parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `oneToManyRelationships` | hashtable[] | **Required**. An array of hashtables, each describing one `OneToManyRelationshipMetadata` entry. Required keys per entry: `SchemaName`, `ReferencedEntity`, `ReferencingEntity`. Optional key: `CascadeConfiguration`. |
+| `lookup` | hashtable | **Required**. A hashtable describing the `ComplexLookupAttributeMetadata` for the new column. Must include at minimum: `SchemaName`, `AttributeType`, `AttributeTypeName`, `DisplayName`, and `'@odata.type' = 'Microsoft.Dynamics.CRM.ComplexLookupAttributeMetadata'`. |
+| `solutionUniqueName` | string | The unique name of the solution to add the attribute and relationships to. If not provided, the default solution is used. |
+
+#### New-PolymorphicLookupColumn returns
+
+A `CreatePolymorphicLookupAttributeResponse` object containing:
+
+- `AttributeId` — the GUID of the new lookup attribute.
+- `RelationshipIds` — an array of GUIDs, one per relationship created.
+
+#### New-PolymorphicLookupColumn example
+
+```powershell
+$relationships = @(
+   @{
+      SchemaName        = 'sample_media_sample_book'
+      ReferencedEntity  = 'sample_book'
+      ReferencingEntity = 'sample_media'
+   },
+   @{
+      SchemaName        = 'sample_media_sample_audio'
+      ReferencedEntity  = 'sample_audio'
+      ReferencingEntity = 'sample_media'
+   }
+)
+
+$lookup = @{
+   '@odata.type'     = 'Microsoft.Dynamics.CRM.ComplexLookupAttributeMetadata'
+   AttributeType     = 'Lookup'
+   AttributeTypeName = @{ Value = 'LookupType' }
+   SchemaName        = 'sample_MediaPolymorphicLookup'
+   DisplayName       = New-Label -label 'Media' -languageCode 1033
+   Description       = New-Label -label 'Polymorphic lookup to a media item' -languageCode 1033
+}
+
+$result = New-PolymorphicLookupColumn `
+   -oneToManyRelationships $relationships `
+   -lookup $lookup `
+   -solutionUniqueName 'MySolution'
+
+$result.AttributeId     # GUID of the new attribute
+$result.RelationshipIds # array of relationship GUIDs
+```
+
+### New-PrimaryNameAttribute function
+
+A function to build a primary-name `StringAttributeMetadata` hashtable for use when creating a Dataverse table.
+
+The `New-PrimaryNameAttribute` function does not call the Dataverse API. It constructs a hashtable representing a `Microsoft.Dynamics.CRM.StringAttributeMetadata` with `IsPrimaryName` set to `$true`. The `SchemaName` is formed as `{prefix}_Name` and the `DisplayName` is always `Name`. Pass this object in the `Attributes` array of the table-creation body.
+
+#### New-PrimaryNameAttribute parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `prefix` | string | **Required**. The customization prefix of the publisher (for example, `'sample'`). |
+| `description` | string | **Required**. The description text for the attribute. |
+| `languageCode` | int | **Required**. The LCID of the language for the labels (for example, `1033` for English). |
+
+#### New-PrimaryNameAttribute returns
+
+A hashtable representing a `Microsoft.Dynamics.CRM.StringAttributeMetadata` with `IsPrimaryName = $true`, `SchemaName = '{prefix}_Name'`, and `MaxLength = 100`.
+
+#### New-PrimaryNameAttribute example
+
+```powershell
+$primaryAttr = New-PrimaryNameAttribute `
+   -prefix       'sample' `
+   -description  'The name of the bank account' `
+   -languageCode 1033
 ```
