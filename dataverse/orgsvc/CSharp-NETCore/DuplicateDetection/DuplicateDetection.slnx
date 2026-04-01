@@ -1,5 +1,0 @@
-<Solution>
-  <Project Path="DetectMultipleDuplicateRecords/DetectMultipleDuplicateRecords.csproj" />
-  <Project Path="EnableDuplicateDetection/EnableDuplicateDetection.csproj" />
-  <Project Path="UseDuplicatedetectionforCRUD/UseDuplicatedetectionforCRUD.csproj" />
-</Solution>
