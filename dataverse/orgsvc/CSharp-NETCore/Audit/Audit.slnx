@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="AuditEntityData/AuditEntityData.csproj" />
-  <Project Path="AuditUserAccess/AuditUserAccess.csproj" />
-</Solution>

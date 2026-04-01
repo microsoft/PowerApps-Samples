@@ -11,7 +11,6 @@ More information: [Entity relationships](https://learn.microsoft.com/power-apps/
 |Sample folder|Description|Build target|
 |---|---|---|
 |AssociateRecords|Associate and disassociate records using relationships|.NET 6|
-|ConnectionEarlyBound|Create connections between records using early-bound entities|.NET 6|
 |ConnectionRole|Create and manage connection roles|.NET 6|
 |ReciprocalConnection|Create reciprocal connections between records|.NET 6|
 |UpdateConnectionRole|Update connection role definitions|.NET 6|
@@ -28,6 +27,7 @@ More information: [Entity relationships](https://learn.microsoft.com/power-apps/
 2. Navigate to `dataverse/orgsvc/CSharp-NETCore/Relationships/`
 3. Open the desired sample folder
 4. Edit the `appsettings.json` file (located in the Relationships folder) with your environment connection details:
+
    ```json
    {
      "ConnectionStrings": {
@@ -35,7 +35,9 @@ More information: [Entity relationships](https://learn.microsoft.com/power-apps/
      }
    }
    ```
+
 5. Build and run the sample:
+
    ```bash
    cd SampleFolder
    dotnet run
