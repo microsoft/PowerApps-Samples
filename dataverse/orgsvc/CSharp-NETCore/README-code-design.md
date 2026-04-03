@@ -37,4 +37,4 @@ If you would like to use the template, place the a copy of the template's compre
 
 Some of our code samples that target .NET Core (CSharp-NETCore folder) were manually written and some were AI generated. The AI generated samples are rewritten (modernized) versions of the code samples that target .NET Framework (CSharp folder). The AI was instructed to follow our modern programming design pattern, use only supported APIs, and extract Dataverse SDK specific calls from the legacy code samples. This is still a work in progress as we update our code sample collection to .NET Core.
 
-More information: [Our principles for using AI-generated and machine-translated content on Microsoft Learn](https://learn.microsoft.com/en-us/principles-for-ai-generated-content)
+More information: [Our principles for using AI-generated and machine-translated content on Microsoft Learn](https://learn.microsoft.com/principles-for-ai-generated-content)
