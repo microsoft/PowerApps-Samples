@@ -18,7 +18,7 @@ Our .NET Core based code samples follow a certain design. This table highlights 
 |Main()|Executes the Setup(), Run(), and Cleanup() methods (in that order).|
 |Setup()|Pre-creates any entity or other data required by the Run() method. While this code may be interesting, the code is not the primary focus of the sample.|
 |Run()|Invokes the primary operations being demonstrated by the code sample.|
-|Cleanup()|Deletes all created entities and frees any other resources allocated during the execution of the program. Additonal overloaded Cleanup() methods may be added to the program to free additional non-entity related resources.|
+|Cleanup()|Deletes all created entities and frees any other resources allocated during the execution of the program. Additional overloaded Cleanup() methods may be added to the program to free additional non-entity related resources.|
 |entityStore| Keeps track of all entities created in Dataverse by the sample. Used by Cleanup() to delete any created entities in Dataverse before the program terminates.|
 
 We place any methods that demonstrate the primary purpose of the sample at the beginning of the code file to aid in discoverability. The code that follows is boilerplate (common among the samples) and often does not change.
