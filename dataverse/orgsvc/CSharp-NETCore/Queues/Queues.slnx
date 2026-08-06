@@ -1,0 +1,10 @@
+<Solution>
+  <Project Path="AddRecordToQueue/AddRecordToQueue.csproj" />
+  <Project Path="AddSecurityPrincipalToQueue/AddSecurityPrincipalToQueue.csproj" />
+  <Project Path="CleanHistoryQueue/CleanHistoryQueue.csproj" />
+  <Project Path="CreateQueue/CreateQueue.csproj" />
+  <Project Path="DeleteQueue/DeleteQueue.csproj" />
+  <Project Path="ReleaseQueueItems/ReleaseQueueItems.csproj" />
+  <Project Path="ShareQueue/ShareQueue.csproj" />
+  <Project Path="SpecifyQueueItem/SpecifyQueueItem.csproj" />
+</Solution>
