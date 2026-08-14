@@ -185,7 +185,7 @@ try
     {
         for ($i = 0; $i -lt $servicePrincipalCredentials.Count; $i++)
         {
-            if ($servicePrincipalCredentials[$i].endDateTime -lt $currentDateTime)
+            if ([DateTime]$servicePrincipalCredentials[$i].endDateTime -lt $currentDateTime)
             {
                 Write-Output("Certificate '" + $servicePrincipalCredentials[$i].displayName + "', with thumbprint '" + $servicePrincipalCredentials[$i].customKeyIdentifier + "' has expired on "+ $servicePrincipalCredentials[$i].endDateTime +". Removing the certificate principal from CRM app with id '" + $crmAppId +"'.")
                 $removeID = $servicePrincipalCredentials[$i].keyId
