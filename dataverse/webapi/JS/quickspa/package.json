@@ -12,10 +12,13 @@
     "vm-browserify": "^1.1.2"
   },
   "dependencies": {
-    "@azure/msal-browser": "^4.7.0",
-    "dotenv": "^16.4.7"
+    "@azure/msal-browser": "^5.17.3",
+    "dotenv": "^17.4.2"
   },
   "scripts": {
-    "start": "parcel src/index.html"
+    "start": "parcel src/index.html src/redirect.html"
+  },
+  "@parcel/resolver-default": {
+    "packageExports": true
   }
 }

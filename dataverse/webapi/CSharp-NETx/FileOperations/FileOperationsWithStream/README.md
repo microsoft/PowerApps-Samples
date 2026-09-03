@@ -20,11 +20,11 @@ To upload a PDF file named `25mb.pdf` to the `sample_FileColumn` file column on 
 
 ## Download File
 
-If the file was succesfully uploaded, to download the text file named `25mb.pdf` that was just uploaded to the `sample_FileColumn` file column on the account record, this sample uses the [DownloadFileRequest class](../../WebAPIService/Messages/DownloadFileRequest.cs).
+If the file was successfully uploaded, to download the text file named `25mb.pdf` that was just uploaded to the `sample_FileColumn` file column on the account record, this sample uses the [DownloadFileRequest class](../../WebAPIService/Messages/DownloadFileRequest.cs).
 
 To process the response the [DownloadFileResponse class](../../WebAPIService/Messages/DownloadFileResponse.cs) simply reads the response content as a byte[] to get the entire file.
 
 
 ## Delete File
 
-If the file was succesfully uploaded, use the [DeleteColumnValueRequest class](../../WebAPIService/Messages/DeleteColumnValueRequest.cs) to delete the file.This method can be used to delete the value of any type of column. This request doesn't have any response value to process.
+If the file was successfully uploaded, use the [DeleteColumnValueRequest class](../../WebAPIService/Messages/DeleteColumnValueRequest.cs) to delete the file.This method can be used to delete the value of any type of column. This request doesn't have any response value to process.
