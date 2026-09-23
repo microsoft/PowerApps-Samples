@@ -10,11 +10,12 @@
 		"rebuild": "pcf-scripts rebuild",
 		"start": "pcf-scripts start",
 		"start:watch": "pcf-scripts start watch",
-		"refreshTypes": "pcf-scripts refreshTypes"
+		"refreshTypes": "pcf-scripts refreshTypes",
+		"test": "node --test tests/filePreviewHandler.test.mjs"
 	},
 	"dependencies": {
-		"mammoth": "^1.9.1",
-		"xlsx": "^0.18.5"
+		"@stackline/xlsx": "1.0.7",
+		"mammoth": "^1.9.1"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.25.1",
@@ -27,5 +28,8 @@
 		"pcf-start": "^1",
 		"typescript": "^5.8.3",
 		"typescript-eslint": "^8.31.0"
+	},
+	"engines": {
+		"node": ">=20"
 	}
 }
