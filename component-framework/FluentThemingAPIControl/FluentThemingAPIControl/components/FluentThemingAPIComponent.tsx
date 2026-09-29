@@ -24,22 +24,28 @@ export const FluentThemingAPIComponent: React.FC<IFluentThemingAPIComponentProps
 
 	const fluentDesignLanguage = props.context.fluentDesignLanguage;
 	if (fluentDesignLanguage) {
+		const theme = fluentDesignLanguage.tokenTheme as Theme;
+		const rootStyle = {
+			rowGap: theme.spacingVerticalL,
+			padding: theme.spacingVerticalM,
+		};
+		const childStyle = {
+			padding: `${theme.spacingVerticalM} ${theme.spacingHorizontalL}`,
+		};
+
 		return (
-			<div className={styles.root}>
-				<div className={styles.child}>
-					<FluentV9InheritanceFromPlatformComponent theme={fluentDesignLanguage.tokenTheme as Theme} />
+			<div className={styles.root} style={rootStyle}>
+				<div className={styles.child} style={childStyle}>
+					<FluentV9InheritanceFromPlatformComponent theme={theme} />
 				</div>
-				<div className={styles.child}>
-					<FluentV9ThemingAPIComponent theme={fluentDesignLanguage.tokenTheme as Theme} />
+				<div className={styles.child} style={childStyle}>
+					<FluentV9ThemingAPIComponent theme={theme} />
 				</div>
-				<div className={styles.child}>
-					<FluentV8ThemingAPIComponent
-						theme={fluentDesignLanguage.tokenTheme as Theme}
-						brand={fluentDesignLanguage.brand}
-					/>
+				<div className={styles.child} style={childStyle}>
+					<FluentV8ThemingAPIComponent theme={theme} brand={fluentDesignLanguage.brand} />
 				</div>
-				<div className={styles.child}>
-					<NonFluentThemingAPIComponent theme={fluentDesignLanguage.tokenTheme as Theme} />
+				<div className={styles.child} style={childStyle}>
+					<NonFluentThemingAPIComponent theme={theme} />
 				</div>
 			</div>
 		);
@@ -56,12 +62,10 @@ const _getStyles = makeStyles({
 	root: {
 		display: "flex",
 		flexDirection: "column",
-		...shorthands.padding("5px"),
 	},
 	child: {
 		display: "flex",
 		flexDirection: "column",
 		...shorthands.border("1px", "dotted", "black"),
-		...shorthands.padding("10px"),
 	},
 });

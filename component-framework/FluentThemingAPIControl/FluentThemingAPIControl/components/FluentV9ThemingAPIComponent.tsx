@@ -8,6 +8,7 @@ import {
 	Checkbox,
 	makeStyles,
 	Theme,
+	tokens,
 } from "@fluentui/react-components";
 
 export interface IFluentV9ThemingAPIComponentProps {
@@ -29,13 +30,18 @@ export const FluentV9ThemingAPIComponent: React.FC<IFluentV9ThemingAPIComponentP
 		<FluentProvider theme={props.theme}>
 			<div className={styles.root}>
 				<Label weight="semibold">{"Theming provided by the platform via FluentProvider."}</Label>
-				<Combobox placeholder="Select an animal">
-					{options.map((option) => (
-						<Option key={option}>{option}</Option>
-					))}
-				</Combobox>
-				<Button appearance={"primary"}>Example</Button>
-				<Checkbox defaultChecked={true} label="Checked checkbox" />
+				<div className={styles.formFields}>
+					<Combobox placeholder="Select an animal">
+						{options.map((option) => (
+							<Option key={option}>{option}</Option>
+						))}
+					</Combobox>
+					<Checkbox defaultChecked={true} label="Checked checkbox" />
+				</div>
+				<div className={styles.actions}>
+					<Button appearance={"primary"}>Example</Button>
+					<span>Layout spacing uses the density-aware Fluent theme tokens.</span>
+				</div>
 			</div>
 		</FluentProvider>
 	);
@@ -45,5 +51,18 @@ const _useStyles = makeStyles({
 	root: {
 		display: "flex",
 		flexDirection: "column",
+		rowGap: tokens.spacingVerticalL,
+		paddingLeft: tokens.spacingHorizontalL,
+		paddingRight: tokens.spacingHorizontalL,
+	},
+	formFields: {
+		display: "flex",
+		flexDirection: "column",
+		rowGap: tokens.spacingVerticalS,
+	},
+	actions: {
+		display: "flex",
+		flexDirection: "column",
+		rowGap: tokens.spacingVerticalM,
 	},
 });

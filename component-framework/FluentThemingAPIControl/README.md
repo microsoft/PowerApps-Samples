@@ -18,6 +18,8 @@ This sample shows use cases with modern theming API capabilities to style your c
 
 This sample works for model-driven and canvas apps.
 
+Display-density-aware spacing is available in model-driven apps. To test it, add the control to an eligible model-driven app, change the app's display density, and compare the spacing between and around elements. The Fluent v9 example uses the platform provider's token references, while the non-Fluent example reads the resolved spacing values from `context.fluentDesignLanguage.tokenTheme`. Interactive control dimensions remain independent of these layout spacing values.
+
 ## Applies to
 
 [Power Apps component framework](https://learn.microsoft.com/power-apps/developer/component-framework/overview)

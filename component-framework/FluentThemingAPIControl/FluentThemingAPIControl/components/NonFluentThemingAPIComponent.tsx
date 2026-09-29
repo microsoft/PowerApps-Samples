@@ -15,23 +15,33 @@ export const NonFluentThemingAPIComponent: React.FC<INonFluentThemingAPIComponen
 
 	// Example of HTML with theming tokens
 	return (
-		<div className={styles.root}>
+		<div
+			className={styles.root}
+			style={{
+				rowGap: props.theme.spacingVerticalL,
+				padding: `${props.theme.spacingVerticalM} ${props.theme.spacingHorizontalL}`,
+			}}>
 			<span style={{ fontSize: props.theme.fontSizeBase300, fontWeight: props.theme.fontWeightSemibold }}>
 				{"Stylizing HTML with platform provided theme."}
 			</span>
-			<select
-				name="animals"
-				style={{
-					fontSize: props.theme.fontSizeBase300,
-					color: props.theme.colorNeutralForeground1,
-				}}>
-				<option value="Cat">Cat</option>
-				<option value="Dog">Dog</option>
-				<option value="Ferret">Ferret</option>
-				<option value="Fish">Fish</option>
-				<option value="Hamster">Hamster</option>
-				<option value="Snake">Snake</option>
-			</select>
+			<div className={styles.formFields} style={{ rowGap: props.theme.spacingVerticalS }}>
+				<select
+					name="animals"
+					style={{
+						fontSize: props.theme.fontSizeBase300,
+						color: props.theme.colorNeutralForeground1,
+					}}>
+					<option value="Cat">Cat</option>
+					<option value="Dog">Dog</option>
+					<option value="Ferret">Ferret</option>
+					<option value="Fish">Fish</option>
+					<option value="Hamster">Hamster</option>
+					<option value="Snake">Snake</option>
+				</select>
+				<label>
+					<input type="checkbox" defaultChecked={true} /> Checked checkbox
+				</label>
+			</div>
 			<button
 				style={{
 					background: props.theme.colorBrandBackground,
@@ -39,19 +49,9 @@ export const NonFluentThemingAPIComponent: React.FC<INonFluentThemingAPIComponen
 					color: props.theme.colorNeutralBackground1,
 					borderRadius: props.theme.borderRadiusMedium,
 					border: "none",
-					height: props.theme.lineHeightBase600,
 				}}>
 				Example
 			</button>
-			<input
-				type="checkbox"
-				value="true"
-				style={{
-					height: props.theme.spacingVerticalXL,
-					width: props.theme.spacingHorizontalXL,
-				}}
-				checked={true}
-			/>
 		</div>
 	);
 };
@@ -61,5 +61,9 @@ const _useStyles = makeStyles({
 		display: "flex",
 		flexDirection: "column",
 		justifyContent: "start",
+	},
+	formFields: {
+		display: "flex",
+		flexDirection: "column",
 	},
 });
