@@ -1,5 +1,5 @@
 import * as mammoth from "mammoth";
-import * as XLSX from "xlsx";
+import * as XLSX from "@stackline/xlsx";
 import { IInputs } from "./generated/ManifestTypes";
 
 /**
