@@ -1,0 +1,52 @@
+---
+languages:
+- csharp
+products:
+- power-platform
+- power-apps
+page_type: sample
+description: "{{DESCRIPTION}}"
+---
+
+# {{SAMPLE_NAME}}
+
+{{DESCRIPTION}}
+
+## What this sample does
+
+{{WHAT_IT_DOES}}
+
+## How this sample works
+
+### Setup
+
+{{SETUP_DESCRIPTION}}
+
+### Run
+
+{{RUN_DESCRIPTION}}
+
+### Cleanup
+
+{{CLEANUP_DESCRIPTION}}
+
+## Demonstrates
+
+{{DEMONSTRATES_LIST}}
+
+## Sample Output
+
+```
+Connected to Dataverse.
+
+Setting up sample data...
+Running sample...
+{{SAMPLE_OUTPUT}}
+Cleaning up...
+
+Press any key to exit.
+```
+
+## See also
+
+{{SEE_ALSO_LINKS}}
