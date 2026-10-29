@@ -316,7 +316,7 @@ Retrieves the next page of records using the @odata.nextLink value.
 
 The `Get-NextLink` function uses the [Invoke-ResilientRestMethod function](#invoke-resilientrestmethod-function) to send a `GET` request to the next page URL. It accepts the `@odata.nextLink` value from a previous response and optional parameters to control page size and annotations. This function is designed to work with paginated results from the Dataverse Web API.
 
-[Learn about paging results](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/query-data-web-api#page-results)
+[Learn about paging results](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/query/page-results)
 
 #### Get-NextLink parameters
 
