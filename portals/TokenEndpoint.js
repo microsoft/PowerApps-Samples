@@ -20,7 +20,7 @@
     var callback = null;
 
     //Force Login for Anonymous users. Below line can be commented if force login is not needed.
-    $.cookie("ImplicitGrantForceLogin", 1);
+    document.cookie = "ImplicitGrantForceLogin=1";
 
 	let clientId = "6d08757f-4f46-e911"; //Add the Client ID registered on CRM.
 
@@ -39,7 +39,7 @@
     function handleGetAuthenticationTokenSuccess(data, status, jqXHR) {
         var jsonResult = JSON.parse(jqXHR.getResponseHeader('X-Responded-JSON'));
         if (jsonResult && jsonResult.status == 401) {
-            var forceLogin = Number($.cookie("ImplicitGrantForceLogin")) === 1;
+            var forceLogin = Number(getCookie("ImplicitGrantForceLogin")) === 1;
             if (forceLogin) {
                 // If the user is not logged in, redirect to login page
                 redirectToLogin();
@@ -57,6 +57,22 @@
         var loginUrl = window.location.origin + '/SignIn?returnUrl=' + encodeURIComponent(redirectUrl);
         window.location = loginUrl;
     }
+	
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
 
 }(window.auth || (window.auth = {}), window.jQuery));
 
