@@ -83,7 +83,7 @@ Like all PCF samples, you can modify and build this sample.
 ### Prerequisites
 
 - [Install the Microsoft Power Platform CLI](https://learn.microsoft.com/power-platform/developer/cli/introduction)
-- Node.js and npm installed
+- Node.js 20 or newer and npm installed
 - Dataverse environment with AI Builder capabilities
 - A Code Interpreter enable prompt with a case-sensitive single input named **RecordId** in your environment. [Review Code Interpreter documentation here](https://learn.microsoft.com/microsoft-copilot-studio/code-interpreter-for-prompts)
 
@@ -94,9 +94,13 @@ This project uses the following npm packages:
 ```json
 {
  "mammoth": "^1.9.1",
- "xlsx": "^0.18.5"
+ "@stackline/xlsx": "1.0.7"
 }
 ```
+
+The Excel preview uses the independent `@stackline/xlsx` compatibility package.
+It supports the existing XLS/XLSX preview APIs and renders empty worksheets
+without the preview failure produced by `xlsx@0.18.5`.
 
 ## Configuration
 
@@ -145,6 +149,17 @@ To try this sample locally, follow these steps:
    ```powershell
    pac pcf push --publisher-prefix <your-prefix>
    ```
+
+## Test Excel previews
+
+```powershell
+npm test
+```
+
+The tests run the actual preview handler with XLS/XLSX fixtures created by
+`xlsx@0.18.5`. They cover empty worksheets, first-sheet selection, workbook
+metadata, Unicode and multiline text, and downloadable file bytes. These tests
+run locally without Dataverse; use the sample app to validate the hosted UI.
 
 ## Enable 'Code Interpreter'
 
