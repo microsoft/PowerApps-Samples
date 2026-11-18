@@ -61,7 +61,7 @@ function Get-FirstPartyAppList{
 		[App]@{IsCommonlyUsedApp=$false;ApplicationName='Microsoft Office Web Apps Service';AppId='67e3df25-268a-4324-a550-0de1c7f97287'},
 		[App]@{IsCommonlyUsedApp=$false;ApplicationName='Microsoft Online Syndication Partner Portal';AppId='d176f6e7-38e5-40c9-8a78-3998aab820e7'},
 		[App]@{IsCommonlyUsedApp=$false;ApplicationName='Microsoft password reset service';AppId='93625bc8-bfe2-437a-97e0-3d0060024faa'},
-		[App]@{IsCommonlyUsedApp=$true;ApplicationName='Microsoft Power BI';AppId='871c010f-5e61-4fb1-83ac-98610a7e9110'},
+		[App]@{IsCommonlyUsedApp=$true;ApplicationName='Microsoft Power BI';AppId='00000009-0000-0000-c000-000000000000'},
 		[App]@{IsCommonlyUsedApp=$false;ApplicationName='Microsoft Storefronts';AppId='28b567f6-162c-4f54-99a0-6887f387bbcc'},
 		[App]@{IsCommonlyUsedApp=$false;ApplicationName='Microsoft Stream Portal';AppId='cf53fce8-def6-4aeb-8d30-b158e7b1cf83'},
 		[App]@{IsCommonlyUsedApp=$false;ApplicationName='Microsoft Substrate Management';AppId='98db8bd6-0cc0-4e67-9de5-f187f1cd1b41'},
